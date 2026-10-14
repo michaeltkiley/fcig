@@ -36,7 +36,7 @@ import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW, HIST = os.path.join(HERE, "raw"), os.path.join(HERE, "history")
 COLS = ["FFR", "10Yr Treasury", "Mortgage Rate", "BBB", "Stock Market", "House Prices", "Dollar"]
-DAILY_START = "2024-12-01"
+DAILY_START = "2020-01-01"  # earliest comparison date offered on the page
 
 FRED_IDS = ["DFF", "DGS10", "MORTGAGE30US", "BAMLC0A4CBBBEY", "DBAA", "DTWEXBGS", "TWEXB", "TWEXBMTH",
             "CSUSHPISA", "SP500"]
@@ -315,7 +315,10 @@ def main():
 
     # daily, trading days since DAILY_START
     days = S["Stock Market"][1].loc[DAILY_START:].index
-    drows = [[d.strftime("%Y-%m-%d")] + fci_at(S, d)["3yr"] + fci_at(S, d)["1yr"] for d in days]
+    drows = []
+    for d in days:
+        r = fci_at(S, d)
+        drows.append([d.strftime("%Y-%m-%d")] + r["3yr"] + r["1yr"])
     pd.DataFrame(drows, columns=["date"] + keys).to_csv(os.path.join(HERE, "fcig_replication_daily.csv"),
                                                          index=False, float_format="%.5f")
 
