@@ -18,17 +18,17 @@
 :root{
   --page:#eef1f4; --card:#ffffff; --rule:#dde3e8; --grid:#e8ecef;
   --ink:#10151d; --ink2:#4b5568; --ink3:#7c8698; --accent:#1c5cab; --accent-lt:#e8edf4;
-  --ease:#2a78d6; --tight:#eb6834; --ease-soft:#cde2fb; --tight-soft:#fbd9c9;
+  --ease:#2a78d6; --next:#008300; --tight:#eb6834; --ease-soft:#cde2fb; --tight-soft:#fbd9c9;
   --serif:"Newsreader",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --page:#12161c; --card:#191f27; --rule:#2a323d; --grid:#222a34;
   --ink:#f2f4f7; --ink2:#b7c0cc; --ink3:#8a95a6; --accent:#74aeef; --accent-lt:#1c2a3a;
-  --ease:#3987e5; --tight:#d95926; --ease-soft:#1d3554; --tight-soft:#4a2717; color-scheme:dark}}
+  --ease:#3987e5; --next:#008300; --tight:#d95926; --ease-soft:#1d3554; --tight-soft:#4a2717; color-scheme:dark}}
 :root[data-theme="dark"]{
   --page:#12161c; --card:#191f27; --rule:#2a323d; --grid:#222a34;
   --ink:#f2f4f7; --ink2:#b7c0cc; --ink3:#8a95a6; --accent:#74aeef; --accent-lt:#1c2a3a;
-  --ease:#3987e5; --tight:#d95926; --ease-soft:#1d3554; --tight-soft:#4a2717; color-scheme:dark}
+  --ease:#3987e5; --next:#008300; --tight:#d95926; --ease-soft:#1d3554; --tight-soft:#4a2717; color-scheme:dark}
 body{background:var(--page);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
 .wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:28px 56px;display:flex;flex-direction:column;gap:22px}
 h1{font-family:var(--serif);font-weight:500;font-size:2rem;line-height:1.15;margin:0;text-wrap:balance}
@@ -122,6 +122,7 @@ body{margin:0}
 .prose b{color:var(--ink)}
 .prose code{font-family:var(--mono);font-size:.82rem}
 .k-line{display:inline-block;width:18px;height:0;border-top:2px solid var(--ink);vertical-align:middle}
+.k-next{display:inline-block;width:18px;height:0;border-top:2px solid var(--next);vertical-align:middle}
 .k-dash{display:inline-block;width:18px;height:0;border-top:2px dashed var(--accent);vertical-align:middle}
 </style>
 <div class="wrap">
@@ -158,10 +159,29 @@ body{margin:0}
     <div class="chart" id="cD"></div>
     <p class="note">Starts at the total on the comparison date, steps through each component's contribution to the change, and lands on the latest total. Totals are markers so the scale can zoom in on the steps.</p>
   </section>
+
+  <section class="opt">
+    <header><h2 id="rbTitle2">Next year, if conditions hold: level and change since the comparison date</h2></header>
+    <div class="legend" aria-hidden="true">
+      <span><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="var(--ink)"/></svg>Current level</span>
+      <span><svg width="14" height="14"><circle cx="7" cy="7" r="4.5" fill="var(--card)" stroke="var(--ink)" stroke-width="1.6"/></svg>Level on the comparison date</span>
+      <span><svg width="14" height="10"><rect width="14" height="10" rx="2" fill="var(--tight)"/></svg>Moved toward headwind</span>
+      <span><svg width="14" height="10"><rect width="14" height="10" rx="2" fill="var(--ease)"/></svg>Moved toward tailwind</span>
+    </div>
+    <div class="chart" id="cA2"></div>
+    <p class="note">The effect on GDP growth in the year after the coming four quarters from the changes already in the index, if financial variables stay where they are. It shows how much of today's impulse is still to come once the next year has passed. It uses the same published weights, shifted one year: a change made <i>i</i> quarters ago gets the weight the index gives a change made <i>i</i> + 4 quarters ago.</p>
+  </section>
+
+  <section class="opt">
+    <header><h2 id="wfTitle2">What moved next year's impulse since the comparison date</h2></header>
+    <div class="chart" id="cD2"></div>
+    <p class="note">The same waterfall for the next‑year measure: from its total on the comparison date, through each component's contribution, to the latest total.</p>
+  </section>
   <section class="opt">
     <header><h2>Recent path: daily replication against the Fed's monthly releases</h2></header>
     <div class="legend" aria-hidden="true">
       <span><i class="k-dash"></i>Replicated, daily</span>
+      <span><i class="k-next"></i>Next year, if conditions hold</span>
       <span><svg width="14" height="14"><circle cx="7" cy="7" r="4" fill="var(--ink)"/></svg>Fed published, month‑end</span>
       <span><svg width="14" height="14"><line x1="7" y1="1" x2="7" y2="13" stroke="var(--ink3)" stroke-dasharray="2 2"/></svg>FOMC meeting</span>
     </div>
@@ -194,6 +214,7 @@ body{margin:0}
         <li><b>Stocks and house prices</b>: 100 × three‑month log change in the level.</li>
         <li><b>Dollar</b>: 100 × log change in the three‑month average.</li>
       </ul>
+      <p><b>Next year, if conditions hold.</b> The Fed's weights for a change made <i>i</i> quarters ago are β<sub><i>i</i>+4</sub> − β<sub><i>i</i></sub>, its effect on GDP growth over the next four quarters. Reading the same table four rows further down gives β<sub><i>i</i>+8</sub> − β<sub><i>i</i>+4</sub>, its effect in the four quarters after that. Applied to the changes already in the index (the last 12 quarters, or 4 with the one‑year lookback), this gives the growth impulse still to come a year from now if financial variables do not move. It is not a Fed series; it uses only the Fed's published weights.</p>
       <p><b>Sources.</b> FRED: effective fed funds (DFF), 10‑year Treasury (DGS10), Freddie Mac 30‑year mortgage rate (MORTGAGE30US), ICE BofA BBB effective yield (BAMLC0A4CBBBEY), Moody's Baa (DBAA), broad dollar (DTWEXBGS, TWEXB, TWEXBMTH), Case‑Shiller national (CSUSHPISA). Yahoo Finance: Dow Jones U.S. Total Stock Market Index (^DWCF), with the S&amp;P 500 before 1995 and FRED's SP500 for days not yet available. Zillow: ZHVI, United States, mid‑tier, smoothed and seasonally adjusted. Fed: published FCI‑G for validation.</p>
       <p><b>Where it differs from the Fed.</b></p>
       <ul>
@@ -232,7 +253,7 @@ const toT = s => s.length === 7 ? Date.UTC(+s.slice(0,4), +s.slice(5,7), 0) : Da
 
 let state = { lb: "3yr", since: null };
 try { const s = JSON.parse(localStorage.getItem("fcig-rep")||"{}"); if (s.lb) state.lb = s.lb; if (s.since) state.since = s.since; } catch(e) {}
-const off = () => state.lb === "3yr" ? 1 : 9;
+const off = (m) => (m === "next" ? 16 : 0) + (state.lb === "3yr" ? 1 : 9);
 const preRow = (rows, m) => { let r = null; for (const x of rows) if (x[0] < m) r = x; return r; };
 const onOrBefore = (rows, d) => { let r = rows[0]; for (const x of rows) if (x[0] <= d) r = x; return r; };
 function fomcDefault() {
@@ -260,12 +281,13 @@ function build() {
 }
 function save() { try { localStorage.setItem("fcig-rep", JSON.stringify(state)); } catch(e) {} }
 
-function items() {
-  const rows = R.daily, cur = rows[rows.length-1], pre = onOrBefore(rows, state.since), o = off();
+function items(m) {
+  const rows = R.daily, cur = rows[rows.length-1], pre = onOrBefore(rows, state.since), o = off(m);
   return { cur: cur[0], pre: pre[0], list: COMP.map(c => {
     const v = r => [].concat(c.i).reduce((s, k) => s + r[k + o], 0);
     const parts = c.parts && c.parts.map(([k, n]) => ({n, now: cur[k+o], before: pre[k+o], d: cur[k+o]-pre[k+o]}));
-    return {...c, now: v(cur), before: v(pre), d: v(cur)-v(pre), parts};
+    const lab = m === "next" && c.tot ? {s:"Next yr", l:["Next‑year","total"], n:"Next‑year total (if conditions hold)"} : {};
+    return {...c, ...lab, now: v(cur), before: v(pre), d: v(cur)-v(pre), parts};
   })};
 }
 /* ---------- helpers ---------- */
@@ -434,7 +456,8 @@ function drawLines(host, o) {
   if (o.mark != null && o.mark >= t0) {
     const mx = x(o.mark);
     el("line", {x1:mx, x2:mx, y1:m.t - 12, y2:H-m.b, stroke:"var(--accent)", "stroke-width":1.5}, s);
-    el("text", {x:mx + 4, y:m.t - 4, class:"ax", style:"fill:var(--accent)"}, s, "comparison date");
+    const right = mx > W - m.r - 110;
+    el("text", {x: right ? mx - 4 : mx + 4, y:m.t - 4, "text-anchor": right ? "end" : "start", class:"ax", style:"fill:var(--accent)"}, s, "comparison date");
   }
   for (const se of o.series) {
     if (se.style === "dots") {
@@ -490,7 +513,7 @@ function stats(k, since) {
   });
 }
 
-function tiles(M) {
+function tiles(M, N) {
   const o = off(), d = R.daily, last = d[d.length-1], fl = R.fed_m[R.fed_m.length-1];
   const rep = R.rep_m.find(r => r[0] === fl[0]);
   const st = stats(state.lb, "2024-01")[0];
@@ -498,6 +521,7 @@ function tiles(M) {
     ["Replicated, latest", lv(last[o]), `${fmtD(last[0])} · ${state.lb === "3yr" ? "3‑year" : "1‑year"} lookback`],
     ["Fed's latest release", lv(fl[o]), `${fmtD(fl[0])}; replicated ${lv(rep[o])}`],
     ["Change since comparison date", sg(M.list[0].d), `${fmtD(M.pre)} → ${fmtD(M.cur)}`],
+    ["Next year, if conditions hold", lv(N.list[0].now), `${sg(N.list[0].d)} since ${fmtD(M.pre)}`],
     ["Tracking error since 2024", st.rmse.toFixed(3), `RMSE over ${st.N} months · correlation ${st.corr.toFixed(3)}`]
   ];
   document.getElementById("tiles").innerHTML = T.map(([k,v,s]) => `<div class="tile"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${s}</span></div>`).join("");
@@ -517,16 +541,23 @@ function render() {
   const M = items(), o = off();
   document.getElementById("stamp").textContent = `${fmtD(M.pre)} → ${fmtD(M.cur)}`;
   document.getElementById("rbTitle").textContent = `Level and change since ${fmtD(M.pre)}`;
-  tiles(M);
+  const N = items("next");
+  tiles(M, N);
   drawA(document.getElementById("cA"), M);
   document.getElementById("wfTitle").textContent = `What moved the index since ${fmtD(M.pre)}`;
   drawD(document.getElementById("cD"), M);
+  document.getElementById("rbTitle2").textContent = `Next year, if conditions hold: level and change since ${fmtD(M.pre)}`;
+  document.getElementById("wfTitle2").textContent = `What moved next year's impulse since ${fmtD(M.pre)}`;
+  drawA(document.getElementById("cA2"), N);
+  drawD(document.getElementById("cD2"), N);
   const lastD = R.daily[R.daily.length-1][0], from = `${+lastD.slice(0,4) - 2}${lastD.slice(4)}`;
   const daily = R.daily.filter(r => r[0] >= from).map(r => [toT(r[0]), r[o]]);
+  const on = off("next"), nextD = R.daily.filter(r => r[0] >= from).map(r => [toT(r[0]), r[on]]);
   const fedM = R.fed_m.filter(r => r[0] >= from.slice(0,7)).map(r => [toT(r[0]), r[o]]);
   drawLines(document.getElementById("cR"), {H: 280, top: 26, label: "Daily replicated FCI-G with Fed month-end values",
     series: [{name:"Replicated (daily)", pts: daily, color:"var(--accent)", style:"dash", w:1.8, tol: 4*864e5},
-             {name:"Fed published", pts: fedM, color:"var(--ink)", style:"dots", tol: 4*864e5}],
+             {name:"Fed published", pts: fedM, color:"var(--ink)", style:"dots", tol: 4*864e5},
+             {name:"Next year, if conditions hold", pts: nextD, color:"var(--next)", w:1.6, tol: 4*864e5}],
     events: MTG.map(m => ({t: toT(m)})), mark: toT(M.pre), tipDate: tipDay,
     endLabel: {pts: daily, color:"var(--accent)", date: R.daily[R.daily.length-1][0]}});
   const fedH = R.fed_m.map(r => [toT(r[0]), r[o]]), repH = R.rep_m.map(r => [toT(r[0]), r[o]]);

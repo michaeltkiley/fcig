@@ -10,6 +10,16 @@ house prices, dollar), the level on a comparison date you choose (by default the
 a waterfall of what drove that change, the daily path against the Fed's monthly releases,
 and the full history since 1990 with replication errors.
 
+## Next year, if conditions hold
+
+Alongside the index, the page shows the growth impulse still to come a year from now from the
+changes already in the index, if financial variables stay where they are. The Fed's weight on a
+change made i quarters ago is beta(i+4) - beta(i), its effect on growth over the next four
+quarters; row i + 4 of the same table, beta(i+8) - beta(i+4), is its effect in the four quarters
+after that. Applying those rows to the same 12 (or 4) quarters of changes gives the next-year
+measure, with the same components, range bars and waterfall from a chosen date. It uses only the
+Fed's published weights but is not a Fed series.
+
 ## Method
 
 Ajello, Cavallo, Favara, Peterman, Schindler and Sinha (2023),
