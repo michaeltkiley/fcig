@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Conditions Impulse on Growth (FCI‑G) — Michael T. Kiley</title>
+<meta name="description" content="Daily replication of the Federal Reserve Board's Financial Conditions Impulse on Growth (FCI-G) from public data, with the level and change since the last FOMC meeting.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Michael T. Kiley">
+<meta property="og:title" content="Financial Conditions Impulse on Growth (FCI‑G)">
+<meta property="og:description" content="Daily replication of the Fed's FCI-G from public data: level, components, and change since the last FOMC meeting.">
+<meta property="og:url" content="https://michaeltkiley.github.io/fcig/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column; controls row on top; four stacked option cards, each a chart + a short note. Tokens match michaeltkiley.github.io. */
+:root{
+  --page:#eef1f4; --card:#ffffff; --rule:#dde3e8; --grid:#e8ecef;
+  --ink:#10151d; --ink2:#4b5568; --ink3:#7c8698; --accent:#1c5cab; --accent-lt:#e8edf4;
+  --ease:#2a78d6; --tight:#eb6834; --ease-soft:#cde2fb; --tight-soft:#fbd9c9;
+  --serif:"Newsreader",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#12161c; --card:#191f27; --rule:#2a323d; --grid:#222a34;
+  --ink:#f2f4f7; --ink2:#b7c0cc; --ink3:#8a95a6; --accent:#74aeef; --accent-lt:#1c2a3a;
+  --ease:#3987e5; --tight:#d95926; --ease-soft:#1d3554; --tight-soft:#4a2717; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --page:#12161c; --card:#191f27; --rule:#2a323d; --grid:#222a34;
+  --ink:#f2f4f7; --ink2:#b7c0cc; --ink3:#8a95a6; --accent:#74aeef; --accent-lt:#1c2a3a;
+  --ease:#3987e5; --tight:#d95926; --ease-soft:#1d3554; --tight-soft:#4a2717; color-scheme:dark}
+body{background:var(--page);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:28px 56px;display:flex;flex-direction:column;gap:22px}
+h1{font-family:var(--serif);font-weight:500;font-size:2rem;line-height:1.15;margin:0;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:500;font-size:1.35rem;margin:0;text-wrap:balance}
+.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.lede{color:var(--ink2);max-width:68ch;margin:6px 0 0}
+.controls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:end;padding:14px 16px;background:var(--card);border:1px solid var(--rule);border-radius:6px}
+.ctl{display:flex;flex-direction:column;gap:4px}
+.ctl label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+select{font:inherit;font-size:.9rem;padding:5px 8px;border:1px solid var(--rule);border-radius:4px;background:var(--card);color:var(--ink)}
+select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:flex;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.seg button{font:inherit;font-size:.85rem;padding:5px 12px;border:0;background:var(--card);color:var(--ink2);cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--accent-lt);color:var(--accent);font-weight:600}
+.stamp{font-family:var(--mono);font-size:.8rem;color:var(--ink2)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.82rem;color:var(--ink2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.opt{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.opt header{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.tag{font-family:var(--mono);font-size:.78rem;color:var(--accent);font-weight:500}
+.rec{font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);background:var(--accent-lt);padding:2px 8px;border-radius:999px}
+.note{color:var(--ink2);font-size:.88rem;max-width:72ch;margin:0}
+.note b{color:var(--ink);font-weight:600}
+.chart{width:100%;min-width:0}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--sans);fill:var(--ink2)}
+svg .num{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+svg .numm{font-family:var(--mono);font-size:10.5px;fill:var(--ink2)}
+svg .lab{font-size:11.5px;fill:var(--ink2)}
+svg .labt{font-size:11.5px;fill:var(--ink);font-weight:600}
+svg .ax{font-family:var(--mono);font-size:10px;fill:var(--ink3)}
+svg .ptitle{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;fill:var(--ink3);font-weight:600}
+.tip{position:fixed;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:5px;padding:8px 10px;font-size:.8rem;box-shadow:0 4px 14px rgba(0,0,0,.12);z-index:10;min-width:170px}
+.tip .t{font-weight:600;margin-bottom:4px}
+.tip .r{display:flex;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:.76rem;color:var(--ink2)}
+.tip .r b{color:var(--ink);font-weight:500}
+details{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 16px}
+summary{cursor:pointer;font-weight:500}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;font-size:.85rem;margin-top:10px;min-width:440px;width:100%}
+th,td{padding:5px 10px;border-bottom:1px solid var(--grid);text-align:right;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);font-weight:600}
+td{font-family:var(--mono);font-size:.8rem}
+td:first-child{font-family:var(--sans);font-size:.85rem}
+tr.tot td{font-weight:600}
+.foot{font-size:.8rem;color:var(--ink3);max-width:80ch}
+.foot a{color:var(--accent)}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0}
+/* ---- shared site nav (same on every page of the site) ---- */
+.site-nav{border-bottom:1px solid var(--rule);background:var(--card)}
+.site-nav-inner{max-width:1120px;margin:0 auto;padding:14px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.site-nav .wordmark{font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:17px;color:var(--ink);text-decoration:none}
+.site-nav nav{display:flex;gap:20px;flex-wrap:wrap}
+.site-nav nav a{font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:.02em;color:var(--ink2);text-decoration:none}
+.site-nav nav a:hover,.site-nav nav a.active{color:var(--accent)}
+.state{padding:40px 0;color:var(--ink2)}
+</style>
+</head>
+<body>
+<div class="site-nav">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="https://michaeltkiley.github.io/">Michael T. Kiley</a>
+    <nav>
+      <a href="https://michaeltkiley.github.io/index.html">Home</a>
+      <a href="https://michaeltkiley.github.io/cv.html">CV</a>
+      <a href="https://michaeltkiley.github.io/monetary_policy_surprises/">Monetary Policy Expectations</a>
+      <a href="https://michaeltkiley.github.io/inflation_forecast/">Inflation Forecast</a>
+      <a href="https://michaeltkiley.github.io/equilibrium_rate/">Equilibrium Real Interest Rate (r*)</a>
+      <a href="https://michaeltkiley.github.io/resource_utilization/">Resource Utilization and Risk</a>
+      <a href="https://michaeltkiley.github.io/termprem/">Yield Curve Tracker</a>
+      <a href="https://michaeltkiley.github.io/gdpnow-replication/">Real GDP</a>
+      <a href="https://michaeltkiley.github.io/fcig/" class="active">Financial Conditions</a>
+    </nav>
+  </div>
+</div>
+<style>
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px}
+.tile{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile .k{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.tile .v{font-family:var(--mono);font-size:1.45rem;font-weight:500;color:var(--ink)}
+.tile .s{font-size:.8rem;color:var(--ink2)}
+.prose{max-width:72ch;color:var(--ink2);font-size:.9rem;display:flex;flex-direction:column;gap:8px}
+.prose p{margin:0}
+.prose ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.prose b{color:var(--ink)}
+.prose code{font-family:var(--mono);font-size:.82rem}
+.k-line{display:inline-block;width:18px;height:0;border-top:2px solid var(--ink);vertical-align:middle}
+.k-dash{display:inline-block;width:18px;height:0;border-top:2px dashed var(--accent);vertical-align:middle}
+</style>
+<div class="wrap">
+  <div>
+    <div class="eyebrow">Financial Conditions Impulse on Growth · daily replication</div>
+    <h1>Replicating the Fed's FCI‑G from public data</h1>
+    <p class="lede">The Federal Reserve Board's FCI‑G measures how changes in interest rates, stock and house prices, and the dollar push on real GDP growth over the next year. The Fed publishes it monthly; this page rebuilds it every weekday from public data, using the Fed's published weights and formula, so it can be read daily and compared with the last FOMC meeting. Units are percentage points of real GDP growth over the next year. Positive values are a headwind; negative values are a tailwind.</p>
+  </div>
+
+  <div class="state" id="state">Loading data…</div>
+  <div class="tiles" id="tiles"></div>
+
+  <div class="controls">
+    <div class="ctl"><label for="mtg">Compare with level before</label><select id="mtg"></select></div>
+    <div class="ctl"><label id="lbk-l">Lookback</label><div class="seg" role="group" aria-labelledby="lbk-l"><button id="lb3" type="button" aria-pressed="true">3‑year (baseline)</button><button id="lb1" type="button" aria-pressed="false">1‑year</button></div></div>
+    <div class="ctl" style="min-width:0"><label>Dates compared</label><div class="stamp" id="stamp"></div></div>
+  </div>
+
+  <section class="opt">
+    <header><h2 id="rbTitle">Level and change since the FOMC</h2></header>
+    <div class="legend" aria-hidden="true">
+      <span><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="var(--ink)"/></svg>Current level (replicated)</span>
+      <span><svg width="14" height="14"><circle cx="7" cy="7" r="4.5" fill="var(--card)" stroke="var(--ink)" stroke-width="1.6"/></svg>Level the day before the meeting</span>
+      <span><svg width="14" height="10"><rect width="14" height="10" rx="2" fill="var(--tight)"/></svg>Moved toward headwind</span>
+      <span><svg width="14" height="10"><rect width="14" height="10" rx="2" fill="var(--ease)"/></svg>Moved toward tailwind</span>
+    </div>
+    <div class="chart" id="cA"></div>
+    <p class="note">Daily replicated index. "Before" is the last trading day before the meeting's first day. Long‑term rates combine the 10‑year Treasury, mortgage rate and BBB yield components; hover to see each.</p>
+  </section>
+
+
+  <section class="opt">
+    <header><h2 id="wfTitle">What moved the index since the FOMC</h2></header>
+    <div class="chart" id="cD"></div>
+    <p class="note">Starts at the total the day before the meeting, steps through each component's contribution to the change, and lands on the latest total. Totals are markers so the scale can zoom in on the steps.</p>
+  </section>
+  <section class="opt">
+    <header><h2>Recent path: daily replication against the Fed's monthly releases</h2></header>
+    <div class="legend" aria-hidden="true">
+      <span><i class="k-dash"></i>Replicated, daily</span>
+      <span><svg width="14" height="14"><circle cx="7" cy="7" r="4" fill="var(--ink)"/></svg>Fed published, month‑end</span>
+      <span><svg width="14" height="14"><line x1="7" y1="1" x2="7" y2="13" stroke="var(--ink3)" stroke-dasharray="2 2"/></svg>FOMC meeting</span>
+    </div>
+    <div class="chart" id="cR"></div>
+  </section>
+
+  <section class="opt">
+    <header><h2>Full history, 1990 to today</h2></header>
+    <div class="legend" aria-hidden="true">
+      <span><i class="k-line"></i>Fed published</span>
+      <span><i class="k-dash"></i>Replicated</span>
+    </div>
+    <div class="chart" id="cH"></div>
+    <div class="chart" id="cE"></div>
+    <p class="note">Bottom panel: replicated minus published. Errors are largest before 2000, when the house‑price, stock and BBB inputs are spliced from substitutes.</p>
+  </section>
+
+  <section class="opt">
+    <header><h2>Accuracy by component</h2></header>
+    <div class="tbl" id="acc"></div>
+    <p class="note">RMSE is root‑mean‑square error of the replicated minus published monthly values, in the index's units (percentage points of GDP growth). Correlation is between monthly levels.</p>
+  </section>
+
+  <section class="opt">
+    <header><h2>Method and data</h2></header>
+    <div class="prose">
+      <p>The index follows the Technical Appendix of Ajello, Cavallo, Favara, Peterman, Schindler and Sinha (2023), "A New Index to Measure U.S. Financial Conditions," FEDS Notes. For each variable, three‑month changes over the last 12 quarters (3‑year lookback) or 4 quarters (1‑year) are multiplied by the Fed's published weights (Table 1, from the FRB/US model and other Board models) and summed.</p>
+      <ul>
+        <li><b>Rates</b> (fed funds, 10‑year, mortgage, BBB): change in the three‑month average of daily values.</li>
+        <li><b>Stocks and house prices</b>: 100 × three‑month log change in the level.</li>
+        <li><b>Dollar</b>: 100 × log change in the three‑month average.</li>
+      </ul>
+      <p><b>Sources.</b> FRED: effective fed funds (DFF), 10‑year Treasury (DGS10), Freddie Mac 30‑year mortgage rate (MORTGAGE30US), ICE BofA BBB effective yield (BAMLC0A4CBBBEY), Moody's Baa (DBAA), broad dollar (DTWEXBGS, TWEXB, TWEXBMTH), Case‑Shiller national (CSUSHPISA). Yahoo Finance: Dow Jones U.S. Total Stock Market Index (^DWCF), with the S&amp;P 500 before 1995 and FRED's SP500 for days not yet available. Zillow: ZHVI, United States, mid‑tier, smoothed and seasonally adjusted. Fed: published FCI‑G for validation.</p>
+      <p><b>Where it differs from the Fed.</b></p>
+      <ul>
+        <li><b>BBB yield before Oct 2023</b>: FRED carries only a rolling three years of ICE data, so this page stores the ICE history it has collected and uses changes in Moody's Baa for earlier dates. This matters for history, not for the latest values: the 1‑year BBB component matches to within 0.003.</li>
+        <li><b>Mortgage rate</b>: the weekly Freddie Mac survey tracks the Fed's series closely but not exactly (error up to about 0.05), so the Fed likely uses a different or daily mortgage rate.</li>
+        <li><b>Stocks</b>: at a few month‑ends the Fed's index appears to use the previous day's close, for example Feb 27 instead of Feb 28, 2025. This explains most of the remaining stock error.</li>
+        <li><b>Pre‑1995 stocks and pre‑2000 house prices</b> are spliced from the S&amp;P 500 and Case‑Shiller.</li>
+        <li><b>Latest days</b>: Zillow publishes monthly, so its latest level is carried forward until the next release. When the Dow Jones Total Market index is not yet available, S&amp;P 500 changes fill in and are replaced when it arrives. The footer lists the latest date for each input.</li>
+      </ul>
+    </div>
+  </section>
+
+  <p class="foot" id="foot"></p>
+  <p class="foot">Code and data: <a href="https://github.com/michaeltkiley/fcig">github.com/michaeltkiley/fcig</a>. Updated Monday through Saturday after the U.S. market close. This replication is not an official Federal Reserve product.</p>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script>
+let R = null;
+const COMP = [
+  {i:0,s:"FCI‑G",l:["FCI‑G","total"],n:"FCI‑G total",tot:true},
+  {i:1,s:"Fed funds",l:["Fed funds","rate"],n:"Federal funds rate"},
+  {i:[2,3,4],s:"Long rates",l:["Long‑term","rates"],n:"Long‑term rates",parts:[[2,"10‑yr Treasury"],[3,"Mortgage rate"],[4,"BBB yield"]]},
+  {i:5,s:"Stocks",l:["Stock","market"],n:"Stock market"},
+  {i:6,s:"Houses",l:["House","prices"],n:"House prices"},
+  {i:7,s:"Dollar",l:["Dollar",""],n:"Dollar"}
+];
+const NAMES = ["FCI‑G total","Fed funds rate","10‑yr Treasury","Mortgage rate","BBB yield","Stock market","House prices","Dollar"];
+let MTG = [];
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const NS = "http://www.w3.org/2000/svg";
+const fmtD = s => { const [y,m,d] = s.split("-"); return d ? `${MON[+m-1]} ${+d}, ${y}` : `${MON[+m-1]} ${y}`; };
+const fmtM = s => { const [y,m,d] = s.split("-"); return `${MON[+m-1]} ${+d}–${+d+1}, ${y}`; };
+const sg = (v,p=2) => { const a = Math.abs(v).toFixed(p); return (+a === 0 ? "" : v > 0 ? "+" : "−") + a; };
+const lv = (v,p=2) => { const a = Math.abs(v).toFixed(p); return (+a !== 0 && v < 0 ? "−" : "") + a; };
+const toT = s => s.length === 7 ? Date.UTC(+s.slice(0,4), +s.slice(5,7), 0) : Date.UTC(+s.slice(0,4), +s.slice(5,7)-1, +s.slice(8,10));
+
+let state = { lb: "3yr", mtg: null };
+try { const s = JSON.parse(localStorage.getItem("fcig-rep")||"{}"); if (s.lb) state.lb = s.lb; if (s.mtg) state.mtg = s.mtg; } catch(e) {}
+const off = () => state.lb === "3yr" ? 1 : 9;
+const preRow = (rows, m) => { let r = null; for (const x of rows) if (x[0] < m) r = x; return r; };
+
+function build() {
+  const sel = document.getElementById("mtg"), rows = R.daily, last = rows[rows.length-1][0];
+  let def = null; sel.innerHTML = "";
+  for (const m of [...MTG].reverse()) {
+    if (m > last) continue;
+    const p = preRow(rows, m); if (!p) continue;
+    const o = document.createElement("option"); o.value = m; o.textContent = `${fmtM(m)} FOMC`;
+    sel.appendChild(o); if (!def) def = m;
+  }
+  if (!state.mtg || ![...sel.options].some(o => o.value === state.mtg)) state.mtg = def;
+  sel.value = state.mtg;
+  sel.onchange = () => { state.mtg = sel.value; save(); render(); };
+  for (const [id,k] of [["lb3","3yr"],["lb1","1yr"]]) document.getElementById(id).onclick = () => { state.lb = k; save(); render(); };
+}
+function save() { try { localStorage.setItem("fcig-rep", JSON.stringify(state)); } catch(e) {} }
+
+function items() {
+  const rows = R.daily, cur = rows[rows.length-1], pre = preRow(rows, state.mtg), o = off();
+  return { cur: cur[0], pre: pre[0], list: COMP.map(c => {
+    const v = r => [].concat(c.i).reduce((s, k) => s + r[k + o], 0);
+    const parts = c.parts && c.parts.map(([k, n]) => ({n, now: cur[k+o], before: pre[k+o], d: cur[k+o]-pre[k+o]}));
+    return {...c, now: v(cur), before: v(pre), d: v(cur)-v(pre), parts};
+  })};
+}
+/* ---------- helpers ---------- */
+function el(tag, attrs, parent, text) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function svgIn(host, w, h, label) {
+  host.innerHTML = "";
+  const s = el("svg", {viewBox:`0 0 ${w} ${h}`, role:"img", "aria-label":label});
+  host.appendChild(s); return s;
+}
+function niceDomain(vals, pad=0.06) {
+  let lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+  const span = (hi - lo) || 0.1;
+  const raw = span / 6, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1,2,5,10].map(f => f*mag).find(s => s >= raw);
+  lo = Math.floor((lo - span*pad) / step) * step; hi = Math.ceil((hi + span*pad) / step) * step;
+  if (Math.min(...vals) >= 0) lo = Math.max(lo, 0) === 0 ? Math.min(0, lo) : lo;
+  const ticks = []; for (let t = lo; t <= hi + step/2; t += step) ticks.push(+t.toFixed(6));
+  return { lo, hi, ticks, step };
+}
+function niceRange(lo, hi) {
+  const span = (hi - lo) || 0.1, raw = span / 5, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1,2,5,10].map(f => f*mag).find(s => s >= raw);
+  lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+  const ticks = []; for (let t = lo; t <= hi + step/2; t += step) ticks.push(+t.toFixed(6));
+  return { lo, hi, ticks, step };
+}
+const cmp = (s, on) => on ? s.replace("0.", ".") : s;
+const lin = (d0,d1,r0,r1) => v => r0 + (v-d0)/(d1-d0)*(r1-r0);
+const col = v => v > 0 ? "var(--tight)" : "var(--ease)";
+function tickFmt(t, step) { const p = Math.max(0, -Math.floor(Math.log10(step) + 1e-9)); return Math.abs(t) < 1e-9 ? "0" : lv(t, p); }
+
+const tip = document.getElementById("tip");
+function hover(node, it, meta) {
+  const show = e => {
+    tip.innerHTML = `<div class="t">${it.n}</div>
+      <div class="r"><span>Now (${fmtD(meta.cur)})</span><b>${lv(it.now)}</b></div>
+      <div class="r"><span>Before (${fmtD(meta.pre)})</span><b>${lv(it.before)}</b></div>
+      <div class="r"><span>Change</span><b>${sg(it.d)}</b></div>` +
+      (it.parts ? `<div class="r" style="margin-top:6px"><span>Of which</span><span>now · Δ</span></div>` +
+        it.parts.map(q => `<div class="r"><span>${q.n}</span><b>${lv(q.now)} · ${sg(q.d)}</b></div>`).join("") : "");
+    tip.hidden = false; move(e);
+  };
+  const move = e => {
+    const x = e.clientX ?? (e.touches && e.touches[0].clientX), y = e.clientY ?? (e.touches && e.touches[0].clientY);
+    const w = tip.offsetWidth, h = tip.offsetHeight;
+    tip.style.left = Math.min(window.innerWidth - w - 8, Math.max(8, x + 14)) + "px";
+    tip.style.top = Math.max(8, (y - h - 12 < 8 ? y + 18 : y - h - 12)) + "px";
+  };
+  node.addEventListener("pointerenter", show);
+  node.addEventListener("pointermove", move);
+  node.addEventListener("pointerleave", () => tip.hidden = true);
+  node.style.cursor = "default";
+}
+function catLabel(g, x, y, it, wide, narrow) {
+  if (narrow) { el("text", {x:x+4, y:y-6, "text-anchor":"end", transform:`rotate(-40 ${x+4} ${y-6})`, class: it.tot ? "labt" : "lab"}, g, it.s); return; }
+  const t = el("text", {x, y, "text-anchor":"middle", class: it.tot ? "labt" : "lab"}, g);
+  if (wide) { el("tspan", {x, dy:0}, t, it.l[0]); if (it.l[1]) el("tspan", {x, dy:"1.2em"}, t, it.l[1]); }
+  else t.textContent = it.s;
+}
+function gridY(s, dom, y, x0, x1) {
+  for (const t of dom.ticks) {
+    el("line", {x1:x0, x2:x1, y1:y(t), y2:y(t), stroke: Math.abs(t)<1e-9 ? "var(--ink3)" : "var(--grid)", "stroke-width": Math.abs(t)<1e-9 ? 1 : 1}, s);
+    el("text", {x:x0-6, y:y(t)+3.5, "text-anchor":"end", class:"ax"}, s, tickFmt(t, dom.step));
+  }
+}
+function ring(g, cx, cy) { el("circle", {cx, cy, r:4.5, fill:"var(--card)", stroke:"var(--ink)", "stroke-width":1.6}, g); }
+function dot(g, cx, cy) { el("circle", {cx, cy, r:5, fill:"var(--ink)", stroke:"var(--card)", "stroke-width":2}, g); }
+
+/* ---------- A: range bars ---------- */
+function drawA(host, M) {
+  const W = Math.max(320, host.clientWidth), L = M.list;
+  const m = {l:40, r:8, t:22, b:66}, H = 330;
+  const s = svgIn(host, W, H, "Range bars from pre-meeting level to current level for FCI-G and components");
+  const dom = niceDomain(L.flatMap(d => [d.now, d.before]));
+  const y = lin(dom.lo, dom.hi, H - m.b, m.t);
+  gridY(s, dom, y, m.l, W - m.r);
+  const gapTot = 14, slot = (W - m.l - m.r - gapTot) / L.length, bw = Math.min(30, slot * 0.46), wide = slot >= 74, narrow = slot < 56;
+  L.forEach((it, i) => {
+    const cx = m.l + slot * (i + .5) + (i ? gapTot : 0), g = el("g", {}, s);
+    const y0 = y(it.before), y1 = y(it.now), top = Math.min(y0,y1), h = Math.max(2, Math.abs(y1-y0));
+    el("rect", {x:cx-bw/2, y: h===2 ? (y0+y1)/2-1 : top, width:bw, height:h, rx:3, fill: Math.abs(it.d)<0.005 ? "var(--ink3)" : col(it.d), opacity: it.tot ? 1 : .9}, g);
+    ring(g, cx, y0); dot(g, cx, y1);
+    const up = it.now >= it.before;
+    el("text", {x:cx, y: up ? y1-10 : y1+17, "text-anchor":"middle", class:"num", "font-size": narrow ? 10 : null}, g, cmp(lv(it.now), narrow));
+    catLabel(g, cx, H - m.b + 18, it, wide, narrow);
+    el("text", {x:cx, y:H - 10, "text-anchor":"middle", class:"numm", "font-size": narrow ? 9.5 : null}, g, narrow ? cmp(sg(it.d), 1) : "Δ " + sg(it.d));
+    el("rect", {x:cx-slot/2, y:m.t-10, width:slot, height:H-m.t, fill:"transparent"}, g);
+    hover(g, it, M);
+  });
+  el("line", {x1:m.l+slot+gapTot/2, x2:m.l+slot+gapTot/2, y1:m.t-8, y2:H-m.b+4, stroke:"var(--rule)", "stroke-dasharray":"3 3"}, s);
+  el("text", {x:m.l-6, y:H-10, "text-anchor":"end", class:"ax"}, s, "Δ");
+}
+
+/* ---------- D: waterfall ---------- */
+function drawD(host, M) {
+  const W = Math.max(320, host.clientWidth), tot = M.list[0], comps = M.list.slice(1);
+  const m = {l:40, r:8, t:22, b:52}, H = 320;
+  const s = svgIn(host, W, H, "Waterfall from pre-meeting FCI-G total to current total");
+  let run = tot.before; const steps = comps.map(c => { const a = run; run += c.d; return {...c, a, b:run}; });
+  const cols = [{kind:"tot", it:tot, a:0, b:tot.before, lab:["Before", fmtS(M.pre)], v:lv(tot.before)}]
+    .concat(steps.map(c => ({kind:"d", it:c, a:c.a, b:c.b, lab:c.l, v:sg(c.d)})))
+    .concat([{kind:"tot", it:tot, a:0, b:tot.now, lab:["Now", fmtS(M.cur)], v:lv(tot.now)}]);
+  const vals = cols.flatMap(c => c.kind === "tot" ? [c.b] : [c.a, c.b]);
+  let lo = Math.min(...vals), hi = Math.max(...vals), sp = (hi - lo) || 0.1;
+  const dom = niceRange(lo - sp*.2, hi + sp*.2);
+  const y = lin(dom.lo, dom.hi, H - m.b, m.t);
+  gridY(s, dom, y, m.l, W - m.r);
+  const slot = (W - m.l - m.r) / cols.length, bw = Math.min(38, slot * .62), wide = slot >= 64, narrow = slot < 52;
+  cols.forEach((c, i) => {
+    const cx = m.l + slot*(i+.5), g = el("g", {}, s);
+    const ya = y(c.a), yb = y(c.b), h = Math.max(2, Math.abs(yb-ya));
+    if (c.kind === "tot") { el("line", {x1:cx-bw/2, x2:cx+bw/2, y1:yb, y2:yb, stroke:"var(--ink)", "stroke-width":2}, g); (i ? dot : ring)(g, cx, yb); }
+    else el("rect", {x:cx-bw/2, y:Math.min(ya,yb) - (h===2?1:0), width:bw, height:h, rx:3, fill: Math.abs(c.b-c.a) < 0.005 ? "var(--ink3)" : col(c.b-c.a)}, g);
+    if (i < cols.length-1) el("line", {x1:cx+bw/2, x2:cx+slot-bw/2, y1:yb, y2:yb, stroke:"var(--ink3)", "stroke-dasharray":"2 2"}, s);
+    const below = c.kind==="tot" ? false : c.b < c.a;
+    el("text", {x:cx, y: c.kind==="tot" ? yb-11 : below ? Math.max(ya,yb)+15 : Math.min(ya,yb)-7, "text-anchor":"middle", class: c.kind==="tot" ? "num" : "numm", "font-size": narrow && c.kind!=="tot" ? 9.5 : null}, g, cmp(c.v, narrow && c.kind!=="tot"));
+    const t = el("text", {x:cx, y:H - m.b + 18, "text-anchor":"middle", class: c.kind==="tot" ? "labt" : "lab"}, g);
+    if (narrow && c.kind !== "tot") { t.remove(); catLabel(g, cx, H - m.b + 18, c.it, false, true); }
+    else if (c.kind === "tot" || wide) { el("tspan", {x:cx, dy:0}, t, c.lab[0]); if (c.lab[1] && !narrow) el("tspan", {x:cx, dy:"1.2em"}, t, c.lab[1]); }
+    else t.textContent = c.it.s;
+    el("rect", {x:cx-slot/2, y:m.t-10, width:slot, height:H-m.t, fill:"transparent"}, g);
+    hover(g, c.it, M);
+  });
+}
+
+
+/* ---------- line charts ---------- */
+function drawLines(host, o) {
+  const W = Math.max(320, host.clientWidth), H = o.H || 300, narrow = W < 560;
+  const m = {l:44, r:12, t:o.top ?? 14, b:28};
+  const s = svgIn(host, W, H, o.label);
+  const all = o.series.flatMap(se => se.pts);
+  const t0 = o.t0 ?? Math.min(...all.map(p => p[0])), t1 = o.t1 ?? Math.max(...all.map(p => p[0]));
+  const dom = o.dom || niceDomain(all.map(p => p[1]), .05);
+  const x = lin(t0, t1, m.l, W - m.r), y = lin(dom.lo, dom.hi, H - m.b, m.t);
+  gridY(s, dom, y, m.l, W - m.r);
+  // x ticks
+  const d0 = new Date(t0), d1 = new Date(t1);
+  if (o.xYears) {
+    const span = d1.getUTCFullYear() - d0.getUTCFullYear(), step = [1,2,5,10].find(k => span / k <= (narrow ? 5 : 9));
+    for (let yr = Math.ceil(d0.getUTCFullYear()/step)*step; yr <= d1.getUTCFullYear(); yr += step) {
+      const tx = x(Date.UTC(yr,0,1)); if (tx < m.l) continue;
+      el("line", {x1:tx, x2:tx, y1:H-m.b, y2:H-m.b+4, stroke:"var(--ink3)"}, s);
+      el("text", {x:tx, y:H-m.b+16, "text-anchor":"middle", class:"ax"}, s, yr);
+    }
+  } else {
+    const step = narrow ? 6 : 3;
+    for (let y0 = d0.getUTCFullYear(), mo = d0.getUTCMonth()+1; Date.UTC(y0, mo, 1) <= t1; mo++) {
+      if (mo > 11) { mo = 0; y0++; }
+      if (mo % step) continue;
+      const t = Date.UTC(y0, mo, 1), tx = x(t);
+      el("line", {x1:tx, x2:tx, y1:H-m.b, y2:H-m.b+4, stroke:"var(--ink3)"}, s);
+      el("text", {x:tx, y:H-m.b+16, "text-anchor":"middle", class:"ax"}, s, mo === 0 ? `${y0}` : MON[mo]);
+    }
+  }
+  for (const e of (o.events || [])) {
+    const ex = x(e.t); if (ex < m.l || ex > W - m.r) continue;
+    el("line", {x1:ex, x2:ex, y1:m.t, y2:H-m.b, stroke:"var(--ink3)", "stroke-dasharray":"2 3", opacity:.7}, s);
+  }
+  for (const se of o.series) {
+    if (se.style === "dots") {
+      for (const p of se.pts) el("circle", {cx:x(p[0]), cy:y(p[1]), r:se.r || 3.5, fill:se.color, stroke:"var(--card)", "stroke-width":1.5}, s);
+    } else if (se.style === "area") {
+      const d = se.pts.map((p,i) => `${i?"L":"M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("");
+      el("path", {d: d + `L${x(se.pts[se.pts.length-1][0]).toFixed(1)},${y(0)}L${x(se.pts[0][0]).toFixed(1)},${y(0)}Z`, fill:se.color, opacity:.35}, s);
+      el("path", {d, fill:"none", stroke:se.color, "stroke-width":1.25}, s);
+    } else {
+      const d = se.pts.map((p,i) => `${i?"L":"M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("");
+      el("path", {d, fill:"none", stroke:se.color, "stroke-width":se.w || 2, "stroke-dasharray": se.style === "dash" ? "5 3" : null, "stroke-linejoin":"round"}, s);
+    }
+  }
+  if (o.endLabel) {
+    const p = o.endLabel.pts[o.endLabel.pts.length-1];
+    el("circle", {cx:x(p[0]), cy:y(p[1]), r:4.5, fill:o.endLabel.color, stroke:"var(--card)", "stroke-width":2}, s);
+    el("text", {x:x(p[0])-8, y:y(p[1])-9, "text-anchor":"end", class:"num"}, s, `${lv(p[1])} · ${fmtD(o.endLabel.date)}`);
+  }
+  // crosshair
+  const cross = el("line", {y1:m.t, y2:H-m.b, stroke:"var(--ink2)", "stroke-width":1, visibility:"hidden"}, s);
+  const hit = el("rect", {x:m.l, y:m.t, width:W-m.l-m.r, height:H-m.t-m.b, fill:"transparent"}, s);
+  const ref = o.series[0].pts;
+  const near = (pts, t) => { let b = null, bd = Infinity; for (const p of pts) { const d = Math.abs(p[0]-t); if (d < bd) { bd = d; b = p; } } return [b, bd]; };
+  hit.addEventListener("pointermove", e => {
+    const r = s.getBoundingClientRect(), t = t0 + ((e.clientX - r.left) * (W / r.width) - m.l) / (W - m.l - m.r) * (t1 - t0);
+    const [p] = near(ref, t); if (!p) return;
+    cross.setAttribute("x1", x(p[0])); cross.setAttribute("x2", x(p[0])); cross.setAttribute("visibility", "visible");
+    let h = `<div class="t">${o.tipDate(p[0])}</div>`;
+    for (const se of o.series) {
+      const [q, dd] = near(se.pts, p[0]);
+      if (q && dd <= (se.tol ?? 4e9)) h += `<div class="r"><span>${se.name}</span><b>${lv(q[1], o.tipDp || 2)}</b></div>`;
+    }
+    tip.innerHTML = h; tip.hidden = false;
+    const w = tip.offsetWidth, hh = tip.offsetHeight;
+    tip.style.left = Math.min(innerWidth - w - 8, Math.max(8, e.clientX + 14)) + "px";
+    tip.style.top = Math.max(8, e.clientY - hh - 12) + "px";
+  });
+  hit.addEventListener("pointerleave", () => { tip.hidden = true; cross.setAttribute("visibility", "hidden"); });
+}
+const tipDay = t => { const d = new Date(t); return `${MON[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
+const tipMon = t => { const d = new Date(t); return `${MON[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
+
+/* ---------- stats ---------- */
+function stats(k, since) {
+  const o = k === "3yr" ? 1 : 9, fed = new Map(R.fed_m.map(r => [r[0], r]));
+  const pairs = R.rep_m.filter(r => r[0] >= since && fed.has(r[0])).map(r => [r, fed.get(r[0])]);
+  return NAMES.map((n, c) => {
+    const a = pairs.map(p => p[0][c+o]), b = pairs.map(p => p[1][c+o]), N = a.length;
+    const ma = a.reduce((s,v)=>s+v,0)/N, mb = b.reduce((s,v)=>s+v,0)/N;
+    let sab=0, saa=0, sbb=0, se=0, mx=0;
+    for (let i=0;i<N;i++){ const da=a[i]-ma, db=b[i]-mb; sab+=da*db; saa+=da*da; sbb+=db*db; const e=a[i]-b[i]; se+=e*e; mx=Math.max(mx,Math.abs(e)); }
+    return {n, corr: sab/Math.sqrt(saa*sbb), rmse: Math.sqrt(se/N), max: mx, N, last: pairs[pairs.length-1][0][0]};
+  });
+}
+
+function tiles(M) {
+  const o = off(), d = R.daily, last = d[d.length-1], fl = R.fed_m[R.fed_m.length-1];
+  const rep = R.rep_m.find(r => r[0] === fl[0]);
+  const st = stats(state.lb, "2024-01")[0];
+  const T = [
+    ["Replicated, latest", lv(last[o]), `${fmtD(last[0])} · ${state.lb === "3yr" ? "3‑year" : "1‑year"} lookback`],
+    ["Fed's latest release", lv(fl[o]), `${fmtD(fl[0])}; replicated ${lv(rep[o])}`],
+    ["Change since FOMC", sg(M.list[0].d), `${fmtD(M.pre)} → ${fmtD(M.cur)}`],
+    ["Tracking error since 2024", st.rmse.toFixed(3), `RMSE over ${st.N} months · correlation ${st.corr.toFixed(3)}`]
+  ];
+  document.getElementById("tiles").innerHTML = T.map(([k,v,s]) => `<div class="tile"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${s}</span></div>`).join("");
+}
+
+function accTable() {
+  const g = [["3yr","1990-01"],["3yr","2024-01"],["1yr","1990-01"],["1yr","2024-01"]].map(([k,s]) => stats(k,s));
+  const hd = `<tr><th rowspan="2">Series</th><th colspan="2">3‑yr, 1990–</th><th colspan="2">3‑yr, 2024–</th><th colspan="2">1‑yr, 1990–</th><th colspan="2">1‑yr, 2024–</th></tr>
+    <tr>${"<th>RMSE</th><th>Corr.</th>".repeat(4)}</tr>`;
+  const rows = NAMES.map((n, i) => `<tr class="${i?"":"tot"}"><td>${n}</td>${g.map(G => `<td>${G[i].rmse.toFixed(3)}</td><td>${G[i].corr.toFixed(3)}</td>`).join("")}</tr>`).join("");
+  document.getElementById("acc").innerHTML = `<table><thead>${hd}</thead><tbody>${rows}</tbody></table>`;
+}
+
+function render() {
+  document.getElementById("lb3").setAttribute("aria-pressed", state.lb === "3yr");
+  document.getElementById("lb1").setAttribute("aria-pressed", state.lb === "1yr");
+  const M = items(), o = off();
+  document.getElementById("stamp").textContent = `Now ${fmtD(M.cur)} · before ${fmtD(M.pre)}`;
+  document.getElementById("rbTitle").textContent = `Level and change since the ${fmtM(state.mtg)} FOMC`;
+  tiles(M);
+  drawA(document.getElementById("cA"), M);
+  document.getElementById("wfTitle").textContent = `What moved the index since the ${fmtM(state.mtg)} FOMC`;
+  drawD(document.getElementById("cD"), M);
+  const daily = R.daily.map(r => [toT(r[0]), r[o]]);
+  const fedM = R.fed_m.filter(r => r[0] >= "2024-12").map(r => [toT(r[0]), r[o]]);
+  drawLines(document.getElementById("cR"), {H: 280, top: 26, label: "Daily replicated FCI-G with Fed month-end values",
+    series: [{name:"Replicated (daily)", pts: daily, color:"var(--accent)", style:"dash", w:1.8, tol: 4*864e5},
+             {name:"Fed published", pts: fedM, color:"var(--ink)", style:"dots", tol: 4*864e5}],
+    events: MTG.map(m => ({t: toT(m)})), tipDate: tipDay,
+    endLabel: {pts: daily, color:"var(--accent)", date: R.daily[R.daily.length-1][0]}});
+  const fedH = R.fed_m.map(r => [toT(r[0]), r[o]]), repH = R.rep_m.map(r => [toT(r[0]), r[o]]);
+  drawLines(document.getElementById("cH"), {H: 300, label: "Published and replicated FCI-G, 1990 to present", xYears: true,
+    series: [{name:"Fed published", pts: fedH, color:"var(--ink)", w:1.6, tol: 20*864e5},
+             {name:"Replicated", pts: repH, color:"var(--accent)", style:"dash", w:1.6, tol: 20*864e5}], tipDate: tipMon});
+  const fm = new Map(R.fed_m.map(r => [r[0], r[o]]));
+  const err = R.rep_m.filter(r => fm.has(r[0])).map(r => [toT(r[0]), r[o] - fm.get(r[0])]);
+  drawLines(document.getElementById("cE"), {H: 120, label: "Replication error", xYears: true, t0: fedH[0][0], t1: repH[repH.length-1][0],
+    dom: {lo:-0.3, hi:0.3, ticks:[-0.3,0,0.3], step:0.1}, tipDp: 3,
+    series: [{name:"Replicated − published", pts: err, color:"var(--accent)", style:"area", tol: 20*864e5}], tipDate: tipMon});
+  accTable();
+  const A = R.asof, g = new Date(R.generated);
+  document.getElementById("foot").textContent = `Latest inputs: stocks ${fmtD(A["Stock Market"])}` +
+    (R.stock_proxy_from ? ` (S&P 500 changes from ${fmtD(R.stock_proxy_from)})` : "") +
+    `, fed funds ${fmtD(A["FFR"])}, 10‑year ${fmtD(A["10Yr Treasury"])}, mortgage ${fmtD(A["Mortgage Rate"])}, BBB ${fmtD(A["BBB"])}, dollar ${fmtD(A["Dollar"])}, house prices ${fmtD(A["House Prices"])}. ` +
+    `Fed FCI‑G published through ${fmtD(R.fed_m[R.fed_m.length-1][0])}. Updated ${g.toUTCString().replace(/:\d\d GMT/, " UTC")}.`;
+}
+const fmtS = s => { const [y,m,d] = s.split("-"); return `${MON[+m-1]} ${+d}`; };
+fetch("data.json", {cache: "no-cache"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
+  R = j; MTG = j.meetings;
+  document.getElementById("state").hidden = true;
+  build(); render();
+  let rz; new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(render, 80); }).observe(document.querySelector(".wrap"));
+}).catch(e => { document.getElementById("state").textContent = "The data file could not be loaded (" + e.message + "). Try reloading the page."; });
+</script>
+</body>
+</html>
