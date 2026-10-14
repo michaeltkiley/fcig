@@ -57,8 +57,9 @@ UA = "fcig-replication/1.0 (+https://michaeltkiley.github.io/fcig/)"  # FRED rej
 UA_YAHOO = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 
 # Weights signed so that tightening raises the index; rows are quarters back 0..11.
-W = -pd.read_csv(os.path.join(HERE, "multipliers.csv")).values[:12]
-W[:, 4:6] *= -1  # the Fed's code enters stock and house-price changes with the opposite sign
+W_ALL = -pd.read_csv(os.path.join(HERE, "multipliers.csv")).values  # 20 rows: beta_{i+4} - beta_i
+W_ALL[:, 4:6] *= -1  # the Fed's code enters stock and house-price changes with the opposite sign
+W = W_ALL[:12]
 
 
 # ---------------------------------------------------------------- download
@@ -237,11 +238,17 @@ def changes_at(S, d):
 
 
 def fci_at(S, d):
+    """FCI-G (effect on growth over the next four quarters) and the "next year" measure: the effect
+    of the same past changes on growth in the following four quarters, if financial variables hold
+    where they are. Row i of the weights is beta_{i+4} - beta_i, so the next-year weight on a change
+    made i quarters ago is row i + 4 (beta_{i+8} - beta_{i+4})."""
     D = changes_at(S, d)
     r = {}
     for T, k in ((12, "3yr"), (4, "1yr")):
         comp = (D[:T] * W[:T]).sum(axis=0)
+        nxt = (D[:T] * W_ALL[4:T + 4]).sum(axis=0)
         r[k] = [comp.sum()] + list(comp)
+        r[k + "_next"] = [nxt.sum()] + list(nxt)
     return r
 
 
@@ -296,6 +303,7 @@ def main():
     S, proxy_from = series()
     names = ["FCI-G"] + COLS
     keys = [f"{k}|{c}" for k in ("3yr", "1yr") for c in names]
+    dkeys = keys + [f"{k}|next year|{c}" for k in ("3yr", "1yr") for c in names]
 
     # monthly, 1990 to the latest complete or current month
     last_day = S["Stock Market"][1].index[-1]
@@ -318,8 +326,8 @@ def main():
     drows = []
     for d in days:
         r = fci_at(S, d)
-        drows.append([d.strftime("%Y-%m-%d")] + r["3yr"] + r["1yr"])
-    pd.DataFrame(drows, columns=["date"] + keys).to_csv(os.path.join(HERE, "fcig_replication_daily.csv"),
+        drows.append([d.strftime("%Y-%m-%d")] + r["3yr"] + r["1yr"] + r["3yr_next"] + r["1yr_next"])
+    pd.DataFrame(drows, columns=["date"] + dkeys).to_csv(os.path.join(HERE, "fcig_replication_daily.csv"),
                                                          index=False, float_format="%.5f")
 
     fed_rows = []
