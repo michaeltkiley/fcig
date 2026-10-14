@@ -527,7 +527,7 @@ function render() {
   document.getElementById("foot").textContent = `Latest inputs: stocks ${fmtD(A["Stock Market"])}` +
     (R.stock_proxy_from ? ` (S&P 500 changes from ${fmtD(R.stock_proxy_from)})` : "") +
     `, fed funds ${fmtD(A["FFR"])}, 10‑year ${fmtD(A["10Yr Treasury"])}, mortgage ${fmtD(A["Mortgage Rate"])}, BBB ${fmtD(A["BBB"])}, dollar ${fmtD(A["Dollar"])}, house prices ${fmtD(A["House Prices"])}. ` +
-    `Fed FCI‑G published through ${fmtD(R.fed_m[R.fed_m.length-1][0])}. Updated ${g.toUTCString().replace(/:\d\d GMT/, " UTC")}.`;
+    `Fed FCI‑G published through ${fmtD(R.fed_m[R.fed_m.length-1][0])}. Last updated ${g.toUTCString().replace(/:\d\d GMT/, " UTC")}.`;
 }
 const fmtS = s => { const [y,m,d] = s.split("-"); return `${MON[+m-1]} ${+d}`; };
 fetch("data.json", {cache: "no-cache"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
