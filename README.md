@@ -27,7 +27,7 @@ over the next year; positive values are a headwind.
 | 10-year Treasury | FRED `DGS10` |
 | 30-year mortgage rate | FRED `MORTGAGE30US` (Freddie Mac PMMS) |
 | BBB yield | FRED `BAMLC0A4CBBBEY` (ICE BofA), stored in `history/bbb_ice.csv` because FRED keeps only three years; Moody's Baa (`DBAA`) before Oct 2023 |
-| Stock market | Dow Jones U.S. Total Stock Market Index (Yahoo `^DWCF`), stored in `history/dwcf.csv`; S&P 500 before 1995; FRED `SP500` changes for days Yahoo has not yet supplied |
+| Stock market | Dow Jones U.S. Total Stock Market Index (Yahoo `^DWCF`), stored in `history/dwcf.csv` and extended from Yahoo's data API or, when that is rate-limited, the closing price on Yahoo's quote page; S&P 500 before 1995; FRED `SP500` changes for any day still missing |
 | House prices | Zillow ZHVI, United States, mid-tier, smoothed, seasonally adjusted; Case-Shiller (`CSUSHPISA`) before 2000 |
 | Dollar | FRED `DTWEXBGS`, earlier `TWEXB` and `TWEXBMTH` |
 
@@ -44,7 +44,7 @@ data appear to use the previous day's close.
 - `data.json`: data for `index.html`
 - `fcig_replication_daily.csv`, `fcig_replication_monthly.csv`: results for both lookbacks with all components (monthly file includes the Fed's published values)
 - `fomc_meetings.json`: FOMC meeting start dates, refreshed from the Fed's calendar page
-- `.github/workflows/update.yml`: runs Monday through Saturday at 23:17 UTC and commits new data
+- `.github/workflows/update.yml`: runs Monday through Saturday at 23:17 UTC and commits only when the data change
 
 Run locally: `pip install -r requirements.txt && python fcig_replicate.py` (or `--offline` to reuse `raw/`).
 

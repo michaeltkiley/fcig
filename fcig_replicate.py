@@ -51,6 +51,8 @@ OPTIONAL = {
     "y_DWCF.json": "https://query2.finance.yahoo.com/v8/finance/chart/%5EDWCF?range=3mo&interval=1d",
     "fomc.html": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
 }
+# Fallback when Yahoo's data API rate-limits: the quote page shows the latest close.
+YAHOO_QUOTE = ("y_DWCF_quote.html", "https://finance.yahoo.com/quote/%5EDWCF/")
 UA = "fcig-replication/1.0 (+https://michaeltkiley.github.io/fcig/)"  # FRED rejects generic browser UAs
 UA_YAHOO = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 
@@ -93,6 +95,13 @@ def download():
             f.write(body)
         os.replace(os.path.join(RAW, fn + ".tmp"), os.path.join(RAW, fn))
         print(f"  {fn:24s} {len(body):>9,d} bytes  {time.time() - t:4.1f}s", flush=True)
+    if not os.path.exists(os.path.join(RAW, "y_DWCF.json")) or os.path.getmtime(os.path.join(RAW, "y_DWCF.json")) < time.time() - 3600:
+        fn, url = YAHOO_QUOTE
+        body = fetch(url, tries=2)
+        if body is not None:
+            with open(os.path.join(RAW, fn), "wb") as f:
+                f.write(body)
+            print(f"  {fn:24s} {len(body):>9,d} bytes", flush=True)
     if failed:
         raise SystemExit(f"download failed for required inputs: {', '.join(failed)}")
 
@@ -131,6 +140,31 @@ def update_history():
             write_hist("dwcf.csv", y.combine_first(dw).sort_index(), "dwcf")
         except Exception as e:
             print("  Yahoo data unusable:", e)
+    else:
+        q = quote_close()
+        if q is not None:
+            dw = read_hist("dwcf.csv")
+            if q[0] not in dw.index or abs(dw.loc[q[0]] - q[1]) > 0.01:
+                dw.loc[q[0]] = q[1]
+                write_hist("dwcf.csv", dw.sort_index(), "dwcf")
+            print(f"  Dow Jones Total Market close from quote page: {q[0].date()} {q[1]:,.2f}")
+
+
+def quote_close():
+    """(date, close) from Yahoo's quote page, only when it shows a completed session ("At close")."""
+    p = os.path.join(RAW, YAHOO_QUOTE[0])
+    if not os.path.exists(p) or os.path.getmtime(p) < time.time() - 6 * 3600:
+        return None
+    t = open(p, encoding="utf-8", errors="ignore").read()
+    price = re.search(r'data-testid="qsp-price"[^>]*>\s*([0-9][0-9,]*\.[0-9]+)', t)
+    when = re.search(r"At close:\s*([A-Z][a-z]+) (\d{1,2}) at", t)
+    if not (price and when and when.group(1) in MONTHS):
+        return None
+    today = dt.date.today()
+    d = dt.date(today.year, MONTHS[when.group(1)], int(when.group(2)))
+    if d > today:  # December close read in January
+        d = d.replace(year=today.year - 1)
+    return pd.Timestamp(d), float(price.group(1).replace(",", ""))
 
 
 def stocks():
@@ -303,8 +337,16 @@ def main():
         "rep_m": [rnd(r) for r in complete],
         "fed_m": [rnd(r) for r in fed_rows],
     }
-    with open(os.path.join(HERE, "data.json"), "w") as f:
-        json.dump(data, f, separators=(",", ":"))
+    path = os.path.join(HERE, "data.json")
+    try:
+        old = json.load(open(path))
+    except Exception:
+        old = {}
+    if {k: v for k, v in old.items() if k != "generated"} == json.loads(json.dumps({k: v for k, v in data.items() if k != "generated"})):
+        print("Data unchanged; data.json left as is")
+    else:
+        with open(path, "w") as f:
+            json.dump(data, f, separators=(",", ":"))
 
     # validation summary
     print(f"\nLatest ({drows[-1][0]}): 3-yr {drows[-1][1]:.3f}, 1-yr {drows[-1][9]:.3f}")
