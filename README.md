@@ -6,7 +6,7 @@ built from public data with the Fed's published weights and formula.
 Live page: https://michaeltkiley.github.io/fcig/
 
 The page shows the index and its components (fed funds rate, long-term rates, stock market,
-house prices, dollar), the level the day before the last FOMC meeting and the change since,
+house prices, dollar), the level on a comparison date you choose (by default the day before the last FOMC meeting) and the change since,
 a waterfall of what drove that change, the daily path against the Fed's monthly releases,
 and the full history since 1990 with replication errors.
 
