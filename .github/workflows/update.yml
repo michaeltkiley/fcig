@@ -1,0 +1,45 @@
+name: Update FCI-G
+
+on:
+  schedule:
+    # 23:17 UTC Monday-Saturday: after the U.S. close (7:17pm EDT / 6:17pm EST).
+    # The Saturday run picks up Friday's late-posted FRED data.
+    - cron: "17 23 * * 1-6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-fcig
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download data and recompute the index
+        run: python fcig_replicate.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json fcig_replication_daily.csv fcig_replication_monthly.csv fomc_meetings.json history/
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Update FCI-G data $(date -u +%Y-%m-%d)"
+            git push
+          fi
