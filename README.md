@@ -70,3 +70,8 @@ Replication tab has the method, level check against published Goldman values (th
 S&P 500 / E10, with E10 backed out from multpl.com's Shiller CAPE and extrapolated at its trailing growth
 rate past the last anchor; the dollar is carried forward (or extended with DXY) past FRED's lag.
 Not a Goldman Sachs product; the exact normalization and dollar index are proprietary.
+
+Validation against Goldman's own series: `history/gs_nyfed_digitized.csv` holds Goldman's monthly FCI (Jan 1990-Jul 2022),
+read from the vector chart on slide 18 of the New York Fed's July 2022 Investor Advisory Committee presentation
+(`tools/digitize_nyfed.py`; about 0.01 resolution). Goldman's series is a monthly average. Against it the replication's
+monthly changes correlate at 0.99 (slope 1.01); the level runs about 0.35 high on average and drifts between roughly 0 and 0.6.

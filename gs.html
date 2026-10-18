@@ -159,6 +159,19 @@ tr.tot td{font-weight:600}
       </section>
 
       <section class="opt">
+        <h2>Against Goldman's own monthly series, 1990–2022</h2>
+        <div class="prose"><p>Goldman's FCI is not available without Bloomberg, so I read its values off the chart in the New York Fed's July 2022 Investor Advisory Committee presentation (slide 18). The chart is vector art, so the 391 monthly points (Jan 1990 to Jul 2022) come from the line's coordinates, not from tracing pixels, and are accurate to about 0.01. They are in <code>history/gs_nyfed_digitized.csv</code> and the script is <code>tools/digitize_nyfed.py</code>. Goldman's monthly series behaves like a <b>monthly average</b> of the daily index, so the replication is averaged the same way.</p></div>
+        <div class="legend" aria-hidden="true">
+          <span><i class="k-line"></i>Replicated (monthly average)</span>
+          <span><i class="k-fed" style="border-top-color:var(--ink)"></i>Goldman, digitized</span>
+        </div>
+        <div class="chart" id="cG"></div>
+        <div class="chart" id="cGap"></div>
+        <div class="tbl" id="gsTbl"></div>
+        <p class="note" id="gsNote"></p>
+      </section>
+
+      <section class="opt">
         <h2>Level check against published Goldman values</h2>
         <div class="tbl" id="bench"></div>
         <p class="note" id="benchNote"></p>
@@ -172,7 +185,7 @@ tr.tot td{font-weight:600}
       <section class="opt">
         <h2>Full history, 1990 to today</h2>
         <div class="chart" id="cH"></div>
-        <p class="note">Daily replicated index. Higher is tighter. The 2008–09 and 2020 spikes and the 2021 trough are the episodes in Goldman's own charts; digitizing those charts for a point‑by‑point comparison is not done yet.</p>
+        <p class="note">Daily replicated index. Higher is tighter. The 2008–09 and 2020 spikes and the 2021 trough are the episodes in Goldman's own charts; the comparison with Goldman's own series is above.</p>
       </section>
 
       <section class="opt">
@@ -208,7 +221,7 @@ tr.tot td{font-weight:600}
             <li><b>Dollar:</b> the Federal Reserve's nominal broad dollar index (FRED DTWEXBGS, with DTWEXB and TWEXBMTH before 2006 and 1995). Goldman uses its own trade‑weighted index, a main reason a level match is only approximate.</li>
             <li><b>Level:</b> Goldman's exact normalization is proprietary (an October 2003 base date has been reported for the historical series, and an average of 100 since 2000 more recently). The replication uses a 2000–2025 mean of 100.</li>
           </ul>
-          <p>Published values quoted above come from public material (Federal Reserve Bank of San Francisco, March 2024; Goldman Sachs Global Views, Dec 2023; New York Fed Investor Advisory Committee, July 2022; NYC Comptroller and SanCap presentations). Goldman has not provided a downloadable series, so no point‑by‑point comparison of daily levels is possible here. This is not a Goldman Sachs product.</p>
+          <p>Published values quoted above come from public material (Federal Reserve Bank of San Francisco, March 2024; Goldman Sachs Global Views, Dec 2023; New York Fed Investor Advisory Committee, July 2022; NYC Comptroller and SanCap presentations). Goldman's daily series is not publicly downloadable; the digitized monthly series ends in July 2022, so later levels rely on the three published values above. This is not a Goldman Sachs product.</p>
         </div>
       </section>
       <p class="foot" id="foot2"></p>
@@ -449,6 +462,26 @@ function repTab() {
   tbl("bench", ["Published observation","Goldman","Replicated (mean)","Replicated range","Gap"], br);
   const gaps = S.bench.map(b => b.mean - b.published), mg = gaps.reduce((a,b)=>a+b,0)/gaps.length;
   document.getElementById("benchNote").innerHTML = `The replicated level runs about <b>${mg.toFixed(1)} points above</b> the published Goldman values in all three checks (a gap of ${Math.min(...gaps).toFixed(2)} to ${Math.max(...gaps).toFixed(2)}), with the same direction of movement between March 2023, June 2023 and 2024. A near‑constant gap is what a different reference period or dollar index would produce; it does not affect changes between dates, which is what the Index tab shows. The three published values are few and two have uncertain dates, so the level is not fitted to them.`;
+  const vg = R.vs_gs, gs = R.vs_gs_stats;
+  if (vg && gs) {
+    const pg = vg.map(r => [toT(r[0]), r[1]]), pr = vg.map(r => [toT(r[0]), r[2]]);
+    drawLines(document.getElementById("cG"), {H: 280, label: "Replicated monthly average and Goldman series digitized from the New York Fed chart", base: 100,
+      series: [{name:"Goldman, digitized", pts: pg, color:"var(--ink)", w:1.8, tol: 20*864e5}, {name:"Replicated", pts: pr, color:"var(--accent)", w:1.4, tol: 20*864e5}], tipDate: tipMon});
+    const gap = vg.map(r => [toT(r[0]), r[2]-r[1]]);
+    drawLines(document.getElementById("cGap"), {H: 130, label: "Replicated minus Goldman", base: 0, t0: pg[0][0], t1: pg[pg.length-1][0],
+      dom: {lo:-0.5, hi:1.0, ticks:[-0.5,0,0.5,1.0], step:0.5},
+      series: [{name:"Replicated − Goldman", pts: gap, color:"var(--accent)", w:1.3, tol: 20*864e5}], tipDate: tipMon});
+    const dec = Object.entries(gs.by_decade).map(([d,v]) => `${d}: ${sg(v[0])}`).join(", ");
+    tbl("gsTbl", [`Monthly, ${fmtD(gs.first)} to ${fmtD(gs.last)} (${gs.n} months)`, "Value"], [
+      {c:["Correlation of 1‑month changes", gs.corr_chg1.toFixed(3)]},
+      {c:["Correlation of 3‑month changes", gs.corr_chg3.toFixed(3)]},
+      {c:["Correlation of levels", gs.corr_level.toFixed(3)]},
+      {c:["Slope of replicated on Goldman", gs.slope.toFixed(2)]},
+      {c:["Average gap (replicated − Goldman)", sg(gs.mean_gap)]},
+      {c:["Gap standard deviation (tracking error in level)", gs.sd_gap.toFixed(2)]}]);
+    const cf = gs.coef;
+    document.getElementById("gsNote").innerHTML = `<b>Changes match closely; the level drifts.</b> Monthly changes correlate at ${gs.corr_chg1.toFixed(2)} and the slope is ${gs.slope.toFixed(2)}, so the weights and scaling reproduce Goldman's movements. (Against month‑end values rather than monthly averages, the correlation of 1‑month changes would be only ${gs.corr_chg1_monthend.toFixed(2)}, which is how I found that Goldman's series is a monthly average.) Letting each component's coefficient be fitted freely gives ${["cape","bbb","usd","y10","ffr"].map(k => `${SH1[k]} ${cf[k].toFixed(2)}`).join(", ")}, where 1 would be an exact match; the 10‑year and fed funds coefficients (about 0.8) are the furthest from 1. What remains is a slowly varying level gap (${dec}) with a standard deviation of ${gs.sd_gap.toFixed(2)}. That is consistent with a different dollar index and BBB spread definition (before Oct 2023 the spread here is Baa less the 10‑year) rather than wrong weights, but I have not isolated the cause. The level is not fitted to remove it.`;
+  } else document.getElementById("cG").innerHTML = '<p class="note">Digitized Goldman series not available.</p>';
   const T = (a,b) => [a, b], bench = S.bench.map(b => [toT(b.start) + (toT(b.end)-toT(b.start))/2, b.published]);
   const from = toT("2019-01-01"), pts = X.filter(x => toT(x.d) >= from).map(x => [toT(x.d), x.fci]);
   drawLines(document.getElementById("cB"), {H: 260, label: "Replicated index since 2019 with published Goldman observations", base: 100, t0: from, t1: pts[pts.length-1][0],
