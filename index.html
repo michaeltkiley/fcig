@@ -168,6 +168,16 @@ tr.tot td{font-weight:600}
         <div class="chart" id="fg-wf"></div>
         <p class="note">The bars start at the index on the comparison date, add each part's contribution, and end at today's level. <span style="color:var(--tight)">■</span> Orange: conditions got tighter, a bigger drag on growth. <span style="color:var(--ease)">■</span> Blue: conditions got easier. Long‑term rates combine the 10‑year Treasury, mortgage rate and BBB corporate bond yield; hover to see each. The comparison uses the close on the chosen date, or the last trading day before it.</p>
       </section>
+      <section class="opt">
+        <h2>Recent path: last two years</h2>
+        <div class="chart" id="fg-dRecent"></div>
+        <p class="note">Daily. Dashed vertical lines are FOMC meetings; the blue line marks the comparison date. Above zero is a drag on growth, below zero a boost.</p>
+      </section>
+      <section class="opt">
+        <h2>History since 1990</h2>
+        <div class="chart" id="fg-dHist"></div>
+        <p class="note">Month by month; the last point is today. Shows where today's reading sits against the Fed's index over three decades, including the 2008–09 and 2020 swings.</p>
+      </section>
       <div class="methodology" id="fg-foot1"></div>
     </div>
 
@@ -240,6 +250,16 @@ tr.tot td{font-weight:600}
         <div class="chart" id="gs-wf"></div>
         <p class="note">The bars start at the index on the comparison date, add each part's contribution (its weight times the change in the variable), and end at today's level. <span style="color:var(--tight)">■</span> Orange: tighter. <span style="color:var(--ease)">■</span> Blue: easier. Hover for the underlying variable. The comparison uses the close on the chosen date, or the last trading day before it.</p>
       </section>
+      <section class="opt">
+        <h2>Recent path: last two years</h2>
+        <div class="chart" id="gs-dRecent"></div>
+        <p class="note">Daily. Dashed vertical lines are FOMC meetings; the blue line marks the comparison date. Above 100 is tighter than the 2000–2025 average, below 100 is easier.</p>
+      </section>
+      <section class="opt">
+        <h2>History since 1990</h2>
+        <div class="chart" id="gs-dHist"></div>
+        <p class="note">Daily. Shows where today's reading sits against three decades, including the 2008–09 and 2020 spikes and the 2021 low.</p>
+      </section>
       <div class="methodology" id="gs-foot1"></div>
     </div>
 
@@ -284,11 +304,6 @@ tr.tot td{font-weight:600}
         <div class="chart" id="gs-recent"></div>
       </section>
 
-      <section class="opt">
-        <h2>Full history, 1990 to today</h2>
-        <div class="chart" id="gs-hist"></div>
-        <p class="note">Daily. Higher is tighter. The spikes in 2008–09 and 2020 and the low in 2021 are the same episodes as in Goldman's own charts.</p>
-      </section>
 
       <section class="opt">
         <h2>Against the Fed's FCI‑G</h2>
@@ -579,6 +594,13 @@ const FG = (() => {
         ["Fed's latest published", lv(fl[o]), `${fmtD(fl[0])} (monthly)`]]);
       $("fg-wfTitle").textContent = `What changed since ${fmtD(M.pre)}`;
       drawWF($("fg-wf"), wfModel(M), "Waterfall from the FCI-G on the comparison date to the latest value");
+      const lastD = R.daily[R.daily.length-1][0], from = `${+lastD.slice(0,4) - 2}${lastD.slice(4)}`;
+      drawLines($("fg-dRecent"), {H: 260, top: 26, zero: true, label: "Daily FCI-G, last two years",
+        series: [{name:"Replicated FCI‑G", pts: R.daily.filter(r => r[0] >= from).map(r => [toT(r[0]), r[o]]), color:"var(--accent)", w:1.8, tol: 4*864e5}],
+        events: MTG.map(m => ({t: toT(m)})), mark: toT(M.pre), tipDate: tipDay, endLabel: fmtD(lastD)});
+      const hist = R.rep_m.filter(r => r[0] < lastD.slice(0,7)).map(r => [toT(r[0]), r[o]]).concat([[toT(lastD), R.daily[R.daily.length-1][o]]]);
+      drawLines($("fg-dHist"), {H: 280, zero: true, label: "FCI-G since 1990", mark: toT(M.pre),
+        series: [{name:"Replicated FCI‑G", pts: hist, color:"var(--accent)", w:1.5, tol: 40*864e5}], tipDate: tipMon, endLabel: fmtD(lastD)});
     } else {
       const N = items("next"), on = off("next");
       const lastD = R.daily[R.daily.length-1][0], from = `${+lastD.slice(0,4) - 2}${lastD.slice(4)}`;
@@ -694,8 +716,6 @@ const GS = (() => {
     drawLines($("gs-recent"), {H: 260, base: 100, label: "Replicated index since 2019 with published Goldman values", t0: from, t1: pts[pts.length-1][0],
       dom: niceDomain(pts.map(p => p[1]).concat(bench.map(p => p[1])), .05),
       series: [{name:"Replicated", pts, color:"var(--accent)", w:1.4, tol: 4*864e5}, {name:"Goldman, published (period mid‑point)", pts: bench, color:"var(--ink)", style:"dots", tol: 1e12}], tipDate: tipDay});
-    drawLines($("gs-hist"), {H: 280, base: 100, label: "Replicated index, 1990 to present",
-      series: [{name:"Replicated", pts: X.map(x => [toT(x[0]), x[1]]), color:"var(--accent)", w:1.2, tol: 5*864e5}], tipDate: tipDay, endLabel: fmtD(cur[0])});
 
     const vf = R.vs_fed, vs = R.vs_fed_stats;
     if (vf && vs) {
@@ -738,6 +758,12 @@ const GS = (() => {
         ["Biggest driver of the change", big.s, `${sg(big.d)} points`]]);
       $("gs-wfTitle").textContent = `What changed since ${fmtD(M.pre[0])}`;
       drawWF($("gs-wf"), M.wf, "Waterfall from the index on the comparison date to the latest level");
+      const lastD = M.cur[0], from = `${+lastD.slice(0,4) - 2}${lastD.slice(4)}`;
+      drawLines($("gs-dRecent"), {H: 260, top: 26, base: 100, label: "Daily index, last two years",
+        series: [{name:"Index", pts: X.filter(x => x[0] >= from).map(x => [toT(x[0]), x[1]]), color:"var(--accent)", w:1.8, tol: 4*864e5}],
+        events: R.meetings.map(m => ({t: toT(m)})), mark: toT(M.pre[0]), tipDate: tipDay, endLabel: fmtD(lastD)});
+      drawLines($("gs-dHist"), {H: 280, base: 100, label: "Index since 1990", mark: toT(M.pre[0]),
+        series: [{name:"Index", pts: X.map(x => [toT(x[0]), x[1]]), color:"var(--accent)", w:1.2, tol: 5*864e5}], tipDate: tipDay, endLabel: fmtD(lastD)});
     } else repTab();
   }
   function init(j) { R = j; X = prep(j); dateControls("gs", X, R.meetings, st, save, () => app.render()); }
