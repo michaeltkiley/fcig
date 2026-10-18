@@ -5,10 +5,10 @@ built from public data with the Fed's published weights and formula.
 
 Live page: https://michaeltkiley.github.io/fcig/
 
-The page shows the index and its components (fed funds rate, long-term rates, stock market,
-house prices, dollar), the level on a comparison date you choose (by default the day before the last FOMC meeting) and the change since,
-a waterfall of what drove that change, the daily path against the Fed's monthly releases,
-and the full history since 1990 with replication errors.
+One page with two tabs, **Fed FCI-G** and **Goldman-style FCI**. Each has a **Data** tab (summary tiles and one waterfall of
+what changed since a comparison date you choose, by default the day before the last FOMC meeting) and a **Replication** tab
+(method, checks against the published series, full history, data timing). Every tab ends with the disclaimer, notes and references.
+`gs.html` just redirects to the Goldman-style tab (`#gs`).
 
 ## Next year, if conditions hold
 
@@ -62,9 +62,9 @@ Not an official Federal Reserve product.
 
 ## Goldman Sachs-style FCI
 
-`gs.html` (built by `fcig_gs.py`, data in `gs_data.json` and `fcig_gs_daily.csv`) is a daily levels index
+The Goldman-style tab (built by `fcig_gs.py`, data in `gs_data.json` and `fcig_gs_daily.csv`) is a daily levels index
 using Goldman's published weights (fed funds 4.4%, 10-year 45.1%, BBB spread 39.6%, CAPE 4.9%, dollar 6.0%),
-normalized to a 2000-2025 mean of 100. The Index tab shows only a waterfall from a chosen earlier date; the
+normalized to a 2000-2025 mean of 100. The Data tab shows only a waterfall from a chosen earlier date; the
 Replication tab has the method, level check against published Goldman values (the replication runs about
 0.6 above them), comparison with the Fed's FCI-G, and the data-currency rules. CAPE is made daily as
 S&P 500 / E10, with E10 backed out from multpl.com's Shiller CAPE and extrapolated at its trailing growth
