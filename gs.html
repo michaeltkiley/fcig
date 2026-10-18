@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goldman-style Financial Conditions Index — Michael T. Kiley</title>
+<meta name="description" content="Daily public-data version of the Goldman Sachs U.S. Financial Conditions Index: level, what moved it since an earlier date, and the replication and validation details.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Michael T. Kiley">
+<meta property="og:title" content="Goldman-style Financial Conditions Index">
+<meta property="og:description" content="Daily public-data version of the Goldman Sachs U.S. FCI, with a waterfall of what moved it since an earlier date.">
+<meta property="og:url" content="https://michaeltkiley.github.io/fcig/gs.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Same tokens and components as index.html (the Fed FCI-G page). Two tabs: Index (waterfall) and Replication. */
+:root{
+  --page:#eef1f4; --card:#ffffff; --rule:#dde3e8; --grid:#e8ecef;
+  --ink:#10151d; --ink2:#4b5568; --ink3:#7c8698; --accent:#1c5cab; --accent-lt:#e8edf4;
+  --ease:#2a78d6; --tight:#eb6834; --gold:#008300;
+  --serif:"Newsreader",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#12161c; --card:#191f27; --rule:#2a323d; --grid:#222a34;
+  --ink:#f2f4f7; --ink2:#b7c0cc; --ink3:#8a95a6; --accent:#74aeef; --accent-lt:#1c2a3a;
+  --ease:#3987e5; --tight:#d95926; --gold:#3fb950; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --page:#12161c; --card:#191f27; --rule:#2a323d; --grid:#222a34;
+  --ink:#f2f4f7; --ink2:#b7c0cc; --ink3:#8a95a6; --accent:#74aeef; --accent-lt:#1c2a3a;
+  --ease:#3987e5; --tight:#d95926; --gold:#3fb950; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:28px 56px;display:flex;flex-direction:column;gap:22px}
+h1{font-family:var(--serif);font-weight:500;font-size:2rem;line-height:1.15;margin:0;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:500;font-size:1.35rem;margin:0;text-wrap:balance}
+.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.lede{color:var(--ink2);max-width:68ch;margin:6px 0 0}
+.controls{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:end;padding:14px 16px;background:var(--card);border:1px solid var(--rule);border-radius:6px}
+.ctl{display:flex;flex-direction:column;gap:4px}
+.ctl label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+input[type=date]{font:inherit;font-size:.9rem;padding:5px 8px;border:1px solid var(--rule);border-radius:4px;background:var(--card);color:var(--ink)}
+input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.linkbtn{font:inherit;font-size:.8rem;border:0;background:none;color:var(--accent);padding:2px 0;cursor:pointer;text-align:left;text-decoration:underline;text-underline-offset:2px}
+.stamp{font-family:var(--mono);font-size:.8rem;color:var(--ink2)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule)}
+.tabs button{font:inherit;font-size:.92rem;font-weight:500;padding:9px 16px;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;color:var(--ink2);cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.panel{display:flex;flex-direction:column;gap:22px}
+.panel[hidden]{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.82rem;color:var(--ink2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.opt{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.note{color:var(--ink2);font-size:.88rem;max-width:72ch;margin:0}
+.note b{color:var(--ink);font-weight:600}
+.chart{width:100%;min-width:0}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--sans);fill:var(--ink2)}
+svg .num{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+svg .numm{font-family:var(--mono);font-size:10.5px;fill:var(--ink2)}
+svg .lab{font-size:11.5px;fill:var(--ink2)}
+svg .labt{font-size:11.5px;fill:var(--ink);font-weight:600}
+svg .ax{font-family:var(--mono);font-size:10px;fill:var(--ink3)}
+.tip{position:fixed;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:5px;padding:8px 10px;font-size:.8rem;box-shadow:0 4px 14px rgba(0,0,0,.12);z-index:10;min-width:190px}
+.tip .t{font-weight:600;margin-bottom:4px}
+.tip .r{display:flex;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:.76rem;color:var(--ink2)}
+.tip .r b{color:var(--ink);font-weight:500}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;font-size:.85rem;margin-top:4px;min-width:480px;width:100%}
+th,td{padding:5px 10px;border-bottom:1px solid var(--grid);text-align:right;font-variant-numeric:tabular-nums;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);font-weight:600}
+td{font-family:var(--mono);font-size:.8rem}
+td:first-child,td.tx{font-family:var(--sans);font-size:.85rem}
+td.tx{text-align:left}
+tr.tot td{font-weight:600}
+.foot{font-size:.8rem;color:var(--ink3);max-width:80ch;margin:0}
+.foot a,.note a,.prose a{color:var(--accent)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px}
+.tile{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile .k{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.tile .v{font-family:var(--mono);font-size:1.45rem;font-weight:500;color:var(--ink)}
+.tile .s{font-size:.8rem;color:var(--ink2)}
+.prose{max-width:74ch;color:var(--ink2);font-size:.9rem;display:flex;flex-direction:column;gap:8px}
+.prose p{margin:0}
+.prose ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.prose b{color:var(--ink)}
+.prose code{font-family:var(--mono);font-size:.82rem}
+.formula{font-family:var(--mono);font-size:.82rem;background:var(--accent-lt);border-radius:4px;padding:8px 10px;overflow-x:auto;color:var(--ink);white-space:pre}
+.k-line{display:inline-block;width:18px;height:0;border-top:2px solid var(--accent);vertical-align:middle}
+.k-fed{display:inline-block;width:18px;height:0;border-top:2px solid var(--ink3);vertical-align:middle}
+.state{padding:40px 0;color:var(--ink2)}
+/* ---- shared site nav (same on every page of the site) ---- */
+.site-nav{border-bottom:1px solid var(--rule);background:var(--card)}
+.site-nav-inner{max-width:1260px;margin:0 auto;padding:14px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.site-nav .wordmark{font-family:'Newsreader',Georgia,serif;font-weight:500;font-size:17px;color:var(--ink);text-decoration:none}
+.site-nav nav{font-size:0;line-height:0;text-wrap:balance;margin:0 -20px -8px 0}
+.site-nav nav a{display:inline-block;margin:0 20px 8px 0;line-height:1.5;font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:.02em;color:var(--ink2);text-decoration:none}
+.site-nav nav a:hover,.site-nav nav a.active{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="site-nav">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="https://michaeltkiley.github.io/">Michael T. Kiley</a>
+    <nav>
+      <a href="https://michaeltkiley.github.io/index.html">Home</a>
+      <a href="https://michaeltkiley.github.io/cv.html">CV</a>
+      <a href="https://michaeltkiley.github.io/monetary_policy_surprises/">Monetary Policy Expectations</a>
+      <a href="https://michaeltkiley.github.io/inflation_forecast/">Inflation Forecast</a>
+      <a href="https://michaeltkiley.github.io/equilibrium_rate/">Equilibrium Real Interest Rate (r*)</a>
+      <a href="https://michaeltkiley.github.io/resource_utilization/">Resource Utilization and Risk</a>
+      <a href="https://michaeltkiley.github.io/termprem/">Yield Curve Tracker</a>
+      <a href="https://michaeltkiley.github.io/gdpnow-replication/">Real GDP</a>
+      <a href="https://michaeltkiley.github.io/fcig/" class="active">Financial Conditions</a>
+    </nav>
+  </div>
+</div>
+<div class="wrap">
+  <div>
+    <div class="eyebrow">Goldman Sachs–style Financial Conditions Index · daily</div>
+    <h1>A public-data Goldman Sachs FCI</h1>
+    <p class="lede">Goldman's U.S. Financial Conditions Index is a levels index around 100: higher means tighter financial conditions, lower means easier. It is built from the federal funds rate, the 10‑year Treasury yield, the BBB corporate spread, equity valuations and the dollar, with weights Goldman has published. This page rebuilds it every weekday from public data. Differences between two dates measure the tightening or easing in between. See also the <a href="./" style="color:var(--accent)">Fed's FCI‑G replication</a>.</p>
+  </div>
+
+  <div class="state" id="state">Loading data…</div>
+
+  <div id="app" hidden>
+    <div class="tabs" role="tablist" aria-label="Page sections">
+      <button type="button" role="tab" id="tab-index" aria-controls="p-index" aria-selected="true">Index</button>
+      <button type="button" role="tab" id="tab-rep" aria-controls="p-rep" aria-selected="false" tabindex="-1">Replication and validation</button>
+    </div>
+
+    <div class="panel" id="p-index" role="tabpanel" aria-labelledby="tab-index" style="margin-top:22px">
+      <div class="tiles" id="tiles"></div>
+      <div class="controls">
+        <div class="ctl"><label for="since">Compare with level on</label><input type="date" id="since"><button type="button" class="linkbtn" id="sinceFomc"></button></div>
+        <div class="ctl" style="min-width:0"><label>Dates compared</label><div class="stamp" id="stamp"></div></div>
+      </div>
+      <section class="opt">
+        <h2 id="wfTitle">What moved the index since the comparison date</h2>
+        <div class="chart" id="cD"></div>
+        <p class="note">Starts at the index on the comparison date, steps through each component's contribution to the change (its weight times the change in the variable), and lands on the latest level. <span style="color:var(--tight)">■</span> pushes toward tighter conditions, <span style="color:var(--ease)">■</span> toward easier. Hover for the underlying variable. The comparison uses the close on the chosen date, or on the last trading day before it.</p>
+      </section>
+      <p class="foot" id="foot"></p>
+    </div>
+
+    <div class="panel" id="p-rep" role="tabpanel" aria-labelledby="tab-rep" style="margin-top:22px" hidden>
+      <section class="opt">
+        <h2>How the index is built</h2>
+        <div class="prose">
+          <p>Goldman's weights (Hatzius, New York Fed presentation, Feb 2019, repeated in Goldman research in 2021) reflect each variable's estimated effect on activity, not its volatility. Rates and spreads enter in percentage points; equity valuations and the dollar in log points (100 × ln).</p>
+          <div class="formula">FCI = 100 + Σ w·(X − mean X)
+    = 100 + 0.044·ΔFFR + 0.451·ΔY10 + 0.396·ΔBBB − 0.049·100Δln(CAPE) + 0.060·100Δln(USD)</div>
+          <p>The reference means are taken over 2000–2025 and then frozen, so history does not revise as data arrive. Differences between two dates do not depend on the normalization.</p>
+        </div>
+        <div class="tbl" id="comp"></div>
+        <p class="note">"One point" is the move in each variable that alone tightens the index by one point. Weights are those published in 2019; I have not verified whether Goldman has changed them since.</p>
+      </section>
+
+      <section class="opt">
+        <h2>Level check against published Goldman values</h2>
+        <div class="tbl" id="bench"></div>
+        <p class="note" id="benchNote"></p>
+        <div class="legend" aria-hidden="true">
+          <span><i class="k-line"></i>Replicated, daily</span>
+          <span><svg width="14" height="14"><circle cx="7" cy="7" r="4" fill="var(--ink)"/></svg>Published Goldman value</span>
+        </div>
+        <div class="chart" id="cB"></div>
+      </section>
+
+      <section class="opt">
+        <h2>Full history, 1990 to today</h2>
+        <div class="chart" id="cH"></div>
+        <p class="note">Daily replicated index. Higher is tighter. The 2008–09 and 2020 spikes and the 2021 trough are the episodes in Goldman's own charts; digitizing those charts for a point‑by‑point comparison is not done yet.</p>
+      </section>
+
+      <section class="opt">
+        <h2>Changes against the Fed's FCI‑G</h2>
+        <div class="legend" aria-hidden="true">
+          <span><i class="k-line"></i>Goldman‑style (month‑end)</span>
+          <span><i class="k-fed"></i>Fed FCI‑G, published (3‑year lookback)</span>
+        </div>
+        <div class="chart" id="cF"></div>
+        <div class="tbl" id="fedTbl"></div>
+        <p class="note">Both are standardized (mean 0, standard deviation 1) since 2000 so they can share an axis. The two indexes are built differently, so this is a consistency check, not a test of the Goldman replication.</p>
+      </section>
+
+      <section class="opt">
+        <h2>What drives the index</h2>
+        <div class="tbl" id="drv"></div>
+        <p class="note">Left: standard deviation of 3‑month changes in each component's contribution since 2000, in index points. Right: each component's share of the variance of daily changes since 2020. Rates and credit spreads dominate by weight; equity valuations matter in the big moves because CAPE changes by large percentages.</p>
+      </section>
+
+      <section class="opt">
+        <h2>Daily updates: data and extrapolation rules</h2>
+        <div class="tbl" id="cur"></div>
+        <div class="prose" id="curProse"></div>
+      </section>
+
+      <section class="opt">
+        <h2>Sources and differences from Goldman</h2>
+        <div class="prose">
+          <ul>
+            <li><b>Rates:</b> FRED effective fed funds (DFF) and 10‑year Treasury (DGS10).</li>
+            <li><b>BBB spread:</b> ICE BofA BBB option‑adjusted spread (FRED BAMLC0A4CBBB). FRED shows only the last three years, so the page stores the history it has collected; before Oct 2023 it uses Moody's Baa yield less the 10‑year, level‑matched at the splice. Goldman's exact spread definition is not public.</li>
+            <li><b>Equity valuation:</b> Shiller's CAPE from multpl.com, made daily with the S&amp;P 500 as described above. Shiller's own spreadsheet is no longer updated promptly, so it is not used.</li>
+            <li><b>Dollar:</b> the Federal Reserve's nominal broad dollar index (FRED DTWEXBGS, with DTWEXB and TWEXBMTH before 2006 and 1995). Goldman uses its own trade‑weighted index, a main reason a level match is only approximate.</li>
+            <li><b>Level:</b> Goldman's exact normalization is proprietary (an October 2003 base date has been reported for the historical series, and an average of 100 since 2000 more recently). The replication uses a 2000–2025 mean of 100.</li>
+          </ul>
+          <p>Published values quoted above come from public material (Federal Reserve Bank of San Francisco, March 2024; Goldman Sachs Global Views, Dec 2023; New York Fed Investor Advisory Committee, July 2022; NYC Comptroller and SanCap presentations). Goldman has not provided a downloadable series, so no point‑by‑point comparison of daily levels is possible here. This is not a Goldman Sachs product.</p>
+        </div>
+      </section>
+      <p class="foot" id="foot2"></p>
+    </div>
+  </div>
+
+  <p class="foot">Code and data: <a href="https://github.com/michaeltkiley/fcig">github.com/michaeltkiley/fcig</a> (<code>fcig_gs.py</code>, <code>fcig_gs_daily.csv</code>). Updated Monday through Saturday after the U.S. market close.</p>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script>
+let R = null, X = null;
+const KEYS = ["ffr","y10","bbb","cape","usd"];
+const SHORT = {ffr:["Fed funds","rate"], y10:["10‑yr","Treasury"], bbb:["BBB","spread"], cape:["Equity","valuation"], usd:["Dollar",""]};
+const SH1 = {ffr:"Fed funds", y10:"10‑yr", bbb:"BBB spread", cape:"Equity", usd:"Dollar"};
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const NS = "http://www.w3.org/2000/svg";
+const fmtD = s => { const [y,m,d] = s.split("-"); return d ? `${MON[+m-1]} ${+d}, ${y}` : `${MON[+m-1]} ${y}`; };
+const fmtS = s => { const [y,m,d] = s.split("-"); return `${MON[+m-1]} ${+d}`; };
+const sg = (v,p=2) => { const a = Math.abs(v).toFixed(p); return (+a === 0 ? "" : v > 0 ? "+" : "−") + a; };
+const lv = (v,p=2) => { const a = Math.abs(v).toFixed(p); return (+a !== 0 && v < 0 ? "−" : "") + a; };
+const toT = s => s.length === 7 ? Date.UTC(+s.slice(0,4), +s.slice(5,7), 0) : Date.UTC(+s.slice(0,4), +s.slice(5,7)-1, +s.slice(8,10));
+const cmp = (s, on) => on ? s.replace("0.", ".") : s;
+const lin = (d0,d1,r0,r1) => v => r0 + (v-d0)/(d1-d0)*(r1-r0);
+const col = v => v > 0 ? "var(--tight)" : "var(--ease)";
+const tipDay = t => { const d = new Date(t); return `${MON[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
+const tipMon = t => { const d = new Date(t); return `${MON[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
+
+let state = { since: null, tab: "index" };
+try { const s = JSON.parse(localStorage.getItem("fcig-gs")||"{}"); if (s.since) state.since = s.since; } catch(e) {}
+const save = () => { try { localStorage.setItem("fcig-gs", JSON.stringify({since: state.since})); } catch(e) {} };
+
+/* ---- index levels and contributions from the stored inputs ---- */
+function prep(j) {
+  const w = j.weights, ref = j.ref;
+  const f = {ffr: x => w.ffr*x, y10: x => w.y10*x, bbb: x => w.bbb*x, cape: x => -w.cape*100*Math.log(x), usd: x => w.usd*100*Math.log(x)};
+  return j.rows.map(r => {
+    const c = {}; let t = 100;
+    KEYS.forEach((k, i) => { c[k] = f[k](r[i+1]) - ref[k]; t += c[k]; });
+    return {d: r[0], fci: t, c, x: {ffr:r[1], y10:r[2], bbb:r[3], cape:r[4], usd:r[5]}};
+  });
+}
+const onOrBefore = (d) => { let r = X[0]; for (const x of X) { if (x.d <= d) r = x; else break; } return r; };
+function fomcDefault() {
+  const last = X[X.length-1].d;
+  const m = [...R.meetings].reverse().find(m => m <= last && X.some(x => x.d < m));
+  if (!m) return X[Math.max(0, X.length - 22)].d;
+  let r = X[0]; for (const x of X) { if (x.d < m) r = x; else break; } return r.d;
+}
+function raw(k, x) {
+  const u = {ffr:"%", y10:"%", bbb:" pp", cape:"", usd:""}[k];
+  return k === "cape" ? x.toFixed(1) : k === "usd" ? x.toFixed(1) : x.toFixed(2) + u;
+}
+function rawChange(k, a, b) {
+  if (k === "cape" || k === "usd") return sg(100*Math.log(b/a), 1) + "%";
+  return sg((b-a)*100, 0) + " bp";
+}
+function items() {
+  const cur = X[X.length-1], pre = onOrBefore(state.since);
+  return { cur, pre, list: KEYS.map(k => ({k, n: R.labels[k], s: SH1[k], l: SHORT[k], now: cur.c[k], before: pre.c[k], d: cur.c[k]-pre.c[k],
+    xn: cur.x[k], xb: pre.x[k], w: R.weights[k]})) };
+}
+
+/* ---------- helpers ---------- */
+function el(tag, attrs, parent, text) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function svgIn(host, w, h, label) { host.innerHTML = ""; const s = el("svg", {viewBox:`0 0 ${w} ${h}`, role:"img", "aria-label":label}); host.appendChild(s); return s; }
+function niceDomain(vals, pad=0.06) {
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  const span = (hi - lo) || 0.1, raw = span / 6, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1,2,5,10].map(f => f*mag).find(s => s >= raw);
+  lo = Math.floor((lo - span*pad) / step) * step; hi = Math.ceil((hi + span*pad) / step) * step;
+  const ticks = []; for (let t = lo; t <= hi + step/2; t += step) ticks.push(+t.toFixed(6));
+  return { lo, hi, ticks, step };
+}
+function niceRange(lo, hi) {
+  const span = (hi - lo) || 0.1, raw = span / 5, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1,2,5,10].map(f => f*mag).find(s => s >= raw);
+  lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+  const ticks = []; for (let t = lo; t <= hi + step/2; t += step) ticks.push(+t.toFixed(6));
+  return { lo, hi, ticks, step };
+}
+function tickFmt(t, step) { const p = Math.max(0, -Math.floor(Math.log10(step) + 1e-9)); return lv(t, p); }
+function gridY(s, dom, y, x0, x1, base) {
+  for (const t of dom.ticks) {
+    const z = base != null && Math.abs(t - base) < 1e-9;
+    el("line", {x1:x0, x2:x1, y1:y(t), y2:y(t), stroke: z ? "var(--ink3)" : "var(--grid)", "stroke-width":1}, s);
+    el("text", {x:x0-6, y:y(t)+3.5, "text-anchor":"end", class:"ax"}, s, tickFmt(t, dom.step));
+  }
+}
+function ring(g, cx, cy) { el("circle", {cx, cy, r:4.5, fill:"var(--card)", stroke:"var(--ink)", "stroke-width":1.6}, g); }
+function dot(g, cx, cy) { el("circle", {cx, cy, r:5, fill:"var(--ink)", stroke:"var(--card)", "stroke-width":2}, g); }
+const tip = document.getElementById("tip");
+function placeTip(e) {
+  const x = e.clientX ?? (e.touches && e.touches[0].clientX), y = e.clientY ?? (e.touches && e.touches[0].clientY);
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  tip.style.left = Math.min(innerWidth - w - 8, Math.max(8, x + 14)) + "px";
+  tip.style.top = Math.max(8, (y - h - 12 < 8 ? y + 18 : y - h - 12)) + "px";
+}
+function hoverItem(node, html) {
+  node.addEventListener("pointerenter", e => { tip.innerHTML = html; tip.hidden = false; placeTip(e); });
+  node.addEventListener("pointermove", placeTip);
+  node.addEventListener("pointerleave", () => tip.hidden = true);
+  node.style.cursor = "default";
+}
+function itemTip(it, M) {
+  if (!it) return `<div class="t">Index level</div><div class="r"><span>${fmtD(M.pre.d)}</span><b>${lv(M.pre.fci)}</b></div><div class="r"><span>${fmtD(M.cur.d)}</span><b>${lv(M.cur.fci)}</b></div><div class="r"><span>Change</span><b>${sg(M.cur.fci-M.pre.fci)}</b></div>`;
+  return `<div class="t">${it.n}</div>
+    <div class="r"><span>Weight</span><b>${(it.w*100).toFixed(1)}%</b></div>
+    <div class="r"><span>${fmtS(M.pre.d)}</span><b>${raw(it.k, it.xb)}</b></div>
+    <div class="r"><span>${fmtS(M.cur.d)}</span><b>${raw(it.k, it.xn)}</b></div>
+    <div class="r"><span>Change in variable</span><b>${rawChange(it.k, it.xb, it.xn)}</b></div>
+    <div class="r"><span>Contribution</span><b>${sg(it.d)}</b></div>`;
+}
+
+/* ---------- waterfall ---------- */
+function drawWF(host, M) {
+  const W = Math.max(320, host.clientWidth), comps = M.list;
+  const m = {l:44, r:8, t:24, b:54}, H = 330;
+  const s = svgIn(host, W, H, "Waterfall from the index level on the comparison date to the latest level");
+  let run = M.pre.fci;
+  const steps = comps.map(c => { const a = run; run += c.d; return {...c, a, b: run}; });
+  const cols = [{kind:"tot", a:0, b:M.pre.fci, lab:["Before", fmtS(M.pre.d)], v:lv(M.pre.fci)}]
+    .concat(steps.map(c => ({kind:"d", it:c, a:c.a, b:c.b, lab:c.l, v:sg(c.d)})))
+    .concat([{kind:"tot", a:0, b:M.cur.fci, lab:["Now", fmtS(M.cur.d)], v:lv(M.cur.fci)}]);
+  const vals = cols.flatMap(c => c.kind === "tot" ? [c.b] : [c.a, c.b]);
+  const lo = Math.min(...vals), hi = Math.max(...vals), sp = (hi - lo) || 0.1;
+  const dom = niceRange(lo - sp*.25, hi + sp*.25), y = lin(dom.lo, dom.hi, H - m.b, m.t);
+  gridY(s, dom, y, m.l, W - m.r);
+  const slot = (W - m.l - m.r) / cols.length, bw = Math.min(40, slot * .62), wide = slot >= 60, narrow = slot < 48;
+  cols.forEach((c, i) => {
+    const cx = m.l + slot*(i+.5), g = el("g", {}, s), ya = y(c.a), yb = y(c.b), h = Math.max(2, Math.abs(yb-ya));
+    if (c.kind === "tot") { el("line", {x1:cx-bw/2, x2:cx+bw/2, y1:yb, y2:yb, stroke:"var(--ink)", "stroke-width":2}, g); (i ? dot : ring)(g, cx, yb); }
+    else el("rect", {x:cx-bw/2, y:Math.min(ya,yb) - (h===2?1:0), width:bw, height:h, rx:3, fill: Math.abs(c.b-c.a) < 0.005 ? "var(--ink3)" : col(c.b-c.a)}, g);
+    if (i < cols.length-1) el("line", {x1:cx+bw/2, x2:cx+slot-bw/2, y1:yb, y2:yb, stroke:"var(--ink3)", "stroke-dasharray":"2 2"}, s);
+    const below = c.kind !== "tot" && c.b < c.a;
+    el("text", {x:cx, y: c.kind==="tot" ? yb-11 : below ? Math.max(ya,yb)+15 : Math.min(ya,yb)-7, "text-anchor":"middle", class: c.kind==="tot" ? "num" : "numm", "font-size": narrow && c.kind!=="tot" ? 9.5 : null}, g, cmp(c.v, narrow && c.kind!=="tot"));
+    const t = el("text", {x:cx, y:H - m.b + 18, "text-anchor":"middle", class: c.kind==="tot" ? "labt" : "lab"}, g);
+    if (c.kind === "d" && !wide) t.textContent = c.it.s.split(" ")[0];
+    else { el("tspan", {x:cx, dy:0}, t, c.lab[0]); if (c.lab[1]) el("tspan", {x:cx, dy:"1.2em"}, t, c.lab[1]); }
+    el("rect", {x:cx-slot/2, y:m.t-10, width:slot, height:H-m.t, fill:"transparent"}, g);
+    hoverItem(g, itemTip(c.it, M));
+  });
+}
+
+/* ---------- line charts ---------- */
+function drawLines(host, o) {
+  const W = Math.max(320, host.clientWidth), H = o.H || 280, narrow = W < 560;
+  const m = {l:44, r:12, t:o.top ?? 12, b:28};
+  const s = svgIn(host, W, H, o.label);
+  const all = o.series.flatMap(se => se.pts);
+  const t0 = o.t0 ?? Math.min(...all.map(p => p[0])), t1 = o.t1 ?? Math.max(...all.map(p => p[0]));
+  const dom = o.dom || niceDomain(all.map(p => p[1]), .05);
+  const x = lin(t0, t1, m.l, W - m.r), y = lin(dom.lo, dom.hi, H - m.b, m.t);
+  gridY(s, dom, y, m.l, W - m.r, o.base);
+  const d0 = new Date(t0), d1 = new Date(t1), span = d1.getUTCFullYear() - d0.getUTCFullYear(), step = [1,2,5,10].find(k => span / k <= (narrow ? 5 : 9));
+  for (let yr = Math.ceil(d0.getUTCFullYear()/step)*step; yr <= d1.getUTCFullYear(); yr += step) {
+    const tx = x(Date.UTC(yr,0,1)); if (tx < m.l) continue;
+    el("line", {x1:tx, x2:tx, y1:H-m.b, y2:H-m.b+4, stroke:"var(--ink3)"}, s);
+    el("text", {x:tx, y:H-m.b+16, "text-anchor":"middle", class:"ax"}, s, yr);
+  }
+  for (const se of o.series) {
+    if (se.style === "dots") for (const p of se.pts) el("circle", {cx:x(p[0]), cy:y(p[1]), r:se.r || 4.5, fill:se.color, stroke:"var(--card)", "stroke-width":1.5}, s);
+    else {
+      const d = se.pts.map((p,i) => `${i?"L":"M"}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("");
+      el("path", {d, fill:"none", stroke:se.color, "stroke-width":se.w || 1.6, "stroke-linejoin":"round"}, s);
+    }
+  }
+  if (o.endLabel) {
+    const p = o.series[0].pts[o.series[0].pts.length-1];
+    el("circle", {cx:x(p[0]), cy:y(p[1]), r:4.5, fill:o.series[0].color, stroke:"var(--card)", "stroke-width":2}, s);
+    el("text", {x:x(p[0])-8, y:y(p[1])-9, "text-anchor":"end", class:"num"}, s, `${lv(p[1])} · ${o.endLabel}`);
+  }
+  const cross = el("line", {y1:m.t, y2:H-m.b, stroke:"var(--ink2)", "stroke-width":1, visibility:"hidden"}, s);
+  const hit = el("rect", {x:m.l, y:m.t, width:W-m.l-m.r, height:H-m.t-m.b, fill:"transparent"}, s);
+  const near = (pts, t) => { let b = null, bd = Infinity; for (const p of pts) { const d = Math.abs(p[0]-t); if (d < bd) { bd = d; b = p; } } return [b, bd]; };
+  hit.addEventListener("pointermove", e => {
+    const r = s.getBoundingClientRect(), t = t0 + ((e.clientX - r.left) * (W / r.width) - m.l) / (W - m.l - m.r) * (t1 - t0);
+    const [p] = near(o.series[0].pts, t); if (!p) return;
+    cross.setAttribute("x1", x(p[0])); cross.setAttribute("x2", x(p[0])); cross.setAttribute("visibility", "visible");
+    let h = `<div class="t">${o.tipDate(p[0])}</div>`;
+    for (const se of o.series) { const [q, dd] = near(se.pts, p[0]); if (q && dd <= (se.tol ?? 4e9)) h += `<div class="r"><span>${se.name}</span><b>${lv(q[1], 2)}</b></div>`; }
+    tip.innerHTML = h; tip.hidden = false; placeTip(e);
+  });
+  hit.addEventListener("pointerleave", () => { tip.hidden = true; cross.setAttribute("visibility", "hidden"); });
+}
+
+/* ---------- tab 1 ---------- */
+function build() {
+  const inp = document.getElementById("since"), first = X[0].d, last = X[X.length-1].d, def = fomcDefault();
+  inp.min = first; inp.max = last;
+  if (!state.since || state.since < first || state.since > last) state.since = def;
+  inp.value = state.since;
+  inp.onchange = () => { if (!inp.value) return; state.since = inp.value < first ? first : inp.value > last ? last : inp.value; inp.value = state.since; save(); render(); };
+  const btn = document.getElementById("sinceFomc"), lastM = [...R.meetings].reverse().find(m => m <= last);
+  btn.textContent = lastM ? `Use day before ${fmtD(lastM)} FOMC` : "Reset";
+  btn.onclick = () => { state.since = def; inp.value = def; save(); render(); };
+}
+function tiles(M) {
+  const L = M.cur.fci, big = M.list.slice().sort((a,b) => Math.abs(b.d) - Math.abs(a.d))[0];
+  const T = [
+    ["Index, latest", lv(L), `${fmtD(M.cur.d)} · higher is tighter`],
+    ["Versus 2000–25 average", sg(L - 100), L > 100 ? "tighter than average" : "easier than average"],
+    ["Change since comparison date", sg(M.cur.fci - M.pre.fci), `${fmtD(M.pre.d)} → ${fmtD(M.cur.d)}`],
+    ["Biggest driver of the change", big.s, `${sg(big.d)} points`]
+  ];
+  document.getElementById("tiles").innerHTML = T.map(([k,v,s]) => `<div class="tile"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${s}</span></div>`).join("");
+}
+function footText() {
+  const A = R.asof, g = new Date(R.generated);
+  let t = `Latest inputs: S&amp;P 500 ${fmtD(A.sp500)}, CAPE ${fmtD(A.cape)}, fed funds ${fmtD(A.ffr)}, 10‑year ${fmtD(A.y10)}, BBB spread ${fmtD(A.bbb)}, dollar ${fmtD(A.usd)}`;
+  if (R.usd_extended_from) t += ` (extended with ICE dollar index changes from ${fmtD(R.usd_extended_from)})`;
+  else if (A.usd < R.last) t += ` (carried forward since)`;
+  return t + `. Later days carry the last value forward; see the Replication tab. Last updated ${g.toUTCString().replace(/:\d\d GMT/, " UTC")}.`;
+}
+
+/* ---------- tab 2 ---------- */
+function tbl(id, head, rows, cls) {
+  document.getElementById(id).innerHTML = `<table><thead><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr class="${r.tot?"tot":""}">${r.c.map((v,i) => `<td${r.tx && r.tx.includes(i) ? ' class="tx"' : ""}>${v}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function repTab() {
+  const cur = X[X.length-1], w = R.weights, S = R.stats, A = R.asof;
+  const one = {ffr: `${(100/w.ffr).toFixed(0)} bp`, y10: `${(100/w.y10).toFixed(0)} bp`, bbb: `${(100/w.bbb).toFixed(0)} bp`,
+    cape: `${((1-Math.exp(-1/(w.cape*100)))*100).toFixed(0)}% fall`, usd: `${((Math.exp(1/(w.usd*100))-1)*100).toFixed(0)}% rise`};
+  const how = {ffr:"Level, %", y10:"Level, %", bbb:"Level, percentage points", cape:"−100 × ln(CAPE)", usd:"100 × ln(index)"};
+  const rows = KEYS.map(k => ({c:[R.labels[k], (w[k]*100).toFixed(1)+"%", how[k], raw(k, cur.x[k]), sg(cur.c[k]), one[k]], tx:[2]}));
+  rows.push({tot:true, c:["Index", "100%", "", "", lv(cur.fci), ""]});
+  tbl("comp", ["Component","Weight","Enters as","Latest","Points vs. average","One point ="], rows);
+
+  const br = S.bench.map(b => {
+    const g = b.mean - b.published;
+    return {c:[b.label, b.published.toFixed(2), b.mean.toFixed(2), `${b.min.toFixed(2)} to ${b.max.toFixed(2)}`, sg(g)], tx:[0]};
+  });
+  tbl("bench", ["Published observation","Goldman","Replicated (mean)","Replicated range","Gap"], br);
+  const gaps = S.bench.map(b => b.mean - b.published), mg = gaps.reduce((a,b)=>a+b,0)/gaps.length;
+  document.getElementById("benchNote").innerHTML = `The replicated level runs about <b>${mg.toFixed(1)} points above</b> the published Goldman values in all three checks (a gap of ${Math.min(...gaps).toFixed(2)} to ${Math.max(...gaps).toFixed(2)}), with the same direction of movement between March 2023, June 2023 and 2024. A near‑constant gap is what a different reference period or dollar index would produce; it does not affect changes between dates, which is what the Index tab shows. The three published values are few and two have uncertain dates, so the level is not fitted to them.`;
+  const T = (a,b) => [a, b], bench = S.bench.map(b => [toT(b.start) + (toT(b.end)-toT(b.start))/2, b.published]);
+  const from = toT("2019-01-01"), pts = X.filter(x => toT(x.d) >= from).map(x => [toT(x.d), x.fci]);
+  drawLines(document.getElementById("cB"), {H: 260, label: "Replicated index since 2019 with published Goldman observations", base: 100, t0: from, t1: pts[pts.length-1][0],
+    dom: niceDomain(pts.map(p => p[1]).concat(bench.map(p => p[1])), .05),
+    series: [{name:"Replicated", pts, color:"var(--accent)", w:1.4, tol: 4*864e5}, {name:"Goldman, published (period mid‑point)", pts: bench, color:"var(--ink)", style:"dots", tol: 1e12}], tipDate: tipDay});
+  const all = X.map(x => [toT(x.d), x.fci]);
+  drawLines(document.getElementById("cH"), {H: 280, label: "Replicated index, 1990 to present", base: 100,
+    series: [{name:"Replicated", pts: all, color:"var(--accent)", w:1.2, tol: 5*864e5}], tipDate: tipDay, endLabel: fmtD(cur.d)});
+
+  const vf = R.vs_fed, vs = R.vs_fed_stats;
+  if (vf && vs) {
+    const z = i => { const a = vf.map(r => r[i]), mu = a.reduce((s,v)=>s+v,0)/a.length, sd = Math.sqrt(a.reduce((s,v)=>s+(v-mu)**2,0)/a.length); return a.map(v => (v-mu)/sd); };
+    const zg = z(1), zf = z(2);
+    drawLines(document.getElementById("cF"), {H: 240, label: "Goldman-style index and Fed FCI-G, standardized", base: 0,
+      series: [{name:"Goldman‑style (z)", pts: vf.map((r,i) => [toT(r[0]), zg[i]]), color:"var(--accent)", w:1.5, tol: 20*864e5},
+               {name:"Fed FCI‑G (z)", pts: vf.map((r,i) => [toT(r[0]), zf[i]]), color:"var(--ink3)", w:1.5, tol: 20*864e5}], tipDate: tipMon});
+    tbl("fedTbl", ["Month‑end, "+fmtD(vs.since)+" to "+fmtD(vs.last),"Correlation"], [
+      {c:["Levels", vs.corr_level.toFixed(2)]}, {c:["1‑month changes", vs.corr_chg1.toFixed(2)]}, {c:["3‑month changes", vs.corr_chg3.toFixed(2)]}]);
+  } else document.getElementById("cF").innerHTML = '<p class="note">Fed FCI‑G data not available.</p>';
+
+  const drows = KEYS.map(k => ({c:[R.labels[k], S.sd63[k].toFixed(2), (S.share_var_2020[k]*100).toFixed(0)+"%"]}));
+  drows.push({tot:true, c:["Index", S.sd63.fci.toFixed(2), "100%"]});
+  tbl("drv", ["Component","Std. dev., 3‑month change (pts)","Share of daily variance, 2020–"], drows);
+
+  const e = R.e10_growth != null ? `${(R.e10_growth*100).toFixed(1)}% a year` : null;
+  const cc = S.cape_check, ex = S.extrap_sd_pct;
+  const rule = {
+    ffr:["FRED, posted with about a one‑day lag.","Last value carried forward."],
+    y10:["FRED, posted with about a one‑day lag.","Last value carried forward."],
+    bbb:["FRED (ICE BofA), posted with about a one‑day lag.","Last value carried forward."],
+    cape:["multpl.com current CAPE; S&amp;P 500 close from FRED or Yahoo's quote page.","CAPE = S&amp;P 500 ÷ E10 (ten‑year average earnings), so it moves with the index every day."],
+    usd:["FRED broad dollar index, published weekly with a lag of about a week.", R.usd_extended_from ? `Extended from ${fmtD(R.usd_extended_from)} with ICE dollar index (DXY) changes.` : "Last value carried forward until DXY closes, collected daily from now on, overlap with FRED's data and can extend it."]
+  };
+  const crow = KEYS.map(k => ({c:[R.labels[k], fmtD(A[k === "cape" ? "cape" : k]), rule[k][0], rule[k][1]], tx:[2,3]}));
+  tbl("cur", ["Input","Latest observation","Source and timing","Days after the latest observation"], crow);
+  document.getElementById("curProse").innerHTML =
+    `<p><b>Equity valuation (CAPE).</b> Shiller's CAPE is monthly. The page backs out E10, the ten‑year average of real earnings (in the S&amp;P price units), from each completed month's CAPE and the average S&amp;P 500 price that month, as Shiller does, and also from multpl.com's current value. E10 is interpolated between those anchors, so the daily CAPE equals the S&amp;P 500 divided by E10. The last E10 anchor is ${fmtD(R.e10_last_anchor)}${e ? `; beyond it E10 would grow at its trailing 12‑month rate (${e})` : ""}. When the current CAPE cannot be downloaded, that growth rule keeps the series going.</p>` +
+    (cc ? `<p><b>Checks.</b> The reconstructed monthly‑average CAPE matches multpl's published monthly values in ${cc.n} months since 1990 with a root‑mean‑square error of ${cc.rmse_pct.toFixed(2)}% (largest ${cc.max_pct.toFixed(1)}%). Testing the growth rule out of sample, extrapolating E10 one month ahead has a standard deviation of ${ex[1].toFixed(1)}% (≈${(w.cape*ex[1]).toFixed(2)} index points) and three months ahead ${ex[3].toFixed(1)}% (≈${(w.cape*ex[3]).toFixed(2)} points), including 2020–21 when earnings moved sharply.</p>` : "") +
+    `<p><b>Dollar.</b> The Fed's broad index is released with a lag of about a week. The page collects the ICE dollar index (DXY) close every day; once a stored DXY close falls on or after a date FRED has published, later days are extended with DXY's change. Until then, the last published value is carried forward and the footer says so.</p>`;
+}
+
+function render() {
+  const M = items();
+  document.getElementById("stamp").textContent = `${fmtD(M.pre.d)} → ${fmtD(M.cur.d)}`;
+  document.getElementById("foot").innerHTML = footText();
+  document.getElementById("foot2").innerHTML = footText();
+  if (state.tab === "index") {
+    tiles(M);
+    document.getElementById("wfTitle").textContent = `What moved the index since ${fmtD(M.pre.d)}`;
+    drawWF(document.getElementById("cD"), M);
+  } else repTab();
+}
+function setTab(t, push) {
+  state.tab = t;
+  for (const [k, id] of [["index","tab-index"],["rep","tab-rep"]]) {
+    const b = document.getElementById(id), on = k === t;
+    b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1;
+    document.getElementById("p-" + k).hidden = !on;
+  }
+  if (push) history.replaceState(null, "", t === "rep" ? "#replication" : location.pathname + location.search);
+  render();
+}
+document.getElementById("tab-index").onclick = () => setTab("index", true);
+document.getElementById("tab-rep").onclick = () => setTab("rep", true);
+document.querySelector(".tabs").addEventListener("keydown", e => {
+  if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const t = state.tab === "index" ? "rep" : "index"; setTab(t, true); document.getElementById("tab-" + t).focus(); }
+});
+fetch("gs_data.json", {cache: "no-cache"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
+  R = j; X = prep(j);
+  document.getElementById("state").hidden = true;
+  document.getElementById("app").hidden = false;
+  build(); setTab(location.hash === "#replication" ? "rep" : "index", false);
+  let rz; new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(render, 80); }).observe(document.querySelector(".wrap"));
+}).catch(e => { document.getElementById("state").textContent = "The data file could not be loaded (" + e.message + "). Try reloading the page."; });
+</script>
+</body>
+</html>

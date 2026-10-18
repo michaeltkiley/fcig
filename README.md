@@ -59,3 +59,14 @@ data appear to use the previous day's close.
 Run locally: `pip install -r requirements.txt && python fcig_replicate.py` (or `--offline` to reuse `raw/`).
 
 Not an official Federal Reserve product.
+
+## Goldman Sachs-style FCI
+
+`gs.html` (built by `fcig_gs.py`, data in `gs_data.json` and `fcig_gs_daily.csv`) is a daily levels index
+using Goldman's published weights (fed funds 4.4%, 10-year 45.1%, BBB spread 39.6%, CAPE 4.9%, dollar 6.0%),
+normalized to a 2000-2025 mean of 100. The Index tab shows only a waterfall from a chosen earlier date; the
+Replication tab has the method, level check against published Goldman values (the replication runs about
+0.6 above them), comparison with the Fed's FCI-G, and the data-currency rules. CAPE is made daily as
+S&P 500 / E10, with E10 backed out from multpl.com's Shiller CAPE and extrapolated at its trailing growth
+rate past the last anchor; the dollar is carried forward (or extended with DXY) past FRED's lag.
+Not a Goldman Sachs product; the exact normalization and dollar index are proprietary.

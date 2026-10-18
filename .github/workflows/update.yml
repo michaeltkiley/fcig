@@ -32,14 +32,18 @@ jobs:
       - name: Download data and recompute the index
         run: python fcig_replicate.py
 
+      - name: Update Goldman-style FCI
+        continue-on-error: true  # a failure here must not block the FCI-G update
+        run: python fcig_gs.py
+
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json fcig_replication_daily.csv fcig_replication_monthly.csv fomc_meetings.json history/
+          git add gs_data.json fcig_gs_daily.csv data.json fcig_replication_daily.csv fcig_replication_monthly.csv fomc_meetings.json history/
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Update FCI-G data $(date -u +%Y-%m-%d)"
+            git commit -m "Update FCI data $(date -u +%Y-%m-%d)"
             git push
           fi
