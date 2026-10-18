@@ -31,6 +31,8 @@ Usage:
     python fcig_gs.py            # download, update history, write outputs
     python fcig_gs.py --offline  # recompute from files already in raw/ and history/
 Outputs: gs_data.json (for gs.html), fcig_gs_daily.csv
+Validation: history/gs_nyfed_digitized.csv is Goldman's monthly FCI, 1990-Jul 2022, read from the vector chart in
+the New York Fed's July 2022 Investor Advisory Committee presentation (tools/digitize_nyfed.py).
 """
 import argparse, datetime as dt, json, os, re, time
 import numpy as np, pandas as pd
@@ -323,6 +325,36 @@ def vs_fed(fci):
     return rows, st
 
 
+def vs_goldman(fci, c):
+    """Monthly-average replication against Goldman's monthly series digitized from the New York Fed chart
+    (tools/digitize_nyfed.py). Goldman's series behaves like a monthly average, not a month-end value."""
+    p = os.path.join(HIST, "gs_nyfed_digitized.csv")
+    if not os.path.exists(p):
+        return None, None
+    g = pd.read_csv(p, index_col=0).iloc[:, 0]
+    g.index = pd.PeriodIndex(g.index, freq="M")
+    per = fci.index.to_period("M")
+    rep, rep_end = fci.groupby(per).mean(), fci.groupby(per).last()
+    j = pd.concat([g, rep], axis=1, join="inner").dropna()
+    j.columns = ["gs", "rep"]
+    e = j.rep - j.gs
+    chg = lambda k: float(j.diff(k).dropna().corr().iloc[0, 1])
+    je = pd.concat([g, rep_end], axis=1, join="inner").dropna()
+    cm = c.groupby(per).mean().reindex(j.index)
+    A = np.column_stack([cm.values, np.ones(len(j))])
+    b = np.linalg.lstsq(A, (j.gs - 100).values, rcond=None)[0]
+    by = e.groupby(e.index.year // 10 * 10).agg(["mean", "std"])
+    st = {"n": int(len(j)), "first": str(j.index[0]), "last": str(j.index[-1]),
+          "corr_level": float(j.corr().iloc[0, 1]), "corr_chg1": chg(1), "corr_chg3": chg(3),
+          "corr_chg1_monthend": float(je.diff().dropna().corr().iloc[0, 1]),
+          "mean_gap": float(e.mean()), "sd_gap": float(e.std()), "rmse_demeaned": float(np.sqrt(((e - e.mean()) ** 2).mean())),
+          "slope": float(np.polyfit(j.gs, j.rep, 1)[0]),
+          "coef": {k: float(v) for k, v in zip(c.columns, b[:-1])},
+          "by_decade": {f"{int(d)}s": [float(r["mean"]), float(r["std"])] for d, r in by.iterrows()}}
+    rows = [[str(k), round(float(a), 3), round(float(b_), 3)] for k, a, b_ in zip(j.index, j.gs, j.rep)]
+    return rows, st
+
+
 # ---------------------------------------------------------------- main
 
 def main():
@@ -335,6 +367,7 @@ def main():
     x, c, fci, ref, info, px, m, A = build()
     st = stats(x, c, fci, px, m)
     vf, vst = vs_fed(fci)
+    vg, vgst = vs_goldman(fci, c)
 
     out = pd.concat([fci.rename("fci"), c.add_prefix("c_"), x.add_prefix("x_")], axis=1)
     out.rename_axis("date").to_csv(os.path.join(HERE, "fcig_gs_daily.csv"), date_format="%Y-%m-%d", float_format="%.4f")
@@ -345,7 +378,7 @@ def main():
     data = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), **info,
             "weights": WEIGHTS, "labels": LABELS, "ref": {k: round(float(v), 5) for k, v in ref.items()},
             "norm": NORM, "meetings": meetings, "cols": ["date", "ffr", "y10", "bbb", "cape", "usd"], "rows": rows,
-            "stats": st, "vs_fed": vf, "vs_fed_stats": vst}
+            "stats": st, "vs_fed": vf, "vs_fed_stats": vst, "vs_gs": vg, "vs_gs_stats": vgst}
     path = os.path.join(HERE, "gs_data.json")
     new = json.dumps(data, separators=(",", ":"))
     try:
@@ -367,6 +400,7 @@ def main():
               f"[{b['min']:.2f}, {b['max']:.2f}]")
     print("  CAPE check", st["cape_check"], "| extrapolation sd %", st["extrap_sd_pct"])
     print("  vs Fed", vst)
+    print("  vs Goldman (digitized)", {k: v for k, v in (vgst or {}).items() if k != "by_decade"})
 
 
 if __name__ == "__main__":
