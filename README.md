@@ -49,12 +49,15 @@ series' last real date.
 
 | Input | Rule |
 |---|---|
-| Federal funds rate, 10-year Treasury, BBB, dollar | constant at the last value |
+| Federal funds rate, 10-year Treasury, BBB | constant at the last value |
+| Dollar | moves with the ICE dollar index (DXY) once a saved DXY close overlaps FRED's data, then constant |
 | Mortgage rate | 10-year Treasury plus the average of the last four weekly spreads, on the Thursdays after the last survey |
 | House prices | trailing six-month average monthly growth, for each month-end up to the latest day |
 
-The Goldman-style index already uses the same idea: rates and spread held constant, the dollar carried forward (or
-moved with the ICE dollar index when available), and ten-year earnings (CAPE) grown at their trailing 12-month rate.
+The Goldman-style index uses the same code for the rates, spread and dollar (`hold()` and `extend_dollar()`), and
+grows ten-year earnings (CAPE) at their trailing 12-month rate. `fcig_gs.py` runs first in the workflow because it saves
+each day's DXY close to `history/dxy.csv`, which both indexes read; the overlap with FRED builds up over the days after
+that file began, so until then the dollar is held constant.
 
 ## Accuracy
 
