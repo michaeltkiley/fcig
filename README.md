@@ -41,6 +41,21 @@ over the next year; positive values are a headwind.
 | House prices | Zillow ZHVI, United States, mid-tier, smoothed, seasonally adjusted; Case-Shiller (`CSUSHPISA`) before 2000 |
 | Dollar | FRED `DTWEXBGS`, earlier `TWEXB` and `TWEXBMTH` |
 
+## Filling data that is not daily or not yet published
+
+Inputs that publish weekly, monthly or with a lag are carried to the latest equity trading day by a simple rule
+(`fill()` in `fcig_replicate.py`); real observations are never altered and `asof` in `data.json` still shows each
+series' last real date.
+
+| Input | Rule |
+|---|---|
+| Federal funds rate, 10-year Treasury, BBB, dollar | constant at the last value |
+| Mortgage rate | 10-year Treasury plus the average of the last four weekly spreads, on the Thursdays after the last survey |
+| House prices | trailing six-month average monthly growth, for each month-end up to the latest day |
+
+The Goldman-style index already uses the same idea: rates and spread held constant, the dollar carried forward (or
+moved with the ICE dollar index when available), and ten-year earnings (CAPE) grown at their trailing 12-month rate.
+
 ## Accuracy
 
 Against the Fed's published monthly values, the total index has an RMSE of about 0.05 (3-year
