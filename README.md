@@ -41,6 +41,24 @@ over the next year; positive values are a headwind.
 | House prices | Zillow ZHVI, United States, mid-tier, smoothed, seasonally adjusted; Case-Shiller (`CSUSHPISA`) before 2000 |
 | Dollar | FRED `DTWEXBGS`, earlier `TWEXB` and `TWEXBMTH` |
 
+## Filling data that is not daily or not yet published
+
+Inputs that publish weekly, monthly or with a lag are carried to the latest equity trading day by a simple rule
+(`fill()` in `fcig_replicate.py`); real observations are never altered and `asof` in `data.json` still shows each
+series' last real date.
+
+| Input | Rule |
+|---|---|
+| Federal funds rate, 10-year Treasury, BBB | constant at the last value |
+| Dollar | moves with the ICE dollar index (DXY) once a saved DXY close overlaps FRED's data, then constant |
+| Mortgage rate | 10-year Treasury plus the average of the last four weekly spreads, on the Thursdays after the last survey |
+| House prices | trailing six-month average monthly growth, for each month-end up to the latest day |
+
+The Goldman-style index uses the same code for the rates, spread and dollar (`hold()` and `extend_dollar()`), and
+grows ten-year earnings (CAPE) at their trailing 12-month rate. `fcig_gs.py` runs first in the workflow because it saves
+each day's DXY close to `history/dxy.csv`, which both indexes read; the overlap with FRED builds up over the days after
+that file began, so until then the dollar is held constant.
+
 ## Accuracy
 
 Against the Fed's published monthly values, the total index has an RMSE of about 0.05 (3-year

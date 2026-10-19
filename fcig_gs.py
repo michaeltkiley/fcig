@@ -36,7 +36,7 @@ the New York Fed's July 2022 Investor Advisory Committee presentation (tools/dig
 """
 import argparse, datetime as dt, json, os, re, time
 import numpy as np, pandas as pd
-from fcig_replicate import (HERE, RAW, HIST, MONTHS, fetch, fred, read_hist, write_hist, splice_level,
+from fcig_replicate import (HERE, RAW, HIST, MONTHS, fetch, fred, read_hist, write_hist, splice_level, extend_dollar, hold, hold,
                             splice_diff)
 
 START = "1990-01-02"
@@ -241,25 +241,13 @@ def build():
     idx = px.loc[START:].index  # equity trading days
 
     x = pd.DataFrame(index=idx)
-    x["ffr"] = ffr_s.reindex(ffr_s.index.union(idx)).ffill().reindex(idx)
-    x["y10"] = y10_s.reindex(y10_s.index.union(idx)).ffill().reindex(idx)
-    x["bbb"] = spread.reindex(spread.index.union(idx)).ffill().reindex(idx)
+    x["ffr"] = hold(ffr_s, idx[-1]).reindex(idx, method="ffill")
+    x["y10"] = hold(y10_s, idx[-1]).reindex(idx, method="ffill")
+    x["bbb"] = hold(spread, idx[-1]).reindex(idx, method="ffill")
     e10, (e10_last, e10_g) = e10_daily(A, idx)
     x["cape"] = px.loc[idx].values / e10
+    usd, usd_ext = extend_dollar(usd, dxy)  # same rule as the FCI-G page: DXY changes, then constant
     u = usd.reindex(usd.index.union(idx)).interpolate("time").ffill().reindex(idx)
-    # extend the dollar past FRED's lag with ICE dollar index changes when the two overlap
-    usd_ext = None
-    both = dxy.index.intersection(usd.index)
-    if len(both) and both[-1] < idx[-1]:
-        base = both[-1]
-        tail = dxy[dxy.index > usd_last]
-        if len(tail):
-            ext = usd.loc[base] * tail / dxy.loc[base]
-            u = u.copy()
-            for d, v in ext.items():
-                if d in u.index:
-                    u.loc[d:] = v
-            usd_ext = tail.index[0]
     x["usd"] = u
     x = x.dropna()
 

@@ -211,6 +211,54 @@ def series():
     return S, proxy_from
 
 
+def hold(s, end):
+    """Carry the last value forward on business days up to `end`."""
+    d = pd.bdate_range(s.index[-1] + pd.Timedelta(days=1), end)
+    return pd.concat([s, pd.Series(s.iloc[-1], index=d)])
+
+
+def extend_dollar(usd, dxy):
+    """Extend the broad dollar past FRED's lag with ICE dollar index (DXY) changes, once saved DXY closes
+    overlap the FRED data. Returns (series, first extended date or None); callers then hold the last value."""
+    if dxy is None or not len(dxy):
+        return usd, None
+    both = dxy.index.intersection(usd.index)
+    tail = dxy[dxy.index > usd.index[-1]]
+    if not len(both) or not len(tail):
+        return usd, None
+    ext = usd.loc[both[-1]] * tail / dxy.loc[both[-1]]
+    return pd.concat([usd, ext]), tail.index[0]
+
+
+def fill(S, end, dxy=None):
+    """Carry each input forward to `end` (the last equity trading day) with a simple rule, so series that
+    publish with a lag or less often than daily are not left out of the latest averages:
+      FFR, 10Y, BBB          constant at the last value
+      Dollar                 ICE dollar index changes once saved closes overlap FRED's data, then constant
+      Mortgage rate          10-year Treasury plus the average of the last four weekly spreads, on the
+                             Thursdays (the PMMS day) after the last survey
+      House prices           monthly, at the trailing six-month average growth rate, for each month-end
+                             up to `end`
+    Real observations are never changed; only dates after each series' last observation are added."""
+    S = dict(S)
+    end = pd.Timestamp(end)
+    for c in ("FFR", "10Yr Treasury", "BBB"):
+        S[c] = (S[c][0], hold(S[c][1], end))
+    k, s = S["Dollar"]
+    S["Dollar"] = (k, hold(extend_dollar(s, dxy)[0], end))
+    y10 = S["10Yr Treasury"][1]
+    k, m = S["Mortgage Rate"]
+    spread = (m - y10.reindex(m.index)).dropna().iloc[-4:].mean()
+    thu = pd.date_range(m.index[-1] + pd.Timedelta(days=7), end, freq="7D")
+    S["Mortgage Rate"] = (k, pd.concat([m, y10.reindex(thu) + spread]))
+    k, h = S["House Prices"]
+    g = np.log(h).diff().iloc[-6:].mean()
+    me = pd.date_range(h.index[-1] + pd.offsets.MonthEnd(1), end, freq="ME")
+    if len(me):
+        S["House Prices"] = (k, pd.concat([h, pd.Series(h.iloc[-1] * np.exp(g * np.arange(1, len(me) + 1)), index=me)]))
+    return S
+
+
 # ---------------------------------------------------------------- index
 
 def changes_at(S, d):
@@ -301,6 +349,10 @@ def main():
         download()
     update_history()
     S, proxy_from = series()
+    asof = {k: s.index[-1].strftime("%Y-%m-%d") for k, (_, s) in S.items()}
+    asof["House Prices"] = zillow().index[-1].strftime("%Y-%m")
+    dxy_p = os.path.join(HIST, "dxy.csv")  # daily closes saved by fcig_gs.py
+    S = fill(S, S["Stock Market"][1].index[-1], read_hist("dxy.csv") if os.path.exists(dxy_p) else None)
     names = ["FCI-G"] + COLS
     keys = [f"{k}|{c}" for k in ("3yr", "1yr") for c in names]
     dkeys = keys + [f"{k}|next year|{c}" for k in ("3yr", "1yr") for c in names]
@@ -336,8 +388,6 @@ def main():
             fed_rows.append([m] + list(F["3yr"].loc[m]) + list(F["1yr"].loc[m]))
     complete = [r for r in mrows if r[0] < last_day.strftime("%Y-%m")
                 or (last_day + pd.offsets.BDay(1)).month != last_day.month]
-    asof = {k: s.index[-1].strftime("%Y-%m-%d") for k, (_, s) in S.items()}
-    asof["House Prices"] = zillow().index[-1].strftime("%Y-%m")
     rnd = lambda r: [r[0]] + [round(float(x), 4) for x in r[1:]]
     data = {
         "generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
