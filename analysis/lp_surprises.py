@@ -81,8 +81,9 @@ def monthly_y():
     return y.groupby(y.index.to_period("M")).last()   # month-end values
 
 
-def lp(y, s, mask=None):
-    """Returns tidy rows for every series in y and both shocks."""
+def lp(y, s, mask=None, future=False):
+    """Returns tidy rows for every series in y and both shocks. With future=True, the sums of the target and path
+    surprises over months t+1..t+h are added as controls, so the response holds later surprises at zero."""
     rows = []
     X0 = s.copy()
     dy = y["fci"].diff()
@@ -93,6 +94,9 @@ def lp(y, s, mask=None):
             for k in range(1, LAGS + 1):
                 X[f"dy{k}"] = dy.shift(k)
                 X[f"t{k}"], X[f"p{k}"] = s["target"].shift(k), s["path"].shift(k)
+            if future and h > 0:
+                X["fut_target"] = sum(s["target"].shift(-k) for k in range(1, h + 1))
+                X["fut_path"] = sum(s["path"].shift(-k) for k in range(1, h + 1))
             df = pd.concat([lhs.rename("lhs"), X], axis=1).dropna()
             if mask is not None:
                 df = df[mask.reindex(df.index).fillna(False)]
@@ -121,22 +125,30 @@ def main():
         for a_, b_ in ZLB:
             zlb |= (yy.index >= pd.Period(a_, "M")) & (yy.index <= pd.Period(b_, "M"))
         for smp, mask in (("full", None), ("ex-ZLB", ~zlb)):
-            r = lp(yy, s, mask).assign(sample=smp, factors=method)
-            r["coef"] *= 0.25   # per +25 bp
-            r["se"] *= 0.25
-            parts.append(r)
+            for spec in (("base", "future") if method == "orth" else ("base",)):
+                r = lp(yy, s, mask, future=(spec == "future")).assign(sample=smp, factors=method, spec=spec)
+                r["coef"] *= 0.25   # per +25 bp
+                r["se"] *= 0.25
+                parts.append(r)
     res = pd.concat(parts)
     res.to_csv(os.path.join(HERE, "lp_results.csv"), index=False, float_format="%.5f")
-    chk = res.pivot_table(index=["factors", "sample", "shock", "h"], columns="series", values="coef")
+    chk = res.pivot_table(index=["factors", "spec", "sample", "shock", "h"], columns="series", values="coef")
     print("\nmax |sum of components - FCI| =", float((chk[COMP].sum(axis=1) - chk["fci"]).abs().max()))
     for method in ("orth", "gss"):
         for smp in ("full", "ex-ZLB"):
             print(f"\nFCI response per +25 bp, {method}, {smp} (index points; t-stat):")
             for sh in ("target", "path"):
-                r = res[(res.factors == method) & (res["sample"] == smp) & (res.series == "fci") & (res.shock == sh) & res.h.isin([0, 3, 6, 9, 12])]
+                r = res[(res.factors == method) & (res.spec == "base") & (res["sample"] == smp) & (res.series == "fci") & (res.shock == sh) & res.h.isin([0, 3, 6, 9, 12])]
                 print(f"  {sh:6s}", "  ".join(f"h={int(h)}: {c:+.2f} ({c / e:+.1f})" for h, c, e in zip(r.h, r.coef, r.se)))
-    plot(res[res.factors == "orth"], "lp_irf.png")
-    plot(res[res.factors == "gss"], "lp_irf_gss.png")
+    for smp in ("full", "ex-ZLB"):
+        print(f"\nFCI response per +25 bp, orth, {smp}, controlling for later surprises (index points; t-stat):")
+        for sh in ("target", "path"):
+            r = res[(res.factors == "orth") & (res.spec == "future") & (res["sample"] == smp) & (res.series == "fci") & (res.shock == sh) & res.h.isin([0, 3, 6, 9, 12])]
+            print(f"  {sh:6s}", "  ".join(f"h={int(h)}: {c:+.2f} ({c / e:+.1f})" for h, c, e in zip(r.h, r.coef, r.se)))
+    plot(res[(res.factors == "orth") & (res.spec == "base")], "lp_irf.png")
+    plot(res[(res.factors == "gss") & (res.spec == "base")], "lp_irf_gss.png")
+    for smp in ("full", "ex-ZLB"):
+        plot_ci(res[res.factors == "orth"], smp, f"lp_ci_{smp.replace('-', '').lower()}.png")
 
 
 def plot(res, name):
@@ -167,6 +179,37 @@ def plot(res, name):
     ax[0, 0].legend(fontsize=8, ncol=2, frameon=False)
     fig.tight_layout()
     fig.savefig(os.path.join(HERE, name), dpi=140)
+
+
+
+
+def plot_ci(res, smp, name):
+    """FCI and each contribution, one panel each, target (left) and path (right): the baseline response with 68% and 90%
+    bands, and the response controlling for later surprises (dashed, no band)."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    series = ["fci"] + COMP
+    fig, ax = plt.subplots(len(series), 2, figsize=(10, 12), sharex=True)
+    for j, sh in enumerate(("target", "path")):
+        for i, v in enumerate(series):
+            a = ax[i, j]
+            b = res[(res["sample"] == smp) & (res.shock == sh) & (res.series == v) & (res.spec == "base")].set_index("h")
+            f = res[(res["sample"] == smp) & (res.shock == sh) & (res.series == v) & (res.spec == "future")].set_index("h")
+            a.fill_between(b.index, b.coef - 1.645 * b.se, b.coef + 1.645 * b.se, color="#1f77b4", alpha=0.15, lw=0)
+            a.fill_between(b.index, b.coef - b.se, b.coef + b.se, color="#1f77b4", alpha=0.30, lw=0)
+            a.plot(b.index, b.coef, "-o", color="#1f77b4", ms=3, lw=1.6, label="baseline")
+            a.plot(f.index, f.coef, "--", color="#d62728", lw=1.3, label="controlling for later surprises")
+            a.axhline(0, color="k", lw=0.6)
+            a.set_title(f"{LABEL[v]} - {sh}", fontsize=9, loc="left")
+            if j == 0:
+                a.set_ylabel("index points")
+    for a in ax[-1]:
+        a.set_xlabel("months after the meeting month (h)")
+    ax[0, 0].legend(fontsize=7, frameon=False, loc="lower left")
+    fig.suptitle(f"{smp}: response per +25 bp surprise; bands are 68% (dark) and 90% (light), HAC", fontsize=10)
+    fig.tight_layout(rect=(0, 0, 1, 0.985))
+    fig.savefig(os.path.join(HERE, name), dpi=130)
 
 
 if __name__ == "__main__":
