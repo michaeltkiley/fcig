@@ -29,12 +29,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Download data and recompute the index
-        run: python fcig_replicate.py
-
-      - name: Update Goldman-style FCI
+      - name: Update Goldman-style FCI (first: it saves the daily dollar-index close that both indexes use)
         continue-on-error: true  # a failure here must not block the FCI-G update
         run: python fcig_gs.py
+
+      - name: Download data and recompute the index
+        run: python fcig_replicate.py
 
       - name: Commit updated data
         run: |
