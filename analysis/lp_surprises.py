@@ -82,7 +82,7 @@ def monthly_y():
 
 
 def lp(y, s, mask=None, future=False):
-    """Returns tidy rows for every series in y and both shocks. With future=True, the sums of the target and path
+    """Returns tidy rows for every series in y and every shock (column of s). With future=True, the sums of the target and path
     surprises over months t+1..t+h are added as controls, so the response holds later surprises at zero."""
     rows = []
     X0 = s.copy()
@@ -93,7 +93,8 @@ def lp(y, s, mask=None, future=False):
             X = X0.copy()
             for k in range(1, LAGS + 1):
                 X[f"dy{k}"] = dy.shift(k)
-                X[f"t{k}"], X[f"p{k}"] = s["target"].shift(k), s["path"].shift(k)
+                for c in s.columns:
+                    X[f"{c}_l{k}"] = s[c].shift(k)
             if future and h > 0:
                 X["fut_target"] = sum(s["target"].shift(-k) for k in range(1, h + 1))
                 X["fut_path"] = sum(s["path"].shift(-k) for k in range(1, h + 1))
@@ -101,7 +102,7 @@ def lp(y, s, mask=None, future=False):
             if mask is not None:
                 df = df[mask.reindex(df.index).fillna(False)]
             m = sm.OLS(df["lhs"], sm.add_constant(df.drop(columns="lhs"))).fit(cov_type="HAC", cov_kwds={"maxlags": 12})
-            for sh in ("target", "path"):
+            for sh in s.columns:
                 rows.append(dict(series=v, shock=sh, h=h, coef=m.params[sh], se=m.bse[sh], n=int(m.nobs)))
     return pd.DataFrame(rows)
 
