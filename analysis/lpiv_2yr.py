@@ -22,6 +22,7 @@ import lp_surprises as L
 from fcig_replicate import fetch
 
 HERE, ROOT = L.HERE, L.ROOT
+LABEL_X = "2-yr"
 
 
 def dgs2():
@@ -40,19 +41,21 @@ def dgs2():
 
 
 def lpiv(y, s, x, instruments, mask=None):
+    """2SLS local projections of every column of y on x; s holds the shocks (instruments, and their lags as controls)."""
     rows, diag = [], []
     dy = y["fci"].diff()
     for h in range(L.H + 1):
         base = pd.DataFrame({"x": x})
         for k in range(1, L.LAGS + 1):
             base[f"dy{k}"] = dy.shift(k)
-            base[f"t{k}"], base[f"p{k}"] = s["target"].shift(k), s["path"].shift(k)
-        base[["target", "path"]] = s[["target", "path"]]
+            for c in s.columns:
+                base[f"{c}_l{k}"] = s[c].shift(k)
+        base[list(s.columns)] = s
         lhs = pd.concat({v: y[v].shift(-h) - y[v].shift(1) for v in y.columns}, axis=1)
         df = pd.concat([lhs, base], axis=1).dropna()
         if mask is not None:
             df = df[mask.reindex(df.index).fillna(False)]
-        exog = df[[c for c in df.columns if c not in list(y.columns) + ["x", "target", "path"]]].assign(const=1.0)
+        exog = df[[c for c in df.columns if c not in list(y.columns) + ["x"] + list(s.columns)]].assign(const=1.0)
         for v in y.columns:
             r = IV2SLS(df[v], exog, df[["x"]], df[instruments]).fit(cov_type="kernel", kernel="bartlett", bandwidth=13)
             rows.append(dict(series=v, h=h, coef=r.params["x"], se=r.std_errors["x"], n=int(r.nobs)))
@@ -103,13 +106,14 @@ def main():
     plot(res[res.instruments == "target+path"])
 
 
-def plot(res):
+def plot(res, samples=("full", "ex-ZLB"), name="lpiv_irf.png"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     pal = {"c_ffr": "#7f7f7f", "c_y10": "#1f77b4", "c_bbb": "#d62728", "c_cape": "#2ca02c", "c_usd": "#9467bd"}
-    fig, ax = plt.subplots(1, 2, figsize=(11, 4.2), sharex=True)
-    for a, smp in zip(ax, ("full", "ex-ZLB")):
+    fig, ax = plt.subplots(1, len(samples), figsize=(5.5 * len(samples), 4.2), sharex=True, squeeze=False)
+    ax = ax[0]
+    for a, smp in zip(ax, samples):
         r = res[res["sample"] == smp]
         P = r.pivot_table(index="h", columns="series", values="coef")
         pos, neg = np.zeros(len(P)), np.zeros(len(P))
@@ -121,12 +125,12 @@ def plot(res):
         a.plot(f.index, f.coef, "k-o", ms=3, lw=1.6, label="FCI")
         a.fill_between(f.index, f.coef - 1.645 * f.se, f.coef + 1.645 * f.se, color="k", alpha=0.12, lw=0)
         a.axhline(0, color="k", lw=0.6)
-        a.set_title(f"{smp}: per +25 bp in the 2-yr yield (IV: target + path; 90% band)", fontsize=10)
+        a.set_title(f"{smp}: per +25 bp in the {LABEL_X} yield (IV; 90% band)", fontsize=10)
         a.set_xlabel("months after the meeting month (h)")
     ax[0].set_ylabel("index points")
     ax[0].legend(fontsize=8, ncol=2, frameon=False)
     fig.tight_layout()
-    fig.savefig(os.path.join(HERE, "lpiv_irf.png"), dpi=140)
+    fig.savefig(os.path.join(HERE, name), dpi=140)
 
 
 if __name__ == "__main__":
