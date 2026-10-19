@@ -107,7 +107,7 @@ def main():
                   {"ns": "Nakamura-Steinsson", "raw2y": "Raw 2-yr change"})
 
 
-def plot_fci(res):
+def plot_fci(res, name="lp_alt_fci.png", main_title="GS FCI response per +25 bp (90% HAC bands)", unit="index points"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -129,20 +129,21 @@ def plot_fci(res):
             a.set_title(f"{title} - {smp}", fontsize=9, loc="left")
             a.legend(fontsize=7, frameon=False)
             if j == 0:
-                a.set_ylabel("index points")
+                a.set_ylabel(unit)
     for a in ax[-1]:
         a.set_xlabel("months after the meeting month (h)")
-    fig.suptitle("GS FCI response per +25 bp (90% HAC bands)", fontsize=10)
+    fig.suptitle(main_title, fontsize=10)
     fig.tight_layout(rect=(0, 0, 1, 0.97))
-    fig.savefig(os.path.join(HERE, "lp_alt_fci.png"), dpi=130)
+    fig.savefig(os.path.join(HERE, name), dpi=130)
 
 
-def plot_grid(res, shocks, smp, name, label):
+def plot_grid(res, shocks, smp, name, label, series=None, series_label=None, unit="index points"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    series = ["fci"] + L.COMP
-    fig, ax = plt.subplots(len(series), len(shocks), figsize=(3.9 * len(shocks) + 1, 12), sharex=True, squeeze=False)
+    series = series or ["fci"] + L.COMP
+    series_label = series_label or L.LABEL
+    fig, ax = plt.subplots(len(series), len(shocks), figsize=(3.9 * len(shocks) + 1, 2 * len(series)), sharex=True, squeeze=False)
     for j, sh in enumerate(shocks):
         for i, v in enumerate(series):
             a = ax[i, j]
@@ -151,9 +152,9 @@ def plot_grid(res, shocks, smp, name, label):
             a.fill_between(b.index, b.coef - b.se, b.coef + b.se, color="#1f77b4", alpha=0.30, lw=0)
             a.plot(b.index, b.coef, "-o", color="#1f77b4", ms=3, lw=1.5)
             a.axhline(0, color="k", lw=0.6)
-            a.set_title(f"{L.LABEL[v]} - {label[sh]}", fontsize=9, loc="left")
+            a.set_title(f"{series_label[v]} - {label[sh]}", fontsize=9, loc="left")
             if j == 0:
-                a.set_ylabel("index points")
+                a.set_ylabel(unit)
     for a in ax[-1]:
         a.set_xlabel("months after the meeting month (h)")
     fig.suptitle(f"{smp}: response per +25 bp; bands are 68% (dark) and 90% (light), HAC", fontsize=10)
