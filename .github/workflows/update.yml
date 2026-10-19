@@ -29,7 +29,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Update Goldman-style FCI (first: it saves the daily dollar-index close that both indexes use)
+      # Runs first because it saves the daily dollar-index close that both indexes use.
+      - name: Update Goldman-style FCI
         continue-on-error: true  # a failure here must not block the FCI-G update
         run: python fcig_gs.py
 
