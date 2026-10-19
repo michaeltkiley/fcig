@@ -1,0 +1,2913 @@
+series,shock,h,coef,se,n,sample,spec,lookback
+fci,target,0,-0.00100,0.04335,389,full,baseline,3yr
+fci,path,0,0.08172,0.02263,389,full,baseline,3yr
+fci,target,1,0.01195,0.04067,388,full,baseline,3yr
+fci,path,1,0.10204,0.03494,388,full,baseline,3yr
+fci,target,2,0.02373,0.03713,387,full,baseline,3yr
+fci,path,2,0.12453,0.05132,387,full,baseline,3yr
+fci,target,3,0.04244,0.04049,386,full,baseline,3yr
+fci,path,3,0.16630,0.06716,386,full,baseline,3yr
+fci,target,4,0.04354,0.04659,385,full,baseline,3yr
+fci,path,4,0.14588,0.08126,385,full,baseline,3yr
+fci,target,5,0.03608,0.06116,384,full,baseline,3yr
+fci,path,5,0.15618,0.09827,384,full,baseline,3yr
+fci,target,6,0.08051,0.06529,383,full,baseline,3yr
+fci,path,6,0.16875,0.11911,383,full,baseline,3yr
+fci,target,7,0.09854,0.06805,382,full,baseline,3yr
+fci,path,7,0.19747,0.13706,382,full,baseline,3yr
+fci,target,8,0.08549,0.09014,381,full,baseline,3yr
+fci,path,8,0.27087,0.14821,381,full,baseline,3yr
+fci,target,9,0.01330,0.14096,380,full,baseline,3yr
+fci,path,9,0.30482,0.15453,380,full,baseline,3yr
+fci,target,10,-0.02209,0.16523,379,full,baseline,3yr
+fci,path,10,0.35708,0.15217,379,full,baseline,3yr
+fci,target,11,-0.01261,0.17550,378,full,baseline,3yr
+fci,path,11,0.39141,0.15673,378,full,baseline,3yr
+fci,target,12,-0.06191,0.19679,377,full,baseline,3yr
+fci,path,12,0.41233,0.16211,377,full,baseline,3yr
+FFR,target,0,0.01675,0.00234,389,full,baseline,3yr
+FFR,path,0,0.00364,0.00249,389,full,baseline,3yr
+FFR,target,1,0.03706,0.00413,388,full,baseline,3yr
+FFR,path,1,0.00422,0.00516,388,full,baseline,3yr
+FFR,target,2,0.05540,0.00581,387,full,baseline,3yr
+FFR,path,2,0.00489,0.00750,387,full,baseline,3yr
+FFR,target,3,0.06355,0.00715,386,full,baseline,3yr
+FFR,path,3,0.00594,0.00931,386,full,baseline,3yr
+FFR,target,4,0.06293,0.00990,385,full,baseline,3yr
+FFR,path,4,0.00740,0.01042,385,full,baseline,3yr
+FFR,target,5,0.06395,0.01269,384,full,baseline,3yr
+FFR,path,5,0.00786,0.01135,384,full,baseline,3yr
+FFR,target,6,0.06514,0.01504,383,full,baseline,3yr
+FFR,path,6,0.00837,0.01297,383,full,baseline,3yr
+FFR,target,7,0.06493,0.01688,382,full,baseline,3yr
+FFR,path,7,0.00914,0.01492,382,full,baseline,3yr
+FFR,target,8,0.06236,0.01881,381,full,baseline,3yr
+FFR,path,8,0.01010,0.01675,381,full,baseline,3yr
+FFR,target,9,0.05935,0.02082,380,full,baseline,3yr
+FFR,path,9,0.01075,0.01862,380,full,baseline,3yr
+FFR,target,10,0.05809,0.02263,379,full,baseline,3yr
+FFR,path,10,0.01047,0.02085,379,full,baseline,3yr
+FFR,target,11,0.05566,0.02397,378,full,baseline,3yr
+FFR,path,11,0.01011,0.02329,378,full,baseline,3yr
+FFR,target,12,0.05281,0.02346,377,full,baseline,3yr
+FFR,path,12,0.00859,0.02535,377,full,baseline,3yr
+10Yr Treasury,target,0,-0.00115,0.00051,389,full,baseline,3yr
+10Yr Treasury,path,0,-0.00073,0.00065,389,full,baseline,3yr
+10Yr Treasury,target,1,-0.00222,0.00101,388,full,baseline,3yr
+10Yr Treasury,path,1,-0.00148,0.00126,388,full,baseline,3yr
+10Yr Treasury,target,2,-0.00367,0.00160,387,full,baseline,3yr
+10Yr Treasury,path,2,-0.00224,0.00181,387,full,baseline,3yr
+10Yr Treasury,target,3,-0.00499,0.00215,386,full,baseline,3yr
+10Yr Treasury,path,3,-0.00308,0.00231,386,full,baseline,3yr
+10Yr Treasury,target,4,-0.00663,0.00268,385,full,baseline,3yr
+10Yr Treasury,path,4,-0.00425,0.00278,385,full,baseline,3yr
+10Yr Treasury,target,5,-0.00773,0.00318,384,full,baseline,3yr
+10Yr Treasury,path,5,-0.00521,0.00323,384,full,baseline,3yr
+10Yr Treasury,target,6,-0.00914,0.00369,383,full,baseline,3yr
+10Yr Treasury,path,6,-0.00609,0.00366,383,full,baseline,3yr
+10Yr Treasury,target,7,-0.01045,0.00403,382,full,baseline,3yr
+10Yr Treasury,path,7,-0.00726,0.00405,382,full,baseline,3yr
+10Yr Treasury,target,8,-0.01170,0.00433,381,full,baseline,3yr
+10Yr Treasury,path,8,-0.00815,0.00438,381,full,baseline,3yr
+10Yr Treasury,target,9,-0.01265,0.00452,380,full,baseline,3yr
+10Yr Treasury,path,9,-0.00883,0.00474,380,full,baseline,3yr
+10Yr Treasury,target,10,-0.01384,0.00464,379,full,baseline,3yr
+10Yr Treasury,path,10,-0.00934,0.00501,379,full,baseline,3yr
+10Yr Treasury,target,11,-0.01560,0.00482,378,full,baseline,3yr
+10Yr Treasury,path,11,-0.00988,0.00525,378,full,baseline,3yr
+10Yr Treasury,target,12,-0.01719,0.00498,377,full,baseline,3yr
+10Yr Treasury,path,12,-0.01104,0.00546,377,full,baseline,3yr
+Mortgage Rate,target,0,0.01224,0.00531,389,full,baseline,3yr
+Mortgage Rate,path,0,0.01101,0.00609,389,full,baseline,3yr
+Mortgage Rate,target,1,0.01574,0.00972,388,full,baseline,3yr
+Mortgage Rate,path,1,0.02269,0.01229,388,full,baseline,3yr
+Mortgage Rate,target,2,0.01524,0.01464,387,full,baseline,3yr
+Mortgage Rate,path,2,0.03332,0.01893,387,full,baseline,3yr
+Mortgage Rate,target,3,0.01307,0.01837,386,full,baseline,3yr
+Mortgage Rate,path,3,0.03170,0.02340,386,full,baseline,3yr
+Mortgage Rate,target,4,0.01512,0.02053,385,full,baseline,3yr
+Mortgage Rate,path,4,0.01575,0.02559,385,full,baseline,3yr
+Mortgage Rate,target,5,0.01334,0.02054,384,full,baseline,3yr
+Mortgage Rate,path,5,0.00908,0.02767,384,full,baseline,3yr
+Mortgage Rate,target,6,0.01551,0.01937,383,full,baseline,3yr
+Mortgage Rate,path,6,0.00596,0.02973,383,full,baseline,3yr
+Mortgage Rate,target,7,0.01183,0.01954,382,full,baseline,3yr
+Mortgage Rate,path,7,0.00961,0.03169,382,full,baseline,3yr
+Mortgage Rate,target,8,0.00114,0.01905,381,full,baseline,3yr
+Mortgage Rate,path,8,0.00987,0.03483,381,full,baseline,3yr
+Mortgage Rate,target,9,-0.01290,0.01936,380,full,baseline,3yr
+Mortgage Rate,path,9,0.01394,0.03882,380,full,baseline,3yr
+Mortgage Rate,target,10,-0.02121,0.01982,379,full,baseline,3yr
+Mortgage Rate,path,10,0.01966,0.04172,379,full,baseline,3yr
+Mortgage Rate,target,11,-0.01496,0.02029,378,full,baseline,3yr
+Mortgage Rate,path,11,0.01751,0.04305,378,full,baseline,3yr
+Mortgage Rate,target,12,-0.00371,0.02392,377,full,baseline,3yr
+Mortgage Rate,path,12,0.00517,0.04219,377,full,baseline,3yr
+BBB,target,0,-0.00054,0.00219,389,full,baseline,3yr
+BBB,path,0,0.00540,0.00234,389,full,baseline,3yr
+BBB,target,1,-0.00097,0.00382,388,full,baseline,3yr
+BBB,path,1,0.01188,0.00494,388,full,baseline,3yr
+BBB,target,2,0.00115,0.00530,387,full,baseline,3yr
+BBB,path,2,0.01653,0.00732,387,full,baseline,3yr
+BBB,target,3,0.00599,0.00655,386,full,baseline,3yr
+BBB,path,3,0.01868,0.00951,386,full,baseline,3yr
+BBB,target,4,0.01256,0.00760,385,full,baseline,3yr
+BBB,path,4,0.01820,0.01193,385,full,baseline,3yr
+BBB,target,5,0.01587,0.00900,384,full,baseline,3yr
+BBB,path,5,0.02132,0.01446,384,full,baseline,3yr
+BBB,target,6,0.02119,0.01069,383,full,baseline,3yr
+BBB,path,6,0.02705,0.01674,383,full,baseline,3yr
+BBB,target,7,0.02548,0.01182,382,full,baseline,3yr
+BBB,path,7,0.03470,0.01904,382,full,baseline,3yr
+BBB,target,8,0.02899,0.01255,381,full,baseline,3yr
+BBB,path,8,0.04209,0.02125,381,full,baseline,3yr
+BBB,target,9,0.02690,0.01499,380,full,baseline,3yr
+BBB,path,9,0.04952,0.02315,380,full,baseline,3yr
+BBB,target,10,0.02476,0.01817,379,full,baseline,3yr
+BBB,path,10,0.05761,0.02423,379,full,baseline,3yr
+BBB,target,11,0.02502,0.02073,378,full,baseline,3yr
+BBB,path,11,0.06231,0.02462,378,full,baseline,3yr
+BBB,target,12,0.02815,0.02096,377,full,baseline,3yr
+BBB,path,12,0.06600,0.02501,377,full,baseline,3yr
+Stock Market,target,0,-0.01970,0.03697,389,full,baseline,3yr
+Stock Market,path,0,0.04983,0.01749,389,full,baseline,3yr
+Stock Market,target,1,-0.01663,0.03115,388,full,baseline,3yr
+Stock Market,path,1,0.03388,0.02420,388,full,baseline,3yr
+Stock Market,target,2,-0.02024,0.03306,387,full,baseline,3yr
+Stock Market,path,2,0.03477,0.02676,387,full,baseline,3yr
+Stock Market,target,3,-0.00904,0.02888,386,full,baseline,3yr
+Stock Market,path,3,0.07407,0.03357,386,full,baseline,3yr
+Stock Market,target,4,-0.01451,0.03152,385,full,baseline,3yr
+Stock Market,path,4,0.07475,0.04212,385,full,baseline,3yr
+Stock Market,target,5,-0.03050,0.04714,384,full,baseline,3yr
+Stock Market,path,5,0.08381,0.05188,384,full,baseline,3yr
+Stock Market,target,6,-0.01130,0.04667,383,full,baseline,3yr
+Stock Market,path,6,0.08257,0.06102,383,full,baseline,3yr
+Stock Market,target,7,-0.01022,0.04083,382,full,baseline,3yr
+Stock Market,path,7,0.08558,0.06756,382,full,baseline,3yr
+Stock Market,target,8,-0.02548,0.06120,381,full,baseline,3yr
+Stock Market,path,8,0.13035,0.06878,381,full,baseline,3yr
+Stock Market,target,9,-0.06940,0.09047,380,full,baseline,3yr
+Stock Market,path,9,0.12275,0.07140,380,full,baseline,3yr
+Stock Market,target,10,-0.08592,0.09488,379,full,baseline,3yr
+Stock Market,path,10,0.13897,0.06795,379,full,baseline,3yr
+Stock Market,target,11,-0.06797,0.09306,378,full,baseline,3yr
+Stock Market,path,11,0.15192,0.07341,378,full,baseline,3yr
+Stock Market,target,12,-0.12055,0.11753,377,full,baseline,3yr
+Stock Market,path,12,0.16448,0.07871,377,full,baseline,3yr
+House Prices,target,0,-0.00197,0.00297,389,full,baseline,3yr
+House Prices,path,0,0.00045,0.00266,389,full,baseline,3yr
+House Prices,target,1,-0.00336,0.00593,388,full,baseline,3yr
+House Prices,path,1,0.00077,0.00487,388,full,baseline,3yr
+House Prices,target,2,-0.00524,0.00869,387,full,baseline,3yr
+House Prices,path,2,0.00026,0.00704,387,full,baseline,3yr
+House Prices,target,3,-0.00710,0.01130,386,full,baseline,3yr
+House Prices,path,3,-0.00029,0.00944,386,full,baseline,3yr
+House Prices,target,4,-0.00807,0.01394,385,full,baseline,3yr
+House Prices,path,4,-0.00005,0.01229,385,full,baseline,3yr
+House Prices,target,5,-0.00772,0.01671,384,full,baseline,3yr
+House Prices,path,5,0.00036,0.01453,384,full,baseline,3yr
+House Prices,target,6,-0.00595,0.01987,383,full,baseline,3yr
+House Prices,path,6,0.00127,0.01648,383,full,baseline,3yr
+House Prices,target,7,-0.00346,0.02356,382,full,baseline,3yr
+House Prices,path,7,0.00293,0.01839,382,full,baseline,3yr
+House Prices,target,8,-0.00084,0.02728,381,full,baseline,3yr
+House Prices,path,8,0.00538,0.02033,381,full,baseline,3yr
+House Prices,target,9,0.00128,0.03064,380,full,baseline,3yr
+House Prices,path,9,0.00932,0.02236,380,full,baseline,3yr
+House Prices,target,10,0.00344,0.03373,379,full,baseline,3yr
+House Prices,path,10,0.01433,0.02430,379,full,baseline,3yr
+House Prices,target,11,0.00532,0.03675,378,full,baseline,3yr
+House Prices,path,11,0.01948,0.02605,378,full,baseline,3yr
+House Prices,target,12,0.00636,0.03970,377,full,baseline,3yr
+House Prices,path,12,0.02423,0.02775,377,full,baseline,3yr
+Dollar,target,0,-0.00663,0.00713,389,full,baseline,3yr
+Dollar,path,0,0.01211,0.00722,389,full,baseline,3yr
+Dollar,target,1,-0.01768,0.01475,388,full,baseline,3yr
+Dollar,path,1,0.03007,0.01535,388,full,baseline,3yr
+Dollar,target,2,-0.01892,0.02222,387,full,baseline,3yr
+Dollar,path,2,0.03700,0.02228,387,full,baseline,3yr
+Dollar,target,3,-0.01902,0.02695,386,full,baseline,3yr
+Dollar,path,3,0.03927,0.02733,386,full,baseline,3yr
+Dollar,target,4,-0.01787,0.02972,385,full,baseline,3yr
+Dollar,path,4,0.03409,0.03299,385,full,baseline,3yr
+Dollar,target,5,-0.01113,0.02977,384,full,baseline,3yr
+Dollar,path,5,0.03896,0.03739,384,full,baseline,3yr
+Dollar,target,6,0.00506,0.03130,383,full,baseline,3yr
+Dollar,path,6,0.04962,0.04092,383,full,baseline,3yr
+Dollar,target,7,0.02042,0.03142,382,full,baseline,3yr
+Dollar,path,7,0.06277,0.04518,382,full,baseline,3yr
+Dollar,target,8,0.03103,0.02975,381,full,baseline,3yr
+Dollar,path,8,0.08124,0.05037,381,full,baseline,3yr
+Dollar,target,9,0.02072,0.03158,380,full,baseline,3yr
+Dollar,path,9,0.10735,0.05404,380,full,baseline,3yr
+Dollar,target,10,0.01258,0.04314,379,full,baseline,3yr
+Dollar,path,10,0.12539,0.05470,379,full,baseline,3yr
+Dollar,target,11,-0.00009,0.05441,378,full,baseline,3yr
+Dollar,path,11,0.13996,0.05521,378,full,baseline,3yr
+Dollar,target,12,-0.00777,0.05907,377,full,baseline,3yr
+Dollar,path,12,0.15490,0.05863,377,full,baseline,3yr
+fci,swanson_ffr,0,-0.07513,0.04243,389,full,swanson,3yr
+fci,swanson_fg,0,0.10555,0.02457,389,full,swanson,3yr
+fci,swanson_lsap,0,-0.13137,0.08084,389,full,swanson,3yr
+fci,swanson_ffr,1,-0.06506,0.05368,388,full,swanson,3yr
+fci,swanson_fg,1,0.12703,0.03522,388,full,swanson,3yr
+fci,swanson_lsap,1,0.00455,0.11485,388,full,swanson,3yr
+fci,swanson_ffr,2,-0.04338,0.06995,387,full,swanson,3yr
+fci,swanson_fg,2,0.13550,0.05155,387,full,swanson,3yr
+fci,swanson_lsap,2,0.15888,0.16597,387,full,swanson,3yr
+fci,swanson_ffr,3,-0.05278,0.08037,386,full,swanson,3yr
+fci,swanson_fg,3,0.18074,0.07105,386,full,swanson,3yr
+fci,swanson_lsap,3,0.17638,0.18729,386,full,swanson,3yr
+fci,swanson_ffr,4,-0.02964,0.09407,385,full,swanson,3yr
+fci,swanson_fg,4,0.14926,0.08545,385,full,swanson,3yr
+fci,swanson_lsap,4,0.30752,0.20139,385,full,swanson,3yr
+fci,swanson_ffr,5,-0.02379,0.09997,384,full,swanson,3yr
+fci,swanson_fg,5,0.14294,0.10355,384,full,swanson,3yr
+fci,swanson_lsap,5,0.46098,0.19127,384,full,swanson,3yr
+fci,swanson_ffr,6,0.02157,0.12838,383,full,swanson,3yr
+fci,swanson_fg,6,0.15669,0.12370,383,full,swanson,3yr
+fci,swanson_lsap,6,0.53551,0.23378,383,full,swanson,3yr
+fci,swanson_ffr,7,0.01054,0.14195,382,full,swanson,3yr
+fci,swanson_fg,7,0.20378,0.14298,382,full,swanson,3yr
+fci,swanson_lsap,7,0.50700,0.24919,382,full,swanson,3yr
+fci,swanson_ffr,8,-0.04290,0.13789,381,full,swanson,3yr
+fci,swanson_fg,8,0.28086,0.15652,381,full,swanson,3yr
+fci,swanson_lsap,8,0.55202,0.23146,381,full,swanson,3yr
+fci,swanson_ffr,9,-0.11088,0.16428,380,full,swanson,3yr
+fci,swanson_fg,9,0.29199,0.16477,380,full,swanson,3yr
+fci,swanson_lsap,9,0.71736,0.21826,380,full,swanson,3yr
+fci,swanson_ffr,10,-0.18236,0.18340,379,full,swanson,3yr
+fci,swanson_fg,10,0.35354,0.16398,379,full,swanson,3yr
+fci,swanson_lsap,10,0.66264,0.21206,379,full,swanson,3yr
+fci,swanson_ffr,11,-0.20104,0.19321,378,full,swanson,3yr
+fci,swanson_fg,11,0.39539,0.17148,378,full,swanson,3yr
+fci,swanson_lsap,11,0.64643,0.20369,378,full,swanson,3yr
+fci,swanson_ffr,12,-0.24584,0.20979,377,full,swanson,3yr
+fci,swanson_fg,12,0.40359,0.17962,377,full,swanson,3yr
+fci,swanson_lsap,12,0.72918,0.20896,377,full,swanson,3yr
+FFR,swanson_ffr,0,0.01391,0.00308,389,full,swanson,3yr
+FFR,swanson_fg,0,0.00378,0.00276,389,full,swanson,3yr
+FFR,swanson_lsap,0,-0.00883,0.00631,389,full,swanson,3yr
+FFR,swanson_ffr,1,0.03339,0.00596,388,full,swanson,3yr
+FFR,swanson_fg,1,0.00357,0.00579,388,full,swanson,3yr
+FFR,swanson_lsap,1,-0.00966,0.01205,388,full,swanson,3yr
+FFR,swanson_ffr,2,0.05179,0.00842,387,full,swanson,3yr
+FFR,swanson_fg,2,0.00273,0.00857,387,full,swanson,3yr
+FFR,swanson_lsap,2,-0.00688,0.01672,387,full,swanson,3yr
+FFR,swanson_ffr,3,0.05844,0.01034,386,full,swanson,3yr
+FFR,swanson_fg,3,0.00371,0.01082,386,full,swanson,3yr
+FFR,swanson_lsap,3,-0.01380,0.01979,386,full,swanson,3yr
+FFR,swanson_ffr,4,0.05636,0.01269,385,full,swanson,3yr
+FFR,swanson_fg,4,0.00469,0.01248,385,full,swanson,3yr
+FFR,swanson_lsap,4,-0.02068,0.02194,385,full,swanson,3yr
+FFR,swanson_ffr,5,0.05653,0.01454,384,full,swanson,3yr
+FFR,swanson_fg,5,0.00510,0.01368,384,full,swanson,3yr
+FFR,swanson_lsap,5,-0.02608,0.02406,384,full,swanson,3yr
+FFR,swanson_ffr,6,0.05665,0.01604,383,full,swanson,3yr
+FFR,swanson_fg,6,0.00625,0.01554,383,full,swanson,3yr
+FFR,swanson_lsap,6,-0.03199,0.02665,383,full,swanson,3yr
+FFR,swanson_ffr,7,0.05492,0.01714,382,full,swanson,3yr
+FFR,swanson_fg,7,0.00872,0.01766,382,full,swanson,3yr
+FFR,swanson_lsap,7,-0.03905,0.02922,382,full,swanson,3yr
+FFR,swanson_ffr,8,0.05088,0.01854,381,full,swanson,3yr
+FFR,swanson_fg,8,0.01088,0.01959,381,full,swanson,3yr
+FFR,swanson_lsap,8,-0.04423,0.03176,381,full,swanson,3yr
+FFR,swanson_ffr,9,0.04690,0.02019,380,full,swanson,3yr
+FFR,swanson_fg,9,0.01255,0.02127,380,full,swanson,3yr
+FFR,swanson_lsap,9,-0.04941,0.03370,380,full,swanson,3yr
+FFR,swanson_ffr,10,0.04524,0.02258,379,full,swanson,3yr
+FFR,swanson_fg,10,0.01223,0.02331,379,full,swanson,3yr
+FFR,swanson_lsap,10,-0.05173,0.03494,379,full,swanson,3yr
+FFR,swanson_ffr,11,0.04256,0.02528,378,full,swanson,3yr
+FFR,swanson_fg,11,0.01134,0.02561,378,full,swanson,3yr
+FFR,swanson_lsap,11,-0.05187,0.03503,378,full,swanson,3yr
+FFR,swanson_ffr,12,0.04095,0.02655,377,full,swanson,3yr
+FFR,swanson_fg,12,0.00819,0.02774,377,full,swanson,3yr
+FFR,swanson_lsap,12,-0.04398,0.03452,377,full,swanson,3yr
+10Yr Treasury,swanson_ffr,0,-0.00080,0.00063,389,full,swanson,3yr
+10Yr Treasury,swanson_fg,0,-0.00056,0.00063,389,full,swanson,3yr
+10Yr Treasury,swanson_lsap,0,-0.00016,0.00090,389,full,swanson,3yr
+10Yr Treasury,swanson_ffr,1,-0.00159,0.00119,388,full,swanson,3yr
+10Yr Treasury,swanson_fg,1,-0.00105,0.00124,388,full,swanson,3yr
+10Yr Treasury,swanson_lsap,1,-0.00083,0.00173,388,full,swanson,3yr
+10Yr Treasury,swanson_ffr,2,-0.00270,0.00178,387,full,swanson,3yr
+10Yr Treasury,swanson_fg,2,-0.00154,0.00181,387,full,swanson,3yr
+10Yr Treasury,swanson_lsap,2,-0.00118,0.00259,387,full,swanson,3yr
+10Yr Treasury,swanson_ffr,3,-0.00353,0.00234,386,full,swanson,3yr
+10Yr Treasury,swanson_fg,3,-0.00213,0.00235,386,full,swanson,3yr
+10Yr Treasury,swanson_lsap,3,-0.00158,0.00358,386,full,swanson,3yr
+10Yr Treasury,swanson_ffr,4,-0.00443,0.00291,385,full,swanson,3yr
+10Yr Treasury,swanson_fg,4,-0.00314,0.00293,385,full,swanson,3yr
+10Yr Treasury,swanson_lsap,4,-0.00180,0.00464,385,full,swanson,3yr
+10Yr Treasury,swanson_ffr,5,-0.00494,0.00349,384,full,swanson,3yr
+10Yr Treasury,swanson_fg,5,-0.00398,0.00345,384,full,swanson,3yr
+10Yr Treasury,swanson_lsap,5,-0.00225,0.00569,384,full,swanson,3yr
+10Yr Treasury,swanson_ffr,6,-0.00580,0.00404,383,full,swanson,3yr
+10Yr Treasury,swanson_fg,6,-0.00480,0.00391,383,full,swanson,3yr
+10Yr Treasury,swanson_lsap,6,-0.00229,0.00657,383,full,swanson,3yr
+10Yr Treasury,swanson_ffr,7,-0.00643,0.00449,382,full,swanson,3yr
+10Yr Treasury,swanson_fg,7,-0.00591,0.00432,382,full,swanson,3yr
+10Yr Treasury,swanson_lsap,7,-0.00221,0.00736,382,full,swanson,3yr
+10Yr Treasury,swanson_ffr,8,-0.00718,0.00487,381,full,swanson,3yr
+10Yr Treasury,swanson_fg,8,-0.00670,0.00467,381,full,swanson,3yr
+10Yr Treasury,swanson_lsap,8,-0.00215,0.00810,381,full,swanson,3yr
+10Yr Treasury,swanson_ffr,9,-0.00779,0.00520,380,full,swanson,3yr
+10Yr Treasury,swanson_fg,9,-0.00719,0.00509,380,full,swanson,3yr
+10Yr Treasury,swanson_lsap,9,-0.00241,0.00890,380,full,swanson,3yr
+10Yr Treasury,swanson_ffr,10,-0.00879,0.00549,379,full,swanson,3yr
+10Yr Treasury,swanson_fg,10,-0.00746,0.00545,379,full,swanson,3yr
+10Yr Treasury,swanson_lsap,10,-0.00251,0.00953,379,full,swanson,3yr
+10Yr Treasury,swanson_ffr,11,-0.01023,0.00583,378,full,swanson,3yr
+10Yr Treasury,swanson_fg,11,-0.00794,0.00577,378,full,swanson,3yr
+10Yr Treasury,swanson_lsap,11,-0.00171,0.00999,378,full,swanson,3yr
+10Yr Treasury,swanson_ffr,12,-0.01110,0.00608,377,full,swanson,3yr
+10Yr Treasury,swanson_fg,12,-0.00931,0.00604,377,full,swanson,3yr
+10Yr Treasury,swanson_lsap,12,0.00018,0.01031,377,full,swanson,3yr
+Mortgage Rate,swanson_ffr,0,0.00403,0.00675,389,full,swanson,3yr
+Mortgage Rate,swanson_fg,0,0.00909,0.00618,389,full,swanson,3yr
+Mortgage Rate,swanson_lsap,0,-0.00819,0.00827,389,full,swanson,3yr
+Mortgage Rate,swanson_ffr,1,-0.00074,0.01241,388,full,swanson,3yr
+Mortgage Rate,swanson_fg,1,0.01835,0.01262,388,full,swanson,3yr
+Mortgage Rate,swanson_lsap,1,-0.00695,0.01574,388,full,swanson,3yr
+Mortgage Rate,swanson_ffr,2,-0.00763,0.01857,387,full,swanson,3yr
+Mortgage Rate,swanson_fg,2,0.02724,0.01961,387,full,swanson,3yr
+Mortgage Rate,swanson_lsap,2,-0.00796,0.02369,387,full,swanson,3yr
+Mortgage Rate,swanson_ffr,3,-0.00921,0.02255,386,full,swanson,3yr
+Mortgage Rate,swanson_fg,3,0.02590,0.02465,386,full,swanson,3yr
+Mortgage Rate,swanson_lsap,3,-0.00949,0.03275,386,full,swanson,3yr
+Mortgage Rate,swanson_ffr,4,0.00176,0.02474,385,full,swanson,3yr
+Mortgage Rate,swanson_fg,4,0.00930,0.02767,385,full,swanson,3yr
+Mortgage Rate,swanson_lsap,4,-0.00481,0.04120,385,full,swanson,3yr
+Mortgage Rate,swanson_ffr,5,0.00225,0.02659,384,full,swanson,3yr
+Mortgage Rate,swanson_fg,5,0.00294,0.03051,384,full,swanson,3yr
+Mortgage Rate,swanson_lsap,5,0.00131,0.04971,384,full,swanson,3yr
+Mortgage Rate,swanson_ffr,6,0.00481,0.02780,383,full,swanson,3yr
+Mortgage Rate,swanson_fg,6,0.00167,0.03251,383,full,swanson,3yr
+Mortgage Rate,swanson_lsap,6,0.00709,0.04744,383,full,swanson,3yr
+Mortgage Rate,swanson_ffr,7,-0.00308,0.02898,382,full,swanson,3yr
+Mortgage Rate,swanson_fg,7,0.00863,0.03415,382,full,swanson,3yr
+Mortgage Rate,swanson_lsap,7,0.00129,0.04462,382,full,swanson,3yr
+Mortgage Rate,swanson_ffr,8,-0.01499,0.02987,381,full,swanson,3yr
+Mortgage Rate,swanson_fg,8,0.01052,0.03760,381,full,swanson,3yr
+Mortgage Rate,swanson_lsap,8,-0.01072,0.04571,381,full,swanson,3yr
+Mortgage Rate,swanson_ffr,9,-0.03084,0.03172,380,full,swanson,3yr
+Mortgage Rate,swanson_fg,9,0.01277,0.04169,380,full,swanson,3yr
+Mortgage Rate,swanson_lsap,9,-0.01699,0.04948,380,full,swanson,3yr
+Mortgage Rate,swanson_ffr,10,-0.04258,0.03348,379,full,swanson,3yr
+Mortgage Rate,swanson_fg,10,0.01660,0.04426,379,full,swanson,3yr
+Mortgage Rate,swanson_lsap,10,-0.02677,0.05212,379,full,swanson,3yr
+Mortgage Rate,swanson_ffr,11,-0.03508,0.03430,378,full,swanson,3yr
+Mortgage Rate,swanson_fg,11,0.01288,0.04541,378,full,swanson,3yr
+Mortgage Rate,swanson_lsap,11,-0.03071,0.05083,378,full,swanson,3yr
+Mortgage Rate,swanson_ffr,12,-0.01625,0.03473,377,full,swanson,3yr
+Mortgage Rate,swanson_fg,12,-0.00062,0.04437,377,full,swanson,3yr
+Mortgage Rate,swanson_lsap,12,-0.03045,0.04639,377,full,swanson,3yr
+BBB,swanson_ffr,0,-0.00375,0.00265,389,full,swanson,3yr
+BBB,swanson_fg,0,0.00516,0.00240,389,full,swanson,3yr
+BBB,swanson_lsap,0,-0.00289,0.00383,389,full,swanson,3yr
+BBB,swanson_ffr,1,-0.00800,0.00500,388,full,swanson,3yr
+BBB,swanson_fg,1,0.01160,0.00527,388,full,swanson,3yr
+BBB,swanson_lsap,1,-0.00734,0.00720,388,full,swanson,3yr
+BBB,swanson_ffr,2,-0.00916,0.00713,387,full,swanson,3yr
+BBB,swanson_fg,2,0.01692,0.00793,387,full,swanson,3yr
+BBB,swanson_lsap,2,-0.01325,0.01072,387,full,swanson,3yr
+BBB,swanson_ffr,3,-0.00525,0.00949,386,full,swanson,3yr
+BBB,swanson_fg,3,0.01915,0.01015,386,full,swanson,3yr
+BBB,swanson_lsap,3,-0.00999,0.01345,386,full,swanson,3yr
+BBB,swanson_ffr,4,0.00200,0.01198,385,full,swanson,3yr
+BBB,swanson_fg,4,0.01811,0.01281,385,full,swanson,3yr
+BBB,swanson_lsap,4,-0.00295,0.01562,385,full,swanson,3yr
+BBB,swanson_ffr,5,0.00365,0.01442,384,full,swanson,3yr
+BBB,swanson_fg,5,0.02072,0.01541,384,full,swanson,3yr
+BBB,swanson_lsap,5,0.00275,0.01764,384,full,swanson,3yr
+BBB,swanson_ffr,6,0.00587,0.01660,383,full,swanson,3yr
+BBB,swanson_fg,6,0.02658,0.01757,383,full,swanson,3yr
+BBB,swanson_lsap,6,0.00401,0.02006,383,full,swanson,3yr
+BBB,swanson_ffr,7,0.00566,0.01829,382,full,swanson,3yr
+BBB,swanson_fg,7,0.03454,0.01973,382,full,swanson,3yr
+BBB,swanson_lsap,7,0.00114,0.02265,382,full,swanson,3yr
+BBB,swanson_ffr,8,0.00426,0.01932,381,full,swanson,3yr
+BBB,swanson_fg,8,0.04242,0.02188,381,full,swanson,3yr
+BBB,swanson_lsap,8,-0.00605,0.02412,381,full,swanson,3yr
+BBB,swanson_ffr,9,-0.00274,0.02130,380,full,swanson,3yr
+BBB,swanson_fg,9,0.04958,0.02389,380,full,swanson,3yr
+BBB,swanson_lsap,9,-0.00954,0.02618,380,full,swanson,3yr
+BBB,swanson_ffr,10,-0.01042,0.02395,379,full,swanson,3yr
+BBB,swanson_fg,10,0.05801,0.02532,379,full,swanson,3yr
+BBB,swanson_lsap,10,-0.01582,0.02842,379,full,swanson,3yr
+BBB,swanson_ffr,11,-0.01348,0.02590,378,full,swanson,3yr
+BBB,swanson_fg,11,0.06317,0.02610,378,full,swanson,3yr
+BBB,swanson_lsap,11,-0.02079,0.03069,378,full,swanson,3yr
+BBB,swanson_ffr,12,-0.01319,0.02655,377,full,swanson,3yr
+BBB,swanson_fg,12,0.06799,0.02697,377,full,swanson,3yr
+BBB,swanson_lsap,12,-0.02824,0.03224,377,full,swanson,3yr
+Stock Market,swanson_ffr,0,-0.06930,0.03879,389,full,swanson,3yr
+Stock Market,swanson_fg,0,0.07156,0.01911,389,full,swanson,3yr
+Stock Market,swanson_lsap,0,-0.09693,0.07509,389,full,swanson,3yr
+Stock Market,swanson_ffr,1,-0.04280,0.04467,388,full,swanson,3yr
+Stock Market,swanson_fg,1,0.05447,0.02499,388,full,swanson,3yr
+Stock Market,swanson_lsap,1,0.05399,0.09478,388,full,swanson,3yr
+Stock Market,swanson_ffr,2,-0.02258,0.05014,387,full,swanson,3yr
+Stock Market,swanson_fg,2,0.04118,0.02898,387,full,swanson,3yr
+Stock Market,swanson_lsap,2,0.19554,0.11852,387,full,swanson,3yr
+Stock Market,swanson_ffr,3,-0.04302,0.04640,386,full,swanson,3yr
+Stock Market,swanson_fg,3,0.08731,0.03611,386,full,swanson,3yr
+Stock Market,swanson_lsap,3,0.15805,0.11785,386,full,swanson,3yr
+Stock Market,swanson_ffr,4,-0.04577,0.05050,385,full,swanson,3yr
+Stock Market,swanson_fg,4,0.08414,0.04065,385,full,swanson,3yr
+Stock Market,swanson_lsap,4,0.21873,0.12385,385,full,swanson,3yr
+Stock Market,swanson_ffr,5,-0.05162,0.05408,384,full,swanson,3yr
+Stock Market,swanson_fg,5,0.07954,0.05324,384,full,swanson,3yr
+Stock Market,swanson_lsap,5,0.31854,0.11553,384,full,swanson,3yr
+Stock Market,swanson_ffr,6,-0.02641,0.07155,383,full,swanson,3yr
+Stock Market,swanson_fg,6,0.07639,0.06076,383,full,swanson,3yr
+Stock Market,swanson_lsap,6,0.35894,0.14745,383,full,swanson,3yr
+Stock Market,swanson_ffr,7,-0.04125,0.07511,382,full,swanson,3yr
+Stock Market,swanson_fg,7,0.09323,0.06717,382,full,swanson,3yr
+Stock Market,swanson_lsap,7,0.30589,0.14510,382,full,swanson,3yr
+Stock Market,swanson_ffr,8,-0.07819,0.06928,381,full,swanson,3yr
+Stock Market,swanson_fg,8,0.13721,0.07033,381,full,swanson,3yr
+Stock Market,swanson_lsap,8,0.35159,0.12439,381,full,swanson,3yr
+Stock Market,swanson_ffr,9,-0.09458,0.08869,380,full,swanson,3yr
+Stock Market,swanson_fg,9,0.10866,0.07469,380,full,swanson,3yr
+Stock Market,swanson_lsap,9,0.49711,0.11441,380,full,swanson,3yr
+Stock Market,swanson_ffr,10,-0.12702,0.09680,379,full,swanson,3yr
+Stock Market,swanson_fg,10,0.13580,0.07218,379,full,swanson,3yr
+Stock Market,swanson_lsap,10,0.42775,0.11302,379,full,swanson,3yr
+Stock Market,swanson_ffr,11,-0.12729,0.10053,378,full,swanson,3yr
+Stock Market,swanson_fg,11,0.15894,0.08025,378,full,swanson,3yr
+Stock Market,swanson_lsap,11,0.38945,0.10814,378,full,swanson,3yr
+Stock Market,swanson_ffr,12,-0.17340,0.11768,377,full,swanson,3yr
+Stock Market,swanson_fg,12,0.16050,0.08725,377,full,swanson,3yr
+Stock Market,swanson_lsap,12,0.45913,0.11122,377,full,swanson,3yr
+House Prices,swanson_ffr,0,-0.00236,0.00338,389,full,swanson,3yr
+House Prices,swanson_fg,0,0.00105,0.00274,389,full,swanson,3yr
+House Prices,swanson_lsap,0,0.00150,0.00571,389,full,swanson,3yr
+House Prices,swanson_ffr,1,-0.00390,0.00636,388,full,swanson,3yr
+House Prices,swanson_fg,1,0.00161,0.00503,388,full,swanson,3yr
+House Prices,swanson_lsap,1,0.00458,0.01047,388,full,swanson,3yr
+House Prices,swanson_ffr,2,-0.00525,0.00930,387,full,swanson,3yr
+House Prices,swanson_fg,2,0.00088,0.00738,387,full,swanson,3yr
+House Prices,swanson_lsap,2,0.00904,0.01444,387,full,swanson,3yr
+House Prices,swanson_ffr,3,-0.00621,0.01244,386,full,swanson,3yr
+House Prices,swanson_fg,3,-0.00007,0.01014,386,full,swanson,3yr
+House Prices,swanson_lsap,3,0.01415,0.01843,386,full,swanson,3yr
+House Prices,swanson_ffr,4,-0.00704,0.01606,385,full,swanson,3yr
+House Prices,swanson_fg,4,0.00025,0.01372,385,full,swanson,3yr
+House Prices,swanson_lsap,4,0.01805,0.02264,385,full,swanson,3yr
+House Prices,swanson_ffr,5,-0.00661,0.01940,384,full,swanson,3yr
+House Prices,swanson_fg,5,0.00075,0.01642,384,full,swanson,3yr
+House Prices,swanson_lsap,5,0.02458,0.02619,384,full,swanson,3yr
+House Prices,swanson_ffr,6,-0.00474,0.02263,383,full,swanson,3yr
+House Prices,swanson_fg,6,0.00140,0.01871,383,full,swanson,3yr
+House Prices,swanson_lsap,6,0.03435,0.02939,383,full,swanson,3yr
+House Prices,swanson_ffr,7,-0.00230,0.02617,382,full,swanson,3yr
+House Prices,swanson_fg,7,0.00267,0.02096,382,full,swanson,3yr
+House Prices,swanson_lsap,7,0.04642,0.03285,382,full,swanson,3yr
+House Prices,swanson_ffr,8,0.00018,0.02952,381,full,swanson,3yr
+House Prices,swanson_fg,8,0.00448,0.02320,381,full,swanson,3yr
+House Prices,swanson_lsap,8,0.06060,0.03638,381,full,swanson,3yr
+House Prices,swanson_ffr,9,0.00126,0.03247,380,full,swanson,3yr
+House Prices,swanson_fg,9,0.00780,0.02544,380,full,swanson,3yr
+House Prices,swanson_lsap,9,0.07426,0.03963,380,full,swanson,3yr
+House Prices,swanson_ffr,10,0.00148,0.03511,379,full,swanson,3yr
+House Prices,swanson_fg,10,0.01253,0.02756,379,full,swanson,3yr
+House Prices,swanson_lsap,10,0.08637,0.04280,379,full,swanson,3yr
+House Prices,swanson_ffr,11,0.00152,0.03737,378,full,swanson,3yr
+House Prices,swanson_fg,11,0.01713,0.02942,378,full,swanson,3yr
+House Prices,swanson_lsap,11,0.09896,0.04615,378,full,swanson,3yr
+House Prices,swanson_ffr,12,0.00134,0.03897,377,full,swanson,3yr
+House Prices,swanson_fg,12,0.02050,0.03130,377,full,swanson,3yr
+House Prices,swanson_lsap,12,0.11435,0.04968,377,full,swanson,3yr
+Dollar,swanson_ffr,0,-0.01685,0.00703,389,full,swanson,3yr
+Dollar,swanson_fg,0,0.01547,0.00735,389,full,swanson,3yr
+Dollar,swanson_lsap,0,-0.01588,0.01613,389,full,swanson,3yr
+Dollar,swanson_ffr,1,-0.04142,0.01767,388,full,swanson,3yr
+Dollar,swanson_fg,1,0.03849,0.01669,388,full,swanson,3yr
+Dollar,swanson_lsap,1,-0.02924,0.03958,388,full,swanson,3yr
+Dollar,swanson_ffr,2,-0.04786,0.02902,387,full,swanson,3yr
+Dollar,swanson_fg,2,0.04808,0.02463,387,full,swanson,3yr
+Dollar,swanson_lsap,2,-0.01643,0.06839,387,full,swanson,3yr
+Dollar,swanson_ffr,3,-0.04400,0.03937,386,full,swanson,3yr
+Dollar,swanson_fg,3,0.04687,0.02993,386,full,swanson,3yr
+Dollar,swanson_lsap,3,0.03905,0.09062,386,full,swanson,3yr
+Dollar,swanson_ffr,4,-0.03250,0.04664,385,full,swanson,3yr
+Dollar,swanson_fg,4,0.03590,0.03659,385,full,swanson,3yr
+Dollar,swanson_lsap,4,0.10098,0.10261,385,full,swanson,3yr
+Dollar,swanson_ffr,5,-0.02305,0.04937,384,full,swanson,3yr
+Dollar,swanson_fg,5,0.03789,0.04113,384,full,swanson,3yr
+Dollar,swanson_lsap,5,0.14215,0.10629,384,full,swanson,3yr
+Dollar,swanson_ffr,6,-0.00881,0.05284,383,full,swanson,3yr
+Dollar,swanson_fg,6,0.04921,0.04487,383,full,swanson,3yr
+Dollar,swanson_lsap,6,0.16541,0.11228,383,full,swanson,3yr
+Dollar,swanson_ffr,7,0.00302,0.05586,382,full,swanson,3yr
+Dollar,swanson_fg,7,0.06188,0.04938,382,full,swanson,3yr
+Dollar,swanson_lsap,7,0.19352,0.12048,382,full,swanson,3yr
+Dollar,swanson_ffr,8,0.00214,0.05601,381,full,swanson,3yr
+Dollar,swanson_fg,8,0.08206,0.05544,381,full,swanson,3yr
+Dollar,swanson_lsap,8,0.20297,0.12705,381,full,swanson,3yr
+Dollar,swanson_ffr,9,-0.02309,0.05490,380,full,swanson,3yr
+Dollar,swanson_fg,9,0.10782,0.05979,380,full,swanson,3yr
+Dollar,swanson_lsap,9,0.22435,0.12680,380,full,swanson,3yr
+Dollar,swanson_ffr,10,-0.04027,0.05973,379,full,swanson,3yr
+Dollar,swanson_fg,10,0.12583,0.06185,379,full,swanson,3yr
+Dollar,swanson_lsap,10,0.24536,0.12285,379,full,swanson,3yr
+Dollar,swanson_ffr,11,-0.05904,0.06806,378,full,swanson,3yr
+Dollar,swanson_fg,11,0.13987,0.06404,378,full,swanson,3yr
+Dollar,swanson_lsap,11,0.26312,0.11976,378,full,swanson,3yr
+Dollar,swanson_ffr,12,-0.07420,0.07622,377,full,swanson,3yr
+Dollar,swanson_fg,12,0.15636,0.06875,377,full,swanson,3yr
+Dollar,swanson_lsap,12,0.25819,0.11827,377,full,swanson,3yr
+fci,ns,0,0.07593,0.04396,389,full,ns,3yr
+fci,ns,1,0.11198,0.04467,388,full,ns,3yr
+fci,ns,2,0.13294,0.05308,387,full,ns,3yr
+fci,ns,3,0.17979,0.06673,386,full,ns,3yr
+fci,ns,4,0.15683,0.07647,385,full,ns,3yr
+fci,ns,5,0.14058,0.10434,384,full,ns,3yr
+fci,ns,6,0.17872,0.11746,383,full,ns,3yr
+fci,ns,7,0.22855,0.13030,382,full,ns,3yr
+fci,ns,8,0.29027,0.15170,381,full,ns,3yr
+fci,ns,9,0.24874,0.17455,380,full,ns,3yr
+fci,ns,10,0.26249,0.19102,379,full,ns,3yr
+fci,ns,11,0.30844,0.19962,378,full,ns,3yr
+fci,ns,12,0.28733,0.21537,377,full,ns,3yr
+FFR,ns,0,0.01576,0.00360,389,full,ns,3yr
+FFR,ns,1,0.03096,0.00731,388,full,ns,3yr
+FFR,ns,2,0.04544,0.01129,387,full,ns,3yr
+FFR,ns,3,0.05203,0.01399,386,full,ns,3yr
+FFR,ns,4,0.05227,0.01488,385,full,ns,3yr
+FFR,ns,5,0.05256,0.01634,384,full,ns,3yr
+FFR,ns,6,0.05417,0.01904,383,full,ns,3yr
+FFR,ns,7,0.05642,0.02231,382,full,ns,3yr
+FFR,ns,8,0.05617,0.02490,381,full,ns,3yr
+FFR,ns,9,0.05496,0.02637,380,full,ns,3yr
+FFR,ns,10,0.05279,0.02698,379,full,ns,3yr
+FFR,ns,11,0.04905,0.02722,378,full,ns,3yr
+FFR,ns,12,0.04305,0.02735,377,full,ns,3yr
+10Yr Treasury,ns,0,-0.00142,0.00065,389,full,ns,3yr
+10Yr Treasury,ns,1,-0.00280,0.00133,388,full,ns,3yr
+10Yr Treasury,ns,2,-0.00431,0.00208,387,full,ns,3yr
+10Yr Treasury,ns,3,-0.00578,0.00277,386,full,ns,3yr
+10Yr Treasury,ns,4,-0.00793,0.00345,385,full,ns,3yr
+10Yr Treasury,ns,5,-0.00951,0.00403,384,full,ns,3yr
+10Yr Treasury,ns,6,-0.01131,0.00460,383,full,ns,3yr
+10Yr Treasury,ns,7,-0.01332,0.00501,382,full,ns,3yr
+10Yr Treasury,ns,8,-0.01511,0.00533,381,full,ns,3yr
+10Yr Treasury,ns,9,-0.01628,0.00558,380,full,ns,3yr
+10Yr Treasury,ns,10,-0.01742,0.00577,379,full,ns,3yr
+10Yr Treasury,ns,11,-0.01926,0.00599,378,full,ns,3yr
+10Yr Treasury,ns,12,-0.02172,0.00626,377,full,ns,3yr
+Mortgage Rate,ns,0,0.01690,0.00630,389,full,ns,3yr
+Mortgage Rate,ns,1,0.02788,0.01419,388,full,ns,3yr
+Mortgage Rate,ns,2,0.03316,0.02305,387,full,ns,3yr
+Mortgage Rate,ns,3,0.02838,0.02822,386,full,ns,3yr
+Mortgage Rate,ns,4,0.01334,0.02944,385,full,ns,3yr
+Mortgage Rate,ns,5,0.00496,0.03032,384,full,ns,3yr
+Mortgage Rate,ns,6,0.00481,0.03003,383,full,ns,3yr
+Mortgage Rate,ns,7,0.00745,0.03167,382,full,ns,3yr
+Mortgage Rate,ns,8,0.00274,0.03588,381,full,ns,3yr
+Mortgage Rate,ns,9,-0.00386,0.04065,380,full,ns,3yr
+Mortgage Rate,ns,10,-0.00763,0.04418,379,full,ns,3yr
+Mortgage Rate,ns,11,-0.00764,0.04510,378,full,ns,3yr
+Mortgage Rate,ns,12,-0.01130,0.04478,377,full,ns,3yr
+BBB,ns,0,0.00454,0.00244,389,full,ns,3yr
+BBB,ns,1,0.01013,0.00513,388,full,ns,3yr
+BBB,ns,2,0.01536,0.00803,387,full,ns,3yr
+BBB,ns,3,0.02078,0.00999,386,full,ns,3yr
+BBB,ns,4,0.02517,0.01141,385,full,ns,3yr
+BBB,ns,5,0.03022,0.01324,384,full,ns,3yr
+BBB,ns,6,0.03909,0.01554,383,full,ns,3yr
+BBB,ns,7,0.04882,0.01800,382,full,ns,3yr
+BBB,ns,8,0.05836,0.02046,381,full,ns,3yr
+BBB,ns,9,0.06285,0.02299,380,full,ns,3yr
+BBB,ns,10,0.06767,0.02548,379,full,ns,3yr
+BBB,ns,11,0.07167,0.02736,378,full,ns,3yr
+BBB,ns,12,0.07779,0.02817,377,full,ns,3yr
+Stock Market,ns,0,0.03455,0.03817,389,full,ns,3yr
+Stock Market,ns,1,0.03230,0.03093,388,full,ns,3yr
+Stock Market,ns,2,0.02639,0.02956,387,full,ns,3yr
+Stock Market,ns,3,0.06922,0.03374,386,full,ns,3yr
+Stock Market,ns,4,0.06597,0.04036,385,full,ns,3yr
+Stock Market,ns,5,0.04615,0.07007,384,full,ns,3yr
+Stock Market,ns,6,0.05390,0.07283,383,full,ns,3yr
+Stock Market,ns,7,0.06426,0.07018,382,full,ns,3yr
+Stock Market,ns,8,0.09525,0.08299,381,full,ns,3yr
+Stock Market,ns,9,0.04047,0.09658,380,full,ns,3yr
+Stock Market,ns,10,0.04224,0.10246,379,full,ns,3yr
+Stock Market,ns,11,0.08104,0.09967,378,full,ns,3yr
+Stock Market,ns,12,0.04997,0.11520,377,full,ns,3yr
+House Prices,ns,0,-0.00040,0.00316,389,full,ns,3yr
+House Prices,ns,1,-0.00078,0.00624,388,full,ns,3yr
+House Prices,ns,2,-0.00258,0.00910,387,full,ns,3yr
+House Prices,ns,3,-0.00445,0.01181,386,full,ns,3yr
+House Prices,ns,4,-0.00481,0.01499,385,full,ns,3yr
+House Prices,ns,5,-0.00413,0.01757,384,full,ns,3yr
+House Prices,ns,6,-0.00224,0.02001,383,full,ns,3yr
+House Prices,ns,7,0.00101,0.02263,382,full,ns,3yr
+House Prices,ns,8,0.00511,0.02534,381,full,ns,3yr
+House Prices,ns,9,0.00994,0.02817,380,full,ns,3yr
+House Prices,ns,10,0.01581,0.03107,379,full,ns,3yr
+House Prices,ns,11,0.02144,0.03411,378,full,ns,3yr
+House Prices,ns,12,0.02573,0.03751,377,full,ns,3yr
+Dollar,ns,0,0.00601,0.00861,389,full,ns,3yr
+Dollar,ns,1,0.01428,0.01769,388,full,ns,3yr
+Dollar,ns,2,0.01949,0.02625,387,full,ns,3yr
+Dollar,ns,3,0.01959,0.03131,386,full,ns,3yr
+Dollar,ns,4,0.01282,0.03477,385,full,ns,3yr
+Dollar,ns,5,0.02033,0.03659,384,full,ns,3yr
+Dollar,ns,6,0.04029,0.04046,383,full,ns,3yr
+Dollar,ns,7,0.06390,0.04609,382,full,ns,3yr
+Dollar,ns,8,0.08776,0.05145,381,full,ns,3yr
+Dollar,ns,9,0.10065,0.05369,380,full,ns,3yr
+Dollar,ns,10,0.10903,0.05721,379,full,ns,3yr
+Dollar,ns,11,0.11212,0.06095,378,full,ns,3yr
+Dollar,ns,12,0.12382,0.06189,377,full,ns,3yr
+fci,raw2y,0,0.05593,0.04201,389,full,raw2y,3yr
+fci,raw2y,1,0.08970,0.04415,388,full,raw2y,3yr
+fci,raw2y,2,0.12474,0.05721,387,full,raw2y,3yr
+fci,raw2y,3,0.17624,0.07123,386,full,raw2y,3yr
+fci,raw2y,4,0.17294,0.08219,385,full,raw2y,3yr
+fci,raw2y,5,0.19063,0.10167,384,full,raw2y,3yr
+fci,raw2y,6,0.23752,0.11433,383,full,raw2y,3yr
+fci,raw2y,7,0.27762,0.13006,382,full,raw2y,3yr
+fci,raw2y,8,0.35083,0.14479,381,full,raw2y,3yr
+fci,raw2y,9,0.34271,0.15073,380,full,raw2y,3yr
+fci,raw2y,10,0.35976,0.15307,379,full,raw2y,3yr
+fci,raw2y,11,0.38667,0.16122,378,full,raw2y,3yr
+fci,raw2y,12,0.38338,0.16836,377,full,raw2y,3yr
+FFR,raw2y,0,0.00818,0.00399,389,full,raw2y,3yr
+FFR,raw2y,1,0.01491,0.00849,388,full,raw2y,3yr
+FFR,raw2y,2,0.02343,0.01241,387,full,raw2y,3yr
+FFR,raw2y,3,0.02725,0.01406,386,full,raw2y,3yr
+FFR,raw2y,4,0.02823,0.01386,385,full,raw2y,3yr
+FFR,raw2y,5,0.02876,0.01407,384,full,raw2y,3yr
+FFR,raw2y,6,0.02982,0.01552,383,full,raw2y,3yr
+FFR,raw2y,7,0.03045,0.01773,382,full,raw2y,3yr
+FFR,raw2y,8,0.02860,0.01942,381,full,raw2y,3yr
+FFR,raw2y,9,0.02529,0.02038,380,full,raw2y,3yr
+FFR,raw2y,10,0.02257,0.02093,379,full,raw2y,3yr
+FFR,raw2y,11,0.01989,0.02213,378,full,raw2y,3yr
+FFR,raw2y,12,0.01712,0.02415,377,full,raw2y,3yr
+10Yr Treasury,raw2y,0,-0.00084,0.00060,389,full,raw2y,3yr
+10Yr Treasury,raw2y,1,-0.00175,0.00121,388,full,raw2y,3yr
+10Yr Treasury,raw2y,2,-0.00270,0.00180,387,full,raw2y,3yr
+10Yr Treasury,raw2y,3,-0.00376,0.00228,386,full,raw2y,3yr
+10Yr Treasury,raw2y,4,-0.00536,0.00275,385,full,raw2y,3yr
+10Yr Treasury,raw2y,5,-0.00665,0.00319,384,full,raw2y,3yr
+10Yr Treasury,raw2y,6,-0.00791,0.00364,383,full,raw2y,3yr
+10Yr Treasury,raw2y,7,-0.00945,0.00400,382,full,raw2y,3yr
+10Yr Treasury,raw2y,8,-0.01082,0.00431,381,full,raw2y,3yr
+10Yr Treasury,raw2y,9,-0.01180,0.00467,380,full,raw2y,3yr
+10Yr Treasury,raw2y,10,-0.01272,0.00499,379,full,raw2y,3yr
+10Yr Treasury,raw2y,11,-0.01406,0.00528,378,full,raw2y,3yr
+10Yr Treasury,raw2y,12,-0.01594,0.00555,377,full,raw2y,3yr
+Mortgage Rate,raw2y,0,0.00888,0.00608,389,full,raw2y,3yr
+Mortgage Rate,raw2y,1,0.01794,0.01350,388,full,raw2y,3yr
+Mortgage Rate,raw2y,2,0.02320,0.02142,387,full,raw2y,3yr
+Mortgage Rate,raw2y,3,0.02232,0.02537,386,full,raw2y,3yr
+Mortgage Rate,raw2y,4,0.01002,0.02674,385,full,raw2y,3yr
+Mortgage Rate,raw2y,5,0.00532,0.02816,384,full,raw2y,3yr
+Mortgage Rate,raw2y,6,0.00553,0.02884,383,full,raw2y,3yr
+Mortgage Rate,raw2y,7,0.00764,0.03074,382,full,raw2y,3yr
+Mortgage Rate,raw2y,8,0.00229,0.03531,381,full,raw2y,3yr
+Mortgage Rate,raw2y,9,-0.00351,0.04134,380,full,raw2y,3yr
+Mortgage Rate,raw2y,10,-0.00675,0.04541,379,full,raw2y,3yr
+Mortgage Rate,raw2y,11,-0.00964,0.04617,378,full,raw2y,3yr
+Mortgage Rate,raw2y,12,-0.01691,0.04482,377,full,raw2y,3yr
+BBB,raw2y,0,0.00419,0.00229,389,full,raw2y,3yr
+BBB,raw2y,1,0.00917,0.00483,388,full,raw2y,3yr
+BBB,raw2y,2,0.01261,0.00730,387,full,raw2y,3yr
+BBB,raw2y,3,0.01685,0.00900,386,full,raw2y,3yr
+BBB,raw2y,4,0.01919,0.01062,385,full,raw2y,3yr
+BBB,raw2y,5,0.02359,0.01257,384,full,raw2y,3yr
+BBB,raw2y,6,0.03055,0.01425,383,full,raw2y,3yr
+BBB,raw2y,7,0.03878,0.01612,382,full,raw2y,3yr
+BBB,raw2y,8,0.04626,0.01808,381,full,raw2y,3yr
+BBB,raw2y,9,0.05119,0.01958,380,full,raw2y,3yr
+BBB,raw2y,10,0.05511,0.02047,379,full,raw2y,3yr
+BBB,raw2y,11,0.05708,0.02144,378,full,raw2y,3yr
+BBB,raw2y,12,0.05957,0.02267,377,full,raw2y,3yr
+Stock Market,raw2y,0,0.03013,0.03737,389,full,raw2y,3yr
+Stock Market,raw2y,1,0.03606,0.03033,388,full,raw2y,3yr
+Stock Market,raw2y,2,0.05061,0.03049,387,full,raw2y,3yr
+Stock Market,raw2y,3,0.09023,0.03733,386,full,raw2y,3yr
+Stock Market,raw2y,4,0.09490,0.04414,385,full,raw2y,3yr
+Stock Market,raw2y,5,0.09742,0.06210,384,full,raw2y,3yr
+Stock Market,raw2y,6,0.11431,0.06600,383,full,raw2y,3yr
+Stock Market,raw2y,7,0.11722,0.06868,382,full,raw2y,3yr
+Stock Market,raw2y,8,0.16544,0.07463,381,full,raw2y,3yr
+Stock Market,raw2y,9,0.13655,0.07893,380,full,raw2y,3yr
+Stock Market,raw2y,10,0.13880,0.08276,379,full,raw2y,3yr
+Stock Market,raw2y,11,0.15492,0.08871,378,full,raw2y,3yr
+Stock Market,raw2y,12,0.14035,0.09791,377,full,raw2y,3yr
+House Prices,raw2y,0,-0.00030,0.00253,389,full,raw2y,3yr
+House Prices,raw2y,1,-0.00060,0.00474,388,full,raw2y,3yr
+House Prices,raw2y,2,-0.00238,0.00693,387,full,raw2y,3yr
+House Prices,raw2y,3,-0.00414,0.00922,386,full,raw2y,3yr
+House Prices,raw2y,4,-0.00496,0.01200,385,full,raw2y,3yr
+House Prices,raw2y,5,-0.00460,0.01447,384,full,raw2y,3yr
+House Prices,raw2y,6,-0.00287,0.01690,383,full,raw2y,3yr
+House Prices,raw2y,7,0.00040,0.01951,382,full,raw2y,3yr
+House Prices,raw2y,8,0.00446,0.02240,381,full,raw2y,3yr
+House Prices,raw2y,9,0.00957,0.02537,380,full,raw2y,3yr
+House Prices,raw2y,10,0.01584,0.02808,379,full,raw2y,3yr
+House Prices,raw2y,11,0.02198,0.03052,378,full,raw2y,3yr
+House Prices,raw2y,12,0.02739,0.03313,377,full,raw2y,3yr
+Dollar,raw2y,0,0.00567,0.00718,389,full,raw2y,3yr
+Dollar,raw2y,1,0.01397,0.01751,388,full,raw2y,3yr
+Dollar,raw2y,2,0.01997,0.02655,387,full,raw2y,3yr
+Dollar,raw2y,3,0.02750,0.03135,386,full,raw2y,3yr
+Dollar,raw2y,4,0.03091,0.03436,385,full,raw2y,3yr
+Dollar,raw2y,5,0.04679,0.03697,384,full,raw2y,3yr
+Dollar,raw2y,6,0.06809,0.04098,383,full,raw2y,3yr
+Dollar,raw2y,7,0.09258,0.04803,382,full,raw2y,3yr
+Dollar,raw2y,8,0.11461,0.05484,381,full,raw2y,3yr
+Dollar,raw2y,9,0.13542,0.05745,380,full,raw2y,3yr
+Dollar,raw2y,10,0.14691,0.05618,379,full,raw2y,3yr
+Dollar,raw2y,11,0.15651,0.05591,378,full,raw2y,3yr
+Dollar,raw2y,12,0.17179,0.05838,377,full,raw2y,3yr
+fci,target,0,0.04020,0.03990,279,ex-ZLB,baseline,3yr
+fci,path,0,0.09036,0.02169,279,ex-ZLB,baseline,3yr
+fci,target,1,0.03409,0.04921,278,ex-ZLB,baseline,3yr
+fci,path,1,0.09798,0.03756,278,ex-ZLB,baseline,3yr
+fci,target,2,0.04814,0.04598,277,ex-ZLB,baseline,3yr
+fci,path,2,0.10948,0.05917,277,ex-ZLB,baseline,3yr
+fci,target,3,0.05741,0.04653,276,ex-ZLB,baseline,3yr
+fci,path,3,0.12542,0.08007,276,ex-ZLB,baseline,3yr
+fci,target,4,0.03970,0.05183,275,ex-ZLB,baseline,3yr
+fci,path,4,0.06867,0.09827,275,ex-ZLB,baseline,3yr
+fci,target,5,0.00686,0.05493,274,ex-ZLB,baseline,3yr
+fci,path,5,0.05022,0.10814,274,ex-ZLB,baseline,3yr
+fci,target,6,0.05936,0.06866,273,ex-ZLB,baseline,3yr
+fci,path,6,0.04130,0.12548,273,ex-ZLB,baseline,3yr
+fci,target,7,0.07008,0.07551,272,ex-ZLB,baseline,3yr
+fci,path,7,0.04417,0.13767,272,ex-ZLB,baseline,3yr
+fci,target,8,0.01822,0.09105,271,ex-ZLB,baseline,3yr
+fci,path,8,0.09964,0.13794,271,ex-ZLB,baseline,3yr
+fci,target,9,-0.10639,0.14116,270,ex-ZLB,baseline,3yr
+fci,path,9,0.10858,0.13872,270,ex-ZLB,baseline,3yr
+fci,target,10,-0.15441,0.17642,269,ex-ZLB,baseline,3yr
+fci,path,10,0.15535,0.13145,269,ex-ZLB,baseline,3yr
+fci,target,11,-0.16219,0.18910,268,ex-ZLB,baseline,3yr
+fci,path,11,0.17199,0.13556,268,ex-ZLB,baseline,3yr
+fci,target,12,-0.23351,0.21014,267,ex-ZLB,baseline,3yr
+fci,path,12,0.16790,0.14802,267,ex-ZLB,baseline,3yr
+FFR,target,0,0.01609,0.00281,279,ex-ZLB,baseline,3yr
+FFR,path,0,0.00393,0.00251,279,ex-ZLB,baseline,3yr
+FFR,target,1,0.03528,0.00491,278,ex-ZLB,baseline,3yr
+FFR,path,1,0.00518,0.00572,278,ex-ZLB,baseline,3yr
+FFR,target,2,0.05268,0.00661,277,ex-ZLB,baseline,3yr
+FFR,path,2,0.00590,0.00865,277,ex-ZLB,baseline,3yr
+FFR,target,3,0.06244,0.00790,276,ex-ZLB,baseline,3yr
+FFR,path,3,0.00711,0.01116,276,ex-ZLB,baseline,3yr
+FFR,target,4,0.06420,0.01016,275,ex-ZLB,baseline,3yr
+FFR,path,4,0.00761,0.01334,275,ex-ZLB,baseline,3yr
+FFR,target,5,0.06734,0.01223,274,ex-ZLB,baseline,3yr
+FFR,path,5,0.00673,0.01558,274,ex-ZLB,baseline,3yr
+FFR,target,6,0.07001,0.01401,273,ex-ZLB,baseline,3yr
+FFR,path,6,0.00568,0.01860,273,ex-ZLB,baseline,3yr
+FFR,target,7,0.07029,0.01578,272,ex-ZLB,baseline,3yr
+FFR,path,7,0.00450,0.02165,272,ex-ZLB,baseline,3yr
+FFR,target,8,0.06759,0.01798,271,ex-ZLB,baseline,3yr
+FFR,path,8,0.00369,0.02400,271,ex-ZLB,baseline,3yr
+FFR,target,9,0.06455,0.01979,270,ex-ZLB,baseline,3yr
+FFR,path,9,0.00224,0.02529,270,ex-ZLB,baseline,3yr
+FFR,target,10,0.06379,0.02115,269,ex-ZLB,baseline,3yr
+FFR,path,10,0.00032,0.02651,269,ex-ZLB,baseline,3yr
+FFR,target,11,0.06136,0.02249,268,ex-ZLB,baseline,3yr
+FFR,path,11,-0.00149,0.02784,268,ex-ZLB,baseline,3yr
+FFR,target,12,0.05728,0.02216,267,ex-ZLB,baseline,3yr
+FFR,path,12,-0.00475,0.02927,267,ex-ZLB,baseline,3yr
+10Yr Treasury,target,0,-0.00092,0.00048,279,ex-ZLB,baseline,3yr
+10Yr Treasury,path,0,-0.00026,0.00073,279,ex-ZLB,baseline,3yr
+10Yr Treasury,target,1,-0.00176,0.00097,278,ex-ZLB,baseline,3yr
+10Yr Treasury,path,1,-0.00047,0.00144,278,ex-ZLB,baseline,3yr
+10Yr Treasury,target,2,-0.00318,0.00163,277,ex-ZLB,baseline,3yr
+10Yr Treasury,path,2,-0.00088,0.00213,277,ex-ZLB,baseline,3yr
+10Yr Treasury,target,3,-0.00446,0.00225,276,ex-ZLB,baseline,3yr
+10Yr Treasury,path,3,-0.00135,0.00275,276,ex-ZLB,baseline,3yr
+10Yr Treasury,target,4,-0.00594,0.00283,275,ex-ZLB,baseline,3yr
+10Yr Treasury,path,4,-0.00214,0.00340,275,ex-ZLB,baseline,3yr
+10Yr Treasury,target,5,-0.00674,0.00339,274,ex-ZLB,baseline,3yr
+10Yr Treasury,path,5,-0.00280,0.00397,274,ex-ZLB,baseline,3yr
+10Yr Treasury,target,6,-0.00791,0.00399,273,ex-ZLB,baseline,3yr
+10Yr Treasury,path,6,-0.00346,0.00447,273,ex-ZLB,baseline,3yr
+10Yr Treasury,target,7,-0.00904,0.00437,272,ex-ZLB,baseline,3yr
+10Yr Treasury,path,7,-0.00430,0.00494,272,ex-ZLB,baseline,3yr
+10Yr Treasury,target,8,-0.01007,0.00469,271,ex-ZLB,baseline,3yr
+10Yr Treasury,path,8,-0.00484,0.00539,271,ex-ZLB,baseline,3yr
+10Yr Treasury,target,9,-0.01079,0.00483,270,ex-ZLB,baseline,3yr
+10Yr Treasury,path,9,-0.00504,0.00590,270,ex-ZLB,baseline,3yr
+10Yr Treasury,target,10,-0.01186,0.00491,269,ex-ZLB,baseline,3yr
+10Yr Treasury,path,10,-0.00517,0.00633,269,ex-ZLB,baseline,3yr
+10Yr Treasury,target,11,-0.01358,0.00506,268,ex-ZLB,baseline,3yr
+10Yr Treasury,path,11,-0.00514,0.00665,268,ex-ZLB,baseline,3yr
+10Yr Treasury,target,12,-0.01527,0.00519,267,ex-ZLB,baseline,3yr
+10Yr Treasury,path,12,-0.00580,0.00701,267,ex-ZLB,baseline,3yr
+Mortgage Rate,target,0,0.01224,0.00607,279,ex-ZLB,baseline,3yr
+Mortgage Rate,path,0,0.00953,0.00669,279,ex-ZLB,baseline,3yr
+Mortgage Rate,target,1,0.01328,0.01123,278,ex-ZLB,baseline,3yr
+Mortgage Rate,path,1,0.01577,0.01381,278,ex-ZLB,baseline,3yr
+Mortgage Rate,target,2,0.01208,0.01730,277,ex-ZLB,baseline,3yr
+Mortgage Rate,path,2,0.01919,0.02032,277,ex-ZLB,baseline,3yr
+Mortgage Rate,target,3,0.00848,0.02210,276,ex-ZLB,baseline,3yr
+Mortgage Rate,path,3,0.01200,0.02445,276,ex-ZLB,baseline,3yr
+Mortgage Rate,target,4,0.00788,0.02442,275,ex-ZLB,baseline,3yr
+Mortgage Rate,path,4,-0.00854,0.02687,275,ex-ZLB,baseline,3yr
+Mortgage Rate,target,5,0.00141,0.02341,274,ex-ZLB,baseline,3yr
+Mortgage Rate,path,5,-0.01813,0.03107,274,ex-ZLB,baseline,3yr
+Mortgage Rate,target,6,0.00166,0.02162,273,ex-ZLB,baseline,3yr
+Mortgage Rate,path,6,-0.02150,0.03346,273,ex-ZLB,baseline,3yr
+Mortgage Rate,target,7,-0.00378,0.02158,272,ex-ZLB,baseline,3yr
+Mortgage Rate,path,7,-0.01818,0.03209,272,ex-ZLB,baseline,3yr
+Mortgage Rate,target,8,-0.01754,0.02068,271,ex-ZLB,baseline,3yr
+Mortgage Rate,path,8,-0.02055,0.03007,271,ex-ZLB,baseline,3yr
+Mortgage Rate,target,9,-0.03739,0.01979,270,ex-ZLB,baseline,3yr
+Mortgage Rate,path,9,-0.02216,0.03140,270,ex-ZLB,baseline,3yr
+Mortgage Rate,target,10,-0.04817,0.02079,269,ex-ZLB,baseline,3yr
+Mortgage Rate,path,10,-0.02062,0.03396,269,ex-ZLB,baseline,3yr
+Mortgage Rate,target,11,-0.03986,0.02298,268,ex-ZLB,baseline,3yr
+Mortgage Rate,path,11,-0.02379,0.03711,268,ex-ZLB,baseline,3yr
+Mortgage Rate,target,12,-0.02358,0.02840,267,ex-ZLB,baseline,3yr
+Mortgage Rate,path,12,-0.03679,0.03776,267,ex-ZLB,baseline,3yr
+BBB,target,0,0.00071,0.00241,279,ex-ZLB,baseline,3yr
+BBB,path,0,0.00477,0.00276,279,ex-ZLB,baseline,3yr
+BBB,target,1,0.00029,0.00440,278,ex-ZLB,baseline,3yr
+BBB,path,1,0.00918,0.00582,278,ex-ZLB,baseline,3yr
+BBB,target,2,0.00302,0.00556,277,ex-ZLB,baseline,3yr
+BBB,path,2,0.01172,0.00848,277,ex-ZLB,baseline,3yr
+BBB,target,3,0.00731,0.00715,276,ex-ZLB,baseline,3yr
+BBB,path,3,0.01157,0.01088,276,ex-ZLB,baseline,3yr
+BBB,target,4,0.01255,0.00847,275,ex-ZLB,baseline,3yr
+BBB,path,4,0.00804,0.01350,275,ex-ZLB,baseline,3yr
+BBB,target,5,0.01427,0.01025,274,ex-ZLB,baseline,3yr
+BBB,path,5,0.00807,0.01627,274,ex-ZLB,baseline,3yr
+BBB,target,6,0.01888,0.01232,273,ex-ZLB,baseline,3yr
+BBB,path,6,0.01064,0.01815,273,ex-ZLB,baseline,3yr
+BBB,target,7,0.02297,0.01339,272,ex-ZLB,baseline,3yr
+BBB,path,7,0.01537,0.01969,272,ex-ZLB,baseline,3yr
+BBB,target,8,0.02519,0.01351,271,ex-ZLB,baseline,3yr
+BBB,path,8,0.01983,0.02121,271,ex-ZLB,baseline,3yr
+BBB,target,9,0.01968,0.01672,270,ex-ZLB,baseline,3yr
+BBB,path,9,0.02321,0.02287,270,ex-ZLB,baseline,3yr
+BBB,target,10,0.01509,0.02090,269,ex-ZLB,baseline,3yr
+BBB,path,10,0.02766,0.02415,269,ex-ZLB,baseline,3yr
+BBB,target,11,0.01455,0.02432,268,ex-ZLB,baseline,3yr
+BBB,path,11,0.02894,0.02496,268,ex-ZLB,baseline,3yr
+BBB,target,12,0.01889,0.02454,267,ex-ZLB,baseline,3yr
+BBB,path,12,0.03014,0.02631,267,ex-ZLB,baseline,3yr
+Stock Market,target,0,0.01709,0.03378,279,ex-ZLB,baseline,3yr
+Stock Market,path,0,0.05576,0.01631,279,ex-ZLB,baseline,3yr
+Stock Market,target,1,-0.00197,0.04033,278,ex-ZLB,baseline,3yr
+Stock Market,path,1,0.03443,0.02402,278,ex-ZLB,baseline,3yr
+Stock Market,target,2,-0.00905,0.04373,277,ex-ZLB,baseline,3yr
+Stock Market,path,2,0.03624,0.02868,277,ex-ZLB,baseline,3yr
+Stock Market,target,3,-0.00696,0.03884,276,ex-ZLB,baseline,3yr
+Stock Market,path,3,0.06203,0.03556,276,ex-ZLB,baseline,3yr
+Stock Market,target,4,-0.02353,0.04030,275,ex-ZLB,baseline,3yr
+Stock Market,path,4,0.04358,0.04270,275,ex-ZLB,baseline,3yr
+Stock Market,target,5,-0.05347,0.04317,274,ex-ZLB,baseline,3yr
+Stock Market,path,5,0.03939,0.04020,274,ex-ZLB,baseline,3yr
+Stock Market,target,6,-0.02051,0.05255,273,ex-ZLB,baseline,3yr
+Stock Market,path,6,0.03218,0.05190,273,ex-ZLB,baseline,3yr
+Stock Market,target,7,-0.01953,0.04656,272,ex-ZLB,baseline,3yr
+Stock Market,path,7,0.02602,0.05978,272,ex-ZLB,baseline,3yr
+Stock Market,target,8,-0.06178,0.05618,271,ex-ZLB,baseline,3yr
+Stock Market,path,8,0.06979,0.05874,271,ex-ZLB,baseline,3yr
+Stock Market,target,9,-0.13286,0.08365,270,ex-ZLB,baseline,3yr
+Stock Market,path,9,0.05685,0.05997,270,ex-ZLB,baseline,3yr
+Stock Market,target,10,-0.14272,0.10074,269,ex-ZLB,baseline,3yr
+Stock Market,path,10,0.08272,0.05855,269,ex-ZLB,baseline,3yr
+Stock Market,target,11,-0.13200,0.10008,268,ex-ZLB,baseline,3yr
+Stock Market,path,11,0.08963,0.06467,268,ex-ZLB,baseline,3yr
+Stock Market,target,12,-0.20609,0.12163,267,ex-ZLB,baseline,3yr
+Stock Market,path,12,0.08719,0.07603,267,ex-ZLB,baseline,3yr
+House Prices,target,0,-0.00167,0.00313,279,ex-ZLB,baseline,3yr
+House Prices,path,0,0.00146,0.00336,279,ex-ZLB,baseline,3yr
+House Prices,target,1,-0.00244,0.00652,278,ex-ZLB,baseline,3yr
+House Prices,path,1,0.00271,0.00588,278,ex-ZLB,baseline,3yr
+House Prices,target,2,-0.00328,0.01003,277,ex-ZLB,baseline,3yr
+House Prices,path,2,0.00261,0.00771,277,ex-ZLB,baseline,3yr
+House Prices,target,3,-0.00413,0.01345,276,ex-ZLB,baseline,3yr
+House Prices,path,3,0.00172,0.00942,276,ex-ZLB,baseline,3yr
+House Prices,target,4,-0.00422,0.01683,275,ex-ZLB,baseline,3yr
+House Prices,path,4,0.00188,0.01155,275,ex-ZLB,baseline,3yr
+House Prices,target,5,-0.00391,0.02009,274,ex-ZLB,baseline,3yr
+House Prices,path,5,0.00065,0.01376,274,ex-ZLB,baseline,3yr
+House Prices,target,6,-0.00349,0.02327,273,ex-ZLB,baseline,3yr
+House Prices,path,6,-0.00118,0.01600,273,ex-ZLB,baseline,3yr
+House Prices,target,7,-0.00293,0.02682,272,ex-ZLB,baseline,3yr
+House Prices,path,7,-0.00322,0.01834,272,ex-ZLB,baseline,3yr
+House Prices,target,8,-0.00271,0.03001,271,ex-ZLB,baseline,3yr
+House Prices,path,8,-0.00551,0.02078,271,ex-ZLB,baseline,3yr
+House Prices,target,9,-0.00287,0.03263,270,ex-ZLB,baseline,3yr
+House Prices,path,9,-0.00602,0.02309,270,ex-ZLB,baseline,3yr
+House Prices,target,10,-0.00291,0.03516,269,ex-ZLB,baseline,3yr
+House Prices,path,10,-0.00537,0.02510,269,ex-ZLB,baseline,3yr
+House Prices,target,11,-0.00364,0.03753,268,ex-ZLB,baseline,3yr
+House Prices,path,11,-0.00443,0.02681,268,ex-ZLB,baseline,3yr
+House Prices,target,12,-0.00583,0.03945,267,ex-ZLB,baseline,3yr
+House Prices,path,12,-0.00354,0.02874,267,ex-ZLB,baseline,3yr
+Dollar,target,0,-0.00333,0.00667,279,ex-ZLB,baseline,3yr
+Dollar,path,0,0.01518,0.00722,279,ex-ZLB,baseline,3yr
+Dollar,target,1,-0.00858,0.01204,278,ex-ZLB,baseline,3yr
+Dollar,path,1,0.03119,0.01684,278,ex-ZLB,baseline,3yr
+Dollar,target,2,-0.00413,0.01856,277,ex-ZLB,baseline,3yr
+Dollar,path,2,0.03469,0.02490,277,ex-ZLB,baseline,3yr
+Dollar,target,3,-0.00526,0.02664,276,ex-ZLB,baseline,3yr
+Dollar,path,3,0.03234,0.03134,276,ex-ZLB,baseline,3yr
+Dollar,target,4,-0.01124,0.03185,275,ex-ZLB,baseline,3yr
+Dollar,path,4,0.01823,0.03871,275,ex-ZLB,baseline,3yr
+Dollar,target,5,-0.01204,0.03242,274,ex-ZLB,baseline,3yr
+Dollar,path,5,0.01631,0.04407,274,ex-ZLB,baseline,3yr
+Dollar,target,6,0.00072,0.03390,273,ex-ZLB,baseline,3yr
+Dollar,path,6,0.01892,0.04694,273,ex-ZLB,baseline,3yr
+Dollar,target,7,0.01208,0.03347,272,ex-ZLB,baseline,3yr
+Dollar,path,7,0.02399,0.04919,272,ex-ZLB,baseline,3yr
+Dollar,target,8,0.01754,0.03178,271,ex-ZLB,baseline,3yr
+Dollar,path,8,0.03724,0.05338,271,ex-ZLB,baseline,3yr
+Dollar,target,9,-0.00673,0.03445,270,ex-ZLB,baseline,3yr
+Dollar,path,9,0.05950,0.05737,270,ex-ZLB,baseline,3yr
+Dollar,target,10,-0.02763,0.04620,269,ex-ZLB,baseline,3yr
+Dollar,path,10,0.07581,0.05804,269,ex-ZLB,baseline,3yr
+Dollar,target,11,-0.04902,0.05849,268,ex-ZLB,baseline,3yr
+Dollar,path,11,0.08825,0.05892,268,ex-ZLB,baseline,3yr
+Dollar,target,12,-0.05890,0.06601,267,ex-ZLB,baseline,3yr
+Dollar,path,12,0.10144,0.06381,267,ex-ZLB,baseline,3yr
+fci,swanson_ffr,0,-0.01899,0.03827,279,ex-ZLB,swanson,3yr
+fci,swanson_fg,0,0.10027,0.02367,279,ex-ZLB,swanson,3yr
+fci,swanson_lsap,0,-0.03527,0.10454,279,ex-ZLB,swanson,3yr
+fci,swanson_ffr,1,0.00008,0.05676,278,ex-ZLB,swanson,3yr
+fci,swanson_fg,1,0.11198,0.03816,278,ex-ZLB,swanson,3yr
+fci,swanson_lsap,1,0.09157,0.16356,278,ex-ZLB,swanson,3yr
+fci,swanson_ffr,2,0.08016,0.07514,277,ex-ZLB,swanson,3yr
+fci,swanson_fg,2,0.11281,0.05768,277,ex-ZLB,swanson,3yr
+fci,swanson_lsap,2,0.35126,0.23301,277,ex-ZLB,swanson,3yr
+fci,swanson_ffr,3,0.10451,0.08787,276,ex-ZLB,swanson,3yr
+fci,swanson_fg,3,0.12378,0.08357,276,ex-ZLB,swanson,3yr
+fci,swanson_lsap,3,0.47121,0.27629,276,ex-ZLB,swanson,3yr
+fci,swanson_ffr,4,0.20885,0.10369,275,ex-ZLB,swanson,3yr
+fci,swanson_fg,4,0.03825,0.09855,275,ex-ZLB,swanson,3yr
+fci,swanson_lsap,4,0.88939,0.32420,275,ex-ZLB,swanson,3yr
+fci,swanson_ffr,5,0.26045,0.11938,274,ex-ZLB,swanson,3yr
+fci,swanson_fg,5,-0.00798,0.10238,274,ex-ZLB,swanson,3yr
+fci,swanson_lsap,5,1.25498,0.37525,274,ex-ZLB,swanson,3yr
+fci,swanson_ffr,6,0.40382,0.13743,273,ex-ZLB,swanson,3yr
+fci,swanson_fg,6,-0.02803,0.11232,273,ex-ZLB,swanson,3yr
+fci,swanson_lsap,6,1.58451,0.40296,273,ex-ZLB,swanson,3yr
+fci,swanson_ffr,7,0.41032,0.14775,272,ex-ZLB,swanson,3yr
+fci,swanson_fg,7,-0.01196,0.12657,272,ex-ZLB,swanson,3yr
+fci,swanson_lsap,7,1.58785,0.42397,272,ex-ZLB,swanson,3yr
+fci,swanson_ffr,8,0.30488,0.14703,271,ex-ZLB,swanson,3yr
+fci,swanson_fg,8,0.05244,0.12757,271,ex-ZLB,swanson,3yr
+fci,swanson_lsap,8,1.51689,0.45558,271,ex-ZLB,swanson,3yr
+fci,swanson_ffr,9,0.21079,0.18298,270,ex-ZLB,swanson,3yr
+fci,swanson_fg,9,0.04630,0.13527,270,ex-ZLB,swanson,3yr
+fci,swanson_lsap,9,1.66385,0.45841,270,ex-ZLB,swanson,3yr
+fci,swanson_ffr,10,0.10052,0.21505,269,ex-ZLB,swanson,3yr
+fci,swanson_fg,10,0.11101,0.13926,269,ex-ZLB,swanson,3yr
+fci,swanson_lsap,10,1.47927,0.46393,269,ex-ZLB,swanson,3yr
+fci,swanson_ffr,11,0.05693,0.23554,268,ex-ZLB,swanson,3yr
+fci,swanson_fg,11,0.13943,0.14939,268,ex-ZLB,swanson,3yr
+fci,swanson_lsap,11,1.38346,0.44367,268,ex-ZLB,swanson,3yr
+fci,swanson_ffr,12,0.01007,0.25234,267,ex-ZLB,swanson,3yr
+fci,swanson_fg,12,0.12931,0.16657,267,ex-ZLB,swanson,3yr
+fci,swanson_lsap,12,1.46142,0.43181,267,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,0,0.01136,0.00390,279,ex-ZLB,swanson,3yr
+FFR,swanson_fg,0,0.00386,0.00288,279,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,0,-0.01469,0.01092,279,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,1,0.02685,0.00730,278,ex-ZLB,swanson,3yr
+FFR,swanson_fg,1,0.00463,0.00668,278,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,1,-0.02811,0.02303,278,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,2,0.04367,0.01063,277,ex-ZLB,swanson,3yr
+FFR,swanson_fg,2,0.00449,0.01027,277,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,2,-0.03254,0.03530,277,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,3,0.04990,0.01427,276,ex-ZLB,swanson,3yr
+FFR,swanson_fg,3,0.00575,0.01349,276,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,3,-0.04377,0.04704,276,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,4,0.05240,0.01857,275,ex-ZLB,swanson,3yr
+FFR,swanson_fg,4,0.00471,0.01648,275,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,4,-0.03771,0.05759,275,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,5,0.05752,0.02111,274,ex-ZLB,swanson,3yr
+FFR,swanson_fg,5,0.00254,0.01893,274,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,5,-0.02884,0.06398,274,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,6,0.06106,0.02237,273,ex-ZLB,swanson,3yr
+FFR,swanson_fg,6,0.00129,0.02217,273,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,6,-0.02598,0.06697,273,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,7,0.06023,0.02317,272,ex-ZLB,swanson,3yr
+FFR,swanson_fg,7,0.00187,0.02552,272,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,7,-0.03430,0.06752,272,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,8,0.05513,0.02443,271,ex-ZLB,swanson,3yr
+FFR,swanson_fg,8,0.00281,0.02822,271,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,8,-0.04734,0.06981,271,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,9,0.05067,0.02562,270,ex-ZLB,swanson,3yr
+FFR,swanson_fg,9,0.00309,0.02956,270,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,9,-0.06047,0.07327,270,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,10,0.05075,0.02739,269,ex-ZLB,swanson,3yr
+FFR,swanson_fg,10,0.00111,0.03040,269,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,10,-0.06132,0.07819,269,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,11,0.04930,0.03032,268,ex-ZLB,swanson,3yr
+FFR,swanson_fg,11,-0.00150,0.03103,268,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,11,-0.05759,0.08247,268,ex-ZLB,swanson,3yr
+FFR,swanson_ffr,12,0.05172,0.03215,267,ex-ZLB,swanson,3yr
+FFR,swanson_fg,12,-0.00758,0.03164,267,ex-ZLB,swanson,3yr
+FFR,swanson_lsap,12,-0.03288,0.08635,267,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,0,-0.00055,0.00081,279,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,0,-0.00014,0.00066,279,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,0,0.00160,0.00218,279,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,1,-0.00105,0.00157,278,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,1,-0.00016,0.00136,278,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,1,0.00290,0.00411,278,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,2,-0.00211,0.00241,277,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,2,-0.00029,0.00205,277,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,2,0.00366,0.00604,277,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,3,-0.00330,0.00329,276,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,3,-0.00033,0.00269,276,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,3,0.00242,0.00826,276,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,4,-0.00429,0.00426,275,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,4,-0.00082,0.00348,275,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,4,0.00194,0.01044,275,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,5,-0.00488,0.00523,274,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,5,-0.00121,0.00413,274,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,5,0.00092,0.01272,274,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,6,-0.00539,0.00614,273,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,6,-0.00176,0.00467,273,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,6,0.00206,0.01488,273,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,7,-0.00585,0.00689,272,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,7,-0.00250,0.00520,272,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,7,0.00302,0.01693,272,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,8,-0.00635,0.00762,271,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,8,-0.00288,0.00574,271,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,8,0.00402,0.01900,271,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,9,-0.00679,0.00823,270,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,9,-0.00291,0.00643,270,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,9,0.00470,0.02089,270,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,10,-0.00775,0.00874,269,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,10,-0.00285,0.00704,269,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,10,0.00523,0.02232,269,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,11,-0.00921,0.00920,268,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,11,-0.00277,0.00754,268,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,11,0.00651,0.02340,268,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_ffr,12,-0.01085,0.00958,267,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_fg,12,-0.00332,0.00806,267,ex-ZLB,swanson,3yr
+10Yr Treasury,swanson_lsap,12,0.00593,0.02430,267,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,0,0.00036,0.00957,279,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,0,0.00864,0.00676,279,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,0,-0.02755,0.02312,279,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,1,-0.00492,0.01800,278,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,1,0.01387,0.01352,278,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,1,-0.03813,0.04247,278,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,2,-0.00864,0.02432,277,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,2,0.01671,0.01886,277,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,2,-0.04087,0.05406,277,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,3,-0.00215,0.02877,276,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,3,0.00779,0.02329,276,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,3,-0.00564,0.06180,276,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,4,0.02168,0.03248,275,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,4,-0.01910,0.02714,275,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,4,0.06516,0.06936,275,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,5,0.02480,0.03817,274,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,5,-0.03244,0.03319,274,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,5,0.10555,0.08552,274,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,6,0.02357,0.04021,273,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,6,-0.03414,0.03609,273,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,6,0.10199,0.09149,273,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,7,0.00304,0.04068,272,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,7,-0.02448,0.03488,272,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,7,0.04555,0.09263,272,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,8,-0.02740,0.03892,271,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,8,-0.02056,0.03309,271,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,8,-0.03885,0.09370,271,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,9,-0.05832,0.03911,270,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,9,-0.01977,0.03380,270,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,9,-0.09951,0.10134,270,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,10,-0.07939,0.04048,269,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,10,-0.01740,0.03506,269,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,10,-0.14054,0.11169,269,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,11,-0.06571,0.04231,268,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,11,-0.02254,0.03689,268,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,11,-0.12397,0.11946,268,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_ffr,12,-0.02911,0.04318,267,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_fg,12,-0.03936,0.03691,267,ex-ZLB,swanson,3yr
+Mortgage Rate,swanson_lsap,12,-0.07078,0.12222,267,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,0,-0.00162,0.00310,279,ex-ZLB,swanson,3yr
+BBB,swanson_fg,0,0.00437,0.00280,279,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,0,-0.00008,0.00653,279,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,1,-0.00421,0.00559,278,ex-ZLB,swanson,3yr
+BBB,swanson_fg,1,0.00846,0.00596,278,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,1,-0.00187,0.01352,278,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,2,-0.00188,0.00793,277,ex-ZLB,swanson,3yr
+BBB,swanson_fg,2,0.01075,0.00871,277,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,2,-0.00146,0.02032,277,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,3,0.00506,0.01113,276,ex-ZLB,swanson,3yr
+BBB,swanson_fg,3,0.01003,0.01127,276,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,3,0.00814,0.02601,276,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,4,0.01690,0.01451,275,ex-ZLB,swanson,3yr
+BBB,swanson_fg,4,0.00483,0.01444,275,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,4,0.02825,0.02967,275,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,5,0.02165,0.01716,274,ex-ZLB,swanson,3yr
+BBB,swanson_fg,5,0.00342,0.01726,274,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,5,0.04617,0.03250,274,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,6,0.02865,0.01845,273,ex-ZLB,swanson,3yr
+BBB,swanson_fg,6,0.00491,0.01865,273,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,6,0.06413,0.03638,273,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,7,0.03304,0.01926,272,ex-ZLB,swanson,3yr
+BBB,swanson_fg,7,0.00862,0.01955,272,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,7,0.07679,0.04272,272,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,8,0.03153,0.02041,271,ex-ZLB,swanson,3yr
+BBB,swanson_fg,8,0.01293,0.02085,271,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,8,0.06999,0.04965,271,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,9,0.02088,0.02260,270,ex-ZLB,swanson,3yr
+BBB,swanson_fg,9,0.01633,0.02288,270,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,9,0.05610,0.05651,270,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,10,0.00744,0.02662,269,ex-ZLB,swanson,3yr
+BBB,swanson_fg,10,0.02228,0.02515,269,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,10,0.02959,0.06081,269,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,11,0.00340,0.03053,268,ex-ZLB,swanson,3yr
+BBB,swanson_fg,11,0.02452,0.02698,268,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,11,0.01628,0.06564,268,ex-ZLB,swanson,3yr
+BBB,swanson_ffr,12,0.00602,0.03326,267,ex-ZLB,swanson,3yr
+BBB,swanson_fg,12,0.02617,0.02926,267,ex-ZLB,swanson,3yr
+BBB,swanson_lsap,12,0.01001,0.07087,267,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,0,-0.01949,0.03813,279,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,0,0.06547,0.01845,279,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,0,-0.01639,0.08045,279,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,1,-0.00207,0.05292,278,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,1,0.04769,0.02581,278,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,1,0.09505,0.10135,278,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,2,0.04448,0.05971,277,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,2,0.04211,0.03023,277,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,2,0.27952,0.13825,277,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,3,0.02425,0.05438,276,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,3,0.07129,0.03879,276,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,3,0.24309,0.14151,276,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,4,0.05090,0.05493,275,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,4,0.04623,0.04131,275,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,4,0.39843,0.16260,275,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,5,0.06110,0.06750,274,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,5,0.02767,0.03687,274,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,5,0.57744,0.19775,274,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,6,0.15277,0.07291,273,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,6,0.01367,0.04275,273,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,6,0.77750,0.18979,273,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,7,0.14784,0.07091,272,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,7,0.01595,0.05501,272,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,7,0.76289,0.16938,272,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,8,0.07629,0.07404,271,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,8,0.05932,0.05498,271,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,8,0.77913,0.19952,271,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,9,0.06576,0.10356,270,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,9,0.02579,0.06129,270,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,9,1.00910,0.19336,270,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,10,0.02509,0.12142,269,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,10,0.06385,0.06517,269,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,10,0.89777,0.21141,269,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,11,-0.00252,0.13335,268,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,11,0.08416,0.07301,268,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,11,0.76084,0.22906,268,ex-ZLB,swanson,3yr
+Stock Market,swanson_ffr,12,-0.07593,0.15790,267,ex-ZLB,swanson,3yr
+Stock Market,swanson_fg,12,0.08077,0.08668,267,ex-ZLB,swanson,3yr
+Stock Market,swanson_lsap,12,0.74694,0.25185,267,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,0,-0.00307,0.00447,279,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,0,0.00230,0.00364,279,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,0,-0.00296,0.01712,279,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,1,-0.00496,0.00811,278,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,1,0.00405,0.00635,278,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,1,-0.00346,0.03132,278,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,2,-0.00487,0.01133,277,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,2,0.00362,0.00826,277,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,2,0.00259,0.04305,277,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,3,-0.00332,0.01420,276,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,3,0.00196,0.01008,276,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,3,0.01121,0.05353,276,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,4,-0.00269,0.01773,275,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,4,0.00206,0.01270,275,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,4,0.01447,0.06391,275,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,5,-0.00009,0.02096,274,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,5,0.00041,0.01518,274,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,5,0.02155,0.07267,274,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,6,0.00311,0.02426,273,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,6,-0.00216,0.01771,273,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,6,0.03017,0.07952,273,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,7,0.00767,0.02763,272,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,7,-0.00512,0.02039,272,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,7,0.04319,0.08483,272,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,8,0.01233,0.03095,271,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,8,-0.00834,0.02317,271,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,8,0.05713,0.08931,271,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,9,0.01557,0.03393,270,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,9,-0.00980,0.02578,270,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,9,0.07042,0.09353,270,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,10,0.01784,0.03698,269,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,10,-0.00987,0.02800,269,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,10,0.08195,0.09770,269,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,11,0.01903,0.03997,268,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,11,-0.00977,0.02996,268,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,11,0.09216,0.10196,268,ex-ZLB,swanson,3yr
+House Prices,swanson_ffr,12,0.01847,0.04263,267,ex-ZLB,swanson,3yr
+House Prices,swanson_fg,12,-0.01014,0.03230,267,ex-ZLB,swanson,3yr
+House Prices,swanson_lsap,12,0.10138,0.10581,267,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,0,-0.00599,0.00863,279,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,0,0.01577,0.00742,279,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,0,0.02480,0.02856,279,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,1,-0.00957,0.01974,278,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,1,0.03344,0.01686,278,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,1,0.06517,0.06336,278,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,2,0.00950,0.02874,277,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,2,0.03540,0.02436,277,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,2,0.14036,0.10108,277,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,3,0.03406,0.04109,276,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,3,0.02730,0.03081,276,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,3,0.25576,0.13108,276,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,4,0.07394,0.05227,275,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,4,0.00032,0.03712,275,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,4,0.41885,0.15583,275,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,5,0.10035,0.06060,274,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,5,-0.00836,0.04160,274,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,5,0.53219,0.18050,274,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,6,0.14005,0.07048,273,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,6,-0.00986,0.04322,273,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,6,0.63464,0.21071,273,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,7,0.16434,0.08073,272,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,7,-0.00630,0.04533,272,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,7,0.69072,0.24481,272,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,8,0.16334,0.08363,271,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,8,0.00916,0.05125,271,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,8,0.69278,0.26762,271,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,9,0.12303,0.08265,270,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,9,0.03356,0.05790,270,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,9,0.68350,0.28167,270,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,10,0.08655,0.08511,269,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,10,0.05389,0.06284,269,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,10,0.66658,0.27500,269,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,11,0.06264,0.09332,268,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,11,0.06732,0.06747,268,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,11,0.68923,0.26832,268,ex-ZLB,swanson,3yr
+Dollar,swanson_ffr,12,0.04975,0.10038,267,ex-ZLB,swanson,3yr
+Dollar,swanson_fg,12,0.08277,0.07374,267,ex-ZLB,swanson,3yr
+Dollar,swanson_lsap,12,0.70081,0.26057,267,ex-ZLB,swanson,3yr
+fci,ns,0,0.11308,0.03560,279,ex-ZLB,ns,3yr
+fci,ns,1,0.12518,0.04985,278,ex-ZLB,ns,3yr
+fci,ns,2,0.13134,0.06240,277,ex-ZLB,ns,3yr
+fci,ns,3,0.14842,0.07906,276,ex-ZLB,ns,3yr
+fci,ns,4,0.07849,0.09464,275,ex-ZLB,ns,3yr
+fci,ns,5,0.00595,0.10307,274,ex-ZLB,ns,3yr
+fci,ns,6,0.02186,0.12014,273,ex-ZLB,ns,3yr
+fci,ns,7,0.04580,0.13162,272,ex-ZLB,ns,3yr
+fci,ns,8,0.06483,0.12877,271,ex-ZLB,ns,3yr
+fci,ns,9,-0.03624,0.14176,270,ex-ZLB,ns,3yr
+fci,ns,10,-0.03655,0.16237,269,ex-ZLB,ns,3yr
+fci,ns,11,-0.01770,0.16664,268,ex-ZLB,ns,3yr
+fci,ns,12,-0.07440,0.18280,267,ex-ZLB,ns,3yr
+FFR,ns,0,0.01546,0.00432,279,ex-ZLB,ns,3yr
+FFR,ns,1,0.02977,0.00928,278,ex-ZLB,ns,3yr
+FFR,ns,2,0.04280,0.01395,277,ex-ZLB,ns,3yr
+FFR,ns,3,0.04993,0.01747,276,ex-ZLB,ns,3yr
+FFR,ns,4,0.05062,0.01946,275,ex-ZLB,ns,3yr
+FFR,ns,5,0.05078,0.02206,274,ex-ZLB,ns,3yr
+FFR,ns,6,0.05196,0.02605,273,ex-ZLB,ns,3yr
+FFR,ns,7,0.05320,0.03031,272,ex-ZLB,ns,3yr
+FFR,ns,8,0.05146,0.03339,271,ex-ZLB,ns,3yr
+FFR,ns,9,0.04850,0.03435,270,ex-ZLB,ns,3yr
+FFR,ns,10,0.04479,0.03396,269,ex-ZLB,ns,3yr
+FFR,ns,11,0.03955,0.03310,268,ex-ZLB,ns,3yr
+FFR,ns,12,0.03062,0.03249,267,ex-ZLB,ns,3yr
+10Yr Treasury,ns,0,-0.00080,0.00063,279,ex-ZLB,ns,3yr
+10Yr Treasury,ns,1,-0.00147,0.00135,278,ex-ZLB,ns,3yr
+10Yr Treasury,ns,2,-0.00247,0.00224,277,ex-ZLB,ns,3yr
+10Yr Treasury,ns,3,-0.00343,0.00307,276,ex-ZLB,ns,3yr
+10Yr Treasury,ns,4,-0.00500,0.00389,275,ex-ZLB,ns,3yr
+10Yr Treasury,ns,5,-0.00603,0.00458,274,ex-ZLB,ns,3yr
+10Yr Treasury,ns,6,-0.00739,0.00521,273,ex-ZLB,ns,3yr
+10Yr Treasury,ns,7,-0.00900,0.00572,272,ex-ZLB,ns,3yr
+10Yr Treasury,ns,8,-0.01038,0.00616,271,ex-ZLB,ns,3yr
+10Yr Treasury,ns,9,-0.01098,0.00655,270,ex-ZLB,ns,3yr
+10Yr Treasury,ns,10,-0.01167,0.00695,269,ex-ZLB,ns,3yr
+10Yr Treasury,ns,11,-0.01296,0.00733,268,ex-ZLB,ns,3yr
+10Yr Treasury,ns,12,-0.01499,0.00789,267,ex-ZLB,ns,3yr
+Mortgage Rate,ns,0,0.01419,0.00668,279,ex-ZLB,ns,3yr
+Mortgage Rate,ns,1,0.01758,0.01448,278,ex-ZLB,ns,3yr
+Mortgage Rate,ns,2,0.01458,0.02258,277,ex-ZLB,ns,3yr
+Mortgage Rate,ns,3,0.00287,0.02709,276,ex-ZLB,ns,3yr
+Mortgage Rate,ns,4,-0.01999,0.02784,275,ex-ZLB,ns,3yr
+Mortgage Rate,ns,5,-0.03477,0.03067,274,ex-ZLB,ns,3yr
+Mortgage Rate,ns,6,-0.03661,0.03118,273,ex-ZLB,ns,3yr
+Mortgage Rate,ns,7,-0.03465,0.02924,272,ex-ZLB,ns,3yr
+Mortgage Rate,ns,8,-0.04209,0.02745,271,ex-ZLB,ns,3yr
+Mortgage Rate,ns,9,-0.05538,0.02810,270,ex-ZLB,ns,3yr
+Mortgage Rate,ns,10,-0.06379,0.03083,269,ex-ZLB,ns,3yr
+Mortgage Rate,ns,11,-0.06390,0.03378,268,ex-ZLB,ns,3yr
+Mortgage Rate,ns,12,-0.06562,0.03630,267,ex-ZLB,ns,3yr
+BBB,ns,0,0.00480,0.00279,279,ex-ZLB,ns,3yr
+BBB,ns,1,0.00863,0.00564,278,ex-ZLB,ns,3yr
+BBB,ns,2,0.01218,0.00824,277,ex-ZLB,ns,3yr
+BBB,ns,3,0.01482,0.01073,276,ex-ZLB,ns,3yr
+BBB,ns,4,0.01484,0.01296,275,ex-ZLB,ns,3yr
+BBB,ns,5,0.01510,0.01521,274,ex-ZLB,ns,3yr
+BBB,ns,6,0.01953,0.01702,273,ex-ZLB,ns,3yr
+BBB,ns,7,0.02575,0.01827,272,ex-ZLB,ns,3yr
+BBB,ns,8,0.03155,0.01925,271,ex-ZLB,ns,3yr
+BBB,ns,9,0.03027,0.02129,270,ex-ZLB,ns,3yr
+BBB,ns,10,0.03013,0.02416,269,ex-ZLB,ns,3yr
+BBB,ns,11,0.03035,0.02689,268,ex-ZLB,ns,3yr
+BBB,ns,12,0.03464,0.02825,267,ex-ZLB,ns,3yr
+Stock Market,ns,0,0.06836,0.02755,279,ex-ZLB,ns,3yr
+Stock Market,ns,1,0.04849,0.03403,278,ex-ZLB,ns,3yr
+Stock Market,ns,2,0.03727,0.03780,277,ex-ZLB,ns,3yr
+Stock Market,ns,3,0.06381,0.04092,276,ex-ZLB,ns,3yr
+Stock Market,ns,4,0.03774,0.04495,275,ex-ZLB,ns,3yr
+Stock Market,ns,5,-0.01297,0.05395,274,ex-ZLB,ns,3yr
+Stock Market,ns,6,-0.00503,0.06341,273,ex-ZLB,ns,3yr
+Stock Market,ns,7,0.00079,0.05813,272,ex-ZLB,ns,3yr
+Stock Market,ns,8,0.01186,0.06457,271,ex-ZLB,ns,3yr
+Stock Market,ns,9,-0.06996,0.07970,270,ex-ZLB,ns,3yr
+Stock Market,ns,10,-0.05451,0.09896,269,ex-ZLB,ns,3yr
+Stock Market,ns,11,-0.02358,0.09208,268,ex-ZLB,ns,3yr
+Stock Market,ns,12,-0.07984,0.10993,267,ex-ZLB,ns,3yr
+House Prices,ns,0,0.00101,0.00397,279,ex-ZLB,ns,3yr
+House Prices,ns,1,0.00205,0.00766,278,ex-ZLB,ns,3yr
+House Prices,ns,2,0.00142,0.01078,277,ex-ZLB,ns,3yr
+House Prices,ns,3,-0.00009,0.01357,276,ex-ZLB,ns,3yr
+House Prices,ns,4,0.00027,0.01678,275,ex-ZLB,ns,3yr
+House Prices,ns,5,-0.00060,0.01979,274,ex-ZLB,ns,3yr
+House Prices,ns,6,-0.00248,0.02269,273,ex-ZLB,ns,3yr
+House Prices,ns,7,-0.00420,0.02586,272,ex-ZLB,ns,3yr
+House Prices,ns,8,-0.00637,0.02872,271,ex-ZLB,ns,3yr
+House Prices,ns,9,-0.00770,0.03102,270,ex-ZLB,ns,3yr
+House Prices,ns,10,-0.00779,0.03310,269,ex-ZLB,ns,3yr
+House Prices,ns,11,-0.00826,0.03525,268,ex-ZLB,ns,3yr
+House Prices,ns,12,-0.01010,0.03787,267,ex-ZLB,ns,3yr
+Dollar,ns,0,0.01007,0.00764,279,ex-ZLB,ns,3yr
+Dollar,ns,1,0.02013,0.01688,278,ex-ZLB,ns,3yr
+Dollar,ns,2,0.02556,0.02536,277,ex-ZLB,ns,3yr
+Dollar,ns,3,0.02051,0.03380,276,ex-ZLB,ns,3yr
+Dollar,ns,4,0.00000,0.04139,275,ex-ZLB,ns,3yr
+Dollar,ns,5,-0.00557,0.04526,274,ex-ZLB,ns,3yr
+Dollar,ns,6,0.00188,0.04879,273,ex-ZLB,ns,3yr
+Dollar,ns,7,0.01390,0.05235,272,ex-ZLB,ns,3yr
+Dollar,ns,8,0.02881,0.05522,271,ex-ZLB,ns,3yr
+Dollar,ns,9,0.02900,0.05447,270,ex-ZLB,ns,3yr
+Dollar,ns,10,0.02629,0.05592,269,ex-ZLB,ns,3yr
+Dollar,ns,11,0.02109,0.05974,268,ex-ZLB,ns,3yr
+Dollar,ns,12,0.03089,0.06281,267,ex-ZLB,ns,3yr
+fci,raw2y,0,0.10394,0.02605,279,ex-ZLB,raw2y,3yr
+fci,raw2y,1,0.11071,0.04920,278,ex-ZLB,raw2y,3yr
+fci,raw2y,2,0.12622,0.07281,277,ex-ZLB,raw2y,3yr
+fci,raw2y,3,0.15771,0.09493,276,ex-ZLB,raw2y,3yr
+fci,raw2y,4,0.12210,0.11466,275,ex-ZLB,raw2y,3yr
+fci,raw2y,5,0.09995,0.12924,274,ex-ZLB,raw2y,3yr
+fci,raw2y,6,0.13126,0.14362,273,ex-ZLB,raw2y,3yr
+fci,raw2y,7,0.15732,0.15810,272,ex-ZLB,raw2y,3yr
+fci,raw2y,8,0.20258,0.16035,271,ex-ZLB,raw2y,3yr
+fci,raw2y,9,0.14321,0.15413,270,ex-ZLB,raw2y,3yr
+fci,raw2y,10,0.14901,0.15140,269,ex-ZLB,raw2y,3yr
+fci,raw2y,11,0.15090,0.15987,268,ex-ZLB,raw2y,3yr
+fci,raw2y,12,0.11352,0.17039,267,ex-ZLB,raw2y,3yr
+FFR,raw2y,0,0.00748,0.00546,279,ex-ZLB,raw2y,3yr
+FFR,raw2y,1,0.01153,0.01110,278,ex-ZLB,raw2y,3yr
+FFR,raw2y,2,0.01706,0.01549,277,ex-ZLB,raw2y,3yr
+FFR,raw2y,3,0.02062,0.01817,276,ex-ZLB,raw2y,3yr
+FFR,raw2y,4,0.02232,0.01956,275,ex-ZLB,raw2y,3yr
+FFR,raw2y,5,0.02306,0.02132,274,ex-ZLB,raw2y,3yr
+FFR,raw2y,6,0.02386,0.02459,273,ex-ZLB,raw2y,3yr
+FFR,raw2y,7,0.02342,0.02826,272,ex-ZLB,raw2y,3yr
+FFR,raw2y,8,0.01982,0.03069,271,ex-ZLB,raw2y,3yr
+FFR,raw2y,9,0.01414,0.03110,270,ex-ZLB,raw2y,3yr
+FFR,raw2y,10,0.00981,0.03057,269,ex-ZLB,raw2y,3yr
+FFR,raw2y,11,0.00586,0.03065,268,ex-ZLB,raw2y,3yr
+FFR,raw2y,12,0.00083,0.03221,267,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,0,-0.00019,0.00075,279,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,1,-0.00035,0.00154,278,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,2,-0.00074,0.00235,277,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,3,-0.00131,0.00305,276,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,4,-0.00230,0.00378,275,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,5,-0.00308,0.00446,274,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,6,-0.00372,0.00509,273,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,7,-0.00463,0.00570,272,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,8,-0.00535,0.00627,271,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,9,-0.00557,0.00694,270,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,10,-0.00590,0.00756,269,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,11,-0.00650,0.00810,268,ex-ZLB,raw2y,3yr
+10Yr Treasury,raw2y,12,-0.00790,0.00877,267,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,0,0.00637,0.00712,279,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,1,0.00953,0.01610,278,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,2,0.00850,0.02506,277,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,3,0.00303,0.02934,276,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,4,-0.01466,0.03115,275,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,5,-0.02374,0.03464,274,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,6,-0.02613,0.03597,273,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,7,-0.02676,0.03495,272,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,8,-0.03790,0.03453,271,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,9,-0.05143,0.03817,270,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,10,-0.05883,0.04231,269,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,11,-0.06133,0.04454,268,ex-ZLB,raw2y,3yr
+Mortgage Rate,raw2y,12,-0.06696,0.04439,267,ex-ZLB,raw2y,3yr
+BBB,raw2y,0,0.00465,0.00273,279,ex-ZLB,raw2y,3yr
+BBB,raw2y,1,0.00880,0.00597,278,ex-ZLB,raw2y,3yr
+BBB,raw2y,2,0.01126,0.00898,277,ex-ZLB,raw2y,3yr
+BBB,raw2y,3,0.01293,0.01161,276,ex-ZLB,raw2y,3yr
+BBB,raw2y,4,0.01152,0.01441,275,ex-ZLB,raw2y,3yr
+BBB,raw2y,5,0.01264,0.01720,274,ex-ZLB,raw2y,3yr
+BBB,raw2y,6,0.01698,0.01896,273,ex-ZLB,raw2y,3yr
+BBB,raw2y,7,0.02363,0.02028,272,ex-ZLB,raw2y,3yr
+BBB,raw2y,8,0.02884,0.02150,271,ex-ZLB,raw2y,3yr
+BBB,raw2y,9,0.02951,0.02278,270,ex-ZLB,raw2y,3yr
+BBB,raw2y,10,0.02927,0.02391,269,ex-ZLB,raw2y,3yr
+BBB,raw2y,11,0.02748,0.02566,268,ex-ZLB,raw2y,3yr
+BBB,raw2y,12,0.02805,0.02821,267,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,0,0.07206,0.01917,279,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,1,0.05211,0.03082,278,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,2,0.05293,0.03695,277,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,3,0.08440,0.04261,276,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,4,0.07609,0.04915,275,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,5,0.05724,0.06088,274,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,6,0.07651,0.07048,273,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,7,0.08503,0.07251,272,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,8,0.12816,0.07739,271,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,9,0.07538,0.08150,270,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,10,0.08868,0.09178,269,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,11,0.09434,0.09775,268,ex-ZLB,raw2y,3yr
+Stock Market,raw2y,12,0.05245,0.10984,267,ex-ZLB,raw2y,3yr
+House Prices,raw2y,0,0.00091,0.00307,279,ex-ZLB,raw2y,3yr
+House Prices,raw2y,1,0.00176,0.00538,278,ex-ZLB,raw2y,3yr
+House Prices,raw2y,2,0.00088,0.00728,277,ex-ZLB,raw2y,3yr
+House Prices,raw2y,3,-0.00081,0.00935,276,ex-ZLB,raw2y,3yr
+House Prices,raw2y,4,-0.00140,0.01204,275,ex-ZLB,raw2y,3yr
+House Prices,raw2y,5,-0.00321,0.01506,274,ex-ZLB,raw2y,3yr
+House Prices,raw2y,6,-0.00590,0.01805,273,ex-ZLB,raw2y,3yr
+House Prices,raw2y,7,-0.00806,0.02116,272,ex-ZLB,raw2y,3yr
+House Prices,raw2y,8,-0.01064,0.02418,271,ex-ZLB,raw2y,3yr
+House Prices,raw2y,9,-0.01163,0.02691,270,ex-ZLB,raw2y,3yr
+House Prices,raw2y,10,-0.01122,0.02924,269,ex-ZLB,raw2y,3yr
+House Prices,raw2y,11,-0.01091,0.03128,268,ex-ZLB,raw2y,3yr
+House Prices,raw2y,12,-0.01150,0.03381,267,ex-ZLB,raw2y,3yr
+Dollar,raw2y,0,0.01267,0.00809,279,ex-ZLB,raw2y,3yr
+Dollar,raw2y,1,0.02734,0.01989,278,ex-ZLB,raw2y,3yr
+Dollar,raw2y,2,0.03633,0.03076,277,ex-ZLB,raw2y,3yr
+Dollar,raw2y,3,0.03886,0.03967,276,ex-ZLB,raw2y,3yr
+Dollar,raw2y,4,0.03053,0.04786,275,ex-ZLB,raw2y,3yr
+Dollar,raw2y,5,0.03704,0.05316,274,ex-ZLB,raw2y,3yr
+Dollar,raw2y,6,0.04965,0.05707,273,ex-ZLB,raw2y,3yr
+Dollar,raw2y,7,0.06468,0.06329,272,ex-ZLB,raw2y,3yr
+Dollar,raw2y,8,0.07966,0.06906,271,ex-ZLB,raw2y,3yr
+Dollar,raw2y,9,0.09282,0.07070,270,ex-ZLB,raw2y,3yr
+Dollar,raw2y,10,0.09719,0.06714,269,ex-ZLB,raw2y,3yr
+Dollar,raw2y,11,0.10195,0.06645,268,ex-ZLB,raw2y,3yr
+Dollar,raw2y,12,0.11856,0.07136,267,ex-ZLB,raw2y,3yr
+fci,target,0,0.03040,0.05984,389,full,baseline,1yr
+fci,path,0,0.06430,0.03288,389,full,baseline,1yr
+fci,target,1,0.06129,0.06351,388,full,baseline,1yr
+fci,path,1,0.10080,0.04911,388,full,baseline,1yr
+fci,target,2,0.09339,0.05926,387,full,baseline,1yr
+fci,path,2,0.13719,0.07042,387,full,baseline,1yr
+fci,target,3,0.09502,0.06313,386,full,baseline,1yr
+fci,path,3,0.16879,0.08659,386,full,baseline,1yr
+fci,target,4,0.06149,0.06050,385,full,baseline,1yr
+fci,path,4,0.16369,0.09798,385,full,baseline,1yr
+fci,target,5,0.06410,0.06695,384,full,baseline,1yr
+fci,path,5,0.16378,0.11573,384,full,baseline,1yr
+fci,target,6,0.11947,0.07815,383,full,baseline,1yr
+fci,path,6,0.20435,0.13171,383,full,baseline,1yr
+fci,target,7,0.13470,0.08139,382,full,baseline,1yr
+fci,path,7,0.24430,0.14245,382,full,baseline,1yr
+fci,target,8,0.11482,0.09677,381,full,baseline,1yr
+fci,path,8,0.31158,0.14785,381,full,baseline,1yr
+fci,target,9,0.04138,0.15176,380,full,baseline,1yr
+fci,path,9,0.35002,0.15836,380,full,baseline,1yr
+fci,target,10,0.02292,0.17777,379,full,baseline,1yr
+fci,path,10,0.41921,0.16180,379,full,baseline,1yr
+fci,target,11,0.03899,0.18974,378,full,baseline,1yr
+fci,path,11,0.48325,0.17328,378,full,baseline,1yr
+fci,target,12,0.00639,0.20833,377,full,baseline,1yr
+fci,path,12,0.47466,0.18359,377,full,baseline,1yr
+FFR,target,0,0.01534,0.00260,389,full,baseline,1yr
+FFR,path,0,0.00388,0.00272,389,full,baseline,1yr
+FFR,target,1,0.03467,0.00494,388,full,baseline,1yr
+FFR,path,1,0.00337,0.00574,388,full,baseline,1yr
+FFR,target,2,0.05234,0.00723,387,full,baseline,1yr
+FFR,path,2,0.00185,0.00874,387,full,baseline,1yr
+FFR,target,3,0.05965,0.00890,386,full,baseline,1yr
+FFR,path,3,0.00028,0.01126,386,full,baseline,1yr
+FFR,target,4,0.05774,0.01145,385,full,baseline,1yr
+FFR,path,4,-0.00044,0.01305,385,full,baseline,1yr
+FFR,target,5,0.05749,0.01430,384,full,baseline,1yr
+FFR,path,5,-0.00113,0.01421,384,full,baseline,1yr
+FFR,target,6,0.05754,0.01700,383,full,baseline,1yr
+FFR,path,6,-0.00162,0.01582,383,full,baseline,1yr
+FFR,target,7,0.05614,0.01933,382,full,baseline,1yr
+FFR,path,7,-0.00178,0.01753,382,full,baseline,1yr
+FFR,target,8,0.05250,0.02156,381,full,baseline,1yr
+FFR,path,8,-0.00177,0.01904,381,full,baseline,1yr
+FFR,target,9,0.04825,0.02334,380,full,baseline,1yr
+FFR,path,9,-0.00206,0.02046,380,full,baseline,1yr
+FFR,target,10,0.04560,0.02460,379,full,baseline,1yr
+FFR,path,10,-0.00313,0.02245,379,full,baseline,1yr
+FFR,target,11,0.04145,0.02508,378,full,baseline,1yr
+FFR,path,11,-0.00419,0.02466,378,full,baseline,1yr
+FFR,target,12,0.03439,0.02428,377,full,baseline,1yr
+FFR,path,12,-0.00655,0.02653,377,full,baseline,1yr
+10Yr Treasury,target,0,-0.00073,0.00042,389,full,baseline,1yr
+10Yr Treasury,path,0,-0.00006,0.00060,389,full,baseline,1yr
+10Yr Treasury,target,1,-0.00123,0.00084,388,full,baseline,1yr
+10Yr Treasury,path,1,0.00061,0.00125,388,full,baseline,1yr
+10Yr Treasury,target,2,-0.00156,0.00122,387,full,baseline,1yr
+10Yr Treasury,path,2,0.00128,0.00189,387,full,baseline,1yr
+10Yr Treasury,target,3,-0.00103,0.00161,386,full,baseline,1yr
+10Yr Treasury,path,3,0.00225,0.00255,386,full,baseline,1yr
+10Yr Treasury,target,4,-0.00109,0.00209,385,full,baseline,1yr
+10Yr Treasury,path,4,0.00362,0.00299,385,full,baseline,1yr
+10Yr Treasury,target,5,-0.00154,0.00261,384,full,baseline,1yr
+10Yr Treasury,path,5,0.00439,0.00315,384,full,baseline,1yr
+10Yr Treasury,target,6,-0.00287,0.00290,383,full,baseline,1yr
+10Yr Treasury,path,6,0.00429,0.00321,383,full,baseline,1yr
+10Yr Treasury,target,7,-0.00325,0.00294,382,full,baseline,1yr
+10Yr Treasury,path,7,0.00404,0.00341,382,full,baseline,1yr
+10Yr Treasury,target,8,-0.00324,0.00288,381,full,baseline,1yr
+10Yr Treasury,path,8,0.00335,0.00368,381,full,baseline,1yr
+10Yr Treasury,target,9,-0.00265,0.00293,380,full,baseline,1yr
+10Yr Treasury,path,9,0.00321,0.00407,380,full,baseline,1yr
+10Yr Treasury,target,10,-0.00136,0.00299,379,full,baseline,1yr
+10Yr Treasury,path,10,0.00301,0.00426,379,full,baseline,1yr
+10Yr Treasury,target,11,0.00024,0.00327,378,full,baseline,1yr
+10Yr Treasury,path,11,0.00348,0.00438,378,full,baseline,1yr
+10Yr Treasury,target,12,0.00207,0.00332,377,full,baseline,1yr
+10Yr Treasury,path,12,0.00513,0.00447,377,full,baseline,1yr
+Mortgage Rate,target,0,0.00976,0.00508,389,full,baseline,1yr
+Mortgage Rate,path,0,0.00837,0.00709,389,full,baseline,1yr
+Mortgage Rate,target,1,0.01129,0.00944,388,full,baseline,1yr
+Mortgage Rate,path,1,0.01712,0.01367,388,full,baseline,1yr
+Mortgage Rate,target,2,0.00862,0.01468,387,full,baseline,1yr
+Mortgage Rate,path,2,0.02687,0.01928,387,full,baseline,1yr
+Mortgage Rate,target,3,0.00331,0.01908,386,full,baseline,1yr
+Mortgage Rate,path,3,0.02490,0.02376,386,full,baseline,1yr
+Mortgage Rate,target,4,0.00354,0.02223,385,full,baseline,1yr
+Mortgage Rate,path,4,0.00660,0.02661,385,full,baseline,1yr
+Mortgage Rate,target,5,0.00161,0.02307,384,full,baseline,1yr
+Mortgage Rate,path,5,-0.00272,0.02955,384,full,baseline,1yr
+Mortgage Rate,target,6,0.00545,0.02221,383,full,baseline,1yr
+Mortgage Rate,path,6,-0.00637,0.03244,383,full,baseline,1yr
+Mortgage Rate,target,7,0.00333,0.02221,382,full,baseline,1yr
+Mortgage Rate,path,7,-0.00269,0.03432,382,full,baseline,1yr
+Mortgage Rate,target,8,-0.00741,0.02265,381,full,baseline,1yr
+Mortgage Rate,path,8,0.00081,0.03752,381,full,baseline,1yr
+Mortgage Rate,target,9,-0.02241,0.02392,380,full,baseline,1yr
+Mortgage Rate,path,9,0.00586,0.04304,380,full,baseline,1yr
+Mortgage Rate,target,10,-0.03409,0.02508,379,full,baseline,1yr
+Mortgage Rate,path,10,0.01214,0.04725,379,full,baseline,1yr
+Mortgage Rate,target,11,-0.03349,0.02621,378,full,baseline,1yr
+Mortgage Rate,path,11,0.00850,0.04933,378,full,baseline,1yr
+Mortgage Rate,target,12,-0.02748,0.02912,377,full,baseline,1yr
+Mortgage Rate,path,12,-0.00729,0.04875,377,full,baseline,1yr
+BBB,target,0,0.00013,0.00288,389,full,baseline,1yr
+BBB,path,0,0.00417,0.00268,389,full,baseline,1yr
+BBB,target,1,-0.00007,0.00608,388,full,baseline,1yr
+BBB,path,1,0.00923,0.00670,388,full,baseline,1yr
+BBB,target,2,0.00014,0.00795,387,full,baseline,1yr
+BBB,path,2,0.01259,0.01011,387,full,baseline,1yr
+BBB,target,3,0.00071,0.00897,386,full,baseline,1yr
+BBB,path,3,0.01288,0.01255,386,full,baseline,1yr
+BBB,target,4,0.00270,0.01006,385,full,baseline,1yr
+BBB,path,4,0.00638,0.01416,385,full,baseline,1yr
+BBB,target,5,0.00236,0.01118,384,full,baseline,1yr
+BBB,path,5,0.00408,0.01639,384,full,baseline,1yr
+BBB,target,6,0.00476,0.01259,383,full,baseline,1yr
+BBB,path,6,0.00548,0.01869,383,full,baseline,1yr
+BBB,target,7,0.00483,0.01353,382,full,baseline,1yr
+BBB,path,7,0.01044,0.02039,382,full,baseline,1yr
+BBB,target,8,0.00381,0.01408,381,full,baseline,1yr
+BBB,path,8,0.01803,0.02177,381,full,baseline,1yr
+BBB,target,9,-0.00370,0.01441,380,full,baseline,1yr
+BBB,path,9,0.02392,0.02341,380,full,baseline,1yr
+BBB,target,10,-0.01248,0.01601,379,full,baseline,1yr
+BBB,path,10,0.03040,0.02517,379,full,baseline,1yr
+BBB,target,11,-0.01853,0.01729,378,full,baseline,1yr
+BBB,path,11,0.03104,0.02623,378,full,baseline,1yr
+BBB,target,12,-0.01590,0.01790,377,full,baseline,1yr
+BBB,path,12,0.02951,0.02650,377,full,baseline,1yr
+Stock Market,target,0,0.00240,0.05119,389,full,baseline,1yr
+Stock Market,path,0,0.04211,0.02465,389,full,baseline,1yr
+Stock Market,target,1,0.00753,0.04712,388,full,baseline,1yr
+Stock Market,path,1,0.05496,0.02913,388,full,baseline,1yr
+Stock Market,target,2,0.01424,0.05144,387,full,baseline,1yr
+Stock Market,path,2,0.07675,0.03611,387,full,baseline,1yr
+Stock Market,target,3,0.01264,0.05247,386,full,baseline,1yr
+Stock Market,path,3,0.11002,0.04083,386,full,baseline,1yr
+Stock Market,target,4,-0.01397,0.04958,385,full,baseline,1yr
+Stock Market,path,4,0.13048,0.04504,385,full,baseline,1yr
+Stock Market,target,5,-0.00674,0.05393,384,full,baseline,1yr
+Stock Market,path,5,0.12472,0.05430,384,full,baseline,1yr
+Stock Market,target,6,0.02893,0.05565,383,full,baseline,1yr
+Stock Market,path,6,0.14148,0.06262,383,full,baseline,1yr
+Stock Market,target,7,0.03130,0.05085,382,full,baseline,1yr
+Stock Market,path,7,0.14802,0.07048,382,full,baseline,1yr
+Stock Market,target,8,0.01650,0.05947,381,full,baseline,1yr
+Stock Market,path,8,0.18118,0.07254,381,full,baseline,1yr
+Stock Market,target,9,-0.01332,0.09348,380,full,baseline,1yr
+Stock Market,path,9,0.18447,0.07893,380,full,baseline,1yr
+Stock Market,target,10,0.00698,0.10025,379,full,baseline,1yr
+Stock Market,path,10,0.22092,0.07546,379,full,baseline,1yr
+Stock Market,target,11,0.04610,0.10430,378,full,baseline,1yr
+Stock Market,path,11,0.27309,0.08480,378,full,baseline,1yr
+Stock Market,target,12,0.00913,0.12312,377,full,baseline,1yr
+Stock Market,path,12,0.26486,0.09266,377,full,baseline,1yr
+House Prices,target,0,-0.00135,0.00201,389,full,baseline,1yr
+House Prices,path,0,-0.00221,0.00261,389,full,baseline,1yr
+House Prices,target,1,-0.00134,0.00440,388,full,baseline,1yr
+House Prices,path,1,-0.00486,0.00478,388,full,baseline,1yr
+House Prices,target,2,-0.00178,0.00675,387,full,baseline,1yr
+House Prices,path,2,-0.00664,0.00662,387,full,baseline,1yr
+House Prices,target,3,-0.00275,0.00895,386,full,baseline,1yr
+House Prices,path,3,-0.00719,0.00840,386,full,baseline,1yr
+House Prices,target,4,-0.00370,0.01101,385,full,baseline,1yr
+House Prices,path,4,-0.00595,0.01035,385,full,baseline,1yr
+House Prices,target,5,-0.00393,0.01321,384,full,baseline,1yr
+House Prices,path,5,-0.00435,0.01201,384,full,baseline,1yr
+House Prices,target,6,-0.00286,0.01585,383,full,baseline,1yr
+House Prices,path,6,-0.00321,0.01381,383,full,baseline,1yr
+House Prices,target,7,-0.00167,0.01907,382,full,baseline,1yr
+House Prices,path,7,-0.00272,0.01588,382,full,baseline,1yr
+House Prices,target,8,-0.00040,0.02240,381,full,baseline,1yr
+House Prices,path,8,-0.00317,0.01805,381,full,baseline,1yr
+House Prices,target,9,0.00090,0.02549,380,full,baseline,1yr
+House Prices,path,9,-0.00290,0.02027,380,full,baseline,1yr
+House Prices,target,10,0.00217,0.02820,379,full,baseline,1yr
+House Prices,path,10,-0.00174,0.02221,379,full,baseline,1yr
+House Prices,target,11,0.00333,0.03087,378,full,baseline,1yr
+House Prices,path,11,0.00043,0.02374,378,full,baseline,1yr
+House Prices,target,12,0.00444,0.03330,377,full,baseline,1yr
+House Prices,path,12,0.00386,0.02504,377,full,baseline,1yr
+Dollar,target,0,0.00484,0.00838,389,full,baseline,1yr
+Dollar,path,0,0.00804,0.01025,389,full,baseline,1yr
+Dollar,target,1,0.01043,0.01696,388,full,baseline,1yr
+Dollar,path,1,0.02038,0.02140,388,full,baseline,1yr
+Dollar,target,2,0.02139,0.02338,387,full,baseline,1yr
+Dollar,path,2,0.02448,0.02961,387,full,baseline,1yr
+Dollar,target,3,0.02249,0.02606,386,full,baseline,1yr
+Dollar,path,3,0.02564,0.03535,386,full,baseline,1yr
+Dollar,target,4,0.01628,0.02777,385,full,baseline,1yr
+Dollar,path,4,0.02300,0.04112,385,full,baseline,1yr
+Dollar,target,5,0.01485,0.02773,384,full,baseline,1yr
+Dollar,path,5,0.03879,0.04647,384,full,baseline,1yr
+Dollar,target,6,0.02852,0.02918,383,full,baseline,1yr
+Dollar,path,6,0.06430,0.04911,383,full,baseline,1yr
+Dollar,target,7,0.04402,0.03013,382,full,baseline,1yr
+Dollar,path,7,0.08898,0.05045,382,full,baseline,1yr
+Dollar,target,8,0.05307,0.03137,381,full,baseline,1yr
+Dollar,path,8,0.11315,0.05332,381,full,baseline,1yr
+Dollar,target,9,0.03432,0.03921,380,full,baseline,1yr
+Dollar,path,9,0.13752,0.05680,380,full,baseline,1yr
+Dollar,target,10,0.01610,0.05326,379,full,baseline,1yr
+Dollar,path,10,0.15761,0.05958,379,full,baseline,1yr
+Dollar,target,11,-0.00011,0.06412,378,full,baseline,1yr
+Dollar,path,11,0.17090,0.06175,378,full,baseline,1yr
+Dollar,target,12,-0.00026,0.06999,377,full,baseline,1yr
+Dollar,path,12,0.18513,0.06767,377,full,baseline,1yr
+fci,swanson_ffr,0,-0.03196,0.06077,389,full,swanson,1yr
+fci,swanson_fg,0,0.08941,0.03482,389,full,swanson,1yr
+fci,swanson_lsap,0,-0.14175,0.10194,389,full,swanson,1yr
+fci,swanson_ffr,1,-0.02437,0.07188,388,full,swanson,1yr
+fci,swanson_fg,1,0.13711,0.05306,388,full,swanson,1yr
+fci,swanson_lsap,1,-0.09362,0.12965,388,full,swanson,1yr
+fci,swanson_ffr,2,0.00911,0.08636,387,full,swanson,1yr
+fci,swanson_fg,2,0.16302,0.07542,387,full,swanson,1yr
+fci,swanson_lsap,2,0.06456,0.16814,387,full,swanson,1yr
+fci,swanson_ffr,3,-0.01357,0.10039,386,full,swanson,1yr
+fci,swanson_fg,3,0.19965,0.09660,386,full,swanson,1yr
+fci,swanson_lsap,3,0.07564,0.21542,386,full,swanson,1yr
+fci,swanson_ffr,4,-0.03138,0.11236,385,full,swanson,1yr
+fci,swanson_fg,4,0.18085,0.11023,385,full,swanson,1yr
+fci,swanson_lsap,4,0.20530,0.23954,385,full,swanson,1yr
+fci,swanson_ffr,5,-0.00374,0.12849,384,full,swanson,1yr
+fci,swanson_fg,5,0.16545,0.12714,384,full,swanson,1yr
+fci,swanson_lsap,5,0.38883,0.24471,384,full,swanson,1yr
+fci,swanson_ffr,6,0.03125,0.16209,383,full,swanson,1yr
+fci,swanson_fg,6,0.21877,0.14386,383,full,swanson,1yr
+fci,swanson_lsap,6,0.46153,0.31020,383,full,swanson,1yr
+fci,swanson_ffr,7,0.03258,0.17881,382,full,swanson,1yr
+fci,swanson_fg,7,0.26395,0.15696,382,full,swanson,1yr
+fci,swanson_lsap,7,0.57041,0.37226,382,full,swanson,1yr
+fci,swanson_ffr,8,-0.00744,0.17818,381,full,swanson,1yr
+fci,swanson_fg,8,0.31981,0.16259,381,full,swanson,1yr
+fci,swanson_lsap,8,0.70671,0.37572,381,full,swanson,1yr
+fci,swanson_ffr,9,-0.07291,0.20109,380,full,swanson,1yr
+fci,swanson_fg,9,0.32891,0.17235,380,full,swanson,1yr
+fci,swanson_lsap,9,0.91266,0.35027,380,full,swanson,1yr
+fci,swanson_ffr,10,-0.13423,0.22174,379,full,swanson,1yr
+fci,swanson_fg,10,0.40353,0.17698,379,full,swanson,1yr
+fci,swanson_lsap,10,0.84505,0.33861,379,full,swanson,1yr
+fci,swanson_ffr,11,-0.15834,0.23479,378,full,swanson,1yr
+fci,swanson_fg,11,0.47148,0.19202,378,full,swanson,1yr
+fci,swanson_lsap,11,0.82021,0.32428,378,full,swanson,1yr
+fci,swanson_ffr,12,-0.15361,0.23017,377,full,swanson,1yr
+fci,swanson_fg,12,0.43347,0.20399,377,full,swanson,1yr
+fci,swanson_lsap,12,0.95114,0.29982,377,full,swanson,1yr
+FFR,swanson_ffr,0,0.01221,0.00332,389,full,swanson,1yr
+FFR,swanson_fg,0,0.00435,0.00309,389,full,swanson,1yr
+FFR,swanson_lsap,0,-0.01026,0.00717,389,full,swanson,1yr
+FFR,swanson_ffr,1,0.03112,0.00654,388,full,swanson,1yr
+FFR,swanson_fg,1,0.00353,0.00641,388,full,swanson,1yr
+FFR,swanson_lsap,1,-0.01264,0.01355,388,full,swanson,1yr
+FFR,swanson_ffr,2,0.05002,0.00916,387,full,swanson,1yr
+FFR,swanson_fg,2,0.00092,0.00960,387,full,swanson,1yr
+FFR,swanson_lsap,2,-0.00939,0.01810,387,full,swanson,1yr
+FFR,swanson_ffr,3,0.05743,0.01093,386,full,swanson,1yr
+FFR,swanson_fg,3,-0.00049,0.01236,386,full,swanson,1yr
+FFR,swanson_lsap,3,-0.01378,0.02115,386,full,swanson,1yr
+FFR,swanson_ffr,4,0.05549,0.01319,385,full,swanson,1yr
+FFR,swanson_fg,4,-0.00176,0.01452,385,full,swanson,1yr
+FFR,swanson_lsap,4,-0.01644,0.02367,385,full,swanson,1yr
+FFR,swanson_ffr,5,0.05529,0.01536,384,full,swanson,1yr
+FFR,swanson_fg,5,-0.00282,0.01590,384,full,swanson,1yr
+FFR,swanson_lsap,5,-0.01806,0.02615,384,full,swanson,1yr
+FFR,swanson_ffr,6,0.05519,0.01743,383,full,swanson,1yr
+FFR,swanson_fg,6,-0.00309,0.01785,383,full,swanson,1yr
+FFR,swanson_lsap,6,-0.02039,0.02932,383,full,swanson,1yr
+FFR,swanson_ffr,7,0.05297,0.01915,382,full,swanson,1yr
+FFR,swanson_fg,7,-0.00174,0.01984,382,full,swanson,1yr
+FFR,swanson_lsap,7,-0.02565,0.03249,382,full,swanson,1yr
+FFR,swanson_ffr,8,0.04845,0.02103,381,full,swanson,1yr
+FFR,swanson_fg,8,-0.00053,0.02142,381,full,swanson,1yr
+FFR,swanson_lsap,8,-0.02975,0.03520,381,full,swanson,1yr
+FFR,swanson_ffr,9,0.04359,0.02271,380,full,swanson,1yr
+FFR,swanson_fg,9,0.00032,0.02249,380,full,swanson,1yr
+FFR,swanson_lsap,9,-0.03373,0.03708,380,full,swanson,1yr
+FFR,swanson_ffr,10,0.04085,0.02471,379,full,swanson,1yr
+FFR,swanson_fg,10,-0.00081,0.02407,379,full,swanson,1yr
+FFR,swanson_lsap,10,-0.03350,0.03847,379,full,swanson,1yr
+FFR,swanson_ffr,11,0.03717,0.02665,378,full,swanson,1yr
+FFR,swanson_fg,11,-0.00279,0.02603,378,full,swanson,1yr
+FFR,swanson_lsap,11,-0.02884,0.03904,378,full,swanson,1yr
+FFR,swanson_ffr,12,0.03227,0.02764,377,full,swanson,1yr
+FFR,swanson_fg,12,-0.00724,0.02790,377,full,swanson,1yr
+FFR,swanson_lsap,12,-0.01697,0.03958,377,full,swanson,1yr
+10Yr Treasury,swanson_ffr,0,-0.00073,0.00055,389,full,swanson,1yr
+10Yr Treasury,swanson_fg,0,0.00003,0.00062,389,full,swanson,1yr
+10Yr Treasury,swanson_lsap,0,0.00040,0.00100,389,full,swanson,1yr
+10Yr Treasury,swanson_ffr,1,-0.00200,0.00113,388,full,swanson,1yr
+10Yr Treasury,swanson_fg,1,0.00115,0.00131,388,full,swanson,1yr
+10Yr Treasury,swanson_lsap,1,-0.00179,0.00188,388,full,swanson,1yr
+10Yr Treasury,swanson_ffr,2,-0.00295,0.00178,387,full,swanson,1yr
+10Yr Treasury,swanson_fg,2,0.00211,0.00196,387,full,swanson,1yr
+10Yr Treasury,swanson_lsap,2,-0.00285,0.00263,387,full,swanson,1yr
+10Yr Treasury,swanson_ffr,3,-0.00306,0.00243,386,full,swanson,1yr
+10Yr Treasury,swanson_fg,3,0.00310,0.00261,386,full,swanson,1yr
+10Yr Treasury,swanson_lsap,3,-0.00354,0.00339,386,full,swanson,1yr
+10Yr Treasury,swanson_ffr,4,-0.00406,0.00300,385,full,swanson,1yr
+10Yr Treasury,swanson_fg,4,0.00485,0.00312,385,full,swanson,1yr
+10Yr Treasury,swanson_lsap,4,-0.00500,0.00432,385,full,swanson,1yr
+10Yr Treasury,swanson_ffr,5,-0.00494,0.00354,384,full,swanson,1yr
+10Yr Treasury,swanson_fg,5,0.00578,0.00338,384,full,swanson,1yr
+10Yr Treasury,swanson_lsap,5,-0.00563,0.00536,384,full,swanson,1yr
+10Yr Treasury,swanson_ffr,6,-0.00618,0.00388,383,full,swanson,1yr
+10Yr Treasury,swanson_fg,6,0.00593,0.00350,383,full,swanson,1yr
+10Yr Treasury,swanson_lsap,6,-0.00627,0.00571,383,full,swanson,1yr
+10Yr Treasury,swanson_ffr,7,-0.00627,0.00405,382,full,swanson,1yr
+10Yr Treasury,swanson_fg,7,0.00586,0.00372,382,full,swanson,1yr
+10Yr Treasury,swanson_lsap,7,-0.00647,0.00573,382,full,swanson,1yr
+10Yr Treasury,swanson_ffr,8,-0.00571,0.00411,381,full,swanson,1yr
+10Yr Treasury,swanson_fg,8,0.00547,0.00402,381,full,swanson,1yr
+10Yr Treasury,swanson_lsap,8,-0.00636,0.00521,381,full,swanson,1yr
+10Yr Treasury,swanson_ffr,9,-0.00449,0.00431,380,full,swanson,1yr
+10Yr Treasury,swanson_fg,9,0.00517,0.00443,380,full,swanson,1yr
+10Yr Treasury,swanson_lsap,9,-0.00418,0.00493,380,full,swanson,1yr
+10Yr Treasury,swanson_ffr,10,-0.00249,0.00449,379,full,swanson,1yr
+10Yr Treasury,swanson_fg,10,0.00462,0.00462,379,full,swanson,1yr
+10Yr Treasury,swanson_lsap,10,-0.00146,0.00534,379,full,swanson,1yr
+10Yr Treasury,swanson_ffr,11,-0.00083,0.00476,378,full,swanson,1yr
+10Yr Treasury,swanson_fg,11,0.00471,0.00474,378,full,swanson,1yr
+10Yr Treasury,swanson_lsap,11,0.00043,0.00579,378,full,swanson,1yr
+10Yr Treasury,swanson_ffr,12,0.00013,0.00469,377,full,swanson,1yr
+10Yr Treasury,swanson_fg,12,0.00604,0.00483,377,full,swanson,1yr
+10Yr Treasury,swanson_lsap,12,0.00152,0.00579,377,full,swanson,1yr
+Mortgage Rate,swanson_ffr,0,0.00323,0.00688,389,full,swanson,1yr
+Mortgage Rate,swanson_fg,0,0.00609,0.00716,389,full,swanson,1yr
+Mortgage Rate,swanson_lsap,0,-0.00346,0.00891,389,full,swanson,1yr
+Mortgage Rate,swanson_ffr,1,-0.00061,0.01263,388,full,swanson,1yr
+Mortgage Rate,swanson_fg,1,0.01137,0.01398,388,full,swanson,1yr
+Mortgage Rate,swanson_lsap,1,0.00479,0.01591,388,full,swanson,1yr
+Mortgage Rate,swanson_ffr,2,-0.00829,0.01869,387,full,swanson,1yr
+Mortgage Rate,swanson_fg,2,0.01895,0.01994,387,full,swanson,1yr
+Mortgage Rate,swanson_lsap,2,0.00659,0.02464,387,full,swanson,1yr
+Mortgage Rate,swanson_ffr,3,-0.01255,0.02328,386,full,swanson,1yr
+Mortgage Rate,swanson_fg,3,0.01770,0.02511,386,full,swanson,1yr
+Mortgage Rate,swanson_lsap,3,0.00570,0.03287,386,full,swanson,1yr
+Mortgage Rate,swanson_ffr,4,-0.00141,0.02650,385,full,swanson,1yr
+Mortgage Rate,swanson_fg,4,-0.00203,0.02889,385,full,swanson,1yr
+Mortgage Rate,swanson_lsap,4,0.01648,0.04091,385,full,swanson,1yr
+Mortgage Rate,swanson_ffr,5,0.00109,0.02914,384,full,swanson,1yr
+Mortgage Rate,swanson_fg,5,-0.01177,0.03268,384,full,swanson,1yr
+Mortgage Rate,swanson_lsap,5,0.02828,0.04912,384,full,swanson,1yr
+Mortgage Rate,swanson_ffr,6,0.00622,0.03099,383,full,swanson,1yr
+Mortgage Rate,swanson_fg,6,-0.01444,0.03543,383,full,swanson,1yr
+Mortgage Rate,swanson_lsap,6,0.03952,0.04973,383,full,swanson,1yr
+Mortgage Rate,swanson_ffr,7,0.00010,0.03191,382,full,swanson,1yr
+Mortgage Rate,swanson_fg,7,-0.00827,0.03715,382,full,swanson,1yr
+Mortgage Rate,swanson_lsap,7,0.03805,0.04788,382,full,swanson,1yr
+Mortgage Rate,swanson_ffr,8,-0.01400,0.03281,381,full,swanson,1yr
+Mortgage Rate,swanson_fg,8,-0.00373,0.04102,381,full,swanson,1yr
+Mortgage Rate,swanson_lsap,8,0.02830,0.04822,381,full,swanson,1yr
+Mortgage Rate,swanson_ffr,9,-0.03190,0.03528,380,full,swanson,1yr
+Mortgage Rate,swanson_fg,9,-0.00049,0.04692,380,full,swanson,1yr
+Mortgage Rate,swanson_lsap,9,0.02276,0.05309,380,full,swanson,1yr
+Mortgage Rate,swanson_ffr,10,-0.04868,0.03758,379,full,swanson,1yr
+Mortgage Rate,swanson_fg,10,0.00493,0.05104,379,full,swanson,1yr
+Mortgage Rate,swanson_lsap,10,0.00965,0.05848,379,full,swanson,1yr
+Mortgage Rate,swanson_ffr,11,-0.04630,0.03935,378,full,swanson,1yr
+Mortgage Rate,swanson_fg,11,0.00070,0.05317,378,full,swanson,1yr
+Mortgage Rate,swanson_lsap,11,0.00473,0.06092,378,full,swanson,1yr
+Mortgage Rate,swanson_ffr,12,-0.03034,0.04047,377,full,swanson,1yr
+Mortgage Rate,swanson_fg,12,-0.01558,0.05247,377,full,swanson,1yr
+Mortgage Rate,swanson_lsap,12,0.00627,0.05866,377,full,swanson,1yr
+BBB,swanson_ffr,0,-0.00229,0.00303,389,full,swanson,1yr
+BBB,swanson_fg,0,0.00390,0.00282,389,full,swanson,1yr
+BBB,swanson_lsap,0,-0.00312,0.00482,389,full,swanson,1yr
+BBB,swanson_ffr,1,-0.00463,0.00721,388,full,swanson,1yr
+BBB,swanson_fg,1,0.00837,0.00690,388,full,swanson,1yr
+BBB,swanson_lsap,1,-0.00476,0.01037,388,full,swanson,1yr
+BBB,swanson_ffr,2,-0.00689,0.01025,387,full,swanson,1yr
+BBB,swanson_fg,2,0.01239,0.01069,387,full,swanson,1yr
+BBB,swanson_lsap,2,-0.01263,0.01537,387,full,swanson,1yr
+BBB,swanson_ffr,3,-0.00666,0.01299,386,full,swanson,1yr
+BBB,swanson_fg,3,0.01344,0.01344,386,full,swanson,1yr
+BBB,swanson_lsap,3,-0.01287,0.01970,386,full,swanson,1yr
+BBB,swanson_ffr,4,-0.00051,0.01581,385,full,swanson,1yr
+BBB,swanson_fg,4,0.00586,0.01542,385,full,swanson,1yr
+BBB,swanson_lsap,4,-0.00287,0.02423,385,full,swanson,1yr
+BBB,swanson_ffr,5,0.00126,0.01895,384,full,swanson,1yr
+BBB,swanson_fg,5,0.00237,0.01760,384,full,swanson,1yr
+BBB,swanson_lsap,5,0.00906,0.03006,384,full,swanson,1yr
+BBB,swanson_ffr,6,0.00382,0.02202,383,full,swanson,1yr
+BBB,swanson_fg,6,0.00318,0.01975,383,full,swanson,1yr
+BBB,swanson_lsap,6,0.02083,0.03584,383,full,swanson,1yr
+BBB,swanson_ffr,7,0.00245,0.02413,382,full,swanson,1yr
+BBB,swanson_fg,7,0.00689,0.02108,382,full,swanson,1yr
+BBB,swanson_lsap,7,0.03429,0.04345,382,full,swanson,1yr
+BBB,swanson_ffr,8,-0.00197,0.02456,381,full,swanson,1yr
+BBB,swanson_fg,8,0.01263,0.02215,381,full,swanson,1yr
+BBB,swanson_lsap,8,0.04420,0.04751,381,full,swanson,1yr
+BBB,swanson_ffr,9,-0.01182,0.02466,380,full,swanson,1yr
+BBB,swanson_fg,9,0.01653,0.02365,380,full,swanson,1yr
+BBB,swanson_lsap,9,0.05188,0.04730,380,full,swanson,1yr
+BBB,swanson_ffr,10,-0.02496,0.02503,379,full,swanson,1yr
+BBB,swanson_fg,10,0.02347,0.02568,379,full,swanson,1yr
+BBB,swanson_lsap,10,0.04488,0.04248,379,full,swanson,1yr
+BBB,swanson_ffr,11,-0.03267,0.02585,378,full,swanson,1yr
+BBB,swanson_fg,11,0.02603,0.02715,378,full,swanson,1yr
+BBB,swanson_lsap,11,0.03293,0.04090,378,full,swanson,1yr
+BBB,swanson_ffr,12,-0.02994,0.02568,377,full,swanson,1yr
+BBB,swanson_fg,12,0.02542,0.02755,377,full,swanson,1yr
+BBB,swanson_lsap,12,0.02601,0.04262,377,full,swanson,1yr
+Stock Market,swanson_ffr,0,-0.04050,0.05322,389,full,swanson,1yr
+Stock Market,swanson_fg,0,0.06374,0.02569,389,full,swanson,1yr
+Stock Market,swanson_lsap,0,-0.10697,0.09222,389,full,swanson,1yr
+Stock Market,swanson_ffr,1,-0.03898,0.05388,388,full,swanson,1yr
+Stock Market,swanson_fg,1,0.08314,0.03113,388,full,swanson,1yr
+Stock Market,swanson_lsap,1,-0.03990,0.09413,388,full,swanson,1yr
+Stock Market,swanson_ffr,2,-0.01961,0.06155,387,full,swanson,1yr
+Stock Market,swanson_fg,2,0.09115,0.03927,387,full,swanson,1yr
+Stock Market,swanson_lsap,2,0.11253,0.09641,387,full,swanson,1yr
+Stock Market,swanson_ffr,3,-0.05081,0.06189,386,full,swanson,1yr
+Stock Market,swanson_fg,3,0.13042,0.04654,386,full,swanson,1yr
+Stock Market,swanson_lsap,3,0.06524,0.11701,386,full,swanson,1yr
+Stock Market,swanson_ffr,4,-0.08481,0.06059,385,full,swanson,1yr
+Stock Market,swanson_fg,4,0.14551,0.04927,385,full,swanson,1yr
+Stock Market,swanson_lsap,4,0.10430,0.13006,385,full,swanson,1yr
+Stock Market,swanson_ffr,5,-0.05635,0.06418,384,full,swanson,1yr
+Stock Market,swanson_fg,5,0.12882,0.05796,384,full,swanson,1yr
+Stock Market,swanson_lsap,5,0.21173,0.11927,384,full,swanson,1yr
+Stock Market,swanson_ffr,6,-0.03252,0.08110,383,full,swanson,1yr
+Stock Market,swanson_fg,6,0.15433,0.06663,383,full,swanson,1yr
+Stock Market,swanson_lsap,6,0.22739,0.16465,383,full,swanson,1yr
+Stock Market,swanson_ffr,7,-0.03320,0.08821,382,full,swanson,1yr
+Stock Market,swanson_fg,7,0.16574,0.07796,382,full,swanson,1yr
+Stock Market,swanson_lsap,7,0.26256,0.19490,382,full,swanson,1yr
+Stock Market,swanson_ffr,8,-0.05172,0.08795,381,full,swanson,1yr
+Stock Market,swanson_fg,8,0.18844,0.07996,381,full,swanson,1yr
+Stock Market,swanson_lsap,8,0.35349,0.18616,381,full,swanson,1yr
+Stock Market,swanson_ffr,9,-0.06088,0.10744,380,full,swanson,1yr
+Stock Market,swanson_fg,9,0.17036,0.08640,380,full,swanson,1yr
+Stock Market,swanson_lsap,9,0.49758,0.16503,380,full,swanson,1yr
+Stock Market,swanson_ffr,10,-0.06778,0.11974,379,full,swanson,1yr
+Stock Market,swanson_fg,10,0.21530,0.08418,379,full,swanson,1yr
+Stock Market,swanson_lsap,10,0.40837,0.17189,379,full,swanson,1yr
+Stock Market,swanson_ffr,11,-0.06507,0.12845,378,full,swanson,1yr
+Stock Market,swanson_fg,11,0.27242,0.09469,378,full,swanson,1yr
+Stock Market,swanson_lsap,11,0.37125,0.17317,378,full,swanson,1yr
+Stock Market,swanson_ffr,12,-0.07076,0.12471,377,full,swanson,1yr
+Stock Market,swanson_fg,12,0.23935,0.10282,377,full,swanson,1yr
+Stock Market,swanson_lsap,12,0.48522,0.15603,377,full,swanson,1yr
+House Prices,swanson_ffr,0,0.00034,0.00271,389,full,swanson,1yr
+House Prices,swanson_fg,0,-0.00173,0.00256,389,full,swanson,1yr
+House Prices,swanson_lsap,0,0.00443,0.00445,389,full,swanson,1yr
+House Prices,swanson_ffr,1,0.00220,0.00556,388,full,swanson,1yr
+House Prices,swanson_fg,1,-0.00428,0.00467,388,full,swanson,1yr
+House Prices,swanson_lsap,1,0.00957,0.00887,388,full,swanson,1yr
+House Prices,swanson_ffr,2,0.00313,0.00834,387,full,swanson,1yr
+House Prices,swanson_fg,2,-0.00615,0.00665,387,full,swanson,1yr
+House Prices,swanson_lsap,2,0.01500,0.01336,387,full,swanson,1yr
+House Prices,swanson_ffr,3,0.00318,0.01102,386,full,swanson,1yr
+House Prices,swanson_fg,3,-0.00693,0.00876,386,full,swanson,1yr
+House Prices,swanson_lsap,3,0.02146,0.01801,386,full,swanson,1yr
+House Prices,swanson_ffr,4,0.00192,0.01363,385,full,swanson,1yr
+House Prices,swanson_fg,4,-0.00553,0.01138,385,full,swanson,1yr
+House Prices,swanson_lsap,4,0.02647,0.02265,385,full,swanson,1yr
+House Prices,swanson_ffr,5,0.00115,0.01604,384,full,swanson,1yr
+House Prices,swanson_fg,5,-0.00382,0.01362,384,full,swanson,1yr
+House Prices,swanson_lsap,5,0.03394,0.02611,384,full,swanson,1yr
+House Prices,swanson_ffr,6,0.00227,0.01851,383,full,swanson,1yr
+House Prices,swanson_fg,6,-0.00307,0.01596,383,full,swanson,1yr
+House Prices,swanson_lsap,6,0.04517,0.02868,383,full,swanson,1yr
+House Prices,swanson_ffr,7,0.00432,0.02143,382,full,swanson,1yr
+House Prices,swanson_fg,7,-0.00341,0.01851,382,full,swanson,1yr
+House Prices,swanson_lsap,7,0.05970,0.03095,382,full,swanson,1yr
+House Prices,swanson_ffr,8,0.00749,0.02444,381,full,swanson,1yr
+House Prices,swanson_fg,8,-0.00504,0.02114,381,full,swanson,1yr
+House Prices,swanson_lsap,8,0.07656,0.03315,381,full,swanson,1yr
+House Prices,swanson_ffr,9,0.01010,0.02740,380,full,swanson,1yr
+House Prices,swanson_fg,9,-0.00586,0.02375,380,full,swanson,1yr
+House Prices,swanson_lsap,9,0.09209,0.03557,380,full,swanson,1yr
+House Prices,swanson_ffr,10,0.01217,0.02997,379,full,swanson,1yr
+House Prices,swanson_fg,10,-0.00560,0.02599,379,full,swanson,1yr
+House Prices,swanson_lsap,10,0.10629,0.03795,379,full,swanson,1yr
+House Prices,swanson_ffr,11,0.01362,0.03206,378,full,swanson,1yr
+House Prices,swanson_fg,11,-0.00429,0.02775,378,full,swanson,1yr
+House Prices,swanson_lsap,11,0.12022,0.04043,378,full,swanson,1yr
+House Prices,swanson_ffr,12,0.01438,0.03339,377,full,swanson,1yr
+House Prices,swanson_fg,12,-0.00196,0.02928,377,full,swanson,1yr
+House Prices,swanson_lsap,12,0.13360,0.04303,377,full,swanson,1yr
+Dollar,swanson_ffr,0,-0.00421,0.00918,389,full,swanson,1yr
+Dollar,swanson_fg,0,0.01302,0.01055,389,full,swanson,1yr
+Dollar,swanson_lsap,0,-0.02277,0.01839,389,full,swanson,1yr
+Dollar,swanson_ffr,1,-0.01146,0.02152,388,full,swanson,1yr
+Dollar,swanson_fg,1,0.03383,0.02341,388,full,swanson,1yr
+Dollar,swanson_lsap,1,-0.04890,0.04362,388,full,swanson,1yr
+Dollar,swanson_ffr,2,-0.00629,0.03166,387,full,swanson,1yr
+Dollar,swanson_fg,2,0.04365,0.03333,387,full,swanson,1yr
+Dollar,swanson_lsap,2,-0.04471,0.07299,387,full,swanson,1yr
+Dollar,swanson_ffr,3,-0.00110,0.04091,386,full,swanson,1yr
+Dollar,swanson_fg,3,0.04241,0.03979,386,full,swanson,1yr
+Dollar,swanson_lsap,3,0.01343,0.09787,386,full,swanson,1yr
+Dollar,swanson_ffr,4,0.00200,0.04786,385,full,swanson,1yr
+Dollar,swanson_fg,4,0.03396,0.04679,385,full,swanson,1yr
+Dollar,swanson_lsap,4,0.08237,0.11266,385,full,swanson,1yr
+Dollar,swanson_ffr,5,-0.00123,0.05251,384,full,swanson,1yr
+Dollar,swanson_fg,5,0.04689,0.05211,384,full,swanson,1yr
+Dollar,swanson_lsap,5,0.12951,0.12239,384,full,swanson,1yr
+Dollar,swanson_ffr,6,0.00245,0.05804,383,full,swanson,1yr
+Dollar,swanson_fg,6,0.07594,0.05553,383,full,swanson,1yr
+Dollar,swanson_lsap,6,0.15528,0.13536,383,full,swanson,1yr
+Dollar,swanson_ffr,7,0.01222,0.06434,382,full,swanson,1yr
+Dollar,swanson_fg,7,0.09888,0.05829,382,full,swanson,1yr
+Dollar,swanson_lsap,7,0.20793,0.15738,382,full,swanson,1yr
+Dollar,swanson_ffr,8,0.01003,0.06854,381,full,swanson,1yr
+Dollar,swanson_fg,8,0.12258,0.06275,381,full,swanson,1yr
+Dollar,swanson_lsap,8,0.24025,0.17420,381,full,swanson,1yr
+Dollar,swanson_ffr,9,-0.01752,0.07113,380,full,swanson,1yr
+Dollar,swanson_fg,9,0.14289,0.06657,380,full,swanson,1yr
+Dollar,swanson_lsap,9,0.28624,0.17741,380,full,swanson,1yr
+Dollar,swanson_ffr,10,-0.04335,0.07803,379,full,swanson,1yr
+Dollar,swanson_fg,10,0.16162,0.07026,379,full,swanson,1yr
+Dollar,swanson_lsap,10,0.31081,0.16630,379,full,swanson,1yr
+Dollar,swanson_ffr,11,-0.06427,0.08637,378,full,swanson,1yr
+Dollar,swanson_fg,11,0.17469,0.07430,378,full,swanson,1yr
+Dollar,swanson_lsap,11,0.31949,0.15458,378,full,swanson,1yr
+Dollar,swanson_ffr,12,-0.06933,0.09463,377,full,swanson,1yr
+Dollar,swanson_fg,12,0.18744,0.08110,377,full,swanson,1yr
+Dollar,swanson_lsap,12,0.31548,0.14496,377,full,swanson,1yr
+fci,ns,0,0.08893,0.05659,389,full,ns,1yr
+fci,ns,1,0.15157,0.06978,388,full,ns,1yr
+fci,ns,2,0.20692,0.07574,387,full,ns,1yr
+fci,ns,3,0.22941,0.09434,386,full,ns,1yr
+fci,ns,4,0.18082,0.09443,385,full,ns,1yr
+fci,ns,5,0.16507,0.10979,384,full,ns,1yr
+fci,ns,6,0.23915,0.11982,383,full,ns,1yr
+fci,ns,7,0.30301,0.13402,382,full,ns,1yr
+fci,ns,8,0.35159,0.14648,381,full,ns,1yr
+fci,ns,9,0.31738,0.17170,380,full,ns,1yr
+fci,ns,10,0.36227,0.19098,379,full,ns,1yr
+fci,ns,11,0.44198,0.20552,378,full,ns,1yr
+fci,ns,12,0.40664,0.22406,377,full,ns,1yr
+FFR,ns,0,0.01515,0.00433,389,full,ns,1yr
+FFR,ns,1,0.02875,0.00907,388,full,ns,1yr
+FFR,ns,2,0.04083,0.01423,387,full,ns,1yr
+FFR,ns,3,0.04462,0.01809,386,full,ns,1yr
+FFR,ns,4,0.04194,0.01996,385,full,ns,1yr
+FFR,ns,5,0.04010,0.02162,384,full,ns,1yr
+FFR,ns,6,0.03980,0.02429,383,full,ns,1yr
+FFR,ns,7,0.04018,0.02745,382,full,ns,1yr
+FFR,ns,8,0.03816,0.02980,381,full,ns,1yr
+FFR,ns,9,0.03474,0.03063,380,full,ns,1yr
+FFR,ns,10,0.03021,0.03043,379,full,ns,1yr
+FFR,ns,11,0.02412,0.02987,378,full,ns,1yr
+FFR,ns,12,0.01394,0.02959,377,full,ns,1yr
+10Yr Treasury,ns,0,-0.00049,0.00063,389,full,ns,1yr
+10Yr Treasury,ns,1,-0.00013,0.00125,388,full,ns,1yr
+10Yr Treasury,ns,2,0.00036,0.00179,387,full,ns,1yr
+10Yr Treasury,ns,3,0.00169,0.00229,386,full,ns,1yr
+10Yr Treasury,ns,4,0.00318,0.00272,385,full,ns,1yr
+10Yr Treasury,ns,5,0.00380,0.00304,384,full,ns,1yr
+10Yr Treasury,ns,6,0.00284,0.00320,383,full,ns,1yr
+10Yr Treasury,ns,7,0.00252,0.00326,382,full,ns,1yr
+10Yr Treasury,ns,8,0.00224,0.00330,381,full,ns,1yr
+10Yr Treasury,ns,9,0.00267,0.00341,380,full,ns,1yr
+10Yr Treasury,ns,10,0.00344,0.00354,379,full,ns,1yr
+10Yr Treasury,ns,11,0.00504,0.00374,378,full,ns,1yr
+10Yr Treasury,ns,12,0.00783,0.00386,377,full,ns,1yr
+Mortgage Rate,ns,0,0.01237,0.00704,389,full,ns,1yr
+Mortgage Rate,ns,1,0.01914,0.01452,388,full,ns,1yr
+Mortgage Rate,ns,2,0.02220,0.02252,387,full,ns,1yr
+Mortgage Rate,ns,3,0.01504,0.02789,386,full,ns,1yr
+Mortgage Rate,ns,4,-0.00379,0.02975,385,full,ns,1yr
+Mortgage Rate,ns,5,-0.01535,0.03178,384,full,ns,1yr
+Mortgage Rate,ns,6,-0.01491,0.03209,383,full,ns,1yr
+Mortgage Rate,ns,7,-0.01140,0.03341,382,full,ns,1yr
+Mortgage Rate,ns,8,-0.01405,0.03843,381,full,ns,1yr
+Mortgage Rate,ns,9,-0.02049,0.04572,380,full,ns,1yr
+Mortgage Rate,ns,10,-0.02568,0.05173,379,full,ns,1yr
+Mortgage Rate,ns,11,-0.03036,0.05388,378,full,ns,1yr
+Mortgage Rate,ns,12,-0.04068,0.05309,377,full,ns,1yr
+BBB,ns,0,0.00404,0.00312,389,full,ns,1yr
+BBB,ns,1,0.00889,0.00744,388,full,ns,1yr
+BBB,ns,2,0.01163,0.01114,387,full,ns,1yr
+BBB,ns,3,0.01193,0.01323,386,full,ns,1yr
+BBB,ns,4,0.00572,0.01361,385,full,ns,1yr
+BBB,ns,5,0.00143,0.01433,384,full,ns,1yr
+BBB,ns,6,0.00331,0.01583,383,full,ns,1yr
+BBB,ns,7,0.00682,0.01767,382,full,ns,1yr
+BBB,ns,8,0.01249,0.02000,381,full,ns,1yr
+BBB,ns,9,0.01211,0.02207,380,full,ns,1yr
+BBB,ns,10,0.01119,0.02525,379,full,ns,1yr
+BBB,ns,11,0.00676,0.02757,378,full,ns,1yr
+BBB,ns,12,0.00714,0.02910,377,full,ns,1yr
+Stock Market,ns,0,0.04885,0.04849,389,full,ns,1yr
+Stock Market,ns,1,0.07097,0.04763,388,full,ns,1yr
+Stock Market,ns,2,0.09715,0.04338,387,full,ns,1yr
+Stock Market,ns,3,0.12317,0.05424,386,full,ns,1yr
+Stock Market,ns,4,0.11234,0.05286,385,full,ns,1yr
+Stock Market,ns,5,0.10251,0.06824,384,full,ns,1yr
+Stock Market,ns,6,0.14135,0.07010,383,full,ns,1yr
+Stock Market,ns,7,0.16290,0.07328,382,full,ns,1yr
+Stock Market,ns,8,0.18148,0.07665,381,full,ns,1yr
+Stock Market,ns,9,0.14952,0.09111,380,full,ns,1yr
+Stock Market,ns,10,0.19844,0.09568,379,full,ns,1yr
+Stock Market,ns,11,0.28982,0.09879,378,full,ns,1yr
+Stock Market,ns,12,0.25146,0.11205,377,full,ns,1yr
+House Prices,ns,0,-0.00255,0.00236,389,full,ns,1yr
+House Prices,ns,1,-0.00490,0.00462,388,full,ns,1yr
+House Prices,ns,2,-0.00694,0.00681,387,full,ns,1yr
+House Prices,ns,3,-0.00819,0.00893,386,full,ns,1yr
+House Prices,ns,4,-0.00780,0.01144,385,full,ns,1yr
+House Prices,ns,5,-0.00679,0.01377,384,full,ns,1yr
+House Prices,ns,6,-0.00555,0.01625,383,full,ns,1yr
+House Prices,ns,7,-0.00502,0.01898,382,full,ns,1yr
+House Prices,ns,8,-0.00522,0.02174,381,full,ns,1yr
+House Prices,ns,9,-0.00484,0.02443,380,full,ns,1yr
+House Prices,ns,10,-0.00338,0.02684,379,full,ns,1yr
+House Prices,ns,11,-0.00106,0.02919,378,full,ns,1yr
+House Prices,ns,12,0.00247,0.03176,377,full,ns,1yr
+Dollar,ns,0,0.01156,0.01172,389,full,ns,1yr
+Dollar,ns,1,0.02886,0.02370,388,full,ns,1yr
+Dollar,ns,2,0.04169,0.03355,387,full,ns,1yr
+Dollar,ns,3,0.04114,0.03925,386,full,ns,1yr
+Dollar,ns,4,0.02923,0.04407,385,full,ns,1yr
+Dollar,ns,5,0.03936,0.04601,384,full,ns,1yr
+Dollar,ns,6,0.07231,0.04665,383,full,ns,1yr
+Dollar,ns,7,0.10701,0.04873,382,full,ns,1yr
+Dollar,ns,8,0.13649,0.05156,381,full,ns,1yr
+Dollar,ns,9,0.14366,0.05522,380,full,ns,1yr
+Dollar,ns,10,0.14807,0.06156,379,full,ns,1yr
+Dollar,ns,11,0.14765,0.06725,378,full,ns,1yr
+Dollar,ns,12,0.16447,0.07002,377,full,ns,1yr
+fci,raw2y,0,0.05464,0.04939,389,full,raw2y,1yr
+fci,raw2y,1,0.09065,0.05911,388,full,raw2y,1yr
+fci,raw2y,2,0.16035,0.06787,387,full,raw2y,1yr
+fci,raw2y,3,0.19134,0.08580,386,full,raw2y,1yr
+fci,raw2y,4,0.17388,0.08976,385,full,raw2y,1yr
+fci,raw2y,5,0.19316,0.10290,384,full,raw2y,1yr
+fci,raw2y,6,0.27379,0.11235,383,full,raw2y,1yr
+fci,raw2y,7,0.34701,0.13163,382,full,raw2y,1yr
+fci,raw2y,8,0.40408,0.14214,381,full,raw2y,1yr
+fci,raw2y,9,0.40353,0.14670,380,full,raw2y,1yr
+fci,raw2y,10,0.43405,0.14925,379,full,raw2y,1yr
+fci,raw2y,11,0.48508,0.16110,378,full,raw2y,1yr
+fci,raw2y,12,0.46620,0.17062,377,full,raw2y,1yr
+FFR,raw2y,0,0.00844,0.00431,389,full,raw2y,1yr
+FFR,raw2y,1,0.01418,0.00906,388,full,raw2y,1yr
+FFR,raw2y,2,0.02085,0.01334,387,full,raw2y,1yr
+FFR,raw2y,3,0.02244,0.01543,386,full,raw2y,1yr
+FFR,raw2y,4,0.02145,0.01556,385,full,raw2y,1yr
+FFR,raw2y,5,0.02055,0.01572,384,full,raw2y,1yr
+FFR,raw2y,6,0.02009,0.01698,383,full,raw2y,1yr
+FFR,raw2y,7,0.01904,0.01885,382,full,raw2y,1yr
+FFR,raw2y,8,0.01534,0.02009,381,full,raw2y,1yr
+FFR,raw2y,9,0.00994,0.02042,380,full,raw2y,1yr
+FFR,raw2y,10,0.00508,0.02083,379,full,raw2y,1yr
+FFR,raw2y,11,0.00085,0.02227,378,full,raw2y,1yr
+FFR,raw2y,12,-0.00445,0.02481,377,full,raw2y,1yr
+10Yr Treasury,raw2y,0,0.00006,0.00065,389,full,raw2y,1yr
+10Yr Treasury,raw2y,1,0.00040,0.00125,388,full,raw2y,1yr
+10Yr Treasury,raw2y,2,0.00084,0.00177,387,full,raw2y,1yr
+10Yr Treasury,raw2y,3,0.00160,0.00221,386,full,raw2y,1yr
+10Yr Treasury,raw2y,4,0.00298,0.00259,385,full,raw2y,1yr
+10Yr Treasury,raw2y,5,0.00379,0.00277,384,full,raw2y,1yr
+10Yr Treasury,raw2y,6,0.00336,0.00294,383,full,raw2y,1yr
+10Yr Treasury,raw2y,7,0.00332,0.00319,382,full,raw2y,1yr
+10Yr Treasury,raw2y,8,0.00325,0.00358,381,full,raw2y,1yr
+10Yr Treasury,raw2y,9,0.00373,0.00401,380,full,raw2y,1yr
+10Yr Treasury,raw2y,10,0.00419,0.00432,379,full,raw2y,1yr
+10Yr Treasury,raw2y,11,0.00534,0.00450,378,full,raw2y,1yr
+10Yr Treasury,raw2y,12,0.00740,0.00456,377,full,raw2y,1yr
+Mortgage Rate,raw2y,0,0.00548,0.00716,389,full,raw2y,1yr
+Mortgage Rate,raw2y,1,0.01115,0.01485,388,full,raw2y,1yr
+Mortgage Rate,raw2y,2,0.01427,0.02221,387,full,raw2y,1yr
+Mortgage Rate,raw2y,3,0.01172,0.02631,386,full,raw2y,1yr
+Mortgage Rate,raw2y,4,-0.00396,0.02822,385,full,raw2y,1yr
+Mortgage Rate,raw2y,5,-0.01224,0.03022,384,full,raw2y,1yr
+Mortgage Rate,raw2y,6,-0.01221,0.03146,383,full,raw2y,1yr
+Mortgage Rate,raw2y,7,-0.00987,0.03378,382,full,raw2y,1yr
+Mortgage Rate,raw2y,8,-0.01318,0.03972,381,full,raw2y,1yr
+Mortgage Rate,raw2y,9,-0.01865,0.04801,380,full,raw2y,1yr
+Mortgage Rate,raw2y,10,-0.02197,0.05380,379,full,raw2y,1yr
+Mortgage Rate,raw2y,11,-0.02695,0.05502,378,full,raw2y,1yr
+Mortgage Rate,raw2y,12,-0.03766,0.05327,377,full,raw2y,1yr
+BBB,raw2y,0,0.00275,0.00285,389,full,raw2y,1yr
+BBB,raw2y,1,0.00638,0.00672,388,full,raw2y,1yr
+BBB,raw2y,2,0.00697,0.00983,387,full,raw2y,1yr
+BBB,raw2y,3,0.00716,0.01173,386,full,raw2y,1yr
+BBB,raw2y,4,0.00023,0.01252,385,full,raw2y,1yr
+BBB,raw2y,5,-0.00270,0.01442,384,full,raw2y,1yr
+BBB,raw2y,6,-0.00013,0.01610,383,full,raw2y,1yr
+BBB,raw2y,7,0.00458,0.01818,382,full,raw2y,1yr
+BBB,raw2y,8,0.01076,0.02070,381,full,raw2y,1yr
+BBB,raw2y,9,0.01296,0.02284,380,full,raw2y,1yr
+BBB,raw2y,10,0.01293,0.02446,379,full,raw2y,1yr
+BBB,raw2y,11,0.00772,0.02543,378,full,raw2y,1yr
+BBB,raw2y,12,0.00488,0.02598,377,full,raw2y,1yr
+Stock Market,raw2y,0,0.03453,0.04389,389,full,raw2y,1yr
+Stock Market,raw2y,1,0.04842,0.04127,388,full,raw2y,1yr
+Stock Market,raw2y,2,0.10083,0.03660,387,full,raw2y,1yr
+Stock Market,raw2y,3,0.12292,0.04626,386,full,raw2y,1yr
+Stock Market,raw2y,4,0.12212,0.04509,385,full,raw2y,1yr
+Stock Market,raw2y,5,0.12727,0.05287,384,full,raw2y,1yr
+Stock Market,raw2y,6,0.16913,0.05497,383,full,raw2y,1yr
+Stock Market,raw2y,7,0.19783,0.06789,382,full,raw2y,1yr
+Stock Market,raw2y,8,0.22567,0.06998,381,full,raw2y,1yr
+Stock Market,raw2y,9,0.21357,0.07128,380,full,raw2y,1yr
+Stock Market,raw2y,10,0.23911,0.07436,379,full,raw2y,1yr
+Stock Market,raw2y,11,0.29562,0.08236,378,full,raw2y,1yr
+Stock Market,raw2y,12,0.27296,0.08833,377,full,raw2y,1yr
+House Prices,raw2y,0,-0.00196,0.00258,389,full,raw2y,1yr
+House Prices,raw2y,1,-0.00424,0.00486,388,full,raw2y,1yr
+House Prices,raw2y,2,-0.00628,0.00678,387,full,raw2y,1yr
+House Prices,raw2y,3,-0.00727,0.00845,386,full,raw2y,1yr
+House Prices,raw2y,4,-0.00674,0.01019,385,full,raw2y,1yr
+House Prices,raw2y,5,-0.00531,0.01181,384,full,raw2y,1yr
+House Prices,raw2y,6,-0.00339,0.01389,383,full,raw2y,1yr
+House Prices,raw2y,7,-0.00153,0.01665,382,full,raw2y,1yr
+House Prices,raw2y,8,-0.00041,0.01997,381,full,raw2y,1yr
+House Prices,raw2y,9,0.00124,0.02333,380,full,raw2y,1yr
+House Prices,raw2y,10,0.00375,0.02618,379,full,raw2y,1yr
+House Prices,raw2y,11,0.00757,0.02847,378,full,raw2y,1yr
+House Prices,raw2y,12,0.01259,0.03044,377,full,raw2y,1yr
+Dollar,raw2y,0,0.00534,0.00937,389,full,raw2y,1yr
+Dollar,raw2y,1,0.01436,0.02090,388,full,raw2y,1yr
+Dollar,raw2y,2,0.02288,0.03053,387,full,raw2y,1yr
+Dollar,raw2y,3,0.03276,0.03631,386,full,raw2y,1yr
+Dollar,raw2y,4,0.03779,0.04015,385,full,raw2y,1yr
+Dollar,raw2y,5,0.06180,0.04265,384,full,raw2y,1yr
+Dollar,raw2y,6,0.09694,0.04534,383,full,raw2y,1yr
+Dollar,raw2y,7,0.13364,0.05112,382,full,raw2y,1yr
+Dollar,raw2y,8,0.16265,0.05784,381,full,raw2y,1yr
+Dollar,raw2y,9,0.18075,0.06056,380,full,raw2y,1yr
+Dollar,raw2y,10,0.19095,0.06044,379,full,raw2y,1yr
+Dollar,raw2y,11,0.19492,0.06090,378,full,raw2y,1yr
+Dollar,raw2y,12,0.21047,0.06535,377,full,raw2y,1yr
+fci,target,0,0.07272,0.05980,279,ex-ZLB,baseline,1yr
+fci,path,0,0.06166,0.03383,279,ex-ZLB,baseline,1yr
+fci,target,1,0.08317,0.07419,278,ex-ZLB,baseline,1yr
+fci,path,1,0.07781,0.05289,278,ex-ZLB,baseline,1yr
+fci,target,2,0.10375,0.07383,277,ex-ZLB,baseline,1yr
+fci,path,2,0.09856,0.07539,277,ex-ZLB,baseline,1yr
+fci,target,3,0.10262,0.07434,276,ex-ZLB,baseline,1yr
+fci,path,3,0.10876,0.10020,276,ex-ZLB,baseline,1yr
+fci,target,4,0.04554,0.07158,275,ex-ZLB,baseline,1yr
+fci,path,4,0.07869,0.12048,275,ex-ZLB,baseline,1yr
+fci,target,5,0.03576,0.07321,274,ex-ZLB,baseline,1yr
+fci,path,5,0.05414,0.13700,274,ex-ZLB,baseline,1yr
+fci,target,6,0.10918,0.09494,273,ex-ZLB,baseline,1yr
+fci,path,6,0.08000,0.15037,273,ex-ZLB,baseline,1yr
+fci,target,7,0.12007,0.10393,272,ex-ZLB,baseline,1yr
+fci,path,7,0.08291,0.15770,272,ex-ZLB,baseline,1yr
+fci,target,8,0.06569,0.12310,271,ex-ZLB,baseline,1yr
+fci,path,8,0.13975,0.15220,271,ex-ZLB,baseline,1yr
+fci,target,9,-0.06588,0.17953,270,ex-ZLB,baseline,1yr
+fci,path,9,0.15436,0.15956,270,ex-ZLB,baseline,1yr
+fci,target,10,-0.10628,0.21655,269,ex-ZLB,baseline,1yr
+fci,path,10,0.20929,0.15642,269,ex-ZLB,baseline,1yr
+fci,target,11,-0.11544,0.23029,268,ex-ZLB,baseline,1yr
+fci,path,11,0.24998,0.15886,268,ex-ZLB,baseline,1yr
+fci,target,12,-0.20115,0.23099,267,ex-ZLB,baseline,1yr
+fci,path,12,0.21036,0.17118,267,ex-ZLB,baseline,1yr
+FFR,target,0,0.01532,0.00334,279,ex-ZLB,baseline,1yr
+FFR,path,0,0.00406,0.00277,279,ex-ZLB,baseline,1yr
+FFR,target,1,0.03424,0.00619,278,ex-ZLB,baseline,1yr
+FFR,path,1,0.00472,0.00615,278,ex-ZLB,baseline,1yr
+FFR,target,2,0.05173,0.00872,277,ex-ZLB,baseline,1yr
+FFR,path,2,0.00407,0.00949,277,ex-ZLB,baseline,1yr
+FFR,target,3,0.06121,0.01028,276,ex-ZLB,baseline,1yr
+FFR,path,3,0.00329,0.01243,276,ex-ZLB,baseline,1yr
+FFR,target,4,0.06201,0.01232,275,ex-ZLB,baseline,1yr
+FFR,path,4,0.00198,0.01508,275,ex-ZLB,baseline,1yr
+FFR,target,5,0.06425,0.01469,274,ex-ZLB,baseline,1yr
+FFR,path,5,-0.00045,0.01763,274,ex-ZLB,baseline,1yr
+FFR,target,6,0.06596,0.01724,273,ex-ZLB,baseline,1yr
+FFR,path,6,-0.00321,0.02092,273,ex-ZLB,baseline,1yr
+FFR,target,7,0.06517,0.01989,272,ex-ZLB,baseline,1yr
+FFR,path,7,-0.00595,0.02412,272,ex-ZLB,baseline,1yr
+FFR,target,8,0.06102,0.02268,271,ex-ZLB,baseline,1yr
+FFR,path,8,-0.00810,0.02647,271,ex-ZLB,baseline,1yr
+FFR,target,9,0.05595,0.02424,270,ex-ZLB,baseline,1yr
+FFR,path,9,-0.01082,0.02768,270,ex-ZLB,baseline,1yr
+FFR,target,10,0.05308,0.02487,269,ex-ZLB,baseline,1yr
+FFR,path,10,-0.01361,0.02897,269,ex-ZLB,baseline,1yr
+FFR,target,11,0.04794,0.02518,268,ex-ZLB,baseline,1yr
+FFR,path,11,-0.01635,0.03023,268,ex-ZLB,baseline,1yr
+FFR,target,12,0.03917,0.02451,267,ex-ZLB,baseline,1yr
+FFR,path,12,-0.02079,0.03126,267,ex-ZLB,baseline,1yr
+10Yr Treasury,target,0,-0.00088,0.00039,279,ex-ZLB,baseline,1yr
+10Yr Treasury,path,0,-0.00019,0.00063,279,ex-ZLB,baseline,1yr
+10Yr Treasury,target,1,-0.00153,0.00084,278,ex-ZLB,baseline,1yr
+10Yr Treasury,path,1,0.00037,0.00134,278,ex-ZLB,baseline,1yr
+10Yr Treasury,target,2,-0.00192,0.00131,277,ex-ZLB,baseline,1yr
+10Yr Treasury,path,2,0.00076,0.00198,277,ex-ZLB,baseline,1yr
+10Yr Treasury,target,3,-0.00154,0.00182,276,ex-ZLB,baseline,1yr
+10Yr Treasury,path,3,0.00140,0.00262,276,ex-ZLB,baseline,1yr
+10Yr Treasury,target,4,-0.00187,0.00243,275,ex-ZLB,baseline,1yr
+10Yr Treasury,path,4,0.00253,0.00305,275,ex-ZLB,baseline,1yr
+10Yr Treasury,target,5,-0.00289,0.00297,274,ex-ZLB,baseline,1yr
+10Yr Treasury,path,5,0.00336,0.00333,274,ex-ZLB,baseline,1yr
+10Yr Treasury,target,6,-0.00436,0.00324,273,ex-ZLB,baseline,1yr
+10Yr Treasury,path,6,0.00374,0.00360,273,ex-ZLB,baseline,1yr
+10Yr Treasury,target,7,-0.00448,0.00329,272,ex-ZLB,baseline,1yr
+10Yr Treasury,path,7,0.00393,0.00396,272,ex-ZLB,baseline,1yr
+10Yr Treasury,target,8,-0.00358,0.00337,271,ex-ZLB,baseline,1yr
+10Yr Treasury,path,8,0.00377,0.00435,271,ex-ZLB,baseline,1yr
+10Yr Treasury,target,9,-0.00205,0.00356,270,ex-ZLB,baseline,1yr
+10Yr Treasury,path,9,0.00389,0.00484,270,ex-ZLB,baseline,1yr
+10Yr Treasury,target,10,0.00002,0.00372,269,ex-ZLB,baseline,1yr
+10Yr Treasury,path,10,0.00406,0.00501,269,ex-ZLB,baseline,1yr
+10Yr Treasury,target,11,0.00193,0.00422,268,ex-ZLB,baseline,1yr
+10Yr Treasury,path,11,0.00511,0.00504,268,ex-ZLB,baseline,1yr
+10Yr Treasury,target,12,0.00319,0.00427,267,ex-ZLB,baseline,1yr
+10Yr Treasury,path,12,0.00682,0.00498,267,ex-ZLB,baseline,1yr
+Mortgage Rate,target,0,0.01006,0.00575,279,ex-ZLB,baseline,1yr
+Mortgage Rate,path,0,0.00633,0.00782,279,ex-ZLB,baseline,1yr
+Mortgage Rate,target,1,0.00929,0.01081,278,ex-ZLB,baseline,1yr
+Mortgage Rate,path,1,0.00932,0.01593,278,ex-ZLB,baseline,1yr
+Mortgage Rate,target,2,0.00562,0.01732,277,ex-ZLB,baseline,1yr
+Mortgage Rate,path,2,0.01251,0.02192,277,ex-ZLB,baseline,1yr
+Mortgage Rate,target,3,-0.00157,0.02312,276,ex-ZLB,baseline,1yr
+Mortgage Rate,path,3,0.00636,0.02676,276,ex-ZLB,baseline,1yr
+Mortgage Rate,target,4,-0.00472,0.02677,275,ex-ZLB,baseline,1yr
+Mortgage Rate,path,4,-0.01589,0.03050,275,ex-ZLB,baseline,1yr
+Mortgage Rate,target,5,-0.01077,0.02714,274,ex-ZLB,baseline,1yr
+Mortgage Rate,path,5,-0.02793,0.03563,274,ex-ZLB,baseline,1yr
+Mortgage Rate,target,6,-0.00911,0.02615,273,ex-ZLB,baseline,1yr
+Mortgage Rate,path,6,-0.03202,0.03901,273,ex-ZLB,baseline,1yr
+Mortgage Rate,target,7,-0.01462,0.02596,272,ex-ZLB,baseline,1yr
+Mortgage Rate,path,7,-0.02915,0.03792,272,ex-ZLB,baseline,1yr
+Mortgage Rate,target,8,-0.03155,0.02541,271,ex-ZLB,baseline,1yr
+Mortgage Rate,path,8,-0.02891,0.03609,271,ex-ZLB,baseline,1yr
+Mortgage Rate,target,9,-0.05534,0.02478,270,ex-ZLB,baseline,1yr
+Mortgage Rate,path,9,-0.02964,0.03847,270,ex-ZLB,baseline,1yr
+Mortgage Rate,target,10,-0.07136,0.02633,269,ex-ZLB,baseline,1yr
+Mortgage Rate,path,10,-0.02726,0.04132,269,ex-ZLB,baseline,1yr
+Mortgage Rate,target,11,-0.06906,0.03004,268,ex-ZLB,baseline,1yr
+Mortgage Rate,path,11,-0.03156,0.04399,268,ex-ZLB,baseline,1yr
+Mortgage Rate,target,12,-0.05734,0.03596,267,ex-ZLB,baseline,1yr
+Mortgage Rate,path,12,-0.04691,0.04448,267,ex-ZLB,baseline,1yr
+BBB,target,0,0.00098,0.00336,279,ex-ZLB,baseline,1yr
+BBB,path,0,0.00421,0.00264,279,ex-ZLB,baseline,1yr
+BBB,target,1,0.00137,0.00713,278,ex-ZLB,baseline,1yr
+BBB,path,1,0.00597,0.00625,278,ex-ZLB,baseline,1yr
+BBB,target,2,0.00127,0.00873,277,ex-ZLB,baseline,1yr
+BBB,path,2,0.00691,0.00947,277,ex-ZLB,baseline,1yr
+BBB,target,3,0.00069,0.00967,276,ex-ZLB,baseline,1yr
+BBB,path,3,0.00609,0.01304,276,ex-ZLB,baseline,1yr
+BBB,target,4,0.00142,0.01068,275,ex-ZLB,baseline,1yr
+BBB,path,4,-0.00034,0.01639,275,ex-ZLB,baseline,1yr
+BBB,target,5,0.00223,0.01165,274,ex-ZLB,baseline,1yr
+BBB,path,5,-0.00303,0.02012,274,ex-ZLB,baseline,1yr
+BBB,target,6,0.00621,0.01300,273,ex-ZLB,baseline,1yr
+BBB,path,6,-0.00392,0.02287,273,ex-ZLB,baseline,1yr
+BBB,target,7,0.00714,0.01332,272,ex-ZLB,baseline,1yr
+BBB,path,7,-0.00276,0.02394,272,ex-ZLB,baseline,1yr
+BBB,target,8,0.00366,0.01392,271,ex-ZLB,baseline,1yr
+BBB,path,8,0.00039,0.02416,271,ex-ZLB,baseline,1yr
+BBB,target,9,-0.00828,0.01524,270,ex-ZLB,baseline,1yr
+BBB,path,9,0.00313,0.02498,270,ex-ZLB,baseline,1yr
+BBB,target,10,-0.02212,0.01720,269,ex-ZLB,baseline,1yr
+BBB,path,10,0.00607,0.02583,269,ex-ZLB,baseline,1yr
+BBB,target,11,-0.03022,0.01849,268,ex-ZLB,baseline,1yr
+BBB,path,11,0.00403,0.02614,268,ex-ZLB,baseline,1yr
+BBB,target,12,-0.02874,0.01848,267,ex-ZLB,baseline,1yr
+BBB,path,12,-0.00017,0.02559,267,ex-ZLB,baseline,1yr
+Stock Market,target,0,0.03993,0.05156,279,ex-ZLB,baseline,1yr
+Stock Market,path,0,0.03800,0.02565,279,ex-ZLB,baseline,1yr
+Stock Market,target,1,0.02098,0.05890,278,ex-ZLB,baseline,1yr
+Stock Market,path,1,0.04341,0.03252,278,ex-ZLB,baseline,1yr
+Stock Market,target,2,0.01222,0.06660,277,ex-ZLB,baseline,1yr
+Stock Market,path,2,0.06140,0.03948,277,ex-ZLB,baseline,1yr
+Stock Market,target,3,0.00925,0.06932,276,ex-ZLB,baseline,1yr
+Stock Market,path,3,0.08062,0.04661,276,ex-ZLB,baseline,1yr
+Stock Market,target,4,-0.03232,0.06513,275,ex-ZLB,baseline,1yr
+Stock Market,path,4,0.08513,0.05196,275,ex-ZLB,baseline,1yr
+Stock Market,target,5,-0.03086,0.06310,274,ex-ZLB,baseline,1yr
+Stock Market,path,5,0.06561,0.04860,274,ex-ZLB,baseline,1yr
+Stock Market,target,6,0.02427,0.07402,273,ex-ZLB,baseline,1yr
+Stock Market,path,6,0.08281,0.05764,273,ex-ZLB,baseline,1yr
+Stock Market,target,7,0.02739,0.06937,272,ex-ZLB,baseline,1yr
+Stock Market,path,7,0.07246,0.06700,272,ex-ZLB,baseline,1yr
+Stock Market,target,8,-0.00737,0.07558,271,ex-ZLB,baseline,1yr
+Stock Market,path,8,0.11468,0.06525,271,ex-ZLB,baseline,1yr
+Stock Market,target,9,-0.06611,0.10967,270,ex-ZLB,baseline,1yr
+Stock Market,path,9,0.11502,0.07167,270,ex-ZLB,baseline,1yr
+Stock Market,target,10,-0.04243,0.12893,269,ex-ZLB,baseline,1yr
+Stock Market,path,10,0.15640,0.06856,269,ex-ZLB,baseline,1yr
+Stock Market,target,11,-0.01608,0.13540,268,ex-ZLB,baseline,1yr
+Stock Market,path,11,0.20068,0.07397,268,ex-ZLB,baseline,1yr
+Stock Market,target,12,-0.09993,0.13652,267,ex-ZLB,baseline,1yr
+Stock Market,path,12,0.17607,0.08957,267,ex-ZLB,baseline,1yr
+House Prices,target,0,-0.00077,0.00229,279,ex-ZLB,baseline,1yr
+House Prices,path,0,-0.00188,0.00292,279,ex-ZLB,baseline,1yr
+House Prices,target,1,-0.00006,0.00529,278,ex-ZLB,baseline,1yr
+House Prices,path,1,-0.00447,0.00514,278,ex-ZLB,baseline,1yr
+House Prices,target,2,0.00033,0.00840,277,ex-ZLB,baseline,1yr
+House Prices,path,2,-0.00625,0.00678,277,ex-ZLB,baseline,1yr
+House Prices,target,3,-0.00005,0.01141,276,ex-ZLB,baseline,1yr
+House Prices,path,3,-0.00729,0.00819,276,ex-ZLB,baseline,1yr
+House Prices,target,4,-0.00062,0.01418,275,ex-ZLB,baseline,1yr
+House Prices,path,4,-0.00612,0.00975,275,ex-ZLB,baseline,1yr
+House Prices,target,5,-0.00137,0.01695,274,ex-ZLB,baseline,1yr
+House Prices,path,5,-0.00570,0.01133,274,ex-ZLB,baseline,1yr
+House Prices,target,6,-0.00204,0.01966,273,ex-ZLB,baseline,1yr
+House Prices,path,6,-0.00661,0.01327,273,ex-ZLB,baseline,1yr
+House Prices,target,7,-0.00307,0.02264,272,ex-ZLB,baseline,1yr
+House Prices,path,7,-0.00906,0.01555,272,ex-ZLB,baseline,1yr
+House Prices,target,8,-0.00434,0.02539,271,ex-ZLB,baseline,1yr
+House Prices,path,8,-0.01347,0.01810,271,ex-ZLB,baseline,1yr
+House Prices,target,9,-0.00511,0.02788,270,ex-ZLB,baseline,1yr
+House Prices,path,9,-0.01688,0.02092,270,ex-ZLB,baseline,1yr
+House Prices,target,10,-0.00573,0.03005,269,ex-ZLB,baseline,1yr
+House Prices,path,10,-0.01958,0.02368,269,ex-ZLB,baseline,1yr
+House Prices,target,11,-0.00673,0.03203,268,ex-ZLB,baseline,1yr
+House Prices,path,11,-0.02133,0.02609,268,ex-ZLB,baseline,1yr
+House Prices,target,12,-0.00804,0.03353,267,ex-ZLB,baseline,1yr
+House Prices,path,12,-0.02161,0.02834,267,ex-ZLB,baseline,1yr
+Dollar,target,0,0.00808,0.00706,279,ex-ZLB,baseline,1yr
+Dollar,path,0,0.01114,0.00941,279,ex-ZLB,baseline,1yr
+Dollar,target,1,0.01889,0.01327,278,ex-ZLB,baseline,1yr
+Dollar,path,1,0.01848,0.02018,278,ex-ZLB,baseline,1yr
+Dollar,target,2,0.03452,0.01873,277,ex-ZLB,baseline,1yr
+Dollar,path,2,0.01915,0.02844,277,ex-ZLB,baseline,1yr
+Dollar,target,3,0.03463,0.02534,276,ex-ZLB,baseline,1yr
+Dollar,path,3,0.01827,0.03459,276,ex-ZLB,baseline,1yr
+Dollar,target,4,0.02165,0.03043,275,ex-ZLB,baseline,1yr
+Dollar,path,4,0.01141,0.04250,275,ex-ZLB,baseline,1yr
+Dollar,target,5,0.01517,0.03055,274,ex-ZLB,baseline,1yr
+Dollar,path,5,0.02227,0.04928,274,ex-ZLB,baseline,1yr
+Dollar,target,6,0.02825,0.03249,273,ex-ZLB,baseline,1yr
+Dollar,path,6,0.03921,0.05218,273,ex-ZLB,baseline,1yr
+Dollar,target,7,0.04254,0.03458,272,ex-ZLB,baseline,1yr
+Dollar,path,7,0.05344,0.05269,272,ex-ZLB,baseline,1yr
+Dollar,target,8,0.04785,0.03832,271,ex-ZLB,baseline,1yr
+Dollar,path,8,0.07139,0.05623,271,ex-ZLB,baseline,1yr
+Dollar,target,9,0.01507,0.04876,270,ex-ZLB,baseline,1yr
+Dollar,path,9,0.08966,0.06036,270,ex-ZLB,baseline,1yr
+Dollar,target,10,-0.01775,0.06398,269,ex-ZLB,baseline,1yr
+Dollar,path,10,0.10321,0.06266,269,ex-ZLB,baseline,1yr
+Dollar,target,11,-0.04322,0.07657,268,ex-ZLB,baseline,1yr
+Dollar,path,11,0.10940,0.06397,268,ex-ZLB,baseline,1yr
+Dollar,target,12,-0.04947,0.08430,267,ex-ZLB,baseline,1yr
+Dollar,path,12,0.11695,0.07024,267,ex-ZLB,baseline,1yr
+fci,swanson_ffr,0,0.03557,0.05160,279,ex-ZLB,swanson,1yr
+fci,swanson_fg,0,0.07489,0.03355,279,ex-ZLB,swanson,1yr
+fci,swanson_lsap,0,-0.03044,0.12716,279,ex-ZLB,swanson,1yr
+fci,swanson_ffr,1,0.03018,0.08378,278,ex-ZLB,swanson,1yr
+fci,swanson_fg,1,0.10506,0.05673,278,ex-ZLB,swanson,1yr
+fci,swanson_lsap,1,-0.03752,0.20338,278,ex-ZLB,swanson,1yr
+fci,swanson_ffr,2,0.12754,0.10401,277,ex-ZLB,swanson,1yr
+fci,swanson_fg,2,0.11545,0.07754,277,ex-ZLB,swanson,1yr
+fci,swanson_lsap,2,0.28458,0.27925,277,ex-ZLB,swanson,1yr
+fci,swanson_ffr,3,0.14777,0.11682,276,ex-ZLB,swanson,1yr
+fci,swanson_fg,3,0.12078,0.10964,276,ex-ZLB,swanson,1yr
+fci,swanson_lsap,3,0.43380,0.33005,276,ex-ZLB,swanson,1yr
+fci,swanson_ffr,4,0.19460,0.13341,275,ex-ZLB,swanson,1yr
+fci,swanson_fg,4,0.05722,0.12856,275,ex-ZLB,swanson,1yr
+fci,swanson_lsap,4,0.83295,0.39227,275,ex-ZLB,swanson,1yr
+fci,swanson_ffr,5,0.30802,0.14880,274,ex-ZLB,swanson,1yr
+fci,swanson_fg,5,-0.00035,0.13512,274,ex-ZLB,swanson,1yr
+fci,swanson_lsap,5,1.32424,0.41399,274,ex-ZLB,swanson,1yr
+fci,swanson_ffr,6,0.44575,0.16794,273,ex-ZLB,swanson,1yr
+fci,swanson_fg,6,0.02583,0.14269,273,ex-ZLB,swanson,1yr
+fci,swanson_lsap,6,1.62515,0.44662,273,ex-ZLB,swanson,1yr
+fci,swanson_ffr,7,0.48962,0.17484,272,ex-ZLB,swanson,1yr
+fci,swanson_fg,7,0.03849,0.15185,272,ex-ZLB,swanson,1yr
+fci,swanson_lsap,7,1.78622,0.47148,272,ex-ZLB,swanson,1yr
+fci,swanson_ffr,8,0.38790,0.18297,271,ex-ZLB,swanson,1yr
+fci,swanson_fg,8,0.09684,0.14677,271,ex-ZLB,swanson,1yr
+fci,swanson_lsap,8,1.77915,0.50680,271,ex-ZLB,swanson,1yr
+fci,swanson_ffr,9,0.28485,0.22499,270,ex-ZLB,swanson,1yr
+fci,swanson_fg,9,0.09425,0.15784,270,ex-ZLB,swanson,1yr
+fci,swanson_lsap,9,1.94914,0.52078,270,ex-ZLB,swanson,1yr
+fci,swanson_ffr,10,0.17761,0.25179,269,ex-ZLB,swanson,1yr
+fci,swanson_fg,10,0.16471,0.16326,269,ex-ZLB,swanson,1yr
+fci,swanson_lsap,10,1.76599,0.50893,269,ex-ZLB,swanson,1yr
+fci,swanson_ffr,11,0.13114,0.28158,268,ex-ZLB,swanson,1yr
+fci,swanson_fg,11,0.21522,0.17348,268,ex-ZLB,swanson,1yr
+fci,swanson_lsap,11,1.69863,0.50316,268,ex-ZLB,swanson,1yr
+fci,swanson_ffr,12,0.09656,0.28484,267,ex-ZLB,swanson,1yr
+fci,swanson_fg,12,0.16303,0.19173,267,ex-ZLB,swanson,1yr
+fci,swanson_lsap,12,1.78180,0.48789,267,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,0,0.01021,0.00359,279,ex-ZLB,swanson,1yr
+FFR,swanson_fg,0,0.00433,0.00305,279,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,0,-0.01771,0.01076,279,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,1,0.02575,0.00694,278,ex-ZLB,swanson,1yr
+FFR,swanson_fg,1,0.00488,0.00689,278,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,1,-0.03277,0.02285,278,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,2,0.04355,0.01008,277,ex-ZLB,swanson,1yr
+FFR,swanson_fg,2,0.00375,0.01064,277,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,2,-0.03728,0.03538,277,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,3,0.05117,0.01336,276,ex-ZLB,swanson,1yr
+FFR,swanson_fg,3,0.00328,0.01403,276,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,3,-0.04656,0.04801,276,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,4,0.05389,0.01712,275,ex-ZLB,swanson,1yr
+FFR,swanson_fg,4,0.00098,0.01711,275,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,4,-0.03916,0.05898,275,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,5,0.05980,0.01939,274,ex-ZLB,swanson,1yr
+FFR,swanson_fg,5,-0.00268,0.01962,274,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,5,-0.02653,0.06453,274,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,6,0.06473,0.02078,273,ex-ZLB,swanson,1yr
+FFR,swanson_fg,6,-0.00581,0.02296,273,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,6,-0.01747,0.06624,273,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,7,0.06548,0.02228,272,ex-ZLB,swanson,1yr
+FFR,swanson_fg,7,-0.00714,0.02635,272,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,7,-0.01812,0.06552,272,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,8,0.06103,0.02446,271,ex-ZLB,swanson,1yr
+FFR,swanson_fg,8,-0.00770,0.02896,271,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,8,-0.02483,0.06666,271,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,9,0.05601,0.02629,270,ex-ZLB,swanson,1yr
+FFR,swanson_fg,9,-0.00875,0.03003,270,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,9,-0.03267,0.07019,270,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,10,0.05505,0.02786,269,ex-ZLB,swanson,1yr
+FFR,swanson_fg,10,-0.01170,0.03067,269,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,10,-0.02824,0.07621,269,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,11,0.05242,0.03037,268,ex-ZLB,swanson,1yr
+FFR,swanson_fg,11,-0.01543,0.03096,268,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,11,-0.01762,0.08259,268,ex-ZLB,swanson,1yr
+FFR,swanson_ffr,12,0.05196,0.03200,267,ex-ZLB,swanson,1yr
+FFR,swanson_fg,12,-0.02290,0.03085,267,ex-ZLB,swanson,1yr
+FFR,swanson_lsap,12,0.01367,0.08802,267,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,0,0.00041,0.00055,279,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,0,-0.00021,0.00063,279,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,0,0.00556,0.00232,279,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,1,-0.00029,0.00130,278,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,1,0.00054,0.00142,278,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,1,0.00707,0.00414,278,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,2,-0.00096,0.00237,277,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,2,0.00113,0.00210,277,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,2,0.00781,0.00619,277,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,3,-0.00101,0.00337,276,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,3,0.00168,0.00275,276,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,3,0.00801,0.00801,276,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,4,-0.00249,0.00416,275,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,4,0.00307,0.00328,275,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,4,0.00528,0.00961,275,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,5,-0.00430,0.00467,274,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,5,0.00411,0.00359,274,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,5,0.00228,0.01035,274,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,6,-0.00690,0.00502,273,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,6,0.00486,0.00383,273,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,6,-0.00259,0.01090,273,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,7,-0.00741,0.00515,272,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,7,0.00520,0.00416,272,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,7,-0.00480,0.01073,272,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,8,-0.00519,0.00525,271,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,8,0.00500,0.00456,271,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,8,-0.00158,0.01060,271,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,9,-0.00274,0.00555,270,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,9,0.00497,0.00505,270,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,9,0.00110,0.01103,270,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,10,0.00006,0.00582,269,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,10,0.00487,0.00520,269,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,10,0.00344,0.01188,269,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,11,0.00140,0.00624,268,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,11,0.00566,0.00519,268,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,11,0.00336,0.01316,268,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_ffr,12,0.00124,0.00640,267,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_fg,12,0.00734,0.00511,267,ex-ZLB,swanson,1yr
+10Yr Treasury,swanson_lsap,12,0.00130,0.01498,267,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,0,-0.00132,0.00903,279,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,0,0.00538,0.00765,279,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,0,-0.02984,0.02341,279,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,1,-0.00500,0.01650,278,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,1,0.00704,0.01523,278,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,1,-0.03233,0.04175,278,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,2,-0.00927,0.02226,277,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,2,0.00950,0.01993,277,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,2,-0.02767,0.05464,277,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,3,-0.00600,0.02793,276,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,3,0.00243,0.02496,276,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,3,0.01134,0.06374,276,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,4,0.01890,0.03358,275,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,4,-0.02677,0.02949,275,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,4,0.09555,0.07481,275,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,5,0.02673,0.04115,274,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,5,-0.04335,0.03609,274,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,5,0.15040,0.09645,274,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,6,0.03161,0.04495,273,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,6,-0.04710,0.03952,273,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,6,0.16453,0.10794,273,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,7,0.01378,0.04548,272,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,7,-0.03891,0.03844,272,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,7,0.11937,0.11069,272,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,8,-0.02167,0.04260,271,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,8,-0.03273,0.03666,271,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,8,0.03617,0.11270,271,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,9,-0.05846,0.04225,270,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,9,-0.03073,0.03816,270,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,9,-0.02496,0.12427,270,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,10,-0.08618,0.04278,269,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,10,-0.02688,0.03974,269,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,10,-0.06429,0.13491,269,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,11,-0.07619,0.04448,268,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,11,-0.03253,0.04173,268,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,11,-0.03978,0.14234,268,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_ffr,12,-0.04050,0.04620,267,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_fg,12,-0.05128,0.04232,267,ex-ZLB,swanson,1yr
+Mortgage Rate,swanson_lsap,12,0.02317,0.14737,267,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,0,-0.00309,0.00374,279,ex-ZLB,swanson,1yr
+BBB,swanson_fg,0,0.00415,0.00282,279,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,0,-0.00818,0.00780,279,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,1,-0.00238,0.00837,278,ex-ZLB,swanson,1yr
+BBB,swanson_fg,1,0.00591,0.00677,278,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,1,-0.00829,0.01724,278,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,2,-0.00235,0.01182,277,ex-ZLB,swanson,1yr
+BBB,swanson_fg,2,0.00706,0.01028,277,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,2,-0.01286,0.02806,277,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,3,-0.00059,0.01654,276,ex-ZLB,swanson,1yr
+BBB,swanson_fg,3,0.00657,0.01421,276,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,3,-0.00855,0.03933,276,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,4,0.00899,0.02091,275,ex-ZLB,swanson,1yr
+BBB,swanson_fg,4,-0.00244,0.01774,275,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,4,0.01778,0.04708,275,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,5,0.01604,0.02490,274,ex-ZLB,swanson,1yr
+BBB,swanson_fg,5,-0.00753,0.02119,274,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,5,0.04780,0.05506,274,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,6,0.02948,0.02695,273,ex-ZLB,swanson,1yr
+BBB,swanson_fg,6,-0.01074,0.02310,273,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,6,0.08914,0.06131,273,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,7,0.03509,0.02777,272,ex-ZLB,swanson,1yr
+BBB,swanson_fg,7,-0.01061,0.02350,272,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,7,0.11400,0.06675,272,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,8,0.02829,0.02832,271,ex-ZLB,swanson,1yr
+BBB,swanson_fg,8,-0.00765,0.02354,271,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,8,0.11182,0.07349,271,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,9,0.01190,0.03006,270,ex-ZLB,swanson,1yr
+BBB,swanson_fg,9,-0.00505,0.02429,270,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,9,0.10495,0.08143,270,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,10,-0.00928,0.03246,269,ex-ZLB,swanson,1yr
+BBB,swanson_fg,10,-0.00041,0.02527,269,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,10,0.08513,0.08547,269,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,11,-0.01705,0.03461,268,ex-ZLB,swanson,1yr
+BBB,swanson_fg,11,-0.00110,0.02563,268,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,11,0.07885,0.08847,268,ex-ZLB,swanson,1yr
+BBB,swanson_ffr,12,-0.01427,0.03532,267,ex-ZLB,swanson,1yr
+BBB,swanson_fg,12,-0.00476,0.02522,267,ex-ZLB,swanson,1yr
+BBB,swanson_lsap,12,0.07203,0.09200,267,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,0,0.01479,0.04636,279,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,0,0.05081,0.02498,279,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,0,-0.03457,0.08931,279,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,1,-0.02362,0.06772,278,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,1,0.06716,0.03465,278,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,1,-0.07645,0.12575,278,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,2,0.02676,0.08391,277,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,2,0.07547,0.04192,277,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,2,0.16135,0.16781,277,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,3,0.00418,0.07910,276,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,3,0.09662,0.05447,276,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,3,0.13030,0.16139,276,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,4,-0.01844,0.07589,275,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,4,0.09390,0.06056,275,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,4,0.22149,0.20766,275,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,5,0.05753,0.07587,274,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,5,0.05667,0.05027,274,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,5,0.48877,0.20780,274,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,6,0.14144,0.08207,273,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,6,0.07711,0.05421,273,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,6,0.63027,0.20731,273,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,7,0.16984,0.07934,272,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,7,0.07038,0.07018,272,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,7,0.74334,0.19529,272,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,8,0.11318,0.08915,271,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,8,0.10448,0.06764,271,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,8,0.80490,0.20689,271,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,9,0.10585,0.12002,270,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,9,0.08387,0.07446,270,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,9,1.02005,0.19509,270,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,10,0.08123,0.13457,269,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,10,0.13804,0.07698,269,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,10,0.85753,0.19621,269,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,11,0.05255,0.15438,268,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,11,0.19431,0.08701,268,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,11,0.71829,0.22002,268,ex-ZLB,swanson,1yr
+Stock Market,swanson_ffr,12,-0.01392,0.15963,267,ex-ZLB,swanson,1yr
+Stock Market,swanson_fg,12,0.16302,0.10489,267,ex-ZLB,swanson,1yr
+Stock Market,swanson_lsap,12,0.70674,0.25607,267,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,0,0.00161,0.00303,279,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,0,-0.00135,0.00286,279,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,0,0.00513,0.01281,279,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,1,0.00386,0.00589,278,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,1,-0.00361,0.00501,278,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,1,0.00706,0.02569,278,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,2,0.00543,0.00881,277,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,2,-0.00536,0.00662,277,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,2,0.00961,0.03868,277,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,3,0.00658,0.01163,276,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,3,-0.00665,0.00813,276,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,3,0.01331,0.05116,276,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,4,0.00508,0.01516,275,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,4,-0.00498,0.01032,275,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,4,0.01052,0.06478,275,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,5,0.00418,0.01837,274,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,5,-0.00433,0.01255,274,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,5,0.01022,0.07576,274,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,6,0.00465,0.02180,273,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,6,-0.00542,0.01523,273,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,6,0.01367,0.08418,273,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,7,0.00739,0.02488,272,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,7,-0.00859,0.01814,272,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,7,0.02527,0.08880,272,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,8,0.01241,0.02780,271,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,8,-0.01409,0.02130,271,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,8,0.04264,0.08989,271,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,9,0.01759,0.03085,270,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,9,-0.01882,0.02468,270,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,9,0.06122,0.08964,270,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,10,0.02282,0.03410,269,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,10,-0.02291,0.02791,269,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,10,0.08013,0.08895,269,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,11,0.02715,0.03721,268,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,11,-0.02612,0.03069,268,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,11,0.09947,0.08790,268,ex-ZLB,swanson,1yr
+House Prices,swanson_ffr,12,0.02939,0.03964,267,ex-ZLB,swanson,1yr
+House Prices,swanson_fg,12,-0.02787,0.03326,267,ex-ZLB,swanson,1yr
+House Prices,swanson_lsap,12,0.11477,0.08708,267,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,0,0.01297,0.01102,279,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,0,0.01177,0.00953,279,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,0,0.04916,0.03199,279,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,1,0.03187,0.02335,278,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,1,0.02315,0.02061,278,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,1,0.09822,0.07284,278,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,2,0.06438,0.03259,277,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,2,0.02389,0.02835,277,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,2,0.18363,0.11826,277,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,3,0.09344,0.04577,276,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,3,0.01685,0.03432,276,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,3,0.32596,0.15731,276,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,4,0.12867,0.05555,275,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,4,-0.00654,0.03997,275,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,4,0.52150,0.18171,275,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,5,0.14804,0.06287,274,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,5,-0.00325,0.04616,274,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,5,0.65131,0.20312,274,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,6,0.18075,0.07282,273,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,6,0.01293,0.05016,273,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,6,0.74761,0.23007,273,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,7,0.20546,0.08456,272,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,7,0.02816,0.05358,272,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,7,0.80715,0.26663,272,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,8,0.19986,0.09132,271,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,8,0.04952,0.06056,271,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,8,0.81004,0.29518,271,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,9,0.15470,0.09482,270,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,9,0.06875,0.06661,270,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,9,0.81944,0.31317,270,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,10,0.11392,0.10047,269,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,10,0.08370,0.07109,269,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,10,0.83230,0.30333,269,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,11,0.09087,0.10880,268,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,11,0.09042,0.07518,268,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,11,0.85606,0.29015,268,ex-ZLB,swanson,1yr
+Dollar,swanson_ffr,12,0.08267,0.11602,267,ex-ZLB,swanson,1yr
+Dollar,swanson_fg,12,0.09947,0.08304,267,ex-ZLB,swanson,1yr
+Dollar,swanson_lsap,12,0.85012,0.27257,267,ex-ZLB,swanson,1yr
+fci,ns,0,0.11678,0.05273,279,ex-ZLB,ns,1yr
+fci,ns,1,0.14263,0.08153,278,ex-ZLB,ns,1yr
+fci,ns,2,0.16826,0.09130,277,ex-ZLB,ns,1yr
+fci,ns,3,0.16800,0.11566,276,ex-ZLB,ns,1yr
+fci,ns,4,0.07822,0.12177,275,ex-ZLB,ns,1yr
+fci,ns,5,0.01647,0.13085,274,ex-ZLB,ns,1yr
+fci,ns,6,0.08087,0.14855,273,ex-ZLB,ns,1yr
+fci,ns,7,0.11730,0.16772,272,ex-ZLB,ns,1yr
+fci,ns,8,0.13257,0.16489,271,ex-ZLB,ns,1yr
+fci,ns,9,0.03677,0.18398,270,ex-ZLB,ns,1yr
+fci,ns,10,0.05550,0.20228,269,ex-ZLB,ns,1yr
+fci,ns,11,0.09717,0.20473,268,ex-ZLB,ns,1yr
+fci,ns,12,-0.00123,0.20692,267,ex-ZLB,ns,1yr
+FFR,ns,0,0.01534,0.00503,279,ex-ZLB,ns,1yr
+FFR,ns,1,0.02913,0.01060,278,ex-ZLB,ns,1yr
+FFR,ns,2,0.04125,0.01620,277,ex-ZLB,ns,1yr
+FFR,ns,3,0.04676,0.02062,276,ex-ZLB,ns,1yr
+FFR,ns,4,0.04542,0.02322,275,ex-ZLB,ns,1yr
+FFR,ns,5,0.04348,0.02618,274,ex-ZLB,ns,1yr
+FFR,ns,6,0.04231,0.03062,273,ex-ZLB,ns,1yr
+FFR,ns,7,0.04128,0.03535,272,ex-ZLB,ns,1yr
+FFR,ns,8,0.03734,0.03876,271,ex-ZLB,ns,1yr
+FFR,ns,9,0.03138,0.03959,270,ex-ZLB,ns,1yr
+FFR,ns,10,0.02464,0.03879,269,ex-ZLB,ns,1yr
+FFR,ns,11,0.01597,0.03730,268,ex-ZLB,ns,1yr
+FFR,ns,12,0.00226,0.03586,267,ex-ZLB,ns,1yr
+10Yr Treasury,ns,0,-0.00071,0.00065,279,ex-ZLB,ns,1yr
+10Yr Treasury,ns,1,-0.00057,0.00133,278,ex-ZLB,ns,1yr
+10Yr Treasury,ns,2,-0.00037,0.00192,277,ex-ZLB,ns,1yr
+10Yr Treasury,ns,3,0.00054,0.00238,276,ex-ZLB,ns,1yr
+10Yr Treasury,ns,4,0.00174,0.00274,275,ex-ZLB,ns,1yr
+10Yr Treasury,ns,5,0.00212,0.00315,274,ex-ZLB,ns,1yr
+10Yr Treasury,ns,6,0.00157,0.00349,273,ex-ZLB,ns,1yr
+10Yr Treasury,ns,7,0.00186,0.00370,272,ex-ZLB,ns,1yr
+10Yr Treasury,ns,8,0.00259,0.00391,271,ex-ZLB,ns,1yr
+10Yr Treasury,ns,9,0.00384,0.00416,270,ex-ZLB,ns,1yr
+10Yr Treasury,ns,10,0.00547,0.00432,269,ex-ZLB,ns,1yr
+10Yr Treasury,ns,11,0.00782,0.00451,268,ex-ZLB,ns,1yr
+10Yr Treasury,ns,12,0.01023,0.00459,267,ex-ZLB,ns,1yr
+Mortgage Rate,ns,0,0.00955,0.00744,279,ex-ZLB,ns,1yr
+Mortgage Rate,ns,1,0.00887,0.01543,278,ex-ZLB,ns,1yr
+Mortgage Rate,ns,2,0.00418,0.02308,277,ex-ZLB,ns,1yr
+Mortgage Rate,ns,3,-0.00891,0.02851,276,ex-ZLB,ns,1yr
+Mortgage Rate,ns,4,-0.03546,0.03017,275,ex-ZLB,ns,1yr
+Mortgage Rate,ns,5,-0.05295,0.03440,274,ex-ZLB,ns,1yr
+Mortgage Rate,ns,6,-0.05440,0.03591,273,ex-ZLB,ns,1yr
+Mortgage Rate,ns,7,-0.05303,0.03408,272,ex-ZLB,ns,1yr
+Mortgage Rate,ns,8,-0.06082,0.03312,271,ex-ZLB,ns,1yr
+Mortgage Rate,ns,9,-0.07601,0.03585,270,ex-ZLB,ns,1yr
+Mortgage Rate,ns,10,-0.08693,0.04061,269,ex-ZLB,ns,1yr
+Mortgage Rate,ns,11,-0.09160,0.04422,268,ex-ZLB,ns,1yr
+Mortgage Rate,ns,12,-0.09812,0.04621,267,ex-ZLB,ns,1yr
+BBB,ns,0,0.00417,0.00345,279,ex-ZLB,ns,1yr
+BBB,ns,1,0.00636,0.00789,278,ex-ZLB,ns,1yr
+BBB,ns,2,0.00654,0.01079,277,ex-ZLB,ns,1yr
+BBB,ns,3,0.00468,0.01350,276,ex-ZLB,ns,1yr
+BBB,ns,4,-0.00357,0.01514,275,ex-ZLB,ns,1yr
+BBB,ns,5,-0.00834,0.01755,274,ex-ZLB,ns,1yr
+BBB,ns,6,-0.00844,0.01981,273,ex-ZLB,ns,1yr
+BBB,ns,7,-0.00822,0.02048,272,ex-ZLB,ns,1yr
+BBB,ns,8,-0.00797,0.02065,271,ex-ZLB,ns,1yr
+BBB,ns,9,-0.01363,0.02107,270,ex-ZLB,ns,1yr
+BBB,ns,10,-0.02085,0.02231,269,ex-ZLB,ns,1yr
+BBB,ns,11,-0.02913,0.02326,268,ex-ZLB,ns,1yr
+BBB,ns,12,-0.03206,0.02292,267,ex-ZLB,ns,1yr
+Stock Market,ns,0,0.07502,0.04242,279,ex-ZLB,ns,1yr
+Stock Market,ns,1,0.07249,0.05565,278,ex-ZLB,ns,1yr
+Stock Market,ns,2,0.08078,0.05705,277,ex-ZLB,ns,1yr
+Stock Market,ns,3,0.09441,0.06867,276,ex-ZLB,ns,1yr
+Stock Market,ns,4,0.06031,0.06442,275,ex-ZLB,ns,1yr
+Stock Market,ns,5,0.02154,0.06334,274,ex-ZLB,ns,1yr
+Stock Market,ns,6,0.06859,0.07309,273,ex-ZLB,ns,1yr
+Stock Market,ns,7,0.08466,0.07945,272,ex-ZLB,ns,1yr
+Stock Market,ns,8,0.09493,0.07873,271,ex-ZLB,ns,1yr
+Stock Market,ns,9,0.03654,0.09636,270,ex-ZLB,ns,1yr
+Stock Market,ns,10,0.09451,0.11184,269,ex-ZLB,ns,1yr
+Stock Market,ns,11,0.17274,0.11029,268,ex-ZLB,ns,1yr
+Stock Market,ns,12,0.08895,0.11720,267,ex-ZLB,ns,1yr
+House Prices,ns,0,-0.00165,0.00286,279,ex-ZLB,ns,1yr
+House Prices,ns,1,-0.00348,0.00559,278,ex-ZLB,ns,1yr
+House Prices,ns,2,-0.00499,0.00811,277,ex-ZLB,ns,1yr
+House Prices,ns,3,-0.00633,0.01049,276,ex-ZLB,ns,1yr
+House Prices,ns,4,-0.00561,0.01320,275,ex-ZLB,ns,1yr
+House Prices,ns,5,-0.00602,0.01607,274,ex-ZLB,ns,1yr
+House Prices,ns,6,-0.00804,0.01908,273,ex-ZLB,ns,1yr
+House Prices,ns,7,-0.01185,0.02219,272,ex-ZLB,ns,1yr
+House Prices,ns,8,-0.01757,0.02509,271,ex-ZLB,ns,1yr
+House Prices,ns,9,-0.02236,0.02778,270,ex-ZLB,ns,1yr
+House Prices,ns,10,-0.02609,0.03034,269,ex-ZLB,ns,1yr
+House Prices,ns,11,-0.02926,0.03272,268,ex-ZLB,ns,1yr
+House Prices,ns,12,-0.03117,0.03527,267,ex-ZLB,ns,1yr
+Dollar,ns,0,0.01506,0.00953,279,ex-ZLB,ns,1yr
+Dollar,ns,1,0.02984,0.02115,278,ex-ZLB,ns,1yr
+Dollar,ns,2,0.04087,0.03157,277,ex-ZLB,ns,1yr
+Dollar,ns,3,0.03684,0.04022,276,ex-ZLB,ns,1yr
+Dollar,ns,4,0.01538,0.04987,275,ex-ZLB,ns,1yr
+Dollar,ns,5,0.01663,0.05343,274,ex-ZLB,ns,1yr
+Dollar,ns,6,0.03927,0.05516,273,ex-ZLB,ns,1yr
+Dollar,ns,7,0.06260,0.05730,272,ex-ZLB,ns,1yr
+Dollar,ns,8,0.08407,0.06033,271,ex-ZLB,ns,1yr
+Dollar,ns,9,0.07701,0.06248,270,ex-ZLB,ns,1yr
+Dollar,ns,10,0.06476,0.06735,269,ex-ZLB,ns,1yr
+Dollar,ns,11,0.05062,0.07284,268,ex-ZLB,ns,1yr
+Dollar,ns,12,0.05869,0.07609,267,ex-ZLB,ns,1yr
+fci,raw2y,0,0.09382,0.03967,279,ex-ZLB,raw2y,1yr
+fci,raw2y,1,0.09992,0.07022,278,ex-ZLB,raw2y,1yr
+fci,raw2y,2,0.14605,0.08991,277,ex-ZLB,raw2y,1yr
+fci,raw2y,3,0.17090,0.11629,276,ex-ZLB,raw2y,1yr
+fci,raw2y,4,0.12470,0.13067,275,ex-ZLB,raw2y,1yr
+fci,raw2y,5,0.10716,0.14597,274,ex-ZLB,raw2y,1yr
+fci,raw2y,6,0.18159,0.15462,273,ex-ZLB,raw2y,1yr
+fci,raw2y,7,0.23723,0.16962,272,ex-ZLB,raw2y,1yr
+fci,raw2y,8,0.26842,0.16663,271,ex-ZLB,raw2y,1yr
+fci,raw2y,9,0.21460,0.16239,270,ex-ZLB,raw2y,1yr
+fci,raw2y,10,0.23019,0.15896,269,ex-ZLB,raw2y,1yr
+fci,raw2y,11,0.25533,0.16387,268,ex-ZLB,raw2y,1yr
+fci,raw2y,12,0.17433,0.16842,267,ex-ZLB,raw2y,1yr
+FFR,raw2y,0,0.00757,0.00561,279,ex-ZLB,raw2y,1yr
+FFR,raw2y,1,0.01112,0.01128,278,ex-ZLB,raw2y,1yr
+FFR,raw2y,2,0.01550,0.01595,277,ex-ZLB,raw2y,1yr
+FFR,raw2y,3,0.01719,0.01899,276,ex-ZLB,raw2y,1yr
+FFR,raw2y,4,0.01700,0.02046,275,ex-ZLB,raw2y,1yr
+FFR,raw2y,5,0.01599,0.02220,274,ex-ZLB,raw2y,1yr
+FFR,raw2y,6,0.01475,0.02543,273,ex-ZLB,raw2y,1yr
+FFR,raw2y,7,0.01238,0.02894,272,ex-ZLB,raw2y,1yr
+FFR,raw2y,8,0.00681,0.03104,271,ex-ZLB,raw2y,1yr
+FFR,raw2y,9,-0.00127,0.03098,270,ex-ZLB,raw2y,1yr
+FFR,raw2y,10,-0.00792,0.03058,269,ex-ZLB,raw2y,1yr
+FFR,raw2y,11,-0.01395,0.03115,268,ex-ZLB,raw2y,1yr
+FFR,raw2y,12,-0.02150,0.03313,267,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,0,0.00032,0.00072,279,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,1,0.00099,0.00140,278,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,2,0.00134,0.00200,277,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,3,0.00186,0.00253,276,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,4,0.00326,0.00298,275,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,5,0.00403,0.00336,274,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,6,0.00394,0.00371,273,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,7,0.00421,0.00408,272,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,8,0.00496,0.00457,271,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,9,0.00587,0.00508,270,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,10,0.00659,0.00543,269,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,11,0.00800,0.00560,268,ex-ZLB,raw2y,1yr
+10Yr Treasury,raw2y,12,0.00957,0.00570,267,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,0,0.00176,0.00836,279,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,1,0.00114,0.01810,278,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,2,-0.00080,0.02688,277,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,3,-0.00577,0.03182,276,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,4,-0.02624,0.03444,275,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,5,-0.03855,0.03849,274,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,6,-0.04112,0.04024,273,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,7,-0.04200,0.03982,272,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,8,-0.05205,0.04148,271,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,9,-0.06607,0.04778,270,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,10,-0.07317,0.05348,269,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,11,-0.07702,0.05557,268,ex-ZLB,raw2y,1yr
+Mortgage Rate,raw2y,12,-0.08447,0.05485,267,ex-ZLB,raw2y,1yr
+BBB,raw2y,0,0.00311,0.00315,279,ex-ZLB,raw2y,1yr
+BBB,raw2y,1,0.00531,0.00720,278,ex-ZLB,raw2y,1yr
+BBB,raw2y,2,0.00554,0.01073,277,ex-ZLB,raw2y,1yr
+BBB,raw2y,3,0.00498,0.01420,276,ex-ZLB,raw2y,1yr
+BBB,raw2y,4,-0.00326,0.01704,275,ex-ZLB,raw2y,1yr
+BBB,raw2y,5,-0.00678,0.02022,274,ex-ZLB,raw2y,1yr
+BBB,raw2y,6,-0.00558,0.02234,273,ex-ZLB,raw2y,1yr
+BBB,raw2y,7,-0.00280,0.02368,272,ex-ZLB,raw2y,1yr
+BBB,raw2y,8,-0.00059,0.02535,271,ex-ZLB,raw2y,1yr
+BBB,raw2y,9,-0.00201,0.02702,270,ex-ZLB,raw2y,1yr
+BBB,raw2y,10,-0.00579,0.02784,269,ex-ZLB,raw2y,1yr
+BBB,raw2y,11,-0.01315,0.02803,268,ex-ZLB,raw2y,1yr
+BBB,raw2y,12,-0.01897,0.02792,267,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,0,0.06973,0.02992,279,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,1,0.05946,0.04418,278,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,2,0.09234,0.04676,277,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,3,0.11378,0.05443,276,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,4,0.09765,0.05291,275,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,5,0.08028,0.05479,274,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,6,0.13318,0.06020,273,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,7,0.16672,0.07181,272,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,8,0.19316,0.07123,271,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,9,0.15690,0.07584,270,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,10,0.19069,0.08439,269,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,11,0.23676,0.08990,268,ex-ZLB,raw2y,1yr
+Stock Market,raw2y,12,0.16411,0.09914,267,ex-ZLB,raw2y,1yr
+House Prices,raw2y,0,-0.00134,0.00299,279,ex-ZLB,raw2y,1yr
+House Prices,raw2y,1,-0.00365,0.00536,278,ex-ZLB,raw2y,1yr
+House Prices,raw2y,2,-0.00580,0.00720,277,ex-ZLB,raw2y,1yr
+House Prices,raw2y,3,-0.00764,0.00880,276,ex-ZLB,raw2y,1yr
+House Prices,raw2y,4,-0.00778,0.01040,275,ex-ZLB,raw2y,1yr
+House Prices,raw2y,5,-0.00888,0.01213,274,ex-ZLB,raw2y,1yr
+House Prices,raw2y,6,-0.01139,0.01429,273,ex-ZLB,raw2y,1yr
+House Prices,raw2y,7,-0.01487,0.01713,272,ex-ZLB,raw2y,1yr
+House Prices,raw2y,8,-0.02012,0.02053,271,ex-ZLB,raw2y,1yr
+House Prices,raw2y,9,-0.02413,0.02426,270,ex-ZLB,raw2y,1yr
+House Prices,raw2y,10,-0.02737,0.02771,269,ex-ZLB,raw2y,1yr
+House Prices,raw2y,11,-0.02916,0.03048,268,ex-ZLB,raw2y,1yr
+House Prices,raw2y,12,-0.02971,0.03316,267,ex-ZLB,raw2y,1yr
+Dollar,raw2y,0,0.01266,0.01027,279,ex-ZLB,raw2y,1yr
+Dollar,raw2y,1,0.02555,0.02366,278,ex-ZLB,raw2y,1yr
+Dollar,raw2y,2,0.03794,0.03578,277,ex-ZLB,raw2y,1yr
+Dollar,raw2y,3,0.04649,0.04536,276,ex-ZLB,raw2y,1yr
+Dollar,raw2y,4,0.04406,0.05477,275,ex-ZLB,raw2y,1yr
+Dollar,raw2y,5,0.06107,0.05962,274,ex-ZLB,raw2y,1yr
+Dollar,raw2y,6,0.08781,0.06230,273,ex-ZLB,raw2y,1yr
+Dollar,raw2y,7,0.11359,0.06688,272,ex-ZLB,raw2y,1yr
+Dollar,raw2y,8,0.13627,0.07281,271,ex-ZLB,raw2y,1yr
+Dollar,raw2y,9,0.14530,0.07423,270,ex-ZLB,raw2y,1yr
+Dollar,raw2y,10,0.14717,0.07146,269,ex-ZLB,raw2y,1yr
+Dollar,raw2y,11,0.14385,0.07066,268,ex-ZLB,raw2y,1yr
+Dollar,raw2y,12,0.15529,0.07594,267,ex-ZLB,raw2y,1yr
