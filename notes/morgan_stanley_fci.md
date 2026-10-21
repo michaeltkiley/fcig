@@ -134,6 +134,26 @@ in March and stocks fell, then equities recovered to new highs while the 10-year
    the model's steady state, and with model-consistent (MCE) expectations.
 4. Decide whether to fold the equivalents into the daily page next to the GS and FCI-G versions.
 
+## What Morgan Stanley's own notes say about effects (all I could find; mostly secondhand)
+- **Policy-rate equivalence of the financial conditions index** [verified, Morgan Stanley article, July 2026]: the Tobias index shows tightening
+  equal to four 25 bp hikes since the start of the Iran conflict; "markets have already priced in the persistent inflation risks identified by the
+  FOMC by pushing the implied Fed funds rate path higher"; "The Fed doesn't need to deliver on the tightening in financial conditions in response to
+  backward-looking data to retain credibility." Michael Gapen (US economics) in the same article: "patience will win the day and the Fed will not hike in July".
+  No growth numbers or weights are given.
+- **October 2026, Mike Wilson (equity strategy)** [secondhand, ChainCatcher/WSJ and Seeking Alpha, both short]: an index built from interest rates, the dollar
+  and energy prices is at its tightest since 2022; since mid-August equal-weighted financials, materials, consumer discretionary and industrials
+  "have significantly underperformed the market"; the key variable is how Chair Warsh characterizes the tightening (if he acknowledges the market has done
+  some of the Fed's tightening, pressure on rate-sensitive assets may ease); Morgan Stanley economists expect a hold in October. No growth effects quoted.
+  An earlier Wilson note, undated, quoted via a news summary: each 1% move in the Dollar Index has about a -0.5% effect on profits.
+- **BBB spreads and growth** [secondhand, Bloomberg, 16 Nov 2018, economists including Robert Rosener]: a sustained 10 bp widening in BBB spreads would
+  cut growth by 0.3 pp and raise unemployment by 0.15 pp; a sustained 100 bp rise in BBB premiums over a year equals a 62 bp funds-rate hike. These two
+  figures do not sit comfortably together as reported (10 bp to 0.3 pp implies 3 pp for 100 bp, which is far more than a 62 bp hike would do in FRB/US
+  or the Fed's weights), so one is probably a different horizon or scaling; I could not read the original. The 62 bp figure compares with 0.27 to 0.50
+  pp per 100 bp in the FRB/US reconstruction in section C.
+- **October 2023** [Morgan Stanley Wealth Management, article on tighter financial conditions, 2023, read in part]: general statement that loosening
+  conditions tend to lift asset prices and the reverse in 2022; no weights. The Tirupattur podcast "three 25 bp hikes" figure is unconfirmed.
+- Nothing I found from Morgan Stanley gives the effect of the 10-year, the S&P 500, the dollar or oil on growth in funds-rate terms, other than the 2018 BBB item.
+
 ## Unverified claims (do not rely on them yet)
 - **Five-variable index with FRB/US weights.** A third-party research summary (xxquant / "Hilo Research", July 2026) reportedly describes a
   Morgan Stanley FCI built from the 10-year yield, S&P 500 returns, BBB spreads, the dollar and oil, aggregated into a funds-rate equivalent
