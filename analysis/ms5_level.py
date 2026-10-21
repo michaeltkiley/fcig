@@ -6,9 +6,10 @@ sensitivities (analysis/frbus_sensitivities.csv), summed. Positive = tighter tha
                + sO * 100 (ln real WTI - mean)
 
 Stationary transforms: stocks as the valuation multiple (CAPE from fcig_gs_daily.csv; the FRB/US stock shock moves the required return with earnings
-fixed, i.e. valuation), the dollar in real terms (FRED real broad index, RTWEXBGS spliced to RTWEXB, put on a daily footing with the nominal broad
-dollar), oil in real terms (WTI over CPI), the BBB spread as is, and the 10-year either nominal (default) or real (less the Cleveland Fed 10-year expected
-inflation, --real10). The sensitivities come from local shocks around a steady state, so applying them to large deviations over decades is a linear
+fixed, i.e. valuation), the dollar in real terms (the FRB/US real exchange rate fpxr, the variable the dollar sensitivity was estimated on, put on a daily footing with the
+nominal broad dollar), oil in real terms (WTI over the FRB/US PCE price level), the BBB spread as is, and the 10-year either nominal (default) or real
+(less FRB/US ptr, the SPF 10-year expected PCE inflation, --real10). FRB/US history comes from federalreserve.gov (data_only_package), so FRED is only
+needed for daily WTI (a saved copy is used when FRED is down). The sensitivities come from local shocks around a steady state, so applying them to large deviations over decades is a linear
 extrapolation. Validation: the index plus the average funds rate should track the effective funds rate before 2008 and the SF Fed proxy funds rate after.
 
 Usage:  python analysis/ms5_level.py [--horizon q4|q8|q12] [--real10]
@@ -28,19 +29,41 @@ START = "1990-01-02"
 
 
 def get(i):
+    """Saved FRED file, refreshed when FRED answers (it sometimes returns a maintenance page)."""
     p = os.path.join(RAW, f"{i}.csv")
     body = fetch(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={i}")
-    if body is not None and body.startswith(b"observation_date"):   # FRED sometimes returns a maintenance page
+    if body is not None and body.startswith(b"observation_date"):
         open(p, "wb").write(body)
     return fred(i)
 
 
-def monthly_to_daily(m, idx, hold_last=True):
-    """Monthly series stamped at the first of the month, interpolated in time to the daily index, last value held."""
-    m = m.copy()
-    m.index = m.index + pd.offsets.MonthBegin(0)
-    s = m.reindex(m.index.union(idx)).interpolate("time").reindex(idx)
-    return s.ffill() if hold_last else s
+def frbus_history():
+    """Quarterly FRB/US history (federalreserve.gov data_only_package): real exchange rate fpxr, PCE price level pcnia, 10-year expected PCE
+    inflation ptr, stamped at mid-quarter."""
+    p = os.path.join(RAW, "frbus", "data_only_package", "HISTDATA.TXT")
+    if not os.path.exists(p):
+        import io, zipfile, urllib.request
+        os.makedirs(os.path.join(RAW, "frbus"), exist_ok=True)
+        req = urllib.request.Request("https://www.federalreserve.gov/econres/files/data_only_package.zip", headers={"User-Agent": "Mozilla/5.0"})
+        zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(req, timeout=120).read())).extractall(os.path.join(RAW, "frbus"))
+    h = pd.read_csv(p, index_col=0)
+    h.columns = [c.lower() for c in h.columns]
+    h = h[["fpxr", "pcnia", "ptr"]].astype(float)
+    h.index = pd.PeriodIndex(h.index, freq="Q").to_timestamp() + pd.Timedelta(days=45)
+    return h.dropna(how="all")
+
+
+def to_daily(q, idx, log=False, extrapolate_growth=False):
+    """Mid-quarter values interpolated (linearly, or in logs) to the daily index; after the last quarter held, or grown at the recent rate."""
+    s = np.log(q) if log else q
+    d = s.reindex(s.index.union(idx)).interpolate("time").reindex(idx)
+    if extrapolate_growth:
+        last = s.index[-1]
+        g = (s.iloc[-1] - s.iloc[-5]) / (s.index[-1] - s.index[-5]).days
+        d = d.where(idx <= last, s.iloc[-1] + g * (idx - last).days.values)
+    else:
+        d = d.ffill()
+    return np.exp(d) if log else d
 
 
 def build():
@@ -49,22 +72,18 @@ def build():
     X = pd.DataFrame(index=idx)
     X["y10"], X["bbb"], X["ffr"] = G.x_y10, G.x_bbb, G.x_ffr
     X["lncape"] = np.log(G.x_cape)
-    # real dollar: monthly real/nominal ratio applied to the daily nominal broad dollar
+    H = frbus_history()
+    # real dollar: the model's own real exchange rate (trade weighted); quarterly ratio of fpxr to the nominal broad dollar applied to the daily nominal
     nom = G.x_usd
-    real = get("RTWEXBGS")
-    old = get("RTWEXB")
-    both = old.index.intersection(real.index)
-    real = pd.concat([old[old.index < real.index[0]] * (real.loc[both].mean() / old.loc[both].mean()), real])
-    nom_m = nom.groupby(nom.index.to_period("M")).mean()
-    nom_m.index = nom_m.index.to_timestamp()
-    ratio = (real / nom_m.reindex(real.index)).dropna()
-    X["lnrusd"] = np.log(nom * monthly_to_daily(ratio, nom.index).reindex(nom.index)).reindex(idx)
-    # real oil
-    wti = hold(get("DCOILWTICO"), idx[-1]).reindex(idx, method="ffill")
-    cpi = monthly_to_daily(get("CPIAUCSL"), idx)
-    X["lnroil"] = np.log(wti / cpi)
+    nq = nom.groupby(nom.index.to_period("Q")).mean()
+    nq.index = nq.index.to_timestamp() + pd.Timedelta(days=45)
+    ratio = (H.fpxr / nq.reindex(H.index)).dropna()
+    X["lnrusd"] = np.log(nom * to_daily(ratio, nom.index, log=True).bfill()).reindex(idx)
+    # real oil: WTI over the PCE price level (interpolated; after the last quarter grown at its recent rate)
+    wti = hold(get("DCOILWTICO"), idx[-1]).reindex(idx, method="ffill").clip(lower=5.0)   # WTI was negative on 20 Apr 2020
+    X["lnroil"] = np.log(wti / to_daily(H.pcnia.dropna(), idx, log=True, extrapolate_growth=True).bfill())
     if REAL10:
-        X["y10"] = X.y10 - monthly_to_daily(get("EXPINF10YR"), idx)
+        X["y10"] = X.y10 - to_daily(H.ptr.dropna(), idx).bfill()
     return X.dropna(), G
 
 
