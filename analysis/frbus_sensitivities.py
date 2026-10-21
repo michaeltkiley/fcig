@@ -6,17 +6,19 @@ Reconstructs the approach reported (by a third-party summary, unverified) for a 
 the combined effect is expressed as an equivalent change in the federal funds rate. See notes/morgan_stanley_fci.md.
 
 Experiments (the Federal Reserve Board's public FRB/US model, VAR expectations, from the steady-state baseline in LONGBASE, 2040Q1 onward as in
-the Board's demos): make one persistent shock to one financial variable, with the funds rate (rff) and every other financial variable held at
-baseline (including household stock wealth, wpsn, except in the equity experiment), and record the effect on real GDP (log difference of xgdp
-from baseline, percent):
-    rff   +1 pp                                       (policy rate)
-    rg10  +1 pp   10-year Treasury yield; the mortgage rate and the BBB yield follow (BBB spread, rbbbp, held fixed)
-    rbbbp +1 pp   BBB corporate bond spread over the 10-year
-    req   +1 pp   required return on equity; stock wealth (wpsn) is free to respond (wealth and cost-of-capital channels); its fall at impact
-                  gives the % stock price move
-    fpxr  +10 %   real exchange rate, trade weighted (up = dollar appreciation)
-    poil  +10 %   price of imported oil
-The funds-rate equivalent of a shock at horizon q is its GDP effect at quarter q divided by the GDP effect of the 1 pp funds rate shock, per unit
+the Board's demos). One persistent shock to one variable at a time; stocks (req, wpsn), the dollar (fpxr), oil (poil) and the BBB spread (rbbbp)
+are held at baseline in every experiment except their own, since each is a separate index variable; the funds rate is held fixed except in its own
+experiment. Effect on real GDP (log difference of xgdp from baseline, percent):
+    rff        +1 pp  policy rate, with the whole Treasury curve, mortgage rate and BBB yield responding as the model implies
+    rg10       +1 pp  parallel move in the 5-, 10- and 30-year Treasury yields (the 10-year stands for the long end); mortgage rate and BBB yield
+                      follow, the BBB spread is unchanged
+    rg10_alone +1 pp  the 10-year only, with the 5- and 30-year unchanged (a kink in the curve; equity valuation depends on the 30-year, not the
+                      10-year, so this moves nothing else); an alternative reading
+    rbbbp      +1 pp  BBB corporate bond spread over the 10-year
+    req        +1 pp  required return on equity; stock wealth (wpsn) responds (wealth and cost-of-capital channels), its fall at impact is the unit
+    fpxr       +10 %  real exchange rate, trade weighted (up = dollar appreciation)
+    poil       +10 %  price of imported oil
+The funds-rate equivalent of a shock at horizon q is its GDP effect at quarter q divided by the GDP effect of the 1 pp funds-rate shock, per unit
 (percentage point, or percent). Horizons: q4 (growth over the first year), q8 and q12.
 
 Setup (FRB/US's Python package pins old libraries, so use an isolated environment):
@@ -55,38 +57,51 @@ def main():
     data.loc[start:end, "dfpdbt"] = 0      # fiscal settings as in the Board's demos
     data.loc[start:end, "dfpsrp"] = 1
     base = frbus.init_trac(start, end, data)
-    FIN = ["rff", "rg10", "rbbbp", "req", "fpxr", "poil"]
+    # One consistent design. Stocks (req, wpsn), the dollar (fpxr), oil (poil) and the BBB spread (rbbbp) are held at baseline in every experiment
+    # except their own, because each is a separate variable in the index. Rates that are not index variables (5- and 30-year Treasuries, the
+    # mortgage rate, car loans, the BBB yield = 10-year + spread) respond as the model implies, or move with the shock where stated.
+    FIXED = ["req", "wpsn", "fpxr", "poil", "rbbbp"]
+    gdp = lambda s, s0: 100 * np.log(s.loc[start:end, "xgdp"] / s0.loc[start:end, "xgdp"]).values
 
     def solver(exo):
         frbus.exogenize(exo)
 
-        def run(var, shift, mult=False):
+        def run(vars_, shift, mult=False):
             d = base.copy()
-            d.loc[start:end, var] = d.loc[start:end, var] * (1 + shift) if mult else d.loc[start:end, var] + shift
+            for v in (vars_ if isinstance(vars_, (list, tuple)) else [vars_]):
+                d.loc[start:end, v] = d.loc[start:end, v] * (1 + shift) if mult else d.loc[start:end, v] + shift
             return frbus.solve(start, end, d)
         return run
 
-    gdp = lambda s, s0: 100 * np.log(s.loc[start:end, "xgdp"] / s0.loc[start:end, "xgdp"]).values
     out = {}
-    # (1) every other financial variable is held at baseline, including household stock wealth (wpsn), so the policy-rate, 10-year, BBB-spread,
-    #     dollar and oil effects contain no equity-market channel. (Leaving wpsn free lets stock wealth fall about 5.7% on a 1 pp funds rate rise,
-    #     2.3% on a 1 pp 10-year rise and 1.2% on a 1 pp spread widening, which would double count the equity variable.)
-    run = solver(FIN + ["wpsn"])
-    sim0 = run("rff", 0.0)
-    for var, shift, mult, kind in (("rff", 1.0, False, "pp"), ("rg10", 1.0, False, "pp"), ("rbbbp", 1.0, False, "pp"),
-                                   ("fpxr", 0.10, True, "pct"), ("poil", 0.10, True, "pct")):
-        g = gdp(run(var, shift, mult), sim0)
-        unit = 100 * np.log(1 + shift) if kind == "pct" else shift
-        out[var] = dict(kind=kind, unit_size=float(unit), gdp_q4=g[3], gdp_q8=g[7], gdp_q12=g[11])
-    # (2) equities: shock the required return on equity (req), with stock wealth free to respond (wealth and cost-of-capital channels), the
-    #     other financial variables held fixed; the % fall in stock wealth at impact gives the unit.
-    run = solver(FIN)
-    sim0 = run("rff", 0.0)
+
+    def record(name, kind, g, unit):
+        out[name] = dict(kind=kind, unit_size=float(unit), gdp_q4=g[3], gdp_q8=g[7], gdp_q12=g[11])
+
+    # policy rate: +1 pp with the whole Treasury curve (5-, 10-, 30-year), mortgage and BBB yield responding through expectations
+    run = solver(["rff"] + FIXED)
+    s0 = run("rff", 0.0)
+    record("rff", "pp", gdp(run("rff", 1.0), s0), 1.0)
+    # 10-year: a parallel +1 pp move in the 5-, 10- and 30-year yields (the 10-year stands for the long end); the mortgage rate and the BBB
+    # yield follow (spread unchanged). The alternative, the 10-year alone with the 5- and 30-year unchanged, is reported as rg10_alone.
+    run = solver(["rff", "rg5", "rg10", "rg30"] + FIXED)
+    s0 = run("rff", 0.0)
+    record("rg10", "pp", gdp(run(["rg5", "rg10", "rg30"], 1.0), s0), 1.0)
+    run = solver(["rff", "rg10"] + FIXED)
+    s0 = run("rff", 0.0)
+    record("rg10_alone", "pp", gdp(run("rg10", 1.0), s0), 1.0)
+    # BBB spread, dollar, oil: policy rate fixed, everything else fixed
+    for var, shift, mult, kind in (("rbbbp", 1.0, False, "pp"), ("fpxr", 0.10, True, "pct"), ("poil", 0.10, True, "pct")):
+        run = solver(["rff"] + FIXED)
+        s0 = run("rff", 0.0)
+        record(var, kind, gdp(run(var, shift, mult), s0), 100 * np.log(1 + shift) if kind == "pct" else shift)
+    # equities: shock the required return on equity (req), stock wealth (wpsn) free to respond (wealth and cost-of-capital channels); the % fall
+    # in stock wealth at impact is the unit
+    run = solver(["rff", "req", "fpxr", "poil", "rbbbp"])
+    s0 = run("rff", 0.0)
     sim = run("req", 1.0)
-    g = gdp(sim, sim0)
-    unit = -100 * np.log(sim.loc[start, "wpsn"] / sim0.loc[start, "wpsn"])
-    out["req"] = dict(kind="stock", unit_size=float(unit), gdp_q4=g[3], gdp_q8=g[7], gdp_q12=g[11])
-    out = {k: out[k] for k in ("rff", "rg10", "rbbbp", "req", "fpxr", "poil")}
+    record("req", "stock", gdp(sim, s0), -100 * np.log(sim.loc[start, "wpsn"] / s0.loc[start, "wpsn"]))
+    out = {k: out[k] for k in ("rff", "rg10", "rg10_alone", "rbbbp", "req", "fpxr", "poil")}
     t = pd.DataFrame(out).T
     for q in ("q4", "q8", "q12"):
         t[f"gdp_per_unit_{q}"] = t[f"gdp_{q}"].astype(float) / t["unit_size"].astype(float)

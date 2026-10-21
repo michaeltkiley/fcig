@@ -12,7 +12,7 @@ the Fed's broad dollar index DTWEXBGS extended with the ICE dollar index (histor
 The Morgan Stanley index is not published, so this is a stand-in built from the described method. The date of the Iran conflict is not
 established here, so the output scans base dates; it also compares with the SF Fed proxy funds rate (raw/proxy-funds-rate-data.xlsx if present).
 
-Usage:  python analysis/ms5_index.py [--horizon q4|q8|q12]   (run analysis/frbus_sensitivities.py first)
+Usage:  python analysis/ms5_index.py [--horizon q4|q8|q12] [--tenyear parallel|alone]   (run analysis/frbus_sensitivities.py first)
 Outputs: analysis/ms5_index_daily.csv (contributions to the change since BASE, in pp of funds rate equivalent)
 """
 import os, sys
@@ -25,6 +25,7 @@ from fcig_replicate import fetch, fred, read_hist, extend_dollar, hold, RAW
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = "2026-02-27"
 HORIZON = sys.argv[sys.argv.index("--horizon") + 1] if "--horizon" in sys.argv else "q4"
+TENYEAR = sys.argv[sys.argv.index("--tenyear") + 1] if "--tenyear" in sys.argv else "parallel"   # parallel long-rate move, or "alone"
 
 
 def wti():
@@ -66,7 +67,9 @@ def contributions(X, base, S):
 def main():
     s = pd.read_csv(os.path.join(HERE, "frbus_sensitivities.csv"), index_col=0)
     S = s[f"ffr_eq_{HORIZON}"].to_dict()
-    print(f"sensitivities (funds-rate pp per unit, {HORIZON}):", {k: round(v, 3) for k, v in S.items() if k != "rff"})
+    if TENYEAR == "alone":
+        S["rg10"] = S["rg10_alone"]
+    print(f"sensitivities (funds-rate pp per unit, {HORIZON}, 10-year {TENYEAR}):", {k: round(v, 3) for k, v in S.items() if k not in ("rff", "rg10_alone")})
     X = inputs()
     print("inputs through", X.index[-1].date(), "| latest:", X.iloc[-1].round(2).to_dict())
     C = contributions(X, BASE, S)

@@ -64,54 +64,64 @@ index**; the weights are mine and the original is unverified.
 
 **Step 1: FRB/US sensitivities** (`analysis/frbus_sensitivities.py`, output `analysis/frbus_sensitivities.csv`). The Board's public FRB/US model
 and Python package run here (the package pins old libraries, so it needs an isolated Python 3.9 environment; setup is in the script's docstring).
-In the steady-state baseline, make one persistent shock to one variable with the funds rate and every other financial variable held at baseline,
-and compare the effect on real GDP with that of a 1 pp funds-rate shock. Funds-rate equivalent (pp of funds rate) at the q4 / q8 / q12 horizon:
+In the steady-state baseline, make one persistent shock to one variable and compare the effect on real GDP with that of a 1 pp funds-rate shock.
+Design (revised twice after review, see below): stocks (required return and stock wealth), the dollar, oil and the BBB spread are held at baseline in
+every experiment except their own, since each is a separate index variable; the funds rate is held fixed except in its own experiment; rates that are
+not index variables (5-, 10-, 30-year Treasuries, mortgage, car loans, BBB yield) respond as the model implies or move with the shock as stated.
+Funds-rate equivalent (pp of funds rate) at the q4 / q8 / q12 horizon:
 
 | Variable (unit) | q4 | q8 | q12 |
 |---|---|---|---|
-| 10-year yield, +1 pp (mortgage rate and BBB yield follow, spread fixed) | 1.27 | 0.99 | 0.79 |
-| BBB spread, +1 pp | 0.40 | 0.60 | 0.68 |
-| Stock prices, 1% fall | 0.099 | 0.104 | 0.100 |
-| Broad dollar, 1% rise (real exchange rate) | 0.315 | 0.336 | 0.296 |
-| Oil, 1% rise | 0.026 | 0.018 | 0.015 |
+| Long rates, parallel +1 pp in the 5-, 10-, 30-year (mortgage rate and BBB yield follow, spread unchanged) | 1.22 | 1.27 | 1.23 |
+| (alternative: the 10-year alone +1 pp, 5- and 30-year unchanged) | 0.86 | 0.70 | 0.57 |
+| BBB spread, +1 pp | 0.27 | 0.43 | 0.50 |
+| Stock prices, 1% fall | 0.067 | 0.074 | 0.074 |
+| Broad dollar, 1% rise (real exchange rate) | 0.212 | 0.238 | 0.217 |
+| Oil, 1% rise | 0.017 | 0.013 | 0.011 |
 
-GDP effect of the 1 pp funds-rate shock itself: -0.14% (q4), -0.27% (q8), -0.39% (q12).
+GDP effect of the 1 pp funds-rate shock (denominator): -0.21% (q4), -0.39% (q8), -0.54% (q12). In that shock the 5-, 10- and 30-year yields rise 0.52,
+0.38 and 0.27 pp at q4 and the mortgage rate 0.37 pp.
 
-**Levels versus spreads, and what is held fixed (checked, with one correction).**
-- The 10-year shock moves the BBB *yield* one-for-one (BBB spread held fixed) and the mortgage rate by 0.88 pp at impact; the spread shock moves only the
-  spread over the 10-year. The index uses the 10-year *level* and the BBB *spread*, so the BBB yield change is exactly the sum of the two pieces: no double
-  counting of corporate bonds. The 10-year coefficient therefore includes the mortgage and corporate-yield pass-through, which is appropriate only if the
-  index has no separate mortgage or corporate-yield term. Residual mismatch: the model's spread is over the 10-year Treasury, the ICE OAS used in the
-  index is over the matched-maturity Treasury curve.
-- First version of the experiments held the funds rate, 10-year, BBB spread, equity premium, dollar and oil fixed but **left household stock wealth free**,
-  which fell 5.7% on a 1 pp funds-rate rise, 2.3% on a 1 pp 10-year rise and 1.2% on a 1 pp spread widening. That put an equity channel inside the rate and
-  spread coefficients (double counting the equity variable). It is now held fixed in those experiments, which raised the 10-year, BBB, dollar and oil
-  equivalents (the funds-rate shock alone is weaker once the stock-wealth fall is removed). The equity experiment still lets stock wealth respond: it
-  shocks the required return on equity, so both the wealth effect and the cost-of-capital channel operate.
+**Review findings and corrections.**
+- *Corporate bonds are not double counted.* The long-rate shock moves the BBB *yield* with the spread unchanged; the spread shock moves only the spread
+  over the 10-year. The index uses the 10-year (or long-rate) *level* and the BBB *spread*, so the BBB yield change is exactly the sum of the two. The long-rate
+  coefficient therefore includes the mortgage and corporate-yield pass-through, which suits an index with no separate mortgage or corporate-yield term.
+  Small mismatch: the model's spread is over the 10-year Treasury, the ICE OAS used in the index is over the matched-maturity curve.
+- *Equity was leaking into the other coefficients (first correction).* Household stock wealth fell 5.7%, 2.3% and 1.2% on 1 pp funds-rate, 10-year and
+  spread shocks, even though the required return was fixed, because it also depends on expected dividend growth. Stock wealth is now fixed in all
+  non-equity experiments.
+- *The curve was inconsistent (second correction, prompted by a reviewer).* FRB/US stock valuation depends on the 30-year yield (required return =
+  30-year yield - expected inflation + premium), the exchange rate on the 10-year, car loans and investment financing on the 5-year, and expected dividends,
+  inflation and output on the funds rate. My earlier experiments (a) shocked the 10-year alone, leaving the 5- and 30-year unchanged, and (b) held the 10-year
+  fixed when shocking the funds rate while the 5- and 30-year still moved. Diagnostic with stocks left free: a 1 pp funds-rate rise lowers stock wealth by
+  13%; a 1 pp parallel rise in long rates by 27% (required return +1.03 pp); the 10-year alone by only 2.3% (required return +0.01, since the 30-year does not move).
+  That is why the equity response to "the 10-year" had looked too small. The denominator was also too small (-0.14% at q4 versus -0.21% now). The policy shock now
+  lets the whole curve respond, and the long-rate shock is a parallel move; the 10-year-alone version stays as a lower bound.
 
-Choices that matter and are mine: the horizon (q4 is the first-year growth effect), persistent shocks, policy held fixed, the 10-year's pass-through,
+Choices that matter and are mine: the horizon (q4 is the first-year growth effect), persistent shocks, treating the 10-year as a proxy for the long end,
 stock price proxied by household stock wealth, real rather than nominal exchange rate, VAR expectations, steady-state starting point. The Fed's own FCI-G
-multipliers (this repo's `multipliers.csv`) imply larger relative weights for equities and the dollar (about 1.5 to 2 times these), so the sensitivities
-are uncertain by that order.
+multipliers (this repo's `multipliers.csv`) imply larger relative weights for equities and the dollar (about 2 times these), so the sensitivities are
+uncertain by that order.
 
 **Step 2: daily index** (`analysis/ms5_index.py`, output `analysis/ms5_index_daily.csv` and `analysis/ms5_index.png`): FFR equivalent = sum of
 sensitivity times the change since a base date in the 10-year (DGS10), BBB OAS (FRED), S&P 500, broad dollar (DTWEXBGS extended with DXY) and WTI.
-Positive = tighter; divide by 0.25 for 25 bp hikes.
+Positive = tighter; divide by 0.25 for 25 bp hikes. Option `--tenyear alone` uses the lower-bound long-rate sensitivity.
 
 **What it shows (base 27 Feb 2026).** The date of the Iran conflict is not established here, so the base date is a guess. Oil went from $67 to $91-101
 in March and stocks fell, then equities recovered to new highs while the 10-year rose.
 
-| Date | q4 sensitivities | q8 sensitivities |
-|---|---|---|
-| 1 April | +2.60 pp (10.4 hikes) | +2.23 pp (8.9) |
-| 10 July | +0.66 pp (2.6 hikes): 10-yr +0.75, dollar +0.71, oil +0.20, equities -0.96, BBB -0.04 | +0.41 pp (1.7) |
-| 16 Oct | **+2.31 pp (9.3 hikes)**: 10-yr +1.43, dollar +0.88, oil +1.07, equities -1.07 | +1.68 pp (6.7) |
+| Date | q4, parallel long rates | q8, parallel | q4, 10-year alone |
+|---|---|---|---|
+| 1 April | +1.89 pp (7.6 hikes) | +1.79 (7.1) | +1.76 (7.1) |
+| 10 July | +0.66 pp (2.6): 10-yr +0.72, dollar +0.48, oil +0.14, equities -0.65, BBB -0.03 | +0.63 (2.5) | +0.45 (1.8) |
+| 20 July | +1.10 pp (4.4) | +1.01 (4.0) | +0.88 (3.5) |
+| 16 Oct | **+1.99 pp (7.9)**: 10-yr +1.38, dollar +0.59, oil +0.73, equities -0.72 | +1.83 (7.3) | +1.58 (6.3) |
 
-- The result depends on the base date: bases after the March oil spike (from 6 March) give negative changes by July (not re-run after the correction).
-- Against the SF Fed proxy funds rate (+0.94 pp by 10 July and +1.56 pp by 9 Oct from the same base) the stand-in has a similar order of magnitude and
+- The July readings swing between 2.6 and 4.4 hikes within ten days, so "about four hikes" cannot be confirmed or rejected from this, and anyway that statement
+  belongs to the 12-variable index (section A), not the five-variable one.
+- The result depends on the base date: bases after the March oil spike (from 6 March) give negative changes by July.
+- Against the SF Fed proxy funds rate (+0.94 pp by 10 July and +1.56 pp by 9 Oct from the same base) the stand-in has the same order of magnitude and
   broadly similar movement, but is larger by October and moves more on oil and the dollar.
-- It does **not** reproduce "four 25 bp hikes by July" (2.6 hikes on 10 July, 5.1 on 20 July at q4). That statement belongs to the 12-variable index
-  (section A), not to the five-variable one, so it is not a validation target for this.
 
 **Cannot be validated.** No published observations of a five-variable Morgan Stanley index were found, so nothing here shows it matches.
 
