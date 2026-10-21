@@ -137,7 +137,7 @@ Everything except daily WTI comes from this repo's GS file and the Fed's FRB/US 
 | Real 10-year gap to r* (`--rstar`) | **+1.13** | +0.65 | -0.12 | -1.33 | +1.58 | +0.35 | 88% |
 
 Adjusting for real rates raises the 10-year term (+0.48 to +0.65) because r* has fallen from about 2.5% to 1.7%, so the same real yield is further above neutral;
-it also lowers the 2012 and 2021 readings less negative (10-year -1.41 to -1.08 and -1.56 to -1.45).
+it also makes the 2012 and 2021 readings less negative (10-year term -1.41 to -1.08 and -1.56 to -1.45).
 **Equities are not adjusted for real rates**: the FRB/US stock equation implies 25% on the price per pp of real rates, but the valuation shows no stable relation
 with the real 10-year yield in the data (slope -1.2% per pp, s.e. 2.7; monthly changes about zero; -17% to +24% across sub-periods), and applying the model's
 mapping (`--erp`) puts the 2009-2012 equity term at +2.4 to +3.1 pp, which contradicts the policy stance. Kept as a flag for comparison only.
