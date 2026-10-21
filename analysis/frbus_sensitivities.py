@@ -6,10 +6,11 @@ Reconstructs the approach reported (by a third-party summary, unverified) for a 
 the combined effect is expressed as an equivalent change in the federal funds rate. See notes/morgan_stanley_fci.md.
 
 Experiments (the Federal Reserve Board's public FRB/US model, VAR expectations, from the steady-state baseline in LONGBASE, 2040Q1 onward as in
-the Board's demos). One persistent shock to one variable at a time; stocks (req, wpsn), the dollar (fpxr), oil (poil) and the BBB spread (rbbbp)
-are held at baseline in every experiment except their own, since each is a separate index variable; the funds rate is held fixed except in its own
-experiment. Effect on real GDP (log difference of xgdp from baseline, percent):
-    rff        +1 pp  policy rate, with the whole Treasury curve, mortgage rate and BBB yield responding as the model implies
+the Board's demos). One persistent shock to one variable at a time. In the partial experiments stocks (req, wpsn), the dollar (fpxr), oil (poil) and the BBB spread
+(rbbbp) are held at baseline except their own, since each is a separate index variable, and the funds rate is held fixed; the yardstick, a funds-rate hike,
+is run with full transmission to all of them. Effect on real GDP (log difference of xgdp from baseline, percent):
+    rff        +1 pp  policy rate with FULL transmission (nothing else held fixed): the yardstick, i.e. what a hike does
+    rff_curve  +1 pp  policy rate with the curve responding but stocks, dollar, oil and the BBB spread held fixed (partial hike; alternative yardstick)
     rg10       +1 pp  parallel move in the 5-, 10- and 30-year Treasury yields (the 10-year stands for the long end); mortgage rate and BBB yield
                       follow, the BBB spread is unchanged
     rg10_alone +1 pp  the 10-year only, with the 5- and 30-year unchanged (a kink in the curve; equity valuation depends on the 30-year, not the
@@ -18,7 +19,8 @@ experiment. Effect on real GDP (log difference of xgdp from baseline, percent):
     req        +1 pp  required return on equity; stock wealth (wpsn) responds (wealth and cost-of-capital channels), its fall at impact is the unit
     fpxr       +10 %  real exchange rate, trade weighted (up = dollar appreciation)
     poil       +10 %  price of imported oil
-The funds-rate equivalent of a shock at horizon q is its GDP effect at quarter q divided by the GDP effect of the 1 pp funds-rate shock, per unit
+The funds-rate equivalent of a shock at horizon q is its (partial) GDP effect at quarter q divided by the GDP effect of the 1 pp full-transmission
+funds-rate hike, per unit
 (percentage point, or percent). Horizons: q4 (growth over the first year), q8 and q12.
 
 Setup (FRB/US's Python package pins old libraries, so use an isolated environment):
@@ -78,10 +80,22 @@ def main():
     def record(name, kind, g, unit):
         out[name] = dict(kind=kind, unit_size=float(unit), gdp_q4=g[3], gdp_q8=g[7], gdp_q12=g[11])
 
-    # policy rate: +1 pp with the whole Treasury curve (5-, 10-, 30-year), mortgage and BBB yield responding through expectations
+    # policy rate, FULL transmission (the yardstick): +1 pp in the funds rate with nothing else held fixed, so the whole curve, mortgage and
+    # corporate yields, stocks, the dollar, spreads and oil all respond as the model implies. This is what a hike does.
+    run = solver(["rff"])
+    s0 = run("rff", 0.0)
+    sF = run("rff", 1.0)
+    gF = gdp(sF, s0)
+    record("rff", "pp", gF, 1.0)
+    spill = {c: float(sF.loc[start + 3, c] - s0.loc[start + 3, c]) for c in ("rg5", "rg10", "rg30", "rme", "rbbb", "rbbbp")}
+    spill["stocks_pct"] = float(100 * np.log(sF.loc[start + 3, "wpsn"] / s0.loc[start + 3, "wpsn"]))
+    spill["dollar_pct"] = float(100 * np.log(sF.loc[start + 3, "fpxr"] / s0.loc[start + 3, "fpxr"]))
+    spill["oil_pct"] = float(100 * np.log(sF.loc[start + 3, "poil"] / s0.loc[start + 3, "poil"]))
+    # policy rate with the curve responding but stocks, dollar, oil and the BBB spread held fixed (the partial hike)
     run = solver(["rff"] + FIXED)
     s0 = run("rff", 0.0)
-    record("rff", "pp", gdp(run("rff", 1.0), s0), 1.0)
+    gC = gdp(run("rff", 1.0), s0)
+    record("rff_curve", "pp", gC, 1.0)
     # 10-year: a parallel +1 pp move in the 5-, 10- and 30-year yields (the 10-year stands for the long end); the mortgage rate and the BBB
     # yield follow (spread unchanged). The alternative, the 10-year alone with the 5- and 30-year unchanged, is reported as rg10_alone.
     run = solver(["rff", "rg5", "rg10", "rg30"] + FIXED)
@@ -101,17 +115,26 @@ def main():
     s0 = run("rff", 0.0)
     sim = run("req", 1.0)
     record("req", "stock", gdp(sim, s0), -100 * np.log(sim.loc[start, "wpsn"] / s0.loc[start, "wpsn"]))
-    out = {k: out[k] for k in ("rff", "rg10", "rg10_alone", "rbbbp", "req", "fpxr", "poil")}
+    out = {k: out[k] for k in ("rff", "rff_curve", "rg10", "rg10_alone", "rbbbp", "req", "fpxr", "poil")}
     t = pd.DataFrame(out).T
     for q in ("q4", "q8", "q12"):
         t[f"gdp_per_unit_{q}"] = t[f"gdp_{q}"].astype(float) / t["unit_size"].astype(float)
-    ref = t.loc["rff"]
+    ref, refc = t.loc["rff"], t.loc["rff_curve"]
     for q in ("q4", "q8", "q12"):
-        # funds rate equivalent (pp) of one unit: +1 pp (rates, spreads), 1% fall in stocks, +1% dollar, +1% oil
+        # funds rate equivalent (pp) of one unit against a full-transmission hike (default); *_curve: against the partial hike
         t[f"ffr_eq_{q}"] = t[f"gdp_per_unit_{q}"] / ref[f"gdp_per_unit_{q}"]
+        t[f"ffr_eq_curve_{q}"] = t[f"gdp_per_unit_{q}"] / refc[f"gdp_per_unit_{q}"]
     t.to_csv(os.path.join(HERE, "frbus_sensitivities.csv"), float_format="%.5f", index_label="variable")
+    # do the partial effects add up to the full hike? Apply the q4 spillovers of the full hike to the partial per-unit effects.
+    per = lambda v, q: float(t.loc[v, f"gdp_per_unit_{q}"])
+    print("\nSpillovers of a 1 pp full-transmission hike at q4:", {k: round(v, 2) for k, v in spill.items()})
+    for q, gi in (("q4", 3), ("q8", 7), ("q12", 11)):
+        parts = {"policy rate and Treasury curve": float(t.loc["rff_curve", f"gdp_{q}"]),
+                 "stocks": -spill["stocks_pct"] * per("req", q), "dollar": spill["dollar_pct"] * per("fpxr", q),
+                 "BBB spread": spill["rbbbp"] * per("rbbbp", q), "oil": spill["oil_pct"] * per("poil", q)}
+        print(f"  {q}: full hike GDP {gF[gi]:+.3f}; sum of partials {sum(parts.values()):+.3f} = " + ", ".join(f"{k} {v:+.3f}" for k, v in parts.items()))
     pd.set_option("display.width", 200)
-    print(t[["kind", "unit_size", "gdp_q4", "gdp_q8", "gdp_q12", "ffr_eq_q4", "ffr_eq_q8", "ffr_eq_q12"]].astype({"unit_size": float}).round(3).to_string())
+    print(t[["kind", "unit_size", "gdp_q4", "gdp_q8", "gdp_q12", "ffr_eq_q4", "ffr_eq_q8", "ffr_eq_q12", "ffr_eq_curve_q4"]].astype({"unit_size": float}).round(3).to_string())
     print("\nFunds-rate equivalent (pp) per unit: rff = 1 pp; rg10 and rbbbp per +1 pp; req row per 1% FALL in stock wealth; fpxr per 1% dollar rise; poil per 1% oil rise")
 
 
