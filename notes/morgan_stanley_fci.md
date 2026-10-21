@@ -1,73 +1,106 @@
-# Morgan Stanley Financial Conditions Index (MS FCI): what is known, and a plan to replicate
+# Morgan Stanley financial conditions indexes: what is known, and how to replicate
 
-Research note, 21 Oct 2026. Web research only; no Morgan Stanley research report, methodology note or Bloomberg data was
-accessible. Facts are marked **[source]** where a document supports them and **[inference]** where I am reading between lines.
+Research note, 21 Oct 2026 (updated the same day with the policy-rate-equivalent index). Web research only; no Morgan Stanley
+client research or Bloomberg data was accessible. Claims are tagged **[verified]** (read on a primary page), **[secondhand]**
+(reported by a third party) or **[inference]** (my reading).
 
 ## Bottom line
-The weights, exact series and normalization are **not public**, unlike the Goldman Sachs index (formula and weights published
-by Hatzius, 2019) and the Fed's FCI-G (weights released with the code). What is public is the family of inputs. A replication
-therefore needs the published index history (Bloomberg) to **estimate** the weights; it cannot be built from a formula.
+Morgan Stanley appears to use **at least two** financial conditions indexes, and the more recent one is much easier to replicate:
 
-## What the sources say
-1. **Components.** Morgan Stanley's own glossary defines it as a *"weighted index comprised of changes in equities, short-term
-   interest rates, long-term interest rates & USD currency"* (Wealth Management Investment Resources definitions page).
-   **[source]** Four groups. Credit spreads are **not** listed, unlike the GS index (rates, spreads, equity valuation, dollar) and
-   the Fed FCI-G (which has a BBB yield). The wording "changes in" may mean the index is built from changes rather than levels;
-   it may equally be loose wording. **[inference]**
-2. **Frequency, aggregation, history.** Aramonte, Rosen and Schindler (Fed FEDS 2013-39), Table 1: daily, aggregated as a
-   **weighted average**, starts **1995**, data source **Bloomberg**, no published reference or year established. **[source]**
-   The same paper says all the indexes in its table except one are expressed as **z-scores**. **[source]**
-3. **Behaviour (July 1995 to June 2012, daily, in z-score units).** Mean 0.075, median -0.139, 10th and 90th percentiles -1.14 and
-   1.72, value in September 2008 0.76 (the other three daily indexes were at 2.6 to 7.7 then); it deteriorated mainly into October 2008
-   rather than September. It is the index **least correlated** with the St. Louis Fed index (monthly correlation 39.7%; its correlations with the other
-   indexes run from 22% to 49%, the lowest in the paper's table), and its AR(1) root is lower than the other daily indexes (confidence interval 0.83 to 0.95, versus about
-   0.92 to 1.00 for Bloomberg's). **[source]** A less persistent index is what you would get from a construction on changes or
-   deviations rather than levels, but that is my reading, not documented. **[inference]**
-4. **Current use.** A July 2026 Morgan Stanley research note ("Watch Out for a Fed Pause", reported by news outlets, not read in
-   the original) says the index shows conditions tightening by the equivalent of about **four 25 bp rate hikes** since the Iran
-   conflict began. **[source, secondhand]** So the published index is, or can be translated into, rate-hike-equivalent units. In
-   October 2026 Mike Wilson linked tighter conditions to higher Treasury yields, a stronger dollar and high oil prices
-   (Seeking Alpha / WSJ coverage; the page is truncated). Oil is not in the definition above, so that may describe a different
-   composite or just commentary. **[unverified]**
+1. **A current, policy-rate-equivalent index (Martin Tobias, Morgan Stanley Research, 2026).** 12 market variables, built on the
+   framework of the Federal Reserve Bank of San Francisco and expressed as an equivalent federal funds rate. The SF Fed framework
+   is its public **Proxy Funds Rate**, which is downloadable weekly through 2026-10-09 and whose method is public (principal
+   components of 12 rates and spreads, mapped to the funds rate with pre-2008 correlations). Morgan Stanley's own index is not
+   published, but it is "modeled on" this, so the public series is a close stand-in and the method can be reproduced.
+2. **The older "MS FCI"** (a daily z-score weighted average of equities, short rates, long rates and the dollar, on Bloomberg since
+   1995). Weights not public; replication needs the Bloomberg history.
 
-## What I could not find
-Series and maturities used (S&P 500 or another equity measure; fed funds, 2-year or other short rate; 10-year or other long rate;
-which dollar index), the weights and how they were chosen, whether they are fixed or re-estimated, the normalization window for
-the z-score, the Bloomberg ticker (I could not confirm one; Bloomberg's own index is BFCIUS, which is a different index), and the
-history since 2012. Morgan Stanley's FCI research notes are client-only.
+A third description (five daily variables aggregated with FRB/US growth sensitivities) was reported by a third-party summary and could
+not be checked; see "Unverified" below. It conflicts with the SF Fed description if it refers to the same index.
 
-## How it compares with the two we have
-| | GS FCI | Fed FCI-G | MS FCI |
-|---|---|---|---|
-| Variables | FFR, 10-yr, BBB spread, CAPE, dollar | FFR, 10-yr, mortgage, BBB, stocks, house prices, dollar | equities, short rate, long rate, dollar |
-| Weights | published (Hatzius 2019) | published (Fed multipliers) | not published |
-| Frequency | daily | monthly weights on quarterly changes | daily |
-| Units | index points (100 = average) | pp of GDP growth | z-score (per the Fed 2013 table); also quoted in rate-hike equivalents |
-| Credit | yes | yes | no, per the definition |
+## A. The 2026 policy-rate-equivalent index
+**[verified]** From Morgan Stanley's article ["Fed Rate Pause: What It Could Mean for Fixed Income Market"](https://www.morganstanley.com/insights/articles/fed-rate-pause-fixed-income-market-impact-2026):
+Martin Tobias, U.S. Interest Rate Strategist, Morgan Stanley Research, "and his team developed a financial conditions index modeled on a
+framework used by the Federal Reserve Bank of San Francisco. The index incorporates 12 market variables, including Treasury yields,
+mortgage rates and corporate borrowing spreads, to estimate the effective level of monetary policy implied by financial conditions.
+Since the start of the Iran conflict, the index suggests financial conditions have tightened by an amount equivalent to four
+25-basis-point rate increases." (The page carries the surrounding July 2026 context: Warsh as Fed chair, a "will not hike in July" call.)
+
+**[verified]** The SF Fed's [Proxy Funds Rate](https://www.frbsf.org/research-and-insights/data-and-indicators/proxy-funds-rate/) (updated 14 Oct 2026),
+following Doh and Choi (2016, FRB Kansas City *Economic Review* 101(3)), Choi, Doh, Foerster and Martinez (2022, FRBSF Economic Letter
+2022-30) and Foerster and Martinez (2024, Economic Letter 2024-16):
+- Uses 12 financial variables, "including Treasury rates, mortgage rates, and borrowing spreads"; the 2024 letter lists "several Treasury
+  rates, mortgage rates, municipal bond rates, corporate borrowing rates, and interest rate spreads". Sources: Federal Reserve Board,
+  Freddie Mac, The Bond Buyer, Moody's. I could not read the paper that lists all 12 series, so the exact list is still open.
+- Extracts common movements by **principal components**, then maps the first three components to **levels of the federal funds rate**
+  using the **pre-2008 correlations**. Until the week of 12 Dec 2008 the proxy matches the funds rate by construction; afterwards it
+  diverges, showing the effect of forward guidance and the balance sheet.
+- Interpreted as "what federal funds rate would typically be associated with prevailing financial market conditions if these conditions
+  were driven solely by the funds rate". Weekly and monthly data, back to 1976, as an Excel file linked from that page
+  (`https://www.frbsf.org/wp-content/uploads/proxy-funds-rate-data.xlsx`).
+- Equities and the dollar are **not** among the variables the SF Fed describes. Whether Morgan Stanley's 12 variables include them is unknown.
+
+**Consistency check on the "four hikes" figure (my calculation, [inference]).** The SF Fed proxy funds rate was about 3.55 at the end of
+February 2026, 4.5 in early July, 5.11 on 9 Oct 2026 (the effective funds rate 3.63 to 3.88). From the end of February to early/mid-July
+that is about +0.95 pp, roughly four 25 bp steps, which matches Morgan Stanley's statement **if the Iran conflict began around late
+February or March** (I did not establish the start date; the proxy begins rising in mid-March). Since the end of February it is now +1.56 pp,
+about six 25 bp steps. This only shows the two indexes are on a comparable scale; Morgan Stanley's own 12 variables and weights may differ.
+
+## B. The older MS FCI (1995 to 2012 documented)
+- **[verified]** Morgan Stanley's glossary (Wealth Management Investment Resources definitions): a "weighted index comprised of changes in
+  equities, short-term interest rates, long-term interest rates & USD currency". No credit spreads listed, unlike the GS index and FCI-G.
+- **[verified]** Aramonte, Rosen and Schindler (2013), Fed FEDS 2013-39, Table 1: daily, weighted average, starts 1995, data from Bloomberg,
+  no reference. The paper's indexes are z-scores. Sample July 1995 to June 2012: mean 0.075, median -0.139, 10th/90th percentile -1.14/1.72,
+  September 2008 value 0.76 (other daily indexes 2.6 to 7.7); it deteriorated mainly into October 2008; monthly correlation with the St. Louis
+  Fed stress index 39.7% (with the other indexes 22% to 49%, the lowest in the table); AR(1) root interval 0.83 to 0.95, lower than the others
+  (about 0.92 to 1.00). A less persistent index is what a construction on changes or deviations would give **[inference]**.
+- Weights, series, normalization window and ticker: not found.
+
+## Unverified claims (do not rely on them yet)
+- **Five-variable index with FRB/US weights.** A third-party research summary (xxquant / "Hilo Research", July 2026) reportedly describes a
+  Morgan Stanley FCI built from the 10-year yield, S&P 500 returns, BBB spreads, the dollar and oil, aggregated into a funds-rate equivalent
+  using FRB/US growth sensitivities. I could not open the page (access check) and have not seen the Morgan Stanley report. It does not match the
+  official article's description (12 variables, SF Fed framework), so it may be a different index (for example from the economics team) or a
+  paraphrase error. If it exists, it would be the GS-style growth-weighted design and the closest to what this repo already replicates.
+- **October 2023: "about three 25 bp hikes since the September FOMC"** (Vishy Tirupattur, *Thoughts on the Market*, 25 Oct 2023, "Implications of
+  the Treasury Market Selloff"). The episode exists, but the summaries I found do not mention the three-hike figure or the exogenous/endogenous
+  distinction. Not confirmed.
+- **October 2026: an index of rates, dollar and energy at its tightest since 2022** (Mike Wilson coverage). Oil is not in the 2026 article's
+  description or the older definition, so this may be a different composite.
+
+## What is still missing
+The 12 series in the Morgan Stanley (and SF Fed) index and whether they match; Morgan Stanley's weights or mapping; whether a Morgan Stanley
+index series exists outside client research (no ticker confirmed); the original July 2026 notes.
+
+## How the three approaches compare
+| | GS FCI | Fed FCI-G | SF Fed proxy funds rate (MS 2026 is "modeled on" it) | Older MS FCI |
+|---|---|---|---|---|
+| Variables | FFR, 10-yr, BBB, CAPE, dollar | FFR, 10-yr, mortgage, BBB, stocks, house prices, dollar | 12 rates and spreads (Treasuries, mortgage, municipal, corporate, spreads) | equities, short rate, long rate, dollar |
+| Weights from | published estimates of growth effects | Fed multipliers (growth effects) | principal components mapped to the funds rate (pre-2008 correlations) | not published |
+| Units | index points | pp of GDP growth | percent (an equivalent funds-rate level) | z-score |
+| Frequency | daily | monthly | weekly and monthly | daily |
+| Public data | formula and data | code and weights | series and method | Bloomberg only |
 
 ## Replication plan
-**With the series (preferred).** Pull the MS FCI history from Bloomberg (search the terminal for "MS FCI" / Morgan Stanley
-Financial Conditions Index; the ticker is unconfirmed) and fit it to the four groups using this repo's data:
-- Candidates: S&P 500 (log), a short rate (fed funds `DFF`, 2-year `DGS2`, or 3-month), the 10-year `DGS10`, and the dollar
-  (broad `DTWEXBGS` or DXY, which this repo already stores).
-- Estimate in **both** forms: the level of the z-scored index on the standardized variables, and its daily change on the daily
-  changes. If "changes in" is literal, the second form should fit almost exactly (R-squared near one with four regressors),
-  and the first should not. Check sign conventions (up = tighter?), whether the weights are stable (rolling regression), and
-  whether the equity weight is on the level of the S&P 500 or on a valuation measure.
-- Validation target: the "four 25 bp hikes" figure for the period since the Iran conflict began (needs the start date from the
-  note), and the September/October 2008 shape from the Fed paper.
-
-**Without the series.** Build an "MS-style" index from the same four groups with weights from the Fed FCI-G multipliers or the GS
-weights and compare with the published statements above. It would be a stand-in, not a replication, and cannot be validated beyond
-the one calibration point.
-
-## Open questions for whoever can see the research
-1. The ticker, and the history since 2012. 2. Is it built on levels or changes, and what is the z-score window? 3. Which equity,
-rate and dollar series, and are weights fixed? 4. How is "equivalent to a 25 bp hike" computed?
+1. **Start with the SF Fed proxy funds rate.** Download the weekly and monthly series (public). Express its changes in 25 bp units and compare
+   with Morgan Stanley's "four hikes" statement once the conflict start date is pinned down.
+2. **Reproduce the method.** Recover the 12 input series (Federal Reserve Board H.15 Treasuries, Freddie Mac PMMS mortgage rate, Moody's Aaa and Baa
+   corporate yields, Bond Buyer municipal index, the listed spreads; the exact list needs the Doh-Choi paper, which I could not download from this
+   container), take principal components, map the first three to the funds rate on the pre-2008 sample, and extend. Validate against the SF Fed series
+   (which should match closely) before trying anything Morgan Stanley-specific. Then make it daily from the daily series.
+3. **Test equities and the dollar.** Add them to the 12 and see whether the mapping changes materially; this is a place Morgan Stanley's index might differ.
+4. **Older MS FCI:** needs the Bloomberg history. Fit it to the S&P 500, a short rate, the 10-year and the dollar, in levels and in daily changes
+   (if "changes in" is literal the changes fit should be near exact); check weight stability.
+5. **If the FRB/US five-variable description turns out to be real:** it is a growth-weighted design like this repo's GS and FCI-G versions, and the
+   FRB/US sensitivities would play the role the Fed's published multipliers play for the FCI-G.
 
 ## Sources
+- Morgan Stanley, Fed Rate Pause: What It Could Mean for Fixed Income Market (July 2026): https://www.morganstanley.com/insights/articles/fed-rate-pause-fixed-income-market-impact-2026
+- SF Fed, Proxy Funds Rate (data and method): https://www.frbsf.org/research-and-insights/data-and-indicators/proxy-funds-rate/
+- Choi, Doh, Foerster, Martinez (2022), Monetary Policy Stance Is Tighter than Federal Funds Rate, FRBSF Economic Letter 2022-30: https://www.frbsf.org/research-and-insights/publications/economic-letter/2022/11/monetary-policy-stance-is-tighter-than-federal-funds-rate/
+- Foerster and Martinez (2024), The Anatomy of the Post-Pandemic Monetary Tightening Cycle, FRBSF Economic Letter 2024-16: https://www.frbsf.org/research-and-insights/publications/economic-letter/2024/06/anatomy-of-post-pandemic-monetary-tightening-cycle/
+- Doh and Choi (2016), Measuring the Stance of Monetary Policy on and off the Zero Lower Bound, FRB Kansas City Economic Review 101(3): https://www.kansascityfed.org/research/economic-review/3q16-dohchoi-monetary-policy-zero-lower-bound/
 - Morgan Stanley Wealth Management, Index, Indicator and Survey Definitions: https://www.morganstanley.com/wealth-investmentsolutions/wmir-definitions
 - Aramonte, Rosen, Schindler (2013), Assessing and Combining Financial Conditions Indexes, FEDS 2013-39: https://www.federalreserve.gov/pubs/feds/2013/201339/201339pap.pdf
-- Hatzius, Hooper, Mishkin, Schoenholtz, Watson (2010), Financial Conditions Indexes: A Fresh Look after the Financial Crisis (context; contains no MS FCI description): https://www.princeton.edu/~mwatson/papers/USMPF-2010.pdf
-- Seeking Alpha, "Tighter financial conditions doing part of Fed's work - Morgan Stanley" (12 Oct 2026; page truncated): https://seekingalpha.com/news/4652159-tighter-financial-conditions-doing-part-of-feds-work---morgan-stanley
-- Press coverage of Morgan Stanley's July 2026 note (four 25 bp hikes equivalent), e.g. https://www.tribuneindia.com/news/business/morgan-stanley-sees-us-fed-holding-rates-steady-in-2026-as-easing-inflation-boosts-fixed-income-outlook/
+- Seeking Alpha, Tighter financial conditions doing part of Fed's work - Morgan Stanley (12 Oct 2026, truncated): https://seekingalpha.com/news/4652159-tighter-financial-conditions-doing-part-of-feds-work---morgan-stanley
+- Morgan Stanley, Thoughts on the Market, Implications of the Treasury Market Selloff (25 Oct 2023, aggregator page only): https://podwise.ai/episodes/45938
