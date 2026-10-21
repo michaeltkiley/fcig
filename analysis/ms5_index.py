@@ -31,7 +31,7 @@ TENYEAR = sys.argv[sys.argv.index("--tenyear") + 1] if "--tenyear" in sys.argv e
 def wti():
     p = os.path.join(RAW, "DCOILWTICO.csv")
     body = fetch("https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILWTICO")
-    if body is not None:
+    if body is not None and body.startswith(b"observation_date"):   # FRED sometimes returns a maintenance page
         open(p, "wb").write(body)
     return fred("DCOILWTICO")
 
