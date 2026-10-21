@@ -6,12 +6,14 @@ Reconstructs the approach reported (by a third-party summary, unverified) for a 
 the combined effect is expressed as an equivalent change in the federal funds rate. See notes/morgan_stanley_fci.md.
 
 Experiments (the Federal Reserve Board's public FRB/US model, VAR expectations, from the steady-state baseline in LONGBASE, 2040Q1 onward as in
-the Board's demos): hold the funds rate (rff) and the other financial variables at baseline, make one persistent shock, and record the effect on
-real GDP (log difference of xgdp from baseline, percent):
+the Board's demos): make one persistent shock to one financial variable, with the funds rate (rff) and every other financial variable held at
+baseline (including household stock wealth, wpsn, except in the equity experiment), and record the effect on real GDP (log difference of xgdp
+from baseline, percent):
     rff   +1 pp                                       (policy rate)
     rg10  +1 pp   10-year Treasury yield; the mortgage rate and the BBB yield follow (BBB spread, rbbbp, held fixed)
     rbbbp +1 pp   BBB corporate bond spread over the 10-year
-    req   +1 pp   required return on equity; the response of household stock wealth (wpsn) at impact gives the % stock price move
+    req   +1 pp   required return on equity; stock wealth (wpsn) is free to respond (wealth and cost-of-capital channels); its fall at impact
+                  gives the % stock price move
     fpxr  +10 %   real exchange rate, trade weighted (up = dollar appreciation)
     poil  +10 %   price of imported oil
 The funds-rate equivalent of a shock at horizon q is its GDP effect at quarter q divided by the GDP effect of the 1 pp funds rate shock, per unit
@@ -53,28 +55,38 @@ def main():
     data.loc[start:end, "dfpdbt"] = 0      # fiscal settings as in the Board's demos
     data.loc[start:end, "dfpsrp"] = 1
     base = frbus.init_trac(start, end, data)
-    frbus.exogenize(["rff", "rg10", "rbbbp", "req", "fpxr", "poil"])   # hold the funds rate and the other financial variables fixed
+    FIN = ["rff", "rg10", "rbbbp", "req", "fpxr", "poil"]
 
-    def run(var, shift, mult=False):
-        d = base.copy()
-        d.loc[start:end, var] = d.loc[start:end, var] * (1 + shift) if mult else d.loc[start:end, var] + shift
-        return frbus.solve(start, end, d)
+    def solver(exo):
+        frbus.exogenize(exo)
 
-    sim0 = run("rff", 0.0)
-    shocks = [("rff", 1.0, False, "pp"), ("rg10", 1.0, False, "pp"), ("rbbbp", 1.0, False, "pp"),
-              ("req", 1.0, False, "stock"), ("fpxr", 0.10, True, "pct"), ("poil", 0.10, True, "pct")]
-    gdp = lambda s: 100 * np.log(s.loc[start:end, "xgdp"] / sim0.loc[start:end, "xgdp"]).values
+        def run(var, shift, mult=False):
+            d = base.copy()
+            d.loc[start:end, var] = d.loc[start:end, var] * (1 + shift) if mult else d.loc[start:end, var] + shift
+            return frbus.solve(start, end, d)
+        return run
+
+    gdp = lambda s, s0: 100 * np.log(s.loc[start:end, "xgdp"] / s0.loc[start:end, "xgdp"]).values
     out = {}
-    for var, shift, mult, kind in shocks:
-        sim = run(var, shift, mult)
-        g = gdp(sim)
-        if kind == "stock":
-            unit = -100 * np.log(sim.loc[start, "wpsn"] / sim0.loc[start, "wpsn"])      # % fall in stock wealth at impact
-        elif kind == "pct":
-            unit = 100 * np.log(sim.loc[start, var] / sim0.loc[start, var])             # % change at impact
-        else:
-            unit = shift
+    # (1) every other financial variable is held at baseline, including household stock wealth (wpsn), so the policy-rate, 10-year, BBB-spread,
+    #     dollar and oil effects contain no equity-market channel. (Leaving wpsn free lets stock wealth fall about 5.7% on a 1 pp funds rate rise,
+    #     2.3% on a 1 pp 10-year rise and 1.2% on a 1 pp spread widening, which would double count the equity variable.)
+    run = solver(FIN + ["wpsn"])
+    sim0 = run("rff", 0.0)
+    for var, shift, mult, kind in (("rff", 1.0, False, "pp"), ("rg10", 1.0, False, "pp"), ("rbbbp", 1.0, False, "pp"),
+                                   ("fpxr", 0.10, True, "pct"), ("poil", 0.10, True, "pct")):
+        g = gdp(run(var, shift, mult), sim0)
+        unit = 100 * np.log(1 + shift) if kind == "pct" else shift
         out[var] = dict(kind=kind, unit_size=float(unit), gdp_q4=g[3], gdp_q8=g[7], gdp_q12=g[11])
+    # (2) equities: shock the required return on equity (req), with stock wealth free to respond (wealth and cost-of-capital channels), the
+    #     other financial variables held fixed; the % fall in stock wealth at impact gives the unit.
+    run = solver(FIN)
+    sim0 = run("rff", 0.0)
+    sim = run("req", 1.0)
+    g = gdp(sim, sim0)
+    unit = -100 * np.log(sim.loc[start, "wpsn"] / sim0.loc[start, "wpsn"])
+    out["req"] = dict(kind="stock", unit_size=float(unit), gdp_q4=g[3], gdp_q8=g[7], gdp_q12=g[11])
+    out = {k: out[k] for k in ("rff", "rg10", "rbbbp", "req", "fpxr", "poil")}
     t = pd.DataFrame(out).T
     for q in ("q4", "q8", "q12"):
         t[f"gdp_per_unit_{q}"] = t[f"gdp_{q}"].astype(float) / t["unit_size"].astype(float)
