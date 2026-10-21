@@ -16,7 +16,8 @@ Morgan Stanley appears to use **at least two** financial conditions indexes, and
    1995). Weights not public; replication needs the Bloomberg history.
 
 A third description (five daily variables aggregated with FRB/US growth sensitivities) was reported by a third-party summary and could
-not be checked; see "Unverified" below. It conflicts with the SF Fed description if it refers to the same index.
+not be checked; see "Unverified" below. It conflicts with the SF Fed description if it refers to the same index. Section C builds a
+reconstruction of it from the Fed's public FRB/US model.
 
 ## A. The 2026 policy-rate-equivalent index
 **[verified]** From Morgan Stanley's article ["Fed Rate Pause: What It Could Mean for Fixed Income Market"](https://www.morganstanley.com/insights/articles/fed-rate-pause-fixed-income-market-impact-2026):
@@ -55,6 +56,57 @@ about six 25 bp steps. This only shows the two indexes are on a comparable scale
   Fed stress index 39.7% (with the other indexes 22% to 49%, the lowest in the table); AR(1) root interval 0.83 to 0.95, lower than the others
   (about 0.92 to 1.00). A less persistent index is what a construction on changes or deviations would give **[inference]**.
 - Weights, series, normalization window and ticker: not found.
+
+## C. Five-variable reconstruction (built here, 21 Oct 2026)
+The unverified description (10-year yield, S&P 500, BBB spreads, dollar, oil, aggregated into a funds-rate equivalent with FRB/US growth
+sensitivities) is implementable from public pieces, so I built it. **It is a reconstruction of the described method, not Morgan Stanley's
+index**; the weights are mine and the original is unverified.
+
+**Step 1: FRB/US sensitivities** (`analysis/frbus_sensitivities.py`, output `analysis/frbus_sensitivities.csv`). The Board's public FRB/US model
+and Python package run here (the package pins old libraries, so it needs an isolated Python 3.9 environment; setup is in the script's docstring).
+In the steady-state baseline, hold the funds rate and the other financial variables fixed, make one persistent shock, and compare the effect on real
+GDP with that of a 1 pp funds-rate shock. Funds-rate equivalent (pp of funds rate) at the q4 / q8 / q12 horizon:
+
+| Variable (unit) | q4 | q8 | q12 |
+|---|---|---|---|
+| 10-year yield, +1 pp (mortgage rate and BBB yield follow, spread fixed) | 1.02 | 0.84 | 0.69 |
+| BBB spread, +1 pp | 0.36 | 0.53 | 0.61 |
+| Stock prices, 1% fall | 0.072 | 0.080 | 0.079 |
+| Broad dollar, 1% rise (real exchange rate) | 0.234 | 0.257 | 0.235 |
+| Oil, 1% rise | 0.018 | 0.013 | 0.012 |
+
+GDP effect of the 1 pp funds-rate shock itself: -0.20% (q4), -0.36% (q8), -0.50% (q12). Choices that matter and are mine: the horizon (q4 is the
+first-year growth effect), persistent shocks, policy rate held fixed, the 10-year allowed to carry the mortgage and corporate yields with it, stock
+price proxied by household stock wealth, real rather than nominal exchange rate, VAR expectations, steady-state starting point. The Fed's own FCI-G
+multipliers (this repo's `multipliers.csv`) imply different relative weights, about two to three times larger for equities and the dollar relative to
+the funds rate, so the sensitivities are uncertain by that order.
+
+**Step 2: daily index** (`analysis/ms5_index.py`, output `analysis/ms5_index_daily.csv` and `analysis/ms5_index.png`): FFR equivalent = sum of
+sensitivity times the change since a base date in the 10-year (DGS10), BBB OAS (FRED), S&P 500, broad dollar (DTWEXBGS extended with DXY) and WTI.
+Positive = tighter; divide by 0.25 for 25 bp hikes.
+
+**What it shows (base 27 Feb 2026, q4 sensitivities).** The date of the Iran conflict is not established here, so the base date is a guess. Oil went
+from $67 to $91-101 in March and stocks fell, then equities recovered to new highs while the 10-year rose.
+- Early April: about +1.9 pp (7.6 hikes), driven by oil, the dollar and the 10-year. 10 July: +0.53 pp (2.1 hikes): the 10-year +0.60,
+  dollar +0.53, oil +0.14, equities -0.70 (a stock rally loosens), BBB -0.04. 16 Oct: **+1.76 pp (7.0 hikes)**: 10-year +1.15, dollar +0.65,
+  oil +0.74, equities -0.78. With q8 sensitivities these are roughly 20 to 25% smaller (16 Oct: +1.35 pp). Using Brent instead of WTI changes
+  the totals by about 0.1 to 0.3 pp.
+- The result depends on the base date: bases after the March oil spike (from 6 March) give negative changes by July.
+- Against the SF Fed proxy funds rate (which rose +0.94 pp by 10 July and +1.56 pp by 9 Oct from the same base) the stand-in has similar scale and
+  similar longer-run movement but a different short-run path (oil and the dollar move it more).
+- It does **not** reproduce "four 25 bp hikes by July" (about 2 hikes on 10 July; 3.9 on 20 July). But that statement belongs to the 12-variable
+  index (section A), not to the five-variable one, so it is not a validation target for this.
+
+**Cannot be validated.** No published observations of a five-variable Morgan Stanley index were found, so nothing here shows it matches.
+
+## Next steps for the five-variable version
+1. Find the original Morgan Stanley note behind the third-party summary: exact variables, the horizon, whether the equivalence is on growth or on a
+   broader objective, and any quoted levels (even a few dated readings would give validation points).
+2. Settle the unit conventions: S&P 500 as a return over what window; the dollar index used; WTI or Brent; whether 10-year pass-through to mortgage rates
+   and BBB yields is included; the horizon.
+3. Check sensitivity to the model state: the same shocks from a 2026-like state with the funds rate at 3.6 to 3.9% and the current baseline, rather than
+   the model's steady state, and with model-consistent (MCE) expectations.
+4. Decide whether to fold the equivalents into the daily page next to the GS and FCI-G versions.
 
 ## Unverified claims (do not rely on them yet)
 - **Five-variable index with FRB/US weights.** A third-party research summary (xxquant / "Hilo Research", July 2026) reportedly describes a
