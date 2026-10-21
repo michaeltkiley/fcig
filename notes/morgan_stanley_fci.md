@@ -138,7 +138,7 @@ in March and stocks fell, then equities recovered to new highs while the 10-year
 - **Policy-rate equivalence of the financial conditions index** [verified, Morgan Stanley article, July 2026]: the Tobias index shows tightening
   equal to four 25 bp hikes since the start of the Iran conflict; "markets have already priced in the persistent inflation risks identified by the
   FOMC by pushing the implied Fed funds rate path higher"; "The Fed doesn't need to deliver on the tightening in financial conditions in response to
-  backward-looking data to retain credibility." Michael Gapen (US economics) in the same article: "patience will win the day and the Fed will not hike in July".
+  backward-looking data to retain credibility." Gapen (Morgan Stanley economics, as quoted) in the same article: "patience will win the day and the Fed will not hike in July".
   No growth numbers or weights are given.
 - **October 2026, Mike Wilson (equity strategy)** [secondhand, ChainCatcher/WSJ and Seeking Alpha, both short]: an index built from interest rates, the dollar
   and energy prices is at its tightest since 2022; since mid-August equal-weighted financials, materials, consumer discretionary and industrials
