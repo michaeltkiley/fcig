@@ -12,8 +12,14 @@ nominal broad dollar), oil in real terms (WTI over the FRB/US PCE price level), 
 needed for daily WTI (a saved copy is used when FRED is down). The sensitivities come from local shocks around a steady state, so applying them to large deviations over decades is a linear
 extrapolation. Validation: the index plus the average funds rate should track the effective funds rate before 2008 and the SF Fed proxy funds rate after.
 
-Usage:  python analysis/ms5_level.py [--horizon q4|q8|q12] [--real10]
-Outputs: analysis/ms5_level_daily.csv, analysis/ms5_level.png
+Real-rate adjustments: --rstar measures the 10-year as the real yield gap to Kiley's r* (history/kiley_rstar.csv, copied from the r* repo; one-sided
+estimate, --twosided for the smoothed one); --erp removes from the equity valuation (100 ln CAPE) the part explained by the real 10-year yield, using the FRB/US
+stock equation (25% on the price per 1 pp of required return). NOT RECOMMENDED: in the data the valuation has no stable relation with the real
+10-year yield (daily 1990-2026 slope -1.2% per pp, s.e. 2.7; monthly changes ~0; by sub-period -17% to +24%), so the model's mapping overstates the
+adjustment and pushes the 2009-2012 equity term to +2.4 to +3.1 pp of tightening. Kept for comparison only.
+
+Usage:  python analysis/ms5_level.py [--horizon q4|q8|q12] [--real10] [--rstar] [--erp]
+Outputs: analysis/ms5_level_daily[_variant].csv, analysis/ms5_level[_variant].png (variant suffix: _real10, _rstar, plus _erp)
 """
 import os, sys
 import numpy as np, pandas as pd
@@ -25,6 +31,10 @@ from fcig_replicate import fetch, fred, hold, RAW
 HERE = os.path.dirname(os.path.abspath(__file__))
 HORIZON = sys.argv[sys.argv.index("--horizon") + 1] if "--horizon" in sys.argv else "q4"
 REAL10 = "--real10" in sys.argv
+RSTAR = "--rstar" in sys.argv        # 10-year as the real yield gap to the equilibrium real rate r*
+ERP = "--erp" in sys.argv            # equities as the equity risk premium (earnings yield less the real 10-year) instead of the CAPE multiple
+RSTAR_COL = "rstar_2side" if "--twosided" in sys.argv else "rstar_1side"
+TAG = ("_rstar" if RSTAR else "_real10" if REAL10 else "") + ("_erp" if ERP else "")
 START = "1990-01-02"
 
 
@@ -82,17 +92,27 @@ def build():
     # real oil: WTI over the PCE price level (interpolated; after the last quarter grown at its recent rate)
     wti = hold(get("DCOILWTICO"), idx[-1]).reindex(idx, method="ffill").clip(lower=5.0)   # WTI was negative on 20 Apr 2020
     X["lnroil"] = np.log(wti / to_daily(H.pcnia.dropna(), idx, log=True, extrapolate_growth=True).bfill())
-    if REAL10:
-        X["y10"] = X.y10 - to_daily(H.ptr.dropna(), idx).bfill()
+    real10 = X.y10 - to_daily(H.ptr.dropna(), idx).bfill()
+    X["real10"] = real10
+    r = pd.read_csv(os.path.join(ROOT, "history", "kiley_rstar.csv"), index_col=0)[RSTAR_COL]   # Kiley r*, quarterly, from the r* repo
+    r.index = pd.PeriodIndex(r.index, freq="Q").to_timestamp() + pd.Timedelta(days=45)
+    X["rstar"] = to_daily(r.dropna(), idx).bfill()
+    X["einf"] = X.y10 - real10                                      # expected inflation (SPF, via FRB/US ptr)
+    if RSTAR:
+        X["y10"] = real10 - X.rstar                                 # real 10-year yield gap to r*
+    elif REAL10:
+        X["y10"] = real10
     return X.dropna(), G
 
 
-def level(X, S):
+def level(X, S, req_pct_per_pp=None):
     m = X.mean()
     C = pd.DataFrame({
         "10-yr": S["rg10"] * (X.y10 - m.y10),
         "BBB spread": S["rbbbp"] * (X.bbb - m.bbb),
-        "Equities": -S["req"] * 100 * (X.lncape - m.lncape),
+        # stock valuation in % (100 ln CAPE); with --erp the part explained by real rates is removed (FRB/US: ln price = ... - 0.25 * required return,
+        # required return = real long rate + premium), leaving the equity-premium part, so real rates are not counted in both the 10-year and equity terms
+        "Equities": -S["req"] * (100 * (X.lncape - m.lncape) + (req_pct_per_pp * (X.real10 - m.real10) if ERP else 0.0)),
         "Dollar": S["fpxr"] * 100 * (X.lnrusd - m.lnrusd),
         "Oil": S["poil"] * 100 * (X.lnroil - m.lnroil),
     })
@@ -101,11 +121,13 @@ def level(X, S):
 
 
 def main():
-    S = pd.read_csv(os.path.join(HERE, "frbus_sensitivities.csv"), index_col=0)[f"ffr_eq_{HORIZON}"].to_dict()
+    sens = pd.read_csv(os.path.join(HERE, "frbus_sensitivities.csv"), index_col=0)
+    S = sens[f"ffr_eq_{HORIZON}"].to_dict()
+    req_pct_per_pp = float(sens.loc["req", "unit_size"])   # % fall in stock wealth per +1 pp on the required return (about 25)
     X, G = build()
-    C = level(X, S)
-    C.to_csv(os.path.join(HERE, "ms5_level_daily.csv"), float_format="%.4f", index_label="date")
-    print(f"{HORIZON}, 10-year {'real' if REAL10 else 'nominal'}; sample {X.index[0].date()} to {X.index[-1].date()}")
+    C = level(X, S, req_pct_per_pp)
+    C.to_csv(os.path.join(HERE, f"ms5_level_daily{TAG}.csv"), float_format="%.4f", index_label="date")
+    print(f"{HORIZON}, 10-year {'real gap to r* (' + RSTAR_COL + ')' if RSTAR else 'real' if REAL10 else 'nominal'}, equities {'CAPE valuation net of real rates' if ERP else 'CAPE valuation'}; sample {X.index[0].date()} to {X.index[-1].date()}")
     print("averages:", {k: round(float(v), 3) for k, v in X.mean().items()})
     print("\\nlatest vs average (pp of funds rate): ", C.iloc[-1].round(2).to_dict())
     print("percentile of today's total in the sample: %.0f%%" % (100 * (C.Total < C.Total.iloc[-1]).mean()))
@@ -124,6 +146,9 @@ def main():
         c = C.Total[a:b]; e = effr[a:b]
         fit = c + effr.mean()
         print(f"  {lab}: corr {np.corrcoef(c, e)[0, 1]:+.2f}, index + mean EFFR minus EFFR: mean {float((fit[a:b] - e).mean()):+.2f}, rmse {float(np.sqrt(((fit[a:b] - e) ** 2).mean())):.2f}")
+    gap = (X.ffr - X.einf - X.rstar)                      # real policy rate less r*: the policy stance relative to neutral
+    print("  vs real policy rate gap (EFFR - expected inflation - r*): corr %+.2f (1990-2026), %+.2f (1990-2008), %+.2f (2009-2015), %+.2f (2016-2019), %+.2f (2022-2026)" % tuple(
+        np.corrcoef(C.Total[a:b], gap[a:b])[0, 1] for a, b in (("1990", "2026"), ("1990", "2008-11"), ("2009", "2015"), ("2016", "2019"), ("2022", "2026"))))
     if w is not None:
         cw = C.Total.reindex(w.index, method="ffill").loc[w.index.intersection(C.index)]
         for lab, a, b in (("proxy, 1990-2026", "1990-01-01", "2026-12-31"), ("proxy, 2009-2015", "2009-01-01", "2015-12-31"), ("proxy, 2020-2026", "2020-01-01", "2026-12-31")):
@@ -154,7 +179,7 @@ def plot(C, effr, w):
     if w is not None:
         b.plot(w.index, w.values, color="#d62728", lw=0.9, ls="--", label="SF Fed proxy funds rate")
     b.set_ylabel("percent"); b.legend(fontsize=7, frameon=False)
-    fig.tight_layout(); fig.savefig(os.path.join(HERE, "ms5_level.png"), dpi=130)
+    fig.tight_layout(); fig.savefig(os.path.join(HERE, f"ms5_level{TAG}.png"), dpi=130)
 
 
 if __name__ == "__main__":

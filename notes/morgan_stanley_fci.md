@@ -123,6 +123,29 @@ Positive = tighter; divide by 0.25 for 25 bp hikes. Options: `--horizon q4|q8|q1
 
 **Cannot be validated.** No published observations of a five-variable Morgan Stanley index were found, so nothing here shows it matches.
 
+## D. Level version of the five-variable index (21 Oct 2026)
+`analysis/ms5_level.py`: deviation of each variable from its 1990 to latest average times the sensitivities in section C; positive = tighter than average,
+in pp of funds rate (q4). Stationary transforms: 10-year yield (nominal, real, or the real gap to r*), BBB spread, stock valuation (CAPE from the GS file),
+real dollar (the FRB/US real exchange rate fpxr, put on a daily footing with the nominal broad dollar), real oil (WTI over the FRB/US PCE price level).
+Everything except daily WTI comes from this repo's GS file and the Fed's FRB/US history, so FRED is not needed (FRED was down when this was built).
+`--rstar` measures the 10-year as the real yield gap to Kiley's r* (`history/kiley_rstar.csv`, from the r* repo; one-sided estimate, 1.67% in 2026Q2).
+
+| 16 Oct 2026 vs 1990-2026 average | Total | 10-yr | BBB | Equities | Dollar | Oil | Percentile |
+|---|---|---|---|---|---|---|---|
+| Nominal 10-year (default) | +0.96 | +0.48 | -0.12 | -1.33 | +1.58 | +0.35 | 81% |
+| Real 10-year | +1.03 | +0.55 | -0.12 | -1.33 | +1.58 | +0.35 | 85% |
+| Real 10-year gap to r* (`--rstar`) | **+1.13** | +0.65 | -0.12 | -1.33 | +1.58 | +0.35 | 88% |
+
+Adjusting for real rates raises the 10-year term (+0.48 to +0.65) because r* has fallen from about 2.5% to 1.7%, so the same real yield is further above neutral;
+it also lowers the 2012 and 2021 readings less negative (10-year -1.41 to -1.08 and -1.56 to -1.45).
+**Equities are not adjusted for real rates**: the FRB/US stock equation implies 25% on the price per pp of real rates, but the valuation shows no stable relation
+with the real 10-year yield in the data (slope -1.2% per pp, s.e. 2.7; monthly changes about zero; -17% to +24% across sub-periods), and applying the model's
+mapping (`--erp`) puts the 2009-2012 equity term at +2.4 to +3.1 pp, which contradicts the policy stance. Kept as a flag for comparison only.
+Validation is weak before 2008 because the funds rate is not one of the five variables (correlation with the effective funds rate +0.17 for 1990-2008; with the
+SF Fed proxy +0.94 for 2020-2026; with the real policy rate gap, EFFR less expected inflation less r*, +0.32 for 1990-2026 and +0.54 for 2022-2026 in the `--rstar`
+version). This is an index of conditions relative to the sample average, not a proxy for the policy rate, and the linear extrapolation of local sensitivities over
+36 years and the averaging window drive its level.
+
 ## Next steps for the five-variable version
 1. Find the original Morgan Stanley note behind the third-party summary: exact variables, the horizon, whether the equivalence is on growth or on a
    broader objective, and any quoted levels (even a few dated readings would give validation points).
