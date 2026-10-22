@@ -201,6 +201,28 @@ The first-order size is plausible: net petroleum imports are about 0.7% of GDP i
 Since 27 Feb: WTI +47.7% (Brent +48.0%), +0.39 pp or 1.6 hikes. Since 27 Aug: WTI +24.1% (Brent +24.5%), +0.20 pp or 0.8 hikes. The window ends on a one-week jump in WTI ($96 to $108);
 Brent and WTI gave the same percentage change over both windows, although their spread varied between $4 and $11 during the year, so the choice of benchmark matters on individual days (14 Oct: WTI $96, Brent $127) but not for these two windows.
 
+## G. Exogenous lists, revised after review (22 Oct 2026)
+In the earlier partial experiments (BBB spread, dollar, oil, equity) the Treasury curve (rg5, rg10, rg30), the 3-month bill (rtb), the mortgage rate (rme) and the car loan
+rate (rcar) were free; they were not listed as exogenous. All partial experiments now fix them. Exact `exoglist` per experiment (`analysis/frbus_sensitivities.py` prints them):
+| Experiment | Shocked | Exogenous (fixed at baseline unless shocked) | Free (transmission) |
+|---|---|---|---|
+| Hike, full transmission (yardstick) | rff +1 pp | rff | everything |
+| Hike, partial (reference column) | rff +1 pp | rff, rbbbp, req, wpsn, fpxr, poil | curve, rtb, rme, rcar, rbbb |
+| Long rates, parallel | rg5, rg10, rg30 +1 pp | rff, rtb, rg5, rg10, rg30, rbbbp, req, wpsn, fpxr, poil | rme, rcar (pass-through), rbbb = rbbbp + rg10 |
+| 10-year alone | rg10 +1 pp | same list as parallel (rg5, rg30 fixed) | rme, rcar, rbbb |
+| BBB spread | rbbbp +1 pp | rff, rtb, rg5, rg10, rg30, rme, rcar, rbbbp, req, wpsn, fpxr, poil | rbbb (= rbbbp + rg10) |
+| Dollar | fpxr +10% | same as BBB-spread list | rbbb |
+| Oil | poil +10% | same as BBB-spread list | rbbb |
+| Equity | req +1 pp | rff, rtb, rg5, rg10, rg30, rme, rcar, rbbbp, req, fpxr, poil (wpsn free) | wpsn, rbbb |
+Possible add-ons (not applied; for the expert to decide): federal debt interest rates rgw and rgfint (fiscal feedback; follow the curve once it is fixed); foreign rates frs10, frl10
+(and frstar) to keep the foreign block out; house prices and non-equity wealth (phouse, wpon, wpo, rcgain) to remove the housing wealth channel; the equity premium reqp and the term and
+credit premia rg5p, rg10p, rg30p if one wants to hold premia rather than levels fixed (then expectations of the policy path move yields); the long-run policy-rate anchors rstar, rrtr, rtr;
+the nominal exchange rate fpx and its residual fpxrr; the relative oil price poilr and import petroleum price pmp (both follow poil). The Treasury, bill, mortgage and car-loan variables that
+are fixed here are all identities or behavioral equations of the rates, so exogenizing the level makes the associated term premium the residual, which is harmless for the partials.
+Result of the change: sensitivities moved only in the third decimal (funds-rate equivalents at q4: long rates 0.569, BBB spread 0.127, stocks 0.032, dollar 0.100, oil 0.0080; q8: 0.520, 0.176,
+0.030, 0.098, 0.0051); the partial-sum check against the full hike is -0.476 / -0.924 / -1.271 versus -0.453 / -0.946 / -1.430. Windows to 20 Oct (q4): since 27 Feb +0.98 pp (3.9 hikes), since
+27 Aug +0.73 pp (2.9 hikes); daily-change correlation with the GS FCI 0.82 (q4), 0.91 without oil.
+
 ## Next steps for the five-variable version
 1. Find the original Morgan Stanley note behind the third-party summary: exact variables, the horizon, whether the equivalence is on growth or on a
    broader objective, and any quoted levels (even a few dated readings would give validation points).

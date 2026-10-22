@@ -62,10 +62,20 @@ def main():
     # One consistent design. Stocks (req, wpsn), the dollar (fpxr), oil (poil) and the BBB spread (rbbbp) are held at baseline in every experiment
     # except their own, because each is a separate variable in the index. Rates that are not index variables (5- and 30-year Treasuries, the
     # mortgage rate, car loans, the BBB yield = 10-year + spread) respond as the model implies, or move with the shock where stated.
-    FIXED = ["req", "wpsn", "fpxr", "poil", "rbbbp"]
+    # Financial conditions held at baseline (exogenized) in every partial experiment except the shocked variable:
+    #   policy rate rff; 3-month bill rtb; Treasury curve rg5, rg10, rg30; mortgage rate rme; new car loan rate rcar; BBB spread rbbbp (so the BBB yield
+    #   rbbb = rbbbp + rg10 is fixed too); required return on equity req and household stock wealth wpsn; real exchange rate fpxr; oil price poil.
+    # rme and rcar are the pass-through of the long-rate shock (they follow rg10 and rg5), so they are free in that experiment and fixed in the others.
+    CURVE = ["rtb", "rg5", "rg10", "rg30"]
+    PASS = ["rme", "rcar"]
+    OTHER = ["rbbbp", "req", "wpsn", "fpxr", "poil"]
+    FIXED = ["rff"] + CURVE + PASS + OTHER                 # everything fixed (BBB spread, dollar and oil experiments)
+    PARTIAL_HIKE = ["rff"] + OTHER                         # partial hike: curve, mortgage and car loan rates respond, stocks/dollar/spread/oil fixed
     gdp = lambda s, s0: 100 * np.log(s.loc[start:end, "xgdp"] / s0.loc[start:end, "xgdp"]).values
+    EXOGLISTS = {}
 
-    def solver(exo):
+    def solver(exo, label):
+        EXOGLISTS[label] = list(exo)
         frbus.exogenize(exo)
 
         def run(vars_, shift, mult=False):
@@ -82,7 +92,7 @@ def main():
 
     # policy rate, FULL transmission (the yardstick): +1 pp in the funds rate with nothing else held fixed, so the whole curve, mortgage and
     # corporate yields, stocks, the dollar, spreads and oil all respond as the model implies. This is what a hike does.
-    run = solver(["rff"])
+    run = solver(["rff"], "rff (full transmission)")
     s0 = run("rff", 0.0)
     sF = run("rff", 1.0)
     gF = gdp(sF, s0)
@@ -92,26 +102,26 @@ def main():
     spill["dollar_pct"] = float(100 * np.log(sF.loc[start + 3, "fpxr"] / s0.loc[start + 3, "fpxr"]))
     spill["oil_pct"] = float(100 * np.log(sF.loc[start + 3, "poil"] / s0.loc[start + 3, "poil"]))
     # policy rate with the curve responding but stocks, dollar, oil and the BBB spread held fixed (the partial hike)
-    run = solver(["rff"] + FIXED)
+    run = solver(PARTIAL_HIKE, "rff_curve (partial hike)")
     s0 = run("rff", 0.0)
     gC = gdp(run("rff", 1.0), s0)
     record("rff_curve", "pp", gC, 1.0)
     # 10-year: a parallel +1 pp move in the 5-, 10- and 30-year yields (the 10-year stands for the long end); the mortgage rate and the BBB
     # yield follow (spread unchanged). The alternative, the 10-year alone with the 5- and 30-year unchanged, is reported as rg10_alone.
-    run = solver(["rff", "rg5", "rg10", "rg30"] + FIXED)
+    run = solver([v for v in FIXED if v not in PASS], "rg10 (parallel long rates)")
     s0 = run("rff", 0.0)
     record("rg10", "pp", gdp(run(["rg5", "rg10", "rg30"], 1.0), s0), 1.0)
-    run = solver(["rff", "rg10"] + FIXED)
+    run = solver([v for v in FIXED if v not in PASS], "rg10_alone")
     s0 = run("rff", 0.0)
     record("rg10_alone", "pp", gdp(run("rg10", 1.0), s0), 1.0)
     # BBB spread, dollar, oil: policy rate fixed, everything else fixed
     for var, shift, mult, kind in (("rbbbp", 1.0, False, "pp"), ("fpxr", 0.10, True, "pct"), ("poil", 0.10, True, "pct")):
-        run = solver(["rff"] + FIXED)
+        run = solver(FIXED, f"{var} (everything fixed)")
         s0 = run("rff", 0.0)
         record(var, kind, gdp(run(var, shift, mult), s0), 100 * np.log(1 + shift) if kind == "pct" else shift)
     # equities: shock the required return on equity (req), stock wealth (wpsn) free to respond (wealth and cost-of-capital channels); the % fall
     # in stock wealth at impact is the unit
-    run = solver(["rff", "req", "fpxr", "poil", "rbbbp"])
+    run = solver([v for v in FIXED if v != "wpsn"], "req (stock wealth free)")
     s0 = run("rff", 0.0)
     sim = run("req", 1.0)
     record("req", "stock", gdp(sim, s0), -100 * np.log(sim.loc[start, "wpsn"] / s0.loc[start, "wpsn"]))
@@ -133,6 +143,9 @@ def main():
                  "stocks": -spill["stocks_pct"] * per("req", q), "dollar": spill["dollar_pct"] * per("fpxr", q),
                  "BBB spread": spill["rbbbp"] * per("rbbbp", q), "oil": spill["oil_pct"] * per("poil", q)}
         print(f"  {q}: full hike GDP {gF[gi]:+.3f}; sum of partials {sum(parts.values()):+.3f} = " + ", ".join(f"{k} {v:+.3f}" for k, v in parts.items()))
+    print("\nexoglists used:")
+    for k, v in EXOGLISTS.items():
+        print(f"  {k}: {v}")
     pd.set_option("display.width", 200)
     print(t[["kind", "unit_size", "gdp_q4", "gdp_q8", "gdp_q12", "ffr_eq_q4", "ffr_eq_q8", "ffr_eq_q12", "ffr_eq_curve_q4"]].astype({"unit_size": float}).round(3).to_string())
     print("\nFunds-rate equivalent (pp) per unit: rff = 1 pp; rg10 and rbbbp per +1 pp; req row per 1% FALL in stock wealth; fpxr per 1% dollar rise; poil per 1% oil rise")
