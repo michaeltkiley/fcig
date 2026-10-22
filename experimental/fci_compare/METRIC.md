@@ -16,3 +16,7 @@ Purpose: fix how agreement and disagreement are measured so that episodes are no
 5. By group (rates incl. the policy rate, corporate yields and mortgage rates; equities; dollar; other): contributions in funds-rate units to the latest level, to the change since 27 Feb 2026 and since 27 Aug 2026, and to the cross-index gap in each episode window.
 
 **Not done:** no episodes chosen by hand; no ranking of indexes; no policy-versus-other decomposition.
+
+## Deviation log
+- **22 Oct 2026, after the first run.** The pre-specified primary transmission conversion (cumulative 3-month response, h = 3) is unusable: the h = 3 responses are statistically indistinguishable from zero for GS, the market-based index and the MS-style index (se 0.5-0.7 against estimates around 0.1-0.15), because month-ahead movements are dominated by non-policy news, so the implied funds-rate levels explode (level sd of 20 pp for the market-based index). **Primary conversion is now h = 0** (same-month response); h = 3 is still printed as a sensitivity. The output-equivalent conversion of FCI-G is unchanged. The choice was made because of the noise in the h = 3 estimates, not to improve a comparison result, and all other metrics are unchanged.
+- The official FCI-G ends in 2026-08; for months after that (and for the by-group table, which needs components) the repository's replication of FCI-G is used, so that every index reaches 2026-10. The overlap with the official series is checked and reported.
