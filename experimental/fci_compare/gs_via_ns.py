@@ -7,7 +7,8 @@ Step 2  Funds-rate content of one NS unit: regress MP1 (today's rate) and ED4 (y
 Step 3  Index response per NS unit: regress each index's event-day change (close of t-1 to t; and t-1 to t+1, because the dollar input of the GS replication is a noon series) on the factor.
 Step 4  Funds-rate pp per index point = (funds-rate pp per NS unit) / (index response per NS unit).
 Applied to GS (daily replication), the MS-style FRB/US index (as a check: native funds-rate units) and the market-based index with NS weights.
-Usage: python experimental/fci_compare/gs_via_ns.py
+Usage: python experimental/fci_compare/gs_via_ns.py [--real]
+--real: real versions: 10-year less Cleveland Fed expected inflation in the market-based and MS-style indexes (weights unchanged); GS uses the real funds rate, the real 10-year and the real dollar.
 """
 import os, sys
 import numpy as np, pandas as pd
@@ -22,8 +23,13 @@ import path_fci_gss_ns as Q
 
 def main():
     ev = P.events(P.USMPD)
-    P.L.REAL10 = False; P.L.RSTAR = False
+    REAL = "--real" in sys.argv
+    P.L.REAL10 = REAL; P.L.RSTAR = False
     X, G = P.L.build()
+    if REAL:
+        # real GS: the published weights applied to the real funds rate and real 10-year (each less Cleveland Fed 10-year expected inflation) and to the real dollar;
+        # BBB spread and CAPE unchanged (constants drop out because every index is demeaned)
+        G = G.assign(fci=G.fci.reindex(X.index) - (0.044 + 0.451) * X.einf + 0.06 * (100 * X.lnrusd - 100 * np.log(G.x_usd.reindex(X.index))))
     d = ev.dropna(subset=Q.FUT + ["UST2Y"] + list(Q.ENDOG.values())).reset_index(drop=True)
     d = d[d.Date.isin(X.index)].reset_index(drop=True)
     gss, ns, _, _ = Q.gss_ns(d)
@@ -75,13 +81,13 @@ def main():
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots(figsize=(13, 6.5))
-    ax.plot(out.index, out["GS via NS"], color="#2ca02c", lw=1.5, label=f"GS FCI (replication), converted by the NS shock: {k:.2f} pp of funds rate per index point")
-    ax.plot(out.index, out["MKT via NS"], color="#ff7f0e", lw=1.5, label="Market-based index (10-year, equities, dollar; NS-shock weights), in funds-rate pp")
+    ax.plot(out.index, out["GS via NS"], color="#2ca02c", lw=1.5, label=f"{'Real ' if REAL else ''}GS FCI (replication), converted by the NS shock: {k:.2f} pp of funds rate per index point")
+    ax.plot(out.index, out["MKT via NS"], color="#ff7f0e", lw=1.5, label=("Real m" if REAL else "M") + "arket-based index (10-year, equities, dollar; NS-shock weights), in funds-rate pp")
     ax.axhline(0, color="gray", lw=0.8); ax.grid(alpha=0.25); ax.tick_params(labelsize=11)
     ax.set_ylabel("pp of funds rate, tighter above zero (vs 1990-2026 average)", fontsize=11)
-    ax.set_title(f"GS and the market-based index in funds-rate equivalents via the Nakamura-Steinsson shock (monthly corr of levels {mo.corr().loc['GS via NS', 'MKT via NS']:.2f})", fontsize=11)
+    ax.set_title(f"{'Real ' if REAL else ''}GS and the market-based index in funds-rate equivalents via the Nakamura-Steinsson shock (monthly corr of levels {mo.corr().loc['GS via NS', 'MKT via NS']:.2f})", fontsize=11)
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.07), ncol=1, fontsize=10, frameon=False)
-    fig.tight_layout(); fig.savefig(os.path.join(HERE, "gs_mkt_via_ns.png"), dpi=130)
+    fig.tight_layout(); fig.savefig(os.path.join(HERE, "gs_mkt_via_ns_real.png" if REAL else "gs_mkt_via_ns.png"), dpi=130)
 
 
 if __name__ == "__main__":
