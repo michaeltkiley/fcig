@@ -3,7 +3,7 @@ FRB/US growth sensitivities of five financial variables, in federal funds rate e
 
 Reconstructs the approach reported (by a third-party summary, unverified) for a Morgan Stanley financial conditions index built from the
 10-year Treasury yield, S&P 500 returns, BBB credit spreads, the dollar and oil: each variable's effect on growth is estimated in FRB/US and
-the combined effect is expressed as an equivalent change in the federal funds rate. See notes/morgan_stanley_fci.md.
+the combined effect is expressed as an equivalent change in the federal funds rate. See experimental/ms_fci/NOTES.md.
 
 Experiments (the Federal Reserve Board's public FRB/US model, VAR expectations, from the steady-state baseline in LONGBASE, 2040Q1 onward as in
 the Board's demos). One persistent shock to one variable at a time. In the partial experiments stocks (req, wpsn), the dollar (fpxr), oil (poil) and the BBB spread
@@ -26,15 +26,15 @@ funds-rate hike, per unit
 Setup (FRB/US's Python package pins old libraries, so use an isolated environment):
     uv venv --python 3.9 venv39
     uv pip install --python venv39/bin/python "pandas<3,>=2.1" scipy numpy "sympy==1.3" symengine networkx multiprocess lxml matplotlib
-    venv39/bin/python analysis/frbus_sensitivities.py
+    venv39/bin/python experimental/ms_fci/frbus_sensitivities.py
 The script downloads pyfrbus.zip and data_only_package.zip from federalreserve.gov to raw/frbus/ (not committed).
-Output: analysis/frbus_sensitivities.csv
+Output: experimental/ms_fci/frbus_sensitivities.csv
 """
 import os, sys, io, zipfile, urllib.request
 import numpy as np, pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
+ROOT = os.path.dirname(os.path.dirname(HERE))
 RAW = os.path.join(ROOT, "raw", "frbus")
 BASE_URL = "https://www.federalreserve.gov/econres/files/"
 

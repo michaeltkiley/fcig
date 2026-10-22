@@ -1,10 +1,10 @@
 """
-Five-variable financial conditions index in federal funds rate equivalents (a reconstruction; see notes/morgan_stanley_fci.md).
+Five-variable financial conditions index in federal funds rate equivalents (a reconstruction; see experimental/ms_fci/NOTES.md).
 
     FFReq(t) = s10 * d(10-yr yield, pp) + sBBB * d(BBB spread, pp) - sS * 100 dln(S&P 500) + sD * 100 dln(broad dollar)
                + sO * 100 dln(WTI oil),     all changes from a base date,
 
-with the sensitivities s from FRB/US (analysis/frbus_sensitivities.csv: the GDP effect of each variable relative to that of the funds
+with the sensitivities s from FRB/US (experimental/ms_fci/frbus_sensitivities.csv: the GDP effect of each variable relative to that of the funds
 rate, at the q4, q8 or q12 horizon). Positive = tighter. Divide by 0.25 for "25 bp hike equivalents".
 
 Data: FRED DGS10, ICE BofA BBB option-adjusted spread (history/bbb_oas.csv, FRED BAMLC0A4CBBB), S&P 500 (history/sp500.csv, FRED SP500),
@@ -12,13 +12,13 @@ the Fed's broad dollar index DTWEXBGS extended with the ICE dollar index (histor
 The Morgan Stanley index is not published, so this is a stand-in built from the described method. The date of the Iran conflict is not
 established here, so the output scans base dates; it also compares with the SF Fed proxy funds rate (raw/proxy-funds-rate-data.xlsx if present).
 
-Usage:  python analysis/ms5_index.py [--horizon q4|q8|q12] [--tenyear parallel|alone]   (run analysis/frbus_sensitivities.py first)
-Outputs: analysis/ms5_index_daily.csv (contributions to the change since BASE, in pp of funds rate equivalent)
+Usage:  python experimental/ms_fci/ms5_index.py [--horizon q4|q8|q12] [--tenyear parallel|alone]   (run experimental/ms_fci/frbus_sensitivities.py first)
+Outputs: experimental/ms_fci/ms5_index_daily.csv (contributions to the change since BASE, in pp of funds rate equivalent)
 """
 import os, sys
 import numpy as np, pandas as pd
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, ROOT)
 from fcig_replicate import fetch, fred, read_hist, extend_dollar, hold, RAW
 

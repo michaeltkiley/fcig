@@ -5,14 +5,14 @@ The MS-style index is the level index of ms5_level.py (FRED inputs by default), 
 equivalents s_j. Variants: nominal 10-year, real 10-year, real gap to r*, each at the q4 sensitivities, and the q8 / q12 sensitivities, plus the
 index without oil. Both indices are on the same trading-day calendar (the GS file's).
 
-Usage:  python analysis/ms5_vs_gs.py [--source fred|frbus]
-Output: analysis/ms5_vs_gs.csv
+Usage:  python experimental/ms_fci/ms5_vs_gs.py [--source fred|frbus]
+Output: experimental/ms_fci/ms5_vs_gs.csv
 """
 import os, sys
 import numpy as np, pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
+ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 import ms5_level as L
 

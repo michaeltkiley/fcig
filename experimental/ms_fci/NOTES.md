@@ -66,7 +66,7 @@ index**; the weights are mine and the original is unverified.
 implies. Each index variable's *partial* effect on GDP (no spillovers to the other variables) is then expressed as a fraction of that hike's effect. The
 equivalent of a combined move is the sum of its partial equivalents, so it also matters that the partials roughly add up to the full hike (checked below).
 
-**Step 1: FRB/US sensitivities** (`analysis/frbus_sensitivities.py`, output `analysis/frbus_sensitivities.csv`). The Board's public FRB/US model and Python
+**Step 1: FRB/US sensitivities** (`experimental/ms_fci/frbus_sensitivities.py`, output `experimental/ms_fci/frbus_sensitivities.csv`). The Board's public FRB/US model and Python
 package run here (the package pins old libraries, so it needs an isolated Python 3.9 environment; setup is in the script's docstring). Steady-state baseline,
 VAR expectations, persistent shocks. In the partial experiments stocks (required return and stock wealth), the dollar, oil and the BBB spread are held at
 baseline except the shocked variable, and the funds rate is held fixed. The long-rate shock is a parallel +1 pp in the 5-, 10- and 30-year yields (the
@@ -101,7 +101,7 @@ Choices that matter and are mine: horizon (q4 is first-year growth), persistent 
 stock wealth, real rather than nominal exchange rate, VAR expectations rather than model-consistent, steady-state starting point rather than 2026 conditions.
 The Fed's own FCI-G multipliers (this repo's `multipliers.csv`) imply larger relative weights for equities and the dollar.
 
-**Step 2: daily index** (`analysis/ms5_index.py`, output `analysis/ms5_index_daily.csv` and `analysis/ms5_index.png`): FFR equivalent = sum of
+**Step 2: daily index** (`experimental/ms_fci/ms5_index.py`, output `experimental/ms_fci/ms5_index_daily.csv` and `experimental/ms_fci/ms5_index.png`): FFR equivalent = sum of
 sensitivity times the change since a base date in the 10-year (DGS10), BBB OAS (FRED), S&P 500, broad dollar (DTWEXBGS extended with DXY) and WTI.
 Positive = tighter; divide by 0.25 for 25 bp hikes. Options: `--horizon q4|q8|q12`, `--tenyear alone`.
 
@@ -124,11 +124,11 @@ Positive = tighter; divide by 0.25 for 25 bp hikes. Options: `--horizon q4|q8|q1
 **Cannot be validated.** No published observations of a five-variable Morgan Stanley index were found, so nothing here shows it matches.
 
 ## D. Level version of the five-variable index (21 Oct 2026)
-`analysis/ms5_level.py`: deviation of each variable from its 1990 to latest average times the sensitivities in section C; positive = tighter than average,
+`experimental/ms_fci/ms5_level.py`: deviation of each variable from its 1990 to latest average times the sensitivities in section C; positive = tighter than average,
 in pp of funds rate (q4). Stationary transforms: 10-year yield (nominal, real, or the real gap to r*), BBB spread, stock valuation (CAPE from the GS file),
 real dollar (the FRB/US real exchange rate fpxr, put on a daily footing with the nominal broad dollar), real oil (WTI over the FRB/US PCE price level).
 Everything except daily WTI comes from this repo's GS file and the Fed's FRB/US history, so FRED is not needed (FRED was down when this was built).
-`--rstar` measures the 10-year as the real yield gap to Kiley's r* (`history/kiley_rstar.csv`, from the r* repo; one-sided estimate, 1.67% in 2026Q2).
+`--rstar` measures the 10-year as the real yield gap to Kiley's r* (`experimental/ms_fci/kiley_rstar.csv`, from the r* repo; one-sided estimate, 1.67% in 2026Q2).
 
 | 16 Oct 2026 vs 1990-2026 average | Total | 10-yr | BBB | Equities | Dollar | Oil | Percentile |
 |---|---|---|---|---|---|---|---|
@@ -161,7 +161,7 @@ CPIAUCSL and the real 10-year from the Cleveland Fed's EXPINF10YR (`--source frb
 percentile; nominal 10-year: +0.80 (77th); real 10-year (Cleveland expected inflation): +0.63 (76th). With the FRB/US-based inputs the r* version reads +1.21: the
 real-rate and real-dollar construction moves the level by up to half a point, a source uncertainty on top of the sensitivities.
 
-**Correlation of daily changes with the GS FCI** (`analysis/ms5_vs_gs.py`, `analysis/ms5_vs_gs.csv`; same trading days, 1990 to 20 Oct 2026, n about 9,200).
+**Correlation of daily changes with the GS FCI** (`experimental/ms_fci/ms5_vs_gs.py`, `experimental/ms_fci/ms5_vs_gs.csv`; same trading days, 1990 to 20 Oct 2026, n about 9,200).
 | Variant of the MS-style index | 1990-2026 | 1990-99 | 2000-08 | 2009-19 | 2020-26 | last 12 months |
 |---|---|---|---|---|---|---|
 | q4 sensitivities (all 10-year versions identical in daily changes) | **0.81** | 0.83 | 0.81 | 0.83 | 0.79 | 0.91 |
@@ -203,7 +203,7 @@ Brent and WTI gave the same percentage change over both windows, although their 
 
 ## G. Exogenous lists, revised after review (22 Oct 2026)
 In the earlier partial experiments (BBB spread, dollar, oil, equity) the Treasury curve (rg5, rg10, rg30), the 3-month bill (rtb), the mortgage rate (rme) and the car loan
-rate (rcar) were free; they were not listed as exogenous. All partial experiments now fix them. Exact `exoglist` per experiment (`analysis/frbus_sensitivities.py` prints them):
+rate (rcar) were free; they were not listed as exogenous. All partial experiments now fix them. Exact `exoglist` per experiment (`experimental/ms_fci/frbus_sensitivities.py` prints them):
 | Experiment | Shocked | Exogenous (fixed at baseline unless shocked) | Free (transmission) |
 |---|---|---|---|
 | Hike, full transmission (yardstick) | rff +1 pp | rff | everything |
@@ -240,13 +240,13 @@ a real 10-year with mean 1.84 and latest 2.42. (c) r* variant (`--rstar`): the r
 Only the 10-year term differs between versions; its sensitivity (0.569) is unchanged and each version is a deviation from its own 1990-2026 mean.
 
 **The r* data.** Kiley's semi-structural Kalman-filter model of the equilibrium real rate (Kiley, "What Can the Data Tell Us about the Equilibrium Real Interest Rate?", IJCB 2020), from this account's
-`output_gap/rstar` repo (copied to `history/kiley_rstar.csv`, 1961Q1 to 2026Q2). Observables: per-capita real GDP growth (FRED GDPC1, CNP16OV), the unemployment rate (UNRATE), core PCE inflation (PCEPILFE),
+`output_gap/rstar` repo (copied to `experimental/ms_fci/kiley_rstar.csv`, 1961Q1 to 2026Q2). Observables: per-capita real GDP growth (FRED GDPC1, CNP16OV), the unemployment rate (UNRATE), core PCE inflation (PCEPILFE),
 long-run inflation expectations (Hoey/Barclays de Zoete Wedd poll before 1991Q4, then the Philadelphia Fed SPF median 10-year CPI forecast) and the federal funds rate (FEDFUNDS), estimated at the posterior mode.
 r* = the model's trend state plus a constant of 2.52 (the 1960-2007 mean realized real funds rate). Used here: the one-sided (filtered, real-time) estimate, quarterly, stamped mid-quarter, interpolated to daily and held at
 its last value (1.67%) after 2026Q2; the two-sided smoothed estimate is available (`--twosided`). One-sided r* falls from 2.6 (1990Q1) to 1.7, dips to about 0 in 2020Q2 and returns to 1.7; the smoothed estimate falls
 from 1.9 to 1.7 and has a 90% band of about -0.7 to 4.1 in 2026Q2. Cautions: the filtered series starts high in the 1990s (2.6 versus 1.9 smoothed), the 2020Q2 dip is a filter artifact of the pandemic quarter, and the current r* is very uncertain.
 
-**Chart** (`analysis/ms5_rstar_compare.png`). Nominal vs real vs r*-gap totals: correlation of levels between nominal and r*-gap versions +0.85, of daily changes +0.998 (the adjustment is a low-frequency level shift, not a change in daily dynamics).
+**Chart** (`experimental/ms_fci/ms5_rstar_compare.png`). Nominal vs real vs r*-gap totals: correlation of levels between nominal and r*-gap versions +0.85, of daily changes +0.998 (the adjustment is a low-frequency level shift, not a change in daily dynamics).
 The adjustment lowers the early-1990s readings by about 1 to 1.5 pp (high inflation expectations and a high r*), is small around 2000 to 2008, and raises 2010 to 2021 by about 0.5 to 1.0 pp (very low real rates relative to r*, which was itself low). Latest: nominal +0.80, real +0.62,
 r*-gap +0.72 pp; 10-year term +0.51, +0.33, +0.44. Level correlation with the GS FCI: nominal 0.80, real 0.83, r*-gap 0.78.
 

@@ -2,7 +2,7 @@
 Chart: the MS-style level index with the nominal 10-year (default), the real 10-year, and the real 10-year gap to r* (Kiley), plus the underlying rates.
 
 Panels: (1) the three versions of the total; (2) the 10-year term in each version (funds-rate pp); (3) nominal 10-year, expected inflation (Cleveland Fed),
-real 10-year and Kiley's r* (one-sided, as used, and two-sided for reference). Output: analysis/ms5_rstar_compare.png
+real 10-year and Kiley's r* (one-sided, as used, and two-sided for reference). Output: experimental/ms_fci/ms5_rstar_compare.png
 """
 import os, sys
 import numpy as np, pandas as pd
@@ -25,7 +25,7 @@ for name, real10, rstar in (("nominal 10-year (default)", False, False), ("real 
     out[name] = L.level(X, S, KREQ)
 L.REAL10, L.RSTAR = False, False
 X, G = L.build()
-r2 = pd.read_csv(os.path.join(L.ROOT, "history", "kiley_rstar.csv"), index_col=0)["rstar_2side"]
+r2 = pd.read_csv(os.path.join(L.HERE, "kiley_rstar.csv"), index_col=0)["rstar_2side"]
 r2.index = pd.PeriodIndex(r2.index, freq="Q").to_timestamp() + pd.Timedelta(days=45)
 r2d = r2.reindex(r2.index.union(X.index)).interpolate("time").reindex(X.index).ffill().bfill()
 

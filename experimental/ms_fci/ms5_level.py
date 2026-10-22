@@ -1,6 +1,6 @@
 """
 Level version of the five-variable funds-rate-equivalent index: deviations of each variable from its 1990 to latest average, times the FRB/US
-sensitivities (analysis/frbus_sensitivities.csv), summed. Positive = tighter than average conditions; units are pp of funds rate.
+sensitivities (experimental/ms_fci/frbus_sensitivities.csv), summed. Positive = tighter than average conditions; units are pp of funds rate.
 
     level(t) = s10 * (y10 - mean) + sBBB * (BBB spread - mean) - sS * 100 (ln CAPE - mean) + sD * 100 (ln real dollar - mean)
                + sO * 100 (ln real WTI - mean)
@@ -12,19 +12,19 @@ nominal broad dollar), oil in real terms (WTI over the FRB/US PCE price level), 
 needed for daily WTI (a saved copy is used when FRED is down). The sensitivities come from local shocks around a steady state, so applying them to large deviations over decades is a linear
 extrapolation. Validation: the index plus the average funds rate should track the effective funds rate before 2008 and the SF Fed proxy funds rate after.
 
-Real-rate adjustments: --rstar measures the 10-year as the real yield gap to Kiley's r* (history/kiley_rstar.csv, copied from the r* repo; one-sided
+Real-rate adjustments: --rstar measures the 10-year as the real yield gap to Kiley's r* (kiley_rstar.csv in this folder, copied from the r* repo; one-sided
 estimate, --twosided for the smoothed one); --erp removes from the equity valuation (100 ln CAPE) the part explained by the real 10-year yield, using the FRB/US
 stock equation (25% on the price per 1 pp of required return). NOT RECOMMENDED: in the data the valuation has no stable relation with the real
 10-year yield (daily 1990-2026 slope -1.2% per pp, s.e. 2.7; monthly changes ~0; by sub-period -17% to +24%), so the model's mapping overstates the
 adjustment and pushes the 2009-2012 equity term to +2.4 to +3.1 pp of tightening. Kept for comparison only.
 
-Usage:  python analysis/ms5_level.py [--horizon q4|q8|q12] [--real10] [--rstar] [--erp] [--source fred|frbus]
-Outputs: analysis/ms5_level_daily[_variant].csv, analysis/ms5_level[_variant].png (variant suffix: _real10, _rstar, plus _erp)
+Usage:  python experimental/ms_fci/ms5_level.py [--horizon q4|q8|q12] [--real10] [--rstar] [--erp] [--source fred|frbus]
+Outputs: experimental/ms_fci/ms5_level_daily[_variant].csv, experimental/ms_fci/ms5_level[_variant].png (variant suffix: _real10, _rstar, plus _erp)
 """
 import os, sys
 import numpy as np, pandas as pd
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, ROOT)
 from fcig_replicate import fetch, fred, hold, RAW
 
@@ -124,7 +124,7 @@ def build():
     X["lnroil"] = np.log(wti / price)
     real10 = X.y10 - einf
     X["real10"] = real10
-    r = pd.read_csv(os.path.join(ROOT, "history", "kiley_rstar.csv"), index_col=0)[RSTAR_COL]   # Kiley r*, quarterly, from the r* repo
+    r = pd.read_csv(os.path.join(HERE, "kiley_rstar.csv"), index_col=0)[RSTAR_COL]   # Kiley r*, quarterly, from the r* repo
     r.index = pd.PeriodIndex(r.index, freq="Q").to_timestamp() + pd.Timedelta(days=45)
     X["rstar"] = to_daily(r.dropna(), idx).bfill()
     X["einf"] = einf
