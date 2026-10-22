@@ -30,3 +30,9 @@ Weights (pp of funds-rate per unit) MS set: 10-year 0.82 (0.98); BBB -0.73 (-0.5
 ## Caveats and follow-ups
 Few events (270) and daily event-day changes contain other news; oil and fed funds responses are noise. Path surprise in the ZLB era is partly QE/forward guidance, and ED4 switched from Eurodollar to SOFR futures in 2022.
 Equal-weight or constrained alternatives (e.g. fix BBB at FRB/US weight, or use BBB yield instead of the spread), intraday-only weights for 10-year/equities/dollar, and the target surprise as a second set of weights are natural next steps.
+
+## Without the BBB spread (`path_fci_nobbb.py`)
+BBB dropped after the IV check (`path_fci_iv_bbb.py`: spread falls ~0.4-0.5 pp per 1 pp path-driven 10-year rise, first-stage F > 50, same in Baa and ICE data).
+Weights re-estimated (full sample): 10-year 0.96, dollar 0.107 per 1%, CAPE -0.031 per 1%, fed funds 0.01, oil -0.003 (FRB/US q4: 0.57, 0.10, -0.032, 0, +0.008).
+Correlation with the GS FCI, 1990-2026: levels 0.63-0.64 (FRB/US-weighted 0.76), daily changes 0.77 (0.80). Today: GS-style +1.05 pp, MS-style +0.90 (FRB/US weights +0.91); non-ZLB betas +1.45 / +1.27.
+Path-weighted indexes still run well below FRB/US-weighted ones in 2009-2021 (about -3 pp vs -1.6) because the 10-year weight is 1.7x higher.
