@@ -39,7 +39,7 @@ def main():
             for dt in dates:
                 i0 = X.index[X.index.get_indexer([pd.Timestamp(dt)], method="pad")[0]]
                 rows.append(dict(index="GS FCI (index pts)", tenyr="-", start=i0.date(), total=G.fci.loc[last] - G.fci.loc[i0]))
-        raw = {n: P.VARS[n][1] * (X[P.VARS[n][0]].iloc[-1] - X[P.VARS[n][0]].loc[X.index[X.index.get_indexer([pd.Timestamp(dates[0])], method='pad')[0]])) for n in W['GSS path'].index}
+        raw = {n: P.VARS[n][1] * (X[P.VARS[n][0]].iloc[-1] - X[P.VARS[n][0]].loc[X.index[X.index.get_indexer([pd.Timestamp(dates[0])], method='pad')[0]]]) for n in W['GSS path'].index}
         print(f"[{vlab}] change since {dates[0]} in the inputs (10-yr pp, 100 ln CAPE, 100 ln real dollar): " + ", ".join(f"{k.split(' (')[0]} {v:+.2f}" for k, v in raw.items()), f"(to {last.date()})")
     R = pd.DataFrame(rows)
     pd.set_option("display.width", 200)
