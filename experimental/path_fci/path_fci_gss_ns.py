@@ -9,7 +9,7 @@ Factors, from the event-window surprises in MP1, MP2, ED2, ED3, ED4 (USMPD "Mone
 Then, as in path_fci_raw_ed4.py:  x_j = a_j + b_j factor + e_j  (UST10Y pp, SP500 %, DXY %);  w = Psi^-1 b / (b' Psi^-1 b), full error covariance (diagonal variant also printed);
 index = sum_j w_j (x_j - mean_j) with the real 10-year (--real10), 100 ln CAPE and 100 ln real dollar.
 
-Usage:  python experimental/path_fci/path_fci_gss_ns.py [--sample full|nonzlb] [--real10]
+Usage:  python experimental/path_fci/path_fci_gss_ns.py [--sample full|nonzlb] [--real10] [--diag]
 Outputs: path_fci_{gss,ns}_{ms,gs}_<sample>[_real10].png
 """
 import os, argparse
@@ -50,13 +50,13 @@ def estimate(d, fac, full=True):
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--sample", default="full", choices=["full", "nonzlb"]); ap.add_argument("--real10", action="store_true")
+    ap = argparse.ArgumentParser(); ap.add_argument("--sample", default="full", choices=["full", "nonzlb"]); ap.add_argument("--real10", action="store_true"); ap.add_argument("--diag", action="store_true", help="plot the diagonal-covariance weights (errors treated as independent)")
     ap.add_argument("usmpd", nargs="?", default=P.USMPD)
     a = ap.parse_args()
     ev = P.events(a.usmpd)
     P.L.REAL10 = a.real10
     X, G = P.L.build()
-    tag = "_real10" if a.real10 else ""
+    tag = ("_real10" if a.real10 else "") + ("_diag" if a.diag else "")
     ten = "real 10-yr" if a.real10 else "10-yr"
     d = ev.dropna(subset=FUT + ["UST2Y"] + list(ENDOG.values())).reset_index(drop=True)
     if a.sample == "nonzlb":
@@ -89,10 +89,10 @@ def main():
             print("  weights [90% band]: " + ", ".join(f"{n} {w[i]:+.4f} [{np.percentile(bs[:, i], 5):+.3f}, {np.percentile(bs[:, i], 95):+.3f}]" for i, n in enumerate(names)) + f"; shares {', '.join(f'{x:.0%}' for x in w * b)}")
             print(f"  index: level sd {idx.std():.2f}, daily sd {idx.diff().std():.3f}; vs MS FRB/US: levels {np.corrcoef(idx, ms_frbus)[0, 1]:.2f}, daily {idx.diff().corr(ms_frbus.diff()):.2f}; "
                   f"vs GS FCI: levels {np.corrcoef(idx, gs)[0, 1]:.2f}, daily {idx.diff().corr(gs.diff()):.2f}; latest {idx.iloc[-1]:+.2f}")
-        idx = idxs["full cov"]
+        idx = idxs["diag" if a.diag else "full cov"]
         for key in ("ms", "gs"):
             fig, ax = plt.subplots(figsize=(13, 6.5))
-            ax.plot(idx.index, idx, color="#1f5fa8", lw=1.8, label=f"{lab} regressions, no instruments; {ten}, CAPE, real dollar (left axis, {unit[fname]})")
+            ax.plot(idx.index, idx, color="#1f5fa8", lw=1.8, label=f"{lab} regressions, no instruments, {'independent-error (diagonal)' if a.diag else 'full-covariance'} weights; {ten}, CAPE, real dollar (left axis, {unit[fname]})")
             ax.axhline(0, color="gray", lw=0.8); ax.set_ylabel("tighter above zero (vs 1990-2026 average)", fontsize=11)
             if key == "ms":
                 ax.plot(ms_frbus.index, ms_frbus, color="#d62728", lw=1.8, label=f"MS-style index, FRB/US weights, all five variables, {ten} (left axis, pp of funds rate)")
