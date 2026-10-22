@@ -62,13 +62,26 @@ def main():
             print(f"  check {name} {lab}: response {b:+.3f} per NS unit -> implied funds-rate pp per own unit {fr['average of MP1 and ED4'] / b:.2f}"
                   + ("  (native 1.00 expected for MS-FRB if the model weights agree with markets)" if name.startswith("MS") else "  (MKT-NS is in NS units, so 1.00 NS unit = 1 by construction; funds-rate pp = average slope)"))
     # level series in funds-rate pp, GS with the NS conversion
-    k = fr["average of MP1 and ED4"] / res[("GS (index points)", "t-1 to t")][0]
+    k = fr["average of MP1 and ED4"] / res[("GS (index points)", "t-1 to t+1")][0]       # two-day window (the GS dollar input is a noon series)
     gsm = (G.fci - G.fci.mean()) * k
     ms_m = ms - ms.mean(); mkt_f = (mkt - mkt.mean()) * fr["average of MP1 and ED4"]
     out = pd.DataFrame({"GS via NS": gsm, "MS-FRB": ms_m, "MKT via NS": mkt_f}).dropna()
     mo = out.resample("ME").last()
     print(f"\nLevels in funds-rate pp (daily, 1990-2026): sd {out.std().round(2).to_dict()}; latest {out.iloc[-1].round(2).to_dict()}")
     print("monthly corr of levels:\n", mo.corr().round(2).to_string())
+    print(f"GS conversion used for the chart: {k:.2f} funds-rate pp per index point (two-day window, average of MP1 and ED4)")
+    print("daily-change correlation:", round(float(out['GS via NS'].diff().corr(out['MKT via NS'].diff())), 2), "; latest:", out.iloc[-1].round(2).to_dict())
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(figsize=(13, 6.5))
+    ax.plot(out.index, out["GS via NS"], color="#2ca02c", lw=1.5, label=f"GS FCI (replication), converted by the NS shock: {k:.2f} pp of funds rate per index point")
+    ax.plot(out.index, out["MKT via NS"], color="#ff7f0e", lw=1.5, label="Market-based index (10-year, equities, dollar; NS-shock weights), in funds-rate pp")
+    ax.axhline(0, color="gray", lw=0.8); ax.grid(alpha=0.25); ax.tick_params(labelsize=11)
+    ax.set_ylabel("pp of funds rate, tighter above zero (vs 1990-2026 average)", fontsize=11)
+    ax.set_title(f"GS and the market-based index in funds-rate equivalents via the Nakamura-Steinsson shock (monthly corr of levels {mo.corr().loc['GS via NS', 'MKT via NS']:.2f})", fontsize=11)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.07), ncol=1, fontsize=10, frameon=False)
+    fig.tight_layout(); fig.savefig(os.path.join(HERE, "gs_mkt_via_ns.png"), dpi=130)
 
 
 if __name__ == "__main__":
