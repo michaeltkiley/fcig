@@ -4,7 +4,9 @@ EXTENSION of frbus_sensitivities.py (unchanged): three more partial experiments 
 Same FRB/US set-up (VAR expectations, steady-state baseline 2040Q1, 24 quarters), same exogenized list FIXED (policy rate, bill rate and the 5-, 10- and 30-year yields, mortgage and car-loan
 rates, BBB spread, required return on equity and stock wealth, real exchange rate, oil), shocking one thing at a time; yardstick = the GDP effect of a 1 pp full-transmission hike
 (taken from frbus_sensitivities.csv).
-    rshort   +1 pp on the policy rate AND the 3-month bill rate (the short end), everything else in FIXED held at baseline
+    rshort   +1 pp on the policy rate AND the 3-month bill rate (the short end), everything else in FIXED held at baseline; the VAR expectations (the 28 z-variables) respond, so this includes
+             the effect of the funds rate as an input to expected inflation and activity (rff enters the expectations VAR)
+    rshort_direct   the same with all 28 z expectation aggregates also held at baseline: the direct effect of the short rate, which is tiny (checked 22 Oct 2026)
     rme      +1 pp on the mortgage rate with the 10-year held fixed (= a mortgage spread shock)
     phouse   +10 % on the house price index (phouse; household housing wealth follows), everything else in FIXED held at baseline
 Also prints the full-hike spillovers at q4 and a sum-of-partials check over the enlarged set.
@@ -44,6 +46,11 @@ def main():
     out = {}
     s0, s1 = run_with(FIXED, ["rff", "rtb"], 1.0)
     out["rshort"] = (gdp(s1, s0), 1.0)
+    import re as _re
+    xml = open(os.path.join(F.RAW, "pyfrbus", "models", "model.xml")).read()
+    Zv = [v for v in _re.findall(r"<variable>\s*<name>([a-z0-9_]+)</name>", xml) if v.startswith("z") and v in base.columns]
+    s0, s1 = run_with(FIXED + Zv, ["rff", "rtb"], 1.0)
+    out["rshort_direct"] = (gdp(s1, s0), 1.0)
     s0, s1 = run_with(FIXED, ["rme"], 1.0)
     out["rme"] = (gdp(s1, s0), 1.0)
     s0, s1 = run_with(FIXED + ["phouse"], ["phouse"], 0.10, mult=True)
@@ -76,10 +83,11 @@ def main():
     # partial sums with the existing per-unit effects (original and extension); policy+short end and curve handled separately
     per = lambda v, qq: float(ref.loc[v, f"gdp_per_unit_{qq}"])
     for qq, i in (("q4", 3), ("q8", 7), ("q12", 11)):
-        parts = {"short end": sp["rff"] * float(t.loc["rshort", f"gdp_per_unit_{qq}"]), "10-year (parallel curve)": sp["rg10"] * per("rg10", qq),
+        parts = {"short end (with VAR expectations)": sp["rff"] * float(t.loc["rshort", f"gdp_per_unit_{qq}"]), "short end (direct)": sp["rff"] * float(t.loc["rshort_direct", f"gdp_per_unit_{qq}"]), "10-year (parallel curve)": sp["rg10"] * per("rg10", qq),
                  "mortgage spread": sp["mortgage spread"] * float(t.loc["rme", f"gdp_per_unit_{qq}"]), "BBB spread": sp["BBB spread"] * per("rbbbp", qq),
                  "stocks": -sp["stocks %"] * per("req", qq), "dollar": sp["dollar %"] * per("fpxr", qq), "house prices": sp["house prices %"] * float(t.loc["phouse", f"gdp_per_unit_{qq}"])}
-        print(f"  {qq}: full hike GDP {gF[i]:+.3f}; sum of partials {sum(parts.values()):+.3f} = " + ", ".join(f"{k} {v:+.3f}" for k, v in parts.items()))
+        tot_exp = sum(v for k, v in parts.items() if k != "short end (direct)"); tot_dir = sum(v for k, v in parts.items() if k != "short end (with VAR expectations)")
+        print(f"  {qq}: full hike GDP {gF[i]:+.3f}; sum of partials with the short end incl. expectations {tot_exp:+.3f}, with the direct short end {tot_dir:+.3f}; parts: " + ", ".join(f"{k} {v:+.3f}" for k, v in parts.items()))
 
 
 if __name__ == "__main__":

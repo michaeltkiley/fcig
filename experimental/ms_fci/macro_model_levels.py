@@ -2,14 +2,14 @@
 Macro-model levels index: financial variables weighted by FRB/US funds-rate equivalents (q4), levels relative to the 1990-2026 average, in pp of funds rate (tighter above zero).
 Replaces the "MS-style" label (no direct source for that index; this is our own construction); oil is dropped.
 Variables and weights (frbus_sensitivities.csv and frbus_sensitivities_ext.csv, q4):
-    policy rate (DFF; short end)   0.242 per pp          10-year Treasury (parallel curve)  0.570 per pp
+    policy rate (DFF; short end)   0.009 per pp (direct effect, VAR expectations held fixed; --withexp uses 0.242, which includes the funds rate's role in the expectations VAR)          10-year Treasury (parallel curve)  0.570 per pp
     mortgage spread (PMMS 30-yr less 10-yr)  0.416 per pp   BBB spread (ICE BofA/Baa)  0.127 per pp
     equities (100 ln CAPE)  -0.032 per %           real dollar (100 ln)  0.100 per %
     house prices (100 ln of the house price to rent ratio: Zillow ZHVI, Case-Shiller before 2000, over CPI owners' equivalent rent CUSR0000SEHC; monthly, carried within the month)  -0.029 per %
         [version "with house prices" only; the ratio is the stationary analogue of CAPE and is the variable in the FRB/US house-price equation. In raw levels the house price index trends so strongly
          that it contributes about -2.2 pp today and swamps everything else; --rawhp uses it]
 Two versions: without and with house prices. --real10: the policy rate and 10-year are real (each less Cleveland Fed 10-year expected inflation).
-Usage: python experimental/ms_fci/macro_model_levels.py [--real10] [--rawhp]
+Usage: python experimental/ms_fci/macro_model_levels.py [--real10] [--rawhp] [--withexp]
 Outputs: macro_model_levels_daily[_real10].csv, macro_model_levels[_real10].png
 """
 import os, sys
@@ -29,7 +29,7 @@ def main():
     X, G = P.L.build()
     base = pd.read_csv(os.path.join(HERE, "frbus_sensitivities.csv"), index_col=0)["ffr_eq_q4"]
     ext = pd.read_csv(os.path.join(HERE, "frbus_sensitivities_ext.csv"), index_col=0)["ffr_eq_q4"]
-    W = {"policy rate": ext["rshort"], "10-year": base["rg10"], "mortgage spread": ext["rme"], "BBB spread": base["rbbbp"], "equities": -base["req"], "dollar": base["fpxr"], "house prices": ext["phouse"]}
+    W = {"policy rate": ext["rshort" if "--withexp" in sys.argv else "rshort_direct"], "10-year": base["rg10"], "mortgage spread": ext["rme"], "BBB spread": base["rbbbp"], "equities": -base["req"], "dollar": base["fpxr"], "house prices": ext["phouse"]}
     print("weights (pp of funds rate per unit, q4): " + ", ".join(f"{k} {v:+.3f}" for k, v in W.items()))
     idx = X.index
     mort = R.fred("MORTGAGE30US").reindex(idx, method="ffill")
@@ -48,7 +48,7 @@ def main():
     A = comp.drop(columns="house prices").sum(axis=1)
     B = comp.sum(axis=1)
     out = pd.DataFrame({"without house prices": A, "with house prices": B})
-    tag = ("_real10" if REAL else "") + ("_rawhp" if "--rawhp" in sys.argv else "")
+    tag = ("_real10" if REAL else "") + ("_rawhp" if "--rawhp" in sys.argv else "") + ("_withexp" if "--withexp" in sys.argv else "")
     out.to_csv(os.path.join(HERE, f"macro_model_levels_daily{tag}.csv"), float_format="%.4f", index_label="date")
     print(f"\n{'real' if REAL else 'nominal'} versions. sd of level: {out.std().round(2).to_dict()}; daily-change sd {out.diff().std().round(3).to_dict()}; corr of the two (levels {out.corr().iloc[0, 1]:.3f}, daily changes {out.diff().corr().iloc[0, 1]:.3f})")
     print("latest:", out.iloc[-1].round(2).to_dict(), "on", out.index[-1].date())
