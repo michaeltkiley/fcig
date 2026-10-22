@@ -174,6 +174,33 @@ MS-style funds-rate equivalent (R-squared 0.66). Against the Fed FCI-G in daily 
 the GS FCI +0.84 and +0.70. The correlation rises with the horizon because longer-horizon sensitivities put more weight on the BBB spread (0.13 at q4, 0.19 at q12) and
 less on the dollar, closer to GS.
 
+## F. Check of the oil simulation, and what drives the oil contribution (22 Oct 2026)
+**Specification.** The oil price (poil, price of imported oil) is made exogenous and raised 10% for 24 quarters; the funds rate, stocks, dollar and BBB spread are held at
+baseline. In FRB/US poil enters only the petroleum import price (pmp), which feeds consumer energy prices (headline PCE inflation, real income) and petroleum import volumes; core
+inflation has no oil term, and the model's relative oil price (poilr) only feeds poil, so exogenizing poil cuts it out correctly. Outcome: a one-time step in headline inflation
+(+0.38 pp annualized in the first quarter, then none), no change in core inflation, the funds rate or long rates, unemployment +0.02 pp; GDP -0.035 / -0.046 / -0.058% at q4 / q8 / q12.
+**The funds-rate treatment does not matter for oil**: with the rule on and stocks, dollar and spread fixed the GDP effect is -0.034 / -0.041 / -0.046%; with everything endogenous
+-0.031 / -0.036 / -0.039%. Funds-rate equivalent of oil per 1%: 0.0081 (q4), 0.0051 (q8), 0.0043 (q12) as built; 0.0079, 0.0045, 0.0034 with the rule on; 0.0072, 0.0040, 0.0029 fully endogenous.
+**State dependence.** From the model's 2026Q2 baseline (oil $67, funds rate 3.7%) rather than the 2040 steady state: oil GDP effect -0.033 / -0.043 / -0.053% (nearly unchanged) but the
+1 pp hike yardstick is stronger (-0.52 / -1.09 / -1.65%), so the oil equivalent is 0.0066 / 0.0041 / 0.0034 (about 18% lower at q4), and every other equivalent would also fall by about 13%.
+The first-order size is plausible: net petroleum imports are about 0.7% of GDP in the model, so a 10% price rise costs about 0.07% of GDP before offsets.
+
+**Why oil contributes so much in the recent windows: the price moves were large, not the sensitivity.** 10% on oil is only 0.08 pp of funds rate (0.3 of a 25 bp hike); 48% is 0.39 pp.
+| Date | WTI | Brent | WTI % since 27 Feb | Oil contribution since 27 Feb |
+|---|---|---|---|---|
+| 27 Feb | $67.0 | $71.3 | 0 | 0 |
+| 6 Mar | $90.8 | $95.7 | +30% | +0.25 pp |
+| 20 Mar | $98.7 | $118.4 | +39% | +0.32 |
+| 7 Apr (peak) | $114.6 | | | |
+| 30 Apr | $108.6 | $124.2 | +48% | +0.39 |
+| 30 Jun | $70.6 | $70.5 | +5% | +0.04 |
+| 27 Aug | $84.8 | $90.2 | +24% | +0.19 |
+| 30 Sep | $97.2 | $115.9 | +37% | +0.30 |
+| 14 Oct | $96.3 | $126.6 | +36% | +0.30 |
+| 20 Oct | $107.9 | $115.2 | +48% | +0.39 |
+Since 27 Feb: WTI +47.7% (Brent +48.0%), +0.39 pp or 1.6 hikes. Since 27 Aug: WTI +24.1% (Brent +24.5%), +0.20 pp or 0.8 hikes. The window ends on a one-week jump in WTI ($96 to $108);
+Brent and WTI gave the same percentage change over both windows, although their spread varied between $4 and $11 during the year, so the choice of benchmark matters on individual days (14 Oct: WTI $96, Brent $127) but not for these two windows.
+
 ## Next steps for the five-variable version
 1. Find the original Morgan Stanley note behind the third-party summary: exact variables, the horizon, whether the equivalence is on growth or on a
    broader objective, and any quoted levels (even a few dated readings would give validation points).
