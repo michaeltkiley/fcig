@@ -36,3 +36,8 @@ BBB dropped after the IV check (`path_fci_iv_bbb.py`: spread falls ~0.4-0.5 pp p
 Weights re-estimated (full sample): 10-year 0.96, dollar 0.107 per 1%, CAPE -0.031 per 1%, fed funds 0.01, oil -0.003 (FRB/US q4: 0.57, 0.10, -0.032, 0, +0.008).
 Correlation with the GS FCI, 1990-2026: levels 0.63-0.64 (FRB/US-weighted 0.76), daily changes 0.77 (0.80). Today: GS-style +1.05 pp, MS-style +0.90 (FRB/US weights +0.91); non-ZLB betas +1.45 / +1.27.
 Path-weighted indexes still run well below FRB/US-weighted ones in 2009-2021 (about -3 pp vs -1.6) because the 10-year weight is 1.7x higher.
+
+## Reverse-regression index (`path_fci_reverse.py`, `path_fci_reverse_index.py`)
+Path surprise regressed on the variables' event-day changes together. BBB gets no weight (t = -0.1), supporting its exclusion. Raw coefficients are shrunk (R2 0.32; non-FOMC news in the regressors), so the index uses the
+relative weights rescaled so that a 1 pp path surprise moves it 1 pp. Rescaled weights (MS-style, no BBB): 10-year 1.13, CAPE -0.036 per 1%, dollar 0.075 per 1%, oil -0.006 per 1%.
+Correlation with the GS FCI: daily changes 0.75, levels 0.65 (GLS no BBB: 0.77 / 0.63-0.65). Latest: +0.3 pp (MS-style), +0.7 (Core), vs +0.9 / +1.0 for GLS.
