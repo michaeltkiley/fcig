@@ -4,7 +4,7 @@ EXPERIMENTAL add-on (path_fci.py unchanged): two clean charts, one for the MS-st
 Path-surprise index = rescaled reverse-regression weights (path_fci_reverse_index.py), BBB spread excluded:
     MS-style: 10-year, ln CAPE, real dollar, real oil        GS-style: fed funds, 10-year, ln CAPE, dollar
 The right axis (GS FCI) is scaled so that its standard deviation and mean line up with the index on the left (same zero line, same spread), so the two
-move together on the page exactly as far as their correlation says. MS chart also shows the same variables with FRB/US weights.
+move together on the page exactly as far as their correlation says.
 
 Usage:  python experimental/path_fci/path_fci_charts.py [--sample full|nonzlb]
 Outputs: path_fci_chart_ms_<sample>.png, path_fci_chart_gs_<sample>.png
@@ -45,14 +45,11 @@ def main():
               f"2012-12 {idx.loc[:'2012-12-31'].iloc[-1]:+.1f}, 2021-12 {idx.loc[:'2021-12-31'].iloc[-1]:+.1f}, 2009-03 {idx.loc[:'2009-03-31'].iloc[-1]:+.1f}")
         fig, ax = plt.subplots(figsize=(13, 6.5))
         ax.plot(idx.index, idx, color="#1f5fa8", lw=1.8, label=f"{key.upper()}-style index, path-surprise weights (left axis, pp of funds rate)")
-        if key == "ms":
-            f = lev(fr, names)
-            ax.plot(f.index, f, color="#d62728", lw=1.4, ls="--", label="same variables, FRB/US weights (left axis)")
         ax.axhline(0, color="gray", lw=0.8)
         ax.set_ylabel("pp of funds rate, tighter above zero (vs 1990-2026 average)", fontsize=11)
         k = gs.std() / idx.std()
         gl = (gs - gs.mean()) / k                       # GS FCI in left-axis units
-        allv = pd.concat([idx, gl] + ([f] if key == "ms" else []))
+        allv = pd.concat([idx, gl])
         pad = 0.04 * (allv.max() - allv.min())
         lo, hi = allv.min() - pad, allv.max() + pad
         ax.set_ylim(lo, hi)
