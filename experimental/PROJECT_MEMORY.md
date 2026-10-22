@@ -21,6 +21,9 @@ A short note (plan: `experimental/path_fci/NOTE_PLAN.md`) that expresses widely 
 - GS minus macro-model difference: mostly weights (dollar and equities weight gaps matter most because those variables swing widely), data (nominal vs real) in the early 1990s, coverage (mortgage spread, house prices) 8-18% (`experimental/fci_compare/gs_vs_macro_decomp.py`).
 - Changes since 27 Feb / 27 Aug 2026 (funds-rate pp): GSS nominal +1.13/+0.73; NS +0.65/+0.47; macro-model +0.92/+0.66 (without HP); all tighter, mostly 10-year and dollar, equities offset since Feb.
 
+- **SF Fed Proxy Funds Rate** (weekly; equals the funds rate until Dec 2008 by construction, so compare from 2009, in changes): 52-week changes correlate 0.74-0.78 with our indexes, 13-week 0.44-0.52; its changes are about 1.5x larger (sd 1.58 vs about 1.0-1.1 pp); since 27 Feb 2026 to 9 Oct it is +1.56 pp (ours +0.4 to +0.97), since 27 Aug +0.72 (ours +0.33 to +0.65); proxy minus funds rate now +1.23 pp. It is a third conversion lens (level mapping on pre-2008 relationships) and the natural anchor (`experimental/fci_compare/proxy_compare.py`).
+- **FCI-G is a flow measure.** Its level correlates only 0.43 with the macro-model level, but with the macro-model 12-month change it correlates 0.84 (1-year lookback; 0.90 with the real index including house prices; 0.93 from 1998) and with the 24-month change 0.72-0.84 for the 3-year lookback (0.56 at 12 months): the best-matching horizon equals FCI-G's lookback, and FCI-G lags the levels index by about 3 months (`macro12m_vs_fcig.py`, `--1yr`). Most of the FCI-G level disagreement is construction, not weights.
+
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.
 
@@ -33,6 +36,7 @@ No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and c
 - The local-projection work (analysis/) was deleted at the user's request; it exists in git history (commits b36b910..a17ee11) if ever needed.
 
 ## 6. Open items / next steps
+0. (22 Oct 2026, sign-off) Next session: start with item 1 (NFCI) or item 2 (swap the macro-model index into `common_unit.py` and add the proxy funds rate, ANFCI and OFR FSI); decide whether the note compares FCI-G with level indexes only through matched-horizon changes (the evidence says it should).
 1. NFCI feasibility: download the Chicago Fed weekly contributions and indicator weights; group mapping; weekly-window conversion; vintages (ALFRED).
 2. Swap the macro-model levels index into `common_unit.py` (replacing the MS-style series) and re-run the metrics, episodes and group table; add ANFCI, SF Fed proxy funds rate, OFR FSI.
 3. Decide treatment of corporate yields in the market-based lens (intraday data search) and of the pre-specified episode metric.
