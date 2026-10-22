@@ -223,6 +223,33 @@ Result of the change: sensitivities moved only in the third decimal (funds-rate 
 0.030, 0.098, 0.0051); the partial-sum check against the full hike is -0.476 / -0.924 / -1.271 versus -0.453 / -0.946 / -1.430. Windows to 20 Oct (q4): since 27 Feb +0.98 pp (3.9 hikes), since
 27 Aug +0.73 pp (2.9 hikes); daily-change correlation with the GS FCI 0.82 (q4), 0.91 without oil.
 
+## H. Data inputs to the MS-style level index, and the r* variant (22 Oct 2026)
+Index = sum over five variables of (FRB/US funds-rate equivalent) x (variable minus its 1990-01-02 to 2026-10-20 daily mean); trading days of the GS file (9,268). Positive = tighter.
+| Input | Source and construction | Mean / latest (20 Oct) | q4 weight |
+|---|---|---|---|
+| 10-year yield (pp) | FRED DGS10 (daily constant maturity) via the GS file | 4.26 / 5.15 | 0.569 pp per pp (parallel long-rate shock) |
+| BBB spread (pp) | ICE BofA BBB option-adjusted spread (FRED BAMLC0A4CBBB, daily from 1997, stored in `history/bbb_oas.csv` because FRED keeps only about 3 years); before 1997 Moody's Baa yield (DBAA) less the 10-year, level-matched | 2.01 / 1.08 | 0.127 per pp |
+| Equities (100 ln CAPE) | Shiller CAPE: daily S&P 500 divided by E10, where E10 is backed out of multpl.com's monthly CAPE at monthly-average prices (`history/cape_e10.csv`), interpolated, and after the last anchor grown at its trailing 12-month rate; S&P 500 from FRED SP500 (`history/sp500.csv`, Yahoo close fallback), before Oct 2016 the Dow Jones Total Market / S&P 500 history, level-matched | CAPE 26.5 / 40.9 | 0.032 per 1% (a rise loosens) |
+| Real dollar (100 ln) | Nominal broad dollar (FRED DTWEXBGS from 2006, spliced with DTWEXB and the monthly TWEXBMTH earlier, last days extended with ICE DXY) times the monthly ratio of FRED RTWEXBGS (real broad dollar, 2006 on) to the nominal index; before 2006 the FRB/US real exchange rate (fpxr, G39 trade weights), level-matched over 2006-2010. Daily moves are the nominal dollar's | log index 4.61 / 4.76 | 0.100 per 1% |
+| Real oil (100 ln) | WTI spot (FRED DCOILWTICO, daily from 1986; floored at $5 because of the negative April 2020 print) divided by CPI-U (FRED CPIAUCSL, monthly, interpolated mid-month, extended after Sep 2026 at its last 12-month rate) | WTI $107.9 on 20 Oct | 0.0080 per 1% |
+There is no funds-rate term. The weights are the FRB/US funds-rate equivalents of section G (full-transmission hike as the yardstick). `--source frbus` replaces the FRED real dollar, CPI and expected-inflation
+inputs with the FRB/US history (fpxr, PCE price level pcnia, SPF 10-year expected inflation ptr) and gives a level about 0.5 pp higher today (+1.21 vs +0.73 for the r* version).
+
+**The 10-year variants.** (a) Nominal, as above (default). (b) Real: DGS10 less the Cleveland Fed 10-year expected inflation (FRED EXPINF10YR, monthly from 1982, interpolated mid-month; mean 2.42, latest 2.73), giving
+a real 10-year with mean 1.84 and latest 2.42. (c) r* variant (`--rstar`): the real 10-year less r*, the equilibrium real rate, so a falling neutral rate does not make the same real yield look more restrictive.
+Only the 10-year term differs between versions; its sensitivity (0.569) is unchanged and each version is a deviation from its own 1990-2026 mean.
+
+**The r* data.** Kiley's semi-structural Kalman-filter model of the equilibrium real rate (Kiley, "What Can the Data Tell Us about the Equilibrium Real Interest Rate?", IJCB 2020), from this account's
+`output_gap/rstar` repo (copied to `history/kiley_rstar.csv`, 1961Q1 to 2026Q2). Observables: per-capita real GDP growth (FRED GDPC1, CNP16OV), the unemployment rate (UNRATE), core PCE inflation (PCEPILFE),
+long-run inflation expectations (Hoey/Barclays de Zoete Wedd poll before 1991Q4, then the Philadelphia Fed SPF median 10-year CPI forecast) and the federal funds rate (FEDFUNDS), estimated at the posterior mode.
+r* = the model's trend state plus a constant of 2.52 (the 1960-2007 mean realized real funds rate). Used here: the one-sided (filtered, real-time) estimate, quarterly, stamped mid-quarter, interpolated to daily and held at
+its last value (1.67%) after 2026Q2; the two-sided smoothed estimate is available (`--twosided`). One-sided r* falls from 2.6 (1990Q1) to 1.7, dips to about 0 in 2020Q2 and returns to 1.7; the smoothed estimate falls
+from 1.9 to 1.7 and has a 90% band of about -0.7 to 4.1 in 2026Q2. Cautions: the filtered series starts high in the 1990s (2.6 versus 1.9 smoothed), the 2020Q2 dip is a filter artifact of the pandemic quarter, and the current r* is very uncertain.
+
+**Chart** (`analysis/ms5_rstar_compare.png`). Nominal vs real vs r*-gap totals: correlation of levels between nominal and r*-gap versions +0.85, of daily changes +0.998 (the adjustment is a low-frequency level shift, not a change in daily dynamics).
+The adjustment lowers the early-1990s readings by about 1 to 1.5 pp (high inflation expectations and a high r*), is small around 2000 to 2008, and raises 2010 to 2021 by about 0.5 to 1.0 pp (very low real rates relative to r*, which was itself low). Latest: nominal +0.80, real +0.62,
+r*-gap +0.72 pp; 10-year term +0.51, +0.33, +0.44. Level correlation with the GS FCI: nominal 0.80, real 0.83, r*-gap 0.78.
+
 ## Next steps for the five-variable version
 1. Find the original Morgan Stanley note behind the third-party summary: exact variables, the horizon, whether the equivalence is on growth or on a
    broader objective, and any quoted levels (even a few dated readings would give validation points).
