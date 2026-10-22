@@ -46,5 +46,9 @@ jobs:
             echo "No changes"
           else
             git commit -m "Update FCI data $(date -u +%Y-%m-%d)"
-            git push
+            for i in 1 2 3 4 5; do
+              git push && break
+              git pull --rebase --autostash origin main
+            done
+            git push  # fails the step if every retry was rejected
           fi
