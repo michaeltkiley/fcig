@@ -2,18 +2,20 @@
 Twelve-month change in the macro-model levels index against the level of FCI-G (monthly; FCI-G is a contribution built from past changes, so its level is naturally related to recent changes of a levels index).
 FCI-G: official 3-year-lookback baseline (raw/fed_monthly_3yr.csv, to 2026-08) with the repository replication for later months; shown in funds-rate pp by the FRB/US yardstick (divide by 0.4525).
 Macro-model index: nominal, without house prices (also printed: with house prices, real versions, other change horizons).
-Usage: python experimental/fci_compare/macro12m_vs_fcig.py        Output: macro12m_vs_fcig.png
+Usage: python experimental/fci_compare/macro12m_vs_fcig.py [--1yr]        Output: macro12m_vs_fcig.png (macro12m_vs_fcig_1yr.png with --1yr, the 1-year-lookback FCI-G)
 """
-import os
+import os, sys
 import numpy as np, pandas as pd
+
+LB = "1yr" if "--1yr" in sys.argv else "3yr"      # FCI-G lookback: 3-year baseline (default) or 1-year
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 
 
 def main():
-    f3 = pd.read_csv(os.path.join(ROOT, "raw", "fed_monthly_3yr.csv"), parse_dates=["date"]).set_index("date").iloc[:, 0]; f3.index = f3.index.to_period("M")
-    rep = pd.read_csv(os.path.join(ROOT, "fcig_replication_monthly.csv")); rep["month"] = pd.PeriodIndex(rep["month"], freq="M"); rep = rep.set_index("month")["3yr|FCI-G"]
+    f3 = pd.read_csv(os.path.join(ROOT, "raw", f"fed_monthly_{LB}.csv"), parse_dates=["date"]).set_index("date").iloc[:, 0]; f3.index = f3.index.to_period("M")
+    rep = pd.read_csv(os.path.join(ROOT, "fcig_replication_monthly.csv")); rep["month"] = pd.PeriodIndex(rep["month"], freq="M"); rep = rep.set_index("month")[f"{LB}|FCI-G"]
     fcig = pd.concat([f3, rep.loc[f3.index[-1] + 1:]])
     mm = {}
     for t in ("", "_real10"):
@@ -44,12 +46,12 @@ def main():
     fig, ax = plt.subplots(figsize=(13, 6.5))
     x = j.index.to_timestamp()
     ax.plot(x, j.macro12, color="#d62728", lw=1.8, label="Macro-model levels index, 12-month change (nominal, without house prices)")
-    ax.plot(x, j.fcig / 0.4525, color="#1f5fa8", lw=1.8, label="FCI-G level (official, 3-year baseline), in funds-rate pp (divided by 0.4525)")
+    ax.plot(x, j.fcig / 0.4525, color="#1f5fa8", lw=1.8, label=f"FCI-G level (official, {LB} lookback), in funds-rate pp (divided by 0.4525)")
     ax.axhline(0, color="gray", lw=0.8); ax.grid(alpha=0.25); ax.tick_params(labelsize=11)
     ax.set_ylabel("pp of funds rate (tighter above zero)", fontsize=11)
     ax.set_title(f"Macro-model index, 12-month change, and the FCI-G level: correlation {j.corr().iloc[0, 1]:.2f} (monthly, {j.index[0]} to {j.index[-1]})", fontsize=12)
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.07), ncol=1, fontsize=10, frameon=False)
-    fig.tight_layout(); fig.savefig(os.path.join(HERE, "macro12m_vs_fcig.png"), dpi=130)
+    fig.tight_layout(); fig.savefig(os.path.join(HERE, "macro12m_vs_fcig_1yr.png" if LB == "1yr" else "macro12m_vs_fcig.png"), dpi=130)
 
 
 if __name__ == "__main__":
