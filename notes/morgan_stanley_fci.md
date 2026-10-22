@@ -146,6 +146,34 @@ SF Fed proxy +0.94 for 2020-2026; with the real policy rate gap, EFFR less expec
 version). This is an index of conditions relative to the sample average, not a proxy for the policy rate, and the linear extrapolation of local sensitivities over
 36 years and the averaging window drive its level.
 
+## E. Refresh with FRED data and correlation with the GS FCI (22 Oct 2026)
+FRED was back; all series were re-downloaded and the daily GS file was brought up to 20 Oct from `main`. The level index now takes its real dollar from FRED's
+RTWEXBGS (2006 on; the old real broad series `RTWEXB` does not exist on FRED, so before 2006 the FRB/US real exchange rate is level-matched on), real oil from
+CPIAUCSL and the real 10-year from the Cleveland Fed's EXPINF10YR (`--source frbus` keeps the earlier FRB/US-based version).
+
+**Change windows to 20 Oct 2026 (q4 sensitivities; q8 in brackets).**
+| Window | Total | 10-yr | BBB | Equities | Dollar | Oil |
+|---|---|---|---|---|---|---|
+| Since 27 Feb (S&P +11.4%, dollar +3.0%, oil +48%, 10-yr 3.97 to 5.12) | +0.98 pp, 3.9 hikes (+0.79, 3.2) | +0.65 | 0.00 | -0.36 | +0.30 | +0.39 |
+| Since 27 Aug (S&P -0.2%, dollar +2.5%, oil +24%, 10-yr 4.67 to 5.12) | +0.72 pp, 2.9 hikes (+0.63, 2.5) | +0.26 | +0.01 | +0.01 | +0.25 | +0.20 |
+
+**Level index vs 1990-2026 average, 20 Oct 2026 (pp of funds rate, q4).** Real gap to r* (`--rstar`): +0.73 (10-yr +0.44, BBB -0.12, equities -1.35, dollar +1.43, oil +0.34), 81st
+percentile; nominal 10-year: +0.80 (77th); real 10-year (Cleveland expected inflation): +0.63 (76th). With the FRB/US-based inputs the r* version reads +1.21: the
+real-rate and real-dollar construction moves the level by up to half a point, a source uncertainty on top of the sensitivities.
+
+**Correlation of daily changes with the GS FCI** (`analysis/ms5_vs_gs.py`, `analysis/ms5_vs_gs.csv`; same trading days, 1990 to 20 Oct 2026, n about 9,200).
+| Variant of the MS-style index | 1990-2026 | 1990-99 | 2000-08 | 2009-19 | 2020-26 | last 12 months |
+|---|---|---|---|---|---|---|
+| q4 sensitivities (all 10-year versions identical in daily changes) | **0.81** | 0.83 | 0.81 | 0.83 | 0.79 | 0.91 |
+| q4 without oil | 0.90 | 0.89 | 0.87 | 0.91 | 0.93 | 0.97 |
+| q8 sensitivities | 0.87 | 0.87 | 0.86 | 0.89 | 0.87 | 0.94 |
+| q12 sensitivities | 0.89 | 0.89 | 0.89 | 0.90 | 0.89 | 0.95 |
+Weekly changes (q4): 0.86; monthly changes: 0.87 to 0.90. The matching components (10-year, BBB spread, equity valuation, dollar) are correlated 0.99 to 1.00 with the GS
+contributions in daily changes, so the gap from 1 is the weights, oil and the missing funds-rate term. Regression: the GS FCI moves 0.87 index points per pp of the
+MS-style funds-rate equivalent (R-squared 0.66). Against the Fed FCI-G in daily changes since 2020 the MS-style index correlates +0.54 (3-year) and +0.47 (1-year),
+the GS FCI +0.84 and +0.70. The correlation rises with the horizon because longer-horizon sensitivities put more weight on the BBB spread (0.13 at q4, 0.19 at q12) and
+less on the dollar, closer to GS.
+
 ## Next steps for the five-variable version
 1. Find the original Morgan Stanley note behind the third-party summary: exact variables, the horizon, whether the equivalence is on growth or on a
    broader objective, and any quoted levels (even a few dated readings would give validation points).

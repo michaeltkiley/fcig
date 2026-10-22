@@ -18,7 +18,7 @@ stock equation (25% on the price per 1 pp of required return). NOT RECOMMENDED: 
 10-year yield (daily 1990-2026 slope -1.2% per pp, s.e. 2.7; monthly changes ~0; by sub-period -17% to +24%), so the model's mapping overstates the
 adjustment and pushes the 2009-2012 equity term to +2.4 to +3.1 pp of tightening. Kept for comparison only.
 
-Usage:  python analysis/ms5_level.py [--horizon q4|q8|q12] [--real10] [--rstar] [--erp]
+Usage:  python analysis/ms5_level.py [--horizon q4|q8|q12] [--real10] [--rstar] [--erp] [--source fred|frbus]
 Outputs: analysis/ms5_level_daily[_variant].csv, analysis/ms5_level[_variant].png (variant suffix: _real10, _rstar, plus _erp)
 """
 import os, sys
@@ -36,6 +36,7 @@ ERP = "--erp" in sys.argv            # equities as the equity risk premium (earn
 RSTAR_COL = "rstar_2side" if "--twosided" in sys.argv else "rstar_1side"
 TAG = ("_rstar" if RSTAR else "_real10" if REAL10 else "") + ("_erp" if ERP else "")
 START = "1990-01-02"
+SOURCE = sys.argv[sys.argv.index("--source") + 1] if "--source" in sys.argv else "fred"   # fred (default) or frbus
 
 
 def get(i):
@@ -76,6 +77,20 @@ def to_daily(q, idx, log=False, extrapolate_growth=False):
     return np.exp(d) if log else d
 
 
+def monthly_to_daily(m, idx, extrapolate=False):
+    """Monthly series (stamped at the month start; value taken as mid-month) interpolated in time to the daily index; after the last month held, or
+    for a price level grown at its last 12-month rate."""
+    m = m.dropna().copy()
+    m.index = m.index + pd.Timedelta(days=14)
+    s = np.log(m) if extrapolate else m
+    d = s.reindex(s.index.union(idx)).interpolate("time").reindex(idx)
+    if extrapolate:
+        g = (s.iloc[-1] - s.iloc[-13]) / (s.index[-1] - s.index[-13]).days
+        d = d.where(idx <= s.index[-1], s.iloc[-1] + g * (idx - s.index[-1]).days.values)
+        return np.exp(d).bfill()
+    return d.ffill().bfill()
+
+
 def build():
     G = pd.read_csv(os.path.join(ROOT, "fcig_gs_daily.csv"), parse_dates=["date"]).set_index("date")
     idx = G.loc[START:].index
@@ -83,21 +98,36 @@ def build():
     X["y10"], X["bbb"], X["ffr"] = G.x_y10, G.x_bbb, G.x_ffr
     X["lncape"] = np.log(G.x_cape)
     H = frbus_history()
-    # real dollar: the model's own real exchange rate (trade weighted); quarterly ratio of fpxr to the nominal broad dollar applied to the daily nominal
     nom = G.x_usd
+    # quarterly FRB/US real-exchange-rate ratio (fpxr over the quarterly mean of the nominal broad dollar)
     nq = nom.groupby(nom.index.to_period("Q")).mean()
     nq.index = nq.index.to_timestamp() + pd.Timedelta(days=45)
-    ratio = (H.fpxr / nq.reindex(H.index)).dropna()
-    X["lnrusd"] = np.log(nom * to_daily(ratio, nom.index, log=True).bfill()).reindex(idx)
-    # real oil: WTI over the PCE price level (interpolated; after the last quarter grown at its recent rate)
+    ratio_q = (H.fpxr / nq.reindex(H.index)).dropna()
+    ratio = to_daily(ratio_q, nom.index, log=True).bfill()
+    if SOURCE == "fred":
+        # FRED real broad dollar (RTWEXBGS, 2006 on) over the nominal monthly mean; before 2006 the FRB/US ratio, level-matched over 2006-2010
+        real = get("RTWEXBGS")
+        nm = nom.groupby(nom.index.to_period("M")).mean()
+        nm.index = nm.index.to_timestamp()
+        rm = (real / nm.reindex(real.index)).dropna()
+        rm_d = monthly_to_daily(rm, nom.index)
+        ov = (nom.index >= "2006-03-01") & (nom.index <= "2010-12-31")
+        scale = float(rm_d[ov].mean() / ratio[ov].mean())
+        ratio = ratio.where(nom.index < real.index[0] + pd.Timedelta(days=45), np.nan).mul(scale).fillna(rm_d)
+        price = monthly_to_daily(get("CPIAUCSL"), idx, extrapolate=True)
+        einf = monthly_to_daily(get("EXPINF10YR"), idx)
+    else:
+        price = to_daily(H.pcnia.dropna(), idx, log=True, extrapolate_growth=True).bfill()
+        einf = to_daily(H.ptr.dropna(), idx).bfill()
+    X["lnrusd"] = np.log(nom * ratio).reindex(idx)
     wti = hold(get("DCOILWTICO"), idx[-1]).reindex(idx, method="ffill").clip(lower=5.0)   # WTI was negative on 20 Apr 2020
-    X["lnroil"] = np.log(wti / to_daily(H.pcnia.dropna(), idx, log=True, extrapolate_growth=True).bfill())
-    real10 = X.y10 - to_daily(H.ptr.dropna(), idx).bfill()
+    X["lnroil"] = np.log(wti / price)
+    real10 = X.y10 - einf
     X["real10"] = real10
     r = pd.read_csv(os.path.join(ROOT, "history", "kiley_rstar.csv"), index_col=0)[RSTAR_COL]   # Kiley r*, quarterly, from the r* repo
     r.index = pd.PeriodIndex(r.index, freq="Q").to_timestamp() + pd.Timedelta(days=45)
     X["rstar"] = to_daily(r.dropna(), idx).bfill()
-    X["einf"] = X.y10 - real10                                      # expected inflation (SPF, via FRB/US ptr)
+    X["einf"] = einf
     if RSTAR:
         X["y10"] = real10 - X.rstar                                 # real 10-year yield gap to r*
     elif REAL10:
