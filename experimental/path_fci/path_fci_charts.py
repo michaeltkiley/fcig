@@ -1,7 +1,7 @@
 """
 EXPERIMENTAL add-on (path_fci.py unchanged): two clean charts, one for the MS-style index and one for the GS-style index, each against the GS FCI.
 
-Path-surprise index = rescaled reverse-regression weights (path_fci_reverse_index.py), BBB spread excluded:
+Path-surprise index = forward-regression (GLS) weights, each variable regressed individually on the path surprise (path_fci.py), BBB spread excluded:
     MS-style: 10-year, ln CAPE, real dollar, real oil        GS-style: fed funds, 10-year, ln CAPE, dollar
 The right axis (GS FCI) is scaled so that its standard deviation and mean line up with the index on the left (same zero line, same spread), so the two
 move together on the page exactly as far as their correlation says.
@@ -33,32 +33,39 @@ def main():
     fr = {"10-yr": sens.rg10, "Equities (ln CAPE)": -sens.req, "Dollar (ln real)": sens.fpxr, "Oil (ln real)": sens.poil}
     lev = lambda w, names: sum(w[n] * P.VARS[n][1] * (X[P.VARS[n][0]] - X[P.VARS[n][0]].mean()) for n in names)
     gs = G.fci.reindex(X.index)
+    req = float(pd.read_csv(os.path.join(ROOT, "experimental", "ms_fci", "frbus_sensitivities.csv"), index_col=0).loc["req", "unit_size"])
+    ms_frbus = P.L.level(X, sens.to_dict(), req).Total      # the MS-style index as built in experimental/ms_fci: five variables, FRB/US q4 weights
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     for key, names in SETS.items():
-        r = sm.OLS(ev.path, sm.add_constant(dx[names])).fit(cov_type="HC1")
-        w = r.params[names] / float((r.params[names] * B.loc[names, "b"].astype(float)).sum())
+        w = P.weights(B, names)                              # forward regressions, one variable at a time against the path surprise (GLS weights)
         idx = lev(w, names)
-        print(f"\n[{key.upper()}-style] weights (pp of path-rate per unit): " + ", ".join(f"{n} {w[n]:+.3f}" for n in names))
-        print(f"  correlation with GS FCI: levels {np.corrcoef(idx, gs)[0, 1]:.2f}, daily changes {idx.diff().corr(gs.diff()):.2f}; latest {idx.iloc[-1]:+.2f} pp; "
-              f"2012-12 {idx.loc[:'2012-12-31'].iloc[-1]:+.1f}, 2021-12 {idx.loc[:'2021-12-31'].iloc[-1]:+.1f}, 2009-03 {idx.loc[:'2009-03-31'].iloc[-1]:+.1f}")
+        other = ms_frbus if key == "ms" else gs
+        print(f"\n[{key.upper()}-style] path weights (pp of path-rate per unit): " + ", ".join(f"{n} {w[n]:+.3f}" for n in names))
+        print(f"  correlation with {'MS FRB/US index' if key == 'ms' else 'GS FCI'}: levels {np.corrcoef(idx, other)[0, 1]:.2f}, daily changes {idx.diff().corr(other.diff()):.2f}; "
+              f"latest {idx.iloc[-1]:+.2f} pp" + (f" vs {ms_frbus.iloc[-1]:+.2f}" if key == "ms" else ""))
         fig, ax = plt.subplots(figsize=(13, 6.5))
-        ax.plot(idx.index, idx, color="#1f5fa8", lw=1.8, label=f"{key.upper()}-style index, path-surprise weights (left axis, pp of funds rate)")
+        ax.plot(idx.index, idx, color="#1f5fa8", lw=1.8, label=f"{key.upper()}-style index, path-surprise weights, no BBB (left axis, pp of funds rate)")
         ax.axhline(0, color="gray", lw=0.8)
         ax.set_ylabel("pp of funds rate, tighter above zero (vs 1990-2026 average)", fontsize=11)
-        k = gs.std() / idx.std()
-        gl = (gs - gs.mean()) / k                       # GS FCI in left-axis units
-        allv = pd.concat([idx, gl])
-        pad = 0.04 * (allv.max() - allv.min())
-        lo, hi = allv.min() - pad, allv.max() + pad
-        ax.set_ylim(lo, hi)
-        b = ax.twinx(); b.plot(gs.index, gs, color="black", lw=1.2, alpha=0.75, label="GS FCI (right axis, scaled to the same spread)")
-        b.set_ylim(gs.mean() + k * lo, gs.mean() + k * hi); b.set_ylabel("GS FCI", fontsize=11)
-        h1, l1 = ax.get_legend_handles_labels(); h2, l2 = b.get_legend_handles_labels()
-        ax.legend(h1 + h2, l1 + l2, loc="upper center", bbox_to_anchor=(0.5, -0.07), ncol=1, fontsize=10, frameon=False)
-        ax.set_title(f"{key.upper()}-style index (no BBB spread) vs GS FCI: corr {np.corrcoef(idx, gs)[0, 1]:.2f} in levels, {idx.diff().corr(gs.diff()):.2f} in daily changes", fontsize=13)
-        ax.grid(alpha=0.25); ax.tick_params(labelsize=11); b.tick_params(labelsize=11)
+        if key == "ms":
+            ax.plot(ms_frbus.index, ms_frbus, color="#d62728", lw=1.8, label="MS-style index, FRB/US weights, all five variables (left axis)")
+            ax.set_ylim(min(idx.min(), ms_frbus.min()) - 0.3, max(idx.max(), ms_frbus.max()) + 0.3)
+            ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.07), ncol=1, fontsize=10, frameon=False)
+            title = f"MS-style index: path-surprise weights vs FRB/US weights (corr {np.corrcoef(idx, ms_frbus)[0, 1]:.2f} levels, {idx.diff().corr(ms_frbus.diff()):.2f} daily changes)"
+        else:
+            k = gs.std() / idx.std()
+            gl = (gs - gs.mean()) / k
+            allv = pd.concat([idx, gl]); pad = 0.04 * (allv.max() - allv.min())
+            lo, hi = allv.min() - pad, allv.max() + pad
+            ax.set_ylim(lo, hi)
+            b = ax.twinx(); b.plot(gs.index, gs, color="#d62728", lw=1.8, label="GS FCI, Goldman-style weights (right axis, scaled to the same spread)")
+            b.set_ylim(gs.mean() + k * lo, gs.mean() + k * hi); b.set_ylabel("GS FCI", fontsize=11); b.tick_params(labelsize=11)
+            h1, l1 = ax.get_legend_handles_labels(); h2, l2 = b.get_legend_handles_labels()
+            ax.legend(h1 + h2, l1 + l2, loc="upper center", bbox_to_anchor=(0.5, -0.07), ncol=1, fontsize=10, frameon=False)
+            title = f"GS-style index: path-surprise weights vs GS FCI (corr {np.corrcoef(idx, gs)[0, 1]:.2f} levels, {idx.diff().corr(gs.diff()):.2f} daily changes)"
+        ax.set_title(title, fontsize=13); ax.grid(alpha=0.25); ax.tick_params(labelsize=11)
         fig.tight_layout(); fig.savefig(os.path.join(HERE, f"path_fci_chart_{key}_{a.sample}.png"), dpi=130)
 
 
