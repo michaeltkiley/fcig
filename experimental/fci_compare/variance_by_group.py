@@ -1,6 +1,7 @@
 """
 Variance decomposition of each index by the project's four groups: rates (policy rate, 10-year, mortgage and BBB rates/spreads), equities, dollar, other (house prices).
-share_g = cov(contribution of group g, index) / var(index); the four shares sum to 100% (a negative share means the group works against the rest of the index's variation).
+var(index) = sum_g var(C_g) + 2 sum_{g<h} cov(C_g, C_h). Reported shares of var(index): the four groups' own variances, var(C_g) / var(index), and one separate "covariance" term,
+2 sum_{g<h} cov(C_g, C_h) / var(index), which can be negative (groups offsetting each other) or positive (groups moving together). The five numbers sum to 100%.
 Monthly (end of month), 1990-2026 and from 1998; levels (base) and 12-month changes. Macro model with house prices (nominal and real), market-based (NS), GS (replication; nominal and real), FCI-G
 (official components, 3-year and 1-year lookback, to 2026-08).
 Usage: python experimental/fci_compare/variance_by_group.py        Output: variance_by_group.csv
@@ -46,7 +47,9 @@ def build(real, wn):
 
 def shares(C):
     T = C.sum(axis=1)
-    return {g: float(np.cov(C[g], T)[0, 1] / T.var()) for g in GROUPS}, float(T.std())
+    own = {g: float(C[g].var() / T.var()) for g in GROUPS}
+    own["covariance"] = 1.0 - sum(own.values())
+    return own, float(T.std())
 
 
 def main():
@@ -75,7 +78,7 @@ def main():
     for samp in ("1990-", "1998-"):
         for kind in ("level", "12m change"):
             t = R_[(R_["sample"] == samp) & (R_.basis == kind)].drop(columns=["sample", "basis"])
-            print(f"\n=== Share of variance (%), {kind}, monthly, from {samp[:-1]} ===")
+            print(f"\n=== Share of variance (%), own variances and the covariance term, {kind}, monthly, from {samp[:-1]} ===")
             print(t.to_string(index=False))
 
 
