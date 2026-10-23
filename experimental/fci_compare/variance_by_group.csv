@@ -1,0 +1,33 @@
+index,sample,basis,rates,equities,dollar,other,sd
+"Macro model with house prices, nominal",1990-,level,64,21,4,12,1.42
+"Macro model with house prices, nominal",1990-,12m change,27,35,37,0,1.01
+"Macro model with house prices, nominal",1998-,level,54,-1,44,4,1.13
+"Macro model with house prices, nominal",1998-,12m change,22,36,41,2,1.06
+"Market-based (NS), nominal",1990-,level,57,53,-10,0,1.62
+"Market-based (NS), nominal",1990-,12m change,21,61,18,0,1.02
+"Market-based (NS), nominal",1998-,level,41,53,6,0,1.05
+"Market-based (NS), nominal",1998-,12m change,11,65,24,0,1.0
+"GS, nominal",1990-,level,51,88,-38,0,1.0
+"GS, nominal",1990-,12m change,22,61,17,0,1.04
+"GS, nominal",1998-,level,31,75,-6,0,0.97
+"GS, nominal",1998-,12m change,19,61,20,0,1.11
+"Macro model with house prices, real",1990-,level,48,29,11,13,1.13
+"Macro model with house prices, real",1990-,12m change,20,39,39,1,0.98
+"Macro model with house prices, real",1998-,level,39,8,48,5,0.99
+"Macro model with house prices, real",1998-,12m change,18,39,40,2,1.07
+"Market-based (NS), real",1990-,level,39,73,-12,0,1.33
+"Market-based (NS), real",1990-,12m change,10,70,20,0,0.97
+"Market-based (NS), real",1998-,level,21,79,1,0,0.97
+"Market-based (NS), real",1998-,12m change,4,72,24,0,1.0
+"GS, real",1990-,level,32,81,-13,0,1.21
+"GS, real",1990-,12m change,20,63,17,0,1.04
+"GS, real",1998-,level,25,80,-5,0,1.03
+"GS, real",1998-,12m change,20,62,18,0,1.13
+"FCI-G, 3yr lookback",1990-,level,22,42,24,13,0.57
+"FCI-G, 3yr lookback",1990-,12m change,24,41,29,7,0.72
+"FCI-G, 3yr lookback",1998-,level,19,43,24,14,0.61
+"FCI-G, 3yr lookback",1998-,12m change,19,41,31,8,0.76
+"FCI-G, 1yr lookback",1990-,level,22,42,29,6,0.55
+"FCI-G, 1yr lookback",1990-,12m change,23,44,30,3,0.85
+"FCI-G, 1yr lookback",1998-,level,18,43,31,7,0.59
+"FCI-G, 1yr lookback",1998-,12m change,19,45,33,4,0.91
