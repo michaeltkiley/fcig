@@ -1,0 +1,381 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\bpsi}{\boldsymbol{\psi}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bg}{\mathbf{g}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bphi}{\boldsymbol{\phi}}
+\newcommand{\bPhi}{\boldsymbol{\Phi}}
+
+\title{Weighting Financial Conditions in Funds-Rate Units:\\
+Impulse-Response Weights versus Market-Response Weights}
+\author{Draft note}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent A financial conditions index (FCI) in ``federal funds rate equivalents'' adds up several financial variables---interest rates, equity prices, the dollar, house prices---with weights that turn each variable into pp of the policy rate. Two ways of choosing the weights are common or natural. The \emph{impulse-response} approach takes the weight on each variable from a macro model: the effect of a persistent move in that variable on output, divided by the effect of a persistent 1 pp funds-rate move. The \emph{market-response} approach takes the weights from how the variables move when monetary policy surprises the market. This note writes down a simple one-factor representation in which both approaches can be stated precisely. It shows (i) what each weighting estimates, (ii) the conditions under which each is the right one, (iii) the conditions under which the two coincide, and (iv) what changes when the index is applied to \emph{levels} of variables that respond with lags. The punchline: the two weightings answer different questions, they always agree on movements that look exactly like monetary policy, and they differ only in how they treat movements that do not.
+\end{abstract}
+
+\section{Why the question arises}
+
+An FCI in funds-rate units is a weighted sum
+\[
+I_t \;=\; \sum_{j=1}^N a_j\, x_{jt} \;=\; \ba'\bx_t ,
+\]
+where $x_{jt}$ is financial variable $j$ (say, the 10-year yield in percentage points, or 100 times the log of equity valuations) measured as a deviation from its long-run average, and $a_j$ is the number of pp of funds rate that one unit of $x_j$ is ``worth.'' Everything hinges on the vector $\ba$.
+
+\paragraph{Impulse-response weights.} A macro model (for example FRB/US) can be used to shock one financial variable at a time, holding the others fixed, and to record the effect on output at some horizon. Call that partial effect $g_j$. Do the same for a persistent 1 pp rise in the funds rate with full transmission to all financial variables, and call its output effect $G$. The weight is $a_j = g_j/G$. This is how the Fed's FCI-G and the ``macro-model levels index'' in our project are built.
+
+\paragraph{Market-response weights.} Alternatively, look at how each variable moves in narrow windows around FOMC announcements, when the main news is monetary policy. If a policy surprise worth 1 pp of funds rate moves variable $j$ by $\psi_j$, the variables jointly contain an estimate of ``how much policy-like tightening'' has occurred, and the weights are chosen to read that estimate off the data as precisely as possible.
+
+\paragraph{The tension.} Impulse responses are effects of \emph{shocks}; an FCI is applied to \emph{levels}. Market responses are also responses to shocks. When is it legitimate to apply either set of weights to levels, and when do the two sets agree? The rest of the note answers these questions in a model simple enough to solve by hand.
+
+\section{A one-factor representation}
+
+\subsection{The financial block}
+
+Let $\varepsilon_t$ be the monetary policy shock, scaled so that $\varepsilon_t = 1$ is a persistent 1 pp increase in the funds-rate path (the ``funds-rate unit''). Start with a static version (dynamics come in Section~\ref{sec:dynamics}):
+\begin{equation}\label{eq:fin}
+\bx_t \;=\; \bpsi\,\varepsilon_t \;+\; \bu_t ,
+\end{equation}
+where
+\begin{itemize}[leftmargin=2em]
+\item $\bpsi \in \mathbb{R}^N$ is the \emph{transmission vector}: how much each financial variable moves per funds-rate unit of policy. For example, a hike raises long yields ($\psi_j>0$), lowers equity valuations ($\psi_j<0$) and raises the dollar ($\psi_j>0$).
+\item $\bu_t$ collects all non-policy movements in financial variables: risk-appetite swings, term-premium shocks, news about growth abroad, measurement noise, and so on. We assume $\E[\bu_t]=0$, $\Var(\bu_t)=\Sigma$ (positive definite) and $\Cov(\bu_t,\varepsilon_t)=0$.
+\item $\Var(\varepsilon_t)=\sigma^2$.
+\end{itemize}
+Equation~\eqref{eq:fin} is a one-factor model: the only common driver with a known direction is policy. Any other common factor is part of $\bu_t$ and shows up as off-diagonal elements of $\Sigma$.
+
+The \emph{policy ray} is the set of configurations $\{\bpsi c : c\in\mathbb{R}\}$: movements in which every variable moves exactly as it would after a policy shock. Movements off the ray are, by construction, non-policy.
+
+\subsection{The output block: two polar cases}
+
+How output responds to financial variables is the key modelling choice. Two polar cases bracket the possibilities.
+
+\begin{assumption}[Causal financial conditions]\label{ass:C}
+Output depends on the financial variables themselves, through stable partial effects $\bg$, whatever moved them:
+\begin{equation}\label{eq:C}
+y_t \;=\; \bg'\bx_t + \eta_t ,\qquad \eta_t \perp (\varepsilon_t,\bu_t).
+\end{equation}
+\end{assumption}
+\noindent Here a 10 bp rise in the 10-year yield has the same effect on spending whether it came from the FOMC or from a term-premium shock. This is the premise of the FRB/US partial experiments and of FCI-G.
+
+\begin{assumption}[Indicator financial conditions]\label{ass:N}
+Output depends only on the policy shock; non-policy movements in financial variables have no effect on output:
+\begin{equation}\label{eq:N}
+y_t \;=\; G\,\varepsilon_t + \eta_t .
+\end{equation}
+\end{assumption}
+\noindent Here the financial variables are just noisy \emph{indicators} of the policy stance. A pure measurement-error or ``noise trader'' view of $\bu_t$ fits this case.
+
+Reality is presumably in between; Section~\ref{sec:mixed} treats the mixed case.
+
+\begin{assumption}[Complete transmission]\label{ass:A1}
+Under Assumption~\ref{ass:C}, policy affects output only through the financial variables in $\bx$:
+\begin{equation}\label{eq:A1}
+G \;=\; \bg'\bpsi .
+\end{equation}
+\end{assumption}
+\noindent In words: the total effect of a hike equals the sum of the partial effects of the moves it causes in the financial variables. This is exactly the ``sum of partials'' check one can run in a macro model. If the hike also works through channels not in $\bx$ (for example expected inflation in a model with forward-looking expectations), then $G = \bg'\bpsi + d$ with $d\neq 0$.
+
+\subsection{Two targets}
+
+An FCI in funds-rate units could be trying to measure either of two things.
+
+\begin{definition}[Policy equivalent]
+$P_t \equiv \varepsilon_t$: the size of the policy shock, in funds-rate units, that the financial variables indicate.
+\end{definition}
+
+\begin{definition}[Output equivalent]
+$O_t \equiv \E[y_t - \eta_t \mid \bx_t\text{ and the structure}]/G$: the funds-rate move that would have the same effect on output as current financial conditions. Under Assumption~\ref{ass:C}, $O_t = \bg'\bx_t/G$; under Assumption~\ref{ass:N}, $O_t=\varepsilon_t$.
+\end{definition}
+
+Substituting \eqref{eq:fin} into the causal case and using \eqref{eq:A1},
+\begin{equation}\label{eq:OP}
+O_t \;=\; \varepsilon_t \;+\; \frac{\bg'\bu_t}{G} \;=\; P_t + \frac{\bg'\bu_t}{G}.
+\end{equation}
+The two targets coincide on the policy ray ($\bu_t=0$) and differ by the output effect of non-policy movements. Everything below follows from this observation.
+
+\section{The two weightings}
+
+\subsection{Impulse-response weights}
+
+\begin{definition}
+The impulse-response (IR) weights are $\bs \equiv \bg/G$, and the IR index is $I^s_t = \bs'\bx_t$.
+\end{definition}
+
+Under complete transmission, $\bs'\bpsi = \bg'\bpsi/G = 1$: a pure policy shock of one funds-rate unit moves the index by exactly one. Without complete transmission, $\bs'\bpsi = 1 - d/G$, and the IR index understates pure policy moves by the share $d/G$ of transmission that runs outside the variables in the index.
+
+\subsection{Market-response weights}
+
+Suppose we observe the financial variables in narrow windows around FOMC announcements together with a measured surprise. Regressing each variable on the surprise estimates $\bpsi$, and the residuals estimate $\Sigma$ (more on which $\Sigma$ in Section~\ref{sec:dynamics}).
+
+\begin{definition}
+The market-response weights are the generalized least squares (GLS) weights
+\begin{equation}\label{eq:w}
+\bw \;\equiv\; \frac{\Sigma^{-1}\bpsi}{\bpsi'\Sigma^{-1}\bpsi},
+\end{equation}
+and the market index is $I^w_t = \bw'\bx_t$.
+\end{definition}
+
+Again $\bw'\bpsi=1$. The formula is the ``factor score'' (Bartlett) estimator of $\varepsilon_t$ from \eqref{eq:fin}. Intuition with uncorrelated noise ($\Sigma$ diagonal with entries $\sigma_j^2$): each variable gives its own estimate of the shock, $x_{jt}/\psi_j$, with error variance $\sigma_j^2/\psi_j^2$; the GLS weights average these estimates with weights proportional to their precisions $\psi_j^2/\sigma_j^2$. A variable that moves a lot with policy and little otherwise gets a large weight. Because no single shock is counted more than once, the weights automatically avoid the double counting that would come from adding up $x_{jt}/\psi_j$ across variables.
+
+\begin{remark}[The reverse regression]
+One could instead regress the surprise on the variables, $\varepsilon_t = \ba'\bx_t + e_t$. The population coefficients are the projection
+\[
+\ba \;=\; \Var(\bx)^{-1}\Cov(\bx,\varepsilon) \;=\; (\sigma^2\bpsi\bpsi'+\Sigma)^{-1}\sigma^2\bpsi \;=\; \kappa\,\bw,\qquad
+\kappa = \frac{\sigma^2 q}{1+\sigma^2 q},\; q=\bpsi'\Sigma^{-1}\bpsi,
+\]
+using the Sherman--Morrison formula. So the reverse regression has the \emph{same relative weights} as GLS, shrunk by $\kappa\in(0,1)$, and $\kappa$ equals the regression's $R^2$. Dividing the reverse-regression coefficients by $R^2$ (equivalently, rescaling so that $\ba'\bpsi=1$) recovers $\bw$. This is why, in our empirical work, the reverse-regression weights had to be ``rescaled for shrinkage'' to be read as funds-rate equivalents.
+\end{remark}
+
+\section{When each weighting is right}
+
+\begin{proposition}[IR weights measure the output equivalent]\label{prop:IR}
+Under Assumptions~\ref{ass:C} and~\ref{ass:A1}, $I^s_t = O_t$ for every configuration $\bx_t$, on or off the policy ray. As an estimate of the policy equivalent, $I^s_t = P_t + \bs'\bu_t$: unbiased, with error variance $\bs'\Sigma\bs$.
+\end{proposition}
+
+\begin{proof}
+$I^s_t = \bg'\bx_t/G = O_t$ by definition under Assumption~\ref{ass:C}. Substituting \eqref{eq:fin}, $I^s_t = (\bg'\bpsi/G)\varepsilon_t + \bs'\bu_t = \varepsilon_t + \bs'\bu_t$ under \eqref{eq:A1}.
+\end{proof}
+
+\noindent In words: if financial conditions cause output through stable partial effects, and the index includes every channel through which policy works, then the IR index is \emph{exactly} the output equivalent of today's conditions. It needs no assumption about where the movements came from. Its weak points are the assumptions themselves: the partial effects must be the same for policy-driven and non-policy-driven movements, and the variable list must be complete.
+
+\begin{proposition}[Market weights measure the policy equivalent]\label{prop:GLS}
+Under \eqref{eq:fin}, among all weights $\ba$ with $\ba'\bpsi=1$ (so that a unit policy shock moves the index by one), $\bw$ minimizes the error variance $\Var(\ba'\bx_t - \varepsilon_t)=\ba'\Sigma\ba$. The minimum is $1/(\bpsi'\Sigma^{-1}\bpsi)$. Hence $I^w_t$ is the best linear unbiased estimate of $P_t$. It requires no output model.
+\end{proposition}
+
+\begin{proof}
+For $\ba'\bpsi=1$, $\ba'\bx_t-\varepsilon_t=\ba'\bu_t$, with variance $\ba'\Sigma\ba$. Minimize $\ba'\Sigma\ba$ subject to $\ba'\bpsi=1$. The Lagrangian first-order condition is $2\Sigma\ba=\lambda\bpsi$, so $\ba\propto\Sigma^{-1}\bpsi$; the constraint fixes the scale and gives \eqref{eq:w}. Substituting, $\bw'\Sigma\bw = 1/(\bpsi'\Sigma^{-1}\bpsi)$.
+\end{proof}
+
+\noindent In words: if the question is ``how much monetary-policy-like tightening do the markets show?'', the market weights are the efficient answer. They do not tell us how much output will fall: under Assumption~\ref{ass:C} their error against the output equivalent is
+\[
+I^w_t - O_t \;=\; (\bw-\bs)'\bu_t ,
+\]
+which is not zero when non-policy movements have output effects that the market weights do not price.
+
+\begin{corollary}[Which is right depends on what the non-policy movements are]\label{cor:which}
+\begin{enumerate}[label=(\alph*),leftmargin=2em]
+\item Under Assumption~\ref{ass:C} (causal), the output equivalent $O_t$ is the economically relevant object, and the IR weights are right. The market weights measure only the policy-like part.
+\item Under Assumption~\ref{ass:N} (indicator), $O_t=P_t=\varepsilon_t$, so both targets call for the market weights. The IR index is still unbiased but is inefficient: its error variance exceeds the minimum by
+\[
+\bs'\Sigma\bs - \frac{1}{\bpsi'\Sigma^{-1}\bpsi} \;\ge\; 0 .
+\]
+It loads on noise that has no output consequences.
+\end{enumerate}
+\end{corollary}
+
+\section{When the two weightings coincide}
+
+\begin{proposition}[Equivalence]\label{prop:eq}
+Suppose $\bs'\bpsi=\bw'\bpsi=1$ (complete transmission). Then:
+\begin{enumerate}[label=(\roman*),leftmargin=2em]
+\item \emph{On the policy ray} the two indexes always agree: if $\bu_t=0$, $I^s_t=I^w_t=\varepsilon_t$. More generally,
+\begin{equation}\label{eq:diff}
+I^s_t - I^w_t \;=\; (\bs-\bw)'\bu_t ,
+\end{equation}
+so any gap between the two indexes is entirely due to non-policy movements.
+\item The two indexes coincide for \emph{every} configuration if and only if
+\begin{equation}\label{eq:equiv}
+\bg \;\propto\; \Sigma^{-1}\bpsi \qquad\Longleftrightarrow\qquad \Sigma\,\bg \;\propto\; \bpsi .
+\end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Both weight vectors satisfy $\ba'\bpsi=1$, so $\ba'\bx_t=\varepsilon_t+\ba'\bu_t$; subtract. (ii) $I^s_t=I^w_t$ for all $\bx_t$ iff $\bs=\bw$, i.e.\ $\bg/(\bg'\bpsi)=\Sigma^{-1}\bpsi/(\bpsi'\Sigma^{-1}\bpsi)$, which (since both sides are normalized the same way) holds iff $\bg\propto\Sigma^{-1}\bpsi$.
+\end{proof}
+
+\paragraph{Reading condition \eqref{eq:equiv}.} The equivalence condition says that a variable's \emph{importance for output} must be proportional to its \emph{signal-to-noise ratio as an indicator of policy}. Three special cases make it concrete:
+\begin{itemize}[leftmargin=2em]
+\item \textbf{One variable} ($N=1$): both weights are $1/\psi$. With a single variable there is nothing to choose.
+\item \textbf{Uncorrelated noise} ($\Sigma=\mathrm{diag}(\sigma_j^2)$): $g_j \propto \psi_j/\sigma_j^2$. Variables that matter more for output must be relatively more responsive to policy, or relatively less noisy.
+\item \textbf{Equal, uncorrelated noise} ($\Sigma=\sigma_u^2 I$): $\bg\propto\bpsi$. Output importance proportional to policy sensitivity.
+\end{itemize}
+There is no general reason for \eqref{eq:equiv} to hold: $\bg$ comes from how spending responds, while $\bpsi$ and $\Sigma$ come from how markets price policy and non-policy news. Equation \eqref{eq:diff} is the practical consequence: the gap between the two indexes is a weighted sum of non-policy movements, so it is largest in episodes dominated by non-policy shocks (credit crises, risk-off episodes, energy shocks) and small in policy-driven episodes.
+
+\section{The mixed case and a unifying formula}\label{sec:mixed}
+
+Let non-policy movements have a causal part and a noise part, $\bu_t=\bu^c_t+\bu^n_t$, uncorrelated with each other and with $\varepsilon_t$, with covariances $\Sigma_c$ and $\Sigma_n$. Output responds to policy and to the causal part, through the same partials:
+\[
+\bx_t = \bpsi\varepsilon_t+\bu^c_t+\bu^n_t,\qquad y_t=\bg'(\bpsi\varepsilon_t+\bu^c_t)+\eta_t,\qquad G=\bg'\bpsi .
+\]
+
+\begin{proposition}[Best linear predictor of output]\label{prop:mixed}
+The weights $\ba^*$ that minimize $\E[(y_t-\ba'\bx_t)^2]$ are
+\begin{equation}\label{eq:mixed}
+\ba^* \;=\; \bigl(\sigma^2\bpsi\bpsi'+\Sigma_c+\Sigma_n\bigr)^{-1}\bigl(\sigma^2\bpsi\bpsi'+\Sigma_c\bigr)\,\bg .
+\end{equation}
+\begin{enumerate}[label=(\alph*),leftmargin=2em]
+\item If $\Sigma_n=0$ (all non-policy movements are causal), $\ba^*=\bg$: the IR weights (times $G$).
+\item If $\Sigma_c=0$ (all non-policy movements are noise), $\ba^*=G\,\kappa\,\bw$ with $\kappa=\sigma^2q/(1+\sigma^2q)$, $q=\bpsi'\Sigma_n^{-1}\bpsi$: the market weights (times $G$), shrunk by $\kappa$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+$\ba^*=\Var(\bx_t)^{-1}\Cov(\bx_t,y_t)$, with $\Var(\bx_t)=\sigma^2\bpsi\bpsi'+\Sigma_c+\Sigma_n$ and $\Cov(\bx_t,y_t)=(\sigma^2\bpsi\bpsi'+\Sigma_c)\bg$. (a) is immediate. For (b), $\Cov(\bx_t,y_t)=\sigma^2\bpsi(\bpsi'\bg)=\sigma^2G\bpsi$, and Sherman--Morrison gives $(\sigma^2\bpsi\bpsi'+\Sigma_n)^{-1}\bpsi=\Sigma_n^{-1}\bpsi/(1+\sigma^2q)$.
+\end{proof}
+
+\noindent In words: the right weights are a matrix-weighted compromise between the IR weights and the market weights, and the compromise depends on how much of the non-policy variation in financial variables has real effects. The two pure approaches are the two corners. The shrinkage factor in (b) is a forecasting adjustment; if the index is meant as an \emph{equivalence} (a pure policy move of one funds-rate unit should move it by one), one imposes $\ba'\bpsi=1$, which removes the shrinkage.
+
+\section{Dynamics: shocks versus levels}\label{sec:dynamics}
+
+\subsection{The output side}
+
+Let the output gap depend on current and past financial conditions,
+\begin{equation}\label{eq:dyn}
+y_t \;=\; \sum_{i=0}^{\infty}\bphi_i'\bx_{t-i} + \eta_t ,
+\end{equation}
+where $\bphi_i$ is the effect at lag $i$ of a \emph{one-period} move in $\bx$. Macro-model experiments usually report the response to a \emph{persistent} shift instead. A permanent unit shift in $x_j$ at date $t$ raises the gap at $t+k$ by
+\[
+\Phi_{jk} \;=\; \sum_{i=0}^{k}\phi_{ji} ,\qquad \bPhi_k=(\Phi_{1k},\dots,\Phi_{Nk})' .
+\]
+Writing levels as accumulated changes, $\bx_{t-i}=\sum_{m\ge i}\Delta\bx_{t-m}$ (deviations vanish in the remote past), and swapping the order of summation gives an equivalent form in terms of changes:
+\begin{equation}\label{eq:changes}
+y_t-\eta_t \;=\; \sum_{m=0}^{\infty}\bPhi_m'\,\Delta\bx_{t-m}.
+\end{equation}
+Each past change counts with the cumulative response for its age.
+
+\begin{proposition}[When horizon-$k$ IR weights are right for levels]\label{prop:levels}
+The levels index $\bPhi_k'\bx_t$ differs from the model's output gap by
+\begin{equation}\label{eq:levelerr}
+\bPhi_k'\bx_t - (y_t-\eta_t) \;=\; \sum_{m=0}^{\infty}(\bPhi_k-\bPhi_m)'\Delta\bx_{t-m}.
+\end{equation}
+It equals the output gap if (a) the effects are fully built up by horizon $k$ ($\bphi_i=0$ for $i>k$, so $\bPhi_m=\bPhi_k$ for $m\ge k$) and (b) the current configuration has been in place for at least $k$ periods ($\Delta\bx_{t-m}=0$ for $m<k$).
+\end{proposition}
+
+\begin{proof}
+$\bPhi_k'\bx_t=\sum_m\bPhi_k'\Delta\bx_{t-m}$; subtract \eqref{eq:changes}. Under (a) and (b) every term with $\Delta\bx_{t-m}\neq 0$ has $m\ge k$ and $\bPhi_m=\bPhi_k$.
+\end{proof}
+
+\noindent In words: applying horizon-$k$ impulse responses to levels measures the output-gap pressure of today's configuration \emph{as if it had already been in place for $k$ periods}. Recent moves are over-counted relative to the model (their effect has not yet built up); moves older than the point where effects die out are counted correctly. With $k$ large (the long-run response), the levels index is the steady-state gap the configuration would produce if it persisted. This is a coherent definition of ``stance in levels,'' but it is a different object from the next-year growth effect.
+
+\begin{corollary}[The growth-impulse form, as in FCI-G]
+Holding financial variables at their current values from $t$ on, the expected change in the output gap over the next $h$ periods is
+\begin{equation}\label{eq:fcig}
+\E\bigl[y_{t+h}-y_t\mid \bx_{t+s}=\bx_t,\ s\ge 1\bigr] \;=\; \sum_{m=0}^{\infty}(\bPhi_{m+h}-\bPhi_m)'\,\Delta\bx_{t-m}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Apply \eqref{eq:changes} at $t+h$ with $\Delta\bx_{t+s}=0$ for $s\ge1$: $y_{t+h}-\eta=\sum_{m\ge0}\bPhi_{m+h}'\Delta\bx_{t-m}$; subtract \eqref{eq:changes} at $t$.
+\end{proof}
+
+\noindent With $h=4$ quarters, \eqref{eq:fcig} is exactly the structure of the Fed's FCI-G: a distributed lag on past changes with weights $\beta_{m+4}-\beta_m$. So FCI-G is the \emph{growth-impulse} index implied by the same impulse responses, and a levels index with horizon-$k$ weights is the corresponding \emph{gap-pressure} index. They are two summaries of one structure, which is why the level of FCI-G lines up with the 12-month \emph{change} of a levels index.
+
+\subsection{The financial side}
+
+Let policy shocks have dynamic effects on the financial variables,
+\[
+\bx_t \;=\; \sum_{h=0}^{\infty}\bpsi_h\,\varepsilon_{t-h} + \bu_t .
+\]
+Event-window regressions measure the impact responses $\bpsi_0$. Static GLS weights built from $\bpsi_0$ give
+\[
+I^w_t \;=\; \sum_{h=0}^{\infty}\bw'\bpsi_h\,\varepsilon_{t-h} + \bw'\bu_t .
+\]
+
+\begin{assumption}[Common dynamics]\label{ass:common}
+All financial variables respond to policy with the same time profile: $\bpsi_h=a_h\bpsi_0$ for scalars $a_h$ with $a_0=1$.
+\end{assumption}
+
+\begin{proposition}[When static market weights are right for levels]\label{prop:mktlevels}
+Under Assumption~\ref{ass:common}, $I^w_t=\sum_h a_h\varepsilon_{t-h}+\bw'\bu_t$: the levels index measures the accumulated, policy-equivalent tightening $\sum_h a_h\varepsilon_{t-h}$ (the ``policy state''), and $\bw$ remains the best linear unbiased weighting provided $\Sigma$ is the covariance of the non-policy component \emph{of levels}. Without common dynamics, static weights mix shocks of different ages with different weights, and the efficient estimate of the policy state requires a dynamic filter (a Kalman filter on the dynamic factor model).
+\end{proposition}
+
+\noindent Two practical conditions follow for the market approach. First, \emph{shape}: variables that react at different speeds (equities at once, house prices slowly) violate Assumption~\ref{ass:common}. Second, \emph{noise at the right frequency}: event windows estimate the covariance of non-policy news \emph{within the window}, $\Sigma_{\text{window}}$, while optimal weights for levels need the covariance of non-policy movements \emph{in levels}, $\Sigma_{\text{levels}}$. The relative weights are unaffected if $\Sigma_{\text{window}}\propto\Sigma_{\text{levels}}$, but not otherwise.
+
+\subsection{Equivalence in the dynamic setting}
+
+Combining the pieces, the levels IR index $\bPhi_k'\bx_t/G_k$ and the levels market index $\bw'\bx_t$ give the same answer for all histories when:
+\begin{enumerate}[leftmargin=2em]
+\item complete transmission holds at horizon $k$: $G_k=\bPhi_k'\bpsi$ (for persistent responses);
+\item the static condition \eqref{eq:equiv} holds with $\bg=\bPhi_k$ and $\Sigma=\Sigma_{\text{levels}}$;
+\item policy affects the variables with common dynamics (Assumption~\ref{ass:common}); and
+\item for the gap interpretation of the IR index, conditions (a) and (b) of Proposition~\ref{prop:levels} hold.
+\end{enumerate}
+On the policy ray (no non-policy movements, common dynamics), conditions 2 and 4 are irrelevant: the two indexes agree whenever both are normalized to the same funds-rate unit.
+
+\paragraph{Noise versus non-policy shocks.} The indicator component $\bu^n_t$ can be read as measurement error in the financial variables, and the causal component $\bu^c_t$ as genuine non-policy financial shocks (risk appetite, term premiums) with output effects. In that reading, the market weights are right when non-policy variation is all measurement error and the IR weights are right when it is all genuine shocks. With both present, an index that must be right on average for every state of the economy (unbiased for $O_t$) must satisfy $(\ba-\bs)'\bu^c_t=0$ for every causal movement that can occur; precision is then chosen among weights that pass that test, using $\Sigma_n$ alone. If the causal movements span all $N$ directions, only $\ba=\bs$ passes, and there is no precision trade-off left to exploit. Covariance weighting by the event-window residuals, which contain both components, can therefore downweight movements that matter for output.
+
+\section{Summary}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{4.2cm}p{6.2cm}p{4.2cm}}
+\toprule
+Question the index answers & Conditions & Right weights \\
+\midrule
+Output effect of current financial conditions, whatever their source (output equivalent) &
+Causal partial effects that are the same for policy and non-policy moves (Ass.~\ref{ass:C}); complete transmission (Ass.~\ref{ass:A1}); for levels, configuration in place $\ge k$ periods and effects built up by $k$ (Prop.~\ref{prop:levels}) &
+IR weights $\bs=\bg/G$ (horizon-$k$ responses $\bPhi_k/G_k$) \\[3pt]
+How much policy-like tightening markets show (policy equivalent) &
+One-factor structure with non-policy movements uncorrelated with policy; for levels, common dynamics (Ass.~\ref{ass:common}) and noise covariance measured for levels &
+Market GLS weights $\bw$; reverse regression divided by its $R^2$ \\[3pt]
+Best forecast of output from financial variables &
+Mixed: some non-policy movements matter for output, some are noise &
+Projection $\ba^*$ in \eqref{eq:mixed}, between $\bg$ and $\kappa\bw$ \\[3pt]
+Both coincide &
+$\bg\propto\Sigma^{-1}\bpsi$ (output importance $\propto$ signal-to-noise); or $N=1$; or no non-policy movement (on the policy ray) &
+Either \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The main messages for building and comparing FCIs:
+\begin{enumerate}[leftmargin=2em]
+\item The two weightings agree on pure policy moves by construction. All disagreement between an IR-weighted index and a market-weighted index is a weighted sum of non-policy movements, equation~\eqref{eq:diff}. Expect them to diverge most in non-policy episodes.
+\item Choosing between them is choosing a view of non-policy financial movements: real effects (IR weights) or noise (market weights). The mixed formula \eqref{eq:mixed} shows the continuum.
+\item The IR approach rests on complete transmission. Checking $\bs'\bpsi$ in the macro model (the ``sum of partials'' against the full effect of a hike) tells how much of policy runs outside the index and how much to rescale.
+\item Levels are not shocks, but both approaches have a coherent levels interpretation: gap pressure from a configuration that has persisted (IR), or accumulated policy-equivalent tightening under common dynamics (market). The growth-impulse form \eqref{eq:fcig} connects the levels index to FCI-G.
+\end{enumerate}
+
+\section{Mapping to our estimates (illustrative)}
+
+For the three variables that both approaches cover (10-year yield in pp, equity valuation in percent, real dollar in percent), our estimates give:
+
+\begin{center}
+\small
+\begin{tabular}{lccc}
+\toprule
+ & 10-year & Equities & Dollar \\
+\midrule
+FRB/US persistent-hike spillovers at 4 quarters, $\bpsi^{\text{FRB/US}}$ & $+0.37$ & $-13.2$ & $+1.6$ \\
+Event-window responses to a parallel 1 pp surprise, $\bpsi^{\text{mkt}}$ & $+0.55$ & $-8.0$ & $+4.3$ \\
+IR weights $\bs$ (FRB/US, 4 quarters) & $0.569$ & $-0.032$ & $0.100$ \\
+Market GLS weights $\bw$ (event window, parallel unit) & $0.598$ & $-0.050$ & $0.064$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent The market rows use the Nakamura--Steinsson policy-news factor with the full error covariance, converted from 2-year-yield units to a parallel funds-rate unit with the factor's funds-rate content (0.98 pp per unit).
+
+\begin{itemize}[leftmargin=2em]
+\item \textbf{Complete transmission.} With the funds rate's direct effect measured with expectations held fixed, the FRB/US partial effects of the variables in the macro-model index add up to about 80 percent of the output effect of a full hike at four quarters (the rest is an expectations channel not in the index). With the three variables above, $\bs'\bpsi^{\text{FRB/US}}\approx0.79$. Evaluated at the \emph{market} transmission vector, $\bs'\bpsi^{\text{mkt}}\approx1.00$: the IR weights price the observed announcement-window response of these three variables as almost exactly one funds-rate unit. By construction $\bw'\bpsi^{\text{mkt}}=1$.
+\item \textbf{Equivalence.} The ratios $s_j/w_j$ are about $0.95$ (10-year), $0.64$ (equities) and $1.57$ (dollar). They are not equal, so condition \eqref{eq:equiv} fails: relative to the market weights, the macro model gives equities less weight and the dollar more, with the 10-year close. By \eqref{eq:diff}, the gap between the two indexes is a weighted sum of non-policy movements in equities and the dollar. That fits our finding that the two indexes share 12-month changes but differ more in levels, where valuation and dollar swings unrelated to policy accumulate.
+\item \textbf{Transmission vectors.} The model and the event windows roughly agree on the long-rate response (0.37 vs 0.55) but differ on equities (model larger) and the dollar (market larger). Part of this is the horizon: the model response is after four quarters, the market response is within the announcement window, which is a reminder that Assumption~\ref{ass:common} matters.
+\end{itemize}
+
+\end{document}
