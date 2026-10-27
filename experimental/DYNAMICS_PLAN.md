@@ -1,6 +1,6 @@
 # Plan: dynamics in financial conditions indexes (distributed-lag macro index; financial response profiles) and integration of the ECB Macro-Finance FCI
 
-Status: PLAN ONLY (27 Oct 2026). Nothing below is implemented yet.
+Status: steps 1a-1c, 2a-2b, C1 and C2 implemented 27 Oct 2026 (results at the end); 2c and C3 not done.
 
 Motivation: the gap test (`fci_compare/gap_test.py`) shows the macro-minus-market gap does not respond to policy surprises in the announcement window or in the same month, but does respond 6-12 months later (+0.6 to +0.9 pp per pp of surprise, se 0.3-0.5). The weighting note (`weighting_note/weighting_note.tex`, section 7) and the tutorial the user shared (sections 4-6) say why this matters:
 - **Output-side lags.** If output depends on past financial conditions, the right index in levels is a distributed lag, sum_m Phi_m' dx_{t-m} / G. A static levels index is right only if the current configuration has persisted.
@@ -138,3 +138,60 @@ Motivation: the gap test (`fci_compare/gap_test.py`) shows the macro-minus-marke
 5. Step 2c and C3 only if the earlier results justify them.
 
 Deliverables are added to `PROJECT_MEMORY.md` and `NOTE_PLAN.md` as they are completed.
+
+---
+
+## Results (27 Oct 2026)
+
+**1a. FRB/US paths** (`ms_fci/frbus_paths.py`, `frbus_paths.csv`, `frbus_hike_paths.csv`).
+- *Linearity.* Persistent responses equal the cumulated one-quarter responses: max difference 0.001-0.004 with z fixed, up to 0.02 with z free.
+- *Profiles differ by variable.* Funds-rate equivalents per unit, q4 / q12 / q24:
+
+| Variable | q4 | q12 | q24 |
+|---|---|---|---|
+| 10-year | 0.57 | 0.46 | 0.37 |
+| mortgage spread | 0.42 | 0.20 | 0.11 |
+| BBB spread | 0.13 | 0.19 | 0.19 |
+| equities (per 1%) | -0.032 | -0.028 | -0.022 |
+| dollar (per 1%) | 0.100 | 0.082 | 0.051 |
+| house prices (per 1%) | -0.029 | -0.019 | -0.011 |
+
+  So FRB/US violates common output-side dynamics: the spreads and the 10-year differ most.
+- *One definition of expectations* (z fixed for all variables, open item 4): q4 weights 10-year 0.52, BBB spread 0.10, equities -0.026, dollar 0.099, mortgage spread 0.40, house prices -0.023 (small changes).
+- *Full-hike spillovers keep growing.* Stocks -13% at q4 and -23% at q12; the dollar +1.6% and +2.5%. The 10-year spillover rises from 0.37 to 0.57.
+
+**1b. Distributed-lag macro index** (`ms_fci/macro_model_dl.py`, `macro_model_dl_monthly.csv`, charts `macro_model_dl.png`, `macro_model_dl_fcig.png`).
+- *Check.* The static q4 index reproduces `macro_model_levels.py` (max difference 4e-5).
+- *Comparison with the static index, from 1998.* The distributed-lag index with effects complete after 12 quarters (DL_12) is much smoother: sd 0.74 against 1.16 for the static q4 index. Levels correlate 0.61; 12-month changes do not correlate (it lags).
+- *Effect of recent moves not yet transmitted* (static q12 minus DL_12): sd 0.76 pp; peaks of 2.8 pp in Sep 2022 (10-year and dollar) and about 2.5 pp in early 2009 (equities, BBB); latest +0.16.
+- *Growth-impulse form against the official FCI-G* (1999-2026): correlation 0.87 with the 1-year lookback and 0.83 with the 3-year lookback. This confirms FCI-G's structure is the growth-impulse form of the same FRB/US partials. Its 1-year version is essentially the 12-month change of the static index (correlation 1.00).
+
+**2a-2b. Financial response profiles** (`path_fci/psi_by_horizon.py`, `psi_by_horizon.csv`, `psi_dl_implied.csv`, charts `psi_by_horizon.png`, `psi_daily.png`).
+- *Same-month responses to a 1 pp NS surprise.* 10-year +0.63 (0.49), equities -10.9% (4.9), dollar +6.8% (1.8). The market and FRB/US readings agree: 1.36 vs 1.38; gap +0.02 (0.11).
+- *Later the profiles drift apart.* Equities rebound (ratio to impact turns negative after 9 months); the dollar and the 10-year keep rising (ratios about 2-3 at 18-24 months). Proportionality is not rejected at any horizon (p = 0.17-0.84): the bands are wide.
+- *Delayed gap.* The macro-minus-market gap implied by the profiles is +0.38 (0.27) at 6 months, +0.75 (0.46) at 12 and +1.83 (0.65) at 24. About 60% of it is the common variables, weighted by s - w (FRB/US gives the dollar more weight and equities less, while the dollar keeps rising and equities rebound). The rest is the mortgage and BBB spreads. The implied gap matches the direct LP of the gap index (h = 12: 0.74 vs 0.89; h = 24: 1.83 vs 1.76), closing the accounting loop with `gap_test.py`.
+- *Robustness.* Same pattern with the GSS path factor (gap +0.45 at 12, +1.16 at 24), with pure-policy events only, and excluding 2008-09 and 2020.
+- *Daily event-day projections* (60 trading days). The common-variable gap stays between -0.2 and 0, so the drift is a 6-24 month phenomenon. Equities fall further over the first month (-15% at 20 days).
+- *GDP weights from responses at several horizons* (tutorial 6.2) are not informative. Industrial production *rises* after hawkish surprises (+3 to +9 per unit; the information effect or Fed response to news). The bootstrap bands on relative weights span zero widely.
+
+**1c. Gap with the distributed-lag index.**
+- *Implied responses* (estimated profiles x FRB/US lags; the market index passed through the hike's own lag profile; K = 4 quarters):
+
+| Months after surprise | Macro (distributed lag) | Market (distributed lag) | Gap |
+|---|---|---|---|
+| 12 | 1.01 | 0.69 | 0.32 (0.25) |
+| 24 | 1.83 | 0.65 | 1.19 (0.51) |
+
+  The gap is zero on impact and up to 6 months. Output-side lags do not remove the delayed gap, as expected: it comes from the financial side.
+- *Direct local projection of the distributed-lag index.* It is dominated by pre-trends (it falls after hawkish surprises), so it is not used.
+
+**C1-C2. ECB Macro-Finance FCI** (`fci_compare/mffci_us.py`, `mffci_us_monthly.csv`, `mffci_us.png`; `lit/lit_ecb_mffci.md`; paragraph added to the weighting note; NOTE_PLAN 7.4).
+- *Approximate US version* (the box's reported weights; CAPE and dollar weights bracketed by two variants; the BBB spread stands in for the A spread). It moves about 1.93 index units per parallel 1 pp move in all rates, and 1.95 (0.41) per parallel surprise in the same month. So its "policy-rate scale" is about twice a funds-rate equivalent.
+- *In funds-rate units, 1999-2026.*
+  - Correlation with the macro-model index 0.85 / 0.79 (variants A / B). With the market-based index 0.59 / 0.86 and GS 0.36 / 0.71 in levels.
+  - 12-month changes correlate 0.62-0.86.
+  - FCI-G (1-year lookback) against its 12-month change: 0.63 / 0.75.
+  - The results depend on the unreported CAPE weight.
+- *Policy surprises.* Same-month response to an NS surprise +1.32 (0.33); gap to the market index +0.01 (0.18). Like the macro-model index, it reads pure policy moves the same as the market index.
+- *Latest* (Oct 2026, demeaned 1999-2026): variant A +1.25, B +0.01 (macro +1.02, market -0.11, GS -0.62).
+- *Exact US weights* are needed before using this in the note: contact the authors or take them from the chart.
