@@ -24,27 +24,33 @@ import fcig_replicate as R
 REAL = "--real10" in sys.argv
 
 
-def main():
-    P.L.REAL10 = REAL; P.L.RSTAR = False
+def components(real=False, withexp=False, rawhp=False, verbose=True):
+    """Daily contributions by variable (pp of funds rate, demeaned over 1990-2026); also returns the build data (X, G)."""
+    P.L.REAL10 = real; P.L.RSTAR = False
     X, G = P.L.build()
     base = pd.read_csv(os.path.join(HERE, "frbus_sensitivities.csv"), index_col=0)["ffr_eq_q4"]
     ext = pd.read_csv(os.path.join(HERE, "frbus_sensitivities_ext.csv"), index_col=0)["ffr_eq_q4"]
-    W = {"policy rate": ext["rshort" if "--withexp" in sys.argv else "rshort_direct"], "10-year": base["rg10"], "mortgage spread": ext["rme"], "BBB spread": base["rbbbp"], "equities": -base["req"], "dollar": base["fpxr"], "house prices": ext["phouse"]}
-    print("weights (pp of funds rate per unit, q4): " + ", ".join(f"{k} {v:+.3f}" for k, v in W.items()))
+    W = {"policy rate": ext["rshort" if withexp else "rshort_direct"], "10-year": base["rg10"], "mortgage spread": ext["rme"], "BBB spread": base["rbbbp"], "equities": -base["req"], "dollar": base["fpxr"], "house prices": ext["phouse"]}
+    if verbose: print("weights (pp of funds rate per unit, q4): " + ", ".join(f"{k} {v:+.3f}" for k, v in W.items()))
     idx = X.index
     mort = R.fred("MORTGAGE30US").reindex(idx, method="ffill")
     spread = mort - G.x_y10.reindex(idx)
     hp = np.log(R.splice_level(R.zillow(), R.fred("CSUSHPISA")))
-    if "--rawhp" not in sys.argv:
+    if not rawhp:
         oer = np.log(P.L.get("CUSR0000SEHC"))
         hp = hp - oer.reindex(hp.index.union(oer.index)).sort_index().ffill().reindex(hp.index)       # price-to-rent ratio
     hp = hp.reindex(idx.union(hp.index)).sort_index().ffill().reindex(idx) * 100          # stepped monthly, carried within the month
-    einf = X.einf if REAL else 0.0
+    einf = X.einf if real else 0.0
     comp = pd.DataFrame({
         "policy rate": W["policy rate"] * (X.ffr - einf), "10-year": W["10-year"] * X.y10, "mortgage spread": W["mortgage spread"] * spread,
         "BBB spread": W["BBB spread"] * X.bbb, "equities": W["equities"] * 100 * X.lncape, "dollar": W["dollar"] * 100 * X.lnrusd,
         "house prices": W["house prices"] * hp}).dropna()
     comp = comp - comp.mean()
+    return comp, X, G
+
+
+def main():
+    comp, X, G = components(REAL, "--withexp" in sys.argv, "--rawhp" in sys.argv)
     A = comp.drop(columns="house prices").sum(axis=1)
     B = comp.sum(axis=1)
     out = pd.DataFrame({"without house prices": A, "with house prices": B})
