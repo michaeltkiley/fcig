@@ -222,3 +222,5 @@ Unit: the funds rate held +100 bp for 12 months in the VAR. Within-month effects
 **A27 (28 Oct).** VAR numerator: variable j held 1 unit above baseline for 12 months, with all other financial variables held at baseline (the same partial design as FRB/US). Its effect runs only through the index.
 
 **A28 (D1b, 28 Oct).** The current-pressure (distributed-lag) index is divided by the persistent hike's GDP effect at 4 quarters (-0.45%), the same yardstick as the static index.
+
+**A29 (28 Oct).** The user asked to see caps of 4, 8 and 12 quarters before deciding (`ms_fci/macro_model_dl_caps.py`, `macro_model_dl_caps.png`). Decision pending.
