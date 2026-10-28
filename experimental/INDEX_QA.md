@@ -220,3 +220,5 @@ Unit: the funds rate held +100 bp for 12 months in the VAR. Within-month effects
 **A26 (28 Oct).** The yardstick and weights in this VAR use the unemployment gap, converted to output terms with an Okun's-law factor of 2 (output gap = -2 x unemployment gap). The factor cancels in the weights but makes the yardstick comparable with FRB/US's GDP effect.
 
 **A27 (28 Oct).** VAR numerator: variable j held 1 unit above baseline for 12 months, with all other financial variables held at baseline (the same partial design as FRB/US). Its effect runs only through the index.
+
+**A28 (D1b, 28 Oct).** The current-pressure (distributed-lag) index is divided by the persistent hike's GDP effect at 4 quarters (-0.45%), the same yardstick as the static index.
