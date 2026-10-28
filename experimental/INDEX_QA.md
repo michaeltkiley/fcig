@@ -206,3 +206,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A21 (28 Oct).** Estimation sample 1990-2025, with all of 2020 dropped from the likelihood.
 
 **A22 (28 Oct).** Lag length chosen by BIC on our data.
+
+**A23 (28 Oct).** No ridge penalty to start, with standard errors reported. Reconsider only if the weights show problems; with spreads (rather than many rate levels) and fewer rate series, collinearity may matter less.
