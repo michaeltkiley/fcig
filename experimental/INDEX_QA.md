@@ -223,4 +223,4 @@ Unit: the funds rate held +100 bp for 12 months in the VAR. Within-month effects
 
 **A28 (D1b, 28 Oct).** The current-pressure (distributed-lag) index is divided by the persistent hike's GDP effect at 4 quarters (-0.45%), the same yardstick as the static index.
 
-**A29 (28 Oct).** The user asked to see caps of 4, 8 and 12 quarters before deciding (`ms_fci/macro_model_dl_caps.py`, `macro_model_dl_caps.png`). Decision pending.
+**A29 (28 Oct).** The user asked to see caps of 4, 8 and 12 quarters before deciding (`ms_fci/macro_model_dl_caps.py`, `macro_model_dl_caps.png`). Decision: 4 quarters is the main version; 8 and 12 are robustness checks, possibly with a different normalization (question 30).
