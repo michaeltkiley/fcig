@@ -157,3 +157,9 @@ To compare the market index with the macro distributed-lag index on equal terms,
 5. D1b, D2a, D3a.
 
 Once these are answered, I will restate each index as a one-line definition for you to approve, then rebuild.
+
+---
+
+## Answers (recorded as given)
+
+**A1 (Q4a, 28 Oct).** Build both current pressure (1) and eventual pressure (2) as separate macro-model indexes. Also build the growth-over-next-year form (3), as a comparison for the FCI-G discussion.
