@@ -180,3 +180,5 @@ Results: `ms_fci/frbus_mce.py`, `frbus_mce.csv`. Convergence was checked at 240 
 Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computations.** Model-consistent weights are not the base.
 
 **A8 (28 Oct).** FRB/US-based computations use the old design: VAR expectations, persistent shifts, funds rate fixed in the partial experiments, policy rate at its direct effect (0.009). The focus is mostly on the 4-quarter horizon.
+
+**A9 (B1c, 28 Oct).** Keep the policy rate in the macro-model index (weight 0.009).
