@@ -192,3 +192,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A14 (B3a, 28 Oct).** GS is converted by its response to NS surprises, in 2-year-yield units (about 0.96 per index point; 0.945 / 0.98), the same unit as the market index.
 
 **A15 (B4a, 28 Oct).** FCI-G enters the comparison both ways: its level against the level indexes, and against their 12-month changes. Both lookbacks (1-year and 3-year) are compared with 12-month changes; there is no 24-month comparison for the 3-year lookback (my reading of "both with 12 month changes").
+
+**A16 (B5a, 28 Oct).** NFCI and ANFCI are converted by their weekly response to NS surprises (2-year-yield units). For the OFR FSI (daily), my reading is the same weekly window, for consistency (to confirm).
