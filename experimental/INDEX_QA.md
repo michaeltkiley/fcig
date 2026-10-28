@@ -188,3 +188,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A11 (B2b, 28 Oct).** The market index stays in NS units (pp of the 2-year yield), with no rescaling to funds-rate pp, and this is stated.
 
 **A12-A13 (B2c, 28 Oct).** Base market index: three variables (10-year, equities, dollar). Robustness version: add the Moody's Baa yield (daily DBAA), with the weights from event-day changes and the index on levels. Not usable: ICE BBB (FRED only from 2023), mortgage rate (weekly), house prices (monthly).
+
+**A14 (B3a, 28 Oct).** GS is converted by its response to NS surprises, in 2-year-yield units (about 0.96 per index point; 0.945 / 0.98), the same unit as the market index.
