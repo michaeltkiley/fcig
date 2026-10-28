@@ -178,3 +178,5 @@ Once these are answered, I will restate each index as a one-line definition for 
 
 Results: `ms_fci/frbus_mce.py`, `frbus_mce.csv`. Convergence was checked at 240 and 300 quarters (`frbus_mce_check.py`). Model-consistent expectations raise most weights 2-3x because the temporary hike's GDP effect is smaller (-0.18% vs -0.45% at q4).
 Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computations.** Model-consistent weights are not the base.
+
+**A8 (28 Oct).** FRB/US-based computations use the old design: VAR expectations, persistent shifts, funds rate fixed in the partial experiments, policy rate at its direct effect (0.009). The focus is mostly on the 4-quarter horizon.
