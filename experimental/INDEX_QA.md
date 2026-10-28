@@ -200,3 +200,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A18 (28 Oct).** Our version of the ECB method uses the macro-model index variables: policy rate, 10-year, mortgage spread, Baa/BBB spread, CAPE, real broad dollar; house prices (price-to-rent) in a second version.
 
 **A19 (28 Oct).** Macro block: PCE inflation gap, output gap (CBO, interpolated to months) and unemployment gap (unemployment less CBO's natural rate).
+
+**A20 (28 Oct).** Inflation gap: core PCE (12-month, less 2%) is the main version; headline PCE is the robustness check.
