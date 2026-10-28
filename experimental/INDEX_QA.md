@@ -165,3 +165,5 @@ Once these are answered, I will restate each index as a one-line definition for 
 **A1 (Q4a, 28 Oct).** Build both current pressure (1) and eventual pressure (2) as separate macro-model indexes. Also build the growth-over-next-year form (3), as a comparison for the FCI-G discussion.
 
 **A2 (Q2a, 28 Oct).** The output-lens yardstick must be model-consistent: the reference move is the same model's persistent 1 pp hike with full transmission. For FRB/US that is the current yardstick. A VAR-based index would use the VAR's own multiplier. For now this applies to the macro-model index (which replaced the MS-style index) and its dynamic versions. To confirm: FCI-G divided by the FRB/US multiplier, since its weights are FRB/US-based. Market and GS conversions use the transmission lens, so no multiplier is involved.
+
+**A3 (B1a, 28 Oct).** Eventual pressure: the main index uses 4-quarter weights. 8 and 12 quarters are robustness checks, reported separately, not side by side throughout.
