@@ -196,3 +196,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A16 (B5a, 28 Oct).** NFCI and ANFCI are converted by their weekly response to NS surprises (2-year-yield units). For the OFR FSI (daily), my reading is the same weekly window, for consistency (to confirm).
 
 **A17 (B7a, 28 Oct).** Drop the approximate ECB US index. Instead, implement the ECB Macro-Finance FCI method (Bletzinger, Martorana and Mistak 2026; cited as the method) on our preferred data: an index inspired by theirs that differs because the data differ. Its specification choices are asked one by one (questions 18 onward).
+
+**A18 (28 Oct).** Our version of the ECB method uses the macro-model index variables: policy rate, 10-year, mortgage spread, Baa/BBB spread, CAPE, real broad dollar; house prices (price-to-rent) in a second version.
