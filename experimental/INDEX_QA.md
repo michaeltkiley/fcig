@@ -169,3 +169,12 @@ Once these are answered, I will restate each index as a one-line definition for 
 **A3 (B1a, 28 Oct).** Eventual pressure: the main index uses 4-quarter weights. 8 and 12 quarters are robustness checks, reported separately, not side by side throughout.
 
 **A4 (28 Oct).** FCI-G is divided by the same FRB/US multiplier as the macro-model index (0.4525, the 4-quarter GDP effect of the hike).
+
+**A5-A7 (B1b, 28 Oct).** The user asked for a model-consistent-expectations experiment:
+- funds rate under the inertial Taylor (1999) rule;
+- 1-unit shifts held for 4 quarters, then no shocks;
+- other financial variables held at baseline throughout (answer 6);
+- at least 200 quarters.
+
+Results: `ms_fci/frbus_mce.py`, `frbus_mce.csv`. Convergence was checked at 240 and 300 quarters (`frbus_mce_check.py`). Model-consistent expectations raise most weights 2-3x because the temporary hike's GDP effect is smaller (-0.18% vs -0.45% at q4).
+Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computations.** Model-consistent weights are not the base.
