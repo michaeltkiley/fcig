@@ -198,3 +198,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A17 (B7a, 28 Oct).** Drop the approximate ECB US index. Instead, implement the ECB Macro-Finance FCI method (Bletzinger, Martorana and Mistak 2026; cited as the method) on our preferred data: an index inspired by theirs that differs because the data differ. Its specification choices are asked one by one (questions 18 onward).
 
 **A18 (28 Oct).** Our version of the ECB method uses the macro-model index variables: policy rate, 10-year, mortgage spread, Baa/BBB spread, CAPE, real broad dollar; house prices (price-to-rent) in a second version.
+
+**A19 (28 Oct).** Macro block: PCE inflation gap, output gap (CBO, interpolated to months) and unemployment gap (unemployment less CBO's natural rate).
