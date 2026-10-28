@@ -199,7 +199,7 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 
 **A18 (28 Oct).** Our version of the ECB method uses the macro-model index variables: policy rate, 10-year, mortgage spread, Baa/BBB spread, CAPE, real broad dollar; house prices (price-to-rent) in a second version.
 
-**A19 (28 Oct).** Macro block: PCE inflation gap, output gap (CBO, interpolated to months) and unemployment gap (unemployment less CBO's natural rate).
+**A19 (28 Oct, corrected).** Macro block: PCE inflation gap and unemployment gap (unemployment less CBO's natural rate). No output gap, since the data are monthly. (My option 3 had read as including both gaps.)
 
 **A20 (28 Oct).** Inflation gap: core PCE (12-month, less 2%) is the main version; headline PCE is the robustness check.
 
@@ -208,3 +208,11 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A22 (28 Oct).** Lag length chosen by BIC on our data.
 
 **A23 (28 Oct).** No ridge penalty to start, with standard errors reported. Reconsider only if the weights show problems; with spreads (rather than many rate levels) and fewer rate series, collinearity may matter less.
+
+**A24-A25 (28 Oct).** Model for our version of the ECB method:
+- a VAR in the core PCE inflation gap, the unemployment gap and every financial variable separately;
+- in the inflation-gap and unemployment-gap equations, lagged financial variables enter only through the index F = alpha'Z (same alpha at every lag);
+- the financial-variable equations are unrestricted;
+- alpha is estimated jointly with the VAR by maximum likelihood.
+
+Unit: the funds rate held +100 bp for 12 months in the VAR. Within-month effects are generalized impulse responses; lags work through the VAR. The yardstick is that experiment's effect.
