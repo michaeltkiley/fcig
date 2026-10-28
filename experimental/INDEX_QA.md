@@ -228,3 +228,5 @@ Unit: the funds rate held +100 bp for 12 months in the VAR. Within-month effects
 **A30 (28 Oct).** The 8- and 12-quarter current-pressure robustness versions are divided by the hike's effect at the same horizon (-0.95%, -1.43%). Each then pairs with the static (eventual-pressure) index at the same horizon. Timing note recorded: current pressure capped at K equals the K-quarter static index minus the not-yet-transmitted part of changes in the last K quarters. A 1-quarter cap would be close to zero, not the eventual-pressure index.
 
 **A31 (D2a, 28 Oct).** Keep the static market index (option A) as is. There is no dynamic market index; the caveat about older policy moves is stated.
+
+**A32 (D3a, 28 Oct).** Gap test: static macro index against static market index only. The market index is not fed through the hike's lags. The current-pressure index is described separately.
