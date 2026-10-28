@@ -216,3 +216,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 - alpha is estimated jointly with the VAR by maximum likelihood.
 
 Unit: the funds rate held +100 bp for 12 months in the VAR. Within-month effects are generalized impulse responses; lags work through the VAR. The yardstick is that experiment's effect.
+
+**A26 (28 Oct).** The yardstick and weights in this VAR use the unemployment gap, converted to output terms with an Okun's-law factor of 2 (output gap = -2 x unemployment gap). The factor cancels in the weights but makes the yardstick comparable with FRB/US's GDP effect.
