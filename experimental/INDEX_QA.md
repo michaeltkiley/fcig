@@ -194,3 +194,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A15 (B4a, 28 Oct).** FCI-G enters the comparison both ways: its level against the level indexes, and against their 12-month changes. Both lookbacks (1-year and 3-year) are compared with 12-month changes; there is no 24-month comparison for the 3-year lookback (my reading of "both with 12 month changes").
 
 **A16 (B5a, 28 Oct).** NFCI and ANFCI are converted by their weekly response to NS surprises (2-year-yield units). For the OFR FSI (daily), my reading is the same weekly window, for consistency (to confirm).
+
+**A17 (B7a, 28 Oct).** Drop the approximate ECB US index. Instead, implement the ECB Macro-Finance FCI method (Bletzinger, Martorana and Mistak 2026; cited as the method) on our preferred data: an index inspired by theirs that differs because the data differ. Its specification choices are asked one by one (questions 18 onward).
