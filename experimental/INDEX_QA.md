@@ -204,3 +204,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A20 (28 Oct).** Inflation gap: core PCE (12-month, less 2%) is the main version; headline PCE is the robustness check.
 
 **A21 (28 Oct).** Estimation sample 1990-2025, with all of 2020 dropped from the likelihood.
+
+**A22 (28 Oct).** Lag length chosen by BIC on our data.
