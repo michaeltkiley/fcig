@@ -186,3 +186,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A10 (B2a, 28 Oct).** Market weights estimated on announcement-window moves in the S&P 500 and DXY are applied to daily levels of 100 ln CAPE and 100 ln real broad dollar, as now.
 
 **A11 (B2b, 28 Oct).** The market index stays in NS units (pp of the 2-year yield), with no rescaling to funds-rate pp, and this is stated.
+
+**A12-A13 (B2c, 28 Oct).** Base market index: three variables (10-year, equities, dollar). Robustness version: add the Moody's Baa yield (daily DBAA), with the weights from event-day changes and the index on levels. Not usable: ICE BBB (FRED only from 2023), mortgage rate (weekly), house prices (monthly).
