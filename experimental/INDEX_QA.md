@@ -184,3 +184,5 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 **A9 (B1c, 28 Oct).** Keep the policy rate in the macro-model index (weight 0.009). The note will say its direct effect is tiny and that the funds rate works through the other financial variables.
 
 **A10 (B2a, 28 Oct).** Market weights estimated on announcement-window moves in the S&P 500 and DXY are applied to daily levels of 100 ln CAPE and 100 ln real broad dollar, as now.
+
+**A11 (B2b, 28 Oct).** The market index stays in NS units (pp of the 2-year yield), with no rescaling to funds-rate pp, and this is stated.
