@@ -230,3 +230,5 @@ Unit: the funds rate held +100 bp for 12 months in the VAR. Within-month effects
 **A31 (D2a, 28 Oct).** Keep the static market index (option A) as is. There is no dynamic market index; the caveat about older policy moves is stated.
 
 **A32 (D3a, 28 Oct).** Gap test: static macro index against static market index only. The market index is not fed through the hike's lags. The current-pressure index is described separately.
+
+**A33 (28 Oct).** Growth-over-next-year index: both lookbacks (1-year and 3-year), as FCI-G publishes, built from our macro-model variables and the FRB/US paths and divided by 0.4525.
