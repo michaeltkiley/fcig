@@ -181,4 +181,4 @@ Decision (answer 7): **use the VAR-expectations weights for FRB/US-based computa
 
 **A8 (28 Oct).** FRB/US-based computations use the old design: VAR expectations, persistent shifts, funds rate fixed in the partial experiments, policy rate at its direct effect (0.009). The focus is mostly on the 4-quarter horizon.
 
-**A9 (B1c, 28 Oct).** Keep the policy rate in the macro-model index (weight 0.009).
+**A9 (B1c, 28 Oct).** Keep the policy rate in the macro-model index (weight 0.009). The note will say its direct effect is tiny and that the funds rate works through the other financial variables.
