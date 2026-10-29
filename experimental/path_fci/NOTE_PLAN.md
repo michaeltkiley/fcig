@@ -90,6 +90,14 @@ Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-bas
 5. Compile the weighting note PDF (needs a TeX engine) and fold its propositions into the note's section 3.
 6. Replication script with a documented data vintage (raw/ inputs are not in git).
 
+## 4e. Second macro lens (29 Oct 2026; PROJECT_MEMORY 3f)
+- A two-variable VAR (unemployment gap, market index; Cholesky, u first; 1973-2019, 4 lags) gives an empirical output yardstick (Phi(12) = 0.25 u pp, -0.5% output per market unit) and a model-independent output lens for the market index:
+  - eventual pressure = the market index;
+  - current pressure (1-year lookback);
+  - growth impetus (forward or realized; to be decided).
+- It complements FRB/US for the output comparison with FCI-G. Faster transmission than FRB/US implies smaller forward impulses.
+- Note structure: add to section 4 (static/dynamic) and section 7 (identification).
+
 ## 5. Assessment of the contribution (revised)
 **What the note would add.** (a) A common funds-rate unit across several widely used indexes, with comparison by group and by episode: shared understanding for communication. (b) A triangulation of the financial block of macro-model-based indexes with event-window evidence. (c) A funds-rate-unit version of FCI-G (the agent found no Fed source that provides one). (d) One more simple, transparent construction, offered as an alternative and not as a competitor.
 **What is already known or close (after reading).** Arnaut-Bauer (2024): four FCIs overlaid, a decomposition of the GS FCI only, and an event study of the GS FCI only; no common unit, no cross-index comparison. Aramonte-Rosen-Schindler (2013): twelve indexes in z-scores, correlations 22-96%, predictability only with 2008 in the sample, no policy-rate unit, no event study; stance: no index is uniquely accurate. Beaton-Lalonde-Luu (2009): the one FCI expressed in funds-rate terms (about 300 bp tightening since 2007; 625 bp with another model's multiplier), so the answer is very model-sensitive. Sack-Swanson (2023): FCI response to policy-induced 2-year yield moves (units of the 2-year yield). SF Fed proxy funds rate (policy-rate units from market variables). Chicago Fed Letter (Aug 2024) discusses FCI-G versus NFCI differences qualitatively via weights. Novelty risk assessed as low to moderate: the funds-rate-equivalent, by-group, episode and model-versus-market comparison were not found in any source read, and a targeted follow-up search for conversions (sell-side, staff, central bank blogs) found only single-index or asset-price-unit versions (section 7.4); Sack-Swanson's closing paragraph is the closest published statement of the idea. The narrow contribution is the combination of a common funds-rate unit, several index families, group and episode decomposition, and a market-based benchmark.

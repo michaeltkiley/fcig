@@ -105,6 +105,47 @@ Units: output lens in funds-rate pp (EP_4, EP_4+HP, CP_4, FCI-G / 0.4525); trans
       - Late 2021-early 2022: FCI-G lags the turn (-0.3 vs macro +1.0).
       - 1995 and 1998: about 1 pp apart (the market index reacts most to the 1998 equity and dollar moves).
 
+## 3f. 29 Oct 2026: a second macro lens from the market index (`experimental/market_macro/`)
+Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model in academic work; the ECB-method VAR did not give a usable alternative.
+
+**Discarded attempt** (`mkt_output*.py`): the market index split into policy and non-policy parts in a predictive output equation. In levels it does not predict unemployment; in real-10y 12-month flows (1973-2025) it does, and non-policy equity moves matter. The user said this was not what was wanted; kept for the record only.
+
+**Adopted direction: two-variable VAR** (`var2_mkt_u.py`, `var2_mkt_u_long.py`).
+- Setup: unemployment gap and the full market index M (2-year pp per NS unit; weights 0.6089 / -0.0512 / 0.0654 applied to monthly 10-year, CAPE, real dollar from 1973). Cholesky with unemployment first (it reacts with a lag).
+- *Granger causality, M -> u:*
+
+| Sample | Lags | p |
+|---|---|---|
+| 1973-2019 | 4 (BIC) | 0.001 |
+| 1973-2019 | 12 | <0.001 |
+| 1990-2019 | 1 (BIC) | <0.0001 |
+| 1973-2025, 2020 dummied | 5 (BIC) | 0.0002 |
+| 1973-2025, 2020 dummied | 12 | 0.0002 |
+| 1973-2025 with 2020 as is | 2 (BIC) | 0.07 |
+
+  Reverse causality (u -> M) is weaker (p about 0.01-0.03).
+- *Unemployment response at 24 months to a 1-unit shock in M* (M stays about 1 unit higher in the long sample):
+
+| Sample | Response (pp) |
+|---|---|
+| 1973-2019, 4 lags | +0.25 [0.12, 0.37] |
+| 1973-2025, 2020 dummied, 5 lags | +0.31 [0.17, 0.45] |
+| 1973-2025, 2020 dummied, 12 lags | +0.58 |
+| 1990-2019, 1 lag | +0.35 |
+| 1973-2025 incl. 2020 | +0.15 |
+
+**Market-index output lens** (`mkt_dynamic.py`; user's spec: 1973-2019, 4 lags; interest-rate (market) units; the market index itself is eventual pressure by analogy).
+- Phi(m) = u response (months 0, 3, 6, 12, 18, 24: 0, .13, .21, .25, .25, .25). Holding M at exactly 1 gives nearly the same path. Yardstick Phi(12) = 0.254 u pp per unit (output -0.51%). Effects are realized within about a year, then plateau (unlike FRB/US, where they keep building for years).
+- *Current pressure* (1-year lookback) = sum_{m=0..12} [Phi(m) - Phi(m-1)] / Phi(12) * M(t-m) (weights sum to 1, mostly months 1-5).
+  - Corr 0.94 with M, 0.85 with FRB/US CP_4.
+  - Latest -1.04 vs M -0.74.
+- *Two "impetus" concepts, choice open (question 49; user unsure):*
+  - Forward impetus (FCI-G's stated definition): sum_{m<12} [Phi(m+12) - Phi(m)] / Phi(12) * dM(t-m). With effects complete within 12 months this is identically EP - CP (corr 1.00). Small (sd 0.51), loads on recent months; corr 0.49 with FCI-G 1yr; latest +0.31.
+  - Realized impetus: CP(t) - CP(t-12). Sd 0.91; corr 0.66 with FCI-G 1yr; latest -0.31 (FCI-G -0.34).
+  - For reference: M's 12-month change has corr 0.82 with FCI-G; FRB/US growth form 0.89.
+  - The two concepts coincide approximately under FRB/US's slow transmission (which is why FCI-G looks like a 12-month change) and separate under the VAR's fast transmission. So FCI-G's large, persistent impulses partly reflect FRB/US lag structure.
+- Possible checks not yet done: the lag profile with 12 lags, or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
+
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.
 
@@ -122,4 +163,5 @@ No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and c
 3. Draft note sections on lenses/units and static/dynamic indexes; ECB method in the text only (may be reconsidered).
 4. Corporate yields: Baa robustness done (full and diagonal); intraday corporate data not pursued.
 5. FRB/US: VAR-expectations old design is the base (answer 8); model-consistent results kept as an alternative (`ms_fci/frbus_mce.csv`).
-6. Replication script and data vintage; raw/ inputs (FRED, OFR, EBP, Shiller CAPE, USMPD, FRB/US package) are not in git.
+6. Market-index output lens (3f): decide the impetus concept (question 49); check lag-profile sensitivity; decide its role in the note (second macro lens beside FRB/US).
+7. Replication script and data vintage; raw/ inputs (FRED, OFR, EBP, Shiller CAPE, USMPD, FRB/US package) are not in git.
