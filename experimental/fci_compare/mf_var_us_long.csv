@@ -1,0 +1,21 @@
+sample,lags,choice,variable,alpha,alpha_se,weight,yardstick_u_m12
+"1960, 4 variables",2,BIC,policy rate,0.00000,0.00000,-0.00000,0.00482
+"1960, 4 variables",2,BIC,10-year,-0.01519,0.00000,2.46928,0.00482
+"1960, 4 variables",2,BIC,Baa spread,-0.99981,0.00000,162.48657,0.00482
+"1960, 4 variables",2,BIC,equities,0.01254,0.00000,-2.03723,0.00482
+"1960, 4 variables",6,6 lags,policy rate,0.00000,0.00000,-0.00000,0.03064
+"1960, 4 variables",6,6 lags,10-year,-0.05834,0.00000,1.39094,0.03064
+"1960, 4 variables",6,6 lags,Baa spread,-0.99801,0.00000,23.79612,0.03064
+"1960, 4 variables",6,6 lags,equities,0.02383,0.00000,-0.56819,0.03064
+"1973, 6 variables",2,BIC,policy rate,0.02802,0.05102,0.28583,0.10455
+"1973, 6 variables",2,BIC,10-year,0.05521,0.06333,0.56313,0.10455
+"1973, 6 variables",2,BIC,mortgage spread,0.40115,0.15080,4.09135,0.10455
+"1973, 6 variables",2,BIC,Baa spread,0.91354,0.06653,9.31718,0.10455
+"1973, 6 variables",2,BIC,equities,-0.00225,0.00314,-0.02291,0.10455
+"1973, 6 variables",2,BIC,dollar,-0.02631,0.00643,-0.26834,0.10455
+"1973, 6 variables",6,6 lags,policy rate,0.00023,,-0.00168,0.11406
+"1973, 6 variables",6,6 lags,10-year,-0.02523,0.06261,0.18779,0.11406
+"1973, 6 variables",6,6 lags,mortgage spread,-0.69589,,5.17861,0.11406
+"1973, 6 variables",6,6 lags,Baa spread,-0.71709,,5.33632,0.11406
+"1973, 6 variables",6,6 lags,equities,0.01639,0.00836,-0.12194,0.11406
+"1973, 6 variables",6,6 lags,dollar,0.02477,0.01178,-0.18435,0.11406

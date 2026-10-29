@@ -1,0 +1,39 @@
+[1960, 4 variables] p=1: T 772, logL -1574.8, BIC 3548.6
+[1960, 4 variables] p=2: T 771, logL -1274.3, BIC 3146.9
+[1960, 4 variables] p=3: T 771, logL -1199.3, BIC 3196.2
+[1960, 4 variables] p=4: T 771, logL -1159.1, BIC 3315.4
+[1960, 4 variables] p=5: T 771, logL -1119.3, BIC 3435.2
+[1960, 4 variables] p=6: T 771, logL -1093.6, BIC 3583.1
+
+[1960, 4 variables, p=2 (BIC)] alpha: policy rate +0.000 (0.000), 10-year -0.015 (0.000), Baa spread -1.000 (0.000), equities +0.013 (0.000)
+   recursive same-month effects of +1 pp funds rate: policy rate +1.000, 10-year +0.144, Baa spread -0.043, equities -0.163
+   yardstick: unemployment gap months 1,6,12,18,24,36: [0.    0.001 0.005 0.01  0.016 0.034] | index F months 1,6,12,24: [ 0.038 -0.01  -0.01  -0.022]
+   financial variables at month 12: {'policy rate': np.float64(1.0), '10-year': np.float64(0.363), 'Baa spread': np.float64(-0.018), 'equities': np.float64(-1.838)}
+   output equivalent at month 12: -0.010% (FRB/US -0.45%); weights: policy rate -0.0000, 10-year +2.4693, Baa spread +162.4866, equities -2.0372
+
+[1960, 4 variables, p=6 (6 lags)] alpha: policy rate +0.000 (0.000), 10-year -0.058 (0.000), Baa spread -0.998 (0.000), equities +0.024 (0.000)
+   recursive same-month effects of +1 pp funds rate: policy rate +1.000, 10-year +0.132, Baa spread -0.042, equities -0.180
+   yardstick: unemployment gap months 1,6,12,18,24,36: [0.    0.004 0.031 0.059 0.085 0.119] | index F months 1,6,12,24: [ 0.03  -0.027 -0.075 -0.109]
+   financial variables at month 12: {'policy rate': np.float64(1.0), '10-year': np.float64(0.293), 'Baa spread': np.float64(0.01), 'equities': np.float64(-1.996)}
+   output equivalent at month 12: -0.061% (FRB/US -0.45%); weights: policy rate -0.0000, 10-year +1.3909, Baa spread +23.7961, equities -0.5682
+[1973, 6 variables] p=1: T 616, logL -2117.4, BIC 4896.5
+[1973, 6 variables] p=2: T 615, logL -1687.0, BIC 4382.2
+[1973, 6 variables] p=3: T 615, logL -1613.3, BIC 4581.7
+[1973, 6 variables] p=4: T 615, logL -1568.4, BIC 4838.6
+[1973, 6 variables] p=5: T 615, logL -1531.1, BIC 5110.7
+[1973, 6 variables] p=6: T 615, logL -1471.4, BIC 5338.1
+
+[1973, 6 variables, p=2 (BIC)] alpha: policy rate +0.028 (0.051), 10-year +0.055 (0.063), mortgage spread +0.401 (0.151), Baa spread +0.914 (0.067), equities -0.002 (0.003), dollar -0.026 (0.006)
+   recursive same-month effects of +1 pp funds rate: policy rate +1.000, 10-year +0.110, mortgage spread +0.017, Baa spread -0.029, equities +0.062, dollar +0.232
+   yardstick: unemployment gap months 1,6,12,18,24,36: [0.    0.045 0.105 0.146 0.156 0.129] | index F months 1,6,12,24: [0.008 0.104 0.117 0.054]
+   financial variables at month 12: {'policy rate': np.float64(1.0), '10-year': np.float64(0.242), 'mortgage spread': np.float64(0.191), 'Baa spread': np.float64(0.025), 'equities': np.float64(-0.12), 'dollar': np.float64(0.918)}
+   output equivalent at month 12: -0.209% (FRB/US -0.45%); weights: policy rate +0.2858, 10-year +0.5631, mortgage spread +4.0914, Baa spread +9.3172, equities -0.0229, dollar -0.2683
+  return np.sqrt(np.diag(J @ Cv @ J.T))
+
+[1973, 6 variables, p=6 (6 lags)] alpha: policy rate +0.000 (nan), 10-year -0.025 (0.063), mortgage spread -0.696 (nan), Baa spread -0.717 (nan), equities +0.016 (0.008), dollar +0.025 (0.012)
+   recursive same-month effects of +1 pp funds rate: policy rate +1.000, 10-year +0.111, mortgage spread +0.013, Baa spread -0.034, equities -0.043, dollar +0.176
+   yardstick: unemployment gap months 1,6,12,18,24,36: [0.    0.036 0.114 0.176 0.202 0.184] | index F months 1,6,12,24: [ 0.016 -0.132 -0.188 -0.122]
+   financial variables at month 12: {'policy rate': np.float64(1.0), '10-year': np.float64(0.168), 'mortgage spread': np.float64(0.21), 'Baa spread': np.float64(0.06), 'equities': np.float64(-0.852), 'dollar': np.float64(0.761)}
+   output equivalent at month 12: -0.228% (FRB/US -0.45%); weights: policy rate -0.0017, 10-year +0.1878, mortgage spread +5.1786, Baa spread +5.3363, equities -0.1219, dollar -0.1844
+
+[exited with code 0]

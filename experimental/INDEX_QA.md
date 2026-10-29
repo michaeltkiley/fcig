@@ -290,3 +290,9 @@ Other:
   - 1 lag: the yardstick is still wrong-signed (unemployment -0.21 at month 12).
   - 6 lags: the right sign at month 12 (unemployment +0.09; output -0.18%), giving weights 10-year 1.10, mortgage spread 10.9, BBB 6.2, equities -0.19/%, dollar -0.10/%. But unemployment falls after month 18, and the index itself loosens by month 12 because spreads narrow.
   - Not reliable. Decision needed (question 38).
+- **Long samples, recursive yardstick (answer 39, `mf_var_us_long.py`/`.log`).**
+  - *1960, 4 variables:* degenerate. The index is essentially the Baa spread alone, the yardstick is near zero (-0.01% / -0.06% output at month 12), and the weights are unusable.
+  - *1973, 6 variables, BIC 2 lags:* the yardstick has the right sign throughout. Unemployment +0.11 pp at month 12 (output -0.21%; FRB/US -0.45%), rising to 0.16 at 24, and the index tightens.
+    - Weights: policy rate 0.29, 10-year 0.56, mortgage spread 4.1, Baa spread 9.3, equities -0.023/%, dollar -0.27/% (negative).
+  - *1973, 6 lags:* similar yardstick (-0.23%). Weights: 10-year 0.19, mortgage 5.2, Baa 5.3, equities -0.12/%, dollar -0.18/%.
+  - The sign of alpha is not identified (it is absorbed by the macro coefficients); the weights are unaffected.
