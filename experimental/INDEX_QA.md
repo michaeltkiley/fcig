@@ -269,3 +269,5 @@ Transmission lens (pp of the 2-year yield per NS unit):
 Other:
 9. **SF Fed proxy funds rate:** 12-month changes from 2009.
 10. **Gap test:** static macro index against static market index only.
+
+**A35 (29 Oct).** Cross-lens comparisons are made as is, with the two units stated: funds-rate pp for the output lens, 2-year-yield pp for the transmission lens. Correlations do not depend on scale.
