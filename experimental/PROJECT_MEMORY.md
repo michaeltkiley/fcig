@@ -59,6 +59,52 @@ A short note (plan: `experimental/path_fci/NOTE_PLAN.md`) that expresses widely 
   - Unemployment falls after hawkish NS surprises in 1994-2025 monthly data.
   - The long-sample recursive LP yardstick: -0.63% output at 12 months (FRB/US -0.45%).
 
+## 3e. 29 Oct 2026: comparison results on the v3 indexes (`fci_compare/metric_v3.py`, `episodes_v3.py`, `nfci_groups.py`; logs alongside)
+Units: output lens in funds-rate pp (EP_4, EP_4+HP, CP_4, FCI-G / 0.4525); transmission lens in pp of the 2-year per NS unit (MKT, GS, NFCI, ANFCI). Demeaned 1990-2026.
+- **NFCI by group** (Chicago Fed contributions of 105 indicators, `raw/nfci_contributions.xlsx`; they sum to the index within 0.005):
+  - Almost entirely spreads (sd 3.6) and "other" (volatility, quantities, leverage, surveys; sd 1.4).
+  - Policy/Treasury rates 0.06, equities 0.4, dollar about 0.
+  - A different object from the macro, market and GS indexes.
+- **Correlations, levels / 12-month changes:**
+
+| Pair | Levels | 12-month changes |
+|---|---|---|
+| EP_4 / MKT | 0.86 | 0.95 |
+| EP_4 / MKT+Baa diag | 0.94 | 0.97 |
+| EP_4 / GS | 0.75 | 0.93 |
+| MKT / GS | 0.86 | 0.94 |
+| EP_4 / CP_4 | 0.84 | 0.37 |
+| NFCI or ANFCI with the others | 0.1-0.45 | 0.3-0.6 |
+
+  FCI-G (1-year lookback) against 12-month changes of EP_4, GS, MKT: 0.84-0.90, slopes about 1; against their levels: 0.3-0.6.
+- **Latest groups (Oct 2026):**
+  - EP_4+HP: rates +0.6, equities -1.4, dollar +1.4 (total +0.2).
+  - MKT: +0.5, -2.2, +0.9 (-0.7).
+  - GS: +0.1, -2.0, +1.1 (-0.8).
+  - NFCI: total -0.9, from narrow spreads.
+  - Since Feb 2026: all tighter. EP_4+HP +1.0, MKT +0.65, FCI-G 1yr +1.4 (rates and dollar); GS +0.4; NFCI +0.2.
+- **Episodes from 1993** (1990-92 treated as a special case; 6-month non-overlapping windows):
+  - *Levels without ANFCI* (EP_4, EP_4+HP, MKT, GS): range mean 1.05, 90th percentile 1.5, latest 1.5.
+    - Closest: 2002-2005 (range down to 0.16 in late 2003; all move from tight after the equity bust to neutral through the 2004 tightening) and 2016-2018 (gradual hikes, low volatility; all 0.5-1.9 loose).
+    - Widest (group split of highest minus lowest):
+      - 1998-2001 equity boom: macro about neutral or tight vs MKT/GS 0.4-1.4 loose; equities 0.7-0.9, plus house prices.
+      - 2008-09: GS +3.2 vs macro +1.3; rates incl. BBB 0.7, equities 0.9.
+      - 2010-2013: macro 1.0-2.1 loose vs GS near neutral; dollar 0.65-0.87, then rates and equities.
+      - Late 2024-early 2025: macro +1.1 vs MKT/GS about -0.35; equities 0.62, dollar 0.64.
+    - Theme: outside crises, the macro/market/GS gaps come from equity and dollar weights. In the macro model, rich valuations loosen less and a strong dollar tightens more. Gaps are widest when valuations or the dollar are far from normal.
+  - *Levels with ANFCI:* ANFCI is the outlier in every wide window.
+    - 1993-95: loose (-4 to -0.6) while the others are tight (narrow spreads, high rates).
+    - 1999-2000: tight (+3), spreads widening in the equity boom.
+    - 2007-09: +8 to +19.
+    - Closest windows add 2005-07, 2014-15 and 2019.
+  - *12-month changes with the FCI-G 1yr level:* range mean 0.73, latest 0.48.
+    - Close: 2006-07, 2014, 2017-19, mid-2025 (0.2-0.4).
+    - Widest:
+      - 2008-09: FCI-G +3.6 to +3.8 vs +1.4 to +3.5.
+      - 2003-04 and 2021: FCI-G loosens more (-1.9 to -2.6 vs about -1 to -1.4; likely house prices and its lags).
+      - Late 2021-early 2022: FCI-G lags the turn (-0.3 vs macro +1.0).
+      - 1995 and 1998: about 1 pp apart (the market index reacts most to the 1998 equity and dollar moves).
+
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.
 
@@ -71,8 +117,8 @@ No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and c
 - The local-projection work (analysis/) was deleted at the user's request; it exists in git history (commits b36b910..a17ee11) if ever needed.
 
 ## 6. Open items / next steps (updated 29 Oct 2026; the full list is in NOTE_PLAN.md 4d)
-1. Re-run the pre-specified metric, episodes and group table on the v3 indexes (`fci_compare/compare_v3.py` is the base); comparison figures.
-2. NFCI groups, or NFCI in total only.
+1. DONE 29 Oct: pre-specified metric, episodes and groups on v3 (`metric_v3.py`, `episodes_v3.py`); see 3e.
+2. DONE 29 Oct: NFCI/ANFCI groups from indicator contributions (`nfci_groups.py`).
 3. Draft note sections on lenses/units and static/dynamic indexes; ECB method in the text only (may be reconsidered).
 4. Corporate yields: Baa robustness done (full and diagonal); intraday corporate data not pursued.
 5. FRB/US: VAR-expectations old design is the base (answer 8); model-consistent results kept as an alternative (`ms_fci/frbus_mce.csv`).
