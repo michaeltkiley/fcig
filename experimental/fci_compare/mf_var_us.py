@@ -119,11 +119,16 @@ class MFVAR:
     def alpha_se(self, h=1e-4):
         f = lambda v: self.sur(self.alpha_from(v))[0]
         k = len(self.v); H = np.zeros((k, k))
+        h = h * max(1.0, float(np.abs(self.v).max()))
         for i in range(k):
             for j in range(i, k):
                 ei = np.zeros(k); ej = np.zeros(k); ei[i] = h; ej[j] = h
                 H[i, j] = H[j, i] = (f(self.v + ei + ej) - f(self.v + ei - ej) - f(self.v - ei + ej) + f(self.v - ei - ej)) / (4 * h * h)
-        Cv = np.linalg.inv(-H)
+        try:
+            Cv = np.linalg.inv(-H)
+        except np.linalg.LinAlgError:
+            print("   (alpha_se: Hessian singular, pseudo-inverse used; standard errors unreliable)")
+            Cv = np.linalg.pinv(-H)
         J = np.zeros((k + 1, k)); a0 = self.alpha
         for i in range(k):
             e = np.zeros(k); e[i] = 1e-6
