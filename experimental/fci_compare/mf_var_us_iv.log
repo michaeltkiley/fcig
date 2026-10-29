@@ -1,0 +1,16 @@
+
+[p=1] alpha: policy rate +0.091, 10-year +0.100, mortgage spread +0.852, BBB spread +0.506, equities -0.020, dollar +0.000
+   first stage: policy-rate residual on NS surprises, coef +0.569 (t 1.4), F 1.9, months 369
+   identified same-month effects per 1 pp funds rate: inflation gap -0.109, unemployment gap -0.157, policy rate +1.000, 10-year +0.964, mortgage spread -0.235, BBB spread -0.294, equities -20.901, dollar +8.854
+   yardstick: u gap months 1,6,12,18,24,36: [-0.157 -0.1   -0.211 -0.469 -0.711 -0.917] | index F months 1,6,12,24: [ 0.267 -0.08  -0.428 -0.437]
+   financial variables at month 12: {'policy rate': np.float64(1.0), '10-year': np.float64(0.749), 'mortgage spread': np.float64(-0.238), 'BBB spread': np.float64(-0.83), 'equities': np.float64(-1.356), 'dollar': np.float64(0.773)}
+   output equivalent of the yardstick at month 12: +0.421% (FRB/US: -0.45%);  weights: policy rate -0.4864, 10-year -0.5357, mortgage spread -4.5553, BBB spread -2.7048, equities +0.1088, dollar -0.0021
+
+[p=6] alpha: policy rate +0.070, 10-year +0.087, mortgage spread +0.864, BBB spread +0.490, equities -0.015, dollar -0.008
+   first stage: policy-rate residual on NS surprises, coef +0.721 (t 2.2), F 4.8, months 368
+   identified same-month effects per 1 pp funds rate: inflation gap -0.128, unemployment gap -0.144, policy rate +1.000, 10-year +0.434, mortgage spread -0.016, BBB spread +0.020, equities -15.363, dollar +6.021
+   yardstick: u gap months 1,6,12,18,24,36: [-0.144  0.059  0.091 -0.064 -0.401 -0.782] | index F months 1,6,12,24: [ 0.286  0.136 -0.167 -0.475]
+   financial variables at month 12: {'policy rate': np.float64(1.0), '10-year': np.float64(0.241), 'mortgage spread': np.float64(-0.163), 'BBB spread': np.float64(-0.385), 'equities': np.float64(-5.708), 'dollar': np.float64(1.632)}
+   output equivalent of the yardstick at month 12: -0.183% (FRB/US: -0.45%);  weights: policy rate +0.8921, 10-year +1.0967, mortgage spread +10.9476, BBB spread +6.2112, equities -0.1874, dollar -0.0959
+
+[exited with code 0]

@@ -285,3 +285,8 @@ Other:
   - The index is almost unchanged: mortgage spread 0.86, BBB spread 0.49, 10-year 0.09, policy rate 0.07, equities -0.015.
   - The yardstick still fails. With the funds rate held +1 pp, by month 12 equities are +6.5%, the BBB spread -0.24 and the dollar -1.3%, so the index loosens and unemployment falls (-0.05 at 12 months, -0.16 at 24).
   - The partial effects have the right sign: mortgage spread +1.0 pp unemployment at month 12, BBB spread +0.57.
+- **Identified by NS surprises (answer 37, `mf_var_us_iv.py`/`.log`).**
+  - Weak instrument: first-stage F is 1.9 (1 lag) and 4.8 (6 lags).
+  - 1 lag: the yardstick is still wrong-signed (unemployment -0.21 at month 12).
+  - 6 lags: the right sign at month 12 (unemployment +0.09; output -0.18%), giving weights 10-year 1.10, mortgage spread 10.9, BBB 6.2, equities -0.19/%, dollar -0.10/%. But unemployment falls after month 18, and the index itself loosens by month 12 because spreads narrow.
+  - Not reliable. Decision needed (question 38).
