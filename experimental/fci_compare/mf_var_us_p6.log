@@ -1,0 +1,14 @@
+p=6 T 411 logL -847.5
+alpha: policy rate +0.070 (0.064), 10-year +0.087 (0.059), mortgage spread +0.864 (0.101), BBB spread +0.490 (0.176), equities -0.015 (0.004), dollar -0.008 (0.009)
+yardstick u path m1,3,6,12,18,24,36: [ 0.004  0.012  0.    -0.048 -0.124 -0.156 -0.046]
+   F path m1,6,12,24: [ 0.047 -0.044 -0.109  0.011]
+   financial paths m12: {'policy rate': np.float64(1.0), '10-year': np.float64(0.2), 'mortgage spread': np.float64(0.011), 'BBB spread': np.float64(-0.243), 'equities': np.float64(6.53), 'dollar': np.float64(-1.265)}
+   partial policy rate      +1 for 12m: u m12 +0.082, m24 +0.083
+   partial 10-year          +1 for 12m: u m12 +0.100, m24 +0.103
+   partial mortgage spread  +1 for 12m: u m12 +1.001, m24 +1.025
+   partial BBB spread       +1 for 12m: u m12 +0.568, m24 +0.581
+   partial equities         +1 for 12m: u m12 -0.017, m24 -0.018
+   partial dollar           +1 for 12m: u m12 -0.009, m24 -0.009
+weights (if yardstick usable): {'policy rate': -1.692, '10-year': -2.081, 'mortgage spread': -20.769, 'BBB spread': -11.784, 'equities': 0.356, 'dollar': 0.182} yardstick output eq 0.096
+
+[exited with code 0]

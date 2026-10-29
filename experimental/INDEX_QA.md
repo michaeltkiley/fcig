@@ -281,3 +281,7 @@ Other:
 - OFR FSI conversion fails: event-day response -0.09 (se 0.57).
 
 **A36 (29 Oct).** Baa robustness market index: report both the full-covariance version (Baa yield weight -0.25; the covariance term subtracts shared non-policy noise) and the diagonal version (all weights take the sign of their policy response; Baa +0.12). Run the ECB-method VAR with 6 lags.
+- **6-lag VAR (29 Oct, `mf_var_us_p6.py`/`.log`).**
+  - The index is almost unchanged: mortgage spread 0.86, BBB spread 0.49, 10-year 0.09, policy rate 0.07, equities -0.015.
+  - The yardstick still fails. With the funds rate held +1 pp, by month 12 equities are +6.5%, the BBB spread -0.24 and the dollar -1.3%, so the index loosens and unemployment falls (-0.05 at 12 months, -0.16 at 24).
+  - The partial effects have the right sign: mortgage spread +1.0 pp unemployment at month 12, BBB spread +0.57.
