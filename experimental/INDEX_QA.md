@@ -232,3 +232,40 @@ Unit: the funds rate held +100 bp for 12 months in the VAR. Within-month effects
 **A32 (D3a, 28 Oct).** Gap test: static macro index against static market index only. The market index is not fed through the hike's lags. The current-pressure index is described separately.
 
 **A33 (28 Oct).** Growth-over-next-year index: both lookbacks (1-year and 3-year), as FCI-G publishes, built from our macro-model variables and the FRB/US paths and divided by 0.4525.
+
+**A34 (28 Oct).** OFR FSI is converted by its event-day response to NS surprises (daily data), unlike the weekly window for NFCI/ANFCI.
+
+---
+
+## Specification for approval (one line per index, from answers 1-34)
+
+Output lens (funds-rate pp; FRB/US old design: VAR expectations, persistent shifts, funds rate fixed in partials):
+1. **Macro-model, eventual pressure (main):**
+   - Index: Phi(4)'x_t / G(4) on levels demeaned 1990-2026.
+   - Weights: policy rate 0.009 (small effect emphasized), 10-year 0.57, mortgage spread 0.42, BBB spread 0.13, CAPE -0.032/%, real dollar 0.10/%.
+   - Second version adds house prices (-0.029/%).
+   - Robustness: 8- and 12-quarter weights over G(8) and G(12), reported separately.
+2. **Macro-model, current pressure:**
+   - Index: sum over past changes of Phi(min(age, K))' dx / G(K).
+   - K = 4 is main; K = 8 and 12 are robustness (each over G(K)).
+   - Both house-price versions.
+3. **Growth over the next year (FCI-G form):** from the FRB/US paths and our variables, 1-year and 3-year lookbacks, divided by 0.4525.
+4. **FCI-G (official):** 1-year and 3-year lookbacks, divided by 0.4525. Compared in levels and against 12-month changes (both lookbacks).
+5. **ECB-method index on our data:**
+   - VAR: core PCE inflation gap (headline as robustness), unemployment gap, and each financial variable from item 1.
+   - Restriction: the macro equations see financial variables only through F = alpha'Z.
+   - Estimation: alpha by maximum likelihood; lags by BIC; sample 1990-2025 excluding 2020; no ridge at first.
+   - Yardstick: funds rate +100 bp for 12 months (generalized impulse responses on impact, VAR dynamics after); unemployment-gap effect at month 12 x (-2).
+   - Weights: variable j held +1 for 12 months, others at baseline.
+
+Transmission lens (pp of the 2-year yield per NS unit):
+6. **Market index:**
+   - Weights: NS one-factor GLS (full covariance) on the 10-year, 100 ln CAPE and 100 ln real broad dollar, estimated from S&P 500 / DXY window moves.
+   - Static only, with the caveat about older policy moves.
+   - Robustness version adds the Baa yield (event-day changes).
+7. **GS replication:** about 0.96 per index point (NS response).
+8. **NFCI and ANFCI:** divided by their weekly response to NS surprises. **OFR FSI:** event-day response.
+
+Other:
+9. **SF Fed proxy funds rate:** 12-month changes from 2009.
+10. **Gap test:** static macro index against static market index only.
