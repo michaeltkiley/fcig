@@ -304,3 +304,9 @@ Other:
 - sample 1990-2025 excluding 2020; lags by BIC, 6 as a check.
 
 Script: `fci_compare/mf_var_us_gk.py`.
+- **2-year indicator, NS instrument (`mf_var_us_gk.log`).**
+  - Weak instrument again: first-stage F 4.3 (1 lag), 2.2 (6 lags).
+  - 1 lag: wrong sign (unemployment -0.14 at month 12).
+  - 6 lags: the right sign only at month 12 (+0.10), reversing after.
+  - Same-month unemployment falls after a tightening (an information-effect pattern).
+  - Not usable.

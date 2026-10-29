@@ -1,0 +1,22 @@
+p=1: T 412, logL -897.6, BIC 2566.0
+p=2: T 411, logL -736.3, BIC 2658.2
+p=3: T 411, logL -653.2, BIC 2907.3
+p=4: T 411, logL -607.5, BIC 3231.2
+p=5: T 411, logL -550.9, BIC 3533.4
+p=6: T 411, logL -489.3, BIC 3825.3
+
+[p=1 (BIC)] alpha: policy rate +0.091 (0.067), 10-year +0.100 (0.063), mortgage spread +0.852 (0.097), BBB spread +0.506 (0.159), equities -0.020 (0.005), dollar +0.000 (0.010)
+   first stage: 2-year residual on NS surprises, coef +0.900 (t 2.1), F 4.3, months 369
+   identified same-month effects per 1 pp on the 2-year: inflation gap -0.069, unemployment gap -0.099, policy rate +0.249, 10-year +0.592, mortgage spread -0.151, BBB spread -0.164, equities -12.866, dollar +5.575, 2-year +1.000
+   yardstick: unemployment gap months 1,6,12,18,24,36: [-0.099 -0.051 -0.141 -0.335 -0.552 -0.749] | index F months 1,6,12,24: [ 0.135 -0.024 -0.28  -0.385]
+   financial variables at month 12: {'policy rate': np.float64(1.119), '10-year': np.float64(0.661), 'mortgage spread': np.float64(-0.186), 'BBB spread': np.float64(-0.655), 'equities': np.float64(-1.993), 'dollar': np.float64(1.398), '2-year': np.float64(1.0)}
+   output equivalent at month 12: +0.282% ; weights (pp of 2-year per unit): policy rate -0.7270, 10-year -0.8007, mortgage spread -6.8085, BBB spread -4.0427, equities +0.1626, dollar -0.0032
+
+[p=6 (6 lags)] alpha: policy rate +0.070 (0.065), 10-year +0.087 (0.059), mortgage spread +0.864 (0.101), BBB spread +0.490 (0.176), equities -0.015 (0.004), dollar -0.008 (0.009)
+   first stage: 2-year residual on NS surprises, coef +0.546 (t 1.5), F 2.2, months 368
+   identified same-month effects per 1 pp on the 2-year: inflation gap -0.169, unemployment gap -0.190, policy rate +1.039, 10-year +0.460, mortgage spread -0.056, BBB spread +0.112, equities -20.225, dollar +8.067, 2-year +1.000
+   yardstick: unemployment gap months 1,6,12,18,24,36: [-0.19  -0.048  0.095 -0.098 -0.618 -1.246] | index F months 1,6,12,24: [ 0.358  0.412 -0.194 -0.769]
+   financial variables at month 12: {'policy rate': np.float64(1.681), '10-year': np.float64(0.351), 'mortgage spread': np.float64(-0.255), 'BBB spread': np.float64(-0.561), 'equities': np.float64(-11.619), 'dollar': np.float64(2.512), '2-year': np.float64(1.0)}
+   output equivalent at month 12: -0.189% ; weights (pp of 2-year per unit): policy rate +0.8615, 10-year +1.0590, mortgage spread +10.5717, BBB spread +5.9979, equities -0.1810, dollar -0.0926
+
+index (pp of 2-year): sd {'p=1': 6.19, 'p=6': 8.29} latest {'p=1': 6.08, 'p=6': -7.91}
