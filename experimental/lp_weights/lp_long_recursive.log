@@ -1,0 +1,16 @@
+recursive funds-rate shock: 611 months, sd 0.325 pp
+
+LP responses to a recursive funds-rate shock of 1 pp (impact):
+ h      u  u_se    ffr  ffr_se
+ 0 -0.000 0.000  1.000   0.000
+ 3 -0.000 0.041  1.265   0.195
+ 6  0.096 0.060  0.769   0.351
+12  0.315 0.098  0.107   0.254
+18  0.425 0.126  0.389   0.247
+24  0.453 0.104 -0.155   0.278
+36  0.454 0.132 -0.513   0.242
+
+theta (u pp at 12 months per unit level of x_t, given 12 lags of everything; se): policy rate +0.3300 (0.0972), 10-year -0.0952 (0.3296), mortgage spread +0.1415 (0.2759), Baa spread +0.2512 (0.4220), equities -0.0488 (0.0114), dollar +0.0178 (0.0320)
+yardstick: u at 12 months per 1 pp funds-rate shock +0.315 (output equivalent -0.629%; FRB/US -0.45%); funds rate itself at 12 months +0.11
+weights theta_j / yardstick (pp of funds rate per unit): policy rate +1.049, 10-year -0.303, mortgage spread +0.450, Baa spread +0.798, equities -0.155, dollar +0.057
+index: sd 9.71, latest -10.78

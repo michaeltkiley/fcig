@@ -310,3 +310,9 @@ Script: `fci_compare/mf_var_us_gk.py`.
   - 6 lags: the right sign only at month 12 (+0.10), reversing after.
   - Same-month unemployment falls after a tightening (an information-effect pattern).
   - Not usable.
+- **LP exploration (29 Oct, user away; `lp_weights/RESULTS.md`).**
+  - One-at-a-time LP-IV reproduces inverse-response (market-type) weights.
+  - Unemployment *falls* after hawkish NS surprises in 1994-2025 monthly data. Orthogonalized surprises turn it conventional, but it is imprecise and fragile.
+  - Multi-horizon and multi-instrument LPs are unusable.
+  - A long-sample (1973-2025) recursive LP gives a conventional yardstick: u +0.32 (se 0.10) at 12 months, output -0.63%. Predictive per-variable effects remain imprecise.
+  - Decision pending.
