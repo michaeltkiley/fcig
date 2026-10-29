@@ -26,14 +26,32 @@ Motivation for the macro-model angle: there is controversy over macro models and
 11. **Honest labeling.** The market-based weights are "less dependent on a macro model, more on a statistical model", not model-free; include an assumptions table by approach (FCI-G: macro model output effects with partial effects; GS: regression weights; NFCI: statistical factor model; market-based: surprise measure, event-window identification, noise structure).
 12. **Data constraints stated openly.** Credit spreads, housing and oil are not in the event-window set; look for intraday corporate yield or bond-ETF/CDS data; otherwise say so. About 250 events: carry sampling bands and treat gaps inside them as non-findings.
 
-## 3. Proposed structure (about 6-7 pages, 4-5 figures, 2-3 tables)
-1. **Introduction**: the question, motivation from policy communication (FOMC quotes), preview of the answer.
-2. **What the indexes purport to do**: Table 1 (variables, weights, units, sign, horizon, frequency, revisions, source of weights) for FCI-G, GS (replicated), NFCI, SF Fed proxy, market-based; assumptions table.
-3. **Common unit**: conversion of each index to funds-rate equivalents (FCI-G by model yardstick, others by response to policy surprises; NFCI weekly), parallel unit, and what the unit means (source-agnostic).
-4. **The simple alternative**: event-window responses of rates, equities and dollar to NS policy news; weights; comparison with model-implied spillovers (Table 2); GSS and covariance variants in a box.
-5. **Comparison**: levels on a common reference (figure), slopes and correlations, by-group contributions (figure), changes as a check, episodes of closest alignment and largest divergence (figure and short stories), what the current readings and recent changes say.
-6. **Caveats and conclusion**: no ground truth, GS replication, information effects, data coverage, unit definition.
-Code and data to bring: `path_fci_gss_ns.py`, `path_fci_rates_variants.py`, `path_fci_changes.py`, `ms5_level.py`, `ms5_vs_gs.py`, `fcig_gs.py` and `fcig_replicate.py`, FRB/US sensitivities, the USMPD workbook, NFCI/ANFCI from FRED. Consolidate into one replication script with fixed seeds and a documented data vintage before submission.
+## 3. Proposed structure (revised 29 Oct 2026; about 8 pages, 5-6 figures, 2-3 tables)
+1. **Introduction:** the question, motivation from policy communication (FOMC quotes), preview of the answer.
+2. **What the indexes purport to do:** Table 1 (variables, weights, units, sign, horizon, frequency, revisions, source of weights) for FCI-G, GS (replicated), NFCI/ANFCI, the SF Fed proxy, the macro-model index and the market-based index.
+3. **Two lenses and a common unit** (from the weighting note, `weighting_note/weighting_note.tex`):
+   - *Output lens:* funds-rate pp with a model-consistent yardstick (FRB/US: persistent 1 pp hike, VAR expectations, 4 quarters).
+   - *Transmission lens:* pp of the 2-year yield per NS policy-news unit.
+   - When impulse-response and market weights agree; the gap between them is non-policy movement.
+4. **Static and dynamic indexes:**
+   - eventual pressure (static levels index, main);
+   - current pressure (distributed lag on demeaned levels);
+   - growth over the next year (the FCI-G form, matching official FCI-G at 0.87/0.85);
+   - FCI-G as a flow measure.
+5. **The simple alternative:** event-window responses of rates, equities and the dollar to NS policy news; one-factor GLS weights; Baa robustness (full and diagonal covariance); comparison with FRB/US weights.
+6. **Comparison:**
+   - levels and 12-month changes;
+   - FCI-G against levels and changes;
+   - the proxy funds rate;
+   - groups;
+   - episodes;
+   - the gap test (no gap on impact, a gap after 6-24 months, traced to financial response profiles).
+7. **What the data can and cannot identify (box or section):**
+   - policy surprises identify financial responses, not activity responses, in post-1994 monthly data;
+   - one-at-a-time LP-IV gives market-type weights;
+   - the ECB-method index (estimated on our data) is predictive and spread-dominated, discussed in the text only;
+   - the long-sample recursive yardstick cross-checks FRB/US.
+8. **Caveats and conclusion:** no ground truth, GS replication, information effects, data coverage, units, FRB/US expectations (model-consistent weights 2-3x larger).
 
 ## 4. Work items (in rough order)
 1. **Done (22 Oct):** read Arnaut-Bauer (2024) and Aramonte-Rosen-Schindler (2013) in full (neither converts any index to funds-rate equivalents; see section 7); read the Boivin-Kiley-Mishkin working paper version (the Handbook text itself is still unread); established which FCI Caballero-Simsek use (FCI-G). Notes: `lit/` folder.
@@ -48,6 +66,29 @@ Effort: about 3-5 weeks part time (the NFCI conversion and the series settlement
 
 ## 4b. Progress and results so far (22 Oct 2026; details in `experimental/PROJECT_MEMORY.md`)
 Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-based index (NS base, GSS robustness), the macro-model levels index (FRB/US weights; policy rate, 10-year, mortgage spread, BBB spread, equities, real dollar, with and without house prices; nominal and real), GS conversion to funds-rate units via the NS shock (0.95 pp per point; range 0.69-1.20), a first common-unit comparison with a pre-specified metric (`METRIC.md`, with a logged deviation: the h=0 same-month conversion replaces the unusable 3-month one), correlation tables by start year, a decomposition of the GS versus macro-model difference (weights 78-96% of variance against real data, data and coverage smaller; dollar and equity weights matter most because those variables swing widely), a comparison with the SF Fed proxy funds rate, and the finding that FCI-G is a flow measure whose level matches the macro-model *change* over its own lookback horizon (correlation 0.84-0.93 for the 1-year lookback). Implications for the note: compare FCI-G with level indexes through matched-horizon changes, report the conversion range for GS, and treat the proxy funds rate as the anchor from 2009. Remaining: NFCI conversion, adding ANFCI, the proxy and the OFR FSI to the comparison, the corporate-yield treatment, and consistent FRB/US partials.
+
+## 4c. Progress 23-29 Oct 2026 (details in `experimental/PROJECT_MEMORY.md` 3b-3d and `experimental/INDEX_QA.md`)
+- **Weighting note** (LaTeX) and review of the user's tutorial.
+- **Index definitions settled** by a one-question-at-a-time Q&A (answers 1-45) and rebuilt (`ms_fci/macro_model_v3.py`, `fci_compare/transmission_v3.py`, `fci_compare/compare_v3.py`).
+- **Work items:**
+  - Done: item 3 (series settled: official FCI-G, GS replication, NFCI/ANFCI, proxy, OFR, which failed conversion); item 4 (conversions); item 7 (model vs event-window table, in `gap_test`/`psi_by_horizon`).
+  - Partly done: the FRB/US consistency item (one design, VAR expectations; model-consistent expectations as a reported alternative).
+  - Open: item 5 (groups for NFCI); item 6 (re-run the pre-specified metric and episodes on the v3 indexes); item 8 (corporate yields; Baa robustness added instead).
+- **Findings for the note:**
+  - FCI-G matches the growth-impulse form of the FRB/US partials (0.87/0.85).
+  - Eventual pressure and the market index agree in 12-month changes (0.95), less in levels (0.86).
+  - NFCI/ANFCI are close to the others in neither levels nor changes.
+  - The macro-market gap is zero on impact and grows over 6-24 months (financial response profiles differ).
+  - Surprise-identified activity responses are wrong-signed or imprecise.
+  - The ECB-method index is spread-dominated.
+
+## 4d. Next steps (29 Oct 2026)
+1. Re-run the pre-specified metric (range, episodes) and the group table on the v3 indexes; produce the comparison figures.
+2. NFCI groups (Chicago Fed contributions) for the by-group comparison, or state that NFCI is compared only in total.
+3. Draft sections 3-4 (lenses, units, static and dynamic indexes) from the weighting note and the Q&A; add a short paragraph on the ECB method (text only).
+4. Decide whether the current-pressure index and the growth-over-next-year index appear in figures or only in a table.
+5. Compile the weighting note PDF (needs a TeX engine) and fold its propositions into the note's section 3.
+6. Replication script with a documented data vintage (raw/ inputs are not in git).
 
 ## 5. Assessment of the contribution (revised)
 **What the note would add.** (a) A common funds-rate unit across several widely used indexes, with comparison by group and by episode: shared understanding for communication. (b) A triangulation of the financial block of macro-model-based indexes with event-window evidence. (c) A funds-rate-unit version of FCI-G (the agent found no Fed source that provides one). (d) One more simple, transparent construction, offered as an alternative and not as a competitor.

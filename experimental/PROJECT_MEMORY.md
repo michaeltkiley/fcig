@@ -70,11 +70,10 @@ No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and c
 - USMPD workbook is read from the path set in `experimental/path_fci/path_fci.py` (download from the SF Fed if missing).
 - The local-projection work (analysis/) was deleted at the user's request; it exists in git history (commits b36b910..a17ee11) if ever needed.
 
-## 6. Open items / next steps
-0. (22 Oct 2026, sign-off) Next session: start with item 1 (NFCI) or item 2 (swap the macro-model index into `common_unit.py` and add the proxy funds rate, ANFCI and OFR FSI); decide whether the note compares FCI-G with level indexes only through matched-horizon changes (the evidence says it should).
-1. NFCI feasibility: download the Chicago Fed weekly contributions and indicator weights; group mapping; weekly-window conversion; vintages (ALFRED).
-2. DONE 27 Oct (common_unit_v2.py). Swap the macro-model levels index into `common_unit.py` (replacing the MS-style series) and re-run the metrics, episodes and group table; add ANFCI, SF Fed proxy funds rate, OFR FSI.
-3. Decide treatment of corporate yields in the market-based lens (intraday data search) and of the pre-specified episode metric.
-4. Consistency of the FRB/US partials (VAR expectations free in some experiments, fixed in the short-rate one): rerun all with one definition.
-5. Real/r*-gap versions and GSS/NS/diagonal sensitivities in a box; weight bands carried into readings.
-6. Replication script with fixed seeds and a documented data vintage before any submission.
+## 6. Open items / next steps (updated 29 Oct 2026; the full list is in NOTE_PLAN.md 4d)
+1. Re-run the pre-specified metric, episodes and group table on the v3 indexes (`fci_compare/compare_v3.py` is the base); comparison figures.
+2. NFCI groups, or NFCI in total only.
+3. Draft note sections on lenses/units and static/dynamic indexes; ECB method in the text only (may be reconsidered).
+4. Corporate yields: Baa robustness done (full and diagonal); intraday corporate data not pursued.
+5. FRB/US: VAR-expectations old design is the base (answer 8); model-consistent results kept as an alternative (`ms_fci/frbus_mce.csv`).
+6. Replication script and data vintage; raw/ inputs (FRED, OFR, EBP, Shiller CAPE, USMPD, FRB/US package) are not in git.
