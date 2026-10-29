@@ -316,3 +316,9 @@ Script: `fci_compare/mf_var_us_gk.py`.
   - Multi-horizon and multi-instrument LPs are unusable.
   - A long-sample (1973-2025) recursive LP gives a conventional yardstick: u +0.32 (se 0.10) at 12 months, output -0.63%. Predictive per-variable effects remain imprecise.
   - Decision pending.
+- **Option 3 tried (answer 44; `fci_compare/mf_var_long_compare.py`/`.log`/`.png`).**
+  - The 1973 recursive ECB-method index behaves like a credit-stress index: the Baa spread dominates (contribution sd 6.6 pp; +35 pp in late 2008); index sd 7.2 pp.
+  - Correlations, levels / 12-month changes: EP_4 0.04 / 0.44, MKT 0.20 / 0.37, GS 0.54 / 0.62, ANFCI 0.67 / 0.76.
+  - Same-month response to an NS tightening: -3.1 (se 2.4), i.e. it reads tightening as loosening, because the Baa spread narrows and the dollar has a negative weight.
+  - The 6-lag version is similar.
+  - Decision pending.
