@@ -1,4 +1,4 @@
-# Project memory: financial conditions indexes in funds-rate equivalents (state as of 27 Oct 2026)
+# Project memory: financial conditions indexes in funds-rate equivalents (state as of 29 Oct 2026)
 
 Purpose of this file: a compact record of what was decided, built and found, so the work can be picked up later. Detail lives in the files named below. Branch history: `ccr-3a1fbe39-so6omu`.
 
@@ -34,6 +34,30 @@ A short note (plan: `experimental/path_fci/NOTE_PLAN.md`) that expresses widely 
 - Distributed-lag macro index (`ms_fci/macro_model_dl.py`): smoother, lags the static index; "not yet transmitted" peaked 2.8 pp in Sep 2022; growth-impulse form correlates 0.87 / 0.83 with official FCI-G 1yr / 3yr.
 - Response profiles (`path_fci/psi_by_horizon.py`): impact readings agree (gap 0.02); delayed gap +0.75 at 12 months, +1.83 at 24 (implied by profiles; equals the gap LP); equities rebound, dollar and 10-year keep rising; proportionality not rejected (low power); robust to GSS, pure-policy events, excluding crises. IP rises after hawkish surprises, so theta from responses is uninformative.
 - Approximate US ECB MF-FCI (`fci_compare/mffci_us.py`): about 1.9 index units per 1 pp parallel move (its "policy-rate scale" is not a funds-rate equivalent); reads policy surprises like the market index (gap 0.01); correlations depend on unreported CAPE/dollar weights.
+
+## 3d. 28-29 Oct 2026: index definitions settled by Q&A (`experimental/INDEX_QA.md`, answers 1-45; read this first)
+- **Approved specification:** INDEX_QA "Specification for approval", with current pressure restated in demeaned levels.
+  - *Output lens* (funds-rate pp; FRB/US old design: VAR expectations, persistent shifts, policy rate direct 0.009 with its small effect emphasized):
+    - eventual pressure EP_4 (main), robustness EP_8 and EP_12;
+    - current pressure CP_K, a distributed lag on demeaned levels (K = 4 main; 8 and 12 over G(K));
+    - growth over the next year (FCI-G form, 1- and 3-year lookbacks);
+    - FCI-G / 0.4525, compared in levels and with 12-month changes.
+  - *Transmission lens* (pp of the 2-year per NS unit, not rescaled):
+    - market index (NS GLS weights, S&P/DXY window moves applied to CAPE and real broad dollar levels; static only);
+    - robustness with the Baa yield, full and diagonal covariance;
+    - GS x 0.945/0.98;
+    - NFCI/ANFCI by weekly NS response; OFR FSI by event-day response (failed: response not different from zero).
+  - Cross-lens comparisons are made as is, with units stated.
+- **Built:** `ms_fci/macro_model_v3.py`, `fci_compare/transmission_v3.py`, `fci_compare/compare_v3.py` (+ `.log`).
+- **FRB/US with model-consistent expectations** (`ms_fci/frbus_mce.py`, converged at 240/300 quarters): weights 2-3x larger. The user chose VAR-expectations weights.
+- **ECB-method index on our data** (`fci_compare/mf_var_us*.py`, `VAR_SPEC_RESEARCH.md`):
+  - Funds-rate yardsticks fail on 1990-2025: wrong sign, weak NS instruments.
+  - The 1973 recursive VAR works, but the index is Baa-spread dominated (a credit-stress index).
+  - Decision: text only, for now.
+- **LP exploration** (`lp_weights/RESULTS.md`):
+  - One-at-a-time LP-IV = inverse-response (market-type) weights.
+  - Unemployment falls after hawkish NS surprises in 1994-2025 monthly data.
+  - The long-sample recursive LP yardstick: -0.63% output at 12 months (FRB/US -0.45%).
 
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.

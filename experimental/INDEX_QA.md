@@ -322,3 +322,5 @@ Script: `fci_compare/mf_var_us_gk.py`.
   - Same-month response to an NS tightening: -3.1 (se 2.4), i.e. it reads tightening as loosening, because the Baa spread narrows and the dollar has a negative weight.
   - The 6-lag version is similar.
   - Decision pending.
+
+**A45 (29 Oct).** For now the ECB-method index is discussed in the text only (literature section), not in the comparison; to be reconsidered later. `compare_v3.py` updated: ECB-method index removed; Baa diagonal market version added.
