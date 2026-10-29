@@ -334,3 +334,8 @@ Script: `fci_compare/mf_var_us_gk.py`.
   - The flow index correlates 0.74 with FCI-G 1yr and 0.83 with the market index's 12-month change.
 - 1990-2025 alone: a is wrong-signed in every variant.
 - Decision pending.
+
+**A47 (29 Oct).** The user redirected: a two-variable VAR in the market index (full index) and the unemployment gap; Cholesky with unemployment first (`market_macro/var2_mkt_u.py`/`.log`).
+- The market index Granger-causes unemployment: long sample 1973-2019 p = 0.001 (BIC 4 lags), 1990-2019 p < 0.0001 (BIC 1 lag).
+- Unemployment response to a 1-unit index shock at 24 months: +0.25 (long, 4 lags) to +0.66 (12 lags); +0.35 (1990-2019).
+- Including 2020 weakens the Granger tests (p 0.07).
