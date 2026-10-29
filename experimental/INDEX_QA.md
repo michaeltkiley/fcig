@@ -246,7 +246,8 @@ Output lens (funds-rate pp; FRB/US old design: VAR expectations, persistent shif
    - Second version adds house prices (-0.029/%).
    - Robustness: 8- and 12-quarter weights over G(8) and G(12), reported separately.
 2. **Macro-model, current pressure:**
-   - Index: sum over past changes of Phi(min(age, K))' dx / G(K).
+   - A distributed lag on demeaned levels: sum_i phi_i' x~_{t-i} / G(K), where phi_i is the FRB/US one-period effect at lag i (the change in the cumulative effect), for lags up to K quarters.
+   - The lag weights sum to the static K-quarter weights. This is the same calculation as summing past changes with the effect for their age, restated in levels at the user's request (29 Oct).
    - K = 4 is main; K = 8 and 12 are robustness (each over G(K)).
    - Both house-price versions.
 3. **Growth over the next year (FCI-G form):** from the FRB/US paths and our variables, 1-year and 3-year lookbacks, divided by 0.4525.
