@@ -272,3 +272,10 @@ Other:
 10. **Gap test:** static macro index against static market index only.
 
 **A35 (29 Oct).** Cross-lens comparisons are made as is, with the two units stated: funds-rate pp for the output lens, 2-year-yield pp for the transmission lens. Correlations do not depend on scale.
+
+---
+
+## Rebuild status (29 Oct)
+- Built: macro-model indexes (`ms_fci/macro_model_v3.py`), transmission-lens indexes (`fci_compare/transmission_v3.py`), comparison (`fci_compare/compare_v3.py`).
+- ECB-method VAR (`fci_compare/mf_var_us.py`): estimated (BIC chooses 1 lag; the index loads mainly on the mortgage and BBB spreads). **The yardstick fails:** the funds rate held +1 pp for 12 months lowers unemployment in the VAR, because the funds-rate innovation is followed by narrowing spreads (the reduced form mixes systematic policy with the cycle). Its funds-rate weights are not usable. Decision needed (question 37).
+- OFR FSI conversion fails: event-day response -0.09 (se 0.57).
