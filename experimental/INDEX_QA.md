@@ -296,3 +296,11 @@ Other:
     - Weights: policy rate 0.29, 10-year 0.56, mortgage spread 4.1, Baa spread 9.3, equities -0.023/%, dollar -0.27/% (negative).
   - *1973, 6 lags:* similar yardstick (-0.23%). Weights: 10-year 0.19, mortgage 5.2, Baa 5.3, equities -0.12/%, dollar -0.18/%.
   - The sign of alpha is not identified (it is absorbed by the macro coefficients); the weights are unaffected.
+
+**A41-A42 (29 Oct).** Try the Gertler-Karadi-style specification only (option A):
+- the 2-year Treasury yield as the policy indicator, outside the index, entering only the financial equations;
+- raw NS surprises (monthly sums) as the instrument;
+- yardstick: the 2-year held +1 pp for 12 months, in NS units;
+- sample 1990-2025 excluding 2020; lags by BIC, 6 as a check.
+
+Script: `fci_compare/mf_var_us_gk.py`.
