@@ -339,3 +339,8 @@ Script: `fci_compare/mf_var_us_gk.py`.
 - The market index Granger-causes unemployment: long sample 1973-2019 p = 0.001 (BIC 4 lags), 1990-2019 p < 0.0001 (BIC 1 lag).
 - Unemployment response to a 1-unit index shock at 24 months: +0.25 (long, 4 lags) to +0.66 (12 lags); +0.35 (1990-2019).
 - Including 2020 weakens the Granger tests (p 0.07).
+
+**A48 (29 Oct).** User: use the 2-variable VAR impulse response (1973-2019, 4 lags, unemployment first) for a market-index output lens in interest-rate (market) units: eventual pressure = the market index; current pressure (1-year lookback); growth impetus (FCI-G form, 1-year lookback). Built in `market_macro/mkt_dynamic.py`.
+- Phi(12) = +0.254 u pp per unit (output -0.51%). Effects build within about a year, then plateau.
+- So the growth impetus loads on the last few months of changes: sd 0.52; corr 0.50 with FCI-G 1yr, 0.72 with M's 12-month change.
+- Current pressure: corr 0.94 with M, 0.85 with FRB/US CP_4.

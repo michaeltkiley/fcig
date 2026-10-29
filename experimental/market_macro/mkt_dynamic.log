@@ -1,0 +1,22 @@
+unemployment response to a 1-unit market-index shock (impulse) vs held shift, months 0,3,6,12,18,24:
+   impulse +0.000  +0.133  +0.209  +0.254  +0.254  +0.245
+   held    +0.000  +0.125  +0.190  +0.235  +0.243  +0.243
+yardstick Phi(12) = +0.254 pp unemployment per unit (output equivalent -0.508%)
+current-pressure lag weights (months 0..12, sum 1): 0.000 0.079 0.113 0.332 0.125 0.080 0.093 0.051 0.044 0.035 0.021 0.016 0.011
+growth-impetus weights on dM (months 0..11): 1.000 0.927 0.817 0.486 0.360 0.277 0.179 0.124 0.075 0.034 0.006 -0.017
+
+sd / latest (market units for *_mkt and M; funds-rate pp for FCI-G and FRB/US indexes):
+        EP_mkt (market index)  CP_mkt (current pressure, 1yr)  GI_mkt (growth impetus, 1yr)  M 12m change  FCI-G 1yr / 0.4525  EP_4 (FRB/US)  CP_4 (FRB/US)  GI_1yr+HP (FRB/US)
+sd                       1.46                            1.50                          0.52          1.03                1.22           1.21           1.23                1.18
+latest                  -0.74                           -1.04                          0.31          0.54               -0.34           0.67           0.04                0.82
+
+correlations, 1991-2026:
+                                EP_mkt (market index)  CP_mkt (current pressure, 1yr)  GI_mkt (growth impetus, 1yr)  M 12m change  FCI-G 1yr / 0.4525  EP_4 (FRB/US)  CP_4 (FRB/US)  GI_1yr+HP (FRB/US)
+EP_mkt (market index)                            1.00                            0.94                          0.10          0.15                0.31           0.83           0.78                0.13
+CP_mkt (current pressure, 1yr)                   0.94                            1.00                         -0.24         -0.10                0.13           0.72           0.85               -0.11
+GI_mkt (growth impetus, 1yr)                     0.10                           -0.24                          1.00          0.72                0.50           0.26          -0.26                0.70
+M 12m change                                     0.15                           -0.10                          0.72          1.00                0.81           0.34          -0.11                0.94
+FCI-G 1yr / 0.4525                               0.31                            0.13                          0.50          0.81                1.00           0.38          -0.00                0.89
+EP_4 (FRB/US)                                    0.83                            0.72                          0.26          0.34                0.38           1.00           0.84                0.33
+CP_4 (FRB/US)                                    0.78                            0.85                         -0.26         -0.11               -0.00           0.84           1.00               -0.17
+GI_1yr+HP (FRB/US)                               0.13                           -0.11                          0.70          0.94                0.89           0.33          -0.17                1.00
