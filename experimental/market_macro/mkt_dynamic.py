@@ -10,6 +10,8 @@ Market-index output lens from the two-variable VAR (user's design, 29 Oct 2026),
                          = each past change counted with the share of its 12-month effect already realized
       growth impetus     GI_mkt(t) = sum_{m=0}^{11} [Phi(m+12) - Phi(m)] / Phi(12) * dM(t-m)      (FCI-G form, 1-year lookback: unemployment change over the
                          next 12 months implied by the last 12 months of changes, in units of the 12-month effect of a 1-unit shift; positive = tighter)
+      realized impetus   CP_mkt(t) - CP_mkt(t-12): the growth effect realized over the past year (contemporaneous impetus)
+      identity: because Phi is essentially flat after 12 months, GI_mkt(t) = EP_mkt(t) - CP_mkt(t) (forward impetus = eventual minus current pressure)
     Comparison: FCI-G 1-year lookback / 0.4525 (funds-rate pp), 12-month change of M, macro-model EP_4 and CP_4 (FRB/US).
 Usage: python experimental/market_macro/mkt_dynamic.py
 Outputs: mkt_dynamic_monthly.csv, mkt_dynamic.png
@@ -58,7 +60,7 @@ def main():
     f1 = pd.read_csv(os.path.join(ROOT, "raw", "fed_monthly_1yr.csv"), parse_dates=["date"]).set_index("date").iloc[:, 0]; f1.index = f1.index.to_period("M")
     rep = pd.read_csv(os.path.join(ROOT, "fcig_replication_monthly.csv")); rep.index = pd.PeriodIndex(rep["month"], freq="M")
     f1 = pd.concat([f1, rep["1yr|FCI-G"].loc[f1.index[-1] + 1:]])
-    J = pd.DataFrame({"EP_mkt (market index)": M, "CP_mkt (current pressure, 1yr)": CP, "GI_mkt (growth impetus, 1yr)": GI, "M 12m change": M.diff(12),
+    J = pd.DataFrame({"EP_mkt (market index)": M, "CP_mkt (current pressure, 1yr)": CP, "GI_mkt (growth impetus, 1yr)": GI, "CP_mkt 12m change (realized impetus)": CP.diff(12), "M 12m change": M.diff(12),
                       "FCI-G 1yr / 0.4525": f1 / 0.4525, "EP_4 (FRB/US)": mm["EP_4"], "CP_4 (FRB/US)": mm["CP_4"], "GI_1yr+HP (FRB/US)": mm["GI_1yr+HP"]}).loc["1991-01":"2026-10"]
     J.to_csv(os.path.join(HERE, "mkt_dynamic_monthly.csv"), float_format="%.4f", index_label="month")
     pd.set_option("display.width", 230)
