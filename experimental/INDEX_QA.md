@@ -324,3 +324,13 @@ Script: `fci_compare/mf_var_us_gk.py`.
   - Decision pending.
 
 **A45 (29 Oct).** For now the ECB-method index is discussed in the text only (literature section), not in the comparison; to be reconsidered later. `compare_v3.py` updated: ECB-method index removed; Baa diagonal market version added.
+
+**A46 (29 Oct).** Try option (b): the market index in an empirical output equation, in raw market-index units, with the non-policy part split out (`market_macro/`).
+- Levels (nominal or real 10-year): the market index does not predict unemployment (a about 0, wrong sign at 24 months), so the weights explode.
+- Real 10-year, 12-month flows, 1973-2025:
+  - a = 0.11 (t 2.6) at 6 months and 0.19 (t 1.9) at 12; output equivalent -0.2 to -0.4% per market unit.
+  - Non-policy equity moves matter (b_eq t -2.6 / -1.7; b = 0 rejected at 6 months, p 0.03); the dollar residual is insignificant.
+  - Output-lens weights (h = 12): 10-year 0.32, equities -0.13/%, dollar -0.04/% (market weights: 0.61, -0.051, 0.065).
+  - The flow index correlates 0.74 with FCI-G 1yr and 0.83 with the market index's 12-month change.
+- 1990-2025 alone: a is wrong-signed in every variant.
+- Decision pending.
