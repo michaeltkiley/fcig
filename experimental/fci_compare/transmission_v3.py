@@ -3,7 +3,8 @@ Transmission-lens indexes as specified in experimental/INDEX_QA.md (approved 29 
     MKT       NS one-factor GLS weights (full residual covariance) from intraday window moves of the 10-year, S&P 500 and DXY (USMPD), applied to daily levels of the
               nominal 10-year, 100 ln CAPE and 100 ln real broad dollar, demeaned over the daily sample (answer 10); static (answer 31)
     MKT+Baa   robustness (answers 12-13): adds the Moody's Baa yield (DBAA); its response and residual use the event-day change (previous business day to the event day),
-              the other three keep their intraday windows; index adds the demeaned Baa yield level
+              the other three keep their intraday windows; index adds the demeaned Baa yield level. Two versions (answer 36): full residual covariance (Baa weight negative)
+              and diagonal covariance ("MKT+Baa diag"; every weight takes the sign of its policy response)
     GS        GS replication x 0.945 / 0.98 (= its NS response in 2-year units, answer 14)
     NFCI, ANFCI  divided by their weekly response to NS surprises (weekly change on the sum of NS surprises in the week, Friday-dated weeks, HAC 4) (answer 16)
     OFR FSI   divided by its event-day response to NS surprises (daily, from 2000) (answer 34)
@@ -30,13 +31,13 @@ def me(s):
     s = s.resample("ME").last(); s.index = s.index.to_period("M"); return s
 
 
-def gls(Y, f):
-    """Y: n x k window changes; f: factor. Returns weights (w'b = 1), b, se(b), residual covariance."""
+def gls(Y, f, full=True):
+    """Y: n x k window changes; f: factor. Returns weights (w'b = 1), b, se(b), residual covariance. full=False: diagonal covariance."""
     Z = sm.add_constant(f)
     res = [sm.OLS(Y[:, j], Z).fit(cov_type="HC1") for j in range(Y.shape[1])]
     b = np.array([r.params[1] for r in res]); se = np.array([r.bse[1] for r in res])
     S = np.cov(np.array([r.resid for r in res]), ddof=2)
-    w = np.linalg.solve(S, b)
+    w = np.linalg.solve(S if full else np.diag(np.diag(S)), b)
     return w / (b @ w), b, se, S
 
 
@@ -75,10 +76,13 @@ def main():
     names4 = names + ["Baa yield"]
     print(f"MKT+Baa ({ok.sum()} events): responses " + ", ".join(f"{n} {b4[i]:+.3f} ({se4[i]:.3f})" for i, n in enumerate(names4)))
     print("     weights: " + ", ".join(f"{n} {w4[i]:+.4f}" for i, n in enumerate(names4)))
+    w4d = gls(Y4, d.ns.values[ok], full=False)[0]
+    print("     diagonal-covariance weights: " + ", ".join(f"{n} {w4d[i]:+.4f}" for i, n in enumerate(names4)))
     baal = baa.reindex(X.index).ffill()
     mkt4 = sum(w4[i] * (lev[n] - lev[n].mean()) for i, n in enumerate(names)) + w4[3] * (baal - baal.mean())
+    mkt4d = sum(w4d[i] * (lev[n] - lev[n].mean()) for i, n in enumerate(names)) + w4d[3] * (baal - baal.mean())
     gs = (G.fci - G.fci.mean()) * 0.945 / 0.98
-    daily = pd.DataFrame({"MKT": mkt, "MKT+Baa": mkt4, "GS": gs.reindex(X.index)})
+    daily = pd.DataFrame({"MKT": mkt, "MKT+Baa": mkt4, "MKT+Baa diag": mkt4d, "GS": gs.reindex(X.index)})
     daily.to_csv(os.path.join(HERE, "transmission_v3_daily.csv"), float_format="%.4f", index_label="date")
     # NFCI / ANFCI weekly
     conv = {}
@@ -97,7 +101,7 @@ def main():
     r = sm.OLS(dd[okk], sm.add_constant(d.ns.values[okk])).fit(cov_type="HC1")
     conv["OFR FSI"] = (r.params[1], r.bse[1], int(okk.sum()))
     print("\nResponse to a 1-unit NS surprise (index units; se; events): " + "; ".join(f"{k} {v[0]:+.3f} ({v[1]:.3f}; n={v[2]})" for k, v in conv.items()))
-    M = pd.DataFrame({"MKT": me(mkt), "MKT+Baa": me(mkt4), "GS": me(gs),
+    M = pd.DataFrame({"MKT": me(mkt), "MKT+Baa": me(mkt4), "MKT+Baa diag": me(mkt4d), "GS": me(gs),
                       "NFCI": me(raw("NFCI.csv")) / conv["NFCI"][0], "ANFCI": me(raw("ANFCI.csv")) / conv["ANFCI"][0], "OFR FSI": me(ofr) / conv["OFR FSI"][0]}).loc["1990-01":"2026-10"]
     for c in ("NFCI", "ANFCI", "OFR FSI"):
         M[c] = M[c] - M[c].mean()
