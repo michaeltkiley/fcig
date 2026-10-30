@@ -24,7 +24,7 @@ ask whether adding the market index makes the impulse responses more robust to t
 
 **MP-Q4. Which index cases.** The note's baseline is r*-gap (LW); nominal and real are the earlier steps. Run all three, with the baseline reported first?
 
-**MP-Q5. Inflation variable.** How should inflation enter the VAR: core PCE 12-month rate, core PCE price level (log), or another measure? [open]
+**MP-Q5. Inflation variable.** How should inflation enter the VAR: core PCE 12-month rate, core PCE price level (log), or another measure? [answered, see MP-A5]
 
 **MP-Q6. Comparators.** Run the same system with the real GS index and the all-real FCI-G (open item R14 in the memory), or only the market index at first?
 
@@ -48,6 +48,9 @@ Assumption in S2, to be tested and reported: the impact responses (the residual 
 
 **MP-A4 (30 Oct 2026). Index cases.** [decided, exploratory] Run all three index cases, **nominal, real and r*-gap**, with the **r*-gap (real, relative to r*) case as the main one**. We are in exploratory mode: choices may be revisited, so every run is labelled with its case, sample (S1/S2/Cholesky window), instrument and policy-variable setup.
 
+**MP-A5 (30 Oct 2026). Inflation variable.** [decided, exploratory] Core PCE **monthly rate, annualized** (one-month log change of the core PCE price index x 1200); no gap, no target subtraction. It is noisy, so the details are open: whether to use the raw monthly rate or a 3-month average (a noisy variable lowers the signal in the inflation equation),
+and how to treat the 2020 months and the 2021-22 spike. Headline PCE not run unless asked. To settle when building the dataset; will be reported as a robustness item.
+
 ## Status of decisions (exploratory; revisit freely)
 | ID | Decision | Status |
 |---|---|---|
@@ -55,4 +58,5 @@ Assumption in S2, to be tested and reported: the impact responses (the residual 
 | MP-A2 | NS from path_fci; BS = own purge now, published series later | exploratory |
 | MP-A3 | Proxy-SVAR samples S1 (1994-2026) and S2 (VAR 1973-2026, instrument from 1994); Cholesky long and matched; 2020 dummied | exploratory |
 | MP-A4 | Nominal, real, r*-gap index; r*-gap main | exploratory |
-| MP-Q5, Q6 | inflation variable; comparators | open |
+| MP-A5 | Inflation = core PCE monthly rate, annualized | exploratory |
+| MP-Q6 | comparators | open |
