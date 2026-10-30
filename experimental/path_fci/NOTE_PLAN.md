@@ -77,6 +77,19 @@ Motivation for the macro-model angle: there is controversy over macro models and
 Appendix: current pressure (answer 50); model-consistent-expectations weights; nominal and real versions of every table.
 Work implied: none new for section 6; the nominal (metric_v3), real (compare_real) and r* (compare_rstar) comparisons are already like for like. The published FCI-G enters the nominal step only.
 
+## 3c. Outline adopted for now (answer 55, 30 Oct 2026; supersedes the section order in 3b)
+1. **Introduction:** question, FOMC motivation, preview: a simple, transparent market index (level and flow), measured relative to r*.
+2. **Existing indexes:** FCI-G, GS, NFCI/ANFCI, proxy funds rate (Table 1).
+3. **The market index:** 3.1 weights from announcement-window responses to NS policy news (rates, equities, dollar; one-factor GLS; 2-year-yield units);
+   3.2 the flow: 12-lag VAR with unemployment, yardstick, forward impetus (FCI-G's form).
+4. **From nominal to real to r*:** why nominal is not enough; matched-horizon expected inflation back to 1973; gaps to r* (LW main, Kiley check); what each step changes.
+5. **A macro-model comparison index:** our FRB/US levels version; when market and model weights agree and why they differ (non-policy movements; weighting note).
+6. **Comparison, like for like at each step** (nominal, real, r*): market index and forward impetus against FCI-G, the FRB/US index, GS and ANFCI; levels, 12-month changes,
+   groups, episodes.
+7. **What the data identify (box):** NS surprises identify financial, not activity, responses; unemployment local projections (4h).
+8. **Caveats and conclusion.**
+Appendix: current pressure; model-consistent-expectations weights; full tables at each step.
+
 ## 4. Work items (in rough order)
 1. **Done (22 Oct):** read Arnaut-Bauer (2024) and Aramonte-Rosen-Schindler (2013) in full (neither converts any index to funds-rate equivalents; see section 7); read the Boivin-Kiley-Mishkin working paper version (the Handbook text itself is still unread); established which FCI Caballero-Simsek use (FCI-G). Notes: `lit/` folder.
 2. **Done (22 Oct):** collected and verified 62 quotes from FOMC minutes, transcripts, press conferences, speeches and Fed publications (`lit/lit_fomc_quotes.md`; strongest listed in section 7.1; page numbers and three attributions still to confirm).

@@ -371,3 +371,5 @@ Lag choice for the headline flow (4 or 12 lags) still to be set (both have been 
 
 **A54 (30 Oct).** Headline flow: forward impetus from the **12-lag** market output VAR (1973-2026, 2020 dummied); 4 lags (the BIC-range choice) as the check. Reasons at the time
 (r* case): yardstick Phi(12) 0.57 consistent with the LP coefficient 0.50 (4 lags: 0.33 vs 0.63); correlation with FCI-G 0.82 (0.71); effects build over about a year like FCI-G.
+
+**A55 (30 Oct).** Note outline adopted "for now": NOTE_PLAN section 3c (market index first, then nominal -> real -> r*, macro-model comparison index, like-for-like comparison, identification box).
