@@ -54,3 +54,6 @@ User added: extend all series back to the 1970s. Adopted without objection: befo
 from 1973 (1-year lookback from 1974-03, 3-year from 1976-03), each rate minus matched expected inflation (funds rate - 1-year; 10-year, mortgage, BBB yield - 10-year).
 Stocks, house prices and the dollar left as published (nominal) pending R12. Check: the monthly nominal version matches the published FCI-G at corr 0.993 (1-year) and 0.989 (3-year), 1990-2026.
 Pre-1986 stock levels: Shiller's monthly-average S&P 500 (raw/shiller_sp500.csv, from ie_data.xls).
+
+**R12 (30 Oct).** Real FCI-G: both versions built in `fcig_real.py`: "real" (rates only real; stocks, house prices, dollar nominal as published) and "all real" (also stocks and
+house prices over CPI, real broad dollar). Which is the main version: question R12a. All-real vs rates-only: corr 0.96 (1-year), 0.94 (3-year); all-real tighter by about 0.07-0.09 on average.
