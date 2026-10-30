@@ -53,6 +53,9 @@ and how to treat the 2020 months and the 2021-22 spike. Headline PCE not run unl
 
 **MP-A6 (30 Oct 2026). Comparators.** [decided, exploratory] Order of runs: **market index first**, then **real GS** (also a level), then **FCI-G** last, entering as its flow form (it is built from past changes, so it is not a level). Same four-variable system and the same schemes at each stage; like-for-like cases (nominal GS with nominal market, real with real, r* with r*).
 
+**MP-A7 (30 Oct 2026). Details set at the start of step 1.** [decided, exploratory] (i) Inflation: the **raw monthly** annualized core PCE rate (no 3-month average); (ii) **enough lags**: the lag length is chosen from the data in step 2 (information criteria plus residual autocorrelation, not fixed at 12), with a long-lag check, because a noisy monthly inflation series needs more lags;
+(iii) **Cholesky order: unemployment, inflation, funds rate, market index**, so the funds rate comes before the index and the index responds to the policy shock contemporaneously (the policy rate does not respond to the index within the month; the Caldara-Herbst concern about that restriction is reported, with the reverse order as a check).
+
 ## Status of decisions (exploratory; revisit freely)
 | ID | Decision | Status |
 |---|---|---|
@@ -61,6 +64,7 @@ and how to treat the 2020 months and the 2021-22 spike. Headline PCE not run unl
 | MP-A3 | Proxy-SVAR samples S1 (1994-2026) and S2 (VAR 1973-2026, instrument from 1994); Cholesky long and matched; 2020 dummied | exploratory |
 | MP-A4 | Nominal, real, r*-gap index; r*-gap main | exploratory |
 | MP-A5 | Inflation = core PCE monthly rate, annualized | exploratory |
+| MP-A7 | Raw monthly inflation; lags chosen from the data; Cholesky order u, inflation, funds rate, index | exploratory |
 | MP-A6 | Comparators: market index first, then GS, then FCI-G (flow form) | exploratory |
 
 All six questions answered (30 Oct 2026). Next: build the dataset and the Cholesky baseline, then the proxy-SVARs; see the plan below.
@@ -73,3 +77,22 @@ Code goes in this folder; inputs come from `fci_note/replication/` (data snapsho
 4. **Proxy-SVARs** (`04_proxy.py`): S1 and S2 samples, with and without the index; IRFs against Cholesky; residual-covariance stability check across 1994 for S2.
 5. **Comparison table**: robustness to identification, size, subsample, information effect (hypotheses above), by index case (nominal, real, r*-gap) and policy-variable setup (funds rate main; 2-year yield robustness).
 6. Then GS, then FCI-G (MP-A6).
+
+## Step 1 results (30 Oct 2026): dataset built (`01_data.py`, log `01_data.log`, output `data/mp_monthly.csv`)
+645 months, 1973-01..2026-09, 22 columns: unemployment gap, raw monthly annualized core PCE (`pi_core`), funds rate (`ffr`, plus `ffr_nominal/real/rstar` per index case), 2-year yield (`gs2`, from 1976-06), market index, GS, FCI-G (1-year), market forward impetus per case,
+monthly NS sum, event counts, 2020 flag. Inputs retrieved from FRED and saved in `data/`: PCEPILFE, GS2, PAYEMS, DTB3, DCOILWTICO (the last three are for the Bauer-Swanson-style purge in step 3). Events: 253 (as in the note); months with an event 1994-2026: 247 of 393 (the 2020 count is 6, since March-April 2020 events are dropped).
+Core PCE monthly annualized: mean 3.3, sd 2.4, range -6.8 to 12.3 (noisy, as expected for the raw monthly rate).
+
+**Finding that affects MP-A1 (correction of something I said).** In MP-A1 I wrote that the index's first stage on the NS instrument is "strong by construction". That holds in the event window, where the weights make a unit NS move the index by 1, but **not in monthly data**.
+Rough monthly correlations of the NS sum with changes in each variable, 1994-2026 (n = 393, before any VAR controls; implied F = r^2 (n-2) / (1 - r^2)):
+| Variable (monthly change) | same month | next month |
+|---|---|---|
+| market index (r*-gap) | r 0.03 (F about 0.3) | r 0.11 (F about 4.8) |
+| funds rate | r 0.21 (F about 18) | r 0.18 (F about 13) |
+| 2-year yield | r 0.22 (F about 20) | r 0.10 (F about 4) |
+Why: the index's monthly change has sd 0.25 against an NS monthly sd of 0.045, so the event-window signal is small next to all other news in a monthly average; the index is a monthly average, so a mid-month surprise is spread over two months' changes.
+Consequence: with the shock **scaled on the index**, the first stage is weak and the scaling unstable; the **funds rate and the 2-year yield have first stages around F 18-20**. This is the reverse of the ranking I assumed in MP-A1. Cholesky is unaffected (no instrument).
+Options for the user: keep the index scaling but build a better-aligned monthly index (month-end values, or the event-window index change as the instrument's own scaling); switch the main scaling to the funds rate (2-year yield as the check); or report both and let the first stages decide. **Open: MP-Q7 below.**
+Also flagged: (a) the 'policy variable' version per index case (nominal funds rate, real, or real gap to r*) is not yet decided, MP-Q8; (b) the purge inputs and the BS purge itself are step 3, not step 1.
+
+**MP-Q7 [open]. Scaling of the monetary policy shock, given the monthly first stage.** **MP-Q8 [open].** Which funds-rate version enters the VAR for each index case: nominal in all cases, or matched to the case (nominal / real / real gap to r*)?

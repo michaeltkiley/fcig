@@ -10,4 +10,5 @@ Does the market index make the responses more robust to identification, larger, 
 | File | Purpose |
 |---|---|
 | `CONTEXT.md` | What the market index is, what the project has already found that bears on MP shocks, comparison with GK and CH |
+| `01_data.py`, `01_data.log`, `data/` | Step 1: monthly data set (`data/mp_monthly.csv`) and the FRED inputs |
 | `MP_QA.md` | Proposed tests and the decisions to be taken one at a time (answers recorded there) |
