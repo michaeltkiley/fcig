@@ -166,4 +166,42 @@ The raw correlation of NS with the monthly change in the 2-year (r 0.22, F about
 | 2-year event-window change | 2.5 | 3.3 | 3.0 | 0.0 | 0.7 | 2.8 |
 **Reading.** (1) Moving to the 2-year does not strengthen identification here; the best single first stage is the **funds rate with the current-meeting surprise MP1 (F about 8-9, near the usual 10)**, a different shock (target, not path/news) from NS. (2) For the 2-year, the best instrument is ED4 (F 5.6 in S1), only slightly above NS (3.5).
 (3) No instrument gets F near 10 for the index; the best (path, own 2-year change) reach about 3-4. (4) S2 (long VAR) is weaker throughout. So weak-instrument-robust inference is needed whichever indicator is used. Whether to use the 2-year as the main policy variable is a choice of units and economic content (it matches the index's units), not something the first stage supports or rules out.
-**MP-Q11 [open].** You said you prefer the 2-year yield: flip MP-A1 so the 2-year is the main policy variable (funds rate as robustness)? The evidence neither requires nor forbids it. If yes, the main instrument for the 2-year would be NS and ED4 (reported side by side); for the funds-rate version, NS and MP1.
+**MP-Q11 [answered, see MP-A10].** You said you prefer the 2-year yield: flip MP-A1 so the 2-year is the main policy variable (funds rate as robustness)? The evidence neither requires nor forbids it. If yes, the main instrument for the 2-year would be NS and ED4 (reported side by side); for the funds-rate version, NS and MP1.
+
+**MP-A10 (30 Oct 2026). Policy variable flipped.** [decided, exploratory] The **2-year Treasury yield is the main policy variable** (monthly average `gs2`, FRED GS2, from 1976-06); the funds rate becomes the robustness case. Scaling of the shock: on the 2-year (units match the index) with the index-scaled version reported alongside (MP-A8).
+Instruments: for the 2-year, NS and ED4 side by side; for the funds-rate robustness, NS and MP1. Long Cholesky window for the 2-year therefore starts 1976-06, not 1973-01. Supersedes MP-A1's main case; MP-A1's reasoning on scaling stays on record.
+
+## Step 2e (Cholesky with the 2-year yield, MP-A10) (`02e_cholesky_gs2.py`, `02e_cholesky_gs2.log`, `irf_cholesky_gs2.csv`, `cholesky_gs2_u.png`)
+Unemployment gap per +1 pp 2-year-yield innovation, 12 lags, r*-gap index, 95% bootstrap band (200 draws); sd = one-sd innovation.
+| Window | sd (pp) | h12 without index | h12 with index |
+|---|---|---|---|
+| long 1976-06..2026 | 0.31 | +0.06 (-0.13, +0.26) | +0.16 (-0.04, +0.33) |
+| matched 1994-2026 | 0.18 | -0.42 (-0.77, -0.05) | -0.39 (-0.78, -0.02) |
+| pre-ZLB long 1976-2008m11 | 0.36 | +0.08 (-0.13, +0.27) | +0.18 (-0.01, +0.34) |
+| pre-ZLB matched 1994-2008m11 | 0.21 | -0.44 (-0.70, -0.05) | -0.32 (-0.63, +0.07) |
+| pre-COVID 1994-2019 | 0.18 | -0.50 (-0.83, -0.14) | -0.38 (-0.68, -0.02) |
+Same pattern as with the funds rate, smaller in size (2-year innovations are larger, so a +1 pp scaling inflates less): long window small and positive, every 1994- window negative. The index leaves the picture much as it is; it rises on impact in the long window (+0.49) and less in the matched (+0.24).
+
+## Step 4 / 4b (proxy-SVAR with the weak instruments; why others may not see weak instruments) (`04_proxy.py`, `04b_why_weak.py`, `mpcommon.py`, logs, `irf_proxy.csv`, `proxy_u.png`; `data/USMPD.xlsx` added for FF4)
+**Proxy-SVAR, unemployment response at 12 months per +1 pp policy rise, with the 95% Anderson-Rubin (AR) set (conditional on the VAR coefficients), 12 lags:**
+| Policy / instrument | S1 (1994-2026) F, h12, AR set | S2 (long VAR) F, h12, AR set |
+|---|---|---|
+| 2-year / NS | 3.5, +0.08, unbounded | 0.7, +0.23, unbounded |
+| 2-year / ED4 | 5.6, -0.01, (-1.56, +3.11) | 1.7, +0.19, unbounded |
+| 2-year / FF4 (Gertler-Karadi style) | 0.4, +1.52, unbounded | 0.1, -1.95, unbounded |
+| funds rate / NS | 4.7, -0.49, unbounded | 0.3, +0.15, unbounded |
+| funds rate / MP1 | 9.3, -1.26, (-2.06, +0.55) | 7.9, -0.29, (-2.56, +9.36) |
+With 2 lags: 2-year / NS S1 F 5.9, -0.04 (-1.03, +1.08); 2-year / ED4 S1 F 9.3, -0.07 (-0.96, +0.58); funds rate / MP1 S1 F 10.6, -0.69 (-1.26, +0.59).
+**Reading.** With the weak instruments the sets are unbounded or very wide, so the data neither confirm nor reject any sign. The 2-year point estimates are close to zero (not the large negative Cholesky value), the funds rate / MP1 point estimate is negative. **The index scaling is unbounded everywhere** (index first stage weak).
+**Why others may report usable first stages from similar data (04b; robust F [homoskedastic F], 2-year yield unless stated).**
+1. **Level of aggregation.** At the event level (253 events) the 2-year window change on NS has F 332, by construction (NS is built from yield surprises in the same window); monthly raw correlation with the monthly 2-year change, F 20; on the VAR residual, F 3.5. A reported 'first stage' can be any of these.
+2. **Which F.** Homoskedastic F is about 1.5 to 2 times the robust F (NS 3.5 vs 6.4; ED4 5.6 vs 7.6; funds rate / MP1 9.3 vs 34.3).
+3. **VAR lags.** 12 lags: NS 3.5, ED4 5.6; 6 lags: 4.1, 6.4; 2 lags: 5.9 [10.1], 9.3 [12.4].
+4. **VAR size.** 2-year with only unemployment: NS 6.1 [11.9], ED4 8.9 [12.5]; with core PCE: 6.4 [11.2], 9.4 [12.0]; **adding the index drops it to 3.5 [6.4], 5.6 [7.6].** The index costs first-stage strength.
+5. **Policy variable.** The 1-year (Gertler-Karadi's) gives NS 7.1 [12.4] and ED4 7.7 [10.6], about twice the 2-year's 3.5 and 5.6.
+6. **Instrument.** FF4 (Gertler-Karadi's own futures surprise) is the weakest here for the 2-year (0.4 [0.7]); 2.4 [5.1] for the 1-year; 5.7 [9.8] for the funds rate. MP1 is the strongest for the funds rate (9.3; 12.2 on 1994-2007).
+7. **Sample.** The 2-year first stage is no better before 2008 (0.1 to 1.3); funds rate / MP1 is (12.2 [26.1] on 1994-2007). So the post-2008 sample is not the cause for the funds rate, and the 2-year is simply poorly explained.
+8. **Timing** (splitting a surprise between the event month and the next in proportion to days left, as a monthly average suggests) did not help (NS 3.5 to 2.9).
+**What is and is not established.** With the choices closest to Gertler-Karadi (1-year indicator, small system, few lags, homoskedastic F) the first stage is about 10 to 12; with this project's choices (2-year, four variables incl. the index, 12 lags, robust F) it is 3 to 6. I could not find Gertler-Karadi's own reported first-stage F or how they compute it;
+the literature does note that the proxy-on-VAR-error F depends on the specification and anchor variable (Lunsford 2015; [Colombo 2025](https://colombodaniele.github.io//files/COLOMBO_2025_Identification_or_propagation.pdf) on anchor dependence), and Känzig (2021) reports regular F 22.7 and robust F 10.6 for an oil proxy (a different application). So 'the literature has strong instruments' is not verified here; 'the reported F depends heavily on these choices' is.
+**Open (user): MP-Q12.** Which first-stage convention to adopt for the project (robust F with 12 lags as now, or a smaller system / fewer lags / 1-year indicator for comparison with the literature), and whether the index should stay in the system when it lowers first-stage strength.

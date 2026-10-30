@@ -1,0 +1,13 @@
+Unemployment-gap response to +1 pp 2-year-yield innovation (95% band); sd = one-sd innovation (pp); gs2 12 = 2-year response at 12 months; idx = index response
+  long 1976-2026                 without index  T=604 sd=0.31  u12 +0.06 (-0.13,+0.26)  u24 +0.10 (-0.11,+0.33)  gs2@12 +0.93
+  long 1976-2026                 with index     T=604 sd=0.30  u12 +0.16 (-0.04,+0.33)  u24 +0.17 (-0.08,+0.37)  gs2@12 +0.77  idx0 +0.49 idx12 +0.67
+  matched 1994-2026              without index  T=393 sd=0.18  u12 -0.42 (-0.77,-0.05)  u24 -0.48 (-0.89,+0.12)  gs2@12 +1.42
+  matched 1994-2026              with index     T=393 sd=0.18  u12 -0.39 (-0.78,-0.02)  u24 -0.47 (-0.91,+0.13)  gs2@12 +1.43  idx0 +0.24 idx12 -0.40
+  pre-ZLB long 1976-2008m11      without index  T=390 sd=0.36  u12 +0.08 (-0.13,+0.27)  u24 +0.12 (-0.05,+0.29)  gs2@12 +0.64
+  pre-ZLB long 1976-2008m11      with index     T=390 sd=0.34  u12 +0.18 (-0.01,+0.34)  u24 +0.13 (-0.05,+0.28)  gs2@12 +0.36  idx0 +0.52 idx12 +0.48
+  pre-ZLB matched 1994-2008m11   without index  T=179 sd=0.21  u12 -0.44 (-0.70,-0.05)  u24 -0.18 (-0.48,+0.23)  gs2@12 +1.33
+  pre-ZLB matched 1994-2008m11   with index     T=179 sd=0.21  u12 -0.32 (-0.63,+0.07)  u24 -0.11 (-0.51,+0.41)  gs2@12 +1.22  idx0 +0.18 idx12 -0.12
+  pre-COVID 1994-2019            without index  T=312 sd=0.18  u12 -0.50 (-0.83,-0.14)  u24 -0.55 (-0.92,+0.07)  gs2@12 +1.53
+  pre-COVID 1994-2019            with index     T=312 sd=0.17  u12 -0.38 (-0.68,-0.02)  u24 -0.42 (-0.79,+0.24)  gs2@12 +1.50  idx0 +0.18 idx12 -0.38
+  1994-2026 ZLB dummied          without index  T=393 sd=0.20  u12 -0.40 (-0.62,-0.11)  u24 -0.34 (-0.57,-0.00)  gs2@12 +1.36
+  1994-2026 ZLB dummied          with index     T=393 sd=0.19  u12 -0.34 (-0.60,+0.00)  u24 -0.47 (-0.81,-0.05)  gs2@12 +1.25  idx0 +0.24 idx12 -0.32
