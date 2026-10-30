@@ -27,3 +27,13 @@ Labels: [decided] by the user; [open] to be asked; [proposal] my suggestion, not
 - Implementation detail (stated, not a new choice): before 1982 both horizons are extended with the Livingston 12-month CPI expectation ("base period to 12 months", semiannual, interpolated to months), each level-adjusted to its Cleveland series over 1982-01..1984-12.
 
 **R4 (30 Oct).** The splice is blended over 1982: the Cleveland weight rises linearly from 1/12 in January to 1 in December 1982 (the shifted Livingston series before, Cleveland after).
+
+**R5 (30 Oct).** Macro-model real indexes as proposed:
+- real policy rate (funds rate minus 1-year expected inflation) and real 10-year (minus 10-year expected inflation);
+- spreads, CAPE, real dollar and house-price ratio unchanged;
+- FRB/US weights and yardstick unchanged;
+- eventual and current pressure and growth versions all rebuilt.
+
+User added: extend all series back to the 1970s. Adopted without objection: before 1990, monthly-average long series (FEDFUNDS, GS10, MORTGAGE30US, Moody's BAA - GS10, Shiller CAPE, Fed real broad dollar), level-matched to the project's end-of-month series at the 1990 overlap.
+
+**R6 (30 Oct).** House-price ratio before 1987: Shiller's home price index (monthly from 1953) over CPI rent of primary residence.
