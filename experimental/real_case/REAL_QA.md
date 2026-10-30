@@ -37,3 +37,6 @@ Labels: [decided] by the user; [open] to be asked; [proposal] my suggestion, not
 User added: extend all series back to the 1970s. Adopted without objection: before 1990, monthly-average long series (FEDFUNDS, GS10, MORTGAGE30US, Moody's BAA - GS10, Shiller CAPE, Fed real broad dollar), level-matched to the project's end-of-month series at the 1990 overlap.
 
 **R6 (30 Oct).** House-price ratio before 1987: Shiller's home price index (monthly from 1953) over CPI rent of primary residence.
+
+**R7 (30 Oct).** Zero point: the main version is demeaned over the full extended sample (1973-2026); the 1990-2026 mean is a check.
+- Data built: `data_long.py`. Flag raised: the house-price-to-rent ratio trends up strongly (1973 about 35% below 1990s levels), partly from CPI rent mismeasurement before the mid-1980s. Question R8.
