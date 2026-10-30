@@ -368,3 +368,6 @@ Open follow-up: whether the market index also carries a flow (its VAR forward im
 **A53 (30 Oct).** The market index carries both a level and a flow: the market index (level) and its VAR forward impetus (flow, the counterpart of FCI-G), so the main approach
 parallels FCI-G, a widely followed approach. The market output VAR (unemployment gap and the market index, Cholesky with unemployment first) is part of the main index's construction.
 Lag choice for the headline flow (4 or 12 lags) still to be set (both have been kept so far).
+
+**A54 (30 Oct).** Headline flow: forward impetus from the **12-lag** market output VAR (1973-2026, 2020 dummied); 4 lags (the BIC-range choice) as the check. Reasons at the time
+(r* case): yardstick Phi(12) 0.57 consistent with the LP coefficient 0.50 (4 lags: 0.33 vs 0.63); correlation with FCI-G 0.82 (0.71); effects build over about a year like FCI-G.
