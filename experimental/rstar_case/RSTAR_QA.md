@@ -18,3 +18,9 @@ Labels: [decided] by the user; [open] to be asked; [proposal] my suggestion, not
 5. **Indexes rebuilt:** FRB/US EP/CP/GI, market index, GS, FCI-G (changes in r* enter the impulse?), NFCI/ANFCI (unchanged?). [open]
 6. **Market output VAR:** re-estimated on the r*-gap market index? [open]
 7. **Comparison and episodes:** rerun compare_real logic; against the real case. [later]
+
+## Answers
+
+**S1 (30 Oct).** Rates measured relative to r*: the real policy rate, the real 10-year, the BBB yield (real) and equities through the earnings yield (inverse CAPE, E/P), "all implicit
+real rates" (user). Implementation notes (facts, not new choices): where BBB enters as a spread over the 10-year (FRB/US, GS), subtracting r* from both cancels, so r* changes BBB only
+where it enters as a yield (FCI-G). Open follow-ups: the mortgage rate (S1a); how the equity weight carries over from 100 ln CAPE to the E/P gap (S1b).
