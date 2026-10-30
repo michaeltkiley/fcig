@@ -54,8 +54,8 @@ Motivation for the macro-model angle: there is controversy over macro models and
 8. **Caveats and conclusion:** no ground truth, GS replication, information effects, data coverage, units, FRB/US expectations (model-consistent weights 2-3x larger).
 
 ## 3b. Structure after answer 51 (30 Oct 2026): r* case is the baseline [section outline is a proposal; the baseline and the walk-through are the user's decision]
-1. **Introduction:** question, motivation (FOMC quotes), preview: our baseline indexes measure financial conditions relative to r*: a macro-model (FRB/US) index paralleling FCI-G
-   and a market index (our new idea, prominent) paralleling GS, the index practitioners follow (answer 52).
+1. **Introduction:** question, motivation (FOMC quotes), preview: the main index is the market index (our new idea; a simple, transparent benchmark), measured relative to r*
+   in the baseline; it is compared with other approaches: macro-model indexes (FCI-G and our FRB/US levels version) and GS (answer 52).
 2. **What the existing indexes do:** Table 1 (FCI-G, GS, NFCI/ANFCI, SF Fed proxy); all are nominal-rate based.
 3. **Two lenses and a common unit:** output lens (FRB/US yardstick; market VAR as a model-independent check) and transmission lens (NS policy-news units).
 4. **Construction, step by step:**
