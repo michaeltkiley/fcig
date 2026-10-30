@@ -385,3 +385,5 @@ Lag choice for the headline flow (4 or 12 lags) still to be set (both have been 
 Supporting numbers to check when drafting: real-case level correlation market-GS 0.99 vs market-FRB/US 0.95 (1974-2026), 0.96 vs 0.79-0.84 (1990-2026); r* case similar.
 - **Addition (user, 30 Oct):** the benefits of the market index must be emphasized as strongly as the cost: it is data-driven and empirically based (weights from observed
   market responses to policy news), not dependent on FRB/US, which is a black box to most readers and not widely used in research. The cost (less rich data) is secondary.
+- **Addition (user, 30 Oct):** a second benefit: besides weights from policy surprises, the dynamics come from a transparent VAR (unemployment gap and the index), not from a
+  structural model's lag structure.

@@ -95,6 +95,7 @@ Appendix: current pressure; model-consistent-expectations weights; full tables a
 - Measuring rates relative to r* matters for long time spans.
 - **Benefits of the market index, stated first and strongly:** data-driven and empirically based (weights from observed market responses to policy news; transparent and
   replicable from public data), and independent of FRB/US, which is a black box to most readers and not widely used in research (FCI-G's weights and our macro-model index rest on it).
+  Its dynamics (the flow) also come from a transparent two-variable VAR with unemployment, not from a structural model's lag structure.
 - The cost is less rich data (rates, equities, dollar only); it appears worth paying.
 - Approaches still differ enough to create policy uncertainty; no one measure is likely best.
 - Problems to highlight: FCI-G has no level (flow only); GS is nominal and proprietary.
