@@ -22,3 +22,6 @@ Labels: [decided] by the user; [open] to be asked; [proposal] my suggestion, not
 **R1 (30 Oct).** Expected inflation: the Cleveland Fed model (EXPINF series, monthly from 1982), spliced to another series before 1982 (source and method: R2).
 
 **R2 (30 Oct).** Before 1982: the Livingston Survey (Philadelphia Fed), spliced level-adjusted (shifted by its average gap to Cleveland over an overlap window; 1982-84 was the example given).
+
+**R3 (30 Oct).** Matched horizons: the policy rate is deflated with 1-year expectations, the 10-year with 10-year expectations.
+- Implementation detail (stated, not a new choice): before 1982 both horizons are extended with the Livingston 12-month CPI expectation ("base period to 12 months", semiannual, interpolated to months), each level-adjusted to its Cleveland series over 1982-01..1984-12.
