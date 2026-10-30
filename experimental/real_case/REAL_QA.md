@@ -18,3 +18,5 @@ Labels: [decided] by the user; [open] to be asked; [proposal] my suggestion, not
 10. **Comparison and episodes:** rerun `metric_v3` / `episodes_v3` logic on the real set. [later]
 
 ## Answers
+
+**R1 (30 Oct).** Expected inflation: the Cleveland Fed model (EXPINF series, monthly from 1982), spliced to another series before 1982 (source and method: R2).
