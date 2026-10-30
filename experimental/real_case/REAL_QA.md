@@ -68,3 +68,6 @@ all-real FCI-G in the VAR, the user's emphasis). Same design as the nominal case
 Results almost identical to nominal: Phi(12) 0.235 (4 lags; nominal 0.227), 0.340 (5), 0.501 (12; nominal 0.507); Granger p <= 0.0013; bootstrap 95% bands above zero
 from month 2-3 to 35-36. Correlation with the all-real FCI-G (1-year), 1975-2026: forward impetus 0.69 (4 lags) / 0.82 (12); realized 0.75 / 0.59. Latest (2026-09): EP -2.75,
 CP -2.9, forward impetus +0.1 to +0.2, realized -0.4 to -0.6.
+
+**R15 (30 Oct).** Conversions and units unchanged from the nominal case (GS x 0.945 / 0.98; NFCI 0.097 and ANFCI 0.185 per NS unit; FRB/US yardstick 0.4525). Files keep the full
+1973-2026 history of every index; in comparisons and charts NFCI and ANFCI are shown from 1990 only (their converted 1970s values are very large, e.g. NFCI +51 in mid-1974).
