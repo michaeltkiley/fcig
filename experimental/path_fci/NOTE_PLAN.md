@@ -64,13 +64,16 @@ Motivation for the macro-model angle: there is controversy over macro models and
    - 4.4 r* (baseline): every implicit real rate (policy rate, 10-year, BBB and mortgage yields, earnings yield) as a gap to r* (Laubach-Williams one-sided; Kiley check);
    - what each step changes (little for real since 1990, more in the 1970s; a lot for r* after 2008), and the cross-index agreement at each step (range 1.16 -> 0.95 -> 0.87).
 5. **The market alternative:** event-window weights, one-factor GLS; comparison with FRB/US weights.
-6. **Where the baseline sits relative to existing indexes:** our r* baseline (eventual pressure and forward impetus) against published FCI-G, GS, NFCI/ANFCI and the proxy funds rate:
-   levels, 12-month changes, groups, episodes; FCI-G against forward impetus.
+6. **Where our indexes sit relative to existing ones, like for like at each step (building-block approach; user correction to answer 51):**
+   - nominal: ours against the existing nominal indexes (published FCI-G, GS, NFCI/ANFCI, proxy funds rate);
+   - real: ours against real versions of the others (GS and FCI-G replications with real rates);
+   - r* (baseline): ours against r*-adjusted versions of the others (GS and FCI-G replications with r* gaps; NFCI/ANFCI unchanged);
+   - each step: levels, 12-month changes, groups, episodes; FCI-G against forward impetus.
 7. **What the data can identify (box):** policy surprises identify financial responses, not activity responses; unemployment local projections (changes, not levels; scales consistent;
    FCI-G scale holds 1974-2026, not 1990-2026; small out-of-sample gains; r* versions predict better).
 8. **Caveats and conclusion:** r* uncertainty (LW vs Kiley), expected-inflation measurement before 1982, GS and FCI-G replications, FRB/US expectations, no ground truth.
 Appendix: current pressure (answer 50); model-consistent-expectations weights; nominal and real versions of every table.
-Work implied: section 6 needs a comparison of the r* baseline with the **published nominal** indexes (so far the r* comparison used our own replications in r* form).
+Work implied: none new for section 6; the nominal (metric_v3), real (compare_real) and r* (compare_rstar) comparisons are already like for like. The published FCI-G enters the nominal step only.
 
 ## 4. Work items (in rough order)
 1. **Done (22 Oct):** read Arnaut-Bauer (2024) and Aramonte-Rosen-Schindler (2013) in full (neither converts any index to funds-rate equivalents; see section 7); read the Boivin-Kiley-Mishkin working paper version (the Handbook text itself is still unread); established which FCI Caballero-Simsek use (FCI-G). Notes: `lit/` folder.

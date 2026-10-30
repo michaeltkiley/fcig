@@ -356,3 +356,6 @@ for unemployment, RSTAR_QA S8c.)
 **A51 (30 Oct).** The r*-adjusted case is the **baseline** of the note. The construction walks through the steps: start with nominal indexes (fine for periods of low, stable inflation
 and inflation expectations with a constant r*, but those conditions do not hold), then real, then r* (the baseline). The baseline is then compared with the existing (nominal)
 indexes (published FCI-G, GS, NFCI/ANFCI, etc.) to show where ours sit relative to the literature.
+- **Correction (user, 30 Oct):** the comparison with the literature is like for like at each step (building-block approach, for consistency): our nominal indexes against the
+  existing nominal indexes, our real against real versions of the others, our r*-adjusted against r*-adjusted versions of the others (built from the replications: GS, FCI-G;
+  NFCI/ANFCI unchanged). Not the r* baseline against published nominal series.
