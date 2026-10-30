@@ -57,3 +57,5 @@ Pre-1986 stock levels: Shiller's monthly-average S&P 500 (raw/shiller_sp500.csv,
 
 **R12 (30 Oct).** Real FCI-G: both versions built in `fcig_real.py`: "real" (rates only real; stocks, house prices, dollar nominal as published) and "all real" (also stocks and
 house prices over CPI, real broad dollar). Which is the main version: question R12a. All-real vs rates-only: corr 0.96 (1-year), 0.94 (3-year); all-real tighter by about 0.07-0.09 on average.
+
+**R12a (30 Oct).** Main real FCI-G: "all real" (rates, stocks, house prices and dollar all real); the rates-only real version is the check.
