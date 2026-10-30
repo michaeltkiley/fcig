@@ -76,3 +76,6 @@ CP -2.9, forward impetus +0.1 to +0.2, realized -0.4 to -0.6.
 
 **R17 (30 Oct).** Comparison and episodes on the real set: 1974-2026 as the main (zero 1973-2026; ANFCI from 1990), 1990-2026 as the check against the nominal results
 (`compare_real.py`, log `compare_real.log`, chart `compare_real_levels.png`). Agenda items 1-10 are done; open: revisit the market output VAR with the real GS and all-real FCI-G (R14).
+
+**R18 (30 Oct).** Next: (3) write up the real-case results (NOTE_PLAN 4f; a paragraph in the weighting note's mapping section), then (2) the r* cases, using the Kiley and
+Laubach-Williams **one-sided estimates from the full-sample estimation** (not real-time vintages).

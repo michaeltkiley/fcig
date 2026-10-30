@@ -198,6 +198,7 @@ The user closed the base nominal case. Next: the real case, which systematically
   - comparison (`compare_real.py`, 1974-2026 main, 1990-2026 check): real EP_4, EP_4+HP, MKT, GS correlate 0.94-0.99 in levels over 1974-2026 (0.75-0.96 over 1990-2026);
     the 12-month changes correlate 0.94-0.99. Cross-index range over 1990-2026 is smaller with real rates (mean 0.95 against 1.16 nominal). Widest windows: 1977-81 (market and GS
     tighter than FRB/US, mostly equities: low CAPE gets a larger weight in the market index), 2000 and 2024-26 (equities and dollar). ANFCI is the outlier in crises, as in nominal.
+- Real case written up (NOTE_PLAN 4f; weighting note paragraph on real rates). **Next: r* cases** (separate folder), Kiley and Laubach-Williams one-sided estimates from the full-sample estimation.
 
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.

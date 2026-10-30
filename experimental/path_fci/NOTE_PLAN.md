@@ -108,6 +108,26 @@ Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-bas
   - put the market lens and FRB/US side by side in output space (current pressure and impetus vs FCI-G);
   - draft the corresponding note text.
 
+## 4f. Real-rate case (30 Oct 2026; `experimental/real_case/REAL_QA.md` R1-R17, PROJECT_MEMORY 3g)
+- **What changes:** every index uses real interest rates and runs from 1973-74 (long data level-matched to the project series at 1990-92).
+  - Expected inflation: Cleveland Fed model from 1982, Livingston before (level-adjusted, blended over 1982); matched horizons (policy rate - 1-year, long rates - 10-year).
+  - FRB/US indexes: real policy rate and real 10-year; FRB/US weights and yardstick unchanged; house prices as the deviation from a trailing 15-year average.
+  - Market index: existing announcement-window weights applied to the real 10-year (implicit assumption: announcement-window moves in the nominal 10-year are real-rate moves).
+  - GS replication: Goldman weights on real rates and the real dollar.
+  - FCI-G: published series kept as benchmark; a monthly replication from 1973 with all variables real is the real-case FCI-G (nominal monthly version matches the published series at 0.99).
+  - NFCI/ANFCI unchanged; conversions unchanged; NFCI/ANFCI shown from 1990 in comparisons.
+  - Zero point: 1973-2026 mean (1990-2026 as a check).
+- **Results:**
+  - Over 1990-2026 each real index correlates 0.94-0.98 with its nominal counterpart (levels), 0.98 in 12-month changes: the real-rate switch is a robustness result, not a new picture.
+  - The indexes agree more with real rates: cross-index range 0.95 on average over 1990-2026 (1.16 nominal).
+  - 1974-2026: FRB/US, market and GS indexes correlate 0.94-0.99 in levels; the widest gaps are 1977-81 and 2000 / 2024-26, both mainly equity valuation (the market and GS indexes weight CAPE more than FRB/US).
+  - FCI-G (all real) tracks 12-month changes of the level indexes (0.90-0.95), not their levels (about 0.3), as in the nominal case.
+  - Market output VAR on the real market index: almost identical to nominal (yardstick 0.235 at 4 lags, 0.501 at 12; significant months 2-36).
+  - The 1970s: nominal FCI-G shows tightening in 1974 and 1979 that the real version does not (rate increases matched expected inflation).
+- **Proposed role in the note [proposal, to be confirmed]:** a robustness subsection of section 6 (comparison) plus the long-history figure (`real_case/compare_real_levels.png`); the 1970s episodes as an illustration of why real rates matter for FCI-G.
+- **Open:** the market output VAR with the real GS index and the all-real FCI-G (R14, user's emphasis).
+- **Next case, r\*:** a separate set of cases building on the real case: rates as gaps to r\*, using the Kiley and the Laubach-Williams **one-sided** estimates from the **full-sample** (latest-vintage) estimation (user, 30 Oct).
+
 ## 5. Assessment of the contribution (revised)
 **What the note would add.** (a) A common funds-rate unit across several widely used indexes, with comparison by group and by episode: shared understanding for communication. (b) A triangulation of the financial block of macro-model-based indexes with event-window evidence. (c) A funds-rate-unit version of FCI-G (the agent found no Fed source that provides one). (d) One more simple, transparent construction, offered as an alternative and not as a competitor.
 **What is already known or close (after reading).** Arnaut-Bauer (2024): four FCIs overlaid, a decomposition of the GS FCI only, and an event study of the GS FCI only; no common unit, no cross-index comparison. Aramonte-Rosen-Schindler (2013): twelve indexes in z-scores, correlations 22-96%, predictability only with 2008 in the sample, no policy-rate unit, no event study; stance: no index is uniquely accurate. Beaton-Lalonde-Luu (2009): the one FCI expressed in funds-rate terms (about 300 bp tightening since 2007; 625 bp with another model's multiplier), so the answer is very model-sensitive. Sack-Swanson (2023): FCI response to policy-induced 2-year yield moves (units of the 2-year yield). SF Fed proxy funds rate (policy-rate units from market variables). Chicago Fed Letter (Aug 2024) discusses FCI-G versus NFCI differences qualitatively via weights. Novelty risk assessed as low to moderate: the funds-rate-equivalent, by-group, episode and model-versus-market comparison were not found in any source read, and a targeted follow-up search for conversions (sell-side, staff, central bank blogs) found only single-index or asset-price-unit versions (section 7.4); Sack-Swanson's closing paragraph is the closest published statement of the idea. The narrow contribution is the combination of a common funds-rate unit, several index families, group and episode decomposition, and a market-based benchmark.
