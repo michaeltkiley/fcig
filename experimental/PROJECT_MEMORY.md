@@ -170,6 +170,12 @@ Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model
   - Chart for the 12-lag full-sample version: eventual pressure, current pressure, forward impetus (`mkt_dynamic_full_chart.py`, `mkt_dynamic_full_12lag.png`).
     - Sd 1.46 / 1.53 / 0.76; latest -0.74 / -1.16 / +0.49.
     - Forward impetus peaks in 2008-09 and 2022 (+3).
+- **Current vs eventual pressure (30 Oct):**
+  - The user questioned the long gaps between current and eventual pressure. Checked: current pressure is a 12-month weighted average of M (weights sum to 1; mean lag 6.5 months with 12 lags, 4.5 with 4).
+  - Gaps persist while M trends (1991-93 -0.6, 2009-10 -0.5, 2021-22 +1.0). |gap| > 0.5 in 38% of months, runs up to 12 months.
+  - The gap equals the forward impetus (corr 0.99). Not a bug; presentation choice open (question 50).
+- **With GS** (`mkt_cp_gs_chart.py`, `mkt_cp_gs.png`): GS tracks eventual pressure (corr 0.85 levels, 0.94 12-month changes), not current pressure (0.66, 0.39). Like the market index, GS is a no-lag levels index.
+- **User verdict (30 Oct): "Love the 1973-2026 estimation results."** The 1973-01..2026-09 VAR with 2020 dummied is the preferred basis for the market-index output lens.
 - **Working specification for the market output lens:** estimated through data end with 2020 dummied, with the 4-lag (the earlier BIC choice; BIC now 5) and 12-lag cases both kept. The impetus concept (forward vs realized) is still open (question 49).
 - Possible checks not yet done: 12 lags was checked (above); or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
 
