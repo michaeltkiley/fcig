@@ -56,5 +56,3 @@ Assumption in S2, to be tested and reported: the impact responses (the residual 
 | MP-A3 | Proxy-SVAR samples S1 (1994-2026) and S2 (VAR 1973-2026, instrument from 1994); Cholesky long and matched; 2020 dummied | exploratory |
 | MP-A4 | Nominal, real, r*-gap index; r*-gap main | exploratory |
 | MP-Q5, Q6 | inflation variable; comparators | open |
-
-Note (30 Oct): "PCE gap" is not a concept the user uses and was removed from this project; the earlier `lp_weights` "core inflation gap" came from replicating an ECB paper and is not a template here.
