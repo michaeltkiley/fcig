@@ -89,3 +89,13 @@ realized 0.74 / 0.58 (4 / 12 lags). Latest (2026-09, LW): EP -0.69, CP -1.1, for
   0.12, 0.15, 0.14, 0.03, 0.02.
 - Out of sample by subperiod (origins): the indexes help in 1995-2007 (RMSE ratios 0.78-0.94), mostly hurt in 2008-2019 (1.06-1.15; FCI-G 0.93-0.97 the exception) and hurt badly in
   2021-2025 (1.24-1.92: the 2022-23 tightening was not followed by higher unemployment). No Diebold-Mariano statistic is significant (|t| < 1.4).
+
+**S8c (30 Oct).** Smoothed (impulse-response-weighted) indexes in the unemployment LP (`lp_smoothed.py`, log `lp_smoothed.log`; common sample 1976-2026, h = 12, L = 4 and L = 1):
+- The growth-impetus forms predict; levels and current pressure do not. With the current reading only (L = 1): adjusted R2 gains 0.10-0.14 for FCI-G (1yr, 3yr), FRB/US GI_1yr+HP and
+  VAR forward impetus; 0.00-0.02 for levels and current pressure. Out of sample (1995-2025): r* FCI-G 1yr 0.88, r* VAR12 forward impetus 0.89, r* VAR4 forward 0.90, r* FCI-G 3yr 0.91,
+  real FCI-G 1yr 0.92, r* FRB/US GI 0.94; levels and CP 1.04-1.06. r* versions beat real ones in every family. No Diebold-Mariano t significant (best -1.1).
+- With 4 lags the same ranking, smaller gains (best 0.94), and all indexes hurt in 2021-25 (1.26-1.75).
+- Scale consistency (L = 1 coefficient vs the index's own claim of the 12-month unemployment effect): FCI-G 0.81 per GDP pp (claim 0.5); FRB/US GI 0.31 per funds-rate pp vs
+  0.81 x 0.4525 = 0.37 implied by FCI-G's coefficient (r*: 0.30 vs 0.32); VAR12 forward impetus 0.50 (yardstick Phi(12) 0.50 real, 0.57 r*); VAR4 forward impetus 0.63-0.64
+  (Phi(12) 0.24 real, 0.33 r*: the 4-lag VAR understates the effect).
+- Current pressure (smoothed level) is uncorrelated with FCI-G (corr about 0) and has no predictive content.
