@@ -43,3 +43,8 @@ out); house prices and dollar as in the all-real FCI-G.
 from the real case (no rates in them; stated, can be revisited). Against the real case, 1974-2026: levels corr 0.92-0.93 (LW) and 0.96-0.97 (Kiley), 12-month changes 0.93-0.97.
 Mostly a shift in level over time: with r* high in 1973-2007 (LW about 3.3-3.6) and low after 2008 (0.6-0.9 until 2016), the r*-gap indexes are easier than the real case before 2008
 and tighter after. Latest (2026-09, LW): EP_4 +0.44 (real -0.86), MKT -0.69 (-2.54), GS -1.12 (-2.77), FCI-G 1yr +0.07 (-0.04).
+
+**S5 (30 Oct).** Market output VAR re-estimated on the r*-gap market index, same design (`var_rstar.py`). The r*-gap index predicts unemployment better than the real one:
+Granger F 9.3 (LW, 4 lags; real case 4.5), unemployment-equation residual sd 0.156 vs 0.158 (4 lags) and 0.149 vs 0.152 (12); bootstrap bands above zero in months 1-36.
+Yardstick Phi(12): LW 0.329 (4 lags), 0.568 (12); Kiley 0.288, 0.531 (real case 0.235, 0.501). Correlation with the r*-gap FCI-G (1-year, LW): forward impetus 0.71 / 0.82,
+realized 0.74 / 0.58 (4 / 12 lags). Latest (2026-09, LW): EP -0.69, CP -1.1, forward impetus +0.5, realized -0.5 to -0.7.
