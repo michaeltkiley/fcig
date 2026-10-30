@@ -373,3 +373,13 @@ Lag choice for the headline flow (4 or 12 lags) still to be set (both have been 
 (r* case): yardstick Phi(12) 0.57 consistent with the LP coefficient 0.50 (4 lags: 0.33 vs 0.63); correlation with FCI-G 0.82 (0.71); effects build over about a year like FCI-G.
 
 **A55 (30 Oct).** Note outline adopted "for now": NOTE_PLAN section 3c (market index first, then nominal -> real -> r*, macro-model comparison index, like-for-like comparison, identification box).
+
+**A56 (30 Oct).** Headline message (user's wording, lightly edited):
+- **Main:** a simple market index, built from how markets respond to policy news, tracks the main published indexes once all are measured on the same basis.
+- **r\*:** measuring rates relative to r* is part of what matters for long time spans.
+- **Trade-off:** the market index is more data-driven and less dependent on a macro model than FCI-G; that is a feature that comes at a cost (less rich data: rates,
+  equities and the dollar only). The cost appears worth it.
+- **Uncertainty:** different approaches still differ enough to create policy uncertainty; no one measure is likely best.
+- **Problems with existing indexes to highlight:** FCI-G has no level (flow only); GS is nominal and proprietary.
+- **Note:** the market index may actually be more similar to GS (than to the macro-model indexes).
+Supporting numbers to check when drafting: real-case level correlation market-GS 0.99 vs market-FRB/US 0.95 (1974-2026), 0.96 vs 0.79-0.84 (1990-2026); r* case similar.

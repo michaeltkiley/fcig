@@ -90,6 +90,14 @@ Work implied: none new for section 6; the nominal (metric_v3), real (compare_rea
 8. **Caveats and conclusion.**
 Appendix: current pressure; model-consistent-expectations weights; full tables at each step.
 
+## 3d. Headline message (answer 56, 30 Oct 2026)
+- A simple market index, built from how markets respond to policy news, tracks the main published indexes once all are measured on the same basis.
+- Measuring rates relative to r* matters for long time spans.
+- The market index is more data-driven and less model-dependent than FCI-G, at the cost of less rich data (rates, equities, dollar); the cost appears worth it.
+- Approaches still differ enough to create policy uncertainty; no one measure is likely best.
+- Problems to highlight: FCI-G has no level (flow only); GS is nominal and proprietary.
+- The market index is closer to GS than to the macro-model indexes (level correlations: market-GS 0.96-0.99, market-FRB/US 0.79-0.95, depending on sample and zero point).
+
 ## 4. Work items (in rough order)
 1. **Done (22 Oct):** read Arnaut-Bauer (2024) and Aramonte-Rosen-Schindler (2013) in full (neither converts any index to funds-rate equivalents; see section 7); read the Boivin-Kiley-Mishkin working paper version (the Handbook text itself is still unread); established which FCI Caballero-Simsek use (FCI-G). Notes: `lit/` folder.
 2. **Done (22 Oct):** collected and verified 62 quotes from FOMC minutes, transcripts, press conferences, speeches and Fed publications (`lit/lit_fomc_quotes.md`; strongest listed in section 7.1; page numbers and three attributions still to confirm).
