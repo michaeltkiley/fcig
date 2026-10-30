@@ -24,7 +24,7 @@ ask whether adding the market index makes the impulse responses more robust to t
 
 **MP-Q4. Which index cases.** The note's baseline is r*-gap (LW); nominal and real are the earlier steps. Run all three, with the baseline reported first?
 
-**MP-Q5. Inflation variable.** Core PCE gap as in `lp_weights`, or core PCE 12-month rate?
+**MP-Q5. Inflation variable.** How should inflation enter the VAR: core PCE 12-month rate, core PCE price level (log), or another measure? [open]
 
 **MP-Q6. Comparators.** Run the same system with the real GS index and the all-real FCI-G (open item R14 in the memory), or only the market index at first?
 
@@ -45,3 +45,16 @@ Earlier results show the sample can change the finding (lp_weights E2 used 1994-
 **MP-A3 amendment (30 Oct 2026, user).** [decided] The instrument sample and the VAR-dynamics sample need not coincide (as in Gertler-Karadi, from memory, not checked): the reduced-form VAR can be estimated on the **long sample 1973-01..2026-09** (2020 dummied) while the instrument identifies the impact vector over its own window (1994-). So the proxy-SVARs run in **two sample cases**, both reported:
 (S1) short: VAR and instrument both 1994-2026; (S2) long: VAR 1973-2026, instrument identification from 1994. Cholesky runs on both windows (long and matched). The headline comparison "does the index make responses similar across samples" is S1 vs S2 vs Cholesky, with and without the index.
 Assumption in S2, to be tested and reported: the impact responses (the residual covariance structure of the four variables) are stable between 1973-93 and 1994-; diagnostic = compare residual covariances before and after 1994 (and note the 1979-82 operating regime).
+
+**MP-A4 (30 Oct 2026). Index cases.** [decided, exploratory] Run all three index cases, **nominal, real and r*-gap**, with the **r*-gap (real, relative to r*) case as the main one**. We are in exploratory mode: choices may be revisited, so every run is labelled with its case, sample (S1/S2/Cholesky window), instrument and policy-variable setup.
+
+## Status of decisions (exploratory; revisit freely)
+| ID | Decision | Status |
+|---|---|---|
+| MP-A1 | Funds rate in VAR, shock scaled on the market index; 2-year yield as robustness | exploratory |
+| MP-A2 | NS from path_fci; BS = own purge now, published series later | exploratory |
+| MP-A3 | Proxy-SVAR samples S1 (1994-2026) and S2 (VAR 1973-2026, instrument from 1994); Cholesky long and matched; 2020 dummied | exploratory |
+| MP-A4 | Nominal, real, r*-gap index; r*-gap main | exploratory |
+| MP-Q5, Q6 | inflation variable; comparators | open |
+
+Note (30 Oct): "PCE gap" is not a concept the user uses and was removed from this project; the earlier `lp_weights` "core inflation gap" came from replicating an ECB paper and is not a template here.
