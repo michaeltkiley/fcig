@@ -344,3 +344,7 @@ Script: `fci_compare/mf_var_us_gk.py`.
 - Phi(12) = +0.254 u pp per unit (output -0.51%). Effects build within about a year, then plateau.
 - So the growth impetus loads on the last few months of changes: sd 0.52; corr 0.50 with FCI-G 1yr, 0.72 with M's 12-month change.
 - Current pressure: corr 0.94 with M, 0.85 with FRB/US CP_4.
+
+**A49 (30 Oct).** Growth impetus: **forward impetus only** (FCI-G's definition: the unemployment / growth effect over the next 12 months of the past year's financial changes).
+Realized impetus (12-month change of current pressure) is dropped from the note. Evidence at the time (RSTAR_QA S8c): forward impetus correlates 0.69-0.83 with FCI-G (realized
+0.59-0.76) and predicts unemployment (in-sample gain 0.07-0.11, out-of-sample RMSE ratio 0.89-0.95; realized 0.04-0.06 and 0.97-1.01). Applies to the nominal, real and r* cases.

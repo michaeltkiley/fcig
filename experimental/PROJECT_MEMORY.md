@@ -176,7 +176,7 @@ Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model
   - The gap equals the forward impetus (corr 0.99). Not a bug; presentation choice open (question 50).
 - **With GS** (`mkt_cp_gs_chart.py`, `mkt_cp_gs.png`): GS tracks eventual pressure (corr 0.85 levels, 0.94 12-month changes), not current pressure (0.66, 0.39). Like the market index, GS is a no-lag levels index.
 - **User verdict (30 Oct): "Love the 1973-2026 estimation results."** The 1973-01..2026-09 VAR with 2020 dummied is the preferred basis for the market-index output lens.
-- **Working specification for the market output lens:** estimated through data end with 2020 dummied, with the 4-lag (the earlier BIC choice; BIC now 5) and 12-lag cases both kept. The impetus concept (forward vs realized) is still open (question 49).
+- **Working specification for the market output lens:** estimated through data end with 2020 dummied, with the 4-lag (the earlier BIC choice; BIC now 5) and 12-lag cases both kept. The impetus concept: forward impetus only (answer 49, 30 Oct); realized impetus dropped.
 - Possible checks not yet done: 12 lags was checked (above); or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
 
 ## 3g. 30 Oct 2026: base nominal case CLOSED; real case started

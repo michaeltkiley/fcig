@@ -99,11 +99,11 @@ Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-bas
 - **Indexes, in market (interest-rate) units:**
   - eventual pressure = the market index;
   - current pressure (1-year lookback; corr 0.90-0.94 with the index);
-  - growth impetus, forward (FCI-G's definition) or realized (12-month change in current pressure), to be decided.
+  - growth impetus: forward (FCI-G's definition) only (answer 49, 30 Oct); realized impetus dropped.
   - Correlation with FCI-G: forward 0.56-0.73, realized 0.44-0.64; the ranking depends on how long effects keep building (lag length).
 - **Role in the note:** a model-independent output lens beside FRB/US for the comparison with FCI-G; FRB/US's slower transmission explains why FCI-G looks like a 12-month change. Goes in section 4 (static/dynamic) and section 7 (identification).
 - **Next:**
-  - decide the impetus concept;
+  - ~~decide the impetus concept~~ (done: forward, answer 49);
   - consider adding inflation (3-variable VAR);
   - put the market lens and FRB/US side by side in output space (current pressure and impetus vs FCI-G);
   - draft the corresponding note text.
