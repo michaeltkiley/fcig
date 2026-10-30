@@ -182,6 +182,13 @@ Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model
 ## 3g. 30 Oct 2026: base nominal case CLOSED; real case started
 The user closed the base nominal case. Next: the real case, which systematically uses real interest rates for all indexes, in a separate folder `experimental/real_case/` (decisions in `real_case/REAL_QA.md`, one at a time; no consequential choices without the user's guidance).
 
+- Real case progress (30 Oct; REAL_QA R1-R8):
+  - expected inflation: Cleveland from 1982, Livingston before, level-adjusted and blended over 1982; matched horizons;
+  - long data back to 1973 (level-matched splices);
+  - zero = 1973-2026 mean (1990-2026 as a check);
+  - house prices as the deviation from a trailing 15-year average.
+  - **Possible later change to the nominal case:** detrended house-price ratio (R8).
+
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.
 
