@@ -42,3 +42,5 @@ User added: extend all series back to the 1970s. Adopted without objection: befo
 - Data built: `data_long.py`. Flag raised: the house-price-to-rent ratio trends up strongly (1973 about 35% below 1990s levels), partly from CPI rent mismeasurement before the mid-1980s. Question R8.
 
 **R8 (30 Oct).** House-price variable in the real case: the ratio's deviation from its trailing 15-year (180-month) average, then demeaned like every other variable (`hp_trend.py`). Noted as a possible change for the nominal case later.
+
+**R9 (30 Oct).** Real market index: keep the existing announcement-window weights (NS GLS: 10-year 0.6089, equities -0.0512, dollar 0.0654; 2-year-yield units) and apply them to the real 10-year, CAPE and real dollar, 1973-2026 (zero 1973-2026; 1990-2026 as a check).
