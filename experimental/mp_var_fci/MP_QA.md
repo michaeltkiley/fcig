@@ -64,3 +64,12 @@ and how to treat the 2020 months and the 2021-22 spike. Headline PCE not run unl
 | MP-A6 | Comparators: market index first, then GS, then FCI-G (flow form) | exploratory |
 
 All six questions answered (30 Oct 2026). Next: build the dataset and the Cholesky baseline, then the proxy-SVARs; see the plan below.
+
+## Build plan (proposal, 30 Oct 2026; nothing built until approved)
+Code goes in this folder; inputs come from `fci_note/replication/` (data snapshot, index series `output/indexes_{nominal,real,rstar}.csv`) and the USMPD events. Each step ends with a log and a short note here.
+1. **Dataset** (`01_data.py`): monthly 1973-01..2026-09 with unemployment gap (as in the existing VAR), core PCE monthly annualized (raw and 3-month average), funds rate, the market index (three cases), GS (real), FCI-G flow; monthly NS instrument (sum of event-window NS factor, from `path_fci`) and the own-purge BS instrument; 2020 dummies. Checks: ranges, sample start dates, instrument months.
+2. **Cholesky baseline** (`02_cholesky.py`): four-variable VAR, the market index ordered before and after the funds rate, 12 lags (4 as check), with and without the index; long and matched windows; IRFs of unemployment and inflation to a unit shock scaled on the index, with bootstrap bands.
+3. **Instruments** (`03_instruments.py`): NS and own-purge BS series; first stage of each on the funds rate and on the index residual (the BS first stage on the index is the non-circular test); the information-effect diagnostics (sign of the index response to raw vs purged).
+4. **Proxy-SVARs** (`04_proxy.py`): S1 and S2 samples, with and without the index; IRFs against Cholesky; residual-covariance stability check across 1994 for S2.
+5. **Comparison table**: robustness to identification, size, subsample, information effect (hypotheses above), by index case (nominal, real, r*-gap) and policy-variable setup (funds rate main; 2-year yield robustness).
+6. Then GS, then FCI-G (MP-A6).
