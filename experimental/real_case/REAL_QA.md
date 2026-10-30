@@ -25,3 +25,5 @@ Labels: [decided] by the user; [open] to be asked; [proposal] my suggestion, not
 
 **R3 (30 Oct).** Matched horizons: the policy rate is deflated with 1-year expectations, the 10-year with 10-year expectations.
 - Implementation detail (stated, not a new choice): before 1982 both horizons are extended with the Livingston 12-month CPI expectation ("base period to 12 months", semiannual, interpolated to months), each level-adjusted to its Cleveland series over 1982-01..1984-12.
+
+**R4 (30 Oct).** The splice is blended over 1982: the Cleveland weight rises linearly from 1/12 in January to 1 in December 1982 (the shifted Livingston series before, Cleveland after).
