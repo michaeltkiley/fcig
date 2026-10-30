@@ -26,3 +26,6 @@ real rates" (user). Implementation notes (facts, not new choices): where BBB ent
 where it enters as a yield (FCI-G). Open follow-ups: the mortgage rate (S1a); how the equity weight carries over from 100 ln CAPE to the E/P gap (S1b).
 
 **S1a (30 Oct).** Mortgage rate: treated like BBB: in FCI-G (where it enters as a yield) real and relative to r*; in FRB/US (a spread over the 10-year) unchanged, since r* cancels.
+
+**S1b (30 Oct).** Equities enter as the earnings-yield gap E/P - r* (E/P = 100 / CAPE, pp), with each index's CAPE weight (per log point) converted by the fixed factor at the
+1973-2026 mean E/P: weight per pp of the gap = w x (-100 / 5.65) = w x (-17.7). Option 3 (factor 100 / E/P(t)) shown and not adopted (`equity_conversion.py`).
