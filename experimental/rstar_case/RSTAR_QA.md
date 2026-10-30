@@ -99,3 +99,6 @@ realized 0.74 / 0.58 (4 / 12 lags). Latest (2026-09, LW): EP -0.69, CP -1.1, for
   0.81 x 0.4525 = 0.37 implied by FCI-G's coefficient (r*: 0.30 vs 0.32); VAR12 forward impetus 0.50 (yardstick Phi(12) 0.50 real, 0.57 r*); VAR4 forward impetus 0.63-0.64
   (Phi(12) 0.24 real, 0.33 r*: the 4-lag VAR understates the effect).
 - Current pressure (smoothed level) is uncorrelated with FCI-G (corr about 0) and has no predictive content.
+
+**S9 (30 Oct).** User: store memory and update the plan; "not sure these tell us a ton, but we should report what we learned". Recorded in PROJECT_MEMORY 3g and NOTE_PLAN 4h
+(proposed placement: a box in section 7). The common-experiment idea is noted as a possible extension, not started.

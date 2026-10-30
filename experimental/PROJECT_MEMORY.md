@@ -206,6 +206,17 @@ The user closed the base nominal case. Next: the real case, which systematically
 - FCI-G scale check and horse race (RSTAR_QA S8, redone as local projections in S8a at the user's request: u(t+12) on current and lagged u and index):
   FCI-G's claimed scale (0.5 on u per +1 reading held) holds over 1974-2026 (sum of coefficients 0.44-0.58) but not over 1990-2026 (published 0.09-0.15, not significant).
   In-sample every index helps (r* above real; FCI-G most); out of sample almost nothing beats u's own lags (only r* FCI-G, RMSE ratio 0.94-0.97).
+- Detailed LPs and smoothed indexes (RSTAR_QA S8b-S8c; `rstar_case/lp_detail.py`, `lp_smoothed.py`). User's view: "not sure these tell us a ton, but we should report
+  what we learned". What we learned:
+  1. Unemployment a year ahead responds to recent changes in financial conditions, not their level: level indexes enter as current minus 3-month-ago reading (sum of lag
+     coefficients about 0); current pressure (smoothed level) has no predictive content and is uncorrelated with FCI-G.
+  2. Growth-impetus forms (FCI-G, FRB/US GI, VAR forward impetus) carry the information; r* versions beat real versions in every family.
+  3. Scales are consistent once units are matched: FCI-G 0.81 per GDP pp; FRB/US GI 0.31 per funds-rate pp vs 0.37 implied via the 0.4525 yardstick; VAR12 forward impetus
+     0.50 vs its Phi(12) 0.50 (VAR4 understates 2-3x).
+  4. FCI-G's claimed scale holds over 1974-2026, not over 1990-2026 (published series: sum 0.09-0.15).
+  5. Out of sample, gains are modest (best RMSE ratio 0.88, r* FCI-G) and never significant; positive before 2008, mixed 2008-19, negative 2021-25.
+  Pending idea (not started; user wants regressions first): a common experiment (permanent step in underlying variables, pushed through each index and FCI-G's hump path,
+  responses from VARs with the path held). Options offered: own-unit step, funds-rate-equivalent step, common underlying change (my suggestion: event-window pattern).
 
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.

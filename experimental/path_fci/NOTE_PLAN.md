@@ -148,6 +148,20 @@ Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-bas
   real rates; a lot for r* after 2008), the increasing agreement across indexes, and the better unemployment fit. Caveat: r* is estimated with wide uncertainty bands, and the
   conclusions for 2009-16 and today depend on it (LW vs Kiley differ most there).
 
+## 4h. What the indexes say about unemployment (30 Oct 2026; RSTAR_QA S8-S8c, PROJECT_MEMORY 3g)
+- **Design:** local projections, u(t+12) on current and lagged u and the current (and lagged) index, 1974/76-2026, 2020-2021Q1 dropped; recursive out-of-sample forecasts from 1995.
+  Indexes: levels (FRB/US eventual pressure, market, GS), smoothed levels (current pressure), growth-impetus forms (FCI-G 1yr/3yr, FRB/US GI, market-VAR forward/realized impetus),
+  ANFCI (1990 on); real and r*-gap versions.
+- **Findings to report (modest; user: "not sure these tell us a ton, but we should report what we learned"):**
+  1. Changes, not levels: unemployment responds to recent changes in financial conditions; level indexes and current pressure add nothing once lags of u are included.
+  2. Growth-impetus forms carry the information and agree in scale once units are matched (FCI-G vs FRB/US GI via the 0.4525 yardstick; the 12-lag VAR's forward impetus vs its own
+     yardstick); r* versions beat real versions.
+  3. FCI-G's scale (about 0.5 on the unemployment gap per +1) holds over 1974-2026 but not over 1990-2026 for the published series.
+  4. Out-of-sample gains are small (best 12% lower RMSE, r* FCI-G) and not significant; they come from before 2008 and reverse after 2021.
+- **Place in the note [proposal]:** a short box or subsection in section 7 (what the data can identify), with one table (in-sample gain and out-of-sample ratio by index family)
+  and one figure (FCI-G response profile, 1974-2026 vs 1990-2026).
+- **Possible extension (not started):** a common experiment (a permanent change in the underlying variables pushed through every index, responses from VARs with the path held).
+
 ## 5. Assessment of the contribution (revised)
 **What the note would add.** (a) A common funds-rate unit across several widely used indexes, with comparison by group and by episode: shared understanding for communication. (b) A triangulation of the financial block of macro-model-based indexes with event-window evidence. (c) A funds-rate-unit version of FCI-G (the agent found no Fed source that provides one). (d) One more simple, transparent construction, offered as an alternative and not as a competitor.
 **What is already known or close (after reading).** Arnaut-Bauer (2024): four FCIs overlaid, a decomposition of the GS FCI only, and an event study of the GS FCI only; no common unit, no cross-index comparison. Aramonte-Rosen-Schindler (2013): twelve indexes in z-scores, correlations 22-96%, predictability only with 2008 in the sample, no policy-rate unit, no event study; stance: no index is uniquely accurate. Beaton-Lalonde-Luu (2009): the one FCI expressed in funds-rate terms (about 300 bp tightening since 2007; 625 bp with another model's multiplier), so the answer is very model-sensitive. Sack-Swanson (2023): FCI response to policy-induced 2-year yield moves (units of the 2-year yield). SF Fed proxy funds rate (policy-rate units from market variables). Chicago Fed Letter (Aug 2024) discusses FCI-G versus NFCI differences qualitatively via weights. Novelty risk assessed as low to moderate: the funds-rate-equivalent, by-group, episode and model-versus-market comparison were not found in any source read, and a targeted follow-up search for conversions (sell-side, staff, central bank blogs) found only single-index or asset-price-unit versions (section 7.4); Sack-Swanson's closing paragraph is the closest published statement of the idea. The narrow contribution is the combination of a common funds-rate unit, several index families, group and episode decomposition, and a market-based benchmark.
