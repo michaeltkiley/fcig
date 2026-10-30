@@ -144,7 +144,14 @@ Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model
   - Realized impetus: CP(t) - CP(t-12). Sd 0.91; corr 0.66 with FCI-G 1yr; latest -0.31 (FCI-G -0.34).
   - For reference: M's 12-month change has corr 0.82 with FCI-G; FRB/US growth form 0.89.
   - The two concepts coincide approximately under FRB/US's slow transmission (which is why FCI-G looks like a 12-month change) and separate under the VAR's fast transmission. So FCI-G's large, persistent impulses partly reflect FRB/US lag structure.
-- Possible checks not yet done: the lag profile with 12 lags, or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
+- Sample: the VAR is estimated 1973-01..2019-12 (2020 excluded by ending in 2019); its weights are applied to the project MKT 1990-2026; comparisons are over 1991-2026.
+- 12-lag check (`mkt_dynamic_lags.py`/`.log`):
+  - Unemployment response 0.10 / 0.30 / 0.56 / 0.68 / 0.66 / 0.44 at 3 / 6 / 12 / 18 / 24 / 36 months; yardstick Phi(12) 0.56 (output -1.1%). The effect keeps building to about 18 months.
+  - Current pressure is almost unchanged (corr 0.99 with the 4-lag version).
+  - Forward impetus now weights older changes more (0.25-1.06): corr with FCI-G 0.74 (4 lags: 0.50); latest +0.48.
+  - Realized impetus: corr with FCI-G 0.44 (4 lags: 0.66); latest -0.62.
+  - Which impetus resembles FCI-G depends on how long effects keep building.
+- Possible checks not yet done: 12 lags was checked (above); or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
 
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.
