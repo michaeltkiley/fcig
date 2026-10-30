@@ -59,3 +59,6 @@ Pre-1986 stock levels: Shiller's monthly-average S&P 500 (raw/shiller_sp500.csv,
 house prices over CPI, real broad dollar). Which is the main version: question R12a. All-real vs rates-only: corr 0.96 (1-year), 0.94 (3-year); all-real tighter by about 0.07-0.09 on average.
 
 **R12a (30 Oct).** Main real FCI-G: "all real" (rates, stocks, house prices and dollar all real); the rates-only real version is the check.
+
+**R13 (30 Oct).** NFCI and ANFCI unchanged (published series, month-end), 1973-2026, zero 1973-2026 (1990-2026 check); `nfci_real.py`. Flag for item 8: with the nominal-case
+NS conversion (0.097, 0.185 per NS unit) the 1970s readings are very large (mid-1974: NFCI +51, ANFCI +26 in 2-year units, vs about +1.3 to +1.5 for the real market and GS indexes).
