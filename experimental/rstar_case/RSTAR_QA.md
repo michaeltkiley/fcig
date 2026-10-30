@@ -81,3 +81,11 @@ realized 0.74 / 0.58 (4 / 12 lags). Latest (2026-09, LW): EP -0.69, CP -1.1, for
   Out of sample (origins 1995-2025) almost nothing beats the u-only projection: only the r* LW FCI-G (RMSE ratio 0.95 / 0.94) and r* Kiley FCI-G (0.97); level indexes 0.99-1.13.
   Over 1990-2026 the FCI-G versions are slightly below 1 at L = 4 (0.97-0.98), everything else above 1 (ANFCI 1.13-1.28 despite the best in-sample fit). The large out-of-sample
   gains in S8 came from a sparse specification with a weaker benchmark.
+
+**S8b (30 Oct).** Detailed local-projection results (`lp_detail.py`, log `lp_detail.log`, charts `lp_detail_fcig.png`, `lp_detail_levels.png`; L = 4):
+- Level indexes act through their recent change: at h = 12, c0 about +0.5 to +0.7 and c3 about -0.45 (sum near zero, 0.01-0.03), i.e. u(t+12) responds to the 3-month change of the
+  index, not its level. FCI-G (already a change measure) has a positive sum (0.44-0.55, 1974-2026).
+- Horizon profiles (1974-2026, FCI-G all real, sum of c): 0.20 (h3), 0.35 (h6), 0.55 (h12), 0.53 (h18), 0.43 (h24) against the claim of about 0.5 by h12. Published 1990-2026:
+  0.12, 0.15, 0.14, 0.03, 0.02.
+- Out of sample by subperiod (origins): the indexes help in 1995-2007 (RMSE ratios 0.78-0.94), mostly hurt in 2008-2019 (1.06-1.15; FCI-G 0.93-0.97 the exception) and hurt badly in
+  2021-2025 (1.24-1.92: the 2022-23 tightening was not followed by higher unemployment). No Diebold-Mariano statistic is significant (|t| < 1.4).
