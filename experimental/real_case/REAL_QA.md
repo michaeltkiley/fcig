@@ -62,3 +62,9 @@ house prices over CPI, real broad dollar). Which is the main version: question R
 
 **R13 (30 Oct).** NFCI and ANFCI unchanged (published series, month-end), 1973-2026, zero 1973-2026 (1990-2026 check); `nfci_real.py`. Flag for item 8: with the nominal-case
 NS conversion (0.097, 0.185 per NS unit) the 1970s readings are very large (mid-1974: NFCI +51, ANFCI +26 in 2-year units, vs about +1.3 to +1.5 for the real market and GS indexes).
+
+**R14 (30 Oct).** Market output VAR: the real market index itself is eventual pressure (option 3: only the market index for now; **revisit later** with the real GS index and the
+all-real FCI-G in the VAR, the user's emphasis). Same design as the nominal case (`var_real.py`): 1973-01..2026-09, 2020 dummied, Cholesky u first, 4 lags main, 12 check (BIC 5).
+Results almost identical to nominal: Phi(12) 0.235 (4 lags; nominal 0.227), 0.340 (5), 0.501 (12; nominal 0.507); Granger p <= 0.0013; bootstrap 95% bands above zero
+from month 2-3 to 35-36. Correlation with the all-real FCI-G (1-year), 1975-2026: forward impetus 0.69 (4 lags) / 0.82 (12); realized 0.75 / 0.59. Latest (2026-09): EP -2.75,
+CP -2.9, forward impetus +0.1 to +0.2, realized -0.4 to -0.6.
