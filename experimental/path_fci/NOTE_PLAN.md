@@ -101,6 +101,9 @@ Appendix: current pressure; model-consistent-expectations weights; full tables a
 - Problems to highlight: FCI-G has no level (flow only); GS is nominal and proprietary.
 - The market index is closer to GS than to the macro-model indexes (level correlations: market-GS 0.96-0.99, market-FRB/US 0.79-0.95, depending on sample and zero point).
 
+## 3e. Full draft (30 Oct 2026)
+Draft note: `fci_note/paper/fci_note.tex` (PDF alongside), built from `fci_note/replication/` (see its README). The earlier markdown draft of section 3 (`experimental/note_draft/`) is superseded.
+
 ## 4. Work items (in rough order)
 1. **Done (22 Oct):** read Arnaut-Bauer (2024) and Aramonte-Rosen-Schindler (2013) in full (neither converts any index to funds-rate equivalents; see section 7); read the Boivin-Kiley-Mishkin working paper version (the Handbook text itself is still unread); established which FCI Caballero-Simsek use (FCI-G). Notes: `lit/` folder.
 2. **Done (22 Oct):** collected and verified 62 quotes from FOMC minutes, transcripts, press conferences, speeches and Fed publications (`lit/lit_fomc_quotes.md`; strongest listed in section 7.1; page numbers and three attributions still to confirm).
