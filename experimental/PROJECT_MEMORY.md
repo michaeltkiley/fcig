@@ -156,6 +156,17 @@ Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model
   - t about 3-3.5 over 3-24 months with 4 lags; 4-5.5 with 12 lags.
   - Month 1 is insignificant (unemployment ordered first).
   - The 36-month lower bound is near zero (0.017; 0.005).
+- **Through data end, excluding 2020** (`mkt_dynamic_full.py`/`.log`; 1973-01..2026-09, 2020 monthly dummies, 2021+ kept; BIC chooses 5 lags):
+  - Results are very close to 1973-2019; all significant from month 3 to 36 (bootstrap 95%).
+
+| Lags | Phi(12) (output) | Granger p | Corr with FCI-G: forward / realized impetus |
+|---|---|---|---|
+| 4 | 0.227 (-0.45%) | 0.002 | 0.56 / 0.64 |
+| 5 (BIC) | 0.322 (-0.64%) | 0.0002 | 0.58 / 0.57 |
+| 12 | 0.507 (-1.01%) | 0.0001 | 0.73 / 0.44 |
+
+  - Current pressure corr with M 0.90-0.94.
+  - Latest: CP -1.06 to -1.16; forward +0.33 to +0.49; realized -0.34 to -0.62.
 - Possible checks not yet done: 12 lags was checked (above); or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
 
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)

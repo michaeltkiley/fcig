@@ -1,0 +1,43 @@
+sample 1973-01..2026-09 (644 months), 2020 dummied; BIC lag order 5, AIC 7
+
+[p=4] M Granger-causes u: F 4.29, p 0.00190
+   month    resp     t           asy 95%     bootstrap 95%
+       1  +0.015   0.7 [-0.025,+0.055] [-0.023,+0.057]
+       3  +0.113   2.9 [+0.037,+0.190] [+0.041,+0.191]
+       6  +0.181   3.2 [+0.072,+0.290] [+0.074,+0.287]
+       9  +0.212   3.4 [+0.091,+0.334] [+0.095,+0.339]
+      12  +0.227   3.5 [+0.101,+0.352] [+0.106,+0.372]
+      18  +0.234   3.6 [+0.107,+0.362] [+0.104,+0.404]
+      24  +0.233   3.5 [+0.101,+0.365] [+0.081,+0.422]
+      36  +0.224   2.9 [+0.075,+0.373] [+0.048,+0.447]
+   bootstrap 95% band above zero in months 3..36 (34 of 36); M own response m12 +1.03, m24 +0.95
+   yardstick Phi(12) +0.227 u pp per unit (output -0.45%)
+   corr with FCI-G 1yr: M 0.31, CP 0.12, forward impetus 0.56, realized impetus 0.64;  corr(CP, M) 0.94;  latest: M -0.74, CP -1.06, forward impetus +0.33, realized impetus -0.34
+
+[p=5 (BIC)] M Granger-causes u: F 4.97, p 0.00016
+   month    resp     t           asy 95%     bootstrap 95%
+       1  +0.008   0.4 [-0.031,+0.048] [-0.029,+0.044]
+       3  +0.105   2.8 [+0.033,+0.177] [+0.036,+0.179]
+       6  +0.222   3.8 [+0.108,+0.337] [+0.124,+0.330]
+       9  +0.290   4.0 [+0.148,+0.432] [+0.165,+0.425]
+      12  +0.322   4.0 [+0.166,+0.478] [+0.181,+0.490]
+      18  +0.330   3.9 [+0.166,+0.493] [+0.161,+0.509]
+      24  +0.306   3.7 [+0.142,+0.470] [+0.123,+0.497]
+      36  +0.243   2.8 [+0.071,+0.415] [+0.027,+0.456]
+   bootstrap 95% band above zero in months 3..36 (34 of 36); M own response m12 +1.04, m24 +0.93
+   yardstick Phi(12) +0.322 u pp per unit (output -0.64%)
+   corr with FCI-G 1yr: M 0.31, CP 0.08, forward impetus 0.58, realized impetus 0.57;  corr(CP, M) 0.93;  latest: M -0.74, CP -1.09, forward impetus +0.36, realized impetus -0.43
+
+[p=12] M Granger-causes u: F 3.28, p 0.00011
+   month    resp     t           asy 95%     bootstrap 95%
+       1  -0.001  -0.1 [-0.041,+0.039] [-0.045,+0.039]
+       3  +0.088   2.5 [+0.018,+0.158] [+0.016,+0.159]
+       6  +0.271   4.6 [+0.155,+0.387] [+0.159,+0.392]
+       9  +0.436   5.3 [+0.276,+0.597] [+0.251,+0.598]
+      12  +0.507   5.0 [+0.307,+0.706] [+0.285,+0.705]
+      18  +0.597   4.6 [+0.343,+0.850] [+0.308,+0.833]
+      24  +0.575   4.1 [+0.299,+0.851] [+0.273,+0.811]
+      36  +0.391   2.8 [+0.116,+0.667] [+0.056,+0.624]
+   bootstrap 95% band above zero in months 3..36 (34 of 36); M own response m12 +1.19, m24 +1.01
+   yardstick Phi(12) +0.507 u pp per unit (output -1.01%)
+   corr with FCI-G 1yr: M 0.31, CP 0.02, forward impetus 0.73, realized impetus 0.44;  corr(CP, M) 0.90;  latest: M -0.74, CP -1.16, forward impetus +0.49, realized impetus -0.62
