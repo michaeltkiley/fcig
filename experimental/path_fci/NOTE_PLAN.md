@@ -90,13 +90,23 @@ Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-bas
 5. Compile the weighting note PDF (needs a TeX engine) and fold its propositions into the note's section 3.
 6. Replication script with a documented data vintage (raw/ inputs are not in git).
 
-## 4e. Second macro lens (29 Oct 2026; PROJECT_MEMORY 3f)
-- A two-variable VAR (unemployment gap, market index; Cholesky, u first; 1973-2019, 4 lags) gives an empirical output yardstick (Phi(12) = 0.25 u pp, -0.5% output per market unit) and a model-independent output lens for the market index:
+## 4e. Second macro lens (29-30 Oct 2026; PROJECT_MEMORY 3f)
+- **Model:** a two-variable VAR (unemployment gap, market index; Cholesky with unemployment first). Working version estimated 1973-01..2026-09 with 2020 dummied; 4 and 12 lags both kept (BIC 5 shown too).
+- **Evidence:**
+  - The market index Granger-causes unemployment (p 0.0001-0.002).
+  - The unemployment response to a 1-unit tightening is significant from month 3 to 36 (bootstrap 95%).
+  - Yardstick at 12 months: 0.23 (4 lags) to 0.51 (12 lags) u pp, i.e. -0.45% to -1.0% of output per market unit.
+- **Indexes, in market (interest-rate) units:**
   - eventual pressure = the market index;
-  - current pressure (1-year lookback);
-  - growth impetus (forward or realized; to be decided).
-- It complements FRB/US for the output comparison with FCI-G. Faster transmission than FRB/US implies smaller forward impulses.
-- Note structure: add to section 4 (static/dynamic) and section 7 (identification).
+  - current pressure (1-year lookback; corr 0.90-0.94 with the index);
+  - growth impetus, forward (FCI-G's definition) or realized (12-month change in current pressure), to be decided.
+  - Correlation with FCI-G: forward 0.56-0.73, realized 0.44-0.64; the ranking depends on how long effects keep building (lag length).
+- **Role in the note:** a model-independent output lens beside FRB/US for the comparison with FCI-G; FRB/US's slower transmission explains why FCI-G looks like a 12-month change. Goes in section 4 (static/dynamic) and section 7 (identification).
+- **Next:**
+  - decide the impetus concept;
+  - consider adding inflation (3-variable VAR);
+  - put the market lens and FRB/US side by side in output space (current pressure and impetus vs FCI-G);
+  - draft the corresponding note text.
 
 ## 5. Assessment of the contribution (revised)
 **What the note would add.** (a) A common funds-rate unit across several widely used indexes, with comparison by group and by episode: shared understanding for communication. (b) A triangulation of the financial block of macro-model-based indexes with event-window evidence. (c) A funds-rate-unit version of FCI-G (the agent found no Fed source that provides one). (d) One more simple, transparent construction, offered as an alternative and not as a competitor.

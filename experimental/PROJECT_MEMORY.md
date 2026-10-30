@@ -167,6 +167,10 @@ Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model
 
   - Current pressure corr with M 0.90-0.94.
   - Latest: CP -1.06 to -1.16; forward +0.33 to +0.49; realized -0.34 to -0.62.
+  - Chart for the 12-lag full-sample version: eventual pressure, current pressure, forward impetus (`mkt_dynamic_full_chart.py`, `mkt_dynamic_full_12lag.png`).
+    - Sd 1.46 / 1.53 / 0.76; latest -0.74 / -1.16 / +0.49.
+    - Forward impetus peaks in 2008-09 and 2022 (+3).
+- **Working specification for the market output lens:** estimated through data end with 2020 dummied, with the 4-lag (the earlier BIC choice; BIC now 5) and 12-lag cases both kept. The impetus concept (forward vs realized) is still open (question 49).
 - Possible checks not yet done: 12 lags was checked (above); or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
 
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
