@@ -199,6 +199,10 @@ The user closed the base nominal case. Next: the real case, which systematically
     the 12-month changes correlate 0.94-0.99. Cross-index range over 1990-2026 is smaller with real rates (mean 0.95 against 1.16 nominal). Widest windows: 1977-81 (market and GS
     tighter than FRB/US, mostly equities: low CAPE gets a larger weight in the market index), 2000 and 2024-26 (equities and dollar). ANFCI is the outlier in crises, as in nominal.
 - Real case written up (NOTE_PLAN 4f; weighting note paragraph on real rates). **Next: r* cases** (separate folder), Kiley and Laubach-Williams one-sided estimates from the full-sample estimation.
+- r* cases (30 Oct; `experimental/rstar_case/RSTAR_QA.md` S1-S6, all agenda items done): gaps to r* for the real policy rate, 10-year, BBB and mortgage yields (FCI-G) and equities
+  (E/P - r*, CAPE weight x -17.7); LW one-sided full-sample main, Kiley check; zero 1973-2026 mean; FCI-G applies r* to changes too. Results: 1974-2026 close to the real case
+  (corr 0.92-0.97), but over 1990-2026 r* matters a lot (real vs r* corr about 0.6: LW r* falls from 3.5 to under 1 after 2008). Cross-index range shrinks nominal 1.16 -> real 0.95
+  -> r* 0.87 (Kiley 0.78). The r*-gap market index predicts unemployment better (Granger F 9.3 vs 4.5). Latest (zero 1990-2026, LW): EP_4 +1.4, MKT +0.7, GS +0.1.
 
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.
