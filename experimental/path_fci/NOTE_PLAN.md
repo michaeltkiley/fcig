@@ -93,7 +93,9 @@ Appendix: current pressure; model-consistent-expectations weights; full tables a
 ## 3d. Headline message (answer 56, 30 Oct 2026)
 - A simple market index, built from how markets respond to policy news, tracks the main published indexes once all are measured on the same basis.
 - Measuring rates relative to r* matters for long time spans.
-- The market index is more data-driven and less model-dependent than FCI-G, at the cost of less rich data (rates, equities, dollar); the cost appears worth it.
+- **Benefits of the market index, stated first and strongly:** data-driven and empirically based (weights from observed market responses to policy news; transparent and
+  replicable from public data), and independent of FRB/US, which is a black box to most readers and not widely used in research (FCI-G's weights and our macro-model index rest on it).
+- The cost is less rich data (rates, equities, dollar only); it appears worth paying.
 - Approaches still differ enough to create policy uncertainty; no one measure is likely best.
 - Problems to highlight: FCI-G has no level (flow only); GS is nominal and proprietary.
 - The market index is closer to GS than to the macro-model indexes (level correlations: market-GS 0.96-0.99, market-FRB/US 0.79-0.95, depending on sample and zero point).
