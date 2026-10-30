@@ -35,7 +35,7 @@ Motivation for the macro-model angle: there is controversy over macro models and
    - When impulse-response and market weights agree; the gap between them is non-policy movement.
 4. **Static and dynamic indexes:**
    - eventual pressure (static levels index, main);
-   - current pressure (distributed lag on demeaned levels);
+   - current pressure (distributed lag on demeaned levels): appendix only (answer 50, 30 Oct);
    - growth over the next year (the FCI-G form, matching official FCI-G at 0.87/0.85);
    - FCI-G as a flow measure.
 5. **The simple alternative:** event-window responses of rates, equities and the dollar to NS policy news; one-factor GLS weights; Baa robustness (full and diagonal covariance); comparison with FRB/US weights.
@@ -86,7 +86,7 @@ Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-bas
 1. Re-run the pre-specified metric (range, episodes) and the group table on the v3 indexes; produce the comparison figures.
 2. NFCI groups (Chicago Fed contributions) for the by-group comparison, or state that NFCI is compared only in total.
 3. Draft sections 3-4 (lenses, units, static and dynamic indexes) from the weighting note and the Q&A; add a short paragraph on the ECB method (text only).
-4. Decide whether the current-pressure index and the growth-over-next-year index appear in figures or only in a table.
+4. ~~Decide whether the current-pressure index and the growth-over-next-year index appear in figures or only in a table~~ (done: forward impetus only, answer 49; current pressure appendix only, answer 50).
 5. Compile the weighting note PDF (needs a TeX engine) and fold its propositions into the note's section 3.
 6. Replication script with a documented data vintage (raw/ inputs are not in git).
 

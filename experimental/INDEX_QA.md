@@ -348,3 +348,7 @@ Script: `fci_compare/mf_var_us_gk.py`.
 **A49 (30 Oct).** Growth impetus: **forward impetus only** (FCI-G's definition: the unemployment / growth effect over the next 12 months of the past year's financial changes).
 Realized impetus (12-month change of current pressure) is dropped from the note. Evidence at the time (RSTAR_QA S8c): forward impetus correlates 0.69-0.83 with FCI-G (realized
 0.59-0.76) and predicts unemployment (in-sample gain 0.07-0.11, out-of-sample RMSE ratio 0.89-0.95; realized 0.04-0.06 and 0.97-1.01). Applies to the nominal, real and r* cases.
+
+**A50 (30 Oct).** Current pressure is dropped from the note; it appears only in an appendix. The note features eventual pressure (level) and forward impetus (flow).
+(Background: eventual = current + forward impetus when effects stop building after 12 months; current pressure lags eventual by about 6.5 months and has no predictive content
+for unemployment, RSTAR_QA S8c.)
