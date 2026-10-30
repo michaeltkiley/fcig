@@ -95,4 +95,7 @@ Consequence: with the shock **scaled on the index**, the first stage is weak and
 Options for the user: keep the index scaling but build a better-aligned monthly index (month-end values, or the event-window index change as the instrument's own scaling); switch the main scaling to the funds rate (2-year yield as the check); or report both and let the first stages decide. **Open: MP-Q7 below.**
 Also flagged: (a) the 'policy variable' version per index case (nominal funds rate, real, or real gap to r*) is not yet decided, MP-Q8; (b) the purge inputs and the BS purge itself are step 3, not step 1.
 
-**MP-Q7 [open]. Scaling of the monetary policy shock, given the monthly first stage.** **MP-Q8 [open].** Which funds-rate version enters the VAR for each index case: nominal in all cases, or matched to the case (nominal / real / real gap to r*)?
+**MP-Q7 [answered, see MP-A8]. Scaling of the monetary policy shock, given the monthly first stage.** **MP-Q8 [answered, see MP-A9].** Which funds-rate version enters the VAR for each index case: nominal in all cases, or matched to the case (nominal / real / real gap to r*)?
+
+**MP-A8 (30 Oct 2026). Scaling.** [decided, exploratory] Report **both** scalings (funds rate and market index) in the proxy-SVARs and let the real first stages (step 3, with VAR controls) decide; flag the index scaling's weak monthly first stage in every table. **Cholesky first** (step 2), which needs no instrument.
+**MP-A9 (30 Oct 2026). Funds rate version.** [decided, exploratory] The **nominal funds rate** in all index cases, so only the index changes across cases (column `ffr` in `data/mp_monthly.csv`).
