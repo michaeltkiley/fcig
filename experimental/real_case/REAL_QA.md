@@ -20,3 +20,5 @@ Labels: [decided] by the user; [open] to be asked; [proposal] my suggestion, not
 ## Answers
 
 **R1 (30 Oct).** Expected inflation: the Cleveland Fed model (EXPINF series, monthly from 1982), spliced to another series before 1982 (source and method: R2).
+
+**R2 (30 Oct).** Before 1982: the Livingston Survey (Philadelphia Fed), spliced level-adjusted (shifted by its average gap to Cleveland over an overlap window; 1982-84 was the example given).
