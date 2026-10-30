@@ -73,3 +73,6 @@ CP -2.9, forward impetus +0.1 to +0.2, realized -0.4 to -0.6.
 1973-2026 history of every index; in comparisons and charts NFCI and ANFCI are shown from 1990 only (their converted 1970s values are very large, e.g. NFCI +51 in mid-1974).
 
 **R16 (30 Oct).** r*: not part of the real case. The r*-gap cases are a separate, later set of cases building on the real case.
+
+**R17 (30 Oct).** Comparison and episodes on the real set: 1974-2026 as the main (zero 1973-2026; ANFCI from 1990), 1990-2026 as the check against the nominal results
+(`compare_real.py`, log `compare_real.log`, chart `compare_real_levels.png`). Agenda items 1-10 are done; open: revisit the market output VAR with the real GS and all-real FCI-G (R14).

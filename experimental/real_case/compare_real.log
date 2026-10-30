@@ -1,0 +1,159 @@
+
+################ MAIN, real, 1974-2026 (zero 1973-2026): 1974-01..2026-09 ################
+1. level correlations:
+         EP_4  EP_4+HP   MKT    GS  ANFCI
+EP_4     1.00     0.99  0.95  0.95   0.28
+EP_4+HP  0.99     1.00  0.95  0.94   0.23
+MKT      0.95     0.95  1.00  0.99   0.22
+GS       0.95     0.94  0.99  1.00   0.37
+ANFCI    0.28     0.23  0.22  0.37   1.00
+
+2. 12-month changes, correlations:
+         EP_4  EP_4+HP   MKT    GS  ANFCI
+EP_4     1.00     0.99  0.95  0.95   0.53
+EP_4+HP  0.99     1.00  0.94  0.95   0.52
+MKT      0.95     0.94  1.00  0.96   0.45
+GS       0.95     0.95  0.96  1.00   0.59
+ANFCI    0.53     0.52  0.45  0.59   1.00
+   sign agreement:
+         EP_4  EP_4+HP   MKT    GS  ANFCI
+EP_4     1.00     0.95  0.85  0.85   0.65
+EP_4+HP  0.95     1.00  0.84  0.86   0.66
+MKT      0.85     0.84  1.00  0.90   0.63
+GS       0.85     0.86  0.90  1.00   0.67
+ANFCI    0.65     0.66  0.63  0.67   1.00
+   FCI-G 1yr (all real, /0.4525) vs: EP_4 level +0.29 / 12m chg +0.93, EP_4+HP level +0.28 / 12m chg +0.95, MKT level +0.26 / 12m chg +0.90, GS level +0.30 / 12m chg +0.92, ANFCI level +0.55 / 12m chg +0.47
+
+3. level set without ANFCI, 1974-01..: range mean 1.15, median 1.07, 90th pct 1.90, latest 1.91; mean |gap to median|: EP_4 0.40, EP_4+HP 0.41, MKT 0.56, GS 0.37
+   latest (2026-09): EP_4 -0.86, EP_4+HP -0.89, MKT -2.54, GS -2.77
+4. closest 6-month windows:
+   1986-02..1986-07 range 0.31: EP_4 +3.67, EP_4+HP +3.73, MKT +3.74, GS +3.51
+   1986-08..1987-01 range 0.18: EP_4 +2.99, EP_4+HP +3.01, MKT +3.11, GS +3.00
+   1987-02..1987-07 range 0.40: EP_4 +1.98, EP_4+HP +1.95, MKT +2.30, GS +1.94
+   1989-07..1989-12 range 0.49: EP_4 +1.23, EP_4+HP +1.15, MKT +1.64, GS +1.30
+   1993-01..1993-06 range 0.43: EP_4 -0.78, EP_4+HP -0.42, MKT -0.35, GS -0.43
+   1993-08..1994-01 range 0.39: EP_4 -1.07, EP_4+HP -0.72, MKT -0.68, GS -0.77
+   1995-08..1996-01 range 0.39: EP_4 -1.64, EP_4+HP -1.25, MKT -1.45, GS -1.48
+   1996-03..1996-08 range 0.43: EP_4 -1.39, EP_4+HP -1.00, MKT -1.19, GS -1.41
+   2004-07..2004-12 range 0.44: EP_4 -1.36, EP_4+HP -1.77, MKT -1.73, GS -1.65
+   2014-02..2014-07 range 0.42: EP_4 -2.99, EP_4+HP -2.58, MKT -2.98, GS -2.62
+4. widest 6-month windows:
+   1977-08..1978-01 range 2.13: EP_4 +0.77, EP_4+HP +0.52, MKT +2.65, GS +2.23  | MKT - EP_4+HP: rates +0.25, equities +1.40, dollar +0.22, other +0.26
+   1978-02..1978-07 range 2.53: EP_4 +0.72, EP_4+HP +0.38, MKT +2.91, GS +2.37  | MKT - EP_4+HP: rates +0.36, equities +1.50, dollar +0.33, other +0.34
+   1978-10..1979-03 range 2.73: EP_4 +0.45, EP_4+HP -0.01, MKT +2.72, GS +2.25  | MKT - EP_4+HP: rates +0.31, equities +1.54, dollar +0.42, other +0.46
+   1979-09..1980-02 range 2.46: EP_4 +1.01, EP_4+HP +0.49, MKT +2.95, GS +2.69  | MKT - EP_4+HP: rates +0.04, equities +1.61, dollar +0.30, other +0.52
+   1980-06..1980-11 range 2.28: EP_4 +1.03, EP_4+HP +0.58, MKT +2.78, GS +2.79  | GS - EP_4+HP: rates +0.13, equities +1.23, dollar +0.39, other +0.45
+   1980-12..1981-05 range 2.02: EP_4 +3.01, EP_4+HP +2.63, MKT +4.61, GS +4.34  | MKT - EP_4+HP: rates -0.14, equities +1.55, dollar +0.17, other +0.39
+   2000-03..2000-08 range 1.97: EP_4 -1.35, EP_4+HP -1.24, MKT -3.22, GS -2.88  | EP_4+HP - MKT: rates +0.17, equities +1.48, dollar +0.21, other +0.10
+   2024-10..2025-03 range 2.10: EP_4 -0.19, EP_4+HP -0.45, MKT -2.15, GS -2.29  | EP_4 - GS: rates +0.42, equities +0.93, dollar +0.75, other +0.00
+   2025-06..2025-11 range 1.91: EP_4 -1.05, EP_4+HP -1.20, MKT -2.86, GS -2.95  | EP_4 - GS: rates +0.36, equities +1.02, dollar +0.53, other +0.00
+   2026-04..2026-09 range 1.90: EP_4 -1.18, EP_4+HP -1.24, MKT -2.90, GS -3.07  | EP_4 - GS: rates +0.29, equities +1.09, dollar +0.52, other +0.00
+
+3. level set with ANFCI (from 1990), 1990-01..: range mean 2.57, median 1.85, 90th pct 4.85, latest 1.91; mean |gap to median|: EP_4 0.45, EP_4+HP 0.42, MKT 0.39, GS 0.28, ANFCI 1.75
+   latest (2026-09): EP_4 -0.86, EP_4+HP -0.89, MKT -2.54, GS -2.77, ANFCI -2.76
+4. closest 6-month windows:
+   2005-02..2005-07 range 1.11: EP_4 -1.52, EP_4+HP -2.04, MKT -1.81, GS -1.79, ANFCI -2.63
+   2005-08..2006-01 range 0.87: EP_4 -1.23, EP_4+HP -1.88, MKT -1.65, GS -1.60, ANFCI -2.08
+   2006-04..2006-09 range 0.89: EP_4 -1.20, EP_4+HP -1.88, MKT -1.45, GS -1.47, ANFCI -2.09
+   2006-11..2007-04 range 0.76: EP_4 -1.68, EP_4+HP -2.29, MKT -1.94, GS -1.90, ANFCI -2.32
+   2010-07..2010-12 range 0.91: EP_4 -2.07, EP_4+HP -1.74, MKT -1.79, GS -1.26, ANFCI -1.73
+   2011-02..2011-07 range 0.92: EP_4 -3.04, EP_4+HP -2.57, MKT -2.62, GS -2.19, ANFCI -2.84
+   2012-03..2012-08 range 0.92: EP_4 -2.55, EP_4+HP -1.93, MKT -2.49, GS -1.69, ANFCI -1.87
+   2015-07..2015-12 range 1.06: EP_4 -1.63, EP_4+HP -1.29, MKT -2.34, GS -1.65, ANFCI -2.24
+   2017-05..2017-10 range 1.04: EP_4 -2.34, EP_4+HP -2.13, MKT -3.17, GS -2.81, ANFCI -2.79
+   2017-11..2018-04 range 0.98: EP_4 -2.63, EP_4+HP -2.45, MKT -3.42, GS -3.19, ANFCI -2.84
+4. widest 6-month windows:
+   1991-09..1992-02 range 3.98: EP_4 -0.21, EP_4+HP +0.04, MKT +0.46, GS +0.22, ANFCI -3.52  | MKT - ANFCI
+   1992-03..1992-08 range 4.97: EP_4 -0.56, EP_4+HP -0.27, MKT +0.16, GS -0.15, ANFCI -4.80  | MKT - ANFCI
+   1992-10..1993-03 range 4.77: EP_4 -0.52, EP_4+HP -0.18, MKT -0.08, GS -0.23, ANFCI -4.84  | MKT - ANFCI
+   1993-04..1993-09 range 5.34: EP_4 -1.00, EP_4+HP -0.64, MKT -0.55, GS -0.62, ANFCI -5.90  | MKT - ANFCI
+   1993-10..1994-03 range 4.65: EP_4 -0.85, EP_4+HP -0.49, MKT -0.39, GS -0.58, ANFCI -5.04  | MKT - ANFCI
+   1999-07..1999-12 range 4.67: EP_4 -1.80, EP_4+HP -1.65, MKT -3.32, GS -3.12, ANFCI +1.35  | ANFCI - MKT
+   2000-03..2000-08 range 4.79: EP_4 -1.35, EP_4+HP -1.24, MKT -3.22, GS -2.88, ANFCI +1.57  | ANFCI - MKT
+   2007-11..2008-04 range 9.31: EP_4 -2.10, EP_4+HP -2.47, MKT -2.30, GS -1.72, ANFCI +6.84  | ANFCI - EP_4+HP
+   2008-09..2009-02 range 17.33: EP_4 +0.52, EP_4+HP +0.47, MKT +0.38, GS +1.63, ANFCI +17.64  | ANFCI - MKT
+   2009-03..2009-08 range 8.16: EP_4 -0.27, EP_4+HP -0.12, MKT +0.08, GS +0.86, ANFCI +7.89  | ANFCI - EP_4
+
+################ CHECK, real, 1990-2026 (zero 1990-2026): 1990-01..2026-09 ################
+1. level correlations:
+         EP_4  EP_4+HP   MKT    GS  ANFCI
+EP_4     1.00     0.95  0.79  0.75   0.28
+EP_4+HP  0.95     1.00  0.84  0.81   0.23
+MKT      0.79     0.84  1.00  0.96   0.22
+GS       0.75     0.81  0.96  1.00   0.37
+ANFCI    0.28     0.23  0.22  0.37   1.00
+
+2. 12-month changes, correlations:
+         EP_4  EP_4+HP   MKT    GS  ANFCI
+EP_4     1.00     0.99  0.95  0.95   0.53
+EP_4+HP  0.99     1.00  0.94  0.95   0.52
+MKT      0.95     0.94  1.00  0.96   0.45
+GS       0.95     0.95  0.96  1.00   0.59
+ANFCI    0.53     0.52  0.45  0.59   1.00
+   sign agreement:
+         EP_4  EP_4+HP   MKT    GS  ANFCI
+EP_4     1.00     0.96  0.87  0.87   0.65
+EP_4+HP  0.96     1.00  0.88  0.89   0.66
+MKT      0.87     0.88  1.00  0.91   0.63
+GS       0.87     0.89  0.91  1.00   0.67
+ANFCI    0.65     0.66  0.63  0.67   1.00
+   FCI-G 1yr (all real, /0.4525) vs: EP_4 level +0.47 / 12m chg +0.89, EP_4+HP level +0.48 / 12m chg +0.93, MKT level +0.33 / 12m chg +0.88, GS level +0.44 / 12m chg +0.92, ANFCI level +0.55 / 12m chg +0.47
+
+3. level set without ANFCI, 1990-01..: range mean 0.95, median 0.97, 90th pct 1.42, latest 1.58; mean |gap to median|: EP_4 0.37, EP_4+HP 0.31, MKT 0.37, GS 0.32
+   latest (2026-09): EP_4 +0.44, EP_4+HP +0.35, MKT -0.70, GS -1.14
+4. closest 6-month windows:
+   1997-01..1997-06 range 0.43: EP_4 -0.30, EP_4+HP +0.02, MKT +0.08, GS -0.31
+   2002-07..2002-12 range 0.41: EP_4 +1.85, EP_4+HP +1.72, MKT +1.44, GS +1.75
+   2003-01..2003-06 range 0.25: EP_4 +1.23, EP_4+HP +1.04, MKT +1.14, GS +1.28
+   2003-07..2003-12 range 0.30: EP_4 +0.62, EP_4+HP +0.34, MKT +0.59, GS +0.51
+   2004-01..2004-06 range 0.38: EP_4 +0.14, EP_4+HP -0.21, MKT +0.17, GS +0.03
+   2015-01..2015-06 range 0.39: EP_4 -0.94, EP_4+HP -0.62, MKT -0.98, GS -0.64
+   2015-07..2015-12 range 0.50: EP_4 -0.33, EP_4+HP -0.05, MKT -0.50, GS -0.02
+   2017-05..2017-10 range 0.44: EP_4 -1.04, EP_4+HP -0.88, MKT -1.33, GS -1.18
+   2017-11..2018-04 range 0.39: EP_4 -1.33, EP_4+HP -1.21, MKT -1.59, GS -1.56
+   2018-12..2019-05 range 0.48: EP_4 -0.37, EP_4+HP -0.32, MKT -0.79, GS -0.58
+4. widest 6-month windows:
+   1990-01..1990-06 range 1.31: EP_4 +2.59, EP_4+HP +2.48, MKT +3.79, GS +3.07  | MKT - EP_4+HP: rates +0.21, equities +0.87, dollar +0.11, other +0.11
+   1990-08..1991-01 range 1.59: EP_4 +2.21, EP_4+HP +2.24, MKT +3.80, GS +3.24  | MKT - EP_4: rates +0.21, equities +1.05, dollar +0.32, other +0.00
+   2000-03..2000-08 range 1.38: EP_4 -0.05, EP_4+HP -0.00, MKT -1.38, GS -1.25  | EP_4+HP - MKT: rates +0.15, equities +0.94, dollar +0.24, other +0.05
+   2008-12..2009-05 range 1.72: EP_4 +1.81, EP_4+HP +1.81, MKT +2.51, GS +3.50  | GS - EP_4: rates +0.70, equities +0.91, dollar +0.08, other +0.00
+   2011-06..2011-11 range 1.30: EP_4 -1.36, EP_4+HP -0.87, MKT -0.50, GS -0.06  | GS - EP_4: rates +0.27, equities +0.37, dollar +0.66, other +0.00
+   2023-09..2024-02 range 1.33: EP_4 +1.34, EP_4+HP +0.90, MKT +0.24, GS +0.01  | EP_4 - GS: rates +0.53, equities +0.23, dollar +0.56, other +0.00
+   2024-03..2024-08 range 1.50: EP_4 +0.92, EP_4+HP +0.53, MKT -0.31, GS -0.58  | EP_4 - GS: rates +0.47, equities +0.41, dollar +0.61, other +0.00
+   2024-10..2025-03 range 1.76: EP_4 +1.11, EP_4+HP +0.79, MKT -0.31, GS -0.66  | EP_4 - GS: rates +0.49, equities +0.50, dollar +0.78, other +0.00
+   2025-06..2025-11 range 1.57: EP_4 +0.25, EP_4+HP +0.04, MKT -1.02, GS -1.32  | EP_4 - GS: rates +0.43, equities +0.58, dollar +0.56, other +0.00
+   2026-04..2026-09 range 1.57: EP_4 +0.12, EP_4+HP +0.00, MKT -1.06, GS -1.44  | EP_4 - GS: rates +0.36, equities +0.65, dollar +0.55, other +0.00
+
+3. level set with ANFCI (from 1990), 1990-01..: range mean 2.45, median 1.67, 90th pct 5.03, latest 1.58; mean |gap to median|: EP_4 0.38, EP_4+HP 0.32, MKT 0.36, GS 0.30, ANFCI 1.75
+   latest (2026-09): EP_4 +0.44, EP_4+HP +0.35, MKT -0.70, GS -1.14, ANFCI -1.13
+4. closest 6-month windows:
+   1997-05..1997-10 range 0.74: EP_4 -0.56, EP_4+HP -0.25, MKT -0.45, GS -0.75, ANFCI -0.88
+   2005-04..2005-09 range 0.87: EP_4 -0.12, EP_4+HP -0.74, MKT +0.07, GS -0.08, ANFCI -0.64
+   2014-12..2015-05 range 0.74: EP_4 -1.05, EP_4+HP -0.72, MKT -1.07, GS -0.74, ANFCI -1.45
+   2015-10..2016-03 range 0.64: EP_4 -0.22, EP_4+HP +0.03, MKT -0.47, GS +0.08, ANFCI -0.21
+   2016-12..2017-05 range 0.62: EP_4 -0.38, EP_4+HP -0.18, MKT -0.80, GS -0.66, ANFCI -0.63
+   2017-06..2017-11 range 0.43: EP_4 -1.14, EP_4+HP -0.99, MKT -1.41, GS -1.28, ANFCI -1.24
+   2017-12..2018-05 range 0.51: EP_4 -1.25, EP_4+HP -1.13, MKT -1.52, GS -1.51, ANFCI -1.16
+   2018-06..2018-11 range 0.75: EP_4 -0.62, EP_4+HP -0.54, MKT -1.11, GS -1.04, ANFCI -1.28
+   2019-09..2020-02 range 0.74: EP_4 -0.62, EP_4+HP -0.60, MKT -1.23, GS -0.97, ANFCI -1.23
+   2021-01..2021-06 range 0.69: EP_4 -1.73, EP_4+HP -2.03, MKT -2.35, GS -2.13, ANFCI -1.75
+4. widest 6-month windows:
+   1991-09..1992-02 range 4.18: EP_4 +1.09, EP_4+HP +1.28, MKT +2.30, GS +1.85, ANFCI -1.88  | MKT - ANFCI
+   1992-03..1992-08 range 5.17: EP_4 +0.74, EP_4+HP +0.97, MKT +2.00, GS +1.48, ANFCI -3.17  | MKT - ANFCI
+   1992-10..1993-03 range 4.97: EP_4 +0.77, EP_4+HP +1.06, MKT +1.76, GS +1.40, ANFCI -3.21  | MKT - ANFCI
+   1993-04..1993-09 range 5.55: EP_4 +0.29, EP_4+HP +0.60, MKT +1.28, GS +1.01, ANFCI -4.26  | MKT - ANFCI
+   1993-10..1994-03 range 4.85: EP_4 +0.44, EP_4+HP +0.75, MKT +1.44, GS +1.04, ANFCI -3.41  | MKT - ANFCI
+   1999-07..1999-12 range 4.51: EP_4 -0.50, EP_4+HP -0.41, MKT -1.48, GS -1.50, ANFCI +2.98  | ANFCI - GS
+   2000-02..2000-07 range 4.60: EP_4 -0.07, EP_4+HP -0.02, MKT -1.33, GS -1.26, ANFCI +3.25  | ANFCI - MKT
+   2007-11..2008-04 range 9.70: EP_4 -0.80, EP_4+HP -1.23, MKT -0.47, GS -0.10, ANFCI +8.47  | ANFCI - EP_4+HP
+   2008-09..2009-02 range 17.56: EP_4 +1.82, EP_4+HP +1.71, MKT +2.22, GS +3.26, ANFCI +19.27  | ANFCI - EP_4+HP
+   2009-03..2009-08 range 8.49: EP_4 +1.02, EP_4+HP +1.12, MKT +1.92, GS +2.49, ANFCI +9.52  | ANFCI - EP_4
+
+################ real vs nominal, 1990-2026 (both zero 1990-2026) ################
+   EP_4     corr levels 0.97, 12m 0.98; sd real 1.06, nominal 1.32; latest real +0.44, nominal +0.53
+   EP_4+HP  corr levels 0.94, 12m 0.98; sd real 1.02, nominal 1.42; latest real +0.35, nominal +0.05
+   MKT      corr levels 0.98, 12m 0.98; sd real 1.36, nominal 1.65; latest real -0.70, nominal -0.61
+   GS       corr levels 0.96, 12m 0.98; sd real 1.24, nominal 1.02; latest real -1.14, nominal -0.76
+   ANFCI    corr levels 1.00, 12m 1.00; sd real 3.38, nominal 3.37; latest real -1.13, nominal -1.13
+   cross-index range (EP_4, EP_4+HP, MKT, GS), real: mean 0.95, 90th pct 1.42, latest 1.58
+   cross-index range (EP_4, EP_4+HP, MKT, GS), nominal: mean 1.16, 90th pct 1.67, latest 1.29
