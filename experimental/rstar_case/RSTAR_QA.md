@@ -34,3 +34,12 @@ where it enters as a yield (FCI-G). Open follow-ups: the mortgage rate (S1a); ho
 
 **S3 (30 Oct).** Zero point: keep demeaning every variable over 1973-2026, as in the real case (r* matters through its movements over time, not its level).
 - Implementation detail (stated, not a new choice): quarterly r* is interpolated linearly between mid-quarter months; after the last quarter (2026Q2) the last value is held.
+
+**S4 (30 Oct).** FCI-G: r* applied consistently: changes in the funds rate, 10-year, mortgage and BBB yields are changes in their real gaps to r*; the stock term becomes the change
+in the E/P gap through the S1b factor (-17.7 per pp, entered with FCI-G's stock weight; note this replaces the stock-price change with the valuation change, i.e. earnings growth drops
+out); house prices and dollar as in the all-real FCI-G.
+
+**Built (30 Oct; `rstar_indexes.py`, agenda item 5).** FRB/US EP/CP/GI, market, GS and FCI-G rebuilt under S1-S4 with LW (main) and Kiley (check); NFCI/ANFCI carried over unchanged
+from the real case (no rates in them; stated, can be revisited). Against the real case, 1974-2026: levels corr 0.92-0.93 (LW) and 0.96-0.97 (Kiley), 12-month changes 0.93-0.97.
+Mostly a shift in level over time: with r* high in 1973-2007 (LW about 3.3-3.6) and low after 2008 (0.6-0.9 until 2016), the r*-gap indexes are easier than the real case before 2008
+and tighter after. Latest (2026-09, LW): EP_4 +0.44 (real -0.86), MKT -0.69 (-2.54), GS -1.12 (-2.77), FCI-G 1yr +0.07 (-0.04).
