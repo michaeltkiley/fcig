@@ -49,3 +49,8 @@ User added: extend all series back to the 1970s. Adopted without objection: befo
 (funds rate - 1-year expected inflation) and real 10-year (- 10-year expected inflation) as in R3, the BBB spread and 100 ln CAPE from the long data, and the **real** broad dollar
 (user's choice, for consistency with the market and FRB/US indexes). 1973-2026; zero 1973-2026 (main), 1990-2026 (check). Reported in GS points; the 2-year-unit conversion
 (x 0.945 / 0.98) is agenda item 8.
+
+**R11 (30 Oct).** FCI-G: both. The published series stays as the benchmark; a real replication is the real-case FCI-G (`fcig_real.py`): Fed weights and lag structure, monthly data
+from 1973 (1-year lookback from 1974-03, 3-year from 1976-03), each rate minus matched expected inflation (funds rate - 1-year; 10-year, mortgage, BBB yield - 10-year).
+Stocks, house prices and the dollar left as published (nominal) pending R12. Check: the monthly nominal version matches the published FCI-G at corr 0.993 (1-year) and 0.989 (3-year), 1990-2026.
+Pre-1986 stock levels: Shiller's monthly-average S&P 500 (raw/shiller_sp500.csv, from ie_data.xls).
