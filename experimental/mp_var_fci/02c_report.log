@@ -1,0 +1,29 @@
+Unemployment-gap response to +1 pp funds-rate innovation, 95% bootstrap band (lo, hi), r*-gap case, 12 lags
+  long     without index  h6: +0.05 (-0.04,+0.15)  h12: +0.16 (+0.01,+0.33)  h24: +0.21 (+0.04,+0.39)  h36: +0.17 (+0.00,+0.33)
+  long     with index     h6: +0.08 (-0.02,+0.18)  h12: +0.19 (+0.01,+0.34)  h24: +0.25 (+0.06,+0.42)  h36: +0.27 (+0.06,+0.43)
+  matched  without index  h6: -0.41 (-0.70,-0.09)  h12: -0.87 (-1.38,-0.32)  h24: -0.97 (-1.84,+0.03)  h36: -0.45 (-1.20,+0.73)
+  matched  with index     h6: -0.55 (-0.89,-0.19)  h12: -1.08 (-1.65,-0.39)  h24: -1.14 (-1.90,+0.07)  h36: -0.51 (-1.22,+0.80)
+
+Funds-rate and index responses (same shock), with-index system, 95% band
+  nominal  long     index h0 +0.11 (+0.04,+0.17)  h12 +0.13 (-0.08,+0.33) | funds rate h12 +0.62 (+0.18,+0.89) h36 +0.03
+  nominal  matched  index h0 -0.07 (-0.45,+0.34)  h12 -0.81 (-1.31,-0.12) | funds rate h12 +3.13 (+1.74,+3.67) h36 +1.06
+  real     long     index h0 +0.10 (+0.02,+0.15)  h12 +0.12 (-0.07,+0.29) | funds rate h12 +0.67 (+0.26,+0.95) h36 +0.13
+  real     matched  index h0 -0.16 (-0.53,+0.23)  h12 -0.86 (-1.35,-0.12) | funds rate h12 +3.21 (+1.80,+3.77) h36 +1.09
+  rstar    long     index h0 +0.10 (-0.02,+0.19)  h12 +0.19 (-0.07,+0.41) | funds rate h12 +0.66 (+0.26,+0.96) h36 +0.16
+  rstar    matched  index h0 -0.30 (-0.71,+0.08)  h12 -1.44 (-2.06,-0.48) | funds rate h12 +3.31 (+1.87,+3.90) h36 +1.41
+
+Cross-sample distance of the unemployment response: mean |long - matched| over h = 0..36 (pp of unemployment gap per 1 pp funds rate)
+  nominal  with index   : 1.09   (long mean |irf| 0.19, matched 0.90)
+  real     with index   : 1.01   (long mean |irf| 0.18, matched 0.83)
+  rstar    with index   : 1.04   (long mean |irf| 0.19, matched 0.85)
+  without index (system does not depend on the case): 0.85   (long 0.15, matched 0.70)
+Within-sample distance: mean |with index - without index|, r*-gap, h = 0..36
+  long    : 0.04
+  matched : 0.15
+Price puzzle check: cumulative core PCE price level response at 24 and 48 months (%, per 1 pp funds rate), r*-gap, with index
+  long     h24 +0.13 (band of the sum not computed; bound by summed band edges -0.39,+0.65)  h48 +0.16
+  matched  h24 +0.16 (band of the sum not computed; bound by summed band edges -1.71,+1.97)  h48 +0.14
+
+Size of the funds-rate innovation (one-sd orthogonalized shock, pp) and the unemployment response per one-sd shock at 12 and 24 months
+  long     one-sd funds-rate innovation = 0.40 pp;  unemployment gap per one-sd shock: h12 +0.07, h24 +0.10 pp
+  matched  one-sd funds-rate innovation = 0.12 pp;  unemployment gap per one-sd shock: h12 -0.12, h24 -0.13 pp

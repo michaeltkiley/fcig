@@ -1,0 +1,24 @@
+
+== long 1973-01..2026-09, with index, T = 645 ==  selected: AIC 14, BIC 3, HQIC 7, FPE 14
+  p= 6: AIC   -6.907 BIC   -5.874 HQIC   -6.506  portmanteau(18) p-value 0.000   free params/eq 37
+  p=12: AIC   -7.031 BIC   -5.316 HQIC   -6.365  portmanteau(24) p-value 0.000   free params/eq 61
+  p=18: AIC   -7.059 BIC   -4.651 HQIC   -6.124  portmanteau(30) p-value 0.000   free params/eq 85
+  p=24: AIC   -7.178 BIC   -4.066 HQIC   -5.968  portmanteau(36) p-value 0.000   free params/eq 109
+
+== long 1973-01..2026-09, without index, T = 645 ==  selected: AIC 14, BIC 3, HQIC 6, FPE 14
+  p= 6: AIC   -4.566 BIC   -3.917 HQIC   -4.314  portmanteau(18) p-value 0.000   free params/eq 31
+  p=12: AIC   -4.620 BIC   -3.586 HQIC   -4.218  portmanteau(24) p-value 0.000   free params/eq 49
+  p=18: AIC   -4.654 BIC   -3.230 HQIC   -4.101  portmanteau(30) p-value 0.000   free params/eq 67
+  p=24: AIC   -4.670 BIC   -2.850 HQIC   -3.963  portmanteau(36) p-value 0.000   free params/eq 85
+
+== matched 1994-01..2026-09, with index, T = 393 ==  selected: AIC 9, BIC 2, HQIC 4, FPE 9
+  p= 6: AIC  -10.676 BIC   -9.162 HQIC  -10.076  portmanteau(18) p-value 0.000   free params/eq 37
+  p=12: AIC  -10.698 BIC   -8.173 HQIC   -9.696  portmanteau(24) p-value 0.000   free params/eq 61
+  p=18: AIC  -10.639 BIC   -7.078 HQIC   -9.225  portmanteau(30) p-value 0.000   free params/eq 85
+  p=24: AIC  -10.500 BIC   -5.879 HQIC   -8.664  portmanteau(36) p-value 0.000   free params/eq 109
+
+== matched 1994-01..2026-09, without index, T = 393 ==  selected: AIC 9, BIC 3, HQIC 4, FPE 9
+  p= 6: AIC   -7.647 BIC   -6.696 HQIC   -7.270  portmanteau(18) p-value 0.002   free params/eq 31
+  p=12: AIC   -7.639 BIC   -6.117 HQIC   -7.035  portmanteau(24) p-value 0.000   free params/eq 49
+  p=18: AIC   -7.631 BIC   -5.527 HQIC   -6.796  portmanteau(30) p-value 0.000   free params/eq 67
+  p=24: AIC   -7.527 BIC   -4.825 HQIC   -6.454  portmanteau(36) p-value 0.000   free params/eq 85

@@ -99,3 +99,25 @@ Also flagged: (a) the 'policy variable' version per index case (nominal funds ra
 
 **MP-A8 (30 Oct 2026). Scaling.** [decided, exploratory] Report **both** scalings (funds rate and market index) in the proxy-SVARs and let the real first stages (step 3, with VAR controls) decide; flag the index scaling's weak monthly first stage in every table. **Cholesky first** (step 2), which needs no instrument.
 **MP-A9 (30 Oct 2026). Funds rate version.** [decided, exploratory] The **nominal funds rate** in all index cases, so only the index changes across cases (column `ffr` in `data/mp_monthly.csv`).
+
+## Step 2 results (30 Oct 2026): Cholesky baseline (`02a_lags.py`, `02_cholesky.py`, `02c_report.py`; logs `02*.log`; `irf_cholesky.csv`, `irf_cholesky_summary.csv`, figures `cholesky_*.png`)
+Setup: u gap, raw monthly annualized core PCE, nominal funds rate, market index (order as listed, MP-A7); 2020 monthly dummies; 500-draw residual bootstrap. Shock = funds-rate innovation scaled to +1 pp on impact. Exploratory.
+
+**Lags (my choice, change freely).** AIC picks 14 (long) and 9 (matched); BIC 2-3. A residual-autocorrelation (portmanteau) test rejects at every lag length up to 24, so more lags do not fix it: the cause is likely outliers and changing volatility (1970s-80s, ZLB, 2020-22), not too few lags.
+Main case: **12 lags in both windows** (inside the AIC range, same as the note's VAR, keeps the windows comparable); 6 and 24 lags reported as checks.
+
+**Findings (r*-gap index, 12 lags, per +1 pp funds-rate innovation; unemployment gap in pp, 95% bootstrap band).**
+| Window | without index | with index |
+|---|---|---|
+| long 1973-2026 | h12 +0.16 (+0.01, +0.33); h24 +0.21 | h12 +0.19 (+0.01, +0.34); h24 +0.25 (+0.06, +0.42); h36 +0.27 |
+| matched 1994-2026 | h12 -0.87 (-1.38, -0.32); h24 -0.97 | h12 -1.08 (-1.65, -0.39); h24 -1.14 (-1.90, +0.07) |
+1. **Long window: conventional sign, small** (unemployment rises, peak about +0.3 after about 3 years). **Matched window: wrong sign and large** (unemployment falls about 1 pp), band excludes zero through about 18 months. Both with and without the index.
+2. **The index does not make the responses similar across windows under Cholesky.** Mean |long - matched| over 0-36 months: 1.04 with the index (r*-gap; nominal 1.09, real 1.01) vs 0.85 without. Adding the index changes the response little within a window: mean |with - without| 0.04 (long), 0.15 (matched).
+3. **The "shock" is not the same object in the two windows.** One-sd funds-rate innovation: 0.40 pp (long) vs 0.12 pp (matched, which contains 2009-15 and 2020-21 at the ZLB). Per one-sd shock the unemployment response is +0.07 (long) vs -0.12 (matched) at 12 months, so the +1 pp scaling inflates the matched window about 8 times; the wrong sign remains.
+   The funds rate keeps rising after the shock in the matched window (+3.3 pp at 12 months vs +0.66 long): the innovation looks like the start of a hiking cycle that the Fed is executing in response to information about the economy. This is a hypothesis consistent with an information effect, not a test.
+4. **The index after a funds-rate innovation:** long window small and positive on impact (+0.10 in all cases; r*-gap band includes zero); matched window negative (r*-gap -0.30 on impact, -1.44 at 12 months, band excludes zero): conditions loosen after a funds-rate surprise, again the opposite of a monetary tightening.
+5. **Checks:** 6 and 24 lags and the reverse order (index before the funds rate; index impact is then zero by construction) leave the picture unchanged: long window small positive, matched window negative (-0.7 to -1.4 at 12 months). Price level: no price-level decline in either window (cumulative +0.1 to +0.2%, wide bands): a price puzzle typical of recursive funds-rate identification.
+6. nominal, real and r*-gap index cases differ little under Cholesky (long u h12 +0.15, +0.15, +0.19; matched -1.14, -1.05, -1.08).
+
+**What this means for the project question (provisional).** Cholesky on a short window reproduces the wrong-sign problem (as the NS-based LPs did), so any gain from the index has to show up in the identified (proxy-SVAR) responses; the Cholesky benchmark says adding the index alone does not rescue them.
+**Open (user):** are the 1994-2026 funds-rate innovations mainly a ZLB-and-hiking-cycle artifact? An ex-ZLB check (drop 2009-15 and 2020-21 from the shock definition, or estimate on 1994-2007) would say so; not run, awaiting your decision (MP-Q9).

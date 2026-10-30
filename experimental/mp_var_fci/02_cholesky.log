@@ -1,0 +1,29 @@
+done nominal long with index
+done nominal matched with index
+done real long with index
+done real matched with index
+done rstar long without index
+done rstar long with index
+done rstar matched without index
+done rstar matched with index
+
+Summary (per +1 pp funds-rate innovation; u = unemployment gap pp; price = cumulative core PCE price level, % ; idx = market index units):
+   case  window        system  lags          order   T  u_h12  u_h24  u_h36  u_peak  u_peak_h  price_h24  price_h48  ffr_h12  idx_impact  idx_h12
+nominal    long    with index    12 ffr_then_index 645  0.145  0.269  0.314   0.315        34      0.058     -0.105    0.616       0.106    0.128
+nominal matched    with index    12 ffr_then_index 393 -1.144 -1.224 -0.521  -1.345        20      0.384      0.458    3.134      -0.067   -0.808
+   real    long    with index    12 ffr_then_index 645  0.154  0.248  0.289   0.289        35      0.103     -0.005    0.674       0.096    0.115
+   real matched    with index    12 ffr_then_index 393 -1.051 -1.145 -0.489  -1.256        20      0.251      0.234    3.213      -0.160   -0.858
+  rstar    long without index    12 ffr_then_index 645  0.160  0.206  0.167   0.209        21      0.103      0.145    0.634         NaN      NaN
+  rstar    long    with index    12 ffr_then_index 645  0.185  0.251  0.270   0.272        34      0.129      0.157    0.663       0.097    0.189
+  rstar matched without index    12 ffr_then_index 393 -0.874 -0.966 -0.452  -1.048        20      0.216      0.250    3.210         NaN      NaN
+  rstar matched    with index    12 ffr_then_index 393 -1.079 -1.141 -0.510  -1.268        20      0.158      0.135    3.311      -0.295   -1.435
+  rstar    long without index     6 ffr_then_index 645  0.070  0.131  0.148   0.149        37      0.214      0.404    0.773         NaN      NaN
+  rstar    long    with index     6 ffr_then_index 645  0.159  0.203  0.185   0.203        23      0.174      0.323    0.673       0.106    0.424
+  rstar    long without index    24 ffr_then_index 645  0.130  0.265  0.209   0.272        26      0.019     -0.086    0.715         NaN      NaN
+  rstar    long    with index    24 ffr_then_index 645  0.179  0.308  0.235   0.310        23     -0.066     -0.322    0.644       0.087    0.157
+  rstar    long    with index    12 index_then_ffr 645  0.133  0.224  0.277   0.279        38      0.199      0.273    0.735       0.000    0.106
+  rstar matched without index     6 ffr_then_index 393 -0.740 -0.607 -0.109  -0.795        16      0.018     -0.409    3.069         NaN      NaN
+  rstar matched    with index     6 ffr_then_index 393 -0.955 -0.905 -0.460  -1.045        17      0.057     -0.357    3.008      -0.264   -1.288
+  rstar matched without index    24 ffr_then_index 393 -1.212 -1.490 -1.069  -1.582        19      0.171     -0.142    3.361         NaN      NaN
+  rstar matched    with index    24 ffr_then_index 393 -1.420 -1.668 -0.962  -1.771        19      0.348      0.259    3.397      -0.379   -1.689
+  rstar matched    with index    12 index_then_ffr 393 -0.891 -0.977 -0.395  -1.100        20     -0.017     -0.050    3.285       0.000   -1.297
