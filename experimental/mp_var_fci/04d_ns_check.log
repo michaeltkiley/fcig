@@ -1,0 +1,8 @@
+Their shock rebuilt: 163 regular-meeting days 1995-02-01 to 2014-03-19; check: slope of 1-year yield change on it = 1.00; 2-year = 0.98 (NS Table I: 1.10)
+Common event dates 155 of ours 253 (ours include 9 unscheduled meetings with MP1 != 0, which NS's baseline excludes)
+Correlation of our NS (2-year scale) with theirs: 0.966; scheduled meetings only 0.986; ratio of scales (ours / theirs) 1.28
+
+First-stage F for the 2-year residual, robust [homoskedastic]; 4-variable system (u gap, core PCE, 2-year, r*-gap index), 12 lags, VAR 1994-2026, residual window as stated
+   1995-01..2014-04 (span of their shock)       n=232   ours, all events:  1.2 [ 2.0]   ours, scheduled only:  0.1 [ 0.1]   theirs:  0.2 [ 0.3]
+   2015-01..2026-09 (after their shock ends)    n=141   ours, all events:  4.0 [ 7.4]   ours, scheduled only:  4.0 [ 7.7]   theirs: n/a
+   1994-01..2026-09                             n=381   ours, all events:  3.5 [ 6.4]   ours, scheduled only:  2.3 [ 3.5]   theirs: n/a
