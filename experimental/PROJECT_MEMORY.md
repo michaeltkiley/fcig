@@ -151,6 +151,11 @@ Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model
   - Forward impetus now weights older changes more (0.25-1.06): corr with FCI-G 0.74 (4 lags: 0.50); latest +0.48.
   - Realized impetus: corr with FCI-G 0.44 (4 lags: 0.66); latest -0.62.
   - Which impetus resembles FCI-G depends on how long effects keep building.
+- **Decision (user, 30 Oct):** keep both the BIC 4-lag and the 12-lag cases.
+- **Significance** (`mkt_irf_significance.py`/`.log`): the unemployment response is significant from month 3 to 36 in both cases (bootstrap 95%, 1000 replications, above zero in 34 of 36 months).
+  - t about 3-3.5 over 3-24 months with 4 lags; 4-5.5 with 12 lags.
+  - Month 1 is insignificant (unemployment ordered first).
+  - The 36-month lower bound is near zero (0.017; 0.005).
 - Possible checks not yet done: 12 lags was checked (above); or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
 
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
