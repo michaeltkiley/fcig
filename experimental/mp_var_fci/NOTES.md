@@ -1,6 +1,6 @@
 # Market FCI and monetary policy shock identification: research design
 
-Draft, 30 Oct 2026. Citations are from memory and **not yet checked against the papers**; verify before use. Tags: **[recall]** = my recollection of
+Draft, 30 Oct 2026 (first pass written before reading the index docs; see INDEX_AND_LITERATURE.md for corrections). Citations are from memory and **not yet checked against the papers**; verify before use. Tags: **[recall]** = my recollection of
 the paper, **[design]** = proposal here.
 
 ## 1. Question and contribution
@@ -33,15 +33,9 @@ dependent on subsample and on the Fed information effect.** Each of the four is 
 - Method comparison: Plagborg-Moller-Wolf 2021 (LP vs VAR), Ramey 2016 handbook chapter **[recall]**.
 - **Overlap risk:** adding a financial/credit variable to a proxy-SVAR is not new (GK, Caldara-Herbst). The contribution must be (a) a *composite market FCI* rather than one spread, (b) the systematic three-scheme comparison, and (c) the specific robustness/info-effect tests below. A literature search for "FCI in proxy-SVAR" and "information effect robustness" is the first task.
 
-## 4. Which FCI (important design choice)
-The repo has three candidates; they are not interchangeable:
-- **Fed FCI-G replication** is a sum of weighted three-month changes over the past 12 quarters, in growth-impulse units. It is mechanically a distributed lag
-  of financial changes (and already uses FRB/US-implied weights, which embed the Fed's view of transmission). In a VAR this builds in serial correlation and
-  a model-based mapping to growth; risky as a "neutral" market variable. Use as a robustness variant, not the baseline.
-- **Goldman-style FCI** (levels, daily): clean levels index including the funds rate itself (4.4% weight), so it partly mechanically responds to policy.
-- **MS-style five-variable index** (experimental): policy-rate-equivalent, no funds-rate term, so it is the least mechanically tied to the policy instrument.
-**Proposal [design]:** baseline = month-average level of the MS-style or GS index with the funds rate excluded; robustness = GS with funds rate, FCI-G
-(monthly values are in `fcig_replication_monthly.csv`). All three exist daily, which also allows daily-window checks around FOMC dates.
+## 4. Which FCI
+Superseded: see `INDEX_AND_LITERATURE.md` (what the index is, comparison with Gertler-Karadi and Caldara-Herbst, corrected variable choice). In short: baseline = GS-style level
+and unfiltered FCI-G components; FCI-G itself as an outcome, not a lagged regressor.
 
 ## 5. Data and sample
 - Outcomes: unemployment rate, core PCE price index (log), federal funds rate (effective, or shadow rate / 1-year Treasury yield after 2008), FCI. Monthly.

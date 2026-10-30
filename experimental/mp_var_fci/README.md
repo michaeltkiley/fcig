@@ -12,7 +12,8 @@ sensitive to subsample, (d) less dependent on the Fed information effect?
 ## Files
 | File | Purpose |
 |---|---|
-| `NOTES.md` | Research design, literature positioning, specifications, tests, data needs, risks |
+| `INDEX_AND_LITERATURE.md` | What the index is (from the repo), comparison with Gertler-Karadi and Caldara-Herbst, implications |
+| `NOTES.md` | Research design, specifications, tests, data needs, risks (section 4 superseded by the file above) |
 
 ## Planned next steps
 1. Build the monthly FCI series (see NOTES.md section 4) and the instrument/outcome dataset.
