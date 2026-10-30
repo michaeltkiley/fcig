@@ -364,3 +364,7 @@ indexes (published FCI-G, GS, NFCI/ANFCI, etc.) to show where ours sit relative 
 approaches: macro-model indexes (FCI-G, and our new levels version, the FRB/US eventual-pressure index) and GS (what practitioners follow on Bloomberg etc.). Same at every step
 (nominal, real, r* baseline), like for like.
 Open follow-up: whether the market index also carries a flow (its VAR forward impetus) for the comparison with FCI-G.
+
+**A53 (30 Oct).** The market index carries both a level and a flow: the market index (level) and its VAR forward impetus (flow, the counterpart of FCI-G), so the main approach
+parallels FCI-G, a widely followed approach. The market output VAR (unemployment gap and the market index, Cholesky with unemployment first) is part of the main index's construction.
+Lag choice for the headline flow (4 or 12 lags) still to be set (both have been kept so far).
