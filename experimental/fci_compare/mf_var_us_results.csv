@@ -1,0 +1,20 @@
+version,variable,alpha,alpha_se,ffr_weight,p,yardstick_u_m12,yardstick_output
+"main: core PCE, no house prices",policy rate,0.09095,0.06732,-3.65793,1,-0.02800,0.05600
+"main: core PCE, no house prices",10-year,0.10017,0.06250,-4.02905,1,-0.02800,0.05600
+"main: core PCE, no house prices",mortgage spread,0.85176,0.09702,-34.25856,1,-0.02800,0.05600
+"main: core PCE, no house prices",BBB spread,0.50575,0.15939,-20.34188,1,-0.02800,0.05600
+"main: core PCE, no house prices",equities,-0.02034,0.00536,0.81811,1,-0.02800,0.05600
+"main: core PCE, no house prices",dollar,0.00040,0.00951,-0.01613,1,-0.02800,0.05600
+headline PCE,policy rate,0.10707,0.07151,-4.26246,1,-0.02559,0.05118
+headline PCE,10-year,0.08871,0.07122,-3.53161,1,-0.02559,0.05118
+headline PCE,mortgage spread,0.63352,0.16893,-25.22053,1,-0.02559,0.05118
+headline PCE,BBB spread,0.76089,0.13816,-30.29138,1,-0.02559,0.05118
+headline PCE,equities,-0.01901,0.00526,0.75681,1,-0.02559,0.05118
+headline PCE,dollar,0.00122,0.01022,-0.04873,1,-0.02559,0.05118
+"core PCE, + house prices",policy rate,0.09058,0.06831,-2.27569,1,-0.04453,0.08906
+"core PCE, + house prices",10-year,0.12383,0.07240,-3.11094,1,-0.04453,0.08906
+"core PCE, + house prices",mortgage spread,0.82215,0.12007,-20.65444,1,-0.04453,0.08906
+"core PCE, + house prices",BBB spread,0.54783,0.17393,-13.76288,1,-0.04453,0.08906
+"core PCE, + house prices",equities,-0.02000,0.00544,0.50256,1,-0.04453,0.08906
+"core PCE, + house prices",dollar,-0.00118,0.00989,0.02964,1,-0.04453,0.08906
+"core PCE, + house prices",house prices,0.00416,0.00646,-0.10458,1,-0.04453,0.08906

@@ -1,0 +1,7 @@
+index,window,total,rates,equities,dollar,other
+MACRO+HP,latest,0.191,0.597,-1.372,1.446,-0.480
+MACRO+HP,chg since 2026-02,0.980,0.775,-0.175,0.324,0.056
+MACRO+HP,chg since 2026-08,0.615,0.384,-0.014,0.237,0.008
+MKT,latest,-0.725,0.533,-2.184,0.925,0.000
+MKT,chg since 2026-02,0.635,0.706,-0.279,0.207,0.000
+MKT,chg since 2026-08,0.369,0.239,-0.022,0.152,0.000

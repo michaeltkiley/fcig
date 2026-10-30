@@ -1,0 +1,5 @@
+*.aux
+*.log
+*.out
+__pycache__/
+!replication/output/run_all.log

@@ -1,0 +1,11 @@
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+NS on pre-announcement news (253 events): R2 0.131; payroll growth 12m +0.0021 (t 1.7), stocks 3m +0.0021 (t 3.6), slope 3m -0.0086 (t -1.0), oil 3m +0.0003 (t 1.9)
+corr(monthly ns, ns_perp) 0.918
+
+Responses to a 1-unit surprise (pp), monthly LP:
+  raw NS             unemployment gap   h=0: -0.31 (0.17)  h=3: -0.96 (0.45)  h=6: -1.47 (0.57)  h=12: -2.24 (0.99)  h=18: -2.47 (1.23)  h=24: -2.91 (1.61)
+  raw NS             core inflation gap h=0: +0.06 (0.16)  h=3: -0.31 (0.40)  h=6: +0.33 (0.34)  h=12: +0.39 (0.54)  h=18: +0.56 (0.62)  h=24: +0.97 (0.61)
+  orthogonalized NS  unemployment gap   h=0: -0.10 (0.15)  h=3: -0.05 (0.46)  h=6: +0.40 (1.05)  h=12: +0.46 (1.62)  h=18: +1.22 (1.73)  h=24: +0.35 (1.65)
+  orthogonalized NS  core inflation gap h=0: -0.09 (0.16)  h=3: -0.87 (0.50)  h=6: -0.41 (0.61)  h=12: -0.42 (0.67)  h=18: -0.13 (0.54)  h=24: +0.16 (0.69)
+  orthogonalized NS, excluding 2008-07..2009-12: unemployment h=0: -0.12 (0.15)  h=3: -0.40 (0.34)  h=6: -0.35 (0.85)  h=12: -0.56 (1.27)  h=18: +0.53 (1.73)  h=24: -0.19 (1.73)
+  orthogonalized NS, adding lagged u, inflation and the policy rate as controls: unemployment h=0: -0.08 (0.15)  h=3: +0.04 (0.44)  h=6: +0.66 (1.00)  h=12: +1.02 (1.51)  h=18: +2.14 (1.51)  h=24: +1.71 (1.33)

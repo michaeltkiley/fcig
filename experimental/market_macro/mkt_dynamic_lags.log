@@ -1,0 +1,18 @@
+
+[p=4] u response to a 1-unit M shock (90% band): m3: +0.133 [+0.06,+0.20]  m6: +0.209 [+0.11,+0.31]  m12: +0.254 [+0.13,+0.37]  m18: +0.254 [+0.13,+0.38]  m24: +0.245 [+0.12,+0.37]  m36: +0.224 [+0.08,+0.37]
+        M own response: m0: +1.00  m6: +1.09  m12: +1.05  m24: +0.98  m36: +0.91;  yardstick Phi(12) +0.254 (output -0.51%)
+        current-pressure weights m0..12: 0.00 0.08 0.11 0.33 0.12 0.08 0.09 0.05 0.04 0.04 0.02 0.02 0.01
+        forward-impetus weights on dM m0..11: 1.00 0.93 0.82 0.49 0.36 0.28 0.18 0.12 0.07 0.03 0.01 -0.02
+        sd: M 1.46, CP 1.50, forward impetus 0.52, EP - CP 0.51, realized impetus (CP 12m chg) 0.91, M 12m chg 1.03, FCI-G 1yr 1.22
+        corr with FCI-G 1yr: M 0.31, CP 0.13, forward impetus 0.50, EP - CP 0.51, realized impetus (CP 12m chg) 0.66, M 12m chg 0.81;  corr(CP, M) 0.94; corr(forward, EP-CP) 1.00
+        latest: M -0.74, CP -1.04, forward impetus +0.31, EP - CP +0.31, realized impetus (CP 12m chg) -0.31, M 12m chg +0.54, FCI-G 1yr -0.34
+
+[p=12] u response to a 1-unit M shock (90% band): m3: +0.098 [+0.03,+0.16]  m6: +0.299 [+0.19,+0.40]  m12: +0.562 [+0.38,+0.74]  m18: +0.676 [+0.44,+0.91]  m24: +0.662 [+0.39,+0.93]  m36: +0.438 [+0.16,+0.72]
+        M own response: m0: +1.00  m6: +1.16  m12: +1.25  m24: +1.07  m36: +0.92;  yardstick Phi(12) +0.562 (output -1.12%)
+        current-pressure weights m0..12: 0.00 0.00 0.05 0.13 0.12 0.09 0.14 0.09 0.11 0.13 0.03 0.06 0.05
+        forward-impetus weights on dM m0..11: 1.00 1.05 1.06 0.96 0.87 0.80 0.67 0.60 0.50 0.36 0.33 0.25
+        sd: M 1.46, CP 1.53, forward impetus 0.78, EP - CP 0.66, realized impetus (CP 12m chg) 0.88, M 12m chg 1.03, FCI-G 1yr 1.22
+        corr with FCI-G 1yr: M 0.31, CP 0.01, forward impetus 0.74, EP - CP 0.66, realized impetus (CP 12m chg) 0.44, M 12m chg 0.81;  corr(CP, M) 0.90; corr(forward, EP-CP) 0.98
+        latest: M -0.74, CP -1.15, forward impetus +0.48, EP - CP +0.42, realized impetus (CP 12m chg) -0.62, M 12m chg +0.54, FCI-G 1yr -0.34
+
+correlation of the 4- and 12-lag versions: CP 0.99, forward impetus 0.90, realized impetus 0.93

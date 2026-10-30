@@ -1,0 +1,65 @@
+270 events 1994-02-04 to 2026-09-16  (sample: full); ED4 on MP1 slope 0.37; sd path 0.070 pp, sd target 0.066 pp
+
+Response to a +1 pp path surprise, event-day close-to-close change (index units: pp; 100 ln for CAPE, dollar, oil):
+                        b     se      c   se_c     r2      n    t  1/b (pp path per unit)
+10-yr               0.474  0.057  0.072  0.118  0.205  270.0  8.2                    2.11
+BBB spread         -0.200  0.042 -0.126  0.110  0.115  270.0 -4.8                   -5.01
+Equities (ln CAPE) -5.237  1.378 -3.301  2.175  0.110  270.0 -3.8                   -0.19
+Dollar (ln real)    3.529  0.543  1.217  0.351  0.188  270.0  6.5                    0.28
+Oil (ln real)      -2.048  1.975 -1.702  1.898  0.006  270.0 -1.0                   -0.49
+Fed funds           0.053  0.234  0.823  0.283  0.076  270.0  0.2                   18.84
+
+Intraday (USMPD window) response to a +1 pp path surprise: 10-yr in pp; S&P 500 and dollar in percent:
+  10-yr: +0.492 (se 0.034)
+  Equities (ln CAPE): -4.368 (se 0.698)
+  Dollar (ln real): +3.275 (se 0.316)
+  BBB spread, events before 1997 (Moody's Baa less 10-yr): b -0.277 (se 0.051), n 25
+  BBB spread, events from 1997 (ICE BofA OAS): b -0.193 (se 0.045), n 245
+
+Funds-rate-equivalent weights (pp of path-rate per unit of x), one-factor GLS:
+                       GS     MS   Core
+10-yr               0.822  0.817  0.964
+BBB spread         -0.737 -0.733    NaN
+Dollar (ln real)    0.091  0.091  0.107
+Equities (ln CAPE) -0.027 -0.027 -0.031
+Fed funds           0.011    NaN    NaN
+Oil (ln real)         NaN -0.003    NaN
+
+90% bootstrap bands for the weights and standalone 1/b:
+GS {'Fed funds': (np.float64(-0.063), np.float64(0.085)), '10-yr': (np.float64(0.59), np.float64(1.066)), 'BBB spread': (np.float64(-1.352), np.float64(-0.374)), 'Equities (ln CAPE)': (np.float64(-0.037), np.float64(-0.014)), 'Dollar (ln real)': (np.float64(0.06), np.float64(0.115))}
+MS {'10-yr': (np.float64(0.59), np.float64(1.065)), 'BBB spread': (np.float64(-1.358), np.float64(-0.369)), 'Equities (ln CAPE)': (np.float64(-0.037), np.float64(-0.014)), 'Dollar (ln real)': (np.float64(0.06), np.float64(0.115)), 'Oil (ln real)': (np.float64(-0.007), np.float64(0.002))}
+Core {'10-yr': (np.float64(0.708), np.float64(1.309)), 'Equities (ln CAPE)': (np.float64(-0.044), np.float64(-0.018)), 'Dollar (ln real)': (np.float64(0.081), np.float64(0.133))}
+1/b {'10-yr': (np.float64(1.74), np.float64(2.61)), 'BBB spread': (np.float64(-7.53), np.float64(-3.61)), 'Equities (ln CAPE)': (np.float64(-0.34), np.float64(-0.14)), 'Dollar (ln real)': (np.float64(0.23), np.float64(0.38)), 'Oil (ln real)': (np.float64(-2.34), np.float64(1.69)), 'Fed funds': (np.float64(-30.7), np.float64(29.85))}
+
+Correlation of levels / daily changes (1990-2026 / 2009-2026):
+1990-2026 levels
+                         GS set, path weights  MS set, path weights  Core set, path weights  MS FRB/US weights  GS FCI
+GS set, path weights                    1.00                  1.00                    0.96               0.83    0.46
+MS set, path weights                    1.00                  1.00                    0.96               0.82    0.45
+Core set, path weights                  0.96                  0.96                    1.00               0.92    0.65
+MS FRB/US weights                       0.83                  0.82                    0.92               1.00    0.80
+GS FCI                                  0.46                  0.45                    0.65               0.80    1.00 
+ 1990-2026 daily changes
+                         GS set, path weights  MS set, path weights  Core set, path weights  MS FRB/US weights  GS FCI
+GS set, path weights                    1.00                  0.99                    0.95               0.80    0.62
+MS set, path weights                    0.99                  1.00                    0.95               0.76    0.63
+Core set, path weights                  0.95                  0.95                    1.00               0.89    0.77
+MS FRB/US weights                       0.80                  0.76                    0.89               1.00    0.81
+GS FCI                                  0.62                  0.63                    0.77               0.81    1.00
+2009-2026 levels
+                         GS set, path weights  MS set, path weights  Core set, path weights  MS FRB/US weights  GS FCI
+GS set, path weights                    1.00                  1.00                    0.93               0.81    0.16
+MS set, path weights                    1.00                  1.00                    0.93               0.80    0.16
+Core set, path weights                  0.93                  0.93                    1.00               0.96    0.50
+MS FRB/US weights                       0.81                  0.80                    0.96               1.00    0.68
+GS FCI                                  0.16                  0.16                    0.50               0.68    1.00 
+ 2009-2026 daily changes
+                         GS set, path weights  MS set, path weights  Core set, path weights  MS FRB/US weights  GS FCI
+GS set, path weights                    1.00                  0.99                    0.95               0.81    0.67
+MS set, path weights                    0.99                  1.00                    0.95               0.75    0.68
+Core set, path weights                  0.95                  0.95                    1.00               0.88    0.81
+MS FRB/US weights                       0.81                  0.75                    0.88               1.00    0.81
+GS FCI                                  0.67                  0.68                    0.81               0.81    1.00
+
+latest (20 Oct) values, pp: {'GS set, path weights': 1.59, 'MS set, path weights': 1.45, 'Core set, path weights': 1.04, 'MS FRB/US weights': 0.8, 'GS FCI': 99.26}
+sd of daily change: {'GS set, path weights': 0.071, 'MS set, path weights': 0.071, 'Core set, path weights': 0.072, 'MS FRB/US weights': 0.061, 'GS FCI': 0.064}

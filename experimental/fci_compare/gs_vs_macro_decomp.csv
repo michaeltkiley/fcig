@@ -1,0 +1,7 @@
+case,house_prices,sd_D,sd_weights,sd_data,sd_coverage
+GS nominal vs macro nominal,False,0.87,0.762,0.576,0.169
+GS nominal vs macro nominal,True,0.921,0.762,0.576,0.361
+GS nominal vs macro real,False,0.68,0.749,0.377,0.169
+GS nominal vs macro real,True,0.641,0.749,0.377,0.361
+GS real vs macro real,False,0.813,0.749,0.0,0.169
+GS real vs macro real,True,0.717,0.749,0.0,0.361

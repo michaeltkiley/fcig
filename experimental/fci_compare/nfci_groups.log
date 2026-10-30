@@ -1,0 +1,8 @@
+NFCI: 105 indicators; contributions sum vs published index: max abs diff 0.005 over 2911 weeks
+   indicators per group: {'other': 66, 'rates: spreads': 29, 'rates: policy and Treasury': 5, 'equities': 4, 'dollar': 1}
+   sd by group (2-year-yield pp, monthly 1990-2026): {'dollar': 0.0, 'equities': 0.38, 'other': 1.4, 'rates: policy and Treasury': 0.06, 'rates: spreads': 3.55}
+   latest 2026-10 {'dollar': -0.0, 'equities': 0.18, 'other': -0.16, 'rates: policy and Treasury': 0.04, 'rates: spreads': -0.96} total -0.89
+ANFCI: 106 indicators; contributions sum vs published index: max abs diff 0.009 over 2911 weeks
+   indicators per group: {'other': 66, 'rates: spreads': 29, 'rates: policy and Treasury': 5, 'equities': 4, 'dollar': 1, 'macro adjustment': 1}
+   sd by group (2-year-yield pp, monthly 1990-2026): {'dollar': 0.0, 'equities': 0.26, 'macro adjustment': 0.37, 'other': 0.7, 'rates: policy and Treasury': 0.03, 'rates: spreads': 2.74}
+   latest 2026-10 {'dollar': -0.0, 'equities': 0.12, 'macro adjustment': 0.08, 'other': -0.15, 'rates: policy and Treasury': 0.02, 'rates: spreads': -0.97} total -0.9

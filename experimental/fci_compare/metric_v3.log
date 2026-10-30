@@ -1,0 +1,146 @@
+Units: EP_4, EP_4+HP, CP_4, FCI-G in pp of funds rate; MKT, MKT+Baa, GS, NFCI, ANFCI in pp of the 2-year yield per NS unit. Demeaned 1990-2026.
+
+sd / latest:
+        EP_4  EP_4+HP  CP_4   MKT  MKT+Baa  MKT+Baa diag    GS  NFCI  ANFCI  FCI-G 1yr  FCI-G 3yr
+sd      1.32     1.42  1.24  1.65     1.43          1.62  1.02  5.06   3.37       1.22       1.26
+latest  0.67     0.19  0.08 -0.72    -0.49         -0.00 -0.83 -0.98  -0.99       0.18      -0.79
+
+(1-2) pairwise, levels and 12-month changes:
+                  pair  corr_lev  slope_lev  corr_12m  slope_12m  sign_12m
+        EP_4 / EP_4+HP      0.95       1.03      0.99       0.98      0.96
+           EP_4 / CP_4      0.84       0.85      0.37       0.31      0.63
+            EP_4 / MKT      0.86       1.08      0.95       0.97      0.89
+        EP_4 / MKT+Baa      0.86       0.94      0.92       0.81      0.89
+   EP_4 / MKT+Baa diag      0.94       1.16      0.97       0.99      0.93
+             EP_4 / GS      0.75       0.58      0.93       0.97      0.85
+           EP_4 / NFCI      0.24       0.90      0.54       2.96      0.66
+          EP_4 / ANFCI      0.21       0.53      0.50       1.77      0.64
+        EP_4+HP / CP_4      0.83       0.78      0.39       0.33      0.63
+         EP_4+HP / MKT      0.90       1.05      0.94       0.97      0.88
+     EP_4+HP / MKT+Baa      0.89       0.90      0.91       0.81      0.87
+EP_4+HP / MKT+Baa diag      0.96       1.10      0.96       0.98      0.91
+          EP_4+HP / GS      0.77       0.55      0.94       0.99      0.87
+        EP_4+HP / NFCI      0.17       0.60      0.55       3.00      0.66
+       EP_4+HP / ANFCI      0.15       0.36      0.50       1.78      0.65
+            CP_4 / MKT      0.78       0.93      0.42       0.50      0.67
+        CP_4 / MKT+Baa      0.80       0.82      0.44       0.46      0.68
+   CP_4 / MKT+Baa diag      0.85       1.01      0.39       0.46      0.64
+             CP_4 / GS      0.57       0.45      0.35       0.43      0.66
+           CP_4 / NFCI     -0.04      -0.14     -0.06      -0.38      0.51
+          CP_4 / ANFCI     -0.03      -0.08     -0.09      -0.36      0.49
+         MKT / MKT+Baa      1.00       0.87      0.99       0.85      0.97
+    MKT / MKT+Baa diag      0.97       0.96      0.99       0.99      0.94
+              MKT / GS      0.86       0.53      0.94       0.96      0.89
+            MKT / NFCI      0.18       0.56      0.47       2.49      0.62
+           MKT / ANFCI      0.17       0.34      0.43       1.48      0.62
+MKT+Baa / MKT+Baa diag      0.97       1.10      0.98       1.13      0.93
+          MKT+Baa / GS      0.83       0.59      0.89       1.05      0.87
+        MKT+Baa / NFCI      0.12       0.43      0.35       2.19      0.62
+       MKT+Baa / ANFCI      0.10       0.25      0.32       1.28      0.61
+     MKT+Baa diag / GS      0.80       0.51      0.92       0.94      0.85
+   MKT+Baa diag / NFCI      0.17       0.53      0.47       2.51      0.61
+  MKT+Baa diag / ANFCI      0.16       0.33      0.44       1.50      0.61
+             GS / NFCI      0.45       2.22      0.62       3.25      0.67
+            GS / ANFCI      0.43       1.41      0.58       1.95      0.66
+          NFCI / ANFCI      0.99       0.66      0.99       0.64      0.93
+
+FCI-G against levels and 12-month changes:
+             corr_level           corr_with_12m_change           slope_on_12m_change          
+fcig          FCI-G 1yr FCI-G 3yr            FCI-G 1yr FCI-G 3yr           FCI-G 1yr FCI-G 3yr
+index                                                                                         
+ANFCI              0.51      0.52                 0.46      0.13                0.16      0.05
+CP_4              -0.00      0.26                 0.44      0.62                0.63      0.92
+EP_4               0.39      0.51                 0.84      0.56                1.01      0.69
+EP_4+HP            0.38      0.49                 0.89      0.63                1.08      0.78
+GS                 0.56      0.71                 0.90      0.62                1.03      0.74
+MKT                0.33      0.44                 0.81      0.59                0.96      0.72
+MKT+Baa            0.30      0.41                 0.77      0.58                1.05      0.82
+MKT+Baa diag       0.33      0.44                 0.81      0.56                0.95      0.69
+NFCI               0.53      0.55                 0.51      0.17                0.11      0.04
+
+(3) cross-index range, set main ['EP_4', 'EP_4+HP', 'MKT', 'GS', 'ANFCI']: mean 2.65, max 22.11 (2008-11), latest 1.66
+    mean abs gap to cross-index median: {'EP_4': 0.29, 'EP_4+HP': 0.37, 'MKT': 0.45, 'GS': 0.43, 'ANFCI': 1.82}
+  (4) closest alignment:
+      2005-04..2005-09 (mean range 0.81): EP_4 -0.13, EP_4+HP -0.61, MKT +0.06, GS -0.01, ANFCI -0.64
+      2016-11..2017-04 (mean range 0.66): EP_4 -0.55, EP_4+HP -0.56, MKT -0.99, GS -0.33, ANFCI -0.53
+      2017-09..2018-02 (mean range 0.66): EP_4 -1.61, EP_4+HP -1.70, MKT -1.90, GS -1.32, ANFCI -1.32
+      2018-04..2018-09 (mean range 0.57): EP_4 -1.03, EP_4+HP -1.17, MKT -1.46, GS -0.92, ANFCI -1.26
+  (4) widest differences:
+      1992-12..1993-05 (mean range 5.90): EP_4 +1.03, EP_4+HP +1.52, MKT +2.03, GS +0.48, ANFCI -3.87
+      2007-11..2008-04 (mean range 9.87): EP_4 -0.97, EP_4+HP -1.42, MKT -0.65, GS -0.21, ANFCI +8.45
+      2008-09..2009-02 (mean range 17.90): EP_4 +1.49, EP_4+HP +1.33, MKT +1.88, GS +3.08, ANFCI +19.22
+      2009-03..2009-08 (mean range 8.79): EP_4 +0.71, EP_4+HP +0.72, MKT +1.60, GS +2.34, ANFCI +9.49
+
+(3) cross-index range, set without ANFCI ['EP_4', 'EP_4+HP', 'MKT', 'GS']: mean 1.16, max 3.13 (1990-04), latest 1.50
+    mean abs gap to cross-index median: {'EP_4': 0.32, 'EP_4+HP': 0.3, 'MKT': 0.42, 'GS': 0.5}
+  (4) closest alignment:
+      2003-01..2003-06 (mean range 0.31): EP_4 +1.06, EP_4+HP +1.08, MKT +0.96, GS +1.27
+      2003-07..2003-12 (mean range 0.16): EP_4 +0.51, EP_4+HP +0.44, MKT +0.48, GS +0.54
+      2004-01..2004-06 (mean range 0.24): EP_4 +0.08, EP_4+HP -0.08, MKT +0.11, GS +0.10
+      2004-07..2004-12 (mean range 0.47): EP_4 -0.08, EP_4+HP -0.37, MKT +0.09, GS +0.08
+  (4) widest differences:
+      1990-01..1990-06 (mean range 2.99): EP_4 +3.49, EP_4+HP +3.65, MKT +4.73, GS +1.74
+      1990-07..1990-12 (mean range 2.70): EP_4 +3.14, EP_4+HP +3.40, MKT +4.74, GS +2.04
+      1991-02..1991-07 (mean range 2.54): EP_4 +2.63, EP_4+HP +2.99, MKT +3.94, GS +1.39
+      1991-08..1992-01 (mean range 2.20): EP_4 +1.82, EP_4+HP +2.22, MKT +3.09, GS +0.90
+
+(5) groups: latest, change since end-Feb 2026 and end-Aug 2026 (index units as above)
+    index            window  total  rates  equities  dollar  other  macro adjustment
+  EP_4+HP            latest   0.19   0.60     -1.37    1.44  -0.48               NaN
+  EP_4+HP chg since 2026-02   0.98   0.78     -0.18    0.32   0.06               NaN
+  EP_4+HP chg since 2026-08   0.61   0.38     -0.01    0.24   0.01               NaN
+      MKT            latest  -0.72   0.55     -2.21    0.94   0.00               NaN
+      MKT chg since 2026-02   0.65   0.72     -0.28    0.21   0.00               NaN
+      MKT chg since 2026-08   0.38   0.24     -0.02    0.15   0.00               NaN
+       GS            latest  -0.83   0.08     -2.04    1.14   0.00               NaN
+       GS chg since 2026-02   0.44   0.53     -0.26    0.17   0.00               NaN
+       GS chg since 2026-08   0.34   0.22     -0.02    0.14   0.00               NaN
+FCI-G 1yr            latest   0.15   0.42     -0.20   -0.24   0.17               NaN
+FCI-G 1yr chg since 2026-02   1.44   0.80      0.06    0.63  -0.05               NaN
+FCI-G 1yr chg since 2026-08   0.47   0.31      0.16   -0.01  -0.00               NaN
+FCI-G 3yr            latest  -0.82   0.22     -0.77   -0.53   0.25               NaN
+FCI-G 3yr chg since 2026-02   0.68   0.65     -0.08    0.12  -0.01               NaN
+FCI-G 3yr chg since 2026-08   0.23   0.23     -0.02    0.02  -0.01               NaN
+     NFCI            latest  -0.89  -0.92      0.18   -0.00  -0.16               NaN
+     NFCI chg since 2026-02   0.22   0.02      0.03   -0.00   0.18               NaN
+     NFCI chg since 2026-08   0.64   0.25      0.05   -0.00   0.35               NaN
+    ANFCI            latest  -0.90  -0.95      0.12   -0.00  -0.15              0.08
+    ANFCI chg since 2026-02   0.04  -0.08      0.01   -0.00   0.18             -0.06
+    ANFCI chg since 2026-08   0.41   0.13      0.03   -0.00   0.20              0.06
+
+    group sd since 1990: EP_4+HP: rates 1.03, equities 0.79, dollar 0.94, other 0.43; MKT: rates 1.17, equities 1.28, dollar 0.61, other 0.00; GS: rates 0.83, equities 1.18, dollar 0.94, other 0.00; FCI-G 1yr: rates 0.51, equities 0.66, dollar 0.56, other 0.34; FCI-G 3yr: rates 0.56, equities 0.80, dollar 0.64, other 0.41; NFCI: rates 3.56, equities 0.38, dollar 0.00, other 1.40; ANFCI: rates 2.74, equities 0.26, dollar 0.00, other 0.70, macro adjustment 0.37
+
+(4b) group means in the episode windows (main set):
+          window               kind   index  rates  equities  dollar  other  macro adjustment
+2005-04..2005-09  closest alignment EP_4+HP -0.195     0.085  -0.019 -0.477               NaN
+2005-04..2005-09  closest alignment     MKT -0.066     0.138  -0.012  0.000               NaN
+2005-04..2005-09  closest alignment      GS -0.204     0.127   0.062  0.000               NaN
+2005-04..2005-09  closest alignment   ANFCI -0.831     0.158   0.000 -0.172             0.202
+2016-11..2017-04  closest alignment EP_4+HP -1.086    -0.214   0.749 -0.010               NaN
+2016-11..2017-04  closest alignment     MKT -1.129    -0.346   0.487  0.000               NaN
+2016-11..2017-04  closest alignment      GS -0.897    -0.319   0.888  0.000               NaN
+2016-11..2017-04  closest alignment   ANFCI  0.159    -0.067   0.000 -0.498            -0.123
+2017-09..2018-02  closest alignment EP_4+HP -1.167    -0.580   0.133 -0.084               NaN
+2017-09..2018-02  closest alignment     MKT -1.048    -0.939   0.087  0.000               NaN
+2017-09..2018-02  closest alignment      GS -0.996    -0.866   0.544  0.000               NaN
+2017-09..2018-02  closest alignment   ANFCI -0.676    -0.059  -0.000 -0.649             0.061
+2018-04..2018-09  closest alignment EP_4+HP -0.865    -0.568   0.402 -0.139               NaN
+2018-04..2018-09  closest alignment     MKT -0.806    -0.920   0.262  0.000               NaN
+2018-04..2018-09  closest alignment      GS -0.765    -0.849   0.698  0.000               NaN
+2018-04..2018-09  closest alignment   ANFCI -0.625     0.040   0.001 -0.669            -0.010
+1992-12..1993-05 widest differences EP_4+HP  0.968     0.805  -0.744  0.491               NaN
+1992-12..1993-05 widest differences     MKT  1.209     1.304  -0.484  0.000               NaN
+1992-12..1993-05 widest differences      GS  0.823     1.203  -1.549  0.000               NaN
+1992-12..1993-05 widest differences   ANFCI -2.710    -0.597  -0.001 -0.407            -0.163
+2007-11..2008-04 widest differences EP_4+HP  0.005     0.303  -1.281 -0.442               NaN
+2007-11..2008-04 widest differences     MKT -0.306     0.491  -0.834  0.000               NaN
+2007-11..2008-04 widest differences      GS  0.056     0.453  -0.719  0.000               NaN
+2007-11..2008-04 widest differences   ANFCI  6.777     0.487  -0.000  1.262            -0.052
+2008-09..2009-02 widest differences EP_4+HP  0.039     1.653  -0.204 -0.163               NaN
+2008-09..2009-02 widest differences     MKT -0.661     2.677  -0.133  0.000               NaN
+2008-09..2009-02 widest differences      GS  0.605     2.470   0.004  0.000               NaN
+2008-09..2009-02 widest differences   ANFCI 15.800     0.737   0.001  4.007            -1.261
+2009-03..2009-08 widest differences EP_4+HP -0.333     1.541  -0.496  0.013               NaN
+2009-03..2009-08 widest differences     MKT -0.574     2.495  -0.322  0.000               NaN
+2009-03..2009-08 widest differences      GS  0.193     2.301  -0.155  0.000               NaN
+2009-03..2009-08 widest differences   ANFCI  8.022     0.458  -0.001  1.697            -0.653
