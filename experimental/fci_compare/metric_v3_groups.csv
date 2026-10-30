@@ -1,0 +1,54 @@
+index,window,total,rates,equities,dollar,other,macro adjustment,table,kind
+EP_4+HP,latest,0.193,0.600,-1.370,1.440,-0.480,,latest/changes,
+EP_4+HP,chg since 2026-02,0.980,0.780,-0.180,0.320,0.060,,latest/changes,
+EP_4+HP,chg since 2026-08,0.615,0.380,-0.010,0.240,0.010,,latest/changes,
+MKT,latest,-0.723,0.550,-2.210,0.940,0.000,,latest/changes,
+MKT,chg since 2026-02,0.645,0.720,-0.280,0.210,0.000,,latest/changes,
+MKT,chg since 2026-08,0.375,0.240,-0.020,0.150,0.000,,latest/changes,
+GS,latest,-0.829,0.080,-2.040,1.140,0.000,,latest/changes,
+GS,chg since 2026-02,0.439,0.530,-0.260,0.170,0.000,,latest/changes,
+GS,chg since 2026-08,0.339,0.220,-0.020,0.140,0.000,,latest/changes,
+FCI-G 1yr,latest,0.149,0.420,-0.200,-0.240,0.170,,latest/changes,
+FCI-G 1yr,chg since 2026-02,1.437,0.800,0.060,0.630,-0.050,,latest/changes,
+FCI-G 1yr,chg since 2026-08,0.466,0.310,0.160,-0.010,-0.000,,latest/changes,
+FCI-G 3yr,latest,-0.822,0.220,-0.770,-0.530,0.250,,latest/changes,
+FCI-G 3yr,chg since 2026-02,0.676,0.650,-0.080,0.120,-0.010,,latest/changes,
+FCI-G 3yr,chg since 2026-08,0.230,0.230,-0.020,0.020,-0.010,,latest/changes,
+NFCI,latest,-0.892,-0.920,0.180,-0.000,-0.160,,latest/changes,
+NFCI,chg since 2026-02,0.225,0.020,0.030,-0.000,0.180,,latest/changes,
+NFCI,chg since 2026-08,0.640,0.250,0.050,-0.000,0.350,,latest/changes,
+ANFCI,latest,-0.902,-0.950,0.120,-0.000,-0.150,0.080,latest/changes,
+ANFCI,chg since 2026-02,0.044,-0.080,0.010,-0.000,0.180,-0.060,latest/changes,
+ANFCI,chg since 2026-08,0.414,0.130,0.030,-0.000,0.200,0.060,latest/changes,
+EP_4+HP,2005-04..2005-09,,-0.195,0.085,-0.019,-0.477,,episodes,closest alignment
+MKT,2005-04..2005-09,,-0.066,0.138,-0.012,0.000,,episodes,closest alignment
+GS,2005-04..2005-09,,-0.204,0.127,0.062,0.000,,episodes,closest alignment
+ANFCI,2005-04..2005-09,,-0.831,0.158,0.000,-0.172,0.202,episodes,closest alignment
+EP_4+HP,2016-11..2017-04,,-1.086,-0.214,0.749,-0.010,,episodes,closest alignment
+MKT,2016-11..2017-04,,-1.129,-0.346,0.487,0.000,,episodes,closest alignment
+GS,2016-11..2017-04,,-0.897,-0.319,0.888,0.000,,episodes,closest alignment
+ANFCI,2016-11..2017-04,,0.159,-0.067,0.000,-0.498,-0.123,episodes,closest alignment
+EP_4+HP,2017-09..2018-02,,-1.167,-0.580,0.133,-0.084,,episodes,closest alignment
+MKT,2017-09..2018-02,,-1.048,-0.939,0.087,0.000,,episodes,closest alignment
+GS,2017-09..2018-02,,-0.996,-0.866,0.544,0.000,,episodes,closest alignment
+ANFCI,2017-09..2018-02,,-0.676,-0.059,-0.000,-0.649,0.061,episodes,closest alignment
+EP_4+HP,2018-04..2018-09,,-0.865,-0.568,0.402,-0.139,,episodes,closest alignment
+MKT,2018-04..2018-09,,-0.806,-0.920,0.262,0.000,,episodes,closest alignment
+GS,2018-04..2018-09,,-0.765,-0.849,0.698,0.000,,episodes,closest alignment
+ANFCI,2018-04..2018-09,,-0.625,0.040,0.001,-0.669,-0.010,episodes,closest alignment
+EP_4+HP,1992-12..1993-05,,0.968,0.805,-0.744,0.491,,episodes,widest differences
+MKT,1992-12..1993-05,,1.209,1.304,-0.484,0.000,,episodes,widest differences
+GS,1992-12..1993-05,,0.823,1.203,-1.549,0.000,,episodes,widest differences
+ANFCI,1992-12..1993-05,,-2.710,-0.597,-0.001,-0.407,-0.163,episodes,widest differences
+EP_4+HP,2007-11..2008-04,,0.005,0.303,-1.281,-0.442,,episodes,widest differences
+MKT,2007-11..2008-04,,-0.306,0.491,-0.834,0.000,,episodes,widest differences
+GS,2007-11..2008-04,,0.056,0.453,-0.719,0.000,,episodes,widest differences
+ANFCI,2007-11..2008-04,,6.777,0.487,-0.000,1.262,-0.052,episodes,widest differences
+EP_4+HP,2008-09..2009-02,,0.039,1.653,-0.204,-0.163,,episodes,widest differences
+MKT,2008-09..2009-02,,-0.661,2.677,-0.133,0.000,,episodes,widest differences
+GS,2008-09..2009-02,,0.605,2.470,0.004,0.000,,episodes,widest differences
+ANFCI,2008-09..2009-02,,15.800,0.737,0.001,4.007,-1.261,episodes,widest differences
+EP_4+HP,2009-03..2009-08,,-0.333,1.541,-0.496,0.013,,episodes,widest differences
+MKT,2009-03..2009-08,,-0.574,2.495,-0.322,0.000,,episodes,widest differences
+GS,2009-03..2009-08,,0.193,2.301,-0.155,0.000,,episodes,widest differences
+ANFCI,2009-03..2009-08,,8.022,0.458,-0.001,1.697,-0.653,episodes,widest differences

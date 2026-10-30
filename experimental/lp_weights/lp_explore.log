@@ -1,0 +1,43 @@
+months 383 (2020 excluded in regressions); event-window psi per NS unit: 10-year +0.535, equities -7.779, dollar +4.224
+
+=== E2. Responses of the unemployment gap and inflation gap to a 1-unit NS surprise (pp), monthly LP ===
+  all events           unemployment gap   h=0: -0.31 (0.17)  h=3: -0.96 (0.45)  h=6: -1.47 (0.57)  h=12: -2.24 (0.99)  h=18: -2.47 (1.23)  h=24: -2.91 (1.61)
+  all events           core inflation gap h=0: +0.06 (0.16)  h=3: -0.31 (0.40)  h=6: +0.33 (0.34)  h=12: +0.39 (0.54)  h=18: +0.56 (0.62)  h=24: +0.97 (0.61)
+  pure-policy events   unemployment gap   h=0: -0.22 (0.17)  h=3: -0.74 (0.43)  h=6: -1.39 (0.52)  h=12: -2.65 (0.95)  h=18: -3.16 (1.48)  h=24: -3.48 (1.86)
+  pure-policy events   core inflation gap h=0: +0.07 (0.18)  h=3: -0.32 (0.42)  h=6: +0.44 (0.38)  h=12: +0.74 (0.65)  h=18: +1.09 (0.76)  h=24: +1.20 (0.66)
+  information events   unemployment gap   h=0: -1.01 (0.55)  h=3: -2.72 (1.66)  h=6: -3.42 (2.64)  h=12: -0.33 (5.31)  h=18: +1.35 (5.17)  h=24: +0.57 (4.52)
+  information events   core inflation gap h=0: -0.20 (0.69)  h=3: -0.18 (1.37)  h=6: -0.33 (1.96)  h=12: -1.83 (1.78)  h=18: -3.34 (1.49)  h=24: -0.61 (2.83)
+
+monthly LP responses to NS, h = 0 / 12 / 24: policy rate +1.12 / +3.99 / +4.39; 10-year +0.58 / +0.62 / +1.08; mortgage spread -0.18 / +0.66 / +1.25; BBB spread +0.01 / +0.50 / +1.33; equities -12.67 / +4.09 / +17.21; dollar +6.37 / +8.24 / +20.45; unemployment -0.31 / -2.24 / -2.91
+
+=== E1. One variable at a time: LP-IV of u(t+12) - u(t-1) on the month-t change in x_j, instrument NS ===
+    beta_j = (response of u at 12) / (response of x_j in month t); every beta_j * psi_j equals the same number (the shock's total effect),
+    so these 'effects' are inverse responses, i.e. market-type weights, not separate causal effects.
+    policy rate      psi_j(0)  +1.121   beta_j    -2.000   beta_j*psi_j -2.242
+    10-year          psi_j(0)  +0.580   beta_j    -3.866   beta_j*psi_j -2.242
+    mortgage spread  psi_j(0)  -0.180   beta_j   +12.432   beta_j*psi_j -2.242
+    BBB spread       psi_j(0)  +0.012   beta_j  -187.720   beta_j*psi_j -2.242
+    equities         psi_j(0) -12.674   beta_j    +0.177   beta_j*psi_j -2.242
+    dollar           psi_j(0)  +6.368   beta_j    -0.352   beta_j*psi_j -2.242
+
+=== E3. theta from g_h = theta' psi_h stacked over h = 0..24 (unemployment; event-window variables and all six) ===
+  3 variables: cond(Psi) 47, R2 of g on Psi 0.59; theta (u pp per unit): 10-year -0.4387, equities -0.0150, dollar -0.1242
+  6 variables: cond(Psi) 130, R2 of g on Psi 0.81; theta (u pp per unit): policy rate -0.3114, 10-year -0.5893, mortgage spread -0.7327, BBB spread +0.0597, equities -0.0134, dollar +0.0175
+  bootstrap (80 block resamples, even horizons) 90% bands, 3 variables: 10-year [-1.387, +0.726], equities [-0.104, +0.039], dollar [-0.235, +0.105]   (resampled months break the time order of the surprises; indicative only)
+
+=== E4. 'LP macro-model' weights: u(t+h) - u(t-1) on financial levels x_t (all six), controls: u_t-1, inflation_t-1, 3 lags of du ===
+    psi used for normalization (per NS unit): policy rate +1.121, 10-year +0.535, mortgage spread -0.180, BBB spread +0.012, equities -7.779, dollar +4.224  (event window for 10-year, equities, dollar; monthly LP h=0 for the others)
+  h= 6: theta (u pp per unit; se) policy rate +0.0119 (0.0419), 10-year -0.0181 (0.1026), mortgage spread +0.5900 (0.1740), BBB spread +0.1551 (0.2111), equities -0.0150 (0.0071), dollar -0.0064 (0.0096)
+         complete-transmission sum theta'psi = -0.0108 u pp per NS unit;  weights theta_j / theta'psi (2-year pp per unit): policy rate -1.102, 10-year +1.671, mortgage spread -54.520, BBB spread -14.337, equities +1.390, dollar +0.590
+  h=12: theta (u pp per unit; se) policy rate +0.1551 (0.1544), 10-year -0.1740 (0.2463), mortgage spread +0.6085 (0.4708), BBB spread +0.4699 (0.1782), equities -0.0194 (0.0128), dollar -0.0210 (0.0325)
+         complete-transmission sum theta'psi = +0.0390 u pp per NS unit;  weights theta_j / theta'psi (2-year pp per unit): policy rate +3.974, 10-year -4.459, mortgage spread +15.589, BBB spread +12.037, equities -0.497, dollar -0.538
+  h=24: theta (u pp per unit; se) policy rate +0.0854 (0.1388), 10-year -0.1760 (0.1702), mortgage spread +0.5800 (0.4877), BBB spread +0.4649 (0.2631), equities -0.0011 (0.0074), dollar -0.0802 (0.0434)
+         complete-transmission sum theta'psi = -0.4279 u pp per NS unit;  weights theta_j / theta'psi (2-year pp per unit): policy rate -0.200, 10-year +0.411, mortgage spread -1.356, BBB spread -1.087, equities +0.003, dollar +0.187
+  compare relative weights (10-year = 1): LP h=12 policy rate -0.891, 10-year +1.000, mortgage spread -3.496, BBB spread -2.700, equities +0.112, dollar +0.121
+                                          FRB/US q4 policy rate +0.015, 10-year +1.000, mortgage spread +0.730, BBB spread +0.224, equities -0.056, dollar +0.176
+  LP-macro index (h=12 weights, 2-year pp): sd 19.14, latest -33.15; corr levels / 12m changes: EP_4 0.09 / 0.52, MKT 0.31 / 0.46, GS 0.60 / 0.68
+
+=== E5. LP-IV: u(t+12) - u(t-1) on the month-t changes in the 10-year, equities and dollar, instruments: pure, information, MP1, GSS path ===
+  first-stage F (4 instruments): 10-year 2.4, equities 3.3, dollar 5.7;  months 367
+  theta (u pp at 12 months per unit change; approx se): 10-year +1.8995 (1.3957), equities +0.7187 (0.6000), dollar +1.2681 (1.3305)
+  theta'psi = +0.7816; weights theta_j / theta'psi: 10-year +2.430, equities +0.920, dollar +1.623

@@ -1,0 +1,10 @@
+output-lens weights (market units, flows): 10-year +0.3204, equities -0.1275, dollar -0.0386;  market w: 10-year +0.6089, equities -0.0512, dollar +0.0654
+
+1990-2026 correlations:
+                                    output-lens flow  market index 12m change (real 10y)  EP_4 12m change  FCI-G 1yr
+output-lens flow                                1.00                                0.83             0.69       0.74
+market index 12m change (real 10y)              0.83                                1.00             0.86       0.86
+EP_4 12m change                                 0.69                                0.86             1.00       0.84
+FCI-G 1yr                                       0.74                                0.86             0.84       1.00
+sd: {'output-lens flow': 1.92, 'market index 12m change (real 10y)': 1.11, 'EP_4 12m change': 1.02, 'FCI-G 1yr': 1.23}
+latest: {'output-lens flow': -0.74, 'market index 12m change (real 10y)': -0.24, 'EP_4 12m change': -0.19, 'FCI-G 1yr': -0.78} 2026-08

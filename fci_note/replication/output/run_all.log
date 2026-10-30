@@ -1,0 +1,246 @@
+
+========== 01_data ==========
+monthly data 1958-01..2026-09, 16 series
+  \EinfOneSeventyFour = 6.67
+  \EinfOneEightyOne = 8.43
+  \EinfOneLatest = 2.66
+  \RstarLWSeventies = 3.27
+  \RstarLWPreGFC = 2.76
+  \RstarLWPostGFC = 0.86
+  \RstarLWLatest = 1.65
+  \RstarKiPostGFC = 1.51
+
+========== 02_weights ==========
+  \NEvents = 253
+  \EventFirst = January 1996
+  \EventLast = September 2026
+  \PsiTen = 0.53
+  \WTen = 0.609
+  \ShareTen = 0.33
+  \PsiEq = 7.78
+  \WEq = -0.051
+  \ShareEq = 0.40
+  \PsiUsd = 4.22
+  \WUsd = 0.065
+  \ShareUsd = 0.28
+       response     se   to_2y
+GS        1.040  0.155   0.962
+NFCI      0.097  0.051  10.343
+ANFCI     0.185  0.091   5.391
+  \GSResp = 1.04
+  \NFCIResp = 0.097
+  \ANFCIResp = 0.185
+  \FrbusYardstick = 0.4525
+  \RatioTen = 0.94
+  \RatioEq = 0.62
+  \RatioUsd = 1.54
+  \SPsiFrbus = 0.79
+  \SPsiMarket = 0.97
+                 FRB/US weight  Market weight  FRB/US response  Market response
+10-year yield            0.569          0.609            0.370            0.535
+Equities (CAPE)         -0.032         -0.051          -13.178           -7.779
+Real dollar              0.100          0.065            1.618            4.224
+
+========== 03_indexes ==========
+nominal      latest: market -3.34, gs -1.36, frbus -1.55, frbus_hp -1.66, frbus_gi +0.20, frbus_gi_hp +0.29, fcig_1yr -0.31, fcig_3yr -0.78, nfci -5.07, anfci -2.76
+real         latest: market -2.80, gs -2.89, frbus -1.04, frbus_hp -1.14, frbus_gi +0.03, frbus_gi_hp +0.12, fcig_1yr -0.11, fcig_3yr -0.51, nfci -5.07, anfci -2.76
+rstar        latest: market -0.93, gs -1.23, frbus +0.27, frbus_hp +0.16, frbus_gi +0.02, frbus_gi_hp +0.12, fcig_1yr +0.03, fcig_3yr -0.23, nfci -5.07, anfci -2.76
+rstar_kiley  latest: market -1.40, gs -1.64, frbus -0.08, frbus_hp -0.19, frbus_gi -0.06, frbus_gi_hp +0.04, fcig_1yr -0.01, fcig_3yr -0.21, nfci -5.07, anfci -2.76
+
+========== 04_var ==========
+  \SigFromTwelve = 1
+  \SigToTwelve = 33
+  \SigFromFour = 1
+  \SigToFour = 36
+          case  lags  Granger F  p-value  Phi(6)  Phi(12)  Phi(24)  t Phi(12)
+0      nominal    12     3.7373   0.0000  0.2932   0.5681   0.6579     5.0424
+1      nominal     4     4.6235   0.0010  0.2108   0.2653   0.2673     3.6527
+2         real    12     3.6720   0.0000  0.3393   0.6134   0.6764     5.1614
+3         real     4     5.5399   0.0002  0.2604   0.3241   0.3197     4.1132
+4        rstar    12     5.3046   0.0000  0.3988   0.6540   0.6374     6.4035
+5        rstar     4     9.9760   0.0000  0.3233   0.3995   0.3821     5.3598
+6  rstar_kiley    12     4.6341   0.0000  0.3701   0.6131   0.6317     5.8878
+7  rstar_kiley     4     7.7568   0.0000  0.2907   0.3560   0.3407     4.8132
+  \PhiNomTwelve = 0.57
+  \GrangerFNomTwelve = 3.74
+  \GrangerPNomTwelve = 0.0000
+  \PhiNomFour = 0.27
+  \GrangerFNomFour = 4.62
+  \GrangerPNomFour = 0.0010
+  \PhiRealTwelve = 0.61
+  \GrangerFRealTwelve = 3.67
+  \GrangerPRealTwelve = 0.0000
+  \PhiRealFour = 0.32
+  \GrangerFRealFour = 5.54
+  \GrangerPRealFour = 0.0002
+  \PhiRstarTwelve = 0.65
+  \GrangerFRstarTwelve = 5.30
+  \GrangerPRstarTwelve = 0.0000
+  \PhiRstarFour = 0.40
+  \GrangerFRstarFour = 9.98
+  \GrangerPRstarFour = 0.0000
+  \PhiRstarKiTwelve = 0.61
+  \GrangerFRstarKiTwelve = 4.63
+  \GrangerPRstarKiTwelve = 0.0000
+  \PhiRstarKiFour = 0.36
+  \GrangerFRstarKiFour = 7.76
+  \GrangerPRstarKiFour = 0.0000
+  \CorrFIFcigRstar = 0.83
+  \MarketLatestRstar = -0.93
+  \FILatestRstar = 0.18
+
+========== 05_compare ==========
+                                            Nominal  Real  r* (baseline)
+Market vs GS, levels                           0.76  0.99           0.99
+Market vs FRB/US, levels                       0.98  0.95           0.94
+Market vs FRB/US with house prices, levels     0.98  0.95           0.94
+Market vs ANFCI, levels (1990-)                0.17  0.22           0.22
+Market vs GS, 12-month changes                 0.95  0.96           0.98
+Market vs FRB/US, 12-month changes             0.95  0.95           0.96
+Forward impetus vs FCI-G (1-year)              0.80  0.85           0.84
+Forward impetus vs FRB/US growth impetus       0.89  0.88           0.84
+FCI-G vs FRB/US growth impetus                 0.91  0.96           0.98
+FCI-G vs market index level                    0.27  0.27           0.30
+Range of level indexes, 1974-2026              2.82  1.16           1.08
+Range of level indexes, 1990-2026              1.15  0.97           0.88
+Market index, latest                          -3.34 -2.80          -0.93
+GS, latest                                    -1.36 -2.89          -1.23
+FRB/US, latest                                -1.55 -1.04           0.27
+Forward impetus, latest                        0.27  0.12           0.18
+FCI-G (1-year), latest                        -0.31 -0.11           0.03
+Forward impetus vs published FCI-G (1990-)     0.77   NaN            NaN
+FCI-G replication vs published (1990-)         0.98   NaN            NaN
+  \NomMktGs = 0.76
+  \NomMktFrbus = 0.98
+  \NomMktFrbusHp = 0.98
+  \NomMktAnfci = 0.17
+  \NomMktGsChg = 0.95
+  \NomMktFrbusChg = 0.95
+  \NomFiFcig = 0.80
+  \NomFiGi = 0.89
+  \NomFcigGi = 0.91
+  \NomFcigLevel = 0.27
+  \NomRangeLong = 2.82
+  \NomRangeNinety = 1.15
+  \NomMktLatest = -3.34
+  \NomGsLatest = -1.36
+  \NomFrbusLatest = -1.55
+  \NomFiLatest = 0.27
+  \NomFcigLatest = -0.31
+  \NomFiPub = 0.77
+  \NomFcigPub = 0.98
+  \RealMktGs = 0.99
+  \RealMktFrbus = 0.95
+  \RealMktFrbusHp = 0.95
+  \RealMktAnfci = 0.22
+  \RealMktGsChg = 0.96
+  \RealMktFrbusChg = 0.95
+  \RealFiFcig = 0.85
+  \RealFiGi = 0.88
+  \RealFcigGi = 0.96
+  \RealFcigLevel = 0.27
+  \RealRangeLong = 1.16
+  \RealRangeNinety = 0.97
+  \RealMktLatest = -2.80
+  \RealGsLatest = -2.89
+  \RealFrbusLatest = -1.04
+  \RealFiLatest = 0.12
+  \RealFcigLatest = -0.11
+  \RstarMktGs = 0.99
+  \RstarMktFrbus = 0.94
+  \RstarMktFrbusHp = 0.94
+  \RstarMktAnfci = 0.22
+  \RstarMktGsChg = 0.98
+  \RstarMktFrbusChg = 0.96
+  \RstarFiFcig = 0.84
+  \RstarFiGi = 0.84
+  \RstarFcigGi = 0.98
+  \RstarFcigLevel = 0.30
+  \RstarRangeLong = 1.08
+  \RstarRangeNinety = 0.88
+  \RstarMktLatest = -0.93
+  \RstarGsLatest = -1.23
+  \RstarFrbusLatest = 0.27
+  \RstarFiLatest = 0.18
+  \RstarFcigLatest = 0.03
+  \StepNomRealNinety = 0.98
+  \StepRealRstarNinety = 0.57
+  \StepNomRealLong = 0.98
+  \StepRealRstarLong = 0.92
+  \MktGFCNom = -0.70
+  \MktLatestNinetyNom = -0.88
+  \FcigSeventyFourNom = 0.60
+  \FcigSeventyNineNom = 0.51
+  \FcigEightyOneNom = 1.00
+  \FcigGFCNom = 1.84
+  \MktGFCReal = -0.30
+  \MktLatestNinetyReal = -0.98
+  \FcigSeventyFourReal = -0.00
+  \FcigSeventyNineReal = 0.52
+  \FcigEightyOneReal = 1.70
+  \FcigGFCReal = 2.00
+  \MktGFCRstar = 1.16
+  \MktLatestNinetyRstar = 0.45
+  \FcigSeventyFourRstar = 0.35
+  \FcigSeventyNineRstar = 0.61
+  \FcigEightyOneRstar = 1.55
+  \FcigGFCRstar = 2.94
+  \UsdNomSeventyThree = 31
+  \UsdNomLatest = 119
+                     Window  Range  Market     GS  FRB/US  FRB/US+HP  Gap: rates  equities  dollar  house prices
+                                                                                                                
+Widest   1977-12 to 1978-05   2.56    2.75   2.28    0.49       0.19        0.34      1.59    0.33          0.30
+Widest   1978-11 to 1979-04   2.74    2.26   1.91   -0.00      -0.47        0.27      1.58    0.42          0.47
+Widest   1979-10 to 1980-03   2.52    3.05   2.84    1.05       0.53       -0.03      1.74    0.29          0.51
+Widest   1980-05 to 1980-10   2.37    2.70   2.83    0.95       0.49       -0.35      1.76    0.34          0.46
+Widest   1982-02 to 1982-07   2.39   11.06  10.03    8.84       8.67       -0.43      2.87   -0.22          0.17
+Closest  1986-11 to 1987-04   0.25    0.95   0.94    1.14       1.15       -0.13      0.09   -0.16         -0.00
+Closest  1989-04 to 1989-09   0.31   -0.07  -0.28    0.00      -0.09        0.04     -0.22    0.11          0.09
+Closest  1989-10 to 1990-03   0.21   -0.42  -0.57   -0.37      -0.41        0.06     -0.27    0.16          0.05
+Closest  1992-11 to 1993-04   0.32   -0.81  -0.91   -1.02      -0.71        0.19     -0.27    0.29         -0.32
+Closest  1995-09 to 1996-02   0.30   -1.57  -1.61   -1.70      -1.40        0.22     -0.48    0.39         -0.30
+
+========== 06_unemployment ==========
+                                    Coef. (s.e.)  Gain adj. R2  OOS ratio  1995-07  2008-19  2021-25   DM t
+Case Index                                                                                                 
+r*   Market index forward impetus    0.50 (0.09)         0.113      0.890    0.890    0.857    1.137 -1.120
+     FCI-G, 1-year lookback          0.70 (0.10)         0.145      0.874    0.871    0.847    1.089 -1.046
+     FCI-G, 3-year lookback          0.61 (0.11)         0.136      0.905    0.937    0.862    1.151 -0.895
+     FRB/US growth impetus           0.30 (0.05)         0.121      0.933    0.941    0.912    1.089 -0.625
+     Market index (level)            0.07 (0.05)         0.013      1.063    0.938    1.116    0.890  1.004
+     Market index current pressure  -0.00 (0.05)        -0.001      1.049    0.981    1.072    1.029  1.378
+     GS (level)                      0.09 (0.06)         0.020      1.049    0.903    1.110    0.856  0.818
+     FRB/US index (level)            0.07 (0.06)         0.009      1.055    0.895    1.113    0.934  0.966
+real Market index forward impetus    0.50 (0.12)         0.089      0.942    0.897    0.917    1.229 -0.741
+     FCI-G, 1-year lookback          0.81 (0.14)         0.133      0.907    0.872    0.885    1.167 -0.827
+     FCI-G, 3-year lookback          0.71 (0.12)         0.131      0.933    0.854    0.940    1.068 -0.727
+     FRB/US growth impetus           0.32 (0.06)         0.101      0.981    0.987    0.961    1.127 -0.206
+     Market index (level)            0.05 (0.04)         0.011      1.061    0.915    1.120    0.890  0.867
+     Market index current pressure   0.02 (0.04)         0.001      1.057    0.973    1.090    0.986  1.371
+     GS (level)                      0.07 (0.05)         0.017      1.045    0.887    1.109    0.854  0.686
+     FRB/US index (level)            0.06 (0.06)         0.009      1.054    0.888    1.115    0.915  0.838
+  \LpFiRatio = 0.89
+  \LpFcigRatio = 0.87
+  \LpFiGain = 0.11
+  \LpFcigGain = 0.14
+  \LpLevelGain = 0.01
+  \LpLevelRatio = 1.06
+  \LpDMBest = -1.12
+  \FcigScaleRstar = 0.47
+  \FcigScaleSeRstar = 0.09
+  \FcigScaleNom = 0.53
+  \FcigScaleSeNom = 0.15
+  \FcigScalePub = 0.13
+  \FcigScaleSePub = 0.14
+
+========== 07_appendix ==========
+  \CorrLevelCP = 0.95
+                               Levels  12-month changes
+Market index                     0.96              0.96
+GS                               0.96              0.97
+FRB/US index                     0.96              0.97
+FCI-G, 1-year                    0.97              0.98
+Market forward impetus           0.96               NaN
+Forward impetus, 4 vs 12 lags    0.96               NaN
+  \KileyMarketCorr = 0.96
+  \FourTwelveCorr = 0.96

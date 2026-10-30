@@ -1,0 +1,28 @@
+  lo, hi = irf.errband_mc(orth=True, repl=1000, signif=0.05, seed=7)
+  rng = check_random_state(rng, deprecated=True)
+
+[p=4] unemployment response to a 1-unit market-index shock
+   month    resp      t           asy 95%     bootstrap 95%
+       1  +0.020    0.9 [-0.023,+0.064] [-0.021,+0.061]
+       3  +0.133    3.1 [+0.049,+0.217] [+0.053,+0.215]
+       6  +0.209    3.4 [+0.089,+0.328] [+0.100,+0.330]
+       9  +0.242    3.5 [+0.106,+0.377] [+0.120,+0.395]
+      12  +0.254    3.5 [+0.112,+0.396] [+0.118,+0.426]
+      18  +0.254    3.4 [+0.108,+0.401] [+0.090,+0.456]
+      24  +0.245    3.1 [+0.093,+0.398] [+0.067,+0.471]
+      36  +0.224    2.5 [+0.051,+0.397] [+0.017,+0.461]
+   months with the bootstrap 95% band above zero: 3..36 (34 of 36)
+  lo, hi = irf.errband_mc(orth=True, repl=1000, signif=0.05, seed=7)
+  rng = check_random_state(rng, deprecated=True)
+
+[p=12] unemployment response to a 1-unit market-index shock
+   month    resp      t           asy 95%     bootstrap 95%
+       1  +0.000    0.0 [-0.044,+0.044] [-0.042,+0.042]
+       3  +0.098    2.5 [+0.023,+0.174] [+0.029,+0.173]
+       6  +0.299    4.7 [+0.175,+0.424] [+0.176,+0.419]
+       9  +0.480    5.5 [+0.307,+0.652] [+0.305,+0.637]
+      12  +0.562    5.1 [+0.346,+0.777] [+0.328,+0.753]
+      18  +0.676    4.7 [+0.392,+0.960] [+0.353,+0.911]
+      24  +0.662    4.0 [+0.338,+0.986] [+0.266,+0.924]
+      36  +0.438    2.6 [+0.102,+0.774] [+0.005,+0.671]
+   months with the bootstrap 95% band above zero: 3..36 (34 of 36)

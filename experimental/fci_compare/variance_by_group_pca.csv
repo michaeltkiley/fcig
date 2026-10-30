@@ -1,0 +1,17 @@
+index,basis,pc1_share,pc2_share,rates,equities,dollar,other
+"Macro model with house prices, nominal",level,52,35,-0.5,-0.53,0.65,-0.23
+"Macro model with house prices, nominal",12m change,46,29,0.35,0.59,0.73,-0.02
+"Market-based (NS), nominal",level,59,36,0.46,0.84,-0.3,
+"Market-based (NS), nominal",12m change,63,27,-0.15,0.98,0.16,
+"GS, nominal",level,73,21,0.34,0.74,-0.58,
+"GS, nominal",12m change,71,16,0.21,0.97,0.15,
+"Macro model with house prices, real",level,62,21,-0.14,-0.59,0.77,-0.21
+"Macro model with house prices, real",12m change,54,27,0.24,0.62,0.75,-0.01
+"Market-based (NS), real",level,71,21,0.18,0.93,-0.33,
+"Market-based (NS), real",12m change,73,15,-0.05,0.99,0.16,
+"GS, real",level,80,12,0.2,0.93,-0.31,
+"GS, real",12m change,80,12,0.23,0.96,0.15,
+"FCI-G, 3yr lookback",level,42,26,-0.21,0.94,-0.17,0.2
+"FCI-G, 3yr lookback",12m change,51,28,0.3,0.8,0.51,0.09
+"FCI-G, 1yr lookback",level,43,28,0.22,0.86,0.46,0.06
+"FCI-G, 1yr lookback",12m change,59,23,0.32,0.8,0.51,0.04

@@ -1,0 +1,8 @@
+variable,group,Macro model,Market-based (NS),GS,FCI-G (impact weight)
+policy rate,rates,0.0085,,0.0416,0.2209
+10-year,rates,0.5695,0.5985,0.4262,0.6377
+mortgage spread,rates,0.4155,,,0.4805
+BBB spread,rates,0.1274,,0.3742,0.1752
+equities,equities,-0.0316,-0.0503,-0.0463,-0.0471
+dollar,dollar,0.1004,0.0642,0.0567,0.1061
+house prices,other,-0.0291,,,-0.0712
