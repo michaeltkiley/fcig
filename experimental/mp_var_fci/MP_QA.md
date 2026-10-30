@@ -132,3 +132,21 @@ Unemployment gap per +1 pp funds-rate innovation (r*-gap, 12 lags, 95% band); sd
 | 1994-2026, ZLB months dummied | 0.13 | -0.63 (-0.96, -0.25) | -0.81 (-1.20, -0.30) | +2.7 / +3.1 |
 **The wrong sign does not come from the ZLB:** it is already there on 1994-2008m11, before any ZLB, and survives dummying the ZLB months. The break is the start of the sample (1994), not the ZLB. In every 1994- window the funds-rate innovation is small (0.12-0.15 pp vs 0.48 pp) and followed by a sustained rise of the funds rate
 (+2.7 to +3.4 pp at 12 months) with the index falling: consistent with post-1994 funds-rate moves being smoothed, largely anticipated hikes that respond to information about the economy. Hypothesis, not tested. The index again changes the response little.
+
+## Step 3 results (30 Oct 2026): instruments and first stages (`03_instruments.py`, `03_instruments.log`, `data/mp_instruments.csv`)
+**Bauer-Swanson-style purge (own, MP-A2).** Event-level regression of NS on pre-meeting information (253 events): R2 0.11 (joint p 0.008); only the 3-month stock change matters (+0.0021, t 3.5) and the curve-slope change weakly (t -1.9); payrolls and oil are not significant.
+**The purged series is almost the same as NS: correlation 0.94 at the event level, 0.93 monthly.** So NS vs BS will differ little with this purge; a richer purge (the published Bauer-Swanson controls incl. payroll surprises and Treasury skewness) would be needed to separate them. This is where the published series matters.
+**First stages (VAR residual on the monthly instrument, robust t; F = t^2), 12 lags.**
+| Residual of | S1 NS / BS | S2 NS / BS |
+|---|---|---|
+| funds rate | F 4.7 / 4.0 (nominal index system 6.5 / 5.3) | F 0.3 / 0.3 |
+| index, r*-gap | F 1.4 / 1.2 | F 1.0 / 2.5 |
+| index, nominal | F 0.3 / 0.1 | F 0.5 / 1.1 |
+| index, real | F 0.3 / 0.3 | F 0.4 / 1.3 |
+| unemployment gap, core PCE | F below 1 | F below 1 |
+(2-year yield as the policy variable: see the log, last two tables.) Signs are right: a hawkish instrument raises the funds rate and the index; the unemployment and inflation residuals are unrelated to it (as exogeneity requires).
+**But the instruments are weak.** Conditional on a 12-lag, four-variable VAR the F-statistics are 0.1 to 6.5 (below the usual 10), and weakest for the index and for S2 (long-VAR residuals in the instrument window). The raw monthly correlation with funds-rate changes (F about 18) falls to about 5 once the VAR removes the predictable part. This matches the earlier LP-IV (F 6-12).
+Consequence: proxy-SVAR impulse responses (step 4) will be imprecise and unstable under standard inference; weak-instrument-robust (Anderson-Rubin) bands are needed, and the choice of scaling variable (funds rate, 2-year, index) matters even more.
+
+**MP-Q10 [open, for the user].** How to handle the weak first stage? (a) Proceed to step 4 and report Anderson-Rubin bands honestly, accepting wide bands; (b) first try to strengthen the instrument (accumulate the instrument over two or three months, use the lagged instrument, use event-window changes of the policy variable instead of monthly residuals), then step 4; (c) supply the published Bauer-Swanson series (and possibly the NS series as published) to replace my purge. Combinations are possible. My suggestion: (c) if you have the file, otherwise (a) with (b) as a variant.
+**Optional input from the user:** the published Bauer-Swanson orthogonalized surprise series (a file or its location). Not required; nothing else is needed. FRED data are downloaded without a key (the CSV endpoint works); no credentials were found in the repo or environment, and none are needed.

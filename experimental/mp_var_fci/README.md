@@ -12,4 +12,5 @@ Does the market index make the responses more robust to identification, larger, 
 | `CONTEXT.md` | What the market index is, what the project has already found that bears on MP shocks, comparison with GK and CH |
 | `01_data.py`, `01_data.log`, `data/` | Step 1: monthly data set (`data/mp_monthly.csv`) and the FRED inputs |
 | `02a_lags.py`, `02_cholesky.py`, `02c_report.py`, `irf_cholesky*.csv`, `cholesky_*.png`, `02*.log` | Step 2: lag choice, Cholesky baseline and report |
+| `02d_exzlb.py`, `03_instruments.py`, logs, `data/mp_instruments.csv` | Steps 2d and 3: ex-ZLB check; NS and own-purge instruments and first stages |
 | `MP_QA.md` | Proposed tests and the decisions to be taken one at a time (answers recorded there) |

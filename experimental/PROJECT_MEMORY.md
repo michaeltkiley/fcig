@@ -268,3 +268,6 @@ market output VAR with GS / FCI-G (R14); house-price detrending decision for exp
 
 **30 Oct addendum (second session).** The experimental branch was merged to `main` (PR #8); root `CLAUDE.md` and `experimental/README.md` now give the entry points and glossary. New parallel project started: `experimental/mp_var_fci/`
 (monetary policy shocks with the market index: Cholesky vs Nakamura-Steinsson vs Bauer-Swanson instruments, comparison with Gertler-Karadi and Caldara-Herbst); design in `CONTEXT.md`, decisions MP-Q1 to MP-Q6 open in `MP_QA.md`. Start there for that project.
+
+**30 Oct, later - MP-shock project status (branch `ccr-9030ba3c-mgpwtw`, not yet merged to main; resume there).** Decisions MP-A1 to MP-A9 recorded in `mp_var_fci/MP_QA.md` (exploratory). Done: step 1 dataset, step 2 Cholesky (long window: small conventional response; 1994- windows: wrong sign even before the ZLB, index changes little),
+step 3 instruments (NS and own BS-style purge correlate 0.94; first stages weak, F 0.1-6.5 on VAR residuals). Open: MP-Q10 (how to handle weak instruments; optional published Bauer-Swanson file). Next: step 4 proxy-SVARs with Anderson-Rubin bands.
