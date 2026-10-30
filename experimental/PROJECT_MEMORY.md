@@ -179,6 +179,9 @@ Motivation (user): the macro-model lens hinges on FRB/US, an idiosyncratic model
 - **Working specification for the market output lens:** estimated through data end with 2020 dummied, with the 4-lag (the earlier BIC choice; BIC now 5) and 12-lag cases both kept. The impetus concept (forward vs realized) is still open (question 49).
 - Possible checks not yet done: 12 lags was checked (above); or 1973-2025 with 2020 dummied (the impetus weights depend on it); adding inflation (3-variable VAR).
 
+## 3g. 30 Oct 2026: base nominal case CLOSED; real case started
+The user closed the base nominal case. Next: the real case, which systematically uses real interest rates for all indexes, in a separate folder `experimental/real_case/` (decisions in `real_case/REAL_QA.md`, one at a time; no consequential choices without the user's guidance).
+
 ## 4. Literature state (details in NOTE_PLAN.md section 7 and `experimental/path_fci/lit/`)
 No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and compares them. Closest: Arnaut-Bauer (FRBSF EL 2024-07), Sack-Swanson (Brookings, Oct 2023; FCI-G vs 2-year yield), Beaton-Lalonde-Luu (2009), Aramonte-Rosen-Schindler (2013), Chicago Fed Letter 498 (Aug 2024). Verified FOMC quotes (62) in `lit/lit_fomc_quotes.md`. Still unread: BKM Handbook text (author covers), NBER WP 34325, FCI-star and multi-asset papers, Goldman 2015 original.
 
