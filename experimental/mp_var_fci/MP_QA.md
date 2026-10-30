@@ -26,7 +26,7 @@ ask whether adding the market index makes the impulse responses more robust to t
 
 **MP-Q5. Inflation variable.** How should inflation enter the VAR: core PCE 12-month rate, core PCE price level (log), or another measure? [answered, see MP-A5]
 
-**MP-Q6. Comparators.** Run the same system with the real GS index and the all-real FCI-G (open item R14 in the memory), or only the market index at first?
+**MP-Q6. Comparators.** Run the same system with the real GS index and the all-real FCI-G (open item R14 in the memory), or only the market index at first? [answered, see MP-A6]
 
 ## Answers
 **MP-A1 (30 Oct 2026). Policy indicator and scaling.** [decided] Main case: the **funds rate** is the policy variable in the four-variable VAR (unemployment gap, core PCE, funds rate, market index) for all three schemes, and the monetary policy shock is **scaled on the market index** (a shock that moves the index by one unit, i.e. a 2-year-yield pp),
@@ -51,6 +51,8 @@ Assumption in S2, to be tested and reported: the impact responses (the residual 
 **MP-A5 (30 Oct 2026). Inflation variable.** [decided, exploratory] Core PCE **monthly rate, annualized** (one-month log change of the core PCE price index x 1200); no gap, no target subtraction. It is noisy, so the details are open: whether to use the raw monthly rate or a 3-month average (a noisy variable lowers the signal in the inflation equation),
 and how to treat the 2020 months and the 2021-22 spike. Headline PCE not run unless asked. To settle when building the dataset; will be reported as a robustness item.
 
+**MP-A6 (30 Oct 2026). Comparators.** [decided, exploratory] Order of runs: **market index first**, then **real GS** (also a level), then **FCI-G** last, entering as its flow form (it is built from past changes, so it is not a level). Same four-variable system and the same schemes at each stage; like-for-like cases (nominal GS with nominal market, real with real, r* with r*).
+
 ## Status of decisions (exploratory; revisit freely)
 | ID | Decision | Status |
 |---|---|---|
@@ -59,4 +61,6 @@ and how to treat the 2020 months and the 2021-22 spike. Headline PCE not run unl
 | MP-A3 | Proxy-SVAR samples S1 (1994-2026) and S2 (VAR 1973-2026, instrument from 1994); Cholesky long and matched; 2020 dummied | exploratory |
 | MP-A4 | Nominal, real, r*-gap index; r*-gap main | exploratory |
 | MP-A5 | Inflation = core PCE monthly rate, annualized | exploratory |
-| MP-Q6 | comparators | open |
+| MP-A6 | Comparators: market index first, then GS, then FCI-G (flow form) | exploratory |
+
+All six questions answered (30 Oct 2026). Next: build the dataset and the Cholesky baseline, then the proxy-SVARs; see the plan below.
