@@ -59,3 +59,15 @@ realized 0.74 / 0.58 (4 / 12 lags). Latest (2026-09, LW): EP -0.69, CP -1.1, for
 - Agenda items 1-7 done.
 
 **S7 (30 Oct).** Written up: NOTE_PLAN section 4g (proposed role in the note to be confirmed) and a paragraph on gaps to r* in the weighting note's mapping section.
+
+**S8 (30 Oct).** Additional VARs (user chose items 2 and 3; the standalone GS VAR skipped): `var_fcig_horse.py`, log `var_fcig_horse.log`.
+- FCI-G scale check (a reading of +1 should raise the unemployment gap about 0.5 pp over the next 12 months; direct regression with u controls, HAC):
+  1974-2026 replications: b 0.56-0.65 (all-real 0.65, se 0.13; r* LW 0.59; nominal 0.63): consistent with the claimed scale. 1990-2026: published 0.26 (se 0.12), replication 0.28:
+  about half the claimed scale. 3-year lookback: 0.51 (all real, 1976-2026), 0.34 (published, 1990-2026). VAR responses to an FCI-G innovation are larger (about 1.2 at 12 months)
+  but mix in the index's own persistence; the direct regression is the cleaner test.
+- Horse race (predicting the unemployment gap; same VAR design; out-of-sample 12-month-ahead forecasts from 1995, ratio to a no-index benchmark):
+  1974-2026: FCI-G versions best (Granger F 12-18 at 4 lags; out-of-sample RMSE ratio 0.68 r* LW, 0.76 real); level indexes significant in-sample (F 4.5-11.5, r* versions above
+  real ones throughout) but no out-of-sample gain as levels (ratios about 1.0); as 12-month changes they do nearly as well as FCI-G (r* LW GS 0.71, r* LW MKT 0.76, real GS 0.79,
+  real EP_4 0.89). 1990-2026: ANFCI best (F 12.8, RMSE ratio 0.52, from 2008), then GS and FCI-G (0.80-0.91); 12-month changes of ANFCI do not help.
+- Side result: the 12-month change of real EP_4 has direct b 0.226 (t 3.1) on the next-12-month unemployment change, close to the FRB/US yardstick through Okun's law
+  (0.4525 / 2 = 0.226); timing is not exactly matched, so this is only suggestive.
