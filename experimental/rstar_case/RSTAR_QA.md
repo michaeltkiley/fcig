@@ -24,3 +24,5 @@ Labels: [decided] by the user; [open] to be asked; [proposal] my suggestion, not
 **S1 (30 Oct).** Rates measured relative to r*: the real policy rate, the real 10-year, the BBB yield (real) and equities through the earnings yield (inverse CAPE, E/P), "all implicit
 real rates" (user). Implementation notes (facts, not new choices): where BBB enters as a spread over the 10-year (FRB/US, GS), subtracting r* from both cancels, so r* changes BBB only
 where it enters as a yield (FCI-G). Open follow-ups: the mortgage rate (S1a); how the equity weight carries over from 100 ln CAPE to the E/P gap (S1b).
+
+**S1a (30 Oct).** Mortgage rate: treated like BBB: in FCI-G (where it enters as a yield) real and relative to r*; in FRB/US (a spread over the 10-year) unchanged, since r* cancels.
