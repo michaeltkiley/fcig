@@ -71,3 +71,5 @@ CP -2.9, forward impetus +0.1 to +0.2, realized -0.4 to -0.6.
 
 **R15 (30 Oct).** Conversions and units unchanged from the nominal case (GS x 0.945 / 0.98; NFCI 0.097 and ANFCI 0.185 per NS unit; FRB/US yardstick 0.4525). Files keep the full
 1973-2026 history of every index; in comparisons and charts NFCI and ANFCI are shown from 1990 only (their converted 1970s values are very large, e.g. NFCI +51 in mid-1974).
+
+**R16 (30 Oct).** r*: not part of the real case. The r*-gap cases are a separate, later set of cases building on the real case.
