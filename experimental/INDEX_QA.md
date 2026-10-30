@@ -352,3 +352,7 @@ Realized impetus (12-month change of current pressure) is dropped from the note.
 **A50 (30 Oct).** Current pressure is dropped from the note; it appears only in an appendix. The note features eventual pressure (level) and forward impetus (flow).
 (Background: eventual = current + forward impetus when effects stop building after 12 months; current pressure lags eventual by about 6.5 months and has no predictive content
 for unemployment, RSTAR_QA S8c.)
+
+**A51 (30 Oct).** The r*-adjusted case is the **baseline** of the note. The construction walks through the steps: start with nominal indexes (fine for periods of low, stable inflation
+and inflation expectations with a constant r*, but those conditions do not hold), then real, then r* (the baseline). The baseline is then compared with the existing (nominal)
+indexes (published FCI-G, GS, NFCI/ANFCI, etc.) to show where ours sit relative to the literature.

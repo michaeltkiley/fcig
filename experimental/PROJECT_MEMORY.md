@@ -206,6 +206,7 @@ The user closed the base nominal case. Next: the real case, which systematically
 - FCI-G scale check and horse race (RSTAR_QA S8, redone as local projections in S8a at the user's request: u(t+12) on current and lagged u and index):
   FCI-G's claimed scale (0.5 on u per +1 reading held) holds over 1974-2026 (sum of coefficients 0.44-0.58) but not over 1990-2026 (published 0.09-0.15, not significant).
   In-sample every index helps (r* above real; FCI-G most); out of sample almost nothing beats u's own lags (only r* FCI-G, RMSE ratio 0.94-0.97).
+- **Answer 51 (30 Oct): the r*-adjusted case is the note's baseline**; the construction walks nominal -> real -> r*; the baseline is compared with existing nominal indexes (published FCI-G, GS, NFCI/ANFCI) to place it in the literature. New structure: NOTE_PLAN section 3b.
 - Detailed LPs and smoothed indexes (RSTAR_QA S8b-S8c; `rstar_case/lp_detail.py`, `lp_smoothed.py`). User's view: "not sure these tell us a ton, but we should report
   what we learned". What we learned:
   1. Unemployment a year ahead responds to recent changes in financial conditions, not their level: level indexes enter as current minus 3-month-ago reading (sum of lag

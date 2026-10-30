@@ -53,6 +53,25 @@ Motivation for the macro-model angle: there is controversy over macro models and
    - the long-sample recursive yardstick cross-checks FRB/US.
 8. **Caveats and conclusion:** no ground truth, GS replication, information effects, data coverage, units, FRB/US expectations (model-consistent weights 2-3x larger).
 
+## 3b. Structure after answer 51 (30 Oct 2026): r* case is the baseline [section outline is a proposal; the baseline and the walk-through are the user's decision]
+1. **Introduction:** question, motivation (FOMC quotes), preview: our baseline index measures financial conditions relative to r*, in funds-rate units.
+2. **What the existing indexes do:** Table 1 (FCI-G, GS, NFCI/ANFCI, SF Fed proxy); all are nominal-rate based.
+3. **Two lenses and a common unit:** output lens (FRB/US yardstick; market VAR as a model-independent check) and transmission lens (NS policy-news units).
+4. **Construction, step by step:**
+   - 4.1 nominal: macro-model (FRB/US) and market-based indexes; eventual pressure and forward impetus;
+   - 4.2 why nominal is not enough: valid only with low, stable inflation and expectations and a constant r*; neither holds over 1973-2026;
+   - 4.3 real: matched-horizon expected inflation (Cleveland, Livingston before 1982), back to 1973;
+   - 4.4 r* (baseline): every implicit real rate (policy rate, 10-year, BBB and mortgage yields, earnings yield) as a gap to r* (Laubach-Williams one-sided; Kiley check);
+   - what each step changes (little for real since 1990, more in the 1970s; a lot for r* after 2008), and the cross-index agreement at each step (range 1.16 -> 0.95 -> 0.87).
+5. **The market alternative:** event-window weights, one-factor GLS; comparison with FRB/US weights.
+6. **Where the baseline sits relative to existing indexes:** our r* baseline (eventual pressure and forward impetus) against published FCI-G, GS, NFCI/ANFCI and the proxy funds rate:
+   levels, 12-month changes, groups, episodes; FCI-G against forward impetus.
+7. **What the data can identify (box):** policy surprises identify financial responses, not activity responses; unemployment local projections (changes, not levels; scales consistent;
+   FCI-G scale holds 1974-2026, not 1990-2026; small out-of-sample gains; r* versions predict better).
+8. **Caveats and conclusion:** r* uncertainty (LW vs Kiley), expected-inflation measurement before 1982, GS and FCI-G replications, FRB/US expectations, no ground truth.
+Appendix: current pressure (answer 50); model-consistent-expectations weights; nominal and real versions of every table.
+Work implied: section 6 needs a comparison of the r* baseline with the **published nominal** indexes (so far the r* comparison used our own replications in r* form).
+
 ## 4. Work items (in rough order)
 1. **Done (22 Oct):** read Arnaut-Bauer (2024) and Aramonte-Rosen-Schindler (2013) in full (neither converts any index to funds-rate equivalents; see section 7); read the Boivin-Kiley-Mishkin working paper version (the Handbook text itself is still unread); established which FCI Caballero-Simsek use (FCI-G). Notes: `lit/` folder.
 2. **Done (22 Oct):** collected and verified 62 quotes from FOMC minutes, transcripts, press conferences, speeches and Fed publications (`lit/lit_fomc_quotes.md`; strongest listed in section 7.1; page numbers and three attributions still to confirm).
