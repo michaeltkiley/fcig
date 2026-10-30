@@ -31,3 +31,6 @@ where it enters as a yield (FCI-G). Open follow-ups: the mortgage rate (S1a); ho
 1973-2026 mean E/P: weight per pp of the gap = w x (-100 / 5.65) = w x (-17.7). Option 3 (factor 100 / E/P(t)) shown and not adopted (`equity_conversion.py`).
 
 **S2 (30 Oct).** Laubach-Williams (one-sided, full-sample) is the main r*; Kiley (one-sided) is the check.
+
+**S3 (30 Oct).** Zero point: keep demeaning every variable over 1973-2026, as in the real case (r* matters through its movements over time, not its level).
+- Implementation detail (stated, not a new choice): quarterly r* is interpolated linearly between mid-quarter months; after the last quarter (2026Q2) the last value is held.
