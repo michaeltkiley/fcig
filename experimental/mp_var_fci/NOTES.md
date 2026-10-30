@@ -1,77 +1,46 @@
-# Market FCI and monetary policy shock identification: research design
+# Market FCI and monetary-policy shock identification: research design
 
-Draft, 30 Oct 2026 (first pass written before reading the index docs; see INDEX_AND_LITERATURE.md for corrections). Citations are from memory and **not yet checked against the papers**; verify before use. Tags: **[recall]** = my recollection of
-the paper, **[design]** = proposal here.
+Draft v2, 30 Oct 2026. Replaces the first draft, which was written before I had read the market FCI work and wrongly used the Fed FCI-G / Goldman-style indexes as the baseline.
+Read `INDEX_AND_LITERATURE.md` first: it describes the index (funds-rate-equivalent, five variables, FRB/US weights) and compares it with Gertler-Karadi and Caldara-Herbst.
 
-## 1. Question and contribution
-Baseline: a two-variable VAR in unemployment and the market FCI. Extension: add core PCE inflation and the federal funds rate (four variables)
-and study monetary policy shocks under three identification schemes:
+## 1. Question
+Starting from the two-variable VAR in unemployment and the market FCI, add core PCE inflation and the federal funds rate, and identify monetary policy shocks by (a) Cholesky ordering, (b) Nakamura-Steinsson (NS) external instrument,
+(c) Bauer-Swanson (BS) external instrument. Does including the market FCI make the impulse responses more robust to identification, larger, less subsample-dependent, and less dependent on the Fed information effect?
 
-1. Cholesky (recursive) ordering.
-2. Proxy-SVAR with Nakamura-Steinsson (NS, 2018) high-frequency surprises as external instrument.
-3. Proxy-SVAR with Bauer-Swanson (BS, 2023) surprises as external instrument.
+## 2. Why this index and not a credit spread
+It is in the same units as the instrument (pp of funds rate), has a model-implied transmission benchmark (about 1), carries no funds-rate term, keeps moving at the ZLB, maps to GDP through FRB/US,
+and has an r*-gap variant. Credit spreads (GK, CH) are about 2% of its monthly variance; equities, the dollar and the 10-year carry the rest. Details and caveats: `INDEX_AND_LITERATURE.md`.
 
-The claim to test: **adding a market-based FCI to the VAR makes monetary policy impulse responses more robust to identification, larger, and less
-dependent on subsample and on the Fed information effect.** Each of the four is a separate, testable hypothesis (section 6).
+## 3. Specifications
+System: (unemployment, core PCE, policy indicator, market FCI). Policy indicator: the funds rate, and the one-year yield (GK) for the ZLB-spanning sample.
+Index variants: nominal q4 (baseline), r*-gap q4 (subsample), q8 and q12 (horizon), without oil, and the Fed FCI-G and Goldman-style indexes from the main repo as outside comparisons.
+Identification: Cholesky with the index ordered before and after the policy indicator; proxy-SVAR with NS; proxy-SVAR with BS; each with and without the index in the VAR.
 
-## 2. Why the FCI could matter (mechanisms)
-- **Information / invertibility.** Proxy-SVARs need the VAR to span the structural shock (invertibility). Four slow macro variables plus a funds rate
-  probably do not; an FCI aggregates many forward-looking prices (yields, spreads, equities, dollar, house prices) and is the standard fix for
-  missing information (cf. Gertler-Karadi 2015 with the excess bond premium; Caldara-Herbst 2019 with credit spreads) **[recall]**.
-- **The transmission channel is measured directly.** Policy works on activity through financial conditions. With the FCI in the system you can show
-  the funds-rate shock -> FCI -> unemployment/inflation path and test how much of the real response runs through it.
-- **Information effect.** A surprise that raises yields and also raises equities (positive news) is not a tightening (Jarocinski-Karadi 2020 sign
-  restrictions) **[recall]**. The FCI includes equities and yields, so its own response to the instrument is a diagnostic: a "tightening" instrument that
-  loosens the FCI is information-contaminated. It can also be used to rotate/purge the instrument.
-- **Funds rate is uninformative at the ZLB / post-2008.** The FCI (or a long-rate/proxy funds rate) carries the policy stance when the funds rate is stuck.
-
-## 3. Literature positioning (honest overlap)
-- Proxy-SVAR: Stock-Watson 2018; Gertler-Karadi 2015 (1-year rate as policy indicator, EBP); Caldara-Herbst 2019 **[recall]**.
-- Instruments: Nakamura-Steinsson 2018 (information effect); Bauer-Swanson 2023 (surprises are predictable from public data; orthogonalizing to
-  macro/financial news removes the apparent information effect); Miranda-Agrippino-Ricco 2021 (information-robust, Greenbook-purged); Jarocinski-
-  Karadi 2020 **[recall]**.
-- Method comparison: Plagborg-Moller-Wolf 2021 (LP vs VAR), Ramey 2016 handbook chapter **[recall]**.
-- **Overlap risk:** adding a financial/credit variable to a proxy-SVAR is not new (GK, Caldara-Herbst). The contribution must be (a) a *composite market FCI* rather than one spread, (b) the systematic three-scheme comparison, and (c) the specific robustness/info-effect tests below. A literature search for "FCI in proxy-SVAR" and "information effect robustness" is the first task.
-
-## 4. Which FCI
-Superseded: see `INDEX_AND_LITERATURE.md` (what the index is, comparison with Gertler-Karadi and Caldara-Herbst, corrected variable choice). In short: baseline = GS-style level
-and unfiltered FCI-G components; FCI-G itself as an outcome, not a lagged regressor.
-
-## 5. Data and sample
-- Outcomes: unemployment rate, core PCE price index (log), federal funds rate (effective, or shadow rate / 1-year Treasury yield after 2008), FCI. Monthly.
-- Instruments: NS surprises (published on Nakamura's site) and BS surprises (published by Bauer/SF Fed) aggregated to monthly **[recall: both are public]**. Both end
-  before 2026; check coverage and extend via the underlying federal funds / Eurodollar-SOFR futures if needed.
-- Sample: 1990-2019 baseline (HFI data), 1990-2007 pre-crisis, 2009-2019 ZLB-era, and with/without 2020+. Each VAR: 12 lags monthly (or 6), Bayesian priors
-  (Minnesota) as a robustness variant. Credible bands via wild bootstrap (proxy-SVAR, Mertens-Ravn style) **[recall]**.
-- Funds rate term: ZLB makes Cholesky on the funds rate weak after 2008; use the 1-year yield as the policy indicator in the proxy schemes (as GK) and report the funds rate version where valid.
-
-## 6. Specifications and tests
-Four-variable systems: (U, PCEcore, FFR, FCI) with Cholesky orderings (FCI last = financial markets react to policy within the month; FCI first = policy
-reacts to markets; both reported). Comparison grid: {Cholesky, NS-IV, BS-IV} x {with FCI, without FCI} x {full, pre-2008, post-2008} x {raw instrument,
-orthogonalized instrument}. Metrics:
-
+## 4. Hypotheses and tests
 | Claim | Test |
 |---|---|
-| More robust to identification | Distance between IRFs across schemes (e.g. integrated absolute difference of unemployment/PCE IRFs at 0-48 months), with vs without FCI; bootstrap CI on the difference |
-| Larger | Peak response and cumulative response of U and PCE to a shock normalized to a 25 bp rise in the policy indicator |
-| Less subsample-dependent | Same IRF distance between pre-2008 and post-2008 samples, and recursive-window IRF stability |
-| Less information-effect dependent | (i) Sign of the FCI response to the raw NS instrument vs BS-orthogonalized instrument; (ii) first-stage F with and without FCI; (iii) change in the unemployment response when the instrument is purged of its predictable component (BS) and when Greenbook-controlled; (iv) JK-style check: share of surprises with yield up / FCI loosening |
-| Invertibility | Granger test of the instrument on VAR residuals with vs without FCI (a standard non-invertibility check) |
+| Transmission is as the model implies | Cumulative index IRF to a 1 pp policy shock vs the FRB/US benchmark (about 1 at q4); by component |
+| Policy reacts to market tightening (CH, in policy units) | Systematic-response coefficient of the policy indicator on the index; effect of omitting the index on IRFs (toward zero?) |
+| More robust to identification | Distance between unemployment/PCE IRFs across Cholesky/NS/BS, with vs without the index |
+| Larger | Peak and cumulative responses per 25 bp; and implied-GDP check: index IRF x 0.45% per pp (q4) against the VAR's response |
+| Less subsample dependent | Pre-2008 / ZLB / post-2015 / ex-2020 splits, nominal vs r*-gap index; recursive windows |
+| Less information-effect dependent | Sign of index response to raw vs orthogonalised instruments; JK-style check with equity and dollar components; first-stage strength with and without the index; invertibility (instrument Granger-causality on residuals) |
 
-Interpretation guard: "larger" is not "better"; if the FCI raises the estimated effect only by absorbing information effects, that should show up in
-test (iii). Report all four jointly.
+Guard: "larger" is not "better"; if the index only raises the estimate by absorbing the information effect, the last row should show it.
 
-## 7. Risks and open points
-1. **Mechanical correlation.** The FCI is built from prices that move on FOMC days, so it reacts to the instrument by construction. That is the point (transmission) but must
-   not be mistaken for identification strength; distinguish the contemporaneous FCI response from the lagged real effects.
-2. **Look-ahead in the FCI.** Replication series use filled/extrapolated inputs (house prices, CAPE, dollar); restrict VAR use to the period with real observations
-   (pre-2026) and prefer variables with no revisions.
-3. **FCI-G uses Fed-model weights**, so its inclusion partly imports the Fed's own transmission view. Another reason for MS/GS baseline.
-4. **Instrument sample ends early**, and post-2020 policy (QE, inflation surge) is outside the identification sample; the 2026 contribution is out of sample.
-5. **Weak instruments**: report the Montiel Olea-Stock-Watson robust F and Anderson-Rubin bands.
-6. **Novelty** (section 3) is unresolved until the literature search is done.
+## 5. Data
+Index: `ms5_level_daily_rstar.csv` and the nominal variant (1990-01-02 to 2026-10-20, daily), aggregated to month averages (also month-end for event windows). Outcomes: UNRATE, core PCE (PCEPILFE), funds rate, one-year yield (FRED).
+Instruments: NS and BS surprises; the SF Fed USMPD workbook (1994 on) and `michaeltkiley/monetary_policy_surprises` are the likely sources; check which shocks that repo already builds before rebuilding.
+Instrument sample ends well before 2026; the identification sample is about 1994-2019, with 2020+ and the 2026 episode as out-of-sample.
 
-## 8. Next steps
-1. Literature search for prior FCI-in-proxy-SVAR work; narrow the claim accordingly.
-2. Build `mp_dataset.py`: monthly aggregation of the FCI variants and the NS/BS instruments.
-3. Run the Cholesky baseline (2-var and 4-var), then proxy-SVARs; write `mp_irf.py` and the comparison table/plots.
+## 6. Risks
+1. **Circularity**: the weights are FRB/US-implied, so the index embeds the Fed model's transmission view; a ratio near 1 is partly by construction (the partials sum to the full hike within 4-11%). Report the component IRFs, not only the total.
+2. **Weak sensitivities and data links**: 2040 steady-state start, VAR expectations, 10-year as the long end, linear extrapolation, r* filter artifacts (NOTES in `ms_fci`).
+3. **Pre-2008 validation is weak** (+0.17 with the funds rate); the index is conditions relative to the sample mean, not a policy-rate proxy.
+4. **Instrument strength**: earlier LP-IV on a related index had first-stage F of 6-12; use robust inference.
+5. **Novelty** until a literature search is done.
+
+## 7. Next steps
+1. Confirm the specification of the existing two-variable VAR (section 4 of `INDEX_AND_LITERATURE.md`).
+2. Build the monthly dataset (index variants, outcomes, NS/BS instruments).
+3. Cholesky baseline with and without the index, then the proxy-SVARs and the tests above.
