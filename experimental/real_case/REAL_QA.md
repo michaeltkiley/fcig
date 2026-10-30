@@ -44,3 +44,8 @@ User added: extend all series back to the 1970s. Adopted without objection: befo
 **R8 (30 Oct).** House-price variable in the real case: the ratio's deviation from its trailing 15-year (180-month) average, then demeaned like every other variable (`hp_trend.py`). Noted as a possible change for the nominal case later.
 
 **R9 (30 Oct).** Real market index: keep the existing announcement-window weights (NS GLS: 10-year 0.6089, equities -0.0512, dollar 0.0654; 2-year-yield units) and apply them to the real 10-year, CAPE and real dollar, 1973-2026 (zero 1973-2026; 1990-2026 as a check).
+
+**R10 (30 Oct).** GS replication, real version: Goldman weights (funds rate 0.044, 10-year 0.451, BBB spread 0.396, CAPE -0.049, dollar 0.060) applied to the real policy rate
+(funds rate - 1-year expected inflation) and real 10-year (- 10-year expected inflation) as in R3, the BBB spread and 100 ln CAPE from the long data, and the **real** broad dollar
+(user's choice, for consistency with the market and FRB/US indexes). 1973-2026; zero 1973-2026 (main), 1990-2026 (check). Reported in GS points; the 2-year-unit conversion
+(x 0.945 / 0.98) is agenda item 8.
