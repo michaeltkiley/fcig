@@ -1,0 +1,16 @@
+First stage (robust t, F = t^2) of the monthly instrument on the VAR residual of the policy variable; index r*-gap in the system
+   window  policy variable          NS  F    BS  F      T
+   S1     ffr        (VAR from 1994-01)    4.7     4.0   381
+   S1     ffr_end    (VAR from 1994-01)    4.8     1.6   381
+   S1     gs2        (VAR from 1994-01)    3.5     2.5   381
+   S1     gs2_end    (VAR from 1994-01)    3.4     4.0   381
+   S2     ffr        (VAR from 1973-01)    0.3     0.3   393
+   S2     ffr_end    (VAR from 1973-01)    2.3     0.6   393
+   S2     gs2        (VAR from 1976-06)    0.7     1.4   393
+   S2     gs2_end    (VAR from 1976-06)    1.4     3.1   393
+
+Raw: correlation of the NS sum with the same-month change of each policy variable, 1994-2026
+   ffr       r +0.21  F  17.9
+   ffr_end   r +0.10  F   3.8
+   gs2       r +0.22  F  20.0
+   gs2_end   r +0.20  F  17.1

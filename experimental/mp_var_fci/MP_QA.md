@@ -150,3 +150,20 @@ Consequence: proxy-SVAR impulse responses (step 4) will be imprecise and unstabl
 
 **MP-Q10 [open, for the user].** How to handle the weak first stage? (a) Proceed to step 4 and report Anderson-Rubin bands honestly, accepting wide bands; (b) first try to strengthen the instrument (accumulate the instrument over two or three months, use the lagged instrument, use event-window changes of the policy variable instead of monthly residuals), then step 4; (c) supply the published Bauer-Swanson series (and possibly the NS series as published) to replace my purge. Combinations are possible. My suggestion: (c) if you have the file, otherwise (a) with (b) as a variant.
 **Optional input from the user:** the published Bauer-Swanson orthogonalized surprise series (a file or its location). Not required; nothing else is needed. FRED data are downloaded without a key (the CSV endpoint works); no credentials were found in the repo or environment, and none are needed.
+
+## Step 3b-3c results (30 Oct 2026): does the 2-year yield, month-end data or a different instrument fix the weak first stage? (`03b_monthend.py`, `03c_alt_instruments.py`, logs)
+User question: does the weak first stage mean the Gertler-Karadi approach (a short-yield policy indicator, here the 2-year) is needed?
+**Policy indicator.** First stage of NS on the VAR residual (r*-gap index in the system), F: S1 funds rate 4.7, 2-year 3.5; S2 funds rate 0.3, 2-year 0.7. Month-end instead of monthly-average values: S1 funds rate 4.8, 2-year 3.4; S2 2.3 and 1.4. **Using the 2-year yield, averaged or month-end, does not raise F** (all between 0.3 and 4.8).
+The raw correlation of NS with the monthly change in the 2-year (r 0.22, F about 20) falls to F about 3.5 once the VAR removes the predictable part: the surprise explains little of the unpredictable monthly movement.
+**Other USMPD instruments (monthly sums, same events), first-stage F:**
+| Instrument | S1 funds rate | S1 2-year | S1 index | S2 funds rate | S2 2-year | S2 index |
+|---|---|---|---|---|---|---|
+| NS | 4.7 | 3.5 | 1.4 | 0.3 | 0.7 | 1.0 |
+| MP1 (current meeting) | **9.3** | 1.4 | 0.1 | **7.9** | 0.1 | 0.2 |
+| MP2 (next meeting) | 7.2 | 0.6 | 0.4 | 1.8 | 0.0 | 0.0 |
+| ED4 (about 9-12 months ahead) | 2.0 | **5.6** | 1.4 | 0.0 | 1.7 | 1.6 |
+| path (ED4 net of MP1) | 0.1 | 3.5 | 2.8 | 0.7 | 1.3 | 3.8 |
+| 2-year event-window change | 2.5 | 3.3 | 3.0 | 0.0 | 0.7 | 2.8 |
+**Reading.** (1) Moving to the 2-year does not strengthen identification here; the best single first stage is the **funds rate with the current-meeting surprise MP1 (F about 8-9, near the usual 10)**, a different shock (target, not path/news) from NS. (2) For the 2-year, the best instrument is ED4 (F 5.6 in S1), only slightly above NS (3.5).
+(3) No instrument gets F near 10 for the index; the best (path, own 2-year change) reach about 3-4. (4) S2 (long VAR) is weaker throughout. So weak-instrument-robust inference is needed whichever indicator is used. Whether to use the 2-year as the main policy variable is a choice of units and economic content (it matches the index's units), not something the first stage supports or rules out.
+**MP-Q11 [open].** You said you prefer the 2-year yield: flip MP-A1 so the 2-year is the main policy variable (funds rate as robustness)? The evidence neither requires nor forbids it. If yes, the main instrument for the 2-year would be NS and ED4 (reported side by side); for the funds-rate version, NS and MP1.
