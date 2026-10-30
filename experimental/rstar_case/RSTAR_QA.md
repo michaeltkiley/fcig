@@ -57,3 +57,5 @@ realized 0.74 / 0.58 (4 / 12 lags). Latest (2026-09, LW): EP -0.69, CP -1.1, for
   from about 3.5 before 2008 to under 1 in 2009-16: 2009-16 looks tighter, 1990-2007 easier. Cross-index range falls again: nominal 1.16, real 0.95, r* LW 0.87, r* Kiley 0.78.
 - Latest (2026-09, zero 1990-2026, LW): EP_4 +1.4, MKT +0.7, GS +0.1 (real case +0.4, -0.7, -1.1): measured against r*, conditions are tighter than average since 1990.
 - Agenda items 1-7 done.
+
+**S7 (30 Oct).** Written up: NOTE_PLAN section 4g (proposed role in the note to be confirmed) and a paragraph on gaps to r* in the weighting note's mapping section.

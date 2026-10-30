@@ -128,6 +128,26 @@ Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-bas
 - **Open:** the market output VAR with the real GS index and the all-real FCI-G (R14, user's emphasis).
 - **Next case, r\*:** a separate set of cases building on the real case: rates as gaps to r\*, using the Kiley and the Laubach-Williams **one-sided** estimates from the **full-sample** (latest-vintage) estimation (user, 30 Oct).
 
+## 4g. r* cases (30 Oct 2026; `experimental/rstar_case/RSTAR_QA.md` S1-S6, PROJECT_MEMORY 3g)
+- **What changes relative to the real case:** every implicit real rate is measured as a gap to the natural rate r*.
+  - r*: Laubach-Williams one-sided, full-sample estimates (main); Kiley one-sided (check). Quarterly, interpolated to months.
+  - Gaps: real policy rate, real 10-year, real BBB and mortgage yields (where FCI-G uses yields; spreads over the 10-year are unchanged since r* cancels), and equities as the
+    earnings-yield gap E/P - r* (E/P = 1/CAPE), with each index's CAPE weight converted at the average E/P (1 pp of E/P = 17.7 log points of CAPE).
+  - Zero point: still the 1973-2026 mean of each variable, so r* matters through its movements over time, not its level.
+  - FCI-G: r* applied to changes as well (a fall in r* with real rates unchanged counts as tightening).
+  - Weights, conversions, VAR design and metric unchanged; NFCI/ANFCI unchanged.
+- **Results:**
+  - 1974-2026: close to the real case (levels corr 0.92-0.95 with LW, 0.96-0.97 with Kiley); same widest episodes (1975-82, 2000-01; equities).
+  - 1990-2026: r* changes the picture much more than real rates did (levels corr real vs r* about 0.6; nominal vs real 0.94-0.98): LW r* falls from about 3.5 before 2008 to
+    under 1 in 2009-16, so 2009-16 looks tighter and 1990-2007 easier.
+  - The indexes agree more at each step: mean cross-index range 1.16 (nominal), 0.95 (real), 0.87 (r*, LW), 0.78 (r*, Kiley), 1990-2026.
+  - Output lens: the r*-gap market index predicts unemployment better than the real one (Granger F 9.3 vs 4.5; yardstick 0.33 vs 0.24 at 4 lags; responses significant in months 1-36).
+  - FCI-G picks up the 2008 fall in r* as tightening (1-year +2.75 against +1.84 in December 2008).
+  - Latest (2026-09, zero 1990-2026, LW): FRB/US EP_4 +1.4, market +0.7, GS +0.1 (real case +0.4, -0.7, -1.1): against r*, conditions are tighter than their 1990-2026 average.
+- **Proposed role in the note [proposal, to be confirmed]:** with the real case, a robustness section showing the chain nominal -> real -> r*: what each step changes (little for
+  real rates; a lot for r* after 2008), the increasing agreement across indexes, and the better unemployment fit. Caveat: r* is estimated with wide uncertainty bands, and the
+  conclusions for 2009-16 and today depend on it (LW vs Kiley differ most there).
+
 ## 5. Assessment of the contribution (revised)
 **What the note would add.** (a) A common funds-rate unit across several widely used indexes, with comparison by group and by episode: shared understanding for communication. (b) A triangulation of the financial block of macro-model-based indexes with event-window evidence. (c) A funds-rate-unit version of FCI-G (the agent found no Fed source that provides one). (d) One more simple, transparent construction, offered as an alternative and not as a competitor.
 **What is already known or close (after reading).** Arnaut-Bauer (2024): four FCIs overlaid, a decomposition of the GS FCI only, and an event study of the GS FCI only; no common unit, no cross-index comparison. Aramonte-Rosen-Schindler (2013): twelve indexes in z-scores, correlations 22-96%, predictability only with 2008 in the sample, no policy-rate unit, no event study; stance: no index is uniquely accurate. Beaton-Lalonde-Luu (2009): the one FCI expressed in funds-rate terms (about 300 bp tightening since 2007; 625 bp with another model's multiplier), so the answer is very model-sensitive. Sack-Swanson (2023): FCI response to policy-induced 2-year yield moves (units of the 2-year yield). SF Fed proxy funds rate (policy-rate units from market variables). Chicago Fed Letter (Aug 2024) discusses FCI-G versus NFCI differences qualitatively via weights. Novelty risk assessed as low to moderate: the funds-rate-equivalent, by-group, episode and model-versus-market comparison were not found in any source read, and a targeted follow-up search for conversions (sell-side, staff, central bank blogs) found only single-index or asset-price-unit versions (section 7.4); Sack-Swanson's closing paragraph is the closest published statement of the idea. The narrow contribution is the combination of a common funds-rate unit, several index families, group and episode decomposition, and a market-based benchmark.
