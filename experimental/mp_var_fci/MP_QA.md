@@ -120,4 +120,15 @@ Main case: **12 lags in both windows** (inside the AIC range, same as the note's
 6. nominal, real and r*-gap index cases differ little under Cholesky (long u h12 +0.15, +0.15, +0.19; matched -1.14, -1.05, -1.08).
 
 **What this means for the project question (provisional).** Cholesky on a short window reproduces the wrong-sign problem (as the NS-based LPs did), so any gain from the index has to show up in the identified (proxy-SVAR) responses; the Cholesky benchmark says adding the index alone does not rescue them.
-**Open (user):** are the 1994-2026 funds-rate innovations mainly a ZLB-and-hiking-cycle artifact? An ex-ZLB check (drop 2009-15 and 2020-21 from the shock definition, or estimate on 1994-2007) would say so; not run, awaiting your decision (MP-Q9).
+**MP-Q9 answered: ex-ZLB check run (below), then step 3.**
+
+## Step 2d results (30 Oct 2026): ex-ZLB check (`02d_exzlb.py`, `02d_exzlb.log`, `irf_exzlb.csv`, `cholesky_exzlb_u.png`)
+Unemployment gap per +1 pp funds-rate innovation (r*-gap, 12 lags, 95% band); sd = one-sd innovation.
+| Window | sd (pp) | u at 12m without index | with index | funds rate at 12m |
+|---|---|---|---|---|
+| 1973-2008m11 (pre-ZLB, long) | 0.48 | +0.11 (-0.01, +0.23) | +0.08 (-0.07, +0.23) | +0.25 / +0.36 |
+| 1994-2008m11 (pre-ZLB, matched) | 0.14 | -0.85 (-1.24, -0.26) | -0.80 (-1.35, -0.11) | +2.7 |
+| 1994-2019 (pre-COVID) | 0.12 | -1.07 (-1.56, -0.41) | -1.13 (-1.69, -0.41) | +3.4 |
+| 1994-2026, ZLB months dummied | 0.13 | -0.63 (-0.96, -0.25) | -0.81 (-1.20, -0.30) | +2.7 / +3.1 |
+**The wrong sign does not come from the ZLB:** it is already there on 1994-2008m11, before any ZLB, and survives dummying the ZLB months. The break is the start of the sample (1994), not the ZLB. In every 1994- window the funds-rate innovation is small (0.12-0.15 pp vs 0.48 pp) and followed by a sustained rise of the funds rate
+(+2.7 to +3.4 pp at 12 months) with the index falling: consistent with post-1994 funds-rate moves being smoothed, largely anticipated hikes that respond to information about the economy. Hypothesis, not tested. The index again changes the response little.

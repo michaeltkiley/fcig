@@ -1,0 +1,9 @@
+Unemployment-gap response to +1 pp funds-rate innovation (95% band); sd_shock = one-sd innovation, pp; ffr12 = funds-rate response at 12 months
+  pre-ZLB long 1973-2008m11        without index  T=431 sd=0.48  u12 +0.11 (-0.01,+0.23)  u24 +0.12 (+0.05,+0.23)  ffr12 +0.25
+  pre-ZLB long 1973-2008m11        with index     T=431 sd=0.46  u12 +0.08 (-0.07,+0.23)  u24 +0.13 (+0.03,+0.25)  ffr12 +0.36  index h0 +0.08 h12 +0.04
+  pre-ZLB matched 1994-2008m11     without index  T=179 sd=0.14  u12 -0.85 (-1.24,-0.26)  u24 -0.45 (-1.01,+0.25)  ffr12 +2.71
+  pre-ZLB matched 1994-2008m11     with index     T=179 sd=0.15  u12 -0.80 (-1.35,-0.11)  u24 -0.66 (-1.56,+0.24)  ffr12 +2.78  index h0 -0.20 h12 -0.99
+  pre-COVID 1994-2019              without index  T=312 sd=0.12  u12 -1.07 (-1.56,-0.41)  u24 -1.24 (-2.01,+0.02)  ffr12 +3.39
+  pre-COVID 1994-2019              with index     T=312 sd=0.12  u12 -1.13 (-1.69,-0.41)  u24 -1.36 (-2.06,-0.10)  ffr12 +3.43  index h0 -0.28 h12 -1.52
+  1994-2026, ZLB months dummied    without index  T=393 sd=0.13  u12 -0.63 (-0.96,-0.25)  u24 -0.52 (-1.00,+0.02)  ffr12 +2.67
+  1994-2026, ZLB months dummied    with index     T=393 sd=0.13  u12 -0.81 (-1.20,-0.30)  u24 -1.02 (-1.57,-0.11)  ffr12 +3.12  index h0 -0.30 h12 -1.33
