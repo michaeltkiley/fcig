@@ -359,3 +359,8 @@ indexes (published FCI-G, GS, NFCI/ANFCI, etc.) to show where ours sit relative 
 - **Correction (user, 30 Oct):** the comparison with the literature is like for like at each step (building-block approach, for consistency): our nominal indexes against the
   existing nominal indexes, our real against real versions of the others, our r*-adjusted against r*-adjusted versions of the others (built from the replications: GS, FCI-G;
   NFCI/ANFCI unchanged). Not the r* baseline against published nominal series.
+
+**A52 (30 Oct).** Two headline families, side by side (r* baseline, and at each step of the walk-through):
+- the **macro-model (FRB/US) index**, paralleling FCI-G (model-based weights, the Fed's own index);
+- the **market index**, our new idea, prominent, paralleling GS (what practitioners look at on Bloomberg etc.).
+Open follow-ups: house prices in the macro-model index (A52a); whether the market index also carries a flow (forward impetus) or is shown as a level only, like GS.
