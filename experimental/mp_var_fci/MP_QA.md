@@ -205,3 +205,37 @@ With 2 lags: 2-year / NS S1 F 5.9, -0.04 (-1.03, +1.08); 2-year / ED4 S1 F 9.3, 
 **What is and is not established.** With the choices closest to Gertler-Karadi (1-year indicator, small system, few lags, homoskedastic F) the first stage is about 10 to 12; with this project's choices (2-year, four variables incl. the index, 12 lags, robust F) it is 3 to 6. I could not find Gertler-Karadi's own reported first-stage F or how they compute it;
 the literature does note that the proxy-on-VAR-error F depends on the specification and anchor variable (Lunsford 2015; [Colombo 2025](https://colombodaniele.github.io//files/COLOMBO_2025_Identification_or_propagation.pdf) on anchor dependence), and Känzig (2021) reports regular F 22.7 and robust F 10.6 for an oil proxy (a different application). So 'the literature has strong instruments' is not verified here; 'the reported F depends heavily on these choices' is.
 **Open (user): MP-Q12.** Which first-stage convention to adopt for the project (robust F with 12 lags as now, or a smaller system / fewer lags / 1-year indicator for comparison with the literature), and whether the index should stay in the system when it lowers first-stage strength.
+
+## Literature read: what the papers say about first-stage strength and how it relates to us (30 Oct 2026; `04c_gk_replication.py`, `04c_gk_replication.log`)
+Texts read in full-text form (not summaries): Gertler-Karadi 2015 ([PDF](https://peterkaradi.github.io/website/Published/GertlerKaradiSurprise.pdf)), Lunsford 2015 ([PDF](https://webarchive.ucr.edu/economics.ucr.edu/wp-content/uploads/2019/10/Lunsford-paper-for-4-13-16-seminar.pdf)), Colombo 2025 ([PDF](https://colombodaniele.github.io//files/COLOMBO_2025_Identification_or_propagation.pdf)). The replication code of Gertler-Karadi sits behind an ICPSR login and was not read, so their lag length is unknown to me.
+
+**Gertler-Karadi (2015) - what they say.**
+1. The first-stage numbers I could not find earlier are in the paper: with the 4-variable VAR (log IP, log CPI, **1-year rate**, excess bond premium; monthly, 1979:07-2012:06 for the lag coefficients, **instruments from 1991:01**) and instrument **FF4**, the first-stage F is **21.5 (robust 17.5), R2 about 0.078** (Table 3 column 2: 17.50; T = 258).
+2. **They found the 2-year weak in monthly VARs and said so:** "For the two year rate, none of the instrument combinations meets the threshold" (Table 3, 2-year columns: F 4.5, 5.2, 0.9, 3.8, 5.2). That is why the baseline is the **1-year rate with FF4** ("a setting where there is unlikely to be a weak instruments problem"); the 2-year, their "conceptually preferred" indicator, is a robustness exercise "despite the potential weak instruments problem", and they report similar responses.
+3. They choose the indicator/instrument pair after looking at the first stage (Table 3 compares instrument sets); they use the Stock-Wright-Yogo threshold of 10.
+4. Monthly construction (their footnote 11): surprises cumulated over the previous 31 days for each day of the month, then averaged over the days of the month, because the dependent variable is a monthly average (equivalent to the timing split I tested in 04b); the VAR is estimated over the longer sample and the instrument identifies only over its own window (as in my S2 structure).
+5. In a later specification with Greenbook controls (sample limited) they say they "cannot confidently rule out" weak instruments (F 2.3 to 4.2 in the appendix figures).
+
+**Lunsford (2015).** The proxy literature's F is not the single-equation first stage but the F from projecting the **proxy on all the VAR errors**; critical values for 10% asymptotic bias at 5% are about **7-9** for conventional VAR sizes. He notes weak proxies are common: only 5 of the 18 proxies in Montiel Olea-Stock-Watson/Stock-Watson (2012) exceed 7.81.
+**Colombo (2025).** Relevance is usually tested on one anchor equation's residual (as GK do); this is anchor-dependent. A shock-based F (regress the recovered shock index on the instrument) is weakly larger and anchor-free. For GK's FF4 on the full 1979M7-2012M6 sample he finds the anchor-based F **fails 10 (4-variable VAR: 9.02)** while the shock-based F is **15.48** (trivariate: 10.27 and 11.13). The gain arises when the instrument loads on several variables (the 1-year rate and the excess bond premium).
+
+**Our numbers on the same conventions (homoskedastic F, [robust]); Lunsford F; Colombo shock-based F, [robust].**
+| Case | anchor F | Lunsford F | Colombo F |
+|---|---|---|---|
+| Approx. replication of GK's first stage (USMPD FF4, 1-year, 12 lags, 1994-02..2012-06, T = 221) | 6.6 [5.5] | 3.1 | 12.6 [9.6] |
+| same, 6 lags | 10.3 [7.2] | 3.9 | 15.9 [9.1] |
+| same, 2-year / FF4 (12 lags) | 1.2 [1.2] | 1.8 | 7.2 [4.7] |
+| Project: 2-year / NS, S1 | 6.4 [3.5] | 2.1 | 8.5 [5.3] |
+| Project: 2-year / ED4, S1 | 7.6 [5.6] | 2.4 | 9.6 [7.3] |
+| Project: funds rate / MP1, S1 | 34.3 [9.3] | 9.1 | 36.7 [10.4] |
+| Project: 2-year / NS, no index, S1 | 11.2 [6.4] | 3.9 | 11.9 [7.1] |
+| Project: any instrument, S2 (long VAR) | 0.1 to 8.8 | 0.5 to 3.4 | 1.9 to 10.3 |
+**Relating the papers to us.**
+- **The 2-year problem is the same one Gertler-Karadi documented**, on their data (F 0.9-5.2); our 2-year numbers (0.8-7.6 across conventions) are in that range. This is not a feature of my construction.
+- **The strong first stages in the literature come from a specific specification** chosen partly for strength: 1-year rate, FF4, instrument window from 1991, anchor F with their VAR. On our data and the closest approximation (1994-2012, 12 lags) the same pair gives anchor F 6.6 (robust 5.5), and 10.3 with 6 lags; an independent re-estimation (Colombo) of their own VAR on the full sample gives 9.02. So even GK's instrument is borderline outside its original window and conventions.
+  Differences I cannot close from here: 1991-93 are missing in USMPD (GK's instruments start 1991-01); GK's lag length; vintage of the data.
+- **By Lunsford's stricter test the weakness is widespread**, including the GK specification on our data (3-4 against critical values of 7-9); only funds rate / MP1 on S1 (9.1) clears it. This matches his observation that weak proxies are the norm.
+- **Colombo's shock-based F is higher** and brings several S1 cases to 8.5-14 (funds rate / NS 13.9), but not S2. The index adds little loading, so the gain is modest; dropping the index raises the anchor F (11.2 vs 6.4).
+- The monthly instrument sum with the timing split (GK's method) did not raise our F (04b).
+**What this changes.** (1) My earlier statement that GK's reported F could not be found is replaced by the above. (2) The project's 2-year main choice (MP-A10) is the choice GK explicitly avoided for baseline because of weak instruments; it is defensible as in this project's units, but results should come with weak-instrument-robust sets (as in step 4) and a GK-style baseline (1-year indicator with FF4/MP1 instruments) for comparison. (3) Whether an F near 5-9 is acceptable depends on the convention: report anchor, Lunsford and Colombo F, with the thresholds.
+**MP-Q12 [open, restated].** Report side by side (a) the 2-year main with robust sets and (b) a GK-style baseline (1-year, FF4 or MP1), and the three F statistics for each? The 1-year yield and FF4 are in the data; the 1-year index units would need a conversion from the 2-year.
