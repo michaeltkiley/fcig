@@ -1,3 +1,6 @@
+> **Note (30 Oct 2026):** this folder holds the FRB/US sensitivities and the **macro-model levels index** (formerly "MS-style"/"five-variable"). It is **not** the market index of the note
+> (that is built from policy-news responses; see `../path_fci/`, `../market_macro/`, `../PROJECT_MEMORY.md` section 9 and the glossary in the root `CLAUDE.md`). Text below is the original Oct 2026 write-up.
+
 # EXPERIMENTAL: Morgan Stanley-style five-variable financial conditions index
 
 Status: exploratory, unverified, not used by the daily update workflow or by `fcig_replicate.py` / `fcig_gs.py` (those only supply input data

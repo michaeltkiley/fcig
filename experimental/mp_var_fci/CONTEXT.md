@@ -1,7 +1,6 @@
 # Context: the market index and what has already been learned (read before MP_QA.md)
 
-30 Oct 2026. Source: `experimental/PROJECT_MEMORY.md` (esp. section 9, "Where we are"), `INDEX_QA.md` A49-A56, `lp_weights/RESULTS.md`, `fci_note/` (paper and replication package), all on branch
-**`ccr-3a1fbe39-so6omu`** (not on `main` or on this branch). Earlier versions of this folder's notes were built on the wrong index (the five-variable Morgan Stanley-style one) and on a guess about your VAR; they are replaced.
+30 Oct 2026. Source: `experimental/PROJECT_MEMORY.md` (esp. section 9, "Where we are"), `INDEX_QA.md` A49-A56, `lp_weights/RESULTS.md`, `fci_note/` (paper and replication package), all on `main` (merged in PR #8). Earlier versions of this folder's notes were built on the wrong index (the five-variable Morgan Stanley-style one) and on a guess about your VAR; they are replaced.
 
 ## 1. The market index (MKT), as in the note
 - **Weights from policy news.** Regress the event-window changes in the 10-year yield, equity valuation (100 ln CAPE) and real broad dollar (100 ln) on the **Nakamura-Steinsson (NS) policy-news factor** from the SF Fed USMPD

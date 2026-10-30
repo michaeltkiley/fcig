@@ -266,3 +266,5 @@ Offered: add as a robustness script and appendix table in the replication packag
 **Open / possible next steps:** user's review of the draft; the sample-split robustness above; common-experiment idea (permanent step through every index);
 market output VAR with GS / FCI-G (R14); house-price detrending decision for experimental nominal case (R8, already applied in the replication package).
 
+**31 Oct addendum (30 Oct session 2).** The experimental branch was merged to `main` (PR #8); root `CLAUDE.md` and `experimental/README.md` now give the entry points and glossary. New parallel project started: `experimental/mp_var_fci/`
+(monetary policy shocks with the market index: Cholesky vs Nakamura-Steinsson vs Bauer-Swanson instruments, comparison with Gertler-Karadi and Caldara-Herbst); design in `CONTEXT.md`, decisions MP-Q1 to MP-Q6 open in `MP_QA.md`. Start there for that project.

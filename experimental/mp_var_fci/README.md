@@ -1,7 +1,6 @@
 # EXPERIMENTAL: monetary policy shocks and the market index
 
-Status: design stage, no code yet. Parallel project to `fci_note/` (the market-index note). **Everything it builds on is on branch `ccr-3a1fbe39-so6omu`** (`experimental/PROJECT_MEMORY.md` section 9, `INDEX_QA.md`, `lp_weights/`, `market_macro/`, `fci_note/`);
-this branch holds only this folder. Not used by the daily workflow.
+Status: design stage, no code yet. Parallel project to `fci_note/` (the market-index note). Everything it builds on is in `experimental/PROJECT_MEMORY.md` (section 9), `INDEX_QA.md`, `lp_weights/`, `market_macro/` and `../../fci_note/`. Not used by the daily workflow.
 
 ## Question
 Add core PCE inflation and the policy rate to the two-variable VAR (unemployment gap, market index) and identify monetary policy shocks by Cholesky ordering, a Nakamura-Steinsson external instrument and a Bauer-Swanson external instrument.
