@@ -48,3 +48,12 @@ and tighter after. Latest (2026-09, LW): EP_4 +0.44 (real -0.86), MKT -0.69 (-2.
 Granger F 9.3 (LW, 4 lags; real case 4.5), unemployment-equation residual sd 0.156 vs 0.158 (4 lags) and 0.149 vs 0.152 (12); bootstrap bands above zero in months 1-36.
 Yardstick Phi(12): LW 0.329 (4 lags), 0.568 (12); Kiley 0.288, 0.531 (real case 0.235, 0.501). Correlation with the r*-gap FCI-G (1-year, LW): forward impetus 0.71 / 0.82,
 realized 0.74 / 0.58 (4 / 12 lags). Latest (2026-09, LW): EP -0.69, CP -1.1, forward impetus +0.5, realized -0.5 to -0.7.
+
+**S6 (30 Oct).** Comparison: 1974-2026 against the real case, plus 1990-2026 against the real and nominal cases (nominal -> real -> r*); Kiley in summary lines
+(`compare_rstar.py`, log `compare_rstar.log`, chart `compare_rstar_levels.png`).
+- 1974-2026: r*-gap and real versions correlate 0.92-0.95 (LW; Kiley 0.96-0.97) in levels; the four main indexes still move together; widest windows 1975-82 and 2000-01
+  (equities), as in the real case. The 1981-82 peak is higher (EP_4 about +9 in 1982 against +5 to +7), since LW r* was moderate while real rates were very high.
+- 1990-2026 (zero 1990-2026): r* changes the picture much more than real rates did: corr real vs r* 0.57-0.63 in levels (nominal vs real 0.94-0.98), because LW r* falls
+  from about 3.5 before 2008 to under 1 in 2009-16: 2009-16 looks tighter, 1990-2007 easier. Cross-index range falls again: nominal 1.16, real 0.95, r* LW 0.87, r* Kiley 0.78.
+- Latest (2026-09, zero 1990-2026, LW): EP_4 +1.4, MKT +0.7, GS +0.1 (real case +0.4, -0.7, -1.1): measured against r*, conditions are tighter than average since 1990.
+- Agenda items 1-7 done.
