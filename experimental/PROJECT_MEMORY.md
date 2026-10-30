@@ -243,3 +243,26 @@ No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and c
 5. FRB/US: VAR-expectations old design is the base (answer 8); model-consistent results kept as an alternative (`ms_fci/frbus_mce.csv`).
 6. Market-index output lens (3f): decide the impetus concept (question 49); check lag-profile sensitivity; decide its role in the note (second macro lens beside FRB/US).
 7. Replication script and data vintage; raw/ inputs (FRED, OFR, EBP, Shiller CAPE, USMPD, FRB/US package) are not in git.
+
+## 9. WHERE WE ARE (end of session, 30 Oct 2026) -- start here next time
+**Status.** A full draft note and replication package exist: `fci_note/paper/fci_note.tex` (+ PDF, 13 pages) and `fci_note/replication/` (README, data snapshot,
+`fci/` utilities, scripts 01-07, `run_all.py`; text numbers are LaTeX macros written by the scripts). The user will review the whole document; await their comments.
+Compile: `cd fci_note/replication && python run_all.py && cd ../paper && pdflatex fci_note.tex` (twice). A TeX engine was installed with apt in this session only;
+in a new container run `apt-get update && apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended lmodern`.
+**Decisions governing the note** (experimental/INDEX_QA.md A49-A56; NOTE_PLAN 3b-3e):
+- The market index is the main index (new, simple, transparent benchmark): weights from policy-news responses (NS factor, USMPD, one-factor GLS) and dynamics from a
+  transparent VAR (unemployment gap + index, Cholesky u first, 12 lags main, 4 check, 2020 dummies); it has a level and a flow (forward impetus, FCI-G form) to parallel FCI-G.
+- Construction walks nominal -> real -> r* (baseline: Laubach-Williams one-sided full-sample; Kiley check); comparisons are like for like at each step (our nominal vs
+  existing nominal, real vs real replications, r* vs r* replications). Comparators: FCI-G, our FRB/US levels index, GS (practitioners), ANFCI.
+- Headline (A56): benefits first (data-driven, empirically based, transparent VAR dynamics, independent of FRB/US, a black box not widely used in research); cost (less
+  rich data) secondary; market index closest to GS; r* matters for long spans; approaches still differ enough to create policy uncertainty; FCI-G has no level, GS nominal
+  and proprietary. Forward impetus only (A49); current pressure appendix only (A50).
+**Items flagged to the user for checking:** Kiley (2020 IJCB) citation for the one-sided series; paraphrased FOMC quote in the intro; box wording "consistent scales"
+(forward impetus coefficient 0.50 vs yardstick 0.65 in the replication data); "mostly equities" for the 1977-82 gap.
+**Last analysis (not saved as a script):** r* market-index VAR, 1973-2026 vs 1990-2026. 12 lags: Phi(12) 0.65 vs 0.62 (same first year), but post-1990 shocks die out
+faster (own index path at 24m 1.13 vs 0.58), so the u response fades sooner (24m 0.64 vs 0.52, bands include zero; significant months 1-33 vs 2-21); Granger F 5.3 vs 2.9;
+shock sd 0.32 vs 0.22. Index held at 1: u 0.46 vs 0.47 at 12m, 0.49 vs 0.59 at 24m (post-1990 effect as large or larger). 4 lags: Phi(12) 0.40 vs 0.55.
+Offered: add as a robustness script and appendix table in the replication package.
+**Open / possible next steps:** user's review of the draft; the sample-split robustness above; common-experiment idea (permanent step through every index);
+market output VAR with GS / FCI-G (R14); house-price detrending decision for experimental nominal case (R8, already applied in the replication package).
+
