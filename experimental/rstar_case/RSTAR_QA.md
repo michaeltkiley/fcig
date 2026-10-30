@@ -71,3 +71,13 @@ realized 0.74 / 0.58 (4 / 12 lags). Latest (2026-09, LW): EP -0.69, CP -1.1, for
   real EP_4 0.89). 1990-2026: ANFCI best (F 12.8, RMSE ratio 0.52, from 2008), then GS and FCI-G (0.80-0.91); 12-month changes of ANFCI do not help.
 - Side result: the 12-month change of real EP_4 has direct b 0.226 (t 3.1) on the next-12-month unemployment change, close to the FRB/US yardstick through Okun's law
   (0.4525 / 2 = 0.226); timing is not exactly matched, so this is only suggestive.
+
+**S8a (30 Oct).** User: the forecast regressions should be local projections: u(t+12) on current and lagged u and current and lagged index. Redone in `lp_unemp.py`
+(lags 0..L-1, L = 4 main and 12; HAC; 2020-2021Q1 dropped; log `lp_unemp.log`). This replaces the direct regressions and out-of-sample results of S8 (VAR Granger results stand).
+- FCI-G scale: the sum of the index coefficients (a reading held over the lag window) is about the claimed 0.5 over 1974-2026 (all real 0.55 / 0.54, se 0.14 / 0.18;
+  nominal 0.50 / 0.58; r* LW 0.46 / 0.44), but 0.09-0.15 (not significant) over 1990-2026 for the published series. The coefficient on the current reading alone (a new rise,
+  past readings held) is larger: 1.2-1.3 (1974-2026), 0.55-0.74 (published, 1990-2026).
+- Horse race: every index is significant in-sample over 1974-2026 (Wald p <= 0.02), r*-gap versions above real ones; FCI-G versions add most (adjusted R2 +0.07 to +0.08).
+  Out of sample (origins 1995-2025) almost nothing beats the u-only projection: only the r* LW FCI-G (RMSE ratio 0.95 / 0.94) and r* Kiley FCI-G (0.97); level indexes 0.99-1.13.
+  Over 1990-2026 the FCI-G versions are slightly below 1 at L = 4 (0.97-0.98), everything else above 1 (ANFCI 1.13-1.28 despite the best in-sample fit). The large out-of-sample
+  gains in S8 came from a sparse specification with a weaker benchmark.
