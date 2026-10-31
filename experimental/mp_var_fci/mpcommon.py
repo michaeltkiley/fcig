@@ -84,3 +84,12 @@ def ar_set(Phi_rows, e, p, z, level=3.841):
         else:
             out.append((-np.inf, np.inf))
     return out
+
+
+def lunsford_colombo(e, z, anchor):
+    """Lunsford F (instrument projected on all VAR errors) and Colombo shock-based F; also the impact vector b (anchor normalized to 1)."""
+    X1 = sm.add_constant(z.values)
+    gam = np.array([sm.OLS(e[c].values, X1).fit().params[1] for c in e.columns]); b = gam / gam[list(e.columns).index(anchor)]
+    FL = sm.OLS(z.values, sm.add_constant(e.values)).fit().fvalue
+    w = e.values @ np.linalg.solve(np.cov(e.values.T), b); FC = sm.OLS(w, X1).fit().tvalues[1] ** 2
+    return FL, FC, b

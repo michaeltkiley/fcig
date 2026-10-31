@@ -56,6 +56,8 @@ and how to treat the 2020 months and the 2021-22 spike. Headline PCE not run unl
 **MP-A7 (30 Oct 2026). Details set at the start of step 1.** [decided, exploratory] (i) Inflation: the **raw monthly** annualized core PCE rate (no 3-month average); (ii) **enough lags**: the lag length is chosen from the data in step 2 (information criteria plus residual autocorrelation, not fixed at 12), with a long-lag check, because a noisy monthly inflation series needs more lags;
 (iii) **Cholesky order: unemployment, inflation, funds rate, market index**, so the funds rate comes before the index and the index responds to the policy shock contemporaneously (the policy rate does not respond to the index within the month; the Caldara-Herbst concern about that restriction is reported, with the reverse order as a check).
 
+**MP-A11 (31 Oct 2026). Path decided.** [decided, exploratory] (i) **Keep the full-sample proxy-SVAR as a case** (not only a documented negative result); (ii) **add the excess bond premium or the NFCI** to the systems (full sample and the Caldara-Herbst window) and see how that goes; (iii) **then try the Greenbook purge** (Miranda-Agrippino-Ricco; the user recalls the data are on the Philadelphia Fed site); (iv) report interim results along the way, and finish with a **full exploration and a summary report**.
+
 ## Status of decisions (exploratory; revisit freely)
 | ID | Decision | Status |
 |---|---|---|
@@ -65,6 +67,7 @@ and how to treat the 2020 months and the 2021-22 spike. Headline PCE not run unl
 | MP-A4 | Nominal, real, r*-gap index; r*-gap main | exploratory |
 | MP-A5 | Inflation = core PCE monthly rate, annualized | exploratory |
 | MP-A7 | Raw monthly inflation; lags chosen from the data; Cholesky order u, inflation, funds rate, index | exploratory |
+| MP-A11 | Keep full-sample proxy case; add EBP or NFCI; then Greenbook purge; interim reports; full summary report | exploratory |
 | MP-A6 | Comparators: market index first, then GS, then FCI-G (flow form) | exploratory |
 
 All six questions answered (30 Oct 2026). Next: build the dataset and the Cholesky baseline, then the proxy-SVARs; see the plan below.
@@ -313,4 +316,4 @@ Path-type instruments are useless for the funds rate in this window: NS F = 0.5 
 3. **Outside the CH window (2008-2026), use event-study evidence, not macro IRFs:** the market index is built from event-window responses, where identification is strong (F 332); report the index's high-frequency response by era and instrument, and leave macro IRFs descriptive (Cholesky with caveats).
 4. **Not feasible without new data:** Chair speeches/testimony and 1988-93 events (Bauer-Swanson), payroll surprises and Treasury skewness for a six-variable purge; a strong full-sample 2-year first stage.
 **Expected outcome and risks.** Short sample (about 160 months), wide sets, possibly a null result for the index beyond EBP; priors can manufacture precision (CH: with the 2-year proxy the result depends on the prior). The contribution would be the test of the index against the CH credit-spread benchmark and the policy-reaction coefficient to a broad market index, not a full-sample identified IRF.
-**MP-Q13 [open, for the user].** Adopt the CH-window path (items 1-3), with the original full-sample comparison kept as a documented negative result?
+**MP-Q13 [answered, see MP-A11].** Adopt the CH-window path (items 1-3), with the original full-sample comparison kept as a documented negative result?
