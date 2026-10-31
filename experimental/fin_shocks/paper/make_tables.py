@@ -4,18 +4,21 @@ Markers: ** = 90% interval excludes zero; dagger = 68% interval excludes zero (b
 import os, numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 HERE = os.path.dirname(os.path.abspath(__file__)); UP = os.path.dirname(HERE)
-FILES = [("nom-0_nom-1", ""), ("real-0_real-1", ""), ("rstar-0_rstar-1", ""), ("kiley-0_kiley-1", ""), ("ma8-0_ma8-nom_ma8-real_ma8-rstar", ""),
-         ("nom-0_nom-1_nom-real_trend", ""), ("fwd-0_fwd-1_upi", ""), ("fwd-0_fwd-1_upiip", ""), ("fwd-nom_fwd-real_fwd-rstar_upi", ""), ("kiley-nom_kiley-real_kiley-rstar_upi", ""),
-         ("nom-rstar_trend_upi", ""), ("rstar-nom_rstar-real_upi", ""), ("rstar-0_rstar-1_drop2021", "drop2021"), ("rstar-0_rstar-1_end2019", "end2019")]
-def _load(suffix):
+import glob
+def _load(irf_files):
+    """All midas_core outputs; the sample tag comes from the file name; duplicates (same case run twice) keep the newest file."""
     out = []
-    for f, smp in FILES:
-        fn = os.path.join(UP, f"midas_core_{f}{suffix}.csv")
-        if os.path.exists(fn): out.append(pd.read_csv(fn).assign(sample=smp))
-    z = pd.concat(out); z["fci"] = z.fci.astype(str); return z
-d = _load(""); irf = _load("_irf")
-if "trend" not in d: d["trend"] = 0
-d["trend"] = d.trend.fillna(0).astype(int); irf["trend"] = irf.trend.fillna(0).astype(int)
+    for fn in sorted(glob.glob(os.path.join(UP, "midas_core_*.csv")), key=os.path.getmtime):
+        if fn.endswith("_irf.csv") != irf_files or os.path.basename(fn) in ("midas_core.csv", "midas_core_irf.csv"): continue
+        smp = "drop2021" if "drop2021" in fn else ("end2019" if "end2019" in fn else "")
+        z = pd.read_csv(fn).assign(sample=smp)
+        if "trend" not in z: z["trend"] = 0
+        out.append(z)
+    z = pd.concat(out); z["fci"] = z.fci.astype(str); z["trend"] = z.trend.fillna(0).astype(int)
+    keys = ["macro", "rate", "fci", "trend", "sample", "lags", "var"] + (["h"] if irf_files else [])
+    return z.drop_duplicates(keys, keep="last")
+d = _load(False); irf = _load(True)
+TR = 1   # FS-A24: quadratic time trend in every monthly equation is the baseline assumption for all results
 os.makedirs(os.path.join(HERE, "tables"), exist_ok=True); os.makedirs(os.path.join(HERE, "figures"), exist_ok=True)
 d.to_csv(os.path.join(HERE, "tables", "all_results.csv"), index=False, float_format="%.4f")
 
@@ -39,12 +42,12 @@ def table(rows, var, macro="u,pi", name=""):
     out += ["\\bottomrule", "\\end{tabular}"]
     open(os.path.join(HERE, "tables", name + ".tex"), "w").write("\n".join(out) + "\n")
 
-CORE = [("Nominal", "nom", "0", 0), ("Nominal", "nom", "1", 0), (None,) * 4, ("Real", "real", "0", 0), ("Real", "real", "1", 0), (None,) * 4,
-        ("$r^*$-gap", "rstar", "0", 0), ("$r^*$-gap", "rstar", "1", 0)]
+CORE = [("Nominal", "nom", "0", TR), ("Nominal", "nom", "1", TR), (None,) * 4, ("Real", "real", "0", TR), ("Real", "real", "1", TR), (None,) * 4,
+        ("$r^*$-gap", "rstar", "0", TR), ("$r^*$-gap", "rstar", "1", TR)]
 for var, nm in (("u", "tab1_u"), ("P", "tab2_p")): table(CORE, var, "u,pi", nm)
 for var, nm in (("u", "tab3_ip_u"), ("P", "tab3_ip_p"), ("ip", "tab3_ip_ip")): table(CORE, var, "u,pi,ip", nm)
 FL = (("0", "none"), ("nom", "nominal"), ("real", "real"), ("rstar", "$r^*$-gap"))
-def block(lab, rate, tr=0):
+def block(lab, rate, tr=TR):
     out = []
     for f, fl in FL:
         ff = "1" if f == {"rstar": "rstar", "nom": "nom"}.get(rate) else f      # same-form FCI is stored as fci = 1
@@ -52,10 +55,10 @@ def block(lab, rate, tr=0):
     return out + [(None,)]
 # FCI held at the note's three indexes (nominal, real, r*-gap); only the 2-year adjustment changes (user, FS-A23)
 ROB = (block("2-year $r^*$-gap, Laubach--Williams (baseline)", "rstar") + block("2-year $r^*$-gap, Kiley", "kiley")
-       + block("2-year $-$ 9--10y forward rate", "fwd") + block("2-year nominal + quadratic trend", "nom", tr=1) + block("2-year $-$ 8-year average", "ma8"))[:-1]
+       + block("2-year $-$ 9--10y forward rate", "fwd") + block("2-year $-$ 8-year average", "ma8"))[:-1]
 for var, nm in (("u", "tab4_rob_u"), ("P", "tab4_rob_p")): table(ROB, var, "u,pi", nm)
-SMP = [("Baseline sample", "rstar", "1", 0, "", "$r^*$-gap (LW)"), ("Also drop 2021", "rstar", "1", 0, "drop2021", "$r^*$-gap (LW)"), ("End in 2019", "rstar", "1", 0, "end2019", "$r^*$-gap (LW)"),
-       (None,), ("Baseline sample", "rstar", "0", 0, "", "none"), ("Also drop 2021", "rstar", "0", 0, "drop2021", "none"), ("End in 2019", "rstar", "0", 0, "end2019", "none")]
+SMP = [("Baseline sample", "rstar", "1", TR, "", "$r^*$-gap (LW)"), ("Also drop 2021", "rstar", "1", TR, "drop2021", "$r^*$-gap (LW)"), ("End in 2019", "rstar", "1", TR, "end2019", "$r^*$-gap (LW)"),
+       (None,), ("Baseline sample", "rstar", "0", TR, "", "none"), ("Also drop 2021", "rstar", "0", TR, "drop2021", "none"), ("End in 2019", "rstar", "0", TR, "end2019", "none")]
 for var, nm in (("u", "tab5_smp_u"), ("P", "tab5_smp_p")): table(SMP, var, "u,pi", nm)
 
 
@@ -65,7 +68,7 @@ cases = [("nom", "0", "Nominal 2-year, no FCI"), ("nom", "1", "Nominal 2-year an
 fig, ax = plt.subplots(2, 4, figsize=(11, 5), sharey="row")
 for j, (rate, fci, title) in enumerate(cases):
     for i, (var, ylab) in enumerate((("u", "Unemployment gap (pp)"), ("P", "Core PCE price level (%)"))):
-        g = irf[(irf.macro == "u,pi") & (irf["var"] == var) & (irf.rate == rate) & (irf.fci == fci) & (irf.lags == 6) & (irf.trend == 0) & (irf["sample"] == "")].sort_values("h")
+        g = irf[(irf.macro == "u,pi") & (irf["var"] == var) & (irf.rate == rate) & (irf.fci == fci) & (irf.lags == 6) & (irf.trend == TR) & (irf["sample"] == "")].sort_values("h")
         a = ax[i, j]; a.fill_between(g.h, g.lo, g.hi, color="0.85", lw=0); a.fill_between(g.h, g.lo68, g.hi68, color="0.65", lw=0)
         a.plot(g.h, g.r, color="k", lw=1.6); a.axhline(0, color="k", lw=0.6)
         a.plot(*BS[var], "o", ms=4, mfc="none", mec="tab:red", label="Bauer-Swanson (2023; CPI for prices)" if (i == 0 and j == 0) else None)
