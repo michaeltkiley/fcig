@@ -119,6 +119,18 @@ Reading [inference unless marked]:
 3. **What this says about the identifying assumption.** The propagation is estimated from the reduced-form link between lagged financial conditions and each monthly variable, over all sources of variation (assumption (c) in section 2). For unemployment and core prices that link has the conventional sign. For IP and commodity prices it is procyclical in 1994-2026: rates and the index rise in expansions, and IP and commodity prices rise with them (2004-06 and 2021-22 are the obvious episodes). The window impact cannot correct this, because the macro side is not identified by the shock. So the commodity and IP results are evidence that assumption (c) fails for demand-sensitive, forward-looking variables, and a warning for the unemployment result too: it may hold for unemployment only because unemployment lags. Bauer-Swanson identify the whole VAR's response to the shock, so they do not need this assumption.
 4. Proposal (for decision): keep the unemployment / core-PCE system as the base; report alternative 1 as the closest like-for-like with Bauer-Swanson, with IP flagged as not matching; report alternative 2 (IMF commodity index) as a diagnostic of assumption (c).
 
+**Quadratic time trend (FS-A13; `midas_bs.py 200 <case> 3,6,12 trend`; `midas_bs_BS{0,1,2}_trend.log/.csv`).** A trend in t and t² is added to every monthly equation (it shifts the levels but does not enter the impulse responses directly; it changes the estimated lag coefficients). MODEL, NS, 3 / 6 / 12 lags [verified]:
+
+| Case, with trend | u, 10 m | u, 36 m | Price level, 24 m | IP, 10 m | IP, 24 m | Commodity index, 24 m |
+|---|---|---|---|---|---|---|
+| Base (u, core PCE) | +0.32* / +0.24* / +0.28* | +0.52* / +0.57* / +0.60* | -0.32* / -0.50* / -0.52* | | | |
+| + IP | +0.34* / +0.28* / +0.27* | +0.50* / +0.52* / +0.53* | -0.40* / -0.54* / -0.56* | -0.22 / -0.40 / -0.33 | -0.10 / -0.02 / -0.31 | |
+| + IP + IMF commodity index | +0.23* / +0.15 / +0.14 | +0.28* / +0.34* / +0.36* | -0.38* / -0.43* / -0.20 | +0.46 / +0.45 / +0.52 | +1.05* / +1.22* / +1.35* | +5.3 / +6.1 / +7.6 |
+
+\* = 90% interval excludes zero. NS-GB within 0.04 of NS.
+
+Reading [inference]: the trend makes the base-case and IP-case responses **larger and more precise** (unemployment about +0.25 to +0.35 pp at 10 months and +0.5 to +0.6 at 36; the price-level fall at 24 months now significant for every lag length, -0.32 to -0.56%). It does **not** fix IP: IP still falls only 0.2-0.4% at 10 months with intervals including zero (Bauer-Swanson about -1.6%). With commodity prices the puzzles remain (IP rises significantly at 24 months, commodity prices rise). So the IP and commodity problems are not a trend artifact; they point to the procyclical reduced-form link (item 3 above).
+
 ## 7. The challenges these papers identify, and whether we address them [inference unless marked]
 | Challenge | Who | What they do | Us |
 |---|---|---|---|
