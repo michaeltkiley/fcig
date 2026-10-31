@@ -16,7 +16,8 @@ import sys, time, numpy as np, pandas as pd
 from mf_common import *
 from mf_common import M as MM0
 from route_a_pos import positions
-from midas_var import IDX, POL, MON, CALW, HAR, H
+from midas_var import IDX, POL, MON, CALW, HAR, H, interp_monthly
+from mf_common import D0
 rng = np.random.default_rng(21)
 
 def monthly(n):
@@ -30,8 +31,13 @@ OIL_CAL = (100 * np.log(_oil)).reindex(CAL).ffill(limit=5)
 CASES = {"BS0": (["u", "pi"], []), "BS1": (["u", "pi", "ip"], []), "BS2": (["u", "pi", "ip", "com"], []), "BS3": (["u", "pi", "ip"], ["oil"])}
 FIRST = "1994-02"
 
+# FS-A15: 2-year in r*-gap form, as the note's policy variable: daily DGS2 minus 1-year expected inflation minus Laubach-Williams r*
+# (monthly, interpolated smoothly between mid-months). The window and event-day changes are unaffected (the offset moves slowly).
+_d0 = D0.load(); Y2GAP = POL["y2"] - interp_monthly(_d0.einf_1y + _d0["rstar LW"])
+RGAP = False
+
 def daily_frame(extra):
-    D = pd.DataFrame({"pol": POL["y2"], "idx": IDX})
+    D = pd.DataFrame({"pol": Y2GAP if RGAP else POL["y2"], "idx": IDX})
     if "oil" in extra: D["oil"] = OIL
     return D
 
@@ -92,10 +98,11 @@ if __name__ == "__main__":
     B = int(sys.argv[1]) if len(sys.argv) > 1 else 200
     ONLY = sys.argv[2].split(",") if len(sys.argv) > 2 else list(CASES)
     LAGS = tuple(int(x) for x in sys.argv[3].split(",")) if len(sys.argv) > 3 else (3, 6, 12)
-    TREND = len(sys.argv) > 4 and sys.argv[4] == "trend"
+    FLAGS = sys.argv[4].split(",") if len(sys.argv) > 4 else []
+    TREND = "trend" in FLAGS; RGAP = "rgap" in FLAGS
     rows, irfrows = [], []; t0 = time.time()
     print("Restricted MIDAS-VAR with Bauer-Swanson-style monthly variables, 1994+, 2-year; responses per +1 pp window move in the 2-year; median-path point estimate [90% interval],", B, "draws")
-    print(("WITH quadratic time trend in the monthly equations. " if TREND else "") + "u: pp; P: core PCE price level %; ip: industrial production %; com: IMF commodity price index % (monthly); oil: WTI % (monthly average of daily)\n")
+    print(("2-YEAR AS r - r* (DGS2 - 1y expected inflation - LW r*). " if RGAP else "") + ("WITH quadratic time trend in the monthly equations. " if TREND else "") + "u: pp; P: core PCE price level %; ip: industrial production %; com: IMF commodity price index % (monthly); oil: WTI % (monthly average of daily)\n")
     for case in ONLY:
         mvars, extra = CASES[case]; K, nd = len(mvars), 2 + len(extra)
         Bd = har_block(extra, mvars)
@@ -125,6 +132,6 @@ if __name__ == "__main__":
                                          **{f"lo{h}": lo[h, j] for h in (10, 12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (10, 12, 24, 36)}))
                         irfrows.append(pd.DataFrame(dict(case=case, lags=L, shock=sk, variant=var, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j])))
             print()
-    suf = ("" if len(ONLY) == len(CASES) else "_" + "-".join(ONLY)) + ("_trend" if TREND else "")
+    suf = ("" if len(ONLY) == len(CASES) else "_" + "-".join(ONLY)) + ("_trend" if TREND else "") + ("_rgap" if RGAP else "")
     pd.DataFrame(rows).to_csv(f"midas_bs{suf}.csv", index=False, float_format="%.4f")
     pd.concat(irfrows).to_csv(f"midas_bs{suf}_irf.csv", index=False, float_format="%.4f")

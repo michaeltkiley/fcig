@@ -131,6 +131,23 @@ Reading [inference unless marked]:
 
 Reading [inference]: the trend makes the base-case and IP-case responses **larger and more precise** (unemployment about +0.25 to +0.35 pp at 10 months and +0.5 to +0.6 at 36; the price-level fall at 24 months now significant for every lag length, -0.32 to -0.56%). It does **not** fix IP: IP still falls only 0.2-0.4% at 10 months with intervals including zero (Bauer-Swanson about -1.6%). With commodity prices the puzzles remain (IP rises significantly at 24 months, commodity prices rise). So the IP and commodity problems are not a trend artifact; they point to the procyclical reduced-form link (item 3 above).
 
+**2-year as r - r\* (FS-A15; `midas_bs.py 200 <case> 3,6,12 rgap`; `midas_bs_BS{0,1,2}_rgap.log/.csv`).** The daily 2-year in the daily block and in the monthly averages is replaced by its r\*-gap form, as for the note's policy variable: DGS2 minus 1-year expected inflation minus Laubach-Williams r\* (monthly, interpolated between mid-months). The window and event-day moves are unchanged (the offset moves slowly); the market index was already in r\*-gap form. No time trend. MODEL, NS, 3 / 6 / 12 lags [verified]:
+
+| Case, 2-year as r - r* | u, 10 m | u, 24 m | u, 36 m | Price level, 24 m | IP, 10 m | IP, 24 m | Commodity index, 24 m |
+|---|---|---|---|---|---|---|---|
+| Base (u, core PCE) | +0.29* / +0.30* / +0.34* | +0.38* / +0.37* / +0.40* | +0.32* / +0.33* / +0.36* | -0.36* / -0.50* / -0.56* | | | |
+| + IP | +0.27* / +0.33* / +0.34* | +0.35* / +0.38* / +0.41* | +0.30* / +0.35* / +0.38 | -0.35 / -0.54* / -0.56* | **-0.49* / -0.96* / -1.00*** | -0.04 / -0.24 / -0.46 | |
+| + IP + IMF commodity index | +0.19* / +0.18 / +0.20* | +0.22* / +0.17 / +0.18 | +0.18 / +0.22 / +0.31 | -0.53* / -0.53* / -0.12 | +0.09 / +0.17 / +0.15 | +0.56 / +0.75 / +1.02 | +2.9 / +3.5 / +9.3* |
+| Bauer-Swanson benchmark | about +0.22 (peak) | about +0.17 | about +0.15 | CPI about -0.5 | about -1.6 | about -1.0 | about -2.6 |
+
+\* = 90% interval excludes zero (the 12-lag u at 36 m in the IP case has lower bound +0.00).
+
+Reading [inference]:
+1. **Measuring the 2-year relative to r\* brings the responses closer to Bauer-Swanson in shape.** Unemployment rises faster (+0.3 pp at 10 months) and then levels off and fades slightly (+0.3 to +0.4 at 36 months) instead of building to +0.5; the price-level fall is significant for nearly every lag length (-0.35 to -0.56% at 24 months).
+2. **IP now falls**, significantly at 10 months: -0.5% (3 lags), -1.0% (6 and 12 lags), against about -1.6% in Bauer-Swanson; it recovers by 24 months. This is the first specification in which IP has the conventional sign.
+3. **Why** (a reading, not tested): the nominal 2-year trends down from 1994 to 2021 with r\* and inflation expectations, while IP trends up, so in levels the reduced-form link between rates and IP picks up opposing trends; the r\*-gap removes the slow-moving part of the rate. This is consistent with the time trend (FS-A13) helping unemployment and prices but not IP: a common deterministic trend does not remove the r\* movements.
+4. **Commodity prices still do not fall**, and adding them still weakens unemployment and turns IP positive at 24 months; the commodity puzzle survives the r\*-gap.
+
 ## 7. The challenges these papers identify, and whether we address them [inference unless marked]
 | Challenge | Who | What they do | Us |
 |---|---|---|---|
