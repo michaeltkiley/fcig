@@ -10,7 +10,7 @@ A monetary shock is observed only in sparse, minute-long announcement windows. F
 
 **Route A, daily HAR + monthly macro rows** (`route_a.*`) [verified]. NS, no credit: long 2-year u12 +0.20 [+0.07,+0.33]; 1994+ u12 +0.34 [+0.13,+0.51], u36 +0.48; long funds-rate +0.33. NS-GB nearly identical. MP1 +0.11. HYBRID (63-day directly estimated path, then model) has the same centre but intervals that include zero. With Baa spread [contaminated] the responses fall by about a third to a half.
 
-**MIDAS-VAR** (`midas_var.py/.log`, B=20, rows are median [90%]) [verified]. Macro equation: m_t on 6 monthly lags plus exponentially weighted 252 daily lags of policy and index (one parameter each).
+**Unrestricted MIDAS-VAR** (`midas_var.py/.log`, B=20; SUPERSEDED by the restricted version in section 7, because the weights are not identified) [verified]. Macro equation: m_t on 6 monthly lags plus exponentially weighted 252 daily lags of policy and index (one parameter each).
 
 | spec, shock | MODEL u12 | PATH u12 | PATH u36 |
 |---|---|---|---|
@@ -43,3 +43,41 @@ Macro-zero-in-window and exogeneity of the window shock are assumptions; informa
 
 ## 6. Next steps (for decision)
 P1-P4 of `PROPOSALS.md` (approved, not started); optional ICE BBB daily credit spread (1997+) as a robustness; a HAR with more lags for route A to test the flat index path.
+
+## 7. Restricted (step-weight) MIDAS-VAR: the chosen MIDAS specification (1 Nov 2026)
+Script `midas_step.py`; logs `midas_step_BASE.log` (base), `midas_step_lagfeedback.log` (first run: both orderings with lagged-only macro feedback; its +CUR rows are the +CUR robustness), csv files alongside. 200 draws (events and macro-equation residuals). Decisions FS-A7 to FS-A9 in `FS_QA.md`.
+
+**Specification (user's choices).** Macro equations (unemployment gap, core PCE) are rows of a monthly VAR: L monthly lags of both macro variables and L monthly lags of the MONTHLY AVERAGE of the daily policy rate and daily index (equal weights within the month, a free coefficient per month), OLS; L = 6 and 12. Daily block: HAR for policy rate and index. Within-month ordering:
+- BASE: macro first. Macro equations use lagged financial averages only; the daily block includes this month's and last month's macro values (markets respond to macro conditions within the month). In the event month macro has not moved, so nothing macro enters the window or the event day.
+- +CUR (robustness): financial first. Macro equations add the current-month financial average; the daily block has last month's macro only (both directions in the same month would not be identified by timing).
+Window impact vector b from 30-minute changes, macro entries zero, no credit spread. MODEL = daily dynamics after the event day; PATH = direct event-day path through the end of month t+1, then the model.
+
+**Results: unemployment gap (pp) at 12 months [90%], and 36 months, per +1 pp on the 2-year (NS, NS-GB) or funds rate (MP1)** [verified]
+
+| Sample | Lags | Shock | BASE MODEL 12m | 36m | BASE PATH 12m | +CUR MODEL 12m |
+|---|---|---|---|---|---|---|
+| 1977-, 2-year | 6 | NS | +0.17 [+0.07,+0.29] | +0.11 | +0.24 [-0.05,+0.66] | +0.06 [-0.03,+0.17] |
+| | 6 | NS-GB | +0.16 [+0.06,+0.30] | +0.10 | +0.49 [-0.03,+1.22] | +0.05 |
+| | 12 | NS | +0.18 [+0.06,+0.29] | +0.11 | +0.27 [-0.07,+0.73] | +0.08 [-0.03,+0.21] |
+| | 12 | NS-GB | +0.17 [+0.06,+0.31] | +0.11 | +0.62 [-0.11,+1.46] | +0.07 |
+| 1994-, 2-year | 6 | NS | +0.20 [+0.05,+0.40] | +0.47 [+0.23,+0.77] | +0.29 [-0.19,+0.81] | +0.24 [+0.03,+0.41] |
+| | 6 | NS-GB | +0.19 [+0.02,+0.36] | +0.46 | +0.66 [-0.18,+1.52] | +0.23 |
+| | 12 | NS | +0.20 [+0.04,+0.37] | +0.39 [+0.12,+0.68] | +0.31 [-0.24,+0.96] | +0.25 [+0.10,+0.43] |
+| | 12 | NS-GB | +0.18 [+0.02,+0.34] | +0.38 | +0.78 [-0.15,+1.98] | +0.23 |
+| 1974-, funds rate | 6 | NS | +0.28 [+0.21,+0.40] | +0.13 | +0.32 [-0.06,+0.71] | +0.20 [+0.10,+0.28] |
+| | 6 | NS-GB | +0.27 [+0.17,+0.39] | +0.12 | +0.48 [-0.11,+1.09] | +0.19 |
+| | 6 | MP1 | +0.07 [-0.00,+0.14] | +0.04 | +0.03 [-0.42,+0.55] | +0.03 |
+| | 12 | NS | +0.38 [+0.29,+0.47] | +0.22 | +0.49 [+0.07,+0.94] | +0.31 [+0.22,+0.41] |
+| | 12 | NS-GB | +0.36 [+0.26,+0.47] | +0.21 | +0.70 [+0.14,+1.40] | +0.29 |
+| | 12 | MP1 | +0.11 [+0.03,+0.19] | +0.06 | +0.17 [-0.39,+1.00] | +0.07 |
+
+Core PCE at 12 months: BASE MODEL between -0.16 and +0.10, every 90% interval includes zero; no inflation result.
+
+**Reading** [inference unless marked]
+1. With equal within-month weights the estimates are stable and precise. In the base case (MODEL) a tightening that raises the 2-year 1 pp raises the unemployment gap about 0.2 pp after a year, with 90% intervals excluding zero in every NS and NS-GB case. In the long samples the effect peaks in year 1-2 and fades; in 1994+ it keeps building to about 0.4-0.5 pp at three years. Funds-rate scaling gives 0.3-0.4 pp per 1 pp on the funds rate for NS; MP1 is smaller (0.07-0.11), as before.
+2. The restriction fixed the unrestricted MIDAS problem [verified]: the long-sample funds-rate response went from +0.02 (weights at bounds) to +0.28/+0.38, and the long 2-year sample from +0.10 to +0.17.
+3. Ordering within the month: putting macro first (BASE) barely changes the results compared with lagged-only feedback [verified: e.g. 1994+, 6 lags, u36 +0.44 -> +0.47; long 12 lags u36 +0.08 -> +0.11]. Financial first (+CUR) matters in the long 2-year sample (12m falls to +0.06-0.08, interval includes zero) but not in 1994+ (+0.23-0.25) or with the funds rate (+0.19-0.31). So the long-sample 2-year result depends on whether the current month's financial average is allowed into the unemployment equation; the 1994+ result does not.
+4. PATH (direct event-day path through month t+1) gives larger centres but wide intervals that include zero at 12 months in most cases. NS-GB PATH is much larger than NS PATH, because the event-day local projections for the Greenbook-purged events show more build-up in financial conditions after the announcement; these paths are noisy.
+5. 6 vs 12 lags: same at 12 months; 12 lags gives less persistence at 36 months in 1994+ and more in the funds-rate sample.
+
+**Literature** (`LITERATURE_MIDAS.md`): no paper found with this combination. Closest: Francis, Ghysels and Owyang (2011, MIDAS, direct regression, small real effects); Gazzani and Vicondoa (2020, daily-VAR shocks as monthly proxy); Chudik and Georgiadis (2022) and Chudik and Kilian (2026, direct mixed-frequency distributed lags; extension to sparse FOMC-type shocks left to future research); Kilian (2024, monthly-average accounting of a day-d surprise, the same as our event-timing exposure).
