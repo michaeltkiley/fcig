@@ -16,4 +16,5 @@ Entry point: `PROJECT_MEMORY.md` (section 9 = where we are). Glossary of index n
 | `ms_fci/` | FRB/US sensitivities and the **macro-model levels index** (earlier "MS-style five-variable" index) | reference for the macro-model comparator |
 | `weighting_note/` | LaTeX weighting note and review | current |
 | `note_draft/` | Draft of note section 3 (market index) | full draft is in `../fci_note/paper/` |
-| `mp_var_fci/` | **New (30 Oct 2026):** monetary policy shocks in a VAR with the market index; Cholesky vs NS vs Bauer-Swanson; comparison with Gertler-Karadi and Caldara-Herbst. Decisions in `MP_QA.md` | design stage |
+| `mp_var_fci/` | Monetary policy shocks in a VAR with the market index (Cholesky, Nakamura-Steinsson, Bauer-Swanson, Greenbook purge, Bayesian proxy-SVAR). Start with `SUMMARY_REPORT.md`; decisions in `MP_QA.md` | **closed 31 Oct 2026** (negative result: credit, not the index, fixes post-1994 identification) |
+| `fin_shocks/` | Financial shocks and activity separate from monetary policy; `PROPOSALS.md` | **proposal stage** (31 Oct 2026) |
