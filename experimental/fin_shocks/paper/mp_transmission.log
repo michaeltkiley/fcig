@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.31)  31 OCT 2026 21:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.31)  31 OCT 2026 21:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -575,7 +575,7 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 re.tex)
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 82.
-<figures/fig1_steps.pdf, id=202, 794.97pt x 361.35pt>
+<figures/fig1_steps.pdf, id=203, 794.97pt x 361.35pt>
 File: figures/fig1_steps.pdf Graphic file (type pdf)
 <use figures/fig1_steps.pdf>
 Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 86.
@@ -584,12 +584,12 @@ Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 86.
 [5{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}] [6 <./figures/fig1_steps.pdf
 >] (./tables/tab2_rob_u.tex) [7] (./tables/tab2_rob_p.tex) [8] [9]
 (./tables/tab3_smp.tex)
-<figures/fig2_recent.pdf, id=342, 578.16pt x 231.26399pt>
+<figures/fig2_recent.pdf, id=348, 578.16pt x 231.26399pt>
 File: figures/fig2_recent.pdf Graphic file (type pdf)
 <use figures/fig2_recent.pdf>
 Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 144.
 (pdftex.def)             Requested size: 399.29463pt x 159.717pt.
-<figures/fig3_loyo.pdf, id=343, 650.43pt x 216.81pt>
+<figures/fig3_loyo.pdf, id=349, 650.43pt x 216.81pt>
 File: figures/fig3_loyo.pdf Graphic file (type pdf)
 <use figures/fig3_loyo.pdf>
 Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 149.
@@ -606,13 +606,13 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: 63B4FF1EED2E2A549D666ABF2B56A532;623.
  ) 
 Here is how much of TeX's memory you used:
- 13345 strings out of 476182
- 208000 string characters out of 5795594
+ 13346 strings out of 476182
+ 208009 string characters out of 5795594
  1993975 words of memory out of 5000000
- 35054 multiletter control sequences out of 15000+600000
+ 35055 multiletter control sequences out of 15000+600000
  631357 words of font info for 96 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,79p,1148b,623s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,1148b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/p
@@ -623,10 +623,10 @@ onts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/t
 ype1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (16 pages, 351151 bytes).
+Output written on mp_transmission.pdf (16 pages, 353934 bytes).
 PDF statistics:
- 604 PDF objects out of 1000 (max. 8388607)
- 395 compressed objects within 4 object streams
+ 612 PDF objects out of 1000 (max. 8388607)
+ 402 compressed objects within 5 object streams
  74 named destinations out of 1000 (max. 500000)
  64 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -50,7 +50,7 @@ def ptable(panels, name, h1="Step", h2="FCI"):
     out += ["\\bottomrule", "\\end{tabular}"]
     open(os.path.join(HERE, "tables", name + ".tex"), "w").write("\n".join(out) + "\n")
 
-STEPS = [("Nominal", "no", ("nom", "0")), ("", "yes", ("nom", "1")), ("Real", "no", ("real", "0")), ("", "yes", ("real", "1")), ("$r^*$-gap", "no", ("rstar", "0")), ("", "yes", ("rstar", "1"))]
+STEPS = [("Nominal", "none", ("nom", "0")), ("", "included", ("nom", "1")), ("Real", "none", ("real", "0")), ("", "included", ("real", "1")), ("$r^*$-gap", "none", ("rstar", "0")), ("", "included", ("rstar", "1"))]
 def core_rows(var, macro="u,pi", **kw): return [(a, b, dict(rate=r, fci=f, var=var, macro=macro, **kw)) for a, b, (r, f) in STEPS]
 ptable([("A. Unemployment gap (percentage points)", core_rows("u")), ("B. Core PCE price level (percent)", core_rows("P"))], "tab1_core")
 ptable([("A. Unemployment gap (percentage points)", core_rows("u", "u,pi,ip")), ("B. Industrial production (percent)", core_rows("ip", "u,pi,ip"))], "tabA_ip")
@@ -60,15 +60,15 @@ FCI4 = [("none", "0"), ("nominal", "nom"), ("real", "real"), ("$r^*$-gap", "rsta
 def adj_rows(rate, var):
     same = {"rstar": "rstar", "nom": "nom"}.get(rate)
     return [("", lab, dict(rate=rate, fci=("1" if f == same else f), var=var)) for lab, f in FCI4]
-ADJ = [("2-year: nominal", "nom"), ("2-year: Laubach--Williams $r^*$-gap (baseline)", "rstar"), ("2-year: Kiley $r^*$-gap", "kiley"),
-       ("2-year: minus 9--10-year forward rate", "fwd"), ("2-year: minus trailing 8-year average", "ma8")]
+ADJ = [("Two-year yield: nominal", "nom"), ("Two-year yield: Laubach--Williams $r^*$-gap (baseline)", "rstar"), ("Two-year yield: Kiley $r^*$-gap", "kiley"),
+       ("Two-year yield: minus 9--10-year forward rate", "fwd"), ("Two-year yield: minus average over past 8 years", "ma8")]
 for var, nm in (("u", "tab2_rob_u"), ("P", "tab2_rob_p")):
     ptable([(t, adj_rows(r, var)) for t, r in ADJ], nm, h1="", h2="FCI")
-SMPS = [("Baseline", ""), ("Also drop 2021", "drop2021"), ("End in 2022", "end2022"), ("End in 2019", "end2019")]
+SMPS = [("Baseline (excl.\\ Mar--Dec 2020)", ""), ("Also drop 2021", "drop2021"), ("End in 2022", "end2022"), ("End in 2019", "end2019")]
 def smp_rows(var): return [(lab if i == 0 else "", fl, dict(rate="rstar", fci=f, var=var, smp=sm)) for lab, sm in SMPS for i, (fl, f) in enumerate((("none", "0"), ("$r^*$-gap", "1")))]
 ptable([("A. Unemployment gap (percentage points)", smp_rows("u")), ("B. Core PCE price level (percent)", smp_rows("P"))], "tab3_smp", h1="Sample", h2="FCI")
-SHK = [("Nakamura--Steinsson", "NS"), ("Greenbook-purged NS", "NS-GB"), ("Bauer--Swanson orth.", "BS-ORTH"), ("Jaroci\\'nski--Karadi", "NS-JK")]
-def shk_rows(var): return [(lab if i == 0 else "", st, dict(rate=r, fci="1", var=var, shock=sk)) for lab, sk in SHK for i, (st, r) in enumerate((("nominal", "nom"), ("$r^*$-gap", "rstar")))]
+SHK = [("Nakamura--Steinsson", "NS"), ("Nakamura--Steinsson, Greenbook part removed", "NS-GB"), ("Bauer--Swanson, predictable part removed", "BS-ORTH"), ("Jaroci\\'nski--Karadi pure policy", "NS-JK")]
+def shk_rows(var): return [(lab if i == 0 else "", st, dict(rate=r, fci="1", var=var, shock=sk)) for lab, sk in SHK for i, (st, r) in enumerate((("Nominal", "nom"), ("$r^*$-gap", "rstar")))]
 ptable([("A. Unemployment gap (percentage points)", shk_rows("u")), ("B. Core PCE price level (percent)", shk_rows("P"))], "tabA_shocks", h1="Shock", h2="Step")
 
 # Figure 2: the r*-gap 2-year, the r*-gap FCI and core inflation, 2015-2026 (monthly)
