@@ -1,6 +1,6 @@
 # experimental/: folder index
 
-Entry point: `PROJECT_MEMORY.md` (section 9 = where we are). Glossary of index names: root `CLAUDE.md`. Draft note and replication package: `../fci_note/`.
+Entry point: `PROJECT_MEMORY.md` (section 9 = where we are). Glossary of index names: root `CLAUDE.md`. Two notes use the market index: Note A, the FCI note and replication package, `../fci_note/`; Note B, the transmission note, `fin_shocks/paper/`.
 
 | Item | What it is | Status |
 |---|---|---|
@@ -17,4 +17,4 @@ Entry point: `PROJECT_MEMORY.md` (section 9 = where we are). Glossary of index n
 | `weighting_note/` | LaTeX weighting note and review | current |
 | `note_draft/` | Draft of note section 3 (market index) | full draft is in `../fci_note/paper/` |
 | `mp_var_fci/` | Monetary policy shocks in a VAR with the market index (Cholesky, Nakamura-Steinsson, Bauer-Swanson, Greenbook purge, Bayesian proxy-SVAR). Start with `SUMMARY_REPORT.md`; decisions in `MP_QA.md` | **closed 31 Oct 2026** (negative result: credit, not the index, fixes post-1994 identification) |
-| `fin_shocks/` | Financial shocks and activity separate from monetary policy; `PROPOSALS.md` | draft note `MF_REPORT.md`: financial conditions and r* in estimating monetary transmission (core cases, 1 Nov 2026); exploratory history in `MF_DEVELOPMENT.md`; P1-P4 pending |
+| `fin_shocks/` | Transmission note (Note B): window-identified surprises traced through the FCI and r* | LaTeX note `fin_shocks/paper/mp_transmission.tex` (1 Nov 2026); uses the FCI of `../fci_note/` (Note A) |

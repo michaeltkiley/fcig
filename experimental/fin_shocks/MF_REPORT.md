@@ -1,3 +1,5 @@
+> **Superseded (1 Nov 2026):** the note is now `paper/mp_transmission.tex`. This markdown version predates the quadratic-trend baseline (FS-A24) and later revisions; use it only as history.
+
 # Financial conditions and r* in estimating monetary transmission (draft note, 1 Nov 2026)
 
 **Claim.** High-frequency monetary surprises give sensible, significant effects of policy on unemployment and prices only when two things are accounted for: (1) **financial conditions as a whole** (the market index, FCI) as the channel through which policy reaches the economy, and (2) the **trend in r\*** in the level of rates. Without them, the same surprises reproduce the puzzles of the post-1994 literature; with them, the puzzles disappear and the responses match or exceed the best-practice estimates of Bauer and Swanson (2023). To our knowledge [inference, based on the papers read for this project, not a systematic search] neither ingredient is used in the high-frequency-identification literature, whose VARs propagate the shock through a nominal 1- or 2-year rate.
