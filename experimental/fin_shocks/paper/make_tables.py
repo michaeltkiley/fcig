@@ -10,7 +10,8 @@ def _load(irf_files):
     out = []
     for fn in sorted(glob.glob(os.path.join(UP, "midas_core_*.csv")), key=os.path.getmtime):
         if fn.endswith("_irf.csv") != irf_files or os.path.basename(fn) in ("midas_core.csv", "midas_core_irf.csv"): continue
-        smp = "drop2021" if "drop2021" in fn else ("end2019" if "end2019" in fn else "")
+        import re as _re
+        m_ = _re.search(r"_((?:drop|end)\d{4})", os.path.basename(fn)); smp = m_.group(1) if m_ else ""
         z = pd.read_csv(fn).assign(sample=smp)
         if "trend" not in z: z["trend"] = 0
         if "shock" not in z: z["shock"] = "NS"
@@ -32,50 +33,68 @@ def cell(r, h):
     if r[f"lo68_{h}"] > 0 or r[f"hi68_{h}"] < 0: return v + "$^{\\dagger}$"
     return v
 
-def table(rows, var, macro="u,pi", name=""):
-    """rows: list of (label, rate, fci, trend). Columns: 12/24/36 months x 3/6/12 lags."""
-    out = ["\\begin{tabular}{llccccccccc}", "\\toprule", " & & \\multicolumn{3}{c}{12 months} & \\multicolumn{3}{c}{24 months} & \\multicolumn{3}{c}{36 months}\\\\",
-           "\\cmidrule(lr){3-5}\\cmidrule(lr){6-8}\\cmidrule(lr){9-11}", "Rate & FCI & 3 & 6 & 12 & 3 & 6 & 12 & 3 & 6 & 12 \\\\", "\\midrule"]
-    for row in rows:
-        lab = row[0]
-        if lab is None: out.append("\\midrule"); continue
-        rate, fci, tr = row[1:4]; smp = row[4] if len(row) > 4 else ""; fl = row[5] if len(row) > 5 else {"0": "no", "1": "yes"}[fci]
-        g = d[(d.macro == macro) & (d["var"] == var) & (d.rate == rate) & (d.fci == fci) & (d.trend == tr) & (d["sample"] == smp)].sort_values("lags")
-        if len(g) < 3: continue
-        out.append(f"{lab} & {fl} & " + " & ".join(cell(r, h) for h in (12, 24, 36) for _, r in g.iterrows()) + " \\\\")
+COLS = ["\\begin{tabular}{llccccccccc}", "\\toprule", " & & \\multicolumn{3}{c}{12 months} & \\multicolumn{3}{c}{24 months} & \\multicolumn{3}{c}{36 months}\\\\",
+        "\\cmidrule(lr){3-5}\\cmidrule(lr){6-8}\\cmidrule(lr){9-11}"]
+def sel(rate, fci, var, macro="u,pi", tr=TR, smp="", shock="NS", bootd=0):
+    return D_ALL[(D_ALL.macro == macro) & (D_ALL["var"] == var) & (D_ALL.rate == rate) & (D_ALL.fci == fci) & (D_ALL.trend == tr)
+                 & (D_ALL["sample"] == smp) & (D_ALL.shock == shock) & (D_ALL.bootd == bootd)].sort_values("lags")
+def ptable(panels, name, h1="Step", h2="FCI"):
+    """panels: list of (title, rows); row = (col1, col2, dict of sel() arguments)."""
+    out = COLS + [f"{h1} & {h2} & 3 & 6 & 12 & 3 & 6 & 12 & 3 & 6 & 12 \\\\"]
+    for title, rows in panels:
+        out += ["\\midrule", f"\\multicolumn{{11}}{{l}}{{\\textit{{{title}}}}}\\\\"]
+        for c1, c2, kw in rows:
+            g = sel(**kw)
+            if len(g) < 3: continue
+            out.append(f"{c1} & {c2} & " + " & ".join(cell(r, h) for h in (12, 24, 36) for _, r in g.iterrows()) + " \\\\")
     out += ["\\bottomrule", "\\end{tabular}"]
     open(os.path.join(HERE, "tables", name + ".tex"), "w").write("\n".join(out) + "\n")
 
-CORE = [("Nominal", "nom", "0", TR), ("Nominal", "nom", "1", TR), (None,) * 4, ("Real", "real", "0", TR), ("Real", "real", "1", TR), (None,) * 4,
-        ("$r^*$-gap", "rstar", "0", TR), ("$r^*$-gap", "rstar", "1", TR)]
-for var, nm in (("u", "tab1_u"), ("P", "tab2_p")): table(CORE, var, "u,pi", nm)
-for var, nm in (("u", "tab3_ip_u"), ("P", "tab3_ip_p"), ("ip", "tab3_ip_ip")): table(CORE, var, "u,pi,ip", nm)
-FL = (("0", "none"), ("nom", "nominal"), ("real", "real"), ("rstar", "$r^*$-gap"))
-def block(lab, rate, tr=TR):
-    out = []
-    for f, fl in FL:
-        ff = "1" if f == {"rstar": "rstar", "nom": "nom"}.get(rate) else f      # same-form FCI is stored as fci = 1
-        out.append((lab, rate, ff, tr, "", fl))
-    return out + [(None,)]
-# FCI held at the note's three indexes (nominal, real, r*-gap); only the 2-year adjustment changes (user, FS-A23)
-ROB = (block("2-year $r^*$-gap, Laubach--Williams (baseline)", "rstar") + block("2-year $r^*$-gap, Kiley", "kiley")
-       + block("2-year $-$ 9--10y forward rate", "fwd") + block("2-year $-$ 8-year average", "ma8"))[:-1]
-for var, nm in (("u", "tab4_rob_u"), ("P", "tab4_rob_p")): table(ROB, var, "u,pi", nm)
-SMP = [("Baseline sample", "rstar", "1", TR, "", "$r^*$-gap (LW)"), ("Also drop 2021", "rstar", "1", TR, "drop2021", "$r^*$-gap (LW)"), ("End in 2019", "rstar", "1", TR, "end2019", "$r^*$-gap (LW)"),
-       (None,), ("Baseline sample", "rstar", "0", TR, "", "none"), ("Also drop 2021", "rstar", "0", TR, "drop2021", "none"), ("End in 2019", "rstar", "0", TR, "end2019", "none")]
-for var, nm in (("u", "tab5_smp_u"), ("P", "tab5_smp_p")): table(SMP, var, "u,pi", nm)
+STEPS = [("Nominal", "no", ("nom", "0")), ("", "yes", ("nom", "1")), ("Real", "no", ("real", "0")), ("", "yes", ("real", "1")), ("$r^*$-gap", "no", ("rstar", "0")), ("", "yes", ("rstar", "1"))]
+def core_rows(var, macro="u,pi", **kw): return [(a, b, dict(rate=r, fci=f, var=var, macro=macro, **kw)) for a, b, (r, f) in STEPS]
+ptable([("A. Unemployment gap (percentage points)", core_rows("u")), ("B. Core PCE price level (percent)", core_rows("P"))], "tab1_core")
+ptable([("A. Unemployment gap (percentage points)", core_rows("u", "u,pi,ip")), ("B. Industrial production (percent)", core_rows("ip", "u,pi,ip"))], "tabA_ip")
+ptable([("A. Unemployment gap (percentage points)", core_rows("u", tr=0)), ("B. Core PCE price level (percent)", core_rows("P", tr=0))], "tabA_notrend")
+ptable([("A. Unemployment gap (percentage points)", core_rows("u", bootd=3)), ("B. Core PCE price level (percent)", core_rows("P", bootd=3))], "tabA_boot")
+FCI4 = [("none", "0"), ("nominal", "nom"), ("real", "real"), ("$r^*$-gap", "rstar")]
+def adj_rows(rate, var):
+    same = {"rstar": "rstar", "nom": "nom"}.get(rate)
+    return [("", lab, dict(rate=rate, fci=("1" if f == same else f), var=var)) for lab, f in FCI4]
+ADJ = [("2-year: nominal", "nom"), ("2-year: Laubach--Williams $r^*$-gap (baseline)", "rstar"), ("2-year: Kiley $r^*$-gap", "kiley"),
+       ("2-year: minus 9--10-year forward rate", "fwd"), ("2-year: minus trailing 8-year average", "ma8")]
+for var, nm in (("u", "tab2_rob_u"), ("P", "tab2_rob_p")):
+    ptable([(t, adj_rows(r, var)) for t, r in ADJ], nm, h1="", h2="FCI")
+SMPS = [("Baseline", ""), ("Also drop 2021", "drop2021"), ("End in 2022", "end2022"), ("End in 2019", "end2019")]
+def smp_rows(var): return [(lab if i == 0 else "", fl, dict(rate="rstar", fci=f, var=var, smp=sm)) for lab, sm in SMPS for i, (fl, f) in enumerate((("none", "0"), ("$r^*$-gap", "1")))]
+ptable([("A. Unemployment gap (percentage points)", smp_rows("u")), ("B. Core PCE price level (percent)", smp_rows("P"))], "tab3_smp", h1="Sample", h2="FCI")
+SHK = [("Nakamura--Steinsson", "NS"), ("Greenbook-purged NS", "NS-GB"), ("Bauer--Swanson orth.", "BS-ORTH"), ("Jaroci\\'nski--Karadi", "NS-JK")]
+def shk_rows(var): return [(lab if i == 0 else "", st, dict(rate=r, fci="1", var=var, shock=sk)) for lab, sk in SHK for i, (st, r) in enumerate((("nominal", "nom"), ("$r^*$-gap", "rstar")))]
+ptable([("A. Unemployment gap (percentage points)", shk_rows("u")), ("B. Core PCE price level (percent)", shk_rows("P"))], "tabA_shocks", h1="Shock", h2="Step")
 
+# Figure 2: the r*-gap 2-year, the r*-gap FCI and core inflation, 2015-2026 (monthly)
+import sys; sys.path.insert(0, os.path.join(UP, "..", "mp_var_fci")); sys.path.insert(0, UP)
+from mf_common import M as _M
+_e2 = pd.read_csv(os.path.join(UP, "..", "mp_var_fci", "data", "EXPINF2YR.csv")); _e2 = pd.Series(_e2.iloc[:, 1].values, index=pd.PeriodIndex(pd.to_datetime(_e2.iloc[:, 0]), freq="M"))
+from mf_common import D0 as _D0
+_d0 = _D0.load()
+gap2 = (_M.gs2 - _e2.reindex(_M.index) - _d0["rstar LW"].reindex(_M.index))
+Z = pd.DataFrame({"r*-gap 2-year yield": gap2, "r*-gap FCI (market index)": _M.market_rstar, "Core PCE inflation, 12-month (%)": _M.pi_core.rolling(12).mean()}).loc["2015-01":"2026-09"]
+fig, a = plt.subplots(figsize=(8, 3.2)); x = Z.index.to_timestamp()
+for c, st in zip(Z.columns, ("-", "--", ":")): a.plot(x, Z[c], st, color="k", lw=1.5, label=c)
+a.axhline(0, color="0.5", lw=0.6); a.legend(fontsize=8, frameon=False); a.tick_params(labelsize=8); a.set_ylabel("Percent / index units", fontsize=8)
+fig.tight_layout(); fig.savefig(os.path.join(HERE, "figures", "fig2_recent.pdf")); plt.close(fig)
 
-# Table 7: fuller bootstrap (daily block re-estimated in each draw, 1000 draws); Table 8: alternative shocks (FS-A25)
-def with_data(dd, fn):
-    global d
-    keep = d; d = dd; fn(); d = keep
-CORE2 = [r for r in CORE]
-if ((D_ALL.bootd == 1)).any():
-    with_data(D_ALL[(D_ALL.shock == "NS") & (D_ALL.bootd == 1)], lambda: [table(CORE2, v, "u,pi", nm) for v, nm in (("u", "tab7_boot_u"), ("P", "tab7_boot_p"))])
-for sk, tag in (("BS-ORTH", "bs"), ("NS-JK", "jk")):
-    if (D_ALL.shock == sk).any():
-        with_data(D_ALL[(D_ALL.shock == sk) & (D_ALL.bootd == 0)], lambda: [table(CORE2, v, "u,pi", nm) for v, nm in (("u", f"tab8_{tag}_u"), ("P", f"tab8_{tag}_p"))])
+# Figure 3: leave-one-year-out (baseline, 6 lags): u at 12 months and price level at 24 months with 90% intervals
+L1 = D_ALL[(D_ALL["sample"].str.startswith("drop")) & (D_ALL["sample"] != "drop2021") & (D_ALL.rate == "rstar") & (D_ALL.fci == "1") & (D_ALL.lags == 6) & (D_ALL.trend == TR) & (D_ALL.shock == "NS")]
+if len(L1):
+    base = sel("rstar", "1", "u").query("lags == 6"); baseP = sel("rstar", "1", "P").query("lags == 6")
+    fig, ax = plt.subplots(1, 2, figsize=(9, 3))
+    for a, (var, h, lab, b0) in zip(ax, (("u", 12, "Unemployment gap, 12 months (pp)", base), ("P", 24, "Core PCE price level, 24 months (%)", baseP))):
+        g = L1[L1["var"] == var].copy(); g["yr"] = g["sample"].str[4:].astype(int); g = g.sort_values("yr")
+        a.errorbar(g.yr, g[f"r{h}"], yerr=[g[f"r{h}"] - g[f"lo{h}"], g[f"hi{h}"] - g[f"r{h}"]], fmt="o", ms=3, color="k", lw=0.8)
+        a.axhline(float(b0[f"r{h}"].iloc[0]), color="tab:red", lw=1, ls="--"); a.axhline(0, color="0.5", lw=0.6)
+        a.set_title(lab, fontsize=9); a.set_xlabel("Year dropped", fontsize=8); a.tick_params(labelsize=8)
+    fig.tight_layout(); fig.savefig(os.path.join(HERE, "figures", "fig3_loyo.pdf")); plt.close(fig)
 
 # Figure 1: the four key cases, 6 lags, with 68% and 90% bands; Bauer-Swanson benchmark (read from their Fig. 8) as markers
 BS = {"u": ([10, 12, 24, 36], [0.22, 0.19, 0.17, 0.15]), "P": ([12, 24, 36], [-0.36, -0.48, -0.6])}
