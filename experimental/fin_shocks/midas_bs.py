@@ -5,7 +5,8 @@ variables and extra daily variables. Cases (1994+, 2-year, NS base / NS-GB robus
    BS1 : monthly [u gap, core PCE inflation, IP]                               (IP = 100 log INDPRO, level)
    BS2 : monthly [u gap, core PCE inflation, IP, commodity prices]             (100 log IMF all-commodity index PALLFNFINDEXM, 1992-; Bauer-Swanson use
                                                                                 the CRB index, which is not on FRED)
-   BS3 : monthly [u gap, core PCE inflation, IP]; daily [2-year, index, oil]   (100 log WTI spot DCOILWTICO; no free daily broad commodity index was
+   BS3 : (DROPPED by the user, FS-A12: use the IMF monthly index, not oil)
+         monthly [u gap, core PCE inflation, IP]; daily [2-year, index, oil]   (100 log WTI spot DCOILWTICO; no free daily broad commodity index was
                                                                                 reachable: S&P GSCI on stooq refused, S&P site 403). Oil has no 30-minute
                                                                                 window series: its event-day impact is the one-day change on the event
                                                                                 day regressed on the shock, divided by the window slope of the 2-year
