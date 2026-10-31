@@ -3,6 +3,7 @@
 Tags: [verified] = computed here or read in the source; [read from figure] = read off a published chart, approximate; [inference] = my reading; [secondhand] = not checked in full text. Decisions: `FS_QA.md` (FS-A7 to FS-A10). Development history (stage 0, routes A and B, unrestricted MIDAS, all earlier tables): `MF_DEVELOPMENT.md`. Literature notes: `LITERATURE_MIDAS.md`.
 
 ## 1. Summary
+0. **Core cases (section 2a, FS-A16):** without the FCI no rate form gives a conventional, significant unemployment or price response (IP rises); adding the FCI makes unemployment conventional and mostly significant; netting r\* (and expected inflation) out of the rate, with the FCI, makes unemployment significant at 12-36 months for every lag length, the price level significant with 6 and 12 lags, and IP fall. Best case vs Bauer-Swanson: unemployment +0.33 vs +0.19 at 12 months, price level -0.5 vs -0.5 at 24 months, IP -0.9 vs -1.5 at 12 months.
 1. **Base case** (1994+, 2-year scaling, Nakamura-Steinsson (NS) shock, MODEL, 3/6/12 monthly lags): a policy move that raises the 2-year yield 1 pp in the FOMC window raises the unemployment gap by **+0.16 to +0.21 pp at 10 months** and **+0.39 to +0.52 pp at 36 months**; every 90% interval excludes zero at 10, 24 and 36 months (one exception: NS-GB, 6 lags, at 10 months). The **core PCE price level falls by 0.24 to 0.44% at 24 months and 0.38 to 0.67% at 36 months**; with 12 lags the fall is significant at 12, 24 and 36 months, with 3 and 6 lags the interval includes zero. [verified]
 2. **Bauer-Swanson's (2023) benchmark** gives almost the same numbers per 1 pp on the 2-year: unemployment about +0.22 pp at 10 months, CPI about -0.5% at 24 months and -0.8% at 50 months [read from figure]. Our unemployment response is more persistent (it keeps rising to 36 months; theirs fades after about 10 months).
 3. We reach this **without a first stage** (the window move is the impact) and **without orthogonalizing the surprise**, which are the two problems Bauer-Swanson and Caldara-Herbst work hardest on. The price is an **exclusion restriction: the shock reaches unemployment and inflation only through the policy rate and the market index.**
@@ -17,7 +18,79 @@ Tags: [verified] = computed here or read in the source; [read from figure] = rea
 - **What identifies the macro response.** (a) The window impact (identified by timing in the 30-minute window); (b) the **exclusion restriction**: no channel from the announcement to macro other than the policy rate and the index; (c) the effect of financial conditions on macro is estimated from **all** month-to-month variation in the lagged monthly averages, so it assumes the economy responds to a given move in financial conditions the same way whatever moved them [inference: this is the assumption a reader will question most].
 - **Uncertainty.** 200 draws: events resampled (window impact and event positions) and residual bootstrap of the macro equations. Daily-block coefficients held fixed.
 
-## 3. Base case: 1994+, 2-year, NS, MODEL (`midas_step.py 200 ALL 1994 3,6,12`; `midas_step_1994.log`, `midas_step_1994_L3-6-12{,_irf}.csv`) [verified]
+## 2a. Core cases: does the FCI help, and do the r\* adjustments help? (FS-A16; `midas_core.py`; `midas_core.log`, `midas_core{,_irf}.csv`) [verified]
+All with the NS surprise, 1994+, MODEL, BASE ordering, 200 draws; per +1 pp window move in the 2-year. Six core cases: the 2-year in three forms (nominal; minus Laubach-Williams r\*; minus 1-year expected inflation and r\*), each **without** the FCI (the daily block is the rate alone; the window impact is the 2-year move alone) and **with** the market index in the matching form (nominal index; nominal index plus the note's r\* adjustment, since the note has no "nominal minus r\*" index; r\*-gap index). The same six with IP added are robustness. \* = 90% interval excludes zero. Bauer-Swanson: benchmark Fig. 8, per 1 pp on the 2-year, read from the figure (approximate; their 90% bands are standard bootstrap bands).
+
+**Unemployment gap (pp), monthly block [u,pi]** (cells: 3 / 6 / 12 lags)
+
+| Rate | FCI | 12 m | 24 m | 36 m |
+|---|---|---|---|---|
+| 2-year nominal | no | -0.13 / -0.27* / -0.34* | -0.01 / -0.19 / -0.36* | +0.08 / -0.08 / -0.25 |
+| 2-year nominal | yes | +0.18* / +0.09 / +0.07 | +0.38* / +0.29* / +0.19 | +0.42* / +0.37* / +0.24* |
+| 2-year - r* | no | -0.02 / -0.10 / -0.17 | +0.10 / -0.05 / -0.25 | +0.17 / +0.01 / -0.21 |
+| 2-year - r* | yes | +0.31* / +0.29* / +0.32* | +0.49* / +0.46* / +0.41* | +0.49* / +0.49* / +0.40* |
+| 2-year - exp. infl. - r* | no | +0.11 / +0.06 / -0.07 | +0.19 / +0.04 / -0.13 | +0.22 / +0.03 / -0.15 |
+| 2-year - exp. infl. - r* | yes | +0.32* / +0.33* / +0.33* | +0.38* / +0.37* / +0.40* | +0.32* / +0.33* / +0.36* |
+| Bauer-Swanson benchmark [read from figure] | | +0.19* | +0.17 | +0.15 |
+
+**Core PCE price level (%), monthly block [u,pi]** (cells: 3 / 6 / 12 lags)
+
+| Rate | FCI | 12 m | 24 m | 36 m |
+|---|---|---|---|---|
+| 2-year nominal | no | +0.01 / +0.06 / +0.01 | -0.08 / +0.03 / +0.05 | -0.17 / -0.07 / +0.03 |
+| 2-year nominal | yes | -0.09 / -0.07 / -0.10 | -0.28 / -0.24 / -0.23 | -0.42 / -0.41 / -0.36 |
+| 2-year - r* | no | -0.05 / -0.04 / -0.08 | -0.15 / -0.15 / -0.14 | -0.24 / -0.28 / -0.22 |
+| 2-year - r* | yes | -0.12 / -0.18 / -0.24* | -0.26 / -0.42 / -0.52* | -0.39 / -0.62 / -0.77* |
+| 2-year - exp. infl. - r* | no | -0.18* / -0.12 / -0.16 | -0.29 / -0.26 / -0.27 | -0.36 / -0.39 / -0.38 |
+| 2-year - exp. infl. - r* | yes | -0.22* / -0.25* / -0.30* | -0.36 / -0.50* / -0.56* | -0.47 / -0.70* / -0.74* |
+| Bauer-Swanson benchmark [read from figure] | | -0.36* | -0.48* | -0.6* |
+
+**Unemployment gap (pp), monthly block [u,pi,ip]** (cells: 3 / 6 / 12 lags)
+
+| Rate | FCI | 12 m | 24 m | 36 m |
+|---|---|---|---|---|
+| 2-year nominal | no | -0.01 / -0.06 / -0.20 | +0.21 / +0.16 / -0.08 | +0.34 / +0.34 / +0.16 |
+| 2-year nominal | yes | +0.41* / +0.36* / +0.25* | +0.63* / +0.62* / +0.52* | +0.57* / +0.61* / +0.57* |
+| 2-year - r* | no | +0.06 / +0.02 / -0.09 | +0.23 / +0.16 / -0.08 | +0.32 / +0.23 / +0.05 |
+| 2-year - r* | yes | +0.30* / +0.33* / +0.33* | +0.45* / +0.47* / +0.43* | +0.43* / +0.48* / +0.44 |
+| 2-year - exp. infl. - r* | no | +0.13 / +0.11 / -0.03 | +0.23 / +0.12 / -0.03 | +0.27 / +0.10 / +0.03 |
+| 2-year - exp. infl. - r* | yes | +0.30* / +0.36* / +0.33* | +0.35* / +0.38* / +0.41* | +0.30* / +0.35* / +0.38* |
+| Bauer-Swanson benchmark [read from figure] | | +0.19* | +0.17 | +0.15 |
+
+**Core PCE price level (%), monthly block [u,pi,ip]** (cells: 3 / 6 / 12 lags)
+
+| Rate | FCI | 12 m | 24 m | 36 m |
+|---|---|---|---|---|
+| 2-year nominal | no | +0.01 / +0.03 / +0.06 | -0.10 / -0.09 / +0.12 | -0.21 / -0.26 / +0.11 |
+| 2-year nominal | yes | -0.13 / -0.15 / -0.15 | -0.34 / -0.43 / -0.30 | -0.45 / -0.63 / -0.44 |
+| 2-year - r* | no | -0.04 / -0.07 / -0.11 | -0.13 / -0.25 / -0.21 | -0.21 / -0.46 / -0.36 |
+| 2-year - r* | yes | -0.10 / -0.22 / -0.33* | -0.22 / -0.50* / -0.67* | -0.31 / -0.75* / -0.97* |
+| 2-year - exp. infl. - r* | no | -0.16 / -0.13 / -0.16 | -0.26 / -0.31 / -0.26 | -0.33 / -0.47 / -0.39 |
+| 2-year - exp. infl. - r* | yes | -0.21* / -0.26* / -0.32* | -0.35 / -0.54* / -0.56* | -0.44 / -0.76* / -0.73* |
+| Bauer-Swanson benchmark [read from figure] | | -0.36* | -0.48* | -0.6* |
+
+**Industrial production (%), monthly block [u,pi,ip]** (cells: 3 / 6 / 12 lags)
+
+| Rate | FCI | 12 m | 24 m | 36 m |
+|---|---|---|---|---|
+| 2-year nominal | no | +1.15* / +1.15* / +1.64* | +1.05 / +1.10 / +1.63* | +1.01 / +1.04 / +1.23 |
+| 2-year nominal | yes | -0.17 / -0.36 / -0.08 | -0.10 / -0.14 / -0.09 | +0.50 / +0.35 / +0.27 |
+| 2-year - r* | no | +0.61 / +0.61 / +1.01 | +0.51 / +0.78 / +1.31 | +0.50 / +0.89 / +1.01 |
+| 2-year - r* | yes | -0.37 / -0.74 / -0.64 | -0.22 / -0.33 / -0.44 | +0.25 / +0.06 / -0.18 |
+| 2-year - exp. infl. - r* | no | +0.16 / +0.13 / +0.41 | +0.22 / +0.62 / +0.80 | +0.30 / +0.88 / +0.72 |
+| 2-year - exp. infl. - r* | yes | -0.45 / -0.87* / -0.89* | -0.04 / -0.24 / -0.46 | +0.41 / +0.15 / -0.08 |
+| Bauer-Swanson benchmark [read from figure] | | -1.5* | -1.0* | -0.85* |
+
+**Summary [verified for the numbers; inference for the reading].**
+1. **Without the FCI nothing works.** With the 2-year alone, in any form, the unemployment response is never significantly positive (it is significantly *negative* with the nominal 2-year and 6 or 12 lags), the price level is never significant except once, and IP *rises* (significantly with the nominal rate). This is the familiar wrong-sign result of the post-1994 literature (Ramey 2016; Bauer-Swanson's unadjusted surprises; this project's Cholesky and local projections).
+2. **Adding the FCI turns every unemployment response conventional and mostly significant.** With the nominal rate and FCI: +0.07 to +0.18 at 12 months (significant with 3 lags), +0.24 to +0.42 at 36 months (all significant). The daily, window-identified propagation through the index is what delivers a sensible transmission.
+3. **The r\* adjustments make it robust and precise.** With the FCI and the rate net of r\* (with or without expected inflation), unemployment is significant at 12, 24 and 36 months for every lag length (+0.29 to +0.33 at 12 months; one exception at 36 months with IP and 12 lags), and nearly identical across 3, 6 and 12 lags; the price level becomes significant (with 6 and 12 lags at 24 and 36 months; at 12 months for all lags when expected inflation is also removed); and IP falls (significantly at 12 months with 6 and 12 lags in the full r - r\* case). Removing r\* without the FCI does not help: both ingredients are needed.
+4. **Relative to Bauer-Swanson.** Best cases (FCI, rate net of expected inflation and r\*): unemployment +0.32 to +0.33 at 12 months against their +0.19, and +0.32 to +0.40 at 36 months against +0.15 (their band includes zero after about 18-20 months; ours excludes it); price level -0.22 to -0.30 at 12 months, -0.36 to -0.56 at 24, -0.47 to -0.74 at 36 against their -0.36, -0.48, -0.6: the same size, and significant with 6 and 12 lags; IP -0.45 to -0.89 at 12 months against -1.5, with a faster recovery. So: same sign and magnitude for prices, larger and more persistent for unemployment, smaller for IP; and obtained from FOMC windows only, without an orthogonalized instrument or Chair speeches.
+5. **The earlier "base case"** (section 3: nominal 2-year with the r\*-gap index) mixes the forms; it sits between the nominal-with-FCI and r\*-with-FCI rows.
+6. **Interpretation [inference].** Two things carry the identification. (a) The FCI: the window measures how far financial conditions as a whole move with policy, and the daily block carries that forward; a policy rate alone in a reduced-form link to unemployment picks up the procyclical co-movement of rates and activity (rates rise in booms), which the FCI's equity and dollar components partly offset. (b) The r\* adjustment: it removes the slow secular decline of rates since 1994 (and of expected inflation), which otherwise lines up against trending real activity. Neither appears in the high-frequency-identification literature I have read (Gertler-Karadi, Nakamura-Steinsson, Caldara-Herbst, Miranda-Agrippino-Ricco, Bauer-Swanson, Jarocinski-Karadi): their VARs use the nominal 1- or 2-year rate, and the closest idea is Caldara-Herbst's credit spread [inference, based on the papers read here, not a systematic search].
+7. **Caveats.** The improvement could partly reflect that the r\*-adjusted and FCI systems fit the 1994-2026 sample better by construction (r\* and the index's weights are themselves estimated); the window impact for the FCI uses the same NS events that set the index weights; bands do not include uncertainty in the daily block or in r\*. The propagation assumption (macro responds to financial conditions the same way whatever moved them) is still the identifying assumption.
+
+## 3. Base case (nominal 2-year with the r*-gap index; superseded as the base by section 2a, pending the user's choice): 1994+, 2-year, NS, MODEL (`midas_step.py 200 ALL 1994 3,6,12`; `midas_step_1994.log`, `midas_step_1994_L3-6-12{,_irf}.csv`) [verified]
 Per +1 pp window move in the 2-year yield. Unemployment gap in pp; core PCE price level in % (monthly annualized rate cumulated, /12). Median-path point estimate [90% interval].
 
 | Lags | u, 10 m | u, 24 m | u, 36 m | Price level, 12 m | 24 m | 36 m |
