@@ -21,16 +21,21 @@ rng = np.random.default_rng(31)
 
 _d0 = D0.load()
 _e2 = fred("EXPINF2YR"); _e2 = pd.Series(_e2.values, index=_e2.index.to_period("M"))
-RATE = {"nom": POL["y2"], "real": POL["y2"] - interp_monthly(_e2), "rstar": POL["y2"] - interp_monthly(_e2 + _d0["rstar LW"])}
+RATE = {"nom": POL["y2"], "real": POL["y2"] - interp_monthly(_e2), "rstar": POL["y2"] - interp_monthly(_e2 + _d0["rstar LW"]),
+        "kiley": POL["y2"] - interp_monthly(_e2 + _d0["rstar Kiley"])}                     # robustness (FS-A19): Kiley's r*
 _nomd = DAILY["idx"].reindex(CALW).ffill(limit=3)
 def _daily_fci(target):
     off = (target - _nomd.groupby(_nomd.index.to_period("M")).mean()).dropna()
     return _nomd + interp_monthly(off)
-FCI = {"nom": _daily_fci(MM0.market_nominal), "real": _daily_fci(MM0.market_real), "rstar": _daily_fci(MM0.market_rstar)}
+FCI = {"nom": _daily_fci(MM0.market_nominal), "real": _daily_fci(MM0.market_real), "rstar": _daily_fci(MM0.market_rstar),
+       "kiley": _daily_fci(D0.read("indexes_rstar_kiley.csv").market)}                 # the FCI note's r* (Kiley) check index
+TREND = False   # robustness (FS-A19): quadratic time trend (t, t^2; t in decades from 2010) in every monthly equation
 MAC = MB.MAC
 
 def daily_frame(form, fci):
-    return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[form]} if fci else {})})
+    """form = rate form; fci = 0 (no FCI), 1 (FCI in the same form as the rate) or the name of an FCI form."""
+    ff = form if fci == 1 else fci
+    return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[ff]} if fci else {})})
 
 def har_block(form, fci, mvars):
     D = daily_frame(form, fci).loc["1990-01-02":].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
@@ -45,7 +50,8 @@ def macro_data(form, fci, mvars, L):
         try:
             xm = np.concatenate([MMv.loc[p - l].values for l in range(1, L + 1)]); xf = np.concatenate([FB.loc[p - l].values for l in range(1, L + 1)])
         except KeyError: continue
-        x = np.r_[1.0, xm, xf]; y = MMv.loc[p].values
+        tt = (p.year + (p.month - 1) / 12 - 2010) / 10
+        x = np.r_[1.0, xm, xf] if not TREND else np.r_[1.0, xm, xf, tt, tt * tt]; y = MMv.loc[p].values
         if np.isnan(x).any() or np.isnan(y).any(): continue
         X.append(x); Y.append(y)
     return np.array(X), np.array(Y)
@@ -57,17 +63,18 @@ def irf(Bd, C, K, nd, L, idx, pos, fci):
 
 if __name__ == "__main__":
     B = int(sys.argv[1]) if len(sys.argv) > 1 else 200
-    SEL = sys.argv[2].split(",") if len(sys.argv) > 2 else None        # e.g. "nom-0,nom-1" (form-fci)
+    SEL = sys.argv[2].split(",") if len(sys.argv) > 2 else None        # e.g. "nom-0,nom-1" (rate form - fci: 0, 1 = same form, or an FCI form name)
+    TREND = len(sys.argv) > 3 and sys.argv[3] == "trend"
     MAC_SETS = {"u,pi": ["u", "pi"], "u,pi,ip": ["u", "pi", "ip"]}
     rows, irfrows = [], []; t0 = time.time()
     print("Core cases, NS surprise, 1994+, MODEL; per +1 pp window move in the 2-year; u gap pp, core PCE price level %, IP %; point [90%],", B, "draws\n")
     idx0 = event_index("NS"); _, _, idx0 = slopes(idx0, "NS"); pos0 = positions(idx0)
     bidx = [rng.choice(idx0, size=len(idx0), replace=True) for _ in range(B)]; bpos = [positions(ib) for ib in bidx]
     for mlab, mvars in MAC_SETS.items():
-        for form in ("nom", "real", "rstar"):
-            for fci in (0, 1):
-                if SEL and f"{form}-{fci}" not in SEL: continue
-                K, nd = len(mvars), 1 + fci; Bd = har_block(form, fci, mvars)
+        combos = [s_.split("-") for s_ in SEL] if SEL else [(f, c) for f in ("nom", "real", "rstar") for c in ("0", "1")]
+        for form, fci in combos:
+                fci = int(fci) if fci in ("0", "1") else fci
+                K, nd = len(mvars), 1 + (fci != 0); Bd = har_block(form, fci, mvars)
                 for L in (3, 6, 12):
                     X, Y = macro_data(form, fci, mvars, L); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
                     def tr(m):
@@ -76,11 +83,11 @@ if __name__ == "__main__":
                     sd = np.array([tr(irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci)) for ib, pb in zip(bidx, bpos)])
                     lo, hi = np.percentile(sd, [5, 95], axis=0)
                     names = ["u", "P"] + (["ip"] if "ip" in mvars else [])
-                    case = f"[{mlab}] rate {form}, {'with' if fci else 'no'} FCI, {L} lags"
+                    case = f"[{mlab}] rate {form}, {'FCI ' + (form if fci == 1 else fci) if fci else 'no FCI'}{', trend' if TREND else ''}, {L} lags"
                     print(f"{case:40s}: " + "  ".join(f"{n} " + " ".join(f"{h}:{s0[h, j]:+.2f}[{lo[h, j]:+.2f},{hi[h, j]:+.2f}]" for h in (12, 24, 36)) for j, n in enumerate(names)) + f"  ({time.time() - t0:.0f}s)", flush=True)
                     for j, n in enumerate(names):
-                        rows.append(dict(macro=mlab, rate=form, fci=fci, lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)}))
-                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j])))
-    suf = "" if not SEL else "_" + "_".join(SEL)
+                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)}))
+                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j])))
+    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "")
     pd.DataFrame(rows).to_csv(f"midas_core{suf}.csv", index=False, float_format="%.4f")
     pd.concat(irfrows).to_csv(f"midas_core{suf}_irf.csv", index=False, float_format="%.4f")
