@@ -1,0 +1,5 @@
+Hessian eigenvalues: min 2.38e-01, max 2.26e+08; non-positive: 0
+   draws kept 288, rejected for explosive A: 12
+shock NS (policy variable y2; 288 draws): u12 +0.037 [-0.001,+0.088]  u24 +0.059 [-0.008,+0.154]  u36 +0.070  P(u12>0) 0.94  | core PCE 12m +0.32
+   draws kept 277, rejected for explosive A: 23
+shock NS-GB (policy variable y2; 277 draws): u12 +0.035 [-0.014,+0.075]  u24 +0.056 [-0.028,+0.127]  u36 +0.067  P(u12>0) 0.89  | core PCE 12m +0.31
