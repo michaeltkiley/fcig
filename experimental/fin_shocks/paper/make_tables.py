@@ -5,7 +5,8 @@ import os, numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 HERE = os.path.dirname(os.path.abspath(__file__)); UP = os.path.dirname(HERE)
 FILES = [("nom-0_nom-1", ""), ("real-0_real-1", ""), ("rstar-0_rstar-1", ""), ("kiley-0_kiley-1", ""), ("ma8-0_ma8-nom_ma8-real_ma8-rstar", ""),
-         ("nom-0_nom-1_nom-real_trend", ""), ("fwd-0_fwd-1_upi", ""), ("fwd-0_fwd-1_upiip", ""), ("rstar-0_rstar-1_drop2021", "drop2021"), ("rstar-0_rstar-1_end2019", "end2019")]
+         ("nom-0_nom-1_nom-real_trend", ""), ("fwd-0_fwd-1_upi", ""), ("fwd-0_fwd-1_upiip", ""), ("fwd-nom_fwd-real_fwd-rstar_upi", ""), ("kiley-nom_kiley-real_kiley-rstar_upi", ""),
+         ("nom-rstar_trend_upi", ""), ("rstar-nom_rstar-real_upi", ""), ("rstar-0_rstar-1_drop2021", "drop2021"), ("rstar-0_rstar-1_end2019", "end2019")]
 def _load(suffix):
     out = []
     for f, smp in FILES:
@@ -42,18 +43,21 @@ CORE = [("Nominal", "nom", "0", 0), ("Nominal", "nom", "1", 0), (None,) * 4, ("R
         ("$r^*$-gap", "rstar", "0", 0), ("$r^*$-gap", "rstar", "1", 0)]
 for var, nm in (("u", "tab1_u"), ("P", "tab2_p")): table(CORE, var, "u,pi", nm)
 for var, nm in (("u", "tab3_ip_u"), ("P", "tab3_ip_p"), ("ip", "tab3_ip_ip")): table(CORE, var, "u,pi,ip", nm)
-ROB = [("$r^*$-gap, Laubach--Williams (baseline)", "rstar", "0", 0, "", "none"), ("$r^*$-gap, Laubach--Williams (baseline)", "rstar", "1", 0, "", "$r^*$-gap (LW)"), (None,),
-       ("2-year $-$ 9--10y forward rate", "fwd", "0", 0, "", "none"), ("2-year $-$ 9--10y forward rate", "fwd", "1", 0, "", "forward-gap"), (None,),
-       ("$r^*$-gap, Kiley", "kiley", "0", 0, "", "none"), ("$r^*$-gap, Kiley", "kiley", "1", 0, "", "$r^*$-gap (Kiley)"), (None,),
-       ("Nominal + quadratic trend", "nom", "0", 1, "", "none"), ("Nominal + quadratic trend", "nom", "1", 1, "", "nominal"), ("Nominal + quadratic trend", "nom", "real", 1, "", "real"), (None,),
-       ("2-year $-$ 8-year average", "ma8", "0", 0, "", "none"), ("2-year $-$ 8-year average", "ma8", "nom", 0, "", "nominal"), ("2-year $-$ 8-year average", "ma8", "real", 0, "", "real"),
-       ("2-year $-$ 8-year average", "ma8", "rstar", 0, "", "$r^*$-gap (LW)")]
+FL = (("0", "none"), ("nom", "nominal"), ("real", "real"), ("rstar", "$r^*$-gap"))
+def block(lab, rate, tr=0):
+    out = []
+    for f, fl in FL:
+        ff = "1" if f == {"rstar": "rstar", "nom": "nom"}.get(rate) else f      # same-form FCI is stored as fci = 1
+        out.append((lab, rate, ff, tr, "", fl))
+    return out + [(None,)]
+# FCI held at the note's three indexes (nominal, real, r*-gap); only the 2-year adjustment changes (user, FS-A23)
+ROB = (block("2-year $r^*$-gap, Laubach--Williams (baseline)", "rstar") + block("2-year $r^*$-gap, Kiley", "kiley")
+       + block("2-year $-$ 9--10y forward rate", "fwd") + block("2-year nominal + quadratic trend", "nom", tr=1) + block("2-year $-$ 8-year average", "ma8"))[:-1]
 for var, nm in (("u", "tab4_rob_u"), ("P", "tab4_rob_p")): table(ROB, var, "u,pi", nm)
 SMP = [("Baseline sample", "rstar", "1", 0, "", "$r^*$-gap (LW)"), ("Also drop 2021", "rstar", "1", 0, "drop2021", "$r^*$-gap (LW)"), ("End in 2019", "rstar", "1", 0, "end2019", "$r^*$-gap (LW)"),
        (None,), ("Baseline sample", "rstar", "0", 0, "", "none"), ("Also drop 2021", "rstar", "0", 0, "drop2021", "none"), ("End in 2019", "rstar", "0", 0, "end2019", "none")]
 for var, nm in (("u", "tab5_smp_u"), ("P", "tab5_smp_p")): table(SMP, var, "u,pi", nm)
-FWDIP = [("2-year $-$ 9--10y forward rate", "fwd", "0", 0, "", "none"), ("2-year $-$ 9--10y forward rate", "fwd", "1", 0, "", "forward-gap")]
-table(FWDIP, "ip", "u,pi,ip", "tab6_fwd_ip")
+
 
 # Figure 1: the four key cases, 6 lags, with 68% and 90% bands; Bauer-Swanson benchmark (read from their Fig. 8) as markers
 BS = {"u": ([10, 12, 24, 36], [0.22, 0.19, 0.17, 0.15]), "P": ([12, 24, 36], [-0.36, -0.48, -0.6])}
