@@ -245,6 +245,14 @@ No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and c
 7. Replication script and data vintage; raw/ inputs (FRED, OFR, EBP, Shiller CAPE, USMPD, FRB/US package) are not in git.
 
 ## 9. WHERE WE ARE (end of session, 30 Oct 2026) -- start here next time
+**Update 31 Oct 2026 (read this block first).**
+- **Note and replication package:** unchanged since 30 Oct: the draft (`fci_note/paper/fci_note.tex`) awaits the user's review. Nothing below changed the note.
+- **Monetary-shock line (`mp_var_fci/`): CLOSED, negative result.** Question was whether adding the market index makes monetary-shock impulse responses more robust, larger, or less sample-/information-effect-dependent, under Cholesky, Nakamura-Steinsson and Bauer-Swanson identification. Answer: no. Full-sample FOMC-only proxy-SVAR is weakly identified for the 2-year and path surprises (as in the literature); the funds rate with the current-meeting surprise (MP1) is the best-identified case.
+  Adding **credit variables (excess bond premium, NFCI), not the index**, removes the wrong-signed post-1994 unemployment response and halves the gap between samples; the policy rate reacts within the month to the EBP and not detectably to the index; the Greenbook purge does not strengthen any first stage (path surprises are predictable from the Greenbook, MP1 is not). Entry point: `mp_var_fci/SUMMARY_REPORT.md`; decisions MP-A1 to MP-A11 in `mp_var_fci/MP_QA.md`. All merged to main (PRs #8-#11).
+- **Next, proposal stage:** `fin_shocks/PROPOSALS.md` (financial shocks and activity separate from monetary policy; four options, P1 recommended: recursive Gilchrist-Zakrajsek-type test of whether an index shock matters beyond the excess bond premium). Decisions FS-Q1 to FS-Q5 await the user.
+- **How to read the addenda at the end of this file:** the "30 Oct addendum", "30 Oct, later", "31 Oct" paragraphs after section 9 are the running history of the monetary-shock project and are superseded by the block above.
+- **Practical:** outbound FRED CSV endpoint works with the project user agent and no key (see `mp_var_fci/mpcommon.py`); the Philadelphia Fed Tealbook data and the Nakamura-Steinsson replication package are in `mp_var_fci/data/`; statsmodels, scipy and matplotlib are not preinstalled in a fresh container (`pip install statsmodels scipy matplotlib`).
+
 **Status.** A full draft note and replication package exist: `fci_note/paper/fci_note.tex` (+ PDF, 13 pages) and `fci_note/replication/` (README, data snapshot,
 `fci/` utilities, scripts 01-07, `run_all.py`; text numbers are LaTeX macros written by the scripts). The user will review the whole document; await their comments.
 Compile: `cd fci_note/replication && python run_all.py && cd ../paper && pdflatex fci_note.tex` (twice). A TeX engine was installed with apt in this session only;
