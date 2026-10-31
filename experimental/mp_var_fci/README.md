@@ -1,6 +1,6 @@
 # EXPERIMENTAL: monetary policy shocks and the market index
 
-Status: design stage, no code yet. Parallel project to `fci_note/` (the market-index note). Everything it builds on is in `experimental/PROJECT_MEMORY.md` (section 9), `INDEX_QA.md`, `lp_weights/`, `market_macro/` and `../../fci_note/`. Not used by the daily workflow.
+Status: exploration done through the Greenbook purge (31 Oct 2026); see `SUMMARY_REPORT.md`. Parallel project to `fci_note/` (the market-index note). Everything it builds on is in `experimental/PROJECT_MEMORY.md` (section 9), `INDEX_QA.md`, `lp_weights/`, `market_macro/` and `../../fci_note/`. Not used by the daily workflow.
 
 ## Question
 Add core PCE inflation and the policy rate to the two-variable VAR (unemployment gap, market index) and identify monetary policy shocks by Cholesky ordering, a Nakamura-Steinsson external instrument and a Bauer-Swanson external instrument.
@@ -14,4 +14,6 @@ Does the market index make the responses more robust to identification, larger, 
 | `02a_lags.py`, `02_cholesky.py`, `02c_report.py`, `irf_cholesky*.csv`, `cholesky_*.png`, `02*.log` | Step 2: lag choice, Cholesky baseline and report |
 | `02d_exzlb.py`, `03_instruments.py`, logs, `data/mp_instruments.csv` | Steps 2d and 3: ex-ZLB check; NS and own-purge instruments and first stages |
 | `02e_cholesky_gs2.py`, `04_proxy.py`, `04b_why_weak.py`, `mpcommon.py`, `irf_*.csv`, `*_u.png` | 2-year Cholesky; proxy-SVAR with Anderson-Rubin sets; why first stages differ across conventions |
+| `SUMMARY_REPORT.md` | **Start here:** summary of the exploration, answers to the four questions, feasibility assessment |
+| `06_credit_augmented.py`, `07_greenbook.py`, `07b_gb_proxy.py`, `08_summary_metrics.py`, logs | Credit-augmented systems (EBP/NFCI), Greenbook purge, summary metrics |
 | `MP_QA.md` | Proposed tests and the decisions to be taken one at a time (answers recorded there) |
