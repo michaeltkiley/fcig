@@ -271,3 +271,6 @@ market output VAR with GS / FCI-G (R14); house-price detrending decision for exp
 
 **30 Oct, later - MP-shock project status (branch `ccr-9030ba3c-mgpwtw`, not yet merged to main; resume there).** Decisions MP-A1 to MP-A9 recorded in `mp_var_fci/MP_QA.md` (exploratory). Done: step 1 dataset, step 2 Cholesky (long window: small conventional response; 1994- windows: wrong sign even before the ZLB, index changes little),
 step 3 instruments (NS and own BS-style purge correlate 0.94; first stages weak, F 0.1-6.5 on VAR residuals). Open: MP-Q10 (how to handle weak instruments; optional published Bauer-Swanson file). Next: step 4 proxy-SVARs with Anderson-Rubin bands.
+
+**30 Oct, later still.** MP project: read GK, Lunsford, Colombo, Bauer-Swanson, Nakamura-Steinsson, Miranda-Agrippino-Ricco and Caldara-Herbst (details in `mp_var_fci/MP_QA.md`). Finding: full-sample FOMC-only proxy-SVAR is weakly identified (as in the literature); in the Caldara-Herbst window (1994-2007, funds rate, MP1) the
+wrong-sign unemployment response disappears when the excess bond premium is added, not when the market index is. Proposed path (MP-Q13, awaiting the user): CH-window study testing whether the index adds beyond EBP, MAR-style Greenbook purge for 1995-2008, event-study evidence after 2008.

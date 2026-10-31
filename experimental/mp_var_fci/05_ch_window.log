@@ -1,0 +1,24 @@
+Caldara-Herbst design: VAR 1993-07..2007-06, 6 lags, instrument from 1994-01; shock = +25 bp funds rate; IP response cumulated, in %; unemployment gap in pp
+
+Proxy-SVAR (instrument: scheduled-meeting surprise), first-stage F anchor robust [homoskedastic]; AR = 95% Anderson-Rubin set
+  CH        MP1  T=162  F   5.0 [  7.1]  Lunsford   5.7  Colombo  17.2 | IP  h12  -1.99          unbounded  h24  -2.77          unbounded
+  CH        ns   T=162  F   0.5 [  0.5]  Lunsford   2.0  Colombo   6.0 | IP  h12  -2.81          unbounded  h24  -4.87          unbounded
+  CH        ED4  T=162  F   0.0 [  0.0]  Lunsford   1.0  Colombo   3.1 | IP  h12 +36.93          unbounded  h24 +81.29          unbounded
+  CH        FF4  T=162  F   2.4 [  2.5]  Lunsford   4.9  Colombo  14.9 | IP  h12  -2.50          unbounded  h24  -3.92          unbounded
+  CH+idx    MP1  T=162  F   7.5 [ 10.4]  Lunsford   5.8  Colombo  23.8 | IP  h12  -1.44          unbounded  h24  -1.51          unbounded
+  CH+idx    ns   T=162  F   1.0 [  1.0]  Lunsford   1.5  Colombo   6.2 | IP  h12  -1.39          unbounded  h24  -1.54          unbounded
+  Ours      MP1  T=162  F   6.2 [ 11.3]  Lunsford   3.3  Colombo  13.4 | u_gap h12  -0.16          unbounded  h24  -0.09          unbounded
+  Ours      ns   T=162  F   3.6 [  3.6]  Lunsford   1.1  Colombo   4.4 | u_gap h12  -0.22          unbounded  h24  -0.12          unbounded
+  Ours+EBP  MP1  T=162  F   9.9 [ 12.3]  Lunsford   4.4  Colombo  22.3 | u_gap h12  +0.11     (-0.14, +2.18)  h24  +0.22     (-0.01, +2.94)
+  Ours+EBP  ns   T=162  F   2.6 [  2.9]  Lunsford   2.5  Colombo  12.6 | u_gap h12  +0.22          unbounded  h24  +0.36          unbounded
+  u,pi,ffr,EBP MP1  T=162  F   8.0 [  9.6]  Lunsford   4.1  Colombo  16.7 | u_gap h12  +0.10          unbounded  h24  +0.19          unbounded
+  u,pi,ffr  MP1  T=162  F   5.7 [  9.9]  Lunsford   3.5  Colombo  10.7 | u_gap h12  -0.15          unbounded  h24  -0.11          unbounded
+
+Cholesky, same window (no instrument)
+  CH-like: ffr before EBP (no reaction) IP  h12  -0.38   h24  -0.70   (ffr 12m +0.34; one-sd shock 0.13 pp)
+  CH-like: ffr after EBP (reacts)    IP  h12  -0.24   h24  -0.49   (ffr 12m +0.41; one-sd shock 0.13 pp)
+  Ours: ffr before index             u_gap h12  -0.22   h24  -0.13   (ffr 12m +0.78; one-sd shock 0.13 pp)
+  Ours: ffr after index (reacts)     u_gap h12  -0.23   h24  -0.14   (ffr 12m +0.79; one-sd shock 0.13 pp)
+  u,pi,ffr,EBP: ffr before EBP       u_gap h12  -0.04   h24  +0.02   (ffr 12m +0.46; one-sd shock 0.12 pp)
+  u,pi,ffr,EBP: ffr after EBP (reacts) u_gap h12  -0.06   h24  -0.01   (ffr 12m +0.51; one-sd shock 0.12 pp)
+  Ours+EBP: ffr last (reacts to both) u_gap h12  -0.10   h24  +0.02   (ffr 12m +0.51; one-sd shock 0.12 pp)

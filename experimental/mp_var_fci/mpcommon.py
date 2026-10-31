@@ -66,3 +66,21 @@ def first_stage(e, z):
     X = sm.add_constant(z.values)
     ro = sm.OLS(e.values, X).fit(cov_type="HC1"); rh = sm.OLS(e.values, X).fit()
     return ro.tvalues[1] ** 2, rh.tvalues[1] ** 2, ro.params[1]      # robust F, homoskedastic F, coefficient
+
+
+def ar_set(Phi_rows, e, p, z, level=3.841):
+    """Anderson-Rubin set (conditional on the VAR coefficients) for the response of one variable at each horizon.
+    Phi_rows: (H+1, k) rows a_h of the MA matrices for that variable; e: residuals (T x k); p: scaling column; z: instrument (Series aligned with e).
+    Returns list of (lo, hi): bounded interval, (-inf, inf) if unbounded, (nan, nan) if empty."""
+    zc = (z - z.mean()).values; ep = e[:, p]; T = len(zc); out = []
+    for a in Phi_rows:
+        c = e @ a
+        A, B = np.mean(zc * c), np.mean(zc * ep)
+        Scc, Scp, Spp = np.mean(zc ** 2 * c * c), np.mean(zc ** 2 * c * ep), np.mean(zc ** 2 * ep * ep)
+        qa, qb, qc = T * B * B - level * Spp, -2 * T * A * B + 2 * level * Scp, T * A * A - level * Scc
+        if qa > 0:
+            d = qb * qb - 4 * qa * qc
+            out.append((np.nan, np.nan) if d < 0 else ((-qb - np.sqrt(d)) / (2 * qa), (-qb + np.sqrt(d)) / (2 * qa)))
+        else:
+            out.append((-np.inf, np.inf))
+    return out
