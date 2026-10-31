@@ -43,6 +43,9 @@ Monthly data 1973-2026: unemployment gap, core PCE, funds rate, 2-year, three in
 **Question.** Separate policy-news movements from other financial movements in the daily index by the variance difference between FOMC days and other days (Rigobon-Sack), then use the non-policy daily shock, aggregated to months, in a local projection of unemployment.
 **Risks.** Needs a defensible control-day set; estimates weak when the variance ratio is modest; aggregation to monthly loses the identification; several sessions. Listed for completeness.
 
+### P5. Window-identified mixed-frequency VAR (added after discussion; stage 0 done)
+**Question.** What is the effect of a monetary shock identified only inside announcement windows (financial variables respond, macro does not) and propagated through a daily-to-monthly VAR? It applies the financial-shock machinery to the monetary case and addresses the weak monthly instrument. **Status:** stage 0 passed its pre-registered go/no-go (`MF_PLAN.md`); route A (block-recursive MIDAS-VAR) and route B (state-space mixed-frequency VAR) planned; a Monte Carlo validation first. User-approved scope: windows to daily to monthly, long sample from 1973 and a 1994- sample, three shock versions.
+
 ## 5. Recommendation
 P1 first, because everything is in hand, it uses the project's own index, it answers the open question left by the monetary line (does the index matter apart from credit?), and a null is informative. If P1 shows an index effect independent of credit, add P2 as the robustness check on identification; run P3 separately as a use of the index in the unemployment-risk framework. Defer P4.
 
