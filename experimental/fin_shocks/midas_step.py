@@ -75,13 +75,16 @@ def irf(Bd, C, L, L0, P, fin_d, idx, pos, sk, use_path):
 
 if __name__ == "__main__":
     B = int(sys.argv[1]) if len(sys.argv) > 1 else 100
-    ONLY = sys.argv[2] if len(sys.argv) > 2 else None          # "BASE" or "+CUR" to run one ordering; output then goes to midas_step_<ordering>.csv
-    rows = []; t0 = time.time()
+    ONLY = sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] != "ALL" else None   # "BASE" or "+CUR" to run one ordering; output then goes to midas_step_<ordering>.csv
+    SPEC = sys.argv[3] if len(sys.argv) > 3 else None          # substring of the spec label, e.g. "1994" (output midas_step_<ordering>_<SPEC>_L<lags>.csv)
+    LAGS = tuple(int(x) for x in sys.argv[4].split(",")) if len(sys.argv) > 4 else (6, 12)
+    rows, irfrows = [], []; t0 = time.time()
     print("Restricted (step-weight) MIDAS-VAR: unemployment-gap response (pp) per +1 pp event-day rise in the scaling variable (2-year for NS/NS-GB, funds rate for MP1); median [90% interval] over", B, "draws")
     print("MODEL = daily block dynamics after the event day; PATH = direct event-day path through the end of month t+1, then the model. BASE = lagged monthly averages; +CUR = current-month average added (robustness)\n")
     for lab, pol, fm in SPECS:
+        if SPEC and SPEC not in lab: continue
         fin_d = [pol, "idx"]
-        for L in (6, 12):
+        for L in LAGS:
             for L0, tag in ((1, "BASE"), (0, "+CUR")):
                 if ONLY and tag != ONLY: continue
                 Bd = har_block(pol, cur=(L0 == 1))
@@ -98,9 +101,16 @@ if __name__ == "__main__":
                         base = irf(Bd, C0, L, L0, P0, fin_d, idx0, pos0, sk, up)
                         dr = np.array([irf(Bd, Cb, L, L0, Pb, fin_d, ib, posb, sk, up) for Cb, Pb, ib, posb in draws])
                         lo, hi = np.percentile(dr[:, :, 0], [5, 95], axis=0); plo, phi = np.percentile(dr[:, :, 1], [5, 95], axis=0)
+                        lev = np.cumsum(base[:, 1]) / 12; dlev = np.cumsum(dr[:, :, 1], axis=1) / 12      # core PCE price level (%): pi is an annualized monthly rate
+                        llo, lhi = np.percentile(dlev, [5, 95], axis=0)
+                        irfrows.append(pd.DataFrame(dict(spec=lab, lags=L, timing=tag, shock=sk, variant=var, h=np.arange(H + 1), u=base[:, 0], u_lo=lo, u_hi=hi,
+                                                         pi=base[:, 1], plev=lev, plev_lo=llo, plev_hi=lhi)))
                         rows.append(dict(spec=lab, lags=L, timing=tag, shock=sk, variant=var, **{f"u{h}": base[h, 0] for h in (6, 12, 24, 36)},
-                                         lo12=lo[12], hi12=hi[12], lo24=lo[24], hi24=hi[24], lo36=lo[36], hi36=hi[36], pi12=base[12, 1], pilo12=plo[12], pihi12=phi[12], P12=float(np.mean(dr[:, 12, 0] > 0))))
+                                         lo12=lo[12], hi12=hi[12], lo24=lo[24], hi24=hi[24], lo36=lo[36], hi36=hi[36], pi12=base[12, 1], pilo12=plo[12], pihi12=phi[12],
+                                         plev12=lev[12], plev24=lev[24], plev36=lev[36], plevlo24=llo[24], plevhi24=lhi[24], P12=float(np.mean(dr[:, 12, 0] > 0))))
                         print(f"   {sk:6s} {var:5s}: u6 {base[6, 0]:+.2f}  u12 {base[12, 0]:+.2f} [{lo[12]:+.2f},{hi[12]:+.2f}]  u24 {base[24, 0]:+.2f} [{lo[24]:+.2f},{hi[24]:+.2f}]  u36 {base[36, 0]:+.2f} [{lo[36]:+.2f},{hi[36]:+.2f}]  P(u12>0) {np.mean(dr[:, 12, 0] > 0):.2f}"
-                              f"  | core PCE 12m {base[12, 1]:+.2f} [{plo[12]:+.2f},{phi[12]:+.2f}]  ({time.time() - t0:.0f}s)", flush=True)
+                              f"  | core PCE 12m {base[12, 1]:+.2f} [{plo[12]:+.2f},{phi[12]:+.2f}]  price level 24m {lev[24]:+.2f} [{llo[24]:+.2f},{lhi[24]:+.2f}]  ({time.time() - t0:.0f}s)", flush=True)
                 print()
-    pd.DataFrame(rows).to_csv(f"midas_step{'_' + ONLY.strip('+') if ONLY else ''}.csv", index=False, float_format="%.4f")
+    suf = ("_" + ONLY.strip("+") if ONLY else "") + (f"_{SPEC}_L{'-'.join(map(str, LAGS))}" if SPEC else "")
+    pd.DataFrame(rows).to_csv(f"midas_step{suf}.csv", index=False, float_format="%.4f")
+    pd.concat(irfrows).to_csv(f"midas_step{suf}_irf.csv", index=False, float_format="%.4f")

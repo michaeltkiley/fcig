@@ -1,0 +1,5 @@
+
+Chudik-Kilian pooled ARDL (12 own lags, shock lags 0..36; pooled regressor = monthly sum of shocks, i.e. a shock on a uniformly random day)
+u gap: d_h in pp; core PCE: monthly rate/12 as dependent, cumulated to the price level (%). Same units as above. Null 90% = permutation of shock values across event dates
+
+NS                               u gap                  (253 events, 370 months): h6 -1.54 (null [-1.15,+0.85], p 0.02)  h12 -1.88 (null [-2.22,+1.58], p 0.11)  h24 -1.83 (null [-3.46,+2.60], p 0.33)  h36 -1.05 (null [-4.25,+2.82], p 0.64)

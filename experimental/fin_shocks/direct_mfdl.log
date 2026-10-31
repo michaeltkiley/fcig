@@ -1,0 +1,26 @@
+Chudik-Georgiadis restricted MFDL: direct regression of the monthly outcome on event-day shocks (no financial channel imposed)
+Response at a horizon of h months = knot value theta_h (daily response h*21.7 weekdays after the event; comparable to month t+h in the VAR)
+Units: pp of the unemployment gap, or % of the core PCE price level, per +1 pp window move in the 2-year (NS, NS-GB) or funds rate (MP1); 90% = 1.645 HAC se
+
+NS     u gap, levels (pure DL)            (253 events, 382 months): h6 -1.24 [-3.50,+1.02]  h12 -2.32 [-4.48,-0.17]  h24 -2.24 [-5.13,+0.65]  h36 -2.09 [-5.20,+1.02]   joint F 0.58   permutation: h12 null 90% [-3.74,+3.12], p 0.28
+NS     u gap, differences                 (253 events, 381 months): h6 -1.89 [-2.72,-1.06]  h12 -2.05 [-2.90,-1.19]  h24 -2.07 [-3.39,-0.74]  h36 -0.34 [-0.66,-0.02]   joint F 3.73   permutation: h12 null 90% [-1.82,+1.69], p 0.06
+NS     core PCE price level, differences  (253 events, 381 months): h6 +0.28 [-0.44,+1.00]  h12 +0.32 [-0.41,+1.05]  h24 +0.64 [+0.07,+1.20]  h36 +0.13 [-0.20,+0.47]   joint F 1.25   permutation: h12 null 90% [-1.18,+1.33], p 0.68
+
+NS-GB  u gap, levels (pure DL)            (205 events, 382 months): h6 -0.30 [-4.18,+3.59]  h12 -1.11 [-4.86,+2.63]  h24 -1.44 [-4.07,+1.20]  h36 -0.60 [-2.94,+1.74]   joint F 0.18   permutation: h12 null 90% [-5.57,+4.64], p 0.70
+NS-GB  u gap, differences                 (205 events, 381 months): h6 -0.91 [-2.83,+1.01]  h12 -1.16 [-3.55,+1.22]  h24 -1.32 [-2.41,-0.23]  h36 -0.21 [-0.55,+0.13]   joint F 1.32   permutation: h12 null 90% [-2.30,+2.09], p 0.39
+NS-GB  core PCE price level, differences  (205 events, 381 months): h6 -0.40 [-1.81,+1.00]  h12 -0.68 [-2.44,+1.07]  h24 -0.60 [-2.30,+1.10]  h36 -0.06 [-0.37,+0.25]   joint F 1.64   permutation: h12 null 90% [-1.32,+1.57], p 0.40
+
+MP1    u gap, levels (pure DL)            (253 events, 382 months): h6 -0.19 [-1.45,+1.07]  h12 -1.76 [-3.75,+0.23]  h24 -1.93 [-4.76,+0.90]  h36 -2.58 [-5.54,+0.37]   joint F 2.18   permutation: h12 null 90% [-3.41,+2.69], p 0.37
+MP1    u gap, differences                 (253 events, 381 months): h6 -0.99 [-1.61,-0.37]  h12 -1.69 [-2.87,-0.52]  h24 -1.92 [-3.12,-0.72]  h36 -0.28 [-0.56,-0.01]   joint F 1.81   permutation: h12 null 90% [-1.78,+1.36], p 0.07
+MP1    core PCE price level, differences  (253 events, 381 months): h6 -0.41 [-0.83,+0.02]  h12 +0.04 [-0.69,+0.77]  h24 -0.07 [-0.76,+0.62]  h36 +0.08 [-0.12,+0.29]   joint F 0.99   permutation: h12 null 90% [-0.94,+1.18], p 0.95
+
+--- events 2007-08-01..2009-06-30 dropped
+NS     u gap, levels (pure DL)            (232 events, 382 months): h6 -0.04 [-1.44,+1.35]  h12 -0.65 [-1.94,+0.65]  h24 -0.74 [-2.08,+0.60]  h36 +0.65 [-0.71,+2.02]   joint F 0.42   permutation: h12 null 90% [-2.59,+3.69], p 0.79
+NS     u gap, differences                 (232 events, 381 months): h6 -1.26 [-1.92,-0.60]  h12 -1.12 [-1.96,-0.29]  h24 -1.05 [-1.71,-0.40]  h36 +0.05 [-0.40,+0.50]   joint F 2.65   permutation: h12 null 90% [-0.87,+1.90], p 0.21
+NS     core PCE price level, differences  (232 events, 381 months): h6 +0.31 [-0.40,+1.02]  h12 +0.45 [-0.24,+1.13]  h24 +0.55 [-0.00,+1.10]  h36 +0.09 [-0.31,+0.49]   joint F 1.02   permutation: h12 null 90% [-1.36,+1.27], p 0.58
+
+--- events 2007-08-01..2009-06-30 dropped
+MP1    u gap, levels (pure DL)            (232 events, 382 months): h6 +0.38 [-0.97,+1.73]  h12 -0.09 [-1.60,+1.41]  h24 +0.07 [-1.58,+1.71]  h36 +0.28 [-1.34,+1.91]   joint F 1.29   permutation: h12 null 90% [-2.56,+3.56], p 0.97
+MP1    u gap, differences                 (232 events, 381 months): h6 -0.88 [-1.51,-0.26]  h12 -0.98 [-2.16,+0.20]  h24 -0.69 [-1.50,+0.13]  h36 -0.02 [-0.41,+0.37]   joint F 1.71   permutation: h12 null 90% [-1.01,+1.89], p 0.28
+MP1    core PCE price level, differences  (232 events, 381 months): h6 -0.30 [-0.86,+0.25]  h12 +0.03 [-0.63,+0.68]  h24 +0.04 [-0.72,+0.80]  h36 +0.10 [-0.21,+0.41]   joint F 0.97   permutation: h12 null 90% [-1.22,+1.68], p 0.98
+
