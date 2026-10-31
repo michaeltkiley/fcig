@@ -317,3 +317,21 @@ Path-type instruments are useless for the funds rate in this window: NS F = 0.5 
 4. **Not feasible without new data:** Chair speeches/testimony and 1988-93 events (Bauer-Swanson), payroll surprises and Treasury skewness for a six-variable purge; a strong full-sample 2-year first stage.
 **Expected outcome and risks.** Short sample (about 160 months), wide sets, possibly a null result for the index beyond EBP; priors can manufacture precision (CH: with the 2-year proxy the result depends on the prior). The contribution would be the test of the index against the CH credit-spread benchmark and the policy-reaction coefficient to a broad market index, not a full-sample identified IRF.
 **MP-Q13 [answered, see MP-A11].** Adopt the CH-window path (items 1-3), with the original full-sample comparison kept as a documented negative result?
+
+## Step 6 (interim, 31 Oct 2026): credit-augmented systems, full sample and CH window (`06_credit_augmented.py`, `06_credit_augmented.log`, `credit_augmented.csv`)
+Unemployment-gap response (pp) to a +25 bp policy rise at 12 months, proxy-SVAR (95% Anderson-Rubin set, conditional on the VAR coefficients; unb = unbounded) and first-stage F (anchor robust [homoskedastic]; Lunsford; Colombo). Systems always contain u gap, core PCE and the policy variable.
+| Sample / policy / instrument | base | + index | + EBP | + NFCI | + ANFCI |
+|---|---|---|---|---|---|
+| FULL-S1, funds rate / MP1: u12 | **-0.36 (-0.54,-0.07)** | -0.32 (-0.52,+0.14) | -0.07 (-0.36,+0.53) | 0.00 (-0.22,+0.77) | -0.09 (-0.31,+0.62) |
+| F robust [homosk.] / Lunsford / Colombo | 8.8 [32] / 11.8 / 36 | 9.3 / 9.1 / 37 | 9.6 / 7.5 / 30 | 9.6 / 10.4 / 42 | 8.5 / 9.8 / 40 |
+| FULL-S1, 2-year / ED4: u12 | -0.17 (-0.50,+0.04) | 0.00 (-0.39,+0.78) | +0.10 unb | +0.06 (-0.20,+0.79) | -0.10 (-0.44,+0.20) |
+| F robust [homosk.] / Lunsford / Colombo | 9.4 [12] / 4.2 / 12.6 | 5.6 / 2.4 / 9.6 | 4.3 / 2.1 / 8.3 | 6.2 / 3.3 / 13.4 | 7.5 / 2.7 / 11.1 |
+| FULL-S1, 2-year / NS: u12 | -0.19 (-0.69,+0.05) | +0.02 unb | +0.12 unb | +0.11 (-0.18,+2.84) | -0.05 (-0.54,+0.47) |
+| CH window, funds rate / MP1: u12 | -0.15 unb | -0.16 unb | +0.10 unb | -0.11 unb | -0.15 unb |
+| FULL-S2 (long VAR), funds rate / MP1: u12 | -0.06 (-0.28,+0.53) | -0.07 (-0.64,+2.34) | +0.05 (-0.64,+3.99) | +0.03 unb | +0.02 unb |
+Cholesky (policy ordered last, so it reacts to the financial variables within the month), FULL-S1 funds rate: base -0.22; + index -0.22; + EBP -0.05; + NFCI -0.07; + ANFCI -0.11 (24 months similar). 2-year: base -0.11; with any financial variable between -0.14 and +0.03.
+**Interim reading.** (1) **Credit-type variables remove the wrong sign**, as Caldara-Herbst predict: on the full sample the base funds-rate / MP1 system has a significantly negative unemployment response (set excludes zero); adding EBP or the NFCI moves it to about zero with a set that includes zero (the sign becomes unresolved, not positive). The market index alone does not do this with the funds rate (-0.32); with the 2-year it moves the point estimate to about 0 (set -0.39 to +0.78).
+(2) **Index + credit is no better than credit alone** (EBP: -0.07; index + EBP: -0.04; NFCI: 0.00; index + NFCI: 0.00) on the full sample; in the CH window index + EBP is the only bounded set (+0.11, -0.14 to +2.18).
+(3) **The funds rate with MP1 is well identified on the full sample** (robust F 8-10, Lunsford 7-12, Colombo 30-42), contrary to the 2-year / NS (F 3-6, Lunsford 2-4, sets mostly unbounded). The MP1 first stage comes mostly from non-ZLB months. In the long-VAR case (S2) every first stage is weak (F 0-8) and the sets are uninformative.
+(4) **Adding financial variables lowers the first stage of the 2-year instruments** (ED4: 9.4 to 4.3-7.5), so credit-augmented 2-year results are less precise.
+(5) In the CH window the NFCI and ANFCI do not repair the sign (-0.11 to -0.15), the EBP does (+0.10): the broad indicator is not a substitute for the credit-specific spread there.

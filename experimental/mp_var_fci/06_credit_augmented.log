@@ -1,0 +1,81 @@
+Unemployment-gap response (pp) to a +25 bp rise in the policy variable; proxy-SVAR with 95% AR set, and Cholesky (12m/24m)
+
+== FULL-S1, policy variable gs2 ==
+  base         ns   T=381  F   6.4 [ 11.2] L  3.9 C  11.9 | proxy u12 -0.19    (-0.69,+0.05) u24 -0.20    (-0.69,+0.03) | Chol last -0.11/-0.12 first -0.11/-0.12
+  +index       ns   T=381  F   3.5 [  6.4] L  2.1 C   8.5 | proxy u12 +0.02              unb u24 -0.02              unb | Chol last -0.14/-0.16 first -0.10/-0.12
+  +EBP         ns   T=381  F   3.1 [  6.0] L  2.1 C   8.5 | proxy u12 +0.12              unb u24 +0.16              unb | Chol last +0.03/+0.04 first -0.03/-0.03
+  +index+EBP   ns   T=381  F   3.2 [  5.9] L  2.2 C  11.3 | proxy u12 +0.17              unb u24 +0.18              unb | Chol last -0.02/-0.02 first -0.05/-0.06
+  +NFCI        ns   T=381  F   4.6 [  7.3] L  3.7 C  15.0 | proxy u12 +0.11    (-0.18,+2.84) u24 +0.17    (-0.19,+4.42) | Chol last -0.03/-0.06 first -0.07/-0.11
+  +index+NFCI  ns   T=381  F   3.1 [  5.6] L  2.6 C  13.3 | proxy u12 +0.15              unb u24 +0.19              unb | Chol last -0.07/-0.07 first -0.09/-0.14
+  +ANFCI       ns   T=381  F   5.3 [  8.5] L  2.8 C  11.2 | proxy u12 -0.05    (-0.54,+0.47) u24 -0.03    (-0.54,+0.83) | Chol last -0.05/-0.07 first -0.10/-0.13
+  base         ED4  T=381  F   9.4 [ 12.0] L  4.2 C  12.6 | proxy u12 -0.17    (-0.50,+0.04) u24 -0.19    (-0.51,+0.02) | Chol last -0.11/-0.12 first -0.11/-0.12
+  +index       ED4  T=381  F   5.6 [  7.6] L  2.4 C   9.6 | proxy u12 -0.00    (-0.39,+0.78) u24 -0.04    (-0.44,+0.63) | Chol last -0.14/-0.16 first -0.10/-0.12
+  +EBP         ED4  T=381  F   4.3 [  6.2] L  2.1 C   8.3 | proxy u12 +0.10              unb u24 +0.13              unb | Chol last +0.03/+0.04 first -0.03/-0.03
+  +index+EBP   ED4  T=381  F   4.2 [  6.1] L  1.8 C   9.2 | proxy u12 +0.11              unb u24 +0.11              unb | Chol last -0.02/-0.02 first -0.05/-0.06
+  +NFCI        ED4  T=381  F   6.2 [  8.0] L  3.3 C  13.4 | proxy u12 +0.06    (-0.20,+0.79) u24 +0.09    (-0.21,+1.18) | Chol last -0.03/-0.06 first -0.07/-0.11
+  +index+NFCI  ED4  T=381  F   4.4 [  6.2] L  2.4 C  12.1 | proxy u12 +0.12    (-0.18,+7.08) u24 +0.10    (-0.22,+7.83) | Chol last -0.07/-0.07 first -0.09/-0.14
+  +ANFCI       ED4  T=381  F   7.5 [  9.5] L  2.7 C  11.1 | proxy u12 -0.10    (-0.44,+0.20) u24 -0.10    (-0.50,+0.34) | Chol last -0.05/-0.07 first -0.10/-0.13
+
+== FULL-S1, policy variable ffr ==
+  base         MP1  T=381  F   8.8 [ 32.3] L 11.8 C  35.6 | proxy u12 -0.36    (-0.54,-0.07) u24 -0.38    (-0.56,-0.08) | Chol last -0.22/-0.24 first -0.22/-0.24
+  +index       MP1  T=381  F   9.3 [ 34.3] L  9.1 C  36.7 | proxy u12 -0.32    (-0.52,+0.14) u24 -0.33    (-0.53,+0.08) | Chol last -0.22/-0.24 first -0.27/-0.29
+  +EBP         MP1  T=381  F   9.6 [ 28.0] L  7.5 C  30.4 | proxy u12 -0.07    (-0.36,+0.53) u24 -0.06    (-0.39,+0.63) | Chol last -0.05/-0.05 first -0.10/-0.11
+  +index+EBP   MP1  T=381  F   9.1 [ 29.1] L  6.8 C  34.3 | proxy u12 -0.04    (-0.39,+0.70) u24 -0.01    (-0.40,+0.76) | Chol last -0.05/-0.04 first -0.13/-0.13
+  +NFCI        MP1  T=381  F   9.6 [ 29.7] L 10.4 C  42.1 | proxy u12 +0.00    (-0.22,+0.77) u24 +0.08    (-0.23,+1.05) | Chol last -0.07/-0.05 first -0.17/-0.19
+  +index+NFCI  MP1  T=381  F   7.9 [ 26.7] L  8.2 C  41.3 | proxy u12 -0.00    (-0.24,+0.98) u24 +0.14    (-0.15,+1.37) | Chol last -0.08/-0.03 first -0.18/-0.17
+  +ANFCI       MP1  T=381  F   8.5 [ 28.5] L  9.8 C  39.5 | proxy u12 -0.09    (-0.31,+0.62) u24 -0.02    (-0.34,+0.90) | Chol last -0.11/-0.09 first -0.21/-0.24
+  base         ns   T=381  F   4.1 [  7.3] L  3.0 C   9.1 | proxy u12 -0.44              unb u24 -0.46              unb | Chol last -0.22/-0.24 first -0.22/-0.24
+  +index       ns   T=381  F   4.7 [  8.2] L  3.5 C  13.9 | proxy u12 -0.12              unb u24 -0.19              unb | Chol last -0.22/-0.24 first -0.27/-0.29
+  +EBP         ns   T=381  F   2.3 [  4.2] L  1.5 C   6.2 | proxy u12 +0.08              unb u24 +0.13              unb | Chol last -0.05/-0.05 first -0.10/-0.11
+  +index+EBP   ns   T=381  F   3.7 [  6.5] L  2.3 C  11.4 | proxy u12 +0.19              unb u24 +0.21              unb | Chol last -0.05/-0.04 first -0.13/-0.13
+  +NFCI        ns   T=381  F   2.4 [  4.4] L  2.9 C  11.8 | proxy u12 +0.10              unb u24 +0.25              unb | Chol last -0.07/-0.05 first -0.17/-0.19
+  +index+NFCI  ns   T=381  F   2.7 [  4.8] L  2.4 C  12.2 | proxy u12 +0.17              unb u24 +0.20              unb | Chol last -0.08/-0.03 first -0.18/-0.17
+  +ANFCI       ns   T=381  F   3.0 [  5.3] L  2.3 C   9.2 | proxy u12 -0.15              unb u24 -0.07              unb | Chol last -0.11/-0.09 first -0.21/-0.24
+
+== FULL-S2, policy variable gs2 ==
+  base         ns   T=393  F   4.8 [  6.9] L  2.9 C   8.7 | proxy u12 -0.16    (-1.82,+0.11) u24 -0.13    (-1.57,+0.11) | Chol last +0.01/+0.02 first +0.01/+0.02
+  +index       ns   T=393  F   0.7 [  1.1] L  0.6 C   2.5 | proxy u12 +0.06              unb u24 +0.00              unb | Chol last -0.04/-0.01 first +0.04/+0.04
+  +EBP         ns   T=393  F   3.1 [  4.2] L  1.2 C   4.7 | proxy u12 +0.00              unb u24 +0.02              unb | Chol last +0.03/+0.03 first +0.02/+0.02
+  +index+EBP   ns   T=393  F   0.9 [  1.4] L  0.6 C   3.0 | proxy u12 +0.20              unb u24 +0.17              unb | Chol last -0.02/+0.00 first +0.03/+0.02
+  +NFCI        ns   T=393  F   3.8 [  4.8] L  1.5 C   6.1 | proxy u12 -0.01              unb u24 +0.03              unb | Chol last -0.01/-0.00 first +0.02/+0.03
+  +index+NFCI  ns   T=393  F   1.0 [  1.6] L  0.7 C   3.3 | proxy u12 +0.13              unb u24 +0.13              unb | Chol last -0.04/-0.01 first +0.04/+0.04
+  +ANFCI       ns   T=393  F   4.9 [  6.3] L  1.7 C   7.0 | proxy u12 -0.07    (-1.37,+0.25) u24 -0.03    (-1.12,+0.27) | Chol last +0.02/+0.03 first +0.04/+0.05
+  base         ED4  T=393  F   6.8 [  8.8] L  3.4 C  10.3 | proxy u12 -0.13    (-0.78,+0.10) u24 -0.10    (-0.67,+0.10) | Chol last +0.01/+0.02 first +0.01/+0.02
+  +index       ED4  T=393  F   1.7 [  2.4] L  1.0 C   4.2 | proxy u12 +0.05              unb u24 +0.01              unb | Chol last -0.04/-0.01 first +0.04/+0.04
+  +EBP         ED4  T=393  F   4.5 [  5.7] L  1.5 C   6.2 | proxy u12 -0.03    (-6.01,+0.54) u24 -0.01    (-5.20,+0.65) | Chol last +0.03/+0.03 first +0.02/+0.02
+  +index+EBP   ED4  T=393  F   1.9 [  2.6] L  0.9 C   4.3 | proxy u12 +0.11              unb u24 +0.07              unb | Chol last -0.02/+0.00 first +0.03/+0.02
+  +NFCI        ED4  T=393  F   5.5 [  7.1] L  2.1 C   8.3 | proxy u12 -0.02    (-0.56,+0.29) u24 +0.01    (-0.40,+0.36) | Chol last -0.01/-0.00 first +0.02/+0.03
+  +index+NFCI  ED4  T=393  F   2.1 [  3.1] L  1.1 C   5.4 | proxy u12 +0.09              unb u24 +0.08              unb | Chol last -0.04/-0.01 first +0.04/+0.04
+  +ANFCI       ED4  T=393  F   6.3 [  8.0] L  2.2 C   9.0 | proxy u12 -0.09    (-0.81,+0.14) u24 -0.05    (-0.68,+0.15) | Chol last +0.02/+0.03 first +0.04/+0.05
+
+== FULL-S2, policy variable ffr ==
+  base         MP1  T=393  F   6.3 [  8.7] L  3.2 C   9.5 | proxy u12 -0.06    (-0.28,+0.53) u24 -0.01    (-0.19,+0.43) | Chol last +0.04/+0.05 first +0.04/+0.05
+  +index       MP1  T=393  F   7.9 [  6.2] L  1.8 C   7.2 | proxy u12 -0.07    (-0.64,+2.34) u24 -0.01    (-0.44,+1.47) | Chol last +0.03/+0.06 first +0.05/+0.06
+  +EBP         MP1  T=393  F   3.8 [  4.6] L  1.2 C   4.9 | proxy u12 +0.05    (-0.64,+3.99) u24 +0.05    (-0.67,+3.24) | Chol last +0.03/+0.03 first +0.04/+0.04
+  +index+EBP   MP1  T=393  F   5.6 [  4.7] L  1.0 C   5.1 | proxy u12 +0.02              unb u24 +0.06              unb | Chol last +0.03/+0.05 first +0.04/+0.05
+  +NFCI        MP1  T=393  F   1.1 [  3.5] L  1.0 C   4.2 | proxy u12 +0.03              unb u24 +0.07              unb | Chol last -0.02/+0.01 first +0.02/+0.05
+  +index+NFCI  MP1  T=393  F   1.2 [  2.6] L  1.4 C   7.3 | proxy u12 -0.01              unb u24 +0.10              unb | Chol last -0.01/+0.03 first +0.03/+0.06
+  +ANFCI       MP1  T=393  F   2.3 [  4.9] L  1.5 C   5.8 | proxy u12 +0.02              unb u24 +0.05              unb | Chol last +0.01/+0.03 first +0.05/+0.06
+  base         ns   T=393  F   2.9 [  2.7] L  1.4 C   4.1 | proxy u12 -0.25              unb u24 -0.16              unb | Chol last +0.04/+0.05 first +0.04/+0.05
+  +index       ns   T=393  F   0.3 [  0.4] L  0.7 C   2.6 | proxy u12 +0.04              unb u24 -0.04              unb | Chol last +0.03/+0.06 first +0.05/+0.06
+  +EBP         ns   T=393  F   0.2 [  0.2] L  0.1 C   0.2 | proxy u12 +0.00              unb u24 +0.03              unb | Chol last +0.03/+0.03 first +0.04/+0.04
+  +index+EBP   ns   T=393  F   0.0 [  0.0] L  0.5 C   2.3 | proxy u12 -1.77              unb u24 -0.72              unb | Chol last +0.03/+0.05 first +0.04/+0.05
+  +NFCI        ns   T=393  F   0.7 [  1.2] L  0.8 C   3.1 | proxy u12 +0.11              unb u24 +0.19              unb | Chol last -0.02/+0.01 first +0.02/+0.05
+  +index+NFCI  ns   T=393  F   0.1 [  0.1] L  0.6 C   3.1 | proxy u12 +0.57              unb u24 +0.56              unb | Chol last -0.01/+0.03 first +0.03/+0.06
+  +ANFCI       ns   T=393  F   1.0 [  1.6] L  0.7 C   2.7 | proxy u12 -0.16              unb u24 -0.06              unb | Chol last +0.01/+0.03 first +0.05/+0.06
+
+== CH, policy variable ffr ==
+  base         MP1  T=162  F   5.7 [  9.9] L  3.5 C  10.7 | proxy u12 -0.15              unb u24 -0.11              unb | Chol last -0.19/-0.13 first -0.19/-0.13
+  +index       MP1  T=162  F   6.2 [ 11.3] L  3.3 C  13.4 | proxy u12 -0.16              unb u24 -0.09              unb | Chol last -0.23/-0.14 first -0.22/-0.13
+  +EBP         MP1  T=162  F   8.0 [  9.6] L  4.1 C  16.7 | proxy u12 +0.10              unb u24 +0.19              unb | Chol last -0.06/-0.01 first -0.04/+0.02
+  +index+EBP   MP1  T=162  F   9.9 [ 12.3] L  4.4 C  22.3 | proxy u12 +0.11    (-0.14,+2.18) u24 +0.22    (-0.01,+2.94) | Chol last -0.10/+0.02 first -0.07/+0.04
+  +NFCI        MP1  T=162  F   7.0 [ 10.1] L  2.7 C  11.2 | proxy u12 -0.11              unb u24 -0.03              unb | Chol last -0.14/-0.08 first -0.13/-0.06
+  +index+NFCI  MP1  T=162  F   7.8 [ 12.6] L  2.9 C  14.8 | proxy u12 -0.11              unb u24 -0.01              unb | Chol last -0.19/-0.09 first -0.17/-0.07
+  +ANFCI       MP1  T=162  F   6.4 [ 10.1] L  2.7 C  10.9 | proxy u12 -0.15              unb u24 -0.07              unb | Chol last -0.17/-0.09 first -0.17/-0.09
+  base         ns   T=162  F   2.3 [  2.1] L  1.2 C   3.6 | proxy u12 -0.35              unb u24 -0.21              unb | Chol last -0.19/-0.13 first -0.19/-0.13
+  +index       ns   T=162  F   3.1 [  2.9] L  0.9 C   3.8 | proxy u12 -0.23              unb u24 -0.12              unb | Chol last -0.23/-0.14 first -0.22/-0.13
+  +EBP         ns   T=162  F   1.3 [  1.4] L  2.6 C  10.4 | proxy u12 +0.13              unb u24 +0.38              unb | Chol last -0.06/-0.01 first -0.04/+0.02
+  +index+EBP   ns   T=162  F   2.1 [  2.1] L  2.2 C  11.2 | proxy u12 +0.25              unb u24 +0.39              unb | Chol last -0.10/+0.02 first -0.07/+0.04
+  +NFCI        ns   T=162  F   2.1 [  2.0] L  1.2 C   4.9 | proxy u12 -0.37              unb u24 -0.22              unb | Chol last -0.14/-0.08 first -0.13/-0.06
+  +index+NFCI  ns   T=162  F   3.5 [  3.2] L  1.0 C   5.3 | proxy u12 -0.23              unb u24 -0.12              unb | Chol last -0.19/-0.09 first -0.17/-0.07
+  +ANFCI       ns   T=162  F   2.2 [  2.1] L  1.0 C   4.2 | proxy u12 -0.36              unb u24 -0.21              unb | Chol last -0.17/-0.09 first -0.17/-0.09
