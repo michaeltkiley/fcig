@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.31)  31 OCT 2026 19:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.31)  31 OCT 2026 20:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -570,7 +570,7 @@ re/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] (./tables/tab1_u.tex)
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 53.
  (./tables/tab2_p.tex)
-<figures/fig1_steps.pdf, id=183, 794.97pt x 361.35pt>
+<figures/fig1_steps.pdf, id=188, 794.97pt x 361.35pt>
 File: figures/fig1_steps.pdf Graphic file (type pdf)
 <use figures/fig1_steps.pdf>
 Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 63.
@@ -579,21 +579,17 @@ Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 63.
 [4{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}] [5 <./figures/fig1_steps.pdf
 >] (./tables/tab3_ip_u.tex) (./tables/tab3_ip_ip.tex) [6]
 (./tables/tab4_rob_u.tex)
-Overfull \hbox (121.21478pt too wide) in paragraph at lines 1--91
+Overfull \hbox (102.40916pt too wide) in paragraph at lines 1--91
  [][] 
  []
 
 (./tables/tab4_rob_p.tex)
-Overfull \hbox (125.74257pt too wide) in paragraph at lines 1--93
+Overfull \hbox (130.27036pt too wide) in paragraph at lines 1--93
  [][] 
  []
 
-[7]
-Overfull \vbox (34.93134pt too high) has occurred while \output is active []
-
-
-[8] (./tables/tab5_smp_u.tex) (./tables/tab5_smp_p.tex)
-Overfull \hbox (37.1316pt too wide) in paragraph at lines 1--102
+[7] [8] (./tables/tab5_smp_u.tex) (./tables/tab5_smp_p.tex)
+Overfull \hbox (50.71497pt too wide) in paragraph at lines 1--102
  [][] 
  []
 
@@ -608,11 +604,11 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 Here is how much of TeX's memory you used:
  13256 strings out of 476182
  206016 string characters out of 5795594
- 1984975 words of memory out of 5000000
+ 1977975 words of memory out of 5000000
  34985 multiletter control sequences out of 15000+600000
  626729 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,10n,79p,2424b,639s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,1688b,647s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/p
@@ -623,10 +619,10 @@ onts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/t
 ype1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (12 pages, 301134 bytes).
+Output written on mp_transmission.pdf (12 pages, 299931 bytes).
 PDF statistics:
- 435 PDF objects out of 1000 (max. 8388607)
- 319 compressed objects within 4 object streams
+ 438 PDF objects out of 1000 (max. 8388607)
+ 324 compressed objects within 4 object streams
  59 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
