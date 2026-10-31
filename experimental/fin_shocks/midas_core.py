@@ -11,7 +11,7 @@ monthly average equals the monthly index in the stated form; daily rate adjustme
 30-minute change (2-year scaled to +1 pp; index window change), unaffected by the slow offsets; macro zero in the window.
 Without the FCI the daily block is the rate alone and the window impact is the 2-year move alone.
 Output: midas_core.log, midas_core{,_irf}.csv"""
-import sys, time, numpy as np, pandas as pd
+import os, sys, time, numpy as np, pandas as pd
 from mf_common import *
 from mf_common import M as MM0, D0
 from route_a_pos import positions
@@ -67,6 +67,7 @@ if __name__ == "__main__":
     SEL = sys.argv[2].split(",") if len(sys.argv) > 2 else None        # e.g. "nom-0,nom-1" (rate form - fci: 0, 1 = same form, or an FCI form name)
     TREND = len(sys.argv) > 3 and sys.argv[3] == "trend"
     MAC_SETS = {"u,pi": ["u", "pi"], "u,pi,ip": ["u", "pi", "ip"]}
+    if os.environ.get("MACRO_ONLY"): MAC_SETS = {k: v for k, v in MAC_SETS.items() if k == os.environ["MACRO_ONLY"]}
     rows, irfrows = [], []; t0 = time.time()
     print("Core cases, NS surprise, 1994+, MODEL; per +1 pp window move in the 2-year; u gap pp, core PCE price level %, IP %; point [90%],", B, "draws\n")
     idx0 = event_index("NS"); _, _, idx0 = slopes(idx0, "NS"); pos0 = positions(idx0)
@@ -82,13 +83,14 @@ if __name__ == "__main__":
                         z = m.copy(); z[:, 1] = np.cumsum(z[:, 1]) / 12; return z
                     s0 = tr(irf(Bd, C0, K, nd, L, idx0, pos0, fci))
                     sd = np.array([tr(irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci)) for ib, pb in zip(bidx, bpos)])
-                    lo, hi = np.percentile(sd, [5, 95], axis=0)
+                    lo, hi = np.percentile(sd, [5, 95], axis=0); lo68, hi68 = np.percentile(sd, [16, 84], axis=0)
                     names = ["u", "P"] + (["ip"] if "ip" in mvars else [])
                     case = f"[{mlab}] rate {form}, {'FCI ' + (form if fci == 1 else fci) if fci else 'no FCI'}{', trend' if TREND else ''}, {L} lags"
                     print(f"{case:40s}: " + "  ".join(f"{n} " + " ".join(f"{h}:{s0[h, j]:+.2f}[{lo[h, j]:+.2f},{hi[h, j]:+.2f}]" for h in (12, 24, 36)) for j, n in enumerate(names)) + f"  ({time.time() - t0:.0f}s)", flush=True)
                     for j, n in enumerate(names):
-                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)}))
-                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j])))
+                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
+                                         **{f"lo68_{h}": lo68[h, j] for h in (12, 24, 36)}, **{f"hi68_{h}": hi68[h, j] for h in (12, 24, 36)}))
+                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
     suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "")
     pd.DataFrame(rows).to_csv(f"midas_core{suf}.csv", index=False, float_format="%.4f")
     pd.concat(irfrows).to_csv(f"midas_core{suf}_irf.csv", index=False, float_format="%.4f")
