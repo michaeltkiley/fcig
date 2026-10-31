@@ -7,7 +7,8 @@ Tags: [verified] = computed here or read in the source; [read from figure] = rea
 2. **Bauer-Swanson's (2023) benchmark** gives almost the same numbers per 1 pp on the 2-year: unemployment about +0.22 pp at 10 months, CPI about -0.5% at 24 months and -0.8% at 50 months [read from figure]. Our unemployment response is more persistent (it keeps rising to 36 months; theirs fades after about 10 months).
 3. We reach this **without a first stage** (the window move is the impact) and **without orthogonalizing the surprise**, which are the two problems Bauer-Swanson and Caldara-Herbst work hardest on. The price is an **exclusion restriction: the shock reaches unemployment and inflation only through the policy rate and the market index.**
 4. A **direct regression** that does not impose that restriction (Chudik-Georgiadis / Chudik-Kilian) gives the wrong sign (unemployment falls after a hawkish surprise), driven by the 2007-09 events, and is about ten times less precise: it neither confirms nor rejects our estimate.
-5. **Robustness:** Greenbook-purged shock (NS-GB) gives the same results; adding the current month's financial average gives the same or slightly larger; PATH gives larger and much noisier responses; the long samples give smaller, less persistent unemployment responses and a price response that depends on the lag length.
+5. **Bauer-Swanson's other variables (section 6a):** adding IP leaves unemployment and prices unchanged, but IP does not fall as in Bauer-Swanson; adding commodity prices gives rising commodity prices and IP (puzzles), which points to a weakness of the propagation assumption for demand-sensitive variables.
+6. **Robustness:** Greenbook-purged shock (NS-GB) gives the same results; adding the current month's financial average gives the same or slightly larger; PATH gives larger and much noisier responses; the long samples give smaller, less persistent unemployment responses and a price response that depends on the lag length.
 
 ## 2. Identification and assumptions
 - **Shock and impact.** NS policy-news factor (USMPD, 253 FOMC events, 1994-2026). Its impact is the 30-minute window change of the variables observed in the window: 2-year yield (scaled to +1 pp) and the market index (+0.99 per 1 pp on the 2-year). Macro variables are zero in the window. No credit spread in the impact vector (no intraday series).
@@ -96,6 +97,32 @@ Comparisons for our funds-rate and MP1 cases (robustness only): NS scaled to the
 2. **Prices.** Our price-level decline (about -0.4% at 24 months with 12 lags) is close to Bauer-Swanson's benchmark (-0.5%) and to their unadjusted-surprise version (-0.4%), far below their FOMC-only orthogonalized version (-3%, an outlier driven by the policy reversal). Like them, we find no price puzzle; unlike Caldara-Herbst, we find a (slow) price decline.
 3. **Persistence.** Our unemployment response keeps building because the 2-year and index stay elevated in the daily block (HAR) and the monthly macro equations are persistent; Bauer-Swanson's 2-year yield response decays within about two years in Fig. 8.
 
+## 6a. Adding Bauer-Swanson's monthly variables: industrial production and commodity prices (`midas_bs.py`; `midas_bs_BS{1,2,3}.log/.csv`, `_irf.csv`) [verified]
+Same design as the base case (1994+, 2-year, NS base / NS-GB robustness, BASE ordering, 200 draws), with more monthly variables in the macro block, each treated like unemployment and inflation (rows of the monthly VAR, lagged monthly averages of the daily 2-year and index, macro set first within the month and feeding the daily block). IP = 100 log INDPRO; commodity prices = 100 log IMF all-commodity index (FRED `PALLFNFINDEXM`, 1992+; Bauer-Swanson use the CRB index, not on FRED). Alternative 3 adds a daily commodity price: no free broad daily index was reachable (S&P GSCI on stooq refused, S&P site 403), so it uses daily WTI oil, with its event-day one-day change on the shock as its impact (no 30-minute window series). Per +1 pp window move in the 2-year, MODEL, NS:
+
+| Case | Lags | u, 10 m | u, 36 m | Price level, 24 m | IP, 10 m | IP, 24 m | Commodity / oil, 24 m |
+|---|---|---|---|---|---|---|---|
+| Base (u, core PCE) | 3 / 6 / 12 | +0.21 / +0.16 / +0.20 | +0.52 / +0.47 / +0.39 | -0.24 / -0.34 / -0.44* | | | |
+| Alt 1: + IP | 3 | +0.24* | +0.53* | -0.22 | +0.02 | +0.08 | |
+| | 6 | +0.25* | +0.55* | -0.42* | -0.34 | +0.06 | |
+| | 12 | +0.26* | +0.52* | -0.46 | -0.34 | -0.14 | |
+| Alt 2: + IP + commodity index | 3 | +0.23* | +0.42* | -0.49* | +0.47 | +0.79 | +3.3 |
+| | 6 | +0.15 | +0.43* | -0.46 | +0.42 | +1.18* | +5.6 |
+| | 12 | +0.14 | +0.33 | -0.12 | +0.47 | +1.59* | +9.1 |
+| Alt 3: + IP, daily oil | 3 | +0.16 | +0.49* | -0.21 | +0.51 | +0.58 | oil +14* |
+| | 6 | +0.14 | +0.53* | -0.38 | +0.58 | +0.98 | oil +12* |
+| | 12 | +0.15 | +0.54* | -0.11 | +0.68 | +1.02* | oil +15* |
+| Bauer-Swanson benchmark | | about +0.22 (peak) | about +0.15 | CPI about -0.5 | about -1.6 | about -1.0 | commodities about -4 on impact, -6 at the trough (6-8 m), about -2.6 at 24 m [read from figure] |
+
+\* = 90% interval excludes zero. Intervals and the NS-GB, PATH and 24-month unemployment results are in the logs; NS-GB MODEL is within 0.03 of NS throughout; PATH widens everything.
+
+Reading [inference unless marked]:
+1. **Adding IP (alternative 1) leaves unemployment and prices as in the base case** (unemployment slightly larger, +0.24 to +0.26 at 10 months, all significant; price level -0.22 to -0.46 at 24 months, significant with 6 lags). **But IP itself does not fall**: about -0.3% at 10 months with 6 or 12 lags, intervals include zero, turning positive later. Bauer-Swanson's IP falls about 1.6% per 1 pp at 10 months [read from figure]. So on IP we do not match them.
+2. **Adding commodity prices (alternative 2) produces puzzles**: commodity prices rise (+3 to +9% at 24 months, mostly insignificant) and IP rises significantly at 24 months with 6 and 12 lags (+1.2 to +1.6%); unemployment weakens (12 lags: +0.14 at 10 months, interval includes zero) and the price fall shrinks with 12 lags. Bauer-Swanson find commodity prices fall about 1% per 25 bp within months.
+3. **Daily oil (alternative 3) is not credible as specified.** On the event day oil falls 2.1% per 1 pp (NS-GB 2.6%), the expected sign [verified], but in the daily block oil is close to a random walk (own coefficients sum to 0.997) with a small positive coefficient on the level of the 2-year (0.08), so a lasting rise in the 2-year drags oil up steadily, to +11 to +15% [verified]. That is a levels-regression artifact, and it feeds a rising IP.
+4. **What this says about the identifying assumption.** The propagation is estimated from the reduced-form link between lagged financial conditions and each monthly variable, over all sources of variation (assumption (c) in section 2). For unemployment and core prices that link has the conventional sign. For IP and commodity prices it is procyclical in 1994-2026: rates and the index rise in expansions, and IP and commodity prices rise with them (2004-06 and 2021-22 are the obvious episodes). The window impact cannot correct this, because the macro side is not identified by the shock. So the commodity and IP results are evidence that assumption (c) fails for demand-sensitive, forward-looking variables, and a warning for the unemployment result too: it may hold for unemployment only because unemployment lags. Bauer-Swanson identify the whole VAR's response to the shock, so they do not need this assumption.
+5. Proposal (for decision): keep the unemployment / core-PCE system as the base; report alternative 1 as the closest like-for-like with Bauer-Swanson, with IP flagged as not matching; report alternative 2 and the oil case as diagnostics of assumption (c). A restricted daily oil equation (own dynamics only, no 2-year level term) would fix the oil artifact if you want that case kept.
+
 ## 7. The challenges these papers identify, and whether we address them [inference unless marked]
 | Challenge | Who | What they do | Us |
 |---|---|---|---|
@@ -106,6 +133,7 @@ Comparisons for our funds-rate and MP1 cases (robustness only): NS scaled to the
 | **Temporal aggregation** of daily surprises into monthly proxies | Kilian (2024); Chudik-Georgiadis; Chudik-Kilian; Jacobson-Matthes-Walker [secondhand]; Gazzani-Vicondoa | monthly-average proxies; mixed-frequency distributed lags | **Addressed by construction**: the daily block and monthly averages place each event in its month. |
 | **Little policy variation after 1994; sample dependence** | Ramey (2016) [secondhand]; Bauer-Swanson's response | long VAR sample with short instrument sample | **Base case works on 1994+ alone**; the long samples are robustness and agree in year one. |
 | **Price puzzle** | many; Bauer-Swanson show it disappears with orthogonalization | | **No puzzle**; the price level falls slowly. |
+| **Output and commodity-price responses** | Bauer-Swanson (IP and commodities fall); Caldara-Herbst (IP falls with credit in the VAR) | | **Not matched** (section 6a): IP does not fall, commodity prices rise; the reduced-form financial-to-macro link is procyclical for these variables. |
 
 ## 8. What this means for the note, and open items
 - The note's claim can be: with the window impact and an explicit exclusion restriction, a 1 pp policy-induced rise in the 2-year raises unemployment about 0.2 pp within a year (0.4-0.5 pp by year three) and lowers the core price level about 0.4% after two years; these match Bauer-Swanson's best-practice estimates without needing a strong instrument. The exclusion restriction must be stated as the identifying assumption, with the direct regression as the (uninformative) check.
