@@ -30,6 +30,24 @@ def _daily_fci(target):
     return _nomd + interp_monthly(off)
 FCI = {"nom": _daily_fci(MM0.market_nominal), "real": _daily_fci(MM0.market_real), "rstar": _daily_fci(MM0.market_rstar),
        "kiley": _daily_fci(D0.read("indexes_rstar_kiley.csv").market)}                 # the FCI note's r* (Kiley) check index
+# Market-based r* (FS-A22): the 9-10 year nominal forward rate (Gurkaynak-Sack-Wright, Fed yield-curve data, SVEN1F09), which replaces both the
+# expected-inflation and r* adjustments. Rate: 2-year minus the forward (daily). FCI: the FCI note's construction with the forward: 10-year minus
+# the forward; equities as the nominal earnings yield (E/P plus 10-year expected inflation) minus the forward, i.e. E/P - (forward - e10), converted
+# at the sample-average E/P as in the note; real dollar; same weights.
+from fci import cases as _cases, indexes as _ix
+_g = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "gsw_sven1f09.csv"), parse_dates=["Date"]).set_index("Date").SVEN1F09
+FWD_D = _g.reindex(CALW).ffill(limit=5); FWD_M = _g.groupby(_g.index.to_period("M")).mean()
+def _fwd_index():
+    X = _cases.inputs(_d0, "nominal"); f = FWD_M.reindex(X.index)
+    X["y10"] = _d0.y10 - f
+    ep = 100 / _d0.cape; r = f - _d0.einf_10y
+    X["equities"] = -(100 / ep.loc[_cases.START:_cases.END].mean()) * (ep - r)
+    w = pd.read_csv(D0.OUT / "market_weights.csv", index_col=0).weight.values
+    return _ix.market(X, w)[0]
+MKT_FWD = _fwd_index()
+RATE["fwd"] = POL["y2"] - FWD_D
+FCI["fwd"] = _daily_fci(MKT_FWD)
+SAMPLE = os.environ.get("SAMPLE", "")   # FS-A22: "" (baseline), "drop2021" (also drop 2021 months, whose lags include 2020), "end2019"
 TREND = False   # robustness (FS-A19): quadratic time trend (t, t^2; t in decades from 2010) in every monthly equation
 MAC = MB.MAC
 
@@ -39,7 +57,7 @@ def daily_frame(form, fci):
     return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[ff]} if fci else {})})
 
 def har_block(form, fci, mvars):
-    D = daily_frame(form, fci).loc["1990-01-02":].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
+    D = daily_frame(form, fci).loc["1990-01-02":("2019-12-31" if SAMPLE == "end2019" else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
     ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1)
     return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
@@ -47,7 +65,8 @@ def har_block(form, fci, mvars):
 def macro_data(form, fci, mvars, L):
     FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean(); MMv = MAC[mvars]; X, Y = [], []
     for p in MMv.index:
-        if p < pd.Period("1994-02", "M") or p > pd.Period("2026-09", "M") or (p.year == 2020 and p.month >= 3): continue
+        if p < pd.Period("1994-02", "M") or p > pd.Period("2019-12" if SAMPLE == "end2019" else "2026-09", "M") or (p.year == 2020 and p.month >= 3): continue
+        if SAMPLE == "drop2021" and p.year == 2021: continue
         try:
             xm = np.concatenate([MMv.loc[p - l].values for l in range(1, L + 1)]); xf = np.concatenate([FB.loc[p - l].values for l in range(1, L + 1)])
         except KeyError: continue
@@ -91,6 +110,6 @@ if __name__ == "__main__":
                         rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
                                          **{f"lo68_{h}": lo68[h, j] for h in (12, 24, 36)}, **{f"hi68_{h}": hi68[h, j] for h in (12, 24, 36)}))
                         irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
-    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "")
+    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_" + SAMPLE if SAMPLE else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "")
     pd.DataFrame(rows).to_csv(f"midas_core{suf}.csv", index=False, float_format="%.4f")
     pd.concat(irfrows).to_csv(f"midas_core{suf}_irf.csv", index=False, float_format="%.4f")

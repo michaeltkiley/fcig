@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.31)  31 OCT 2026 18:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.31)  31 OCT 2026 19:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -566,28 +566,34 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/
 dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/sha
-re/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}]
+re/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] (./tables/tab1_u.tex)
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 32.
- [2] [3] (./tables/tab1_u.tex) (./tables/tab2_p.tex)
-<figures/fig1_steps.pdf, id=171, 794.97pt x 361.35pt>
+(Font)              <9> on input line 53.
+ (./tables/tab2_p.tex)
+<figures/fig1_steps.pdf, id=183, 794.97pt x 361.35pt>
 File: figures/fig1_steps.pdf Graphic file (type pdf)
 <use figures/fig1_steps.pdf>
-Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 61.
+Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 63.
 (pdftex.def)             Requested size: 469.75502pt x 213.53099pt.
 
 [4{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}] [5 <./figures/fig1_steps.pdf
->] (./tables/tab3_ip_ip.tex) (./tables/tab4_rob_u.tex)
-Overfull \hbox (35.24478pt too wide) in paragraph at lines 1--88
+>] (./tables/tab3_ip_u.tex) (./tables/tab3_ip_ip.tex) [6]
+(./tables/tab4_rob_u.tex)
+Overfull \hbox (118.63pt too wide) in paragraph at lines 1--91
  [][] 
  []
 
 (./tables/tab4_rob_p.tex)
-Overfull \hbox (46.70316pt too wide) in paragraph at lines 1--90
+Overfull \hbox (114.10222pt too wide) in paragraph at lines 1--93
  [][] 
  []
 
-[6] [7] [8] [9] (./mp_transmission.aux)
+[7] [8] (./tables/tab5_smp_u.tex) (./tables/tab5_smp_p.tex)
+Overfull \hbox (37.1316pt too wide) in paragraph at lines 1--102
+ [][] 
+ []
+
+[9] [10] [11] [12] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -596,28 +602,27 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: 273EF76C47D34C9B0EA7C83EF2D13823;491.
  ) 
 Here is how much of TeX's memory you used:
- 13202 strings out of 476182
- 204943 string characters out of 5795594
- 1960975 words of memory out of 5000000
- 34950 multiletter control sequences out of 15000+600000
- 632709 words of font info for 96 fonts, out of 8000000 for 9000
+ 13256 strings out of 476182
+ 206016 string characters out of 5795594
+ 1967975 words of memory out of 5000000
+ 34985 multiletter control sequences out of 15000+600000
+ 626729 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,10n,79p,2135b,611s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,2460b,647s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/p
 ublic/lm/lmmi9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/shar
 e/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm
-/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf/f
-onts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb>
-</usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type
-1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/
-share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/publi
-c/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (9 pages, 320240 bytes).
+/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/f
+onts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.
+pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/t
+ype1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></us
+r/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
+Output written on mp_transmission.pdf (12 pages, 299641 bytes).
 PDF statistics:
- 408 PDF objects out of 1000 (max. 8388607)
- 295 compressed objects within 3 object streams
- 47 named destinations out of 1000 (max. 500000)
+ 435 PDF objects out of 1000 (max. 8388607)
+ 319 compressed objects within 4 object streams
+ 59 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
