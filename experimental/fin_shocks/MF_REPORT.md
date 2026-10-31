@@ -142,7 +142,7 @@ Same steps with industrial production (100 log IP) in the monthly block.
 
 The same sequence holds. Without the FCI industrial production **rises** at every step (significantly with the nominal rate, and with the real rate at 12 lags); with the FCI it falls; at the r\* step the fall is significant at 12 months with 6 and 12 lags (about −0.9%), against about −1.5% in Bauer-Swanson, and recovers faster. Unemployment and prices are as in the core cases. [verified]
 
-## 7. Robustness: r\* estimate, and a time trend in place of the adjustments (FS-A19; `midas_core.py ... kiley-0,kiley-1` and `... nom-0,nom-1,nom-real trend`; `midas_robust.log`, `midas_robust{,_irf}.csv`) [verified]
+## 7. Robustness: r\* estimate, and trends in place of the adjustments (FS-A19; `midas_core.py ... kiley-0,kiley-1` and `... nom-0,nom-1,nom-real trend`; `midas_robust.log`, `midas_robust{,_irf}.csv`) [verified]
 (a) **Kiley's r\*** in place of Laubach-Williams, in both the 2-year and the FCI (the FCI note's own Kiley check index). (b) **No real or r\* adjustment**: the nominal 2-year, with a quadratic time trend (t, t²) in every monthly equation instead, without the FCI, with the nominal FCI, and with the real FCI. Cells: 3 / 6 / 12 lags; \* = 90% interval excludes zero.
 
 **Unemployment gap (pp)**
@@ -190,7 +190,38 @@ The same sequence holds. Without the FCI industrial production **rises** at ever
 | nominal + quadratic trend | real | −0.11 / −0.25 / +0.11 | −0.04 / +0.01 / +0.14 | +0.45 / +0.39 / +0.37 |
 | *Bauer-Swanson (2023) benchmark* | | −1.5* | −1.0* | −0.85* |
 
-Reading:
+**(c) The 2-year minus its trailing 8-year moving average** (FS-A20), with no FCI and with each of the three FCI forms. The trend this removes compares with the Laubach-Williams trend in the r\*-gap 2-year (2-year expected inflation plus LW r\*) as follows [verified]: monthly correlation of the two trends 0.80 (1994-2026); averages 5.3 vs 5.5 (1994-2007) and 2.3 vs 2.5 (2008-2015), but 1.4 vs 3.6 (2016-2026), when the 8-year average of the 2-year fell to about 0.7-1 while LW r\* (1.1-2.0) plus expected inflation (1.3-2.5) stayed at 3-4; the resulting rate gaps correlate 0.63 (LW vs Kiley gaps: 0.88). LW r\* is the New York Fed's current one-sided estimate (vintage 26 Aug 2026), identical to the FCI note's file (checked against the NY Fed spreadsheet).
+
+**Unemployment gap (pp)**
+
+| 2-year minus its 8-year average, FCI | 12 months | 24 months | 36 months |
+|---|---|---|---|
+| no FCI | −0.22* / −0.30* / −0.36* | −0.23 / −0.28 / −0.46* | −0.22 / −0.21 / −0.40* |
+| nominal FCI | +0.23* / +0.18 / +0.15 | +0.38* / +0.36* / +0.27 | +0.34* / +0.36* / +0.27* |
+| real FCI | +0.25* / +0.19 / +0.15 | +0.37* / +0.36* / +0.28 | +0.31* / +0.34* / +0.29 |
+| r\*-gap FCI | +0.06 / +0.08 / +0.14 | +0.10 / +0.15 / +0.18 | +0.08 / +0.15 / +0.18 |
+
+**Core PCE price level (%)**
+
+| 2-year minus its 8-year average, FCI | 12 months | 24 months | 36 months |
+|---|---|---|---|
+| no FCI | +0.19 / +0.10 / +0.02 | +0.37 / +0.22 / +0.10 | +0.50 / +0.28 / +0.17 |
+| nominal FCI | +0.01 / −0.07 / −0.11 | −0.02 / −0.19 / −0.23 | −0.02 / −0.24 / −0.31 |
+| real FCI | +0.02 / −0.07 / −0.14 | +0.02 / −0.15 / −0.28 | +0.05 / −0.19 / −0.38 |
+| r\*-gap FCI | +0.07 / −0.05 / −0.15 | +0.19 / −0.07 / −0.27 | +0.29 / −0.06 / −0.35 |
+
+**With industrial production: IP (%)**
+
+| 2-year minus its 8-year average, FCI | 12 months | 24 months | 36 months |
+|---|---|---|---|
+| no FCI | +1.07* / +1.24* / +1.45* | +1.03 / +1.43* / +1.80* | +0.92 / +1.27* / +1.50* |
+| nominal FCI | −0.32 / −0.35 / −0.12 | −0.28 / −0.01 / +0.01 | +0.15 / +0.36 / +0.31 |
+| real FCI | −0.28 / −0.31 / −0.15 | −0.22 / +0.02 / −0.09 | +0.19 / +0.35 / +0.10 |
+| r\*-gap FCI | +0.03 / −0.36 / −0.25 | +0.13 / +0.01 / −0.12 | +0.30 / +0.25 / −0.02 |
+
+Reading: the moving-average adjustment does **not** do what the r\* gap does. Without the FCI the puzzle is worse (unemployment significantly negative at 12 months for all lags); with the nominal or real FCI the results look like the nominal step with the FCI (unemployment conventional, significant mainly at 24-36 months with 3 and 6 lags; prices not significant; IP not falling); paired with the r\*-gap FCI, nothing is significant. A purely statistical trend in the 2-year therefore does not substitute for r\*; the gain at the r\* step comes from the LW trend, which differs from the moving average mainly after 2016. [verified; interpretation inference]
+
+Reading of (a) and (b):
 1. **The FCI remains essential.** In every variant, without the FCI unemployment is insignificant or wrong-signed and IP rises; with the FCI unemployment is conventional. [verified]
 2. **Kiley's r\* weakens the result.** With the FCI, unemployment is significant with 3 lags (+0.38 at 12 months) and at 12 months with 6 lags, but not with 12 lags; the price level is never significant; IP does not fall robustly. So the strength of the r\* step depends on the r\* estimate: Laubach-Williams delivers it, Kiley's estimate (which moves differently after 2008) much less. [verified; the reason is an inference]
 3. **A quadratic trend can stand in for the r\* adjustment for unemployment, not for prices or IP.** With the nominal 2-year, a trend and the FCI (nominal or real), unemployment is significant at all horizons and lags but one, and larger and more persistent than in the baseline (+0.3 to +0.4 at 12 months, +0.7 to +0.8 at 36); the price level falls (−0.3 to −0.5% at 24-36 months) but is never significant, and IP does not fall. Without the FCI the trend does not remove the puzzle. [verified]

@@ -22,7 +22,8 @@ rng = np.random.default_rng(31)
 _d0 = D0.load()
 _e2 = fred("EXPINF2YR"); _e2 = pd.Series(_e2.values, index=_e2.index.to_period("M"))
 RATE = {"nom": POL["y2"], "real": POL["y2"] - interp_monthly(_e2), "rstar": POL["y2"] - interp_monthly(_e2 + _d0["rstar LW"]),
-        "kiley": POL["y2"] - interp_monthly(_e2 + _d0["rstar Kiley"])}                     # robustness (FS-A19): Kiley's r*
+        "kiley": POL["y2"] - interp_monthly(_e2 + _d0["rstar Kiley"]),                     # robustness (FS-A19): Kiley's r*
+        "ma8": POL["y2"] - POL["y2"].rolling(8 * 261, min_periods=8 * 250).mean()}           # robustness (FS-A20): 2-year minus its trailing 8-year moving average
 _nomd = DAILY["idx"].reindex(CALW).ffill(limit=3)
 def _daily_fci(target):
     off = (target - _nomd.groupby(_nomd.index.to_period("M")).mean()).dropna()
