@@ -93,3 +93,17 @@ for j, (rate, fci, title) in enumerate(cases):
         a.tick_params(labelsize=8)
 ax[0, 0].legend(fontsize=7, frameon=False, loc="lower left")
 fig.tight_layout(); fig.savefig(os.path.join(HERE, "figures", "fig1_steps.pdf")); print("tables and figure written")
+
+# Table 8 (compact): alternative shocks, with the FCI (nominal and r*-gap steps); rows labelled by shock (FS-A25)
+def shock_table(var, name):
+    out = ["\\begin{tabular}{llccccccccc}", "\\toprule", " & & \\multicolumn{3}{c}{12 months} & \\multicolumn{3}{c}{24 months} & \\multicolumn{3}{c}{36 months}\\\\",
+           "\\cmidrule(lr){3-5}\\cmidrule(lr){6-8}\\cmidrule(lr){9-11}", "Shock & Step (with FCI) & 3 & 6 & 12 & 3 & 6 & 12 & 3 & 6 & 12 \\\\", "\\midrule"]
+    for k, (sk, lab) in enumerate((("NS", "Nakamura--Steinsson (baseline)"), ("BS-ORTH", "Bauer--Swanson orthogonalized"), ("NS-JK", "Jaroci\\'nski--Karadi pure policy"))):
+        if k: out.append("\\midrule")
+        for rate, step in (("nom", "Nominal"), ("rstar", "$r^*$-gap")):
+            g = D_ALL[(D_ALL.shock == sk) & (D_ALL.bootd == 0) & (D_ALL.macro == "u,pi") & (D_ALL["var"] == var) & (D_ALL.rate == rate) & (D_ALL.fci == "1") & (D_ALL.trend == TR) & (D_ALL["sample"] == "")].sort_values("lags")
+            if len(g) < 3: continue
+            out.append(f"{lab} & {step} & " + " & ".join(cell(r, h) for h in (12, 24, 36) for _, r in g.iterrows()) + " \\\\")
+    out += ["\\bottomrule", "\\end{tabular}"]
+    open(os.path.join(HERE, "tables", name + ".tex"), "w").write("\n".join(out) + "\n")
+for var, nm in (("u", "tab8_shocks_u"), ("P", "tab8_shocks_p")): shock_table(var, nm)
