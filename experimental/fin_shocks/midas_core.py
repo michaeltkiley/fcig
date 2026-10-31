@@ -1,10 +1,11 @@
 """Core cases of the window-identified MIDAS-VAR (FS-A16). All with the NS surprise, 1994+, BASE ordering (macro first within the month), MODEL,
 3/6/12 monthly lags, 200 draws. Monthly block: [u gap, core PCE inflation] (+ IP = 100 log INDPRO as robustness). Daily block: the 2-year yield in one
 of three forms, with or without the market index (FCI) in the matching form:
-   nom : 2-year nominal (DGS2);                        FCI = nominal market index (note's nominal case)
-   rs  : 2-year minus r* (Laubach-Williams);           FCI = nominal index + (r* index - real index)  [the note's r* adjustment applied to the nominal index;
-                                                              no 'nominal minus r*' case exists in the note]
-   rr  : 2-year minus 1-year expected inflation and r*; FCI = r*-gap market index (the note's baseline)
+   Steps identical to the parallel note (fci_note, section 3; FS-A18): nominal -> real -> r*.
+   nom   : 2-year nominal (DGS2);                                         FCI = the note's nominal market index (indexes_nominal.csv)
+   real  : 2-year minus matched-horizon (2-year) expected inflation;     FCI = the note's real market index (indexes_real.csv)
+   rstar : 2-year minus 2-year expected inflation minus LW r*;           FCI = the note's r*-gap market index (indexes_rstar.csv, baseline)
+   (expected inflation: Cleveland Fed EXPINF2YR, monthly; r*: one-sided Laubach-Williams, as in the note)
 Daily FCI = the daily nominal index (note weights on daily 10-year, CAPE, dollar) plus a smooth offset (interpolated between mid-months) so its
 monthly average equals the monthly index in the stated form; daily rate adjustments are interpolated the same way. The window impact is the
 30-minute change (2-year scaled to +1 pp; index window change), unaffected by the slow offsets; macro zero in the window.
@@ -19,12 +20,13 @@ import midas_bs as MB
 rng = np.random.default_rng(31)
 
 _d0 = D0.load()
-RATE = {"nom": POL["y2"], "rs": POL["y2"] - interp_monthly(_d0["rstar LW"]), "rr": POL["y2"] - interp_monthly(_d0.einf_1y + _d0["rstar LW"])}
+_e2 = fred("EXPINF2YR"); _e2 = pd.Series(_e2.values, index=_e2.index.to_period("M"))
+RATE = {"nom": POL["y2"], "real": POL["y2"] - interp_monthly(_e2), "rstar": POL["y2"] - interp_monthly(_e2 + _d0["rstar LW"])}
 _nomd = DAILY["idx"].reindex(CALW).ffill(limit=3)
 def _daily_fci(target):
     off = (target - _nomd.groupby(_nomd.index.to_period("M")).mean()).dropna()
     return _nomd + interp_monthly(off)
-FCI = {"nom": _daily_fci(MM0.market_nominal), "rs": _daily_fci(MM0.market_nominal + MM0.market_rstar - MM0.market_real), "rr": _daily_fci(MM0.market_rstar)}
+FCI = {"nom": _daily_fci(MM0.market_nominal), "real": _daily_fci(MM0.market_real), "rstar": _daily_fci(MM0.market_rstar)}
 MAC = MB.MAC
 
 def daily_frame(form, fci):
@@ -62,7 +64,7 @@ if __name__ == "__main__":
     idx0 = event_index("NS"); _, _, idx0 = slopes(idx0, "NS"); pos0 = positions(idx0)
     bidx = [rng.choice(idx0, size=len(idx0), replace=True) for _ in range(B)]; bpos = [positions(ib) for ib in bidx]
     for mlab, mvars in MAC_SETS.items():
-        for form in ("nom", "rs", "rr"):
+        for form in ("nom", "real", "rstar"):
             for fci in (0, 1):
                 if SEL and f"{form}-{fci}" not in SEL: continue
                 K, nd = len(mvars), 1 + fci; Bd = har_block(form, fci, mvars)
