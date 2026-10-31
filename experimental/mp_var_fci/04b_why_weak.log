@@ -1,0 +1,38 @@
+Events: 253 (FF4 missing for 0 events, set to 0). Monthly instrument sd (pp): ns 0.035  MP1 0.042  ED4 0.046  FF4 0.032
+
+(1) Same data, different level of aggregation. 2-year window change on the NS surprise at the EVENT level (253 events), and monthly average 2-year change on the monthly sum:
+   event-day regression: coefficient +1.01, t 18.2, F 332   (strong by construction: NS is built from yield surprises in the same window)
+   monthly change of the 2-year on the monthly NS sum: r +0.22, F 20
+   VAR-residual first stage (what proxy-SVARs need): see (2).
+
+(2) VAR-residual first stage by instrument and window (4-variable VAR with r*-gap index, 12 lags). robust F [homoskedastic F]
+   window (VAR and residuals)        policy |   ns            MP1            ED4            FF4
+   1994-01..2007-12  gs2   |    0.5 [  0.3]    0.1 [  0.1]    1.3 [  1.0]    0.2 [  0.2]
+   1994-01..2007-12  ffr   |    9.4 [ 10.2]   12.2 [ 26.1]    4.7 [  5.2]    7.5 [ 10.0]
+   1994-01..2012-12  gs2   |    0.5 [  0.6]    0.8 [  1.6]    0.8 [  0.8]    0.0 [  0.1]
+   1994-01..2012-12  ffr   |    5.2 [  7.5]    7.6 [ 19.2]    2.2 [  3.3]    6.1 [  7.5]
+   1994-01..2019-12  gs2   |    1.2 [  1.9]    1.1 [  2.8]    1.9 [  2.0]    0.0 [  0.0]
+   1994-01..2019-12  ffr   |    7.1 [ 11.6]    8.8 [ 28.1]    3.7 [  5.5]    6.8 [ 10.5]
+   1994-01..2026-09  gs2   |    3.5 [  6.4]    1.4 [  3.7]    5.6 [  7.6]    0.4 [  0.7]
+   1994-01..2026-09  ffr   |    4.7 [  8.2]    9.3 [ 34.3]    2.0 [  2.8]    5.7 [  9.8]
+
+(3) Lag length of the VAR (window 1994-2026, 2-year): robust F [homoskedastic F]
+    2 lags |  ns   5.9 [ 10.1]  ED4   9.3 [ 12.4]  FF4   1.2 [  2.0]
+    6 lags |  ns   4.1 [  7.0]  ED4   6.4 [  8.3]  FF4   0.6 [  1.0]
+   12 lags |  ns   3.5 [  6.4]  ED4   5.6 [  7.6]  FF4   0.4 [  0.7]
+
+(4) Policy variable: 1-year (as Gertler-Karadi) vs 2-year vs funds rate, window 1994-2026, 12 lags: robust F [homoskedastic F]
+   gs1  |  ns   7.1 [ 12.4]  MP1   5.3 [ 11.9]  ED4   7.7 [ 10.6]  FF4   2.4 [  5.1]
+   gs2  |  ns   3.5 [  6.4]  MP1   1.4 [  3.7]  ED4   5.6 [  7.6]  FF4   0.4 [  0.7]
+   ffr  |  ns   4.7 [  8.2]  MP1   9.3 [ 34.3]  ED4   2.0 [  2.8]  FF4   5.7 [  9.8]
+
+(5) Timing: surprise assigned to the event month (simple) vs split between the event month and the next in proportion to the days left (suited to monthly averages), 2-year, 1994-2026
+   ns   simple   3.5 [  6.4]    timing-adjusted   2.9 [  3.9]
+   ED4  simple   5.6 [  7.6]    timing-adjusted   3.1 [  4.4]
+   FF4  simple   0.4 [  0.7]    timing-adjusted   1.2 [  1.6]
+   MP1  simple   1.4 [  3.7]    timing-adjusted   3.5 [  4.8]
+
+(6) Smaller systems (12 lags), 2-year, 1994-2026: does the VAR size matter? robust F [homoskedastic F]
+   u_gap+gs2                          ns   6.1 [ 11.9]  ED4   8.9 [ 12.5]  FF4   1.3 [  2.8]
+   u_gap+pi_core+gs2                  ns   6.4 [ 11.2]  ED4   9.4 [ 12.0]  FF4   1.4 [  2.8]
+   u_gap+pi_core+gs2+market_rstar     ns   3.5 [  6.4]  ED4   5.6 [  7.6]  FF4   0.4 [  0.7]

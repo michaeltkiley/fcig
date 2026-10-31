@@ -1,0 +1,30 @@
+Proxy-SVAR: response of the unemployment gap (pp) to a +1 pp rise in the policy variable on impact; AR = 95% Anderson-Rubin set (conditional on the VAR coefficients); F = robust first-stage F
+
+--- 12 lags ---
+  gs2  ns   S1  F  3.5  h12  +0.08            unbounded   h24  -0.10            unbounded   (T=381)
+  gs2  ns   S2  F  0.7  h12  +0.23            unbounded   h24  +0.01            unbounded   (T=393)
+  gs2  ED4  S1  F  5.6  h12  -0.01       (-1.56, +3.11)   h24  -0.17       (-1.75, +2.54)   (T=381)
+  gs2  ED4  S2  F  1.7  h12  +0.19            unbounded   h24  +0.05            unbounded   (T=393)
+  gs2  FF4  S1  F  0.4  h12  +1.52            unbounded   h24  +1.05            unbounded   (T=381)
+  gs2  FF4  S2  F  0.1  h12  -1.95            unbounded   h24  -0.72            unbounded   (T=393)
+  ffr  ns   S1  F  4.7  h12  -0.49            unbounded   h24  -0.74            unbounded   (T=381)
+  ffr  ns   S2  F  0.3  h12  +0.15            unbounded   h24  -0.15            unbounded   (T=393)
+  ffr  MP1  S1  F  9.3  h12  -1.26       (-2.06, +0.55)   h24  -1.32       (-2.12, +0.32)   (T=381)
+  ffr  MP1  S2  F  7.9  h12  -0.29       (-2.56, +9.36)   h24  -0.02       (-1.77, +5.90)   (T=393)
+--- 2 lags ---
+  gs2  ns   S1  F  5.9  h12  -0.04       (-1.03, +1.08)   h24  +0.13       (-0.84, +1.65)   (T=391)
+  gs2  ns   S2  F  2.7  h12  -0.36            unbounded   h24  -0.23            unbounded   (T=393)
+  gs2  ED4  S1  F  9.3  h12  -0.07       (-0.96, +0.58)   h24  +0.10       (-0.78, +0.91)   (T=391)
+  gs2  ED4  S2  F  5.0  h12  -0.34       (-4.26, +0.20)   h24  -0.21       (-3.52, +0.25)   (T=393)
+  gs2  FF4  S1  F  1.2  h12  +0.29            unbounded   h24  +0.47            unbounded   (T=391)
+  gs2  FF4  S2  F  0.2  h12  -0.18            unbounded   h24  -0.15            unbounded   (T=393)
+  ffr  ns   S1  F  5.5  h12  -0.36            unbounded   h24  +0.09            unbounded   (T=391)
+  ffr  ns   S2  F  3.1  h12  -0.61            unbounded   h24  -0.38            unbounded   (T=393)
+  ffr  MP1  S1  F 10.6  h12  -0.69       (-1.26, +0.59)   h24  -0.50       (-1.17, +1.00)   (T=391)
+  ffr  MP1  S2  F  7.7  h12  -0.19       (-0.63, +0.84)   h24  -0.04       (-0.44, +0.84)   (T=393)
+
+--- Scaled on the index instead (12 lags), 2-year main system ---
+  ns   S1  u at h12 per +1 index unit:  +0.09            unbounded   (index first-stage weak: the scaling is unstable)
+  ns   S2  u at h12 per +1 index unit:  +0.19            unbounded   (index first-stage weak: the scaling is unstable)
+  ED4  S1  u at h12 per +1 index unit:  -0.01            unbounded   (index first-stage weak: the scaling is unstable)
+  ED4  S2  u at h12 per +1 index unit:  +0.18            unbounded   (index first-stage weak: the scaling is unstable)

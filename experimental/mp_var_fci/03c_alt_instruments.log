@@ -1,0 +1,10 @@
+Monthly instruments: sd (pp)  ns 0.035  MP1 0.042  MP2 0.031  ED4 0.046  path 0.043  UST2Y 0.038
+
+First-stage F (robust t^2) of each instrument on the VAR residual; S1 = VAR from 1994, S2 = long VAR (funds rate from 1973, 2-year from 1976-06)
+   instrument   |  S1: ffr   gs2   index |  S2: ffr   gs2   index
+   ns          |    4.7   3.5    1.4 |    0.3   0.7    1.0
+   MP1         |    9.3   1.4    0.1 |    7.9   0.1    0.2
+   MP2         |    7.2   0.6    0.4 |    1.8   0.0    0.0
+   ED4         |    2.0   5.6    1.4 |    0.0   1.7    1.6
+   path        |    0.1   3.5    2.8 |    0.7   1.3    3.8
+   UST2Y       |    2.5   3.3    3.0 |    0.0   0.7    2.8

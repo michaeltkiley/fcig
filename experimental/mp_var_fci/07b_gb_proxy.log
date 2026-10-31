@@ -1,0 +1,24 @@
+
+== CH window: u-gap response per +25 bp at 12 months, proxy-SVAR; 'unb' = unbounded 95% AR set ==
+  ffr MP1  base    | raw: F 15.4 u12 -0.22  (-0.28,-0.03) | GB: F 12.1 u12 -0.20  (-0.27,-0.03) | GB+AR: F 16.0 u12 -0.19  (-0.27,+0.03)
+  ffr MP1  +index  | raw: F 17.0 u12 -0.24  (-0.34,-0.05) | GB: F 13.4 u12 -0.23  (-0.32,-0.07) | GB+AR: F 17.4 u12 -0.22  (-0.33,-0.03)
+  ffr MP1  +EBP    | raw: F 18.1 u12 +0.00  (-0.06,+0.13) | GB: F 14.8 u12 -0.00  (-0.07,+0.11) | GB+AR: F 20.6 u12 +0.01  (-0.06,+0.13)
+  ffr MP1  +NFCI   | raw: F 13.5 u12 -0.16  (-0.23,-0.00) | GB: F 11.0 u12 -0.14  (-0.21,+0.04) | GB+AR: F 14.8 u12 -0.13  (-0.22,+0.09)
+  ffr FF4  base    | raw: F  9.3 u12 -0.22  (-0.34,-0.04) | GB: F  9.0 u12 -0.18  (-0.29,+0.13) | GB+AR: F  9.0 u12 -0.18  (-0.30,+0.15)
+  ffr FF4  +index  | raw: F 10.7 u12 -0.24  (-0.38,-0.05) | GB: F 10.6 u12 -0.23  (-0.35,+0.01) | GB+AR: F 10.5 u12 -0.21  (-0.33,+0.05)
+  ffr FF4  +EBP    | raw: F 11.1 u12 +0.07  (-0.01,+0.40) | GB: F 10.5 u12 +0.09  (+0.00,+0.62) | GB+AR: F 10.2 u12 +0.07  (-0.03,+0.60)
+  ffr FF4  +NFCI   | raw: F  8.4 u12 -0.15  (-0.33,+0.01) | GB: F  8.0 u12 -0.11  (-0.25,+0.19) | GB+AR: F  8.1 u12 -0.12  (-0.28,+0.15)
+
+== 1994-2019 window: u-gap response per +25 bp at 12 months, proxy-SVAR; 'unb' = unbounded 95% AR set ==
+  ffr MP1  base    | raw: F  8.4 u12 -0.39  (-0.58,-0.12) | GB: F 11.5 u12 -0.35  (-0.54,+0.03) | GB+AR: F  8.7 u12 -0.35  (-0.68,+0.35)
+  ffr MP1  +index  | raw: F  8.9 u12 -0.34  (-0.54,+0.11) | GB: F 11.4 u12 -0.27  (-0.51,+0.25) | GB+AR: F  8.8 u12 -0.24  (-0.55,+0.95)
+  ffr MP1  +EBP    | raw: F  9.2 u12 -0.10  (-0.40,+0.51) | GB: F 11.3 u12 -0.04  (-0.31,+0.52) | GB+AR: F  8.4 u12 -0.03  (-0.44,+0.96)
+  ffr MP1  +NFCI   | raw: F  9.2 u12 -0.01  (-0.24,+0.80) | GB: F 11.0 u12 +0.00  (-0.25,+1.01) | GB+AR: F  9.0 u12 +0.00  (-0.31,+1.65)
+  ffr FF4  base    | raw: F  6.9 u12 -0.40            unb | GB: F  5.6 u12 -0.26            unb | GB+AR: F  5.9 u12 -0.27            unb
+  ffr FF4  +index  | raw: F  8.0 u12 -0.22  (-0.67,+1.61) | GB: F  6.4 u12 -0.10            unb | GB+AR: F  6.7 u12 -0.11            unb
+  ffr FF4  +EBP    | raw: F  5.5 u12 +0.13            unb | GB: F  4.9 u12 +0.26            unb | GB+AR: F  5.3 u12 +0.14            unb
+  ffr FF4  +NFCI   | raw: F  5.5 u12 +0.19            unb | GB: F  4.3 u12 +0.21            unb | GB+AR: F  4.7 u12 +0.14            unb
+  gs2 ED4  base    | raw: F  6.3 u12 -0.24  (-0.95,+0.09) | GB: F  0.5 u12 -0.04            unb | GB+AR: F  0.4 u12 -0.03            unb
+  gs2 ED4  +index  | raw: F  3.0 u12 -0.08            unb | GB: F  0.1 u12 +1.17            unb | GB+AR: F  0.1 u12 +1.02            unb
+  gs2 ED4  +EBP    | raw: F  2.7 u12 +0.12            unb | GB: F  0.0 u12 +2.28            unb | GB+AR: F  0.1 u12 +1.51            unb
+  gs2 ED4  +NFCI   | raw: F  3.3 u12 +0.12            unb | GB: F  0.0 u12 +1.62            unb | GB+AR: F  0.0 u12 +0.99            unb

@@ -1,0 +1,37 @@
+Part A. Approximation of Gertler-Karadi's first stage (instrument FF4 from USMPD, 1994-02 on; GK use 1991-01 on)
+   VAR 1979-07..2012-06, 4 variables, constant, no other dummies.   GK Table 3, column 2 (1-year, FF4, T = 258): F 17.50 (robust t); text: F 21.5, robust F 17.5, R2 0.078
+   lags  policy  instr  window            n   anchorF [robust]    R2   Lunsford F   Colombo F [robust]
+    12   gs1    FF4    1994-02..2012-06  221     6.6 [  5.5]   0.029      3.1     12.6 [   9.6]
+    12   gs1    ED4    1994-02..2012-06  221     3.4 [  2.2]   0.015      1.4      5.5 [   5.0]
+    12   gs1    MP1    1994-02..2012-06  221    12.8 [ 14.1]   0.055      3.8     15.3 [  16.0]
+    12   gs2    FF4    1994-02..2012-06  221     1.2 [  1.2]   0.006      1.8      7.2 [   4.7]
+    12   gs2    ED4    1994-02..2012-06  221     0.8 [  0.7]   0.004      0.9      3.5 [   3.7]
+     6   gs1    FF4    1994-02..2012-06  221    10.3 [  7.2]   0.045      3.9     15.9 [   9.1]
+     6   gs1    ED4    1994-02..2012-06  221    11.6 [  7.1]   0.050      3.3     13.5 [  10.1]
+     6   gs1    MP1    1994-02..2012-06  221    15.4 [ 18.6]   0.066      4.1     16.7 [  18.3]
+     6   gs2    FF4    1994-02..2012-06  221     3.2 [  2.7]   0.015      2.2      9.0 [   5.4]
+     6   gs2    ED4    1994-02..2012-06  221     5.2 [  3.9]   0.023      1.9      7.6 [   7.3]
+     2   gs1    FF4    1994-02..2012-06  221     7.1 [  5.2]   0.032      3.4     13.7 [   9.3]
+     2   gs1    ED4    1994-02..2012-06  221     5.4 [  3.6]   0.024      2.1      8.5 [   7.3]
+     2   gs1    MP1    1994-02..2012-06  221    14.7 [ 13.9]   0.063      4.0     16.4 [  13.8]
+     2   gs2    FF4    1994-02..2012-06  221     1.6 [  1.5]   0.007      1.8      7.4 [   5.2]
+     2   gs2    ED4    1994-02..2012-06  221     2.0 [  1.5]   0.009      1.2      4.8 [   4.7]
+
+Part B. The same three F statistics for this project's systems (u gap, core PCE, policy variable, r*-gap index), 12 lags, 2020 dummied
+   system                        instr   sample   n   anchorF [robust]    R2   Lunsford F   Colombo F [robust]
+   u_gap+pi_core+gs2+market_rstar  ns     S1  381     6.4 [  3.5]   0.016      2.1      8.5 [   5.3]
+   u_gap+pi_core+gs2+market_rstar  ns     S2  393     1.1 [  0.7]   0.003      0.6      2.5 [   2.0]
+   u_gap+pi_core+gs2+market_rstar  ED4    S1  381     7.6 [  5.6]   0.020      2.4      9.6 [   7.3]
+   u_gap+pi_core+gs2+market_rstar  ED4    S2  393     2.4 [  1.7]   0.006      1.0      4.2 [   3.6]
+   u_gap+pi_core+gs2+market_rstar  FF4    S1  381     0.7 [  0.4]   0.002      0.8      3.3 [   2.3]
+   u_gap+pi_core+gs2+market_rstar  FF4    S2  393     0.1 [  0.1]   0.000      0.5      1.9 [   1.4]
+   u_gap+pi_core+ffr+market_rstar  ns     S1  381     8.2 [  4.7]   0.021      3.5     13.9 [  11.2]
+   u_gap+pi_core+ffr+market_rstar  ns     S2  393     0.4 [  0.3]   0.001      0.7      2.6 [   2.3]
+   u_gap+pi_core+ffr+market_rstar  MP1    S1  381    34.3 [  9.3]   0.083      9.1     36.7 [  10.4]
+   u_gap+pi_core+ffr+market_rstar  MP1    S2  393     6.2 [  7.9]   0.016      1.8      7.2 [   5.0]
+
+   Without the index (u gap, core PCE, policy variable):
+   u_gap+pi_core+gs2             ns     S1  381    11.2 [  6.4]   0.029      3.9     11.9 [   7.1]
+   u_gap+pi_core+gs2             ns     S2  393     6.9 [  4.8]   0.017      2.9      8.7 [   6.4]
+   u_gap+pi_core+gs2             ED4    S1  381    12.0 [  9.4]   0.031      4.2     12.6 [  10.1]
+   u_gap+pi_core+gs2             ED4    S2  393     8.8 [  6.8]   0.022      3.4     10.3 [   8.3]

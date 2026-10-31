@@ -1,0 +1,37 @@
+Events in the note's set: 253; with Greenbook regressors (vintage within 35 days, through 2020-12): 205; first 1996-01-31, last 2020-12-16
+
+Step 1: regression of each surprise on Greenbook forecasts and revisions (19 regressors), R2 [adjusted R2]; share of the surprise variance explained
+   MP1  n=205  R2 0.064 [-0.032]  joint F p-value 0.845
+   FF4  n=205  R2 0.110 [0.018]  joint F p-value 0.263
+   ns   n=205  R2 0.160 [0.073]  joint F p-value 0.020
+   ED4  n=205  R2 0.208 [0.126]  joint F p-value 0.001
+
+Step 3: AR(12) component of the monthly purged series (non-zero months only), R2
+   MP1  R2 0.083
+   FF4  R2 0.072
+   ns   R2 0.045
+   ED4  R2 0.078
+
+Correlation of the monthly raw and purged instruments (1994-2020):
+   MP1  raw vs GB 0.86   raw vs GB+AR 0.83
+   FF4  raw vs GB 0.93   raw vs GB+AR 0.91
+   ns   raw vs GB 0.90   raw vs GB+AR 0.88
+   ED4  raw vs GB 0.88   raw vs GB+AR 0.85
+
+CH window 1994-2007 (6 lags), policy variable ffr  (system u_gap+pi_core+ffr+market_rstar; first stage robust [homoskedastic] | Lunsford | Colombo)
+   MP1   raw: 17.0 [ 35.6]  8.9  36.4   GB: 13.4 [ 32.7]  8.1  33.2   GB+AR: 17.4 [ 31.0]  7.6  31.2
+   FF4   raw: 10.7 [ 17.6]  5.0  20.5   GB: 10.6 [ 13.4]  3.9  16.1   GB+AR: 10.5 [ 12.9]  3.5  14.3
+   ns    raw: 13.5 [ 17.1]  4.5  18.2   GB: 11.0 [ 10.0]  2.5  10.3   GB+AR: 11.3 [ 10.3]  2.6  10.5
+
+1994-2019 residuals (VAR 1994-2026, 12 lags), policy variable ffr  (system u_gap+pi_core+ffr+market_rstar; first stage robust [homoskedastic] | Lunsford | Colombo)
+   MP1   raw:  8.9 [ 30.3]  8.3  33.5   GB: 11.4 [ 30.6]  8.4  33.8   GB+AR:  8.8 [ 22.6]  6.7  27.0
+   FF4   raw:  8.0 [ 12.3]  4.7  18.8   GB:  6.4 [  7.8]  3.7  15.1   GB+AR:  6.7 [  9.2]  3.4  13.7
+   ns    raw:  8.4 [ 13.3]  4.6  18.7   GB:  4.6 [  5.1]  2.7  10.9   GB+AR:  5.4 [  6.1]  2.4   9.8
+
+CH window 1994-2007 (6 lags), policy variable gs2  (system u_gap+pi_core+gs2+market_rstar; first stage robust [homoskedastic] | Lunsford | Colombo)
+   ns    raw:  0.1 [  0.1]  0.4   1.5   GB:  0.4 [  0.3]  0.2   0.9   GB+AR:  0.2 [  0.2]  0.2   0.7
+   ED4   raw:  0.5 [  0.5]  0.5   2.0   GB:  0.1 [  0.1]  0.3   1.2   GB+AR:  0.1 [  0.1]  0.3   1.1
+
+1994-2019 residuals (VAR 1994-2026, 12 lags), policy variable gs2  (system u_gap+pi_core+gs2+market_rstar; first stage robust [homoskedastic] | Lunsford | Colombo)
+   ns    raw:  1.9 [  3.4]  1.1   4.5   GB:  0.0 [  0.0]  0.7   2.8   GB+AR:  0.2 [  0.3]  0.3   1.4
+   ED4   raw:  3.0 [  3.6]  1.1   4.6   GB:  0.1 [  0.1]  0.8   3.4   GB+AR:  0.1 [  0.1]  0.4   1.4

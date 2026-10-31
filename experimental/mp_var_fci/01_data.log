@@ -1,0 +1,48 @@
+mp_monthly.csv: 645 months x 22 columns, 1973-01 to 2026-09
+
+First/last valid month and mean/sd by column:
+  pi_core            1973-01 2026-09  n= 645  mean    3.280  sd   2.438
+  u_gap              1973-01 2026-09  n= 645  mean    0.745  sd   1.573
+  ffr                1973-01 2026-09  n= 645  mean    4.852  sd   3.908
+  gs2                1976-06 2026-09  n= 604  mean    4.957  sd   3.653
+  ffr_nominal        1973-01 2026-09  n= 645  mean    4.852  sd   3.908
+  market_nominal     1973-01 2026-09  n= 645  mean   -0.000  sd   4.137
+  gs_nominal         1973-01 2026-09  n= 645  mean    0.000  sd   1.784
+  fcig1_nominal      1974-03 2026-09  n= 631  mean   -0.201  sd   0.611
+  mkt_fi12_nominal   1974-01 2026-09  n= 633  mean   -0.072  sd   0.987
+  ffr_real           1973-01 2026-09  n= 645  mean    1.384  sd   2.421
+  market_real        1973-01 2026-09  n= 645  mean    0.000  sd   3.184
+  gs_real            1973-01 2026-09  n= 645  mean    0.000  sd   2.817
+  fcig1_real         1974-03 2026-09  n= 631  mean   -0.115  sd   0.644
+  mkt_fi12_real      1974-01 2026-09  n= 633  mean   -0.051  sd   0.873
+  ffr_rstar          1973-01 2026-09  n= 645  mean   -1.021  sd   1.942
+  market_rstar       1973-01 2026-09  n= 645  mean   -0.000  sd   2.878
+  gs_rstar           1973-01 2026-09  n= 645  mean   -0.000  sd   2.609
+  fcig1_rstar        1974-03 2026-09  n= 631  mean   -0.034  sd   0.786
+  mkt_fi12_rstar     1974-01 2026-09  n= 633  mean    0.005  sd   1.007
+  ns                 1973-01 2026-09  n= 645  mean   -0.003  sd   0.035
+  n_events           1973-01 2026-09  n= 645  mean    0.392  sd   0.510
+  d2020              1973-01 2026-09  n= 645  mean    0.019  sd   0.135
+
+NS instrument: events and months with an event, by era
+  1994-2007  events  102  months with event  99 of 168  sd(ns, monthly) 0.048  max|ns| 0.354
+  2008-2015  events   67  months with event  64 of  96  sd(ns, monthly) 0.042  max|ns| 0.224
+  2016-2019  events   32  months with event  32 of  48  sd(ns, monthly) 0.030  max|ns| 0.114
+  2020       events    6  months with event   6 of  12  sd(ns, monthly) 0.003  max|ns| 0.010
+  2021-2026  events   46  months with event  46 of  69  sd(ns, monthly) 0.051  max|ns| 0.139
+  1994-2026  events  253  months with event 247 of 393  sd(ns, monthly) 0.045  max|ns| 0.354
+
+Checks:
+  pi_core: mean 3.28, sd 2.44, min -6.84, max 12.25 (annualized %)
+  pi_core 2020-03..2020-06: [-0.91, -3.89, 1.25, 1.87]
+  ffr below 0.25 in 109 months (zero-lower-bound months: 2008-12, 2022-03)
+  first month with no missing values in the main block: 1973-01
+  correlation of ns with market_rstar monthly change (1994-2026): 0.03
+
+Timing check: correlation of the monthly NS sum with monthly changes (1994-2026), by lead of the change (0 = same month, 1 = next month)
+  market_rstar lead 0: +0.03  lead 1: +0.11  lead 2: -0.08
+  ffr          lead 0: +0.21  lead 1: +0.18  lead 2: +0.10
+  gs2          lead 0: +0.22  lead 1: +0.10  lead 2: +0.07
+  u_gap        lead 0: -0.03  lead 1: -0.03  lead 2: -0.03
+  pi_core      lead 0: -0.02  lead 1: -0.01  lead 2: -0.02
+  (market_rstar is a monthly average, so a mid-month surprise enters the same and the next month's change)

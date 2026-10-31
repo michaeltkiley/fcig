@@ -1,0 +1,98 @@
+Purge regression (event level, n = 253 of 253): R2 0.113, joint F p-value 0.0078
+  const          -0.0123  (t -3.4)
+  payroll 12m    +0.0002  (t +0.1)
+  stocks 3m      +0.0021  (t +3.5)
+  slope 3m chg   -0.0183  (t -1.9)
+  oil 3m         +0.0001  (t +0.5)
+  sd(ns) 0.0541  sd(bs) 0.0509  corr(ns, bs) 0.94
+  monthly instruments written; sd monthly ns 0.0349, bs 0.0325; corr 0.93
+
+S1  VAR and instrument 1994-2026, funds rate, index rstar  (T = 381)
+   residual of            instrument   coefficient     t      F    R2
+   u_gap                  ns             -0.069    -0.57    0.3  0.001
+   u_gap                  bs             -0.072    -0.61    0.4  0.001
+   pi_core                ns             -0.909    -0.74    0.5  0.002
+   pi_core                bs             -0.229    -0.20    0.0  0.000
+   ffr                    ns             +0.344    +2.18    4.7  0.021  <-- policy
+   ffr                    bs             +0.293    +2.00    4.0  0.014  <-- policy
+   market_rstar           ns             +0.327    +1.17    1.4  0.006  <-- index
+   market_rstar           bs             +0.263    +1.12    1.2  0.003  <-- index
+
+S2  VAR 1973-2026, instrument window 1994-2026, funds rate, index rstar  (T = 393)
+   residual of            instrument   coefficient     t      F    R2
+   u_gap                  ns             -0.111    -0.80    0.6  0.001
+   u_gap                  bs             -0.074    -0.56    0.3  0.001
+   pi_core                ns             -0.509    -0.37    0.1  0.000
+   pi_core                bs             +0.112    +0.09    0.0  0.000
+   ffr                    ns             +0.129    +0.52    0.3  0.001  <-- policy
+   ffr                    bs             +0.142    +0.57    0.3  0.001  <-- policy
+   market_rstar           ns             +0.319    +1.01    1.0  0.004  <-- index
+   market_rstar           bs             +0.441    +1.59    2.5  0.007  <-- index
+
+S1  VAR and instrument 1994-2026, funds rate, index nominal  (T = 381)
+   residual of            instrument   coefficient     t      F    R2
+   u_gap                  ns             -0.064    -0.51    0.3  0.001
+   u_gap                  bs             -0.042    -0.35    0.1  0.000
+   pi_core                ns             -0.612    -0.46    0.2  0.001
+   pi_core                bs             -0.194    -0.16    0.0  0.000
+   ffr                    ns             +0.395    +2.54    6.5  0.028  <-- policy
+   ffr                    bs             +0.338    +2.30    5.3  0.018  <-- policy
+   market_nominal         ns             +0.159    +0.54    0.3  0.001  <-- index
+   market_nominal         bs             +0.086    +0.35    0.1  0.000  <-- index
+
+S2  VAR 1973-2026, instrument window 1994-2026, funds rate, index nominal  (T = 393)
+   residual of            instrument   coefficient     t      F    R2
+   u_gap                  ns             -0.132    -0.90    0.8  0.002
+   u_gap                  bs             -0.081    -0.58    0.3  0.001
+   pi_core                ns             +0.020    +0.01    0.0  0.000
+   pi_core                bs             +0.369    +0.29    0.1  0.000
+   ffr                    ns             +0.324    +1.57    2.5  0.006  <-- policy
+   ffr                    bs             +0.250    +1.16    1.3  0.003  <-- policy
+   market_nominal         ns             +0.240    +0.72    0.5  0.002  <-- index
+   market_nominal         bs             +0.307    +1.04    1.1  0.003  <-- index
+
+S1  VAR and instrument 1994-2026, funds rate, index real  (T = 381)
+   residual of            instrument   coefficient     t      F    R2
+   u_gap                  ns             -0.051    -0.40    0.2  0.000
+   u_gap                  bs             -0.029    -0.25    0.1  0.000
+   pi_core                ns             -0.831    -0.63    0.4  0.001
+   pi_core                bs             -0.318    -0.26    0.1  0.000
+   ffr                    ns             +0.348    +2.20    4.9  0.022  <-- policy
+   ffr                    bs             +0.310    +2.11    4.5  0.015  <-- policy
+   market_real            ns             +0.133    +0.50    0.3  0.001  <-- index
+   market_real            bs             +0.116    +0.52    0.3  0.001  <-- index
+
+S2  VAR 1973-2026, instrument window 1994-2026, funds rate, index real  (T = 393)
+   residual of            instrument   coefficient     t      F    R2
+   u_gap                  ns             -0.116    -0.78    0.6  0.001
+   u_gap                  bs             -0.072    -0.51    0.3  0.001
+   pi_core                ns             -0.520    -0.36    0.1  0.000
+   pi_core                bs             +0.140    +0.11    0.0  0.000
+   ffr                    ns             +0.269    +1.21    1.5  0.004  <-- policy
+   ffr                    bs             +0.249    +1.08    1.2  0.003  <-- policy
+   market_real            ns             +0.187    +0.62    0.4  0.001  <-- index
+   market_real            bs             +0.299    +1.15    1.3  0.003  <-- index
+
+S1, 2-year yield as policy variable, index rstar  (T = 381)
+   residual of            instrument   coefficient     t      F    R2
+   u_gap                  ns             -0.008    -0.07    0.0  0.000
+   u_gap                  bs             -0.007    -0.06    0.0  0.000
+   pi_core                ns             -0.784    -0.61    0.4  0.001
+   pi_core                bs             -0.114    -0.10    0.0  0.000
+   gs2                    ns             +0.467    +1.88    3.5  0.016  <-- policy
+   gs2                    bs             +0.409    +1.58    2.5  0.011  <-- policy
+   market_rstar           ns             +0.370    +1.33    1.8  0.007  <-- index
+   market_rstar           bs             +0.315    +1.26    1.6  0.005  <-- index
+
+S2, 2-year yield as policy variable (VAR from 1976-06), index rstar  (T = 393)
+   residual of            instrument   coefficient     t      F    R2
+   u_gap                  ns             -0.078    -0.60    0.4  0.001
+   u_gap                  bs             -0.066    -0.52    0.3  0.000
+   pi_core                ns             -0.734    -0.52    0.3  0.001
+   pi_core                bs             +0.037    +0.03    0.0  0.000
+   gs2                    ns             +0.241    +0.83    0.7  0.003  <-- policy
+   gs2                    bs             +0.346    +1.16    1.4  0.005  <-- policy
+   market_rstar           ns             +0.289    +0.90    0.8  0.003  <-- index
+   market_rstar           bs             +0.377    +1.31    1.7  0.005  <-- index
+
+Reading: F is the squared robust t of one instrument on one residual. Rule of thumb for a usable instrument: F above about 10 on the variable used for scaling.
