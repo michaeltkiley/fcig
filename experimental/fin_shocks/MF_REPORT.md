@@ -69,7 +69,7 @@ The long samples agree on the first year and give less persistence; the 2-year l
 | NS-GB | -1.19 (0.44) | +1.22 (0.15) |
 | MP1 | -1.94 (0.05) | +0.90 (0.09) |
 | NS, crisis events dropped | -0.69 (0.41) | +0.44 (0.43) |
-| MP1, crisis events dropped | -0.81 (0.33) | see log |
+| MP1, crisis events dropped | -0.81 (0.33) | +0.68 (0.28) |
 
 Adding own lags (their recommendation) tightens the null band only modestly (NS: ±1.9 pp at 12 months instead of ±3.4 in levels) and the picture is the same: wrong signs for unemployment and prices (a price puzzle), significant only for MP1 at the 10% level, and much weaker without the 2007-09 events.
 

@@ -1,0 +1,5 @@
+Restricted MIDAS-VAR with Bauer-Swanson-style monthly variables, 1994+, 2-year; responses per +1 pp window move in the 2-year; median-path point estimate [90% interval], 200 draws
+u: pp; P: core PCE price level %; ip: industrial production %; com: IMF commodity price index % (monthly); oil: WTI % (monthly average of daily)
+
+=== BS2 ['u', 'pi', 'ip', 'com'], 3 lags: 382 months, 19 regressors per equation
+   NS     MODEL: u 10:+0.23[+0.06,+0.40] 24:+0.42[+0.18,+0.75] 36:+0.42[+0.17,+0.78]  P 10:-0.22[-0.40,-0.04] 24:-0.49[-0.93,-0.12] 36:-0.63[-1.28,-0.08]  ip 10:+0.47[-0.17,+0.99] 24:+0.79[-0.26,+1.66] 36:+1.12[-0.01,+2.11]  com 10:+1.68[-3.56,+5.74] 24:+3.32[-6.04,+9.69] 36:+5.24[-3.94,+13.32]  (26s)
