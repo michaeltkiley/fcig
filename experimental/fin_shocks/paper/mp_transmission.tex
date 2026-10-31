@@ -51,7 +51,7 @@ Table~\ref{tab:core} reports the responses of the unemployment gap and the core 
 
 \begin{table}[H]\centering\small
 \caption{Responses to a policy move that raises the two-year yield 1 percentage point}\label{tab:core}
-{\setlength{\tabcolsep}{4pt}\input{tables/tab1_core.tex}}
+{\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{\input{tables/tab1_core.tex}}}
 \par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize Columns: horizon and number of monthly lags. $^{**}$: 90 percent interval excludes zero; $^{\dagger}$: 68 percent interval excludes zero (90 percent does not). Steps as in Section~2; all specifications include a quadratic time trend. \citet{bauer2023}, benchmark (read from their Figure~8): unemployment $+0.19$, $+0.17$, $+0.15$ at 12, 24, 36 months (90 percent band excludes zero only at 12); CPI (not core PCE) $-0.36$, $-0.48$, $-0.6$ (bands exclude zero).\end{minipage}
 \end{table}
 
@@ -75,21 +75,21 @@ Table~\ref{tab:core} reports the responses of the unemployment gap and the core 
 
 \begin{table}[H]\centering\small
 \caption{Alternative adjustments of the two-year yield: unemployment gap (percentage points)}\label{tab:rob}
-{\setlength{\tabcolsep}{4pt}\input{tables/tab2_rob_u.tex}}
+{\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{\input{tables/tab2_rob_u.tex}}}
 \par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize See Table~\ref{tab:core}. The FCI is always one of the companion note's three indexes; the $\rs$-gap FCI uses the Laubach--Williams $\rs$. All specifications include the quadratic trend.\end{minipage}
 \end{table}
 
 \begin{table}[H]\centering\small
 \caption{Alternative adjustments of the two-year yield: core PCE price level (percent)}\label{tab:robp}
-{\setlength{\tabcolsep}{4pt}\input{tables/tab2_rob_p.tex}}
+{\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{\input{tables/tab2_rob_p.tex}}}
 \par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize See Table~\ref{tab:rob}. The 8-year average and the Laubach--Williams trend in the two-year yield (two-year expected inflation plus $\rs$) are close until 2015 (averages 5.3 and 5.5 percent over 1994--2007; 2.3 and 2.5 over 2008--2015) and diverge after 2016 (1.4 and 3.6).\end{minipage}
 \end{table}
 
-\textbf{The pandemic and the recent period.} The baseline drops March--December 2020 as dependent observations, but 2020 values still enter the 2021 equations as lags. Table~\ref{tab:smp} also drops 2021, ends the sample in December 2022, and ends it in December 2019 (estimating the daily block over the same period). SMP_TEXT Figure~\ref{fig:recent} shows why the recent period is informative: after 2021 the $\rs$-gap two-year yield and FCI rose by about 4 points, the largest swing in the stance relative to $\rs$ in the sample, and core inflation fell. Figure~\ref{fig:loyo} drops one calendar year at a time. LOYO_TEXT
+\textbf{The pandemic and the recent period.} The baseline drops March--December 2020 as dependent observations, but 2020 values still enter the 2021 equations as lags. Table~\ref{tab:smp} also drops 2021, ends the sample in December 2022, and ends it in December 2019 (estimating the daily block over the same period). With the $\rs$-gap rate and FCI, the unemployment response is robust: 0.26--0.31 percentage point at 12 months when 2021 is dropped, 0.32--0.34 when the sample ends in 2022, and 0.42--0.44 when it ends in 2019, significant at the 90 percent level at almost every horizon and lag length; without the FCI it is insignificant in all three samples. The price response is unchanged when the sample ends in 2022, so the data since 2023 play no special role, and it remains significant with 6 and 12 lags when 2021 is dropped ($-0.43$ and $-0.63$ percent at 24 months); but in the sample ending in 2019 it barely moves. The significant price response therefore comes from including the 2020--22 period. Figure~\ref{fig:recent} shows why the recent period is informative: after 2021 the $\rs$-gap two-year yield and FCI rose by about 4 points, the largest swing in the stance relative to $\rs$ in the sample, and core inflation fell. Figure~\ref{fig:loyo} drops one calendar year at a time. No single year drives the results: the unemployment response at 12 months ranges from 0.26 (dropping 2021) to 0.41, and the price level at 24 months from $-0.43$ (dropping 2021) to $-0.86$, with 90 percent intervals that exclude zero in every case. The 2020--22 dependence is thus a feature of the episode as a whole---a large tightening relative to $\rs$ followed by disinflation---rather than of any one year.
 
 \begin{table}[H]\centering\small
 \caption{Sample: $\rs$-gap two-year yield, without and with the $\rs$-gap FCI}\label{tab:smp}
-{\setlength{\tabcolsep}{4pt}\input{tables/tab3_smp.tex}}
+{\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{\input{tables/tab3_smp.tex}}}
 \par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize See Table~\ref{tab:core}. ``End in'' samples also estimate the daily block over the shorter period.\end{minipage}
 \end{table}
 
@@ -105,9 +105,9 @@ Table~\ref{tab:core} reports the responses of the unemployment gap and the core 
 
 \textbf{Industrial production.} Appendix Table~\ref{tab:ip} adds industrial production to the monthly block. Without the FCI, industrial production rises after a tightening with the nominal and real rates and is insignificant with the $\rs$-gap rate. With the nominal or real FCI it does not fall significantly. Only at the $\rs$ step does it fall, by 0.84--1.05 percent at 12 months, significant at the 90 percent level for every lag length, against about 1.5 percent in \citet{bauer2023}; it recovers within about three years. In exploratory work, adding a commodity price index as well produced rising commodity prices after a tightening, a reminder that the propagation assumption is least plausible for the most forward-looking, demand-sensitive variables.
 
-\textbf{Alternative shocks.} Appendix Table~\ref{tab:shocks} replaces the Nakamura--Steinsson surprise with three alternatives, keeping everything else unchanged: the surprise purged of Greenbook forecasts, the orthogonalized surprise of \citet{bauer2023} (their posted series for FOMC announcements, 201 of our events through 2019), and the ``poor man's'' sign restriction of \citet{jarocinski2020}, which keeps only announcements where the two-year yield and the S\&P 500 move in opposite directions (157 events). In our design a shock enters only through the window moves, scaled to a 1 point rise in the two-year yield, and the timing of announcements, so this exercise checks the ratio of the FCI's window move to the two-year yield's: 0.99 for the baseline, 1.07 for the Bauer--Swanson surprise and 1.09 for the Jaroci\'nski--Karadi selection. The last ratio is higher partly by construction, since that selection keeps announcements where equities, which enter the FCI with a negative sign, fall when yields rise. With these ratios, the responses are slightly larger than the baseline: at the $\rs$ step, unemployment rises 0.40--0.45 percentage point at 12 months and the price level falls 0.55--0.77 percent at 24 months. GB_TEXT Without the FCI, the three shocks give essentially identical responses. The results are therefore not sensitive to how the surprise is cleaned of information or predictable components, which matter here only through the window ratio.
+\textbf{Alternative shocks.} Appendix Table~\ref{tab:shocks} replaces the Nakamura--Steinsson surprise with three alternatives, keeping everything else unchanged: the surprise purged of Greenbook forecasts, the orthogonalized surprise of \citet{bauer2023} (their posted series for FOMC announcements, 201 of our events through 2019), and the ``poor man's'' sign restriction of \citet{jarocinski2020}, which keeps only announcements where the two-year yield and the S\&P 500 move in opposite directions (157 events). In our design a shock enters only through the window moves, scaled to a 1 point rise in the two-year yield, and the timing of announcements, so this exercise checks the ratio of the FCI's window move to the two-year yield's: 0.99 for the baseline, 1.07 for the Bauer--Swanson surprise and 1.09 for the Jaroci\'nski--Karadi selection. The last ratio is higher partly by construction, since that selection keeps announcements where equities, which enter the FCI with a negative sign, fall when yields rise. With these ratios, the responses are slightly larger than the baseline: at the $\rs$ step, unemployment rises 0.40--0.45 percentage point at 12 months and the price level falls 0.55--0.77 percent at 24 months. The Greenbook-purged surprise gives results within 0.02 of the baseline. Without the FCI, the three shocks give essentially identical responses. The results are therefore not sensitive to how the surprise is cleaned of information or predictable components, which matter here only through the window ratio.
 
-\textbf{Inference.} BOOT_TEXT
+\textbf{Inference.} Appendix Table~\ref{tab:boot} reports a fuller bootstrap with 1,000 draws that, in addition to resampling announcements, re-estimates the daily block on a moving-block resample of its regressions (66-day blocks) and regenerates the monthly data recursively from the estimated equations with Rademacher-signed residuals before re-estimating them. The intervals are essentially unchanged: at the $\rs$ step every significance marker is the same, and elsewhere a few markers change between the 68 and 90 percent levels. The FCI weights and $\rs$ remain fixed.
 
 \textbf{Other checks.} In exploratory versions of the model, adding a Baa--Treasury spread to the daily block lowered the unemployment response by a third to a half; because no intraday credit series exists, the spread's window response could not be measured cleanly, and we do not pursue it here, but credit is the most important omitted channel \citep{gilchrist2012,caldara2019}. Replacing the model's daily dynamics with the directly estimated post-announcement path of the financial variables for the first one to two months gives larger but much less precise responses.
 
@@ -158,22 +158,22 @@ The two ingredients play different roles. Financial conditions are essential for
 \section{Additional tables}
 \begin{table}[H]\centering\small
 \caption{Monthly block with industrial production}\label{tab:ip}
-{\setlength{\tabcolsep}{4pt}\input{tables/tabA_ip.tex}}
+{\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{\input{tables/tabA_ip.tex}}}
 \par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize See Table~\ref{tab:core}. Price-level responses are similar to Table~\ref{tab:core}. \citet{bauer2023}, industrial production: about $-1.5$, $-1.0$ and $-0.85$ at 12, 24 and 36 months, read from their Figure~8.\end{minipage}
 \end{table}
 \begin{table}[H]\centering\small
 \caption{Alternative shocks, with the FCI}\label{tab:shocks}
-{\setlength{\tabcolsep}{4pt}\input{tables/tabA_shocks.tex}}
+{\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{\input{tables/tabA_shocks.tex}}}
 \par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize See Table~\ref{tab:core}. All shocks scaled to raise the two-year yield 1 percentage point in the window. Step: the nominal or $\rs$-gap two-year yield and FCI.\end{minipage}
 \end{table}
 \begin{table}[H]\centering\small
 \caption{Core steps without the quadratic trend}\label{tab:notrend}
-{\setlength{\tabcolsep}{4pt}\input{tables/tabA_notrend.tex}}
+{\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{\input{tables/tabA_notrend.tex}}}
 \par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize As Table~\ref{tab:core}, without the trend.\end{minipage}
 \end{table}
 \begin{table}[H]\centering\small
 \caption{Core steps with the fuller bootstrap}\label{tab:boot}
-{\setlength{\tabcolsep}{4pt}\input{tables/tabA_boot.tex}}
+{\setlength{\tabcolsep}{4pt}\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{\input{tables/tabA_boot.tex}}}
 \par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize As Table~\ref{tab:core}, 1,000 draws: announcements resampled; daily block re-estimated on a moving-block resample (66-day blocks); monthly data regenerated recursively from the estimated equations with Rademacher-signed residuals and re-estimated. $\rs$ and the FCI weights held fixed.\end{minipage}
 \end{table}
 \end{document}

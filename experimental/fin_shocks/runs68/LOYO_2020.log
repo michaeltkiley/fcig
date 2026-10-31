@@ -1,0 +1,4 @@
+Core cases, NS surprise, 1994+, MODEL; per +1 pp window move in the 2-year; u gap pp, core PCE price level %, IP %; point [90%], 100 draws
+
+shock NS: 252 events
+[u,pi] rate rstar, FCI rstar, trend, 6 lags: u 12:+0.37[+0.19,+0.54] 24:+0.48[+0.31,+0.67] 36:+0.40[+0.26,+0.57]  P 12:-0.33[-0.52,-0.19] 24:-0.68[-0.99,-0.44] 36:-0.85[-1.23,-0.54]  (13s)
