@@ -1,0 +1,23 @@
+shock,spec,variant,u12,lo12,hi12,u24,lo24,hi24,u36,pi12
+NS,"long 1976- (2-year), BASELINE no credit",daily,0.1991,0.0686,0.3311,0.1504,0.0102,0.3032,0.0750,-0.0506
+NS,"long 1976- (2-year), BASELINE no credit",hybrid,0.0284,-0.4475,0.4945,0.0097,-0.4595,0.4050,0.0080,0.1840
+NS,"short 1994- (2-year), BASELINE no credit",daily,0.3375,0.1271,0.5139,0.4701,0.1991,0.6526,0.4808,-0.1187
+NS,"short 1994- (2-year), BASELINE no credit",hybrid,0.1281,-0.3352,0.5443,0.2484,-0.2610,0.6718,0.3065,-0.1014
+NS,"long 1973- (funds rate), BASELINE no credit",daily,0.3308,0.2518,0.4252,0.2767,0.1631,0.4029,0.1547,-0.0810
+NS,"long 1973- (funds rate), BASELINE no credit",hybrid,0.2513,-0.1882,0.6660,0.2432,-0.1687,0.6771,0.1553,0.3219
+NS,long 1976- (2-year) + Baa [contaminated],daily,0.1227,-0.0089,0.2821,0.0103,-0.1588,0.2171,-0.0614,-0.0293
+NS,long 1976- (2-year) + Baa [contaminated],hybrid,0.2224,-0.3073,0.7683,0.1956,-0.3242,0.6683,0.1099,0.3472
+NS,short 1994- (2-year) + Baa [contaminated],daily,0.1923,-0.0512,0.3732,0.2542,0.0105,0.4261,0.2144,-0.0563
+NS,short 1994- (2-year) + Baa [contaminated],hybrid,0.3454,-0.2711,0.9235,0.5789,-0.2903,1.1416,0.5327,-0.1991
+NS-GB,"long 1976- (2-year), BASELINE no credit",daily,0.1910,0.0594,0.3203,0.1444,-0.0321,0.3092,0.0726,-0.0447
+NS-GB,"long 1976- (2-year), BASELINE no credit",hybrid,0.1617,-0.5138,1.0216,0.0836,-0.4375,0.8207,0.0266,-0.0393
+NS-GB,"short 1994- (2-year), BASELINE no credit",daily,0.3263,0.1177,0.5384,0.4603,0.1975,0.6641,0.4743,-0.1164
+NS-GB,"short 1994- (2-year), BASELINE no credit",hybrid,0.3060,-1.2246,1.4742,0.3201,-1.0285,1.2669,0.3013,-0.0668
+NS-GB,"long 1973- (funds rate), BASELINE no credit",daily,0.3211,0.2235,0.4532,0.2724,0.1587,0.4336,0.1540,-0.0608
+NS-GB,"long 1973- (funds rate), BASELINE no credit",hybrid,0.3153,-0.4554,1.0145,0.2166,-0.4185,0.9577,0.1087,0.1624
+NS-GB,long 1976- (2-year) + Baa [contaminated],daily,0.1237,-0.0220,0.2868,0.0144,-0.1632,0.2431,-0.0567,-0.0277
+NS-GB,long 1976- (2-year) + Baa [contaminated],hybrid,0.1769,-0.7906,1.1466,-0.0266,-0.9218,0.7069,-0.0887,0.1957
+NS-GB,short 1994- (2-year) + Baa [contaminated],daily,0.1936,-0.0258,0.3930,0.2612,-0.0507,0.4560,0.2233,-0.0632
+NS-GB,short 1994- (2-year) + Baa [contaminated],hybrid,0.2795,-0.7578,1.6133,0.1704,-1.1394,1.6824,0.0716,-0.0793
+MP1,"long 1973- (funds rate), BASELINE no credit",daily,0.1080,0.0132,0.1888,0.1031,0.0261,0.2102,0.0630,0.0319
+MP1,"long 1973- (funds rate), BASELINE no credit",hybrid,-0.0302,-0.6686,0.5484,0.0631,-0.5013,0.6984,0.0779,0.6309

@@ -1,0 +1,9 @@
+Response of the unemployment gap to a PERSISTENT-IMPACT shock to the index only (+1 index unit on impact), by model
+   monthly VAR(12), 1976-06-:      u6 +0.428  u12 +0.677  u24 +0.451
+   (same, policy rate only +1:     u6 -0.126  u12 -0.166  u24 -0.050)
+   route B (daily VAR(1) state space): u6 +0.037  u12 +0.069  u24 +0.123
+   (route B, policy only +1:        u6 -0.016  u12 -0.032  u24 -0.063)
+   route A (daily HAR + monthly macro rows): u6 +0.229  u12 +0.346  u24 +0.254
+
+Monthly implied one-month persistence of the index: VAR coefficient on own lag 1 = 1.282; route B A^21[idx,idx] = 1.002
+Route B implied monthly effect of the index on unemployment after 12 months for a SUSTAINED unit index: sum over A^k[2,1] = 9.305

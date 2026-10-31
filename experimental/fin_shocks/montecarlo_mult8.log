@@ -1,0 +1,12 @@
+DGP link multiplier 8.0; max |eig| of A 0.99951
+truth (monthly-average unemployment response, per +1 pp): u6 +0.399  u12 +0.695  u24 +0.898  u36 +0.631
+rep 1/4 done (58s): u12 EVENT +0.284 START +0.612 A +0.606 B +0.743
+rep 2/4 done (102s): u12 EVENT +0.569 START +1.225 A +0.881 B +0.714
+rep 3/4 done (226s): u12 EVENT +0.390 START +0.840 A +0.794 B +0.744
+rep 4/4 done (280s): u12 EVENT +0.297 START +0.640 A +0.485 B +0.534
+
+TRUE u12 +0.695, u24 +0.898, u36 +0.631; mean over 4 replications (bias, RMSE):
+   EVENT  u12: +0.385 (bias -0.310, rmse 0.330)  u24: +0.458 (bias -0.440, rmse 0.452)  u36: +0.266 (bias -0.366, rmse 0.367)
+   START  u12: +0.829 (bias +0.134, rmse 0.279)  u24: +0.986 (bias +0.088, rmse 0.241)  u36: +0.572 (bias -0.060, rmse 0.098)
+   A      u12: +0.692 (bias -0.003, rmse 0.155)  u24: +0.841 (bias -0.057, rmse 0.131)  u36: +0.539 (bias -0.092, rmse 0.150)
+   B      u12: +0.684 (bias -0.012, rmse 0.088)  u24: +0.871 (bias -0.027, rmse 0.143)  u36: +0.608 (bias -0.023, rmse 0.178)

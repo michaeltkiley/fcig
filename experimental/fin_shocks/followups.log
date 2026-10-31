@@ -1,0 +1,27 @@
+(1) Contamination test: unemployment response at 12 and 24 months, point estimates (VAR-bootstrap 90% interval for 12 months)
+
+long 1976- (2-year) + Baa:  b entries (u, pi, policy, index, Baa)
+   W (windows, macro 0)         b = [+0.00, +0.00, +0.43, +0.63, +0.01]   u12 +0.397 [+0.246,+0.485]   u24 +0.293
+   P (monthly proxy)            b = [-0.05, -1.29, +0.43, +0.43, -0.22]   u12 +0.047 [-0.091,+0.159]   u24 -0.055
+   P0 (proxy, macro 0)          b = [+0.00, +0.00, +0.43, +0.43, -0.22]   u12 +0.108 [+0.044,+0.195]   u24 +0.044
+   WM (windows + proxy macro)   b = [-0.05, -1.29, +0.43, +0.63, +0.01]   u12 +0.336 [+0.194,+0.446]   u24 +0.194
+short 1994- (2-year) + Baa:  b entries (u, pi, policy, index, Baa)
+   W (windows, macro 0)         b = [+0.00, +0.00, +0.43, +0.63, +0.01]   u12 +0.275 [+0.057,+0.405]   u24 +0.198
+   P (monthly proxy)            b = [+0.00, -1.12, +0.43, +0.30, -0.12]   u12 -0.033 [-0.156,+0.079]   u24 -0.119
+   P0 (proxy, macro 0)          b = [+0.00, +0.00, +0.43, +0.30, -0.12]   u12 -0.039 [-0.165,+0.063]   u24 -0.090
+   WM (windows + proxy macro)   b = [+0.00, -1.12, +0.43, +0.63, +0.01]   u12 +0.282 [+0.109,+0.406]   u24 +0.169
+
+(2) EBP and NFCI added to the long-sample VAR (1976-06-), EVENT timing; NFCI with zero impact
+
+   monthly slope of the EBP change on the Baa-10y change (1990-): 0.66
+   long + Baa + EBP     b = [+0.00, +0.00, +0.43, +0.63, +0.01, +0.01]   u12 +0.322 [+0.192,+0.388]   u24 +0.178
+   short + Baa + EBP    b = [+0.00, +0.00, +0.43, +0.63, +0.01, +0.01]   u12 +0.242 [+0.072,+0.355]   u24 +0.184
+   long + NFCI          b = [+0.00, +0.00, +0.43, +0.63, +0.01, +0.00]   u12 +0.245 [+0.143,+0.314]   u24 +0.133
+   short + NFCI         b = [+0.00, +0.00, +0.43, +0.63, +0.01, +0.00]   u12 +0.085 [-0.104,+0.272]   u24 -0.181
+
+(3) Baseline (windows, macro 0, EVENT timing), 150 draws over events and VAR residuals
+
+   long 1976- (2-year) + Baa      u12 +0.397 [+0.204,+0.562]  u24 +0.293 [+0.080,+0.419]  u36 +0.084  P(u12>0) 1.00
+   short 1994- (2-year) + Baa     u12 +0.275 [+0.044,+0.441]  u24 +0.198 [-0.063,+0.368]  u36 +0.129  P(u12>0) 0.98
+   long 1973- (funds rate)        u12 +0.388 [+0.218,+0.579]  u24 +0.254 [+0.041,+0.391]  u36 +0.050  P(u12>0) 1.00
+   short 1994- (2-year, no Baa)   u12 +0.266 [+0.047,+0.443]  u24 +0.202 [-0.024,+0.385]  u36 +0.143  P(u12>0) 0.99

@@ -1,0 +1,14 @@
+policy y2; days 14045; financial obs 12600/9213; macro obs 635; start -LL -13196.3; one eval 9483 ms
+round 0: -LL -25053.41 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 17 iterations, 46s
+round 1: -LL -25078.45 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 46 iterations, 94s
+round 2: -LL -25081.92 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 63 iterations, 159s
+round 3: -LL -25081.92 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 34 iterations, 217s
+round 4: -LL -25081.92 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 5 iterations, 232s
+round 5: -LL -25081.92 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 6 iterations, 244s
+converged True, -LL -25081.9, iterations 6, time 244s
+A =
+ [[ 9.988e-01  1.000e-04 -1.100e-03  2.300e-03]
+ [-9.000e-04  9.998e-01 -1.800e-03  1.700e-03]
+ [-1.000e-04  5.000e-04  9.991e-01 -4.000e-04]
+ [-2.600e-03  3.260e-02 -1.900e-02  9.216e-01]] 
+max |eig| of A: 0.99948  half-lives (days) of eigenvalues: [   8. 1322. 1322. 1275.]

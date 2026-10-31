@@ -1,0 +1,11 @@
+truth (monthly-average unemployment response, per +1 pp): u6 +0.021  u12 +0.037  u24 +0.060  u36 +0.072
+rep 1/4 done (85s): u12 EVENT -0.015 START -0.032 A -0.002 B +0.077
+rep 2/4 done (156s): u12 EVENT +0.085 START +0.184 A +0.134 B +0.049
+rep 3/4 done (206s): u12 EVENT +0.061 START +0.132 A +0.122 B -0.020
+rep 4/4 done (289s): u12 EVENT -0.059 START -0.127 A -0.120 B +0.075
+
+TRUE u12 +0.037, u24 +0.060, u36 +0.072; mean over 4 replications (bias, RMSE):
+   EVENT  u12: +0.018 (bias -0.019, rmse 0.061)  u24: +0.024 (bias -0.036, rmse 0.039)  u36: +0.020 (bias -0.051, rmse 0.053)
+   START  u12: +0.039 (bias +0.002, rmse 0.125)  u24: +0.052 (bias -0.008, rmse 0.034)  u36: +0.044 (bias -0.028, rmse 0.041)
+   A      u12: +0.034 (bias -0.004, rmse 0.103)  u24: +0.042 (bias -0.018, rmse 0.040)  u36: +0.051 (bias -0.021, rmse 0.022)
+   B      u12: +0.045 (bias +0.008, rmse 0.040)  u24: +0.074 (bias +0.014, rmse 0.067)  u36: +0.092 (bias +0.020, rmse 0.083)

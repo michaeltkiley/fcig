@@ -1,0 +1,12 @@
+policy ff; days 14045; financial obs 12600/9213; macro obs 635; start -LL 7396.0; one eval 459 ms
+round 0: -LL -8680.65 (STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT), 300 iterations, 372s
+round 1: -LL -8681.35 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 105 iterations, 484s
+round 2: -LL -8681.35 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 5 iterations, 500s
+round 3: -LL -8681.35 (CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH), 1 iterations, 515s
+converged True, -LL -8681.4, iterations 1, time 515s
+A =
+ [[ 9.9500e-01 -7.8000e-03  1.5000e-03  3.2200e-02]
+ [-1.1000e-03  1.0002e+00 -2.2000e-03  5.0000e-04]
+ [ 2.0000e-04  5.0000e-04  9.9920e-01 -1.3000e-03]
+ [ 4.1100e-02  1.2620e-01 -6.0200e-02  5.5290e-01]] 
+max |eig| of A: 0.99932  half-lives (days) of eigenvalues: [1.000e+00 9.140e+02 9.140e+02 1.021e+03]

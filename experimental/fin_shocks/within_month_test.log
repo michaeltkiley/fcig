@@ -1,0 +1,8 @@
+Within-month timing weights: delta-hat (grid -1..1), F test of delta = 0, R2 at delta = 0 and delta-hat
+
+   long 1977- (2-year)        unemployment gap  T=570  delta-hat +0.00  F(delta=0)  0.00 (5% critical 3.9)  R2 0.9912 -> 0.9912
+   long 1977- (2-year)        core PCE          T=570  delta-hat +1.00  F(delta=0)  4.86 (5% critical 3.9)  R2 0.7045 -> 0.7073
+   short 1994- (2-year)       unemployment gap  T=382  delta-hat +1.00  F(delta=0)  2.11 (5% critical 3.9)  R2 0.9936 -> 0.9937
+   short 1994- (2-year)       core PCE          T=382  delta-hat +1.00  F(delta=0)  4.62 (5% critical 3.9)  R2 0.4351 -> 0.4428
+   long 1974- (funds rate)    unemployment gap  T=610  delta-hat -0.50  F(delta=0)  0.66 (5% critical 3.9)  R2 0.9900 -> 0.9900
+   long 1974- (funds rate)    core PCE          T=610  delta-hat +1.00  F(delta=0)  7.92 (5% critical 3.9)  R2 0.7259 -> 0.7297

@@ -1,0 +1,30 @@
+Route A: unemployment-gap response (pp) per +1 pp rise in the scaling variable on the event day; median [90% interval]; daily block HAR, macro equations from the monthly VAR
+
+=== shock NS: 252 events; event-position bins (day, month length, weight): (1,21,0.15), (6,21,0.13), (10,21,0.20), (13,21,0.21), (18,21,0.21), (20,22,0.10)
+   long 1976- (2-year), BASELINE no credit DAILY : u12 +0.199 [+0.069,+0.331]  u24 +0.150 [+0.010,+0.303]  u36 +0.075  | core PCE 12m -0.05  | financial monthly avg months 0,1,2: policy +0.44,+0.96,+1.02  index +0.49,+1.03,+0.96
+                                  HYBRID: u12 +0.028 [-0.448,+0.495]  u24 +0.010 [-0.460,+0.405]  u36 +0.008
+   short 1994- (2-year), BASELINE no credit DAILY : u12 +0.338 [+0.127,+0.514]  u24 +0.470 [+0.199,+0.653]  u36 +0.481  | core PCE 12m -0.12  | financial monthly avg months 0,1,2: policy +0.44,+0.96,+1.02  index +0.49,+1.03,+0.96
+                                  HYBRID: u12 +0.128 [-0.335,+0.544]  u24 +0.248 [-0.261,+0.672]  u36 +0.307
+   long 1973- (funds rate), BASELINE no credit DAILY : u12 +0.331 [+0.252,+0.425]  u24 +0.277 [+0.163,+0.403]  u36 +0.155  | core PCE 12m -0.08  | financial monthly avg months 0,1,2: policy +0.12,+0.22,+0.31  index +0.46,+0.92,+0.81
+                                  HYBRID: u12 +0.251 [-0.188,+0.666]  u24 +0.243 [-0.169,+0.677]  u36 +0.155
+   long 1976- (2-year) + Baa [contaminated] DAILY : u12 +0.123 [-0.009,+0.282]  u24 +0.010 [-0.159,+0.217]  u36 -0.061  | core PCE 12m -0.03  | financial monthly avg months 0,1,2: policy +0.44,+0.96,+1.02  index +0.48,+1.01,+0.95
+                                  HYBRID: u12 +0.222 [-0.307,+0.768]  u24 +0.196 [-0.324,+0.668]  u36 +0.110
+   short 1994- (2-year) + Baa [contaminated] DAILY : u12 +0.192 [-0.051,+0.373]  u24 +0.254 [+0.010,+0.426]  u36 +0.214  | core PCE 12m -0.06  | financial monthly avg months 0,1,2: policy +0.44,+0.96,+1.01  index +0.48,+1.01,+0.95
+                                  HYBRID: u12 +0.345 [-0.271,+0.924]  u24 +0.579 [-0.290,+1.142]  u36 +0.533
+
+=== shock NS-GB: 205 events; event-position bins (day, month length, weight): (1,21,0.16), (6,21,0.13), (10,21,0.20), (13,21,0.20), (18,21,0.21), (20,22,0.10)
+   long 1976- (2-year), BASELINE no credit DAILY : u12 +0.191 [+0.059,+0.320]  u24 +0.144 [-0.032,+0.309]  u36 +0.073  | core PCE 12m -0.04  | financial monthly avg months 0,1,2: policy +0.44,+0.96,+1.02  index +0.48,+1.01,+0.95
+                                  HYBRID: u12 +0.162 [-0.514,+1.022]  u24 +0.084 [-0.438,+0.821]  u36 +0.027
+   short 1994- (2-year), BASELINE no credit DAILY : u12 +0.326 [+0.118,+0.538]  u24 +0.460 [+0.197,+0.664]  u36 +0.474  | core PCE 12m -0.12  | financial monthly avg months 0,1,2: policy +0.44,+0.96,+1.02  index +0.48,+1.01,+0.95
+                                  HYBRID: u12 +0.306 [-1.225,+1.474]  u24 +0.320 [-1.028,+1.267]  u36 +0.301
+   long 1973- (funds rate), BASELINE no credit DAILY : u12 +0.321 [+0.223,+0.453]  u24 +0.272 [+0.159,+0.434]  u36 +0.154  | core PCE 12m -0.06  | financial monthly avg months 0,1,2: policy +0.15,+0.28,+0.39  index +0.45,+0.89,+0.78
+                                  HYBRID: u12 +0.315 [-0.455,+1.014]  u24 +0.217 [-0.419,+0.958]  u36 +0.109
+   long 1976- (2-year) + Baa [contaminated] DAILY : u12 +0.124 [-0.022,+0.287]  u24 +0.014 [-0.163,+0.243]  u36 -0.057  | core PCE 12m -0.03  | financial monthly avg months 0,1,2: policy +0.44,+0.96,+1.02  index +0.48,+1.00,+0.94
+                                  HYBRID: u12 +0.177 [-0.791,+1.147]  u24 -0.027 [-0.922,+0.707]  u36 -0.089
+   short 1994- (2-year) + Baa [contaminated] DAILY : u12 +0.194 [-0.026,+0.393]  u24 +0.261 [-0.051,+0.456]  u36 +0.223  | core PCE 12m -0.06  | financial monthly avg months 0,1,2: policy +0.44,+0.96,+1.02  index +0.48,+1.00,+0.93
+                                  HYBRID: u12 +0.279 [-0.758,+1.613]  u24 +0.170 [-1.139,+1.682]  u36 +0.072
+
+=== shock MP1: 252 events; event-position bins (day, month length, weight): (1,21,0.15), (6,21,0.13), (10,21,0.20), (13,21,0.21), (18,21,0.21), (20,22,0.10)
+   long 1973- (funds rate), BASELINE no credit DAILY : u12 +0.108 [+0.013,+0.189]  u24 +0.103 [+0.026,+0.210]  u36 +0.063  | core PCE 12m +0.03  | financial monthly avg months 0,1,2: policy +0.16,+0.29,+0.39  index +0.15,+0.30,+0.26
+                                  HYBRID: u12 -0.030 [-0.669,+0.548]  u24 +0.063 [-0.501,+0.698]  u36 +0.078
+
