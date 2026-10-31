@@ -13,11 +13,15 @@ def _load(irf_files):
         smp = "drop2021" if "drop2021" in fn else ("end2019" if "end2019" in fn else "")
         z = pd.read_csv(fn).assign(sample=smp)
         if "trend" not in z: z["trend"] = 0
+        if "shock" not in z: z["shock"] = "NS"
+        if "bootd" not in z: z["bootd"] = 0
         out.append(z)
     z = pd.concat(out); z["fci"] = z.fci.astype(str); z["trend"] = z.trend.fillna(0).astype(int)
-    keys = ["macro", "rate", "fci", "trend", "sample", "lags", "var"] + (["h"] if irf_files else [])
+    z["shock"] = z.shock.fillna("NS"); z["bootd"] = z.bootd.fillna(0).astype(int)
+    keys = ["macro", "rate", "fci", "trend", "sample", "shock", "bootd", "lags", "var"] + (["h"] if irf_files else [])
     return z.drop_duplicates(keys, keep="last")
-d = _load(False); irf = _load(True)
+D_ALL = _load(False); IRF_ALL = _load(True)
+d = D_ALL[(D_ALL.shock == "NS") & (D_ALL.bootd == 0)]; irf = IRF_ALL[(IRF_ALL.shock == "NS") & (IRF_ALL.bootd == 0)]
 TR = 1   # FS-A24: quadratic time trend in every monthly equation is the baseline assumption for all results
 os.makedirs(os.path.join(HERE, "tables"), exist_ok=True); os.makedirs(os.path.join(HERE, "figures"), exist_ok=True)
 d.to_csv(os.path.join(HERE, "tables", "all_results.csv"), index=False, float_format="%.4f")
@@ -61,6 +65,17 @@ SMP = [("Baseline sample", "rstar", "1", TR, "", "$r^*$-gap (LW)"), ("Also drop 
        (None,), ("Baseline sample", "rstar", "0", TR, "", "none"), ("Also drop 2021", "rstar", "0", TR, "drop2021", "none"), ("End in 2019", "rstar", "0", TR, "end2019", "none")]
 for var, nm in (("u", "tab5_smp_u"), ("P", "tab5_smp_p")): table(SMP, var, "u,pi", nm)
 
+
+# Table 7: fuller bootstrap (daily block re-estimated in each draw, 1000 draws); Table 8: alternative shocks (FS-A25)
+def with_data(dd, fn):
+    global d
+    keep = d; d = dd; fn(); d = keep
+CORE2 = [r for r in CORE]
+if ((D_ALL.bootd == 1)).any():
+    with_data(D_ALL[(D_ALL.shock == "NS") & (D_ALL.bootd == 1)], lambda: [table(CORE2, v, "u,pi", nm) for v, nm in (("u", "tab7_boot_u"), ("P", "tab7_boot_p"))])
+for sk, tag in (("BS-ORTH", "bs"), ("NS-JK", "jk")):
+    if (D_ALL.shock == sk).any():
+        with_data(D_ALL[(D_ALL.shock == sk) & (D_ALL.bootd == 0)], lambda: [table(CORE2, v, "u,pi", nm) for v, nm in (("u", f"tab8_{tag}_u"), ("P", f"tab8_{tag}_p"))])
 
 # Figure 1: the four key cases, 6 lags, with 68% and 90% bands; Bauer-Swanson benchmark (read from their Fig. 8) as markers
 BS = {"u": ([10, 12, 24, 36], [0.22, 0.19, 0.17, 0.15]), "P": ([12, 24, 36], [-0.36, -0.48, -0.6])}

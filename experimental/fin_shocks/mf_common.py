@@ -52,8 +52,14 @@ def _gbrow(date):
     r["UNEMP_L0"] = _GB["UNEMP"][v].get(q, np.nan); return r
 _R = pd.DataFrame([_gbrow(x) or {} for x in EV.Date]); _ok = _R.notna().all(axis=1).values & (EV.Date <= "2020-12-31").values
 NS_GB = pd.Series(np.nan, index=EV.index); NS_GB[_ok] = sm.OLS(EV.ns[_ok].values, sm.add_constant(_R[_ok].values)).fit().resid
-SHOCKS = {"NS": EV.ns, "MP1": EV.MP1, "NS-GB": NS_GB}
-SCALE = {"NS": "y2", "MP1": "ff", "NS-GB": "y2"}
+# Alternative shocks (FS-A25): Bauer-Swanson (2023) orthogonalized surprise (MPS_ORTH, FOMC announcements 1988-2019, from their posted data,
+# data/bauer_swanson_mps.csv), matched to our events by date; Jarocinski-Karadi (2020) "poor man's" sign restriction applied to NS: the event
+# counts as a monetary policy shock only when the 2-year and the S&P 500 move in opposite directions in the window (other events dropped).
+_bs = pd.read_csv(HERE.parents[0] / "fin_shocks/data/bauer_swanson_mps.csv", parse_dates=["Date"]).groupby("Date").MPS_ORTH.sum()
+BS_ORTH = pd.Series(EV.d.map(_bs).values, index=EV.index)
+NS_JK = EV.ns.where(np.sign(EV.UST2Y) * np.sign(EV.SP500) < 0)
+SHOCKS = {"NS": EV.ns, "MP1": EV.MP1, "NS-GB": NS_GB, "BS-ORTH": BS_ORTH, "NS-JK": NS_JK}
+SCALE = {"NS": "y2", "MP1": "ff", "NS-GB": "y2", "BS-ORTH": "y2", "NS-JK": "y2"}
 
 # ---------------------------------------------------------------- window local projections
 DL = {v: np.full((len(EV), HZ + 1), np.nan) for v in VARS}

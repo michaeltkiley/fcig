@@ -56,11 +56,22 @@ def daily_frame(form, fci):
     ff = form if fci == 1 else fci
     return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[ff]} if fci else {})})
 
+SHOCK = os.environ.get("SHOCK", "NS")          # FS-A25: alternative shocks "BS-ORTH", "NS-JK"
+BOOT_DAILY = os.environ.get("BOOT_DAILY", "") == "1"   # FS-A25: re-estimate the daily block in each draw (moving-block bootstrap of daily rows, 66-day blocks)
+_HAR_DATA = {}
+
 def har_block(form, fci, mvars):
     D = daily_frame(form, fci).loc["1990-01-02":("2019-12-31" if SAMPLE == "end2019" else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
     ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1)
+    _HAR_DATA[(form, fci, tuple(mvars))] = (X[ok], Y[ok])
     return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
+
+def har_boot(form, fci, mvars, blk=66):
+    """Daily block re-estimated on a moving-block resample of its (regressor, outcome) rows."""
+    X, Y = _HAR_DATA[(form, fci, tuple(mvars))]; n = len(Y); starts = rng.integers(0, n - blk, int(np.ceil(n / blk)))
+    ii = np.concatenate([np.arange(s0, s0 + blk) for s0 in starts])[:n]
+    return np.linalg.lstsq(X[ii], Y[ii], rcond=None)[0]
 
 def macro_data(form, fci, mvars, L):
     FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean(); MMv = MAC[mvars]; X, Y = [], []
@@ -77,7 +88,7 @@ def macro_data(form, fci, mvars, L):
     return np.array(X), np.array(Y)
 
 def irf(Bd, C, K, nd, L, idx, pos, fci):
-    wr = win_response("NS", idx); b = np.array([wr["y2"]] + ([wr["idx"]] if fci else []))
+    wr = win_response(SHOCK, idx); b = np.array([wr["y2"]] + ([wr["idx"]] if fci else []))
     out = [(w, MB.simulate(Bd, C, K, nd, L, b, k0, n0)[0]) for k0, n0, w in pos]
     return sum(w * m for w, m in out)
 
@@ -89,7 +100,8 @@ if __name__ == "__main__":
     if os.environ.get("MACRO_ONLY"): MAC_SETS = {k: v for k, v in MAC_SETS.items() if k == os.environ["MACRO_ONLY"]}
     rows, irfrows = [], []; t0 = time.time()
     print("Core cases, NS surprise, 1994+, MODEL; per +1 pp window move in the 2-year; u gap pp, core PCE price level %, IP %; point [90%],", B, "draws\n")
-    idx0 = event_index("NS"); _, _, idx0 = slopes(idx0, "NS"); pos0 = positions(idx0)
+    idx0 = event_index(SHOCK); _, _, idx0 = slopes(idx0, SHOCK); pos0 = positions(idx0)
+    print(f"shock {SHOCK}: {len(idx0)} events{'; daily block re-estimated in each draw' if BOOT_DAILY else ''}", flush=True)
     bidx = [rng.choice(idx0, size=len(idx0), replace=True) for _ in range(B)]; bpos = [positions(ib) for ib in bidx]
     for mlab, mvars in MAC_SETS.items():
         combos = [s_.split("-") for s_ in SEL] if SEL else [(f, c) for f in ("nom", "real", "rstar") for c in ("0", "1")]
@@ -101,15 +113,15 @@ if __name__ == "__main__":
                     def tr(m):
                         z = m.copy(); z[:, 1] = np.cumsum(z[:, 1]) / 12; return z
                     s0 = tr(irf(Bd, C0, K, nd, L, idx0, pos0, fci))
-                    sd = np.array([tr(irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci)) for ib, pb in zip(bidx, bpos)])
+                    sd = np.array([tr(irf(har_boot(form, fci, mvars) if BOOT_DAILY else Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci)) for ib, pb in zip(bidx, bpos)])
                     lo, hi = np.percentile(sd, [5, 95], axis=0); lo68, hi68 = np.percentile(sd, [16, 84], axis=0)
                     names = ["u", "P"] + (["ip"] if "ip" in mvars else [])
                     case = f"[{mlab}] rate {form}, {'FCI ' + (form if fci == 1 else fci) if fci else 'no FCI'}{', trend' if TREND else ''}, {L} lags"
                     print(f"{case:40s}: " + "  ".join(f"{n} " + " ".join(f"{h}:{s0[h, j]:+.2f}[{lo[h, j]:+.2f},{hi[h, j]:+.2f}]" for h in (12, 24, 36)) for j, n in enumerate(names)) + f"  ({time.time() - t0:.0f}s)", flush=True)
                     for j, n in enumerate(names):
-                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
+                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), shock=SHOCK, bootd=int(BOOT_DAILY), draws=B, lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
                                          **{f"lo68_{h}": lo68[h, j] for h in (12, 24, 36)}, **{f"hi68_{h}": hi68[h, j] for h in (12, 24, 36)}))
-                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
-    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_" + SAMPLE if SAMPLE else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "")
+                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), shock=SHOCK, bootd=int(BOOT_DAILY), draws=B, lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
+    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_" + SAMPLE if SAMPLE else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "") + ("" if SHOCK == "NS" else "_" + SHOCK) + ("_bootd" if BOOT_DAILY else "")
     pd.DataFrame(rows).to_csv(f"midas_core{suf}.csv", index=False, float_format="%.4f")
     pd.concat(irfrows).to_csv(f"midas_core{suf}_irf.csv", index=False, float_format="%.4f")
