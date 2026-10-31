@@ -1,0 +1,22 @@
+MIDAS-VAR: unemployment-gap response (pp) per +1 pp event-day rise in the scaling variable; median [90% interval]; MODEL = daily block dynamics; PATH = direct daily response through the end of month t+1, then the model
+
+=== long 1977- (2-year): macro-equation sample 1977-06..2026-09 (570 months); u-equation: beta policy +0.009, beta index -0.010; MIDAS theta policy +4.1, index -8.0; share of weight on the most recent 63 days: policy 0.65, index 0.00 (equal weights = 0.25); R2 u 0.990
+   NS     MODEL: u12 +0.102 [-0.036,+0.123]  u24 +0.123 [-0.065,+0.160]  u36 +0.118  P(u12>0) 0.70  | core PCE 12m +0.03   (11s)
+   NS     PATH : u12 +0.114 [+0.008,+0.183]  u24 +0.118 [-0.359,+0.249]  u36 +0.094  P(u12>0) 0.95  | core PCE 12m +0.04   (11s)
+   NS-GB  MODEL: u12 +0.103 [-0.064,+0.166]  u24 +0.129 [-0.115,+0.261]  u36 +0.130  P(u12>0) 0.75  | core PCE 12m +0.03   (19s)
+   NS-GB  PATH : u12 +0.045 [-0.228,+0.112]  u24 -0.152 [-1.245,+0.136]  u36 -0.376  P(u12>0) 0.30  | core PCE 12m +0.08   (19s)
+
+=== short 1994- (2-year): macro-equation sample 1994-02..2026-09 (382 months); u-equation: beta policy +0.006, beta index +0.019; MIDAS theta policy -8.0, index +8.0; share of weight on the most recent 63 days: policy 0.00, index 0.86 (equal weights = 0.25); R2 u 0.992
+   NS     MODEL: u12 +0.216 [+0.103,+0.422]  u24 +0.495 [+0.332,+0.801]  u36 +0.595  P(u12>0) 1.00  | core PCE 12m -0.13   (26s)
+   NS     PATH : u12 +0.290 [+0.025,+0.506]  u24 +0.648 [+0.088,+1.298]  u36 +0.775  P(u12>0) 1.00  | core PCE 12m -0.17   (26s)
+   NS-GB  MODEL: u12 +0.211 [+0.088,+0.345]  u24 +0.485 [+0.346,+0.769]  u36 +0.583  P(u12>0) 1.00  | core PCE 12m -0.13   (33s)
+   NS-GB  PATH : u12 +0.409 [+0.078,+0.892]  u24 +0.847 [+0.159,+1.852]  u36 +1.002  P(u12>0) 1.00  | core PCE 12m -0.21   (33s)
+
+=== long 1974- (funds rate): macro-equation sample 1974-02..2026-09 (610 months); u-equation: beta policy +0.010, beta index -0.012; MIDAS theta policy +4.1, index -8.0; share of weight on the most recent 63 days: policy 0.65, index 0.00 (equal weights = 0.25); R2 u 0.988
+   NS     MODEL: u12 +0.020 [-0.128,+0.033]  u24 -0.090 [-0.373,-0.064]  u36 -0.200  P(u12>0) 0.35  | core PCE 12m -0.01   (43s)
+   NS     PATH : u12 +0.192 [-0.116,+0.389]  u24 +0.369 [-0.340,+0.994]  u36 +0.534  P(u12>0) 0.85  | core PCE 12m +0.09   (43s)
+   NS-GB  MODEL: u12 +0.033 [-0.107,+0.039]  u24 -0.049 [-0.302,-0.001]  u36 -0.132  P(u12>0) 0.65  | core PCE 12m -0.00   (52s)
+   NS-GB  PATH : u12 +0.203 [-0.182,+0.417]  u24 +0.315 [-0.744,+1.332]  u36 +0.414  P(u12>0) 0.60  | core PCE 12m +0.08   (52s)
+   MP1    MODEL: u12 +0.050 [+0.014,+0.089]  u24 +0.096 [+0.002,+0.182]  u36 +0.139  P(u12>0) 1.00  | core PCE 12m +0.02   (61s)
+   MP1    PATH : u12 +0.426 [+0.136,+0.771]  u24 +1.143 [+0.388,+1.934]  u36 +1.819  P(u12>0) 1.00  | core PCE 12m +0.24   (61s)
+
