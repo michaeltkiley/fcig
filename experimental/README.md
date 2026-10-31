@@ -17,4 +17,4 @@ Entry point: `PROJECT_MEMORY.md` (section 9 = where we are). Glossary of index n
 | `weighting_note/` | LaTeX weighting note and review | current |
 | `note_draft/` | Draft of note section 3 (market index) | full draft is in `../fci_note/paper/` |
 | `mp_var_fci/` | Monetary policy shocks in a VAR with the market index (Cholesky, Nakamura-Steinsson, Bauer-Swanson, Greenbook purge, Bayesian proxy-SVAR). Start with `SUMMARY_REPORT.md`; decisions in `MP_QA.md` | **closed 31 Oct 2026** (negative result: credit, not the index, fixes post-1994 identification) |
-| `fin_shocks/` | Financial shocks and activity separate from monetary policy; `PROPOSALS.md` | mixed-frequency VAR done, `MF_REPORT.md` (31 Oct 2026); P1-P4 pending |
+| `fin_shocks/` | Financial shocks and activity separate from monetary policy; `PROPOSALS.md` | window-identified MIDAS-VAR note `MF_REPORT.md` (comparison with Bauer-Swanson and others, 1 Nov 2026; history in `MF_DEVELOPMENT.md`); P1-P4 pending |
