@@ -84,6 +84,7 @@ BOOT_REC = os.environ.get("BOOT_REC", "") == "1"      # FS-A26: recursive-design
 LAGS = tuple(int(x) for x in os.environ.get("LAGS", "3,6,12").split(","))
 TREND = False   # robustness (FS-A19): quadratic time trend (t, t^2; t in decades from 2010) in every monthly equation
 MAC = MB.MAC
+MAC["ebp"] = MM0.ebp          # FS-A32: monthly excess bond premium (Favara et al.), pp; a third monthly variable treated like u and inflation
 
 # Long-sample dynamics (FS-A29): MSTART = first month of the monthly equations (default 1994-02, the baseline). Shocks, events, daily HAR block
 # (1990-) are unchanged. Before the daily data exist, the monthly average of each financial variable is taken from monthly series:
@@ -187,7 +188,7 @@ if __name__ == "__main__":
     B = int(sys.argv[1]) if len(sys.argv) > 1 else 200
     SEL = sys.argv[2].split(",") if len(sys.argv) > 2 else None        # e.g. "nom-0,nom-1" (rate form - fci: 0, 1 = same form, or an FCI form name)
     TREND = len(sys.argv) > 3 and sys.argv[3] == "trend"
-    MAC_SETS = {"u,pi": ["u", "pi"], "u,pi,ip": ["u", "pi", "ip"]}
+    MAC_SETS = {"u,pi": ["u", "pi"], "u,pi,ip": ["u", "pi", "ip"], "u,pi,ebp": ["u", "pi", "ebp"]}
     if os.environ.get("MACRO_ONLY"): MAC_SETS = {k: v for k, v in MAC_SETS.items() if k == os.environ["MACRO_ONLY"]}
     rows, irfrows = [], []; t0 = time.time()
     print("Core cases, NS surprise, 1994+, MODEL; per +1 pp window move in the 2-year; u gap pp, core PCE price level %, IP %; point [90%],", B, "draws\n")
@@ -213,7 +214,7 @@ if __name__ == "__main__":
                     lo, hi = np.percentile(sd, [5, 95], axis=0); lo68, hi68 = np.percentile(sd, [16, 84], axis=0)
                     if fci in ("baa", "cmp"):
                         fp = irf(Bd, C0, K, nd, L, idx0, pos0, fci, fin=True); print(f"      monthly-average financial responses at h=0,6,12,24 ({list(daily_frame(form, fci).columns)}): " + "; ".join(f"h{h}: " + " ".join(f"{v:+.2f}" for v in fp[h]) for h in (0, 6, 12, 24)), flush=True)
-                    names = ["u", "P"] + (["ip"] if "ip" in mvars else [])
+                    names = ["P" if v == "pi" else v for v in mvars]
                     case = f"[{mlab}] rate {form}, {'FCI ' + (form if fci == 1 else fci) if fci else 'no FCI'}{', trend' if TREND else ''}, {L} lags"
                     print(f"{case:40s}: " + "  ".join(f"{n} " + " ".join(f"{h}:{s0[h, j]:+.2f}[{lo[h, j]:+.2f},{hi[h, j]:+.2f}]" for h in (12, 24, 36)) for j, n in enumerate(names)) + f"  ({time.time() - t0:.0f}s)", flush=True)
                     for j, n in enumerate(names):

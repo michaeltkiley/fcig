@@ -83,6 +83,14 @@ def cc_rows(var):
         out += [(st, "FCI (baseline)", dict(rate=r, fci="1", var=var)), ("", "FCI and Baa spread", dict(rate=r, fci="baa", var=var)), ("", "Components instead of FCI", dict(rate=r, fci="cmp", var=var))]
     return out
 ptable([("A. Unemployment gap (percentage points)", cc_rows("u")), ("B. Core PCE price level (percent)", cc_rows("P"))], "tabA_cc", h1="Step", h2="Financial block")
+# FS-A32: monthly excess bond premium added to the monthly block (third variable, treated like u and inflation)
+def ebp_rows(var):
+    out = []
+    for st, r in (("Nominal", "nom"), ("Real", "real"), ("$r^*$-gap", "rstar")):
+        out += [(st, "No FCI", dict(rate=r, fci="0", var=var)), ("", "No FCI, with EBP", dict(rate=r, fci="0", var=var, macro="u,pi,ebp")),
+                ("", "FCI", dict(rate=r, fci="1", var=var)), ("", "FCI, with EBP", dict(rate=r, fci="1", var=var, macro="u,pi,ebp"))]
+    return out
+ptable([("A. Unemployment gap (percentage points)", ebp_rows("u")), ("B. Core PCE price level (percent)", ebp_rows("P")), ("C. Excess bond premium (percentage points)", [(st if k == 0 else "", lab, dict(rate=r, fci=f, var="ebp", macro="u,pi,ebp")) for st, r in (("Nominal", "nom"), ("Real", "real"), ("$r^*$-gap", "rstar")) for k, (lab, f) in enumerate((("No FCI", "0"), ("FCI", "1")))])], "tabA_ebp", h1="Step", h2="Model")
 # F tests of the proportional-weights restriction (prop_test.py): p-values, FCI versus its three components
 _pt = pd.read_csv(os.path.join(UP, "prop_test.csv"))
 _o = ["\\begin{tabular}{llccc}", "\\toprule", "Step & Equation & 3 lags & 6 lags & 12 lags \\\\", "\\midrule"]
