@@ -30,6 +30,35 @@ def _daily_fci(target):
     return _nomd + interp_monthly(off)
 FCI = {"nom": _daily_fci(MM0.market_nominal), "real": _daily_fci(MM0.market_real), "rstar": _daily_fci(MM0.market_rstar),
        "kiley": _daily_fci(D0.read("indexes_rstar_kiley.csv").market)}                 # the FCI note's r* (Kiley) check index
+# FS-A31: (i) daily Baa-10-year spread (DBAA - DGS10, pp); (ii) the FCI split into its three weighted components (w * 10-year yield, w * equities,
+# w * dollar), each in the same nominal/real/r*-gap form as the FCI: daily nominal component plus a smooth offset so that the monthly average equals
+# the note's monthly component; the three sum to the daily FCI. Window impact of each component = weight x its 30-minute response.
+from fci import cases as _cases0, indexes as _ix0
+BAA = DAILY["baa10"].reindex(CALW).ffill(limit=3)
+CMP_KEYS = ["c_y10", "c_eq", "c_usd"]
+_W = pd.read_csv(D0.OUT / "market_weights.csv", index_col=0).weight
+_rawd = pd.DataFrame({"c_y10": _W["y10"] * DAILY["y10"], "c_eq": _W["equities"] * DAILY["eq"], "c_usd": _W["dollar"] * DAILY["usd"]}).reindex(CALW).ffill(limit=3)
+COMP = {}
+for _f, _case in (("nom", "nominal"), ("real", "real"), ("rstar", "rstar")):
+    _C = _ix0.market(_cases0.inputs(_d0, _case), _W.values)[1]; _C.columns = CMP_KEYS
+    _out = {}
+    for _k in CMP_KEYS:
+        _off = (_C[_k] - _rawd[_k].groupby(_rawd.index.to_period("M")).mean()).dropna(); _out[_k] = _rawd[_k] + interp_monthly(_off)
+    COMP[_f] = pd.DataFrame(_out)
+def baa_impact(idx):
+    """Event-day one-day change in the Baa-10-year spread on the shock, per +1 pp window move in the 2-year (the spread has no 30-minute series; as the oil impact in midas_bs)."""
+    s_ = SHOCKS[SHOCK].values[idx]; ok = ~np.isnan(s_); idx = idx[ok]; x = s_[ok] - s_[ok].mean()
+    pp = EV.p.values[idx].astype(int); y = DAILY["baa10"].values[pp] - DAILY["baa10"].values[pp - 1]; g = ~np.isnan(y)
+    num = np.sum((y[g] - y[g].mean()) * x[g]) / np.sum(x[g] ** 2)
+    y2 = EV.UST2Y.values[idx]; g2 = ~np.isnan(y2)
+    return num / (np.sum((y2[g2] - y2[g2].mean()) * x[g2]) / np.sum(x[g2] ** 2))
+def impact(fci, idx):
+    """Window impact vector b for the daily block, in the column order of daily_frame."""
+    wr = win_response(SHOCK, idx)
+    if fci == "baa": return np.array([wr["y2"], wr["idx"], baa_impact(idx)])
+    if fci == "cmp": return np.array([wr["y2"], _W["y10"] * wr["y10"], _W["equities"] * wr["eq"], _W["dollar"] * wr["usd"]])
+    return np.array([wr["y2"]] + ([wr["idx"]] if fci else []))
+
 # Market-based r* (FS-A22): the 9-10 year nominal forward rate (Gurkaynak-Sack-Wright, Fed yield-curve data, SVEN1F09), which replaces both the
 # expected-inflation and r* adjustments. Rate: 2-year minus the forward (daily). FCI: the FCI note's construction with the forward: 10-year minus
 # the forward; equities as the nominal earnings yield (E/P plus 10-year expected inflation) minus the forward, i.e. E/P - (forward - e10), converted
@@ -55,6 +84,7 @@ BOOT_REC = os.environ.get("BOOT_REC", "") == "1"      # FS-A26: recursive-design
 LAGS = tuple(int(x) for x in os.environ.get("LAGS", "3,6,12").split(","))
 TREND = False   # robustness (FS-A19): quadratic time trend (t, t^2; t in decades from 2010) in every monthly equation
 MAC = MB.MAC
+MAC["ebp"] = MM0.ebp          # FS-A32: monthly excess bond premium (Favara et al.), pp; a third monthly variable treated like u and inflation
 
 # Long-sample dynamics (FS-A29): MSTART = first month of the monthly equations (default 1994-02, the baseline). Shocks, events, daily HAR block
 # (1990-) are unchanged. Before the daily data exist, the monthly average of each financial variable is taken from monthly series:
@@ -84,7 +114,11 @@ def fin_monthly(form, fci):
     return FB
 
 def daily_frame(form, fci):
-    """form = rate form; fci = 0 (no FCI), 1 (FCI in the same form as the rate) or the name of an FCI form."""
+    """form = rate form; fci = 0 (no FCI), 1 (FCI in the same form as the rate) or the name of an FCI form.
+    FS-A31 robustness: fci = "baa" (FCI of the same form plus the daily Baa-10-year spread, which responds on impact) or
+    "cmp" (the FCI replaced by its three weighted components, 10-year yield, equities, dollar, in the same form)."""
+    if fci == "baa": return pd.DataFrame({"pol": RATE[form], "idx": FCI[form], "baa": BAA})
+    if fci == "cmp": return pd.DataFrame({"pol": RATE[form], **{k: COMP[form][k] for k in CMP_KEYS}})
     ff = form if fci == 1 else fci
     return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[ff]} if fci else {})})
 
@@ -144,16 +178,17 @@ def rec_boot_data(form, fci, mvars, L, C, res):
     Xb = np.array([xrow(k) for k in range(len(pos))]); Yb = MMb[pos]
     return Xb, Yb
 
-def irf(Bd, C, K, nd, L, idx, pos, fci):
-    wr = win_response(SHOCK, idx); b = np.array([wr["y2"]] + ([wr["idx"]] if fci else []))
-    out = [(w, MB.simulate(Bd, C, K, nd, L, b, k0, n0)[0]) for k0, n0, w in pos]
-    return sum(w * m for w, m in out)
+def irf(Bd, C, K, nd, L, idx, pos, fci, fin=False):
+    b = impact(fci, idx)
+    out = [(w, MB.simulate(Bd, C, K, nd, L, b, k0, n0)) for k0, n0, w in pos]
+    if fin: return sum(w * m[1] for w, m in out)
+    return sum(w * m[0] for w, m in out)
 
 if __name__ == "__main__":
     B = int(sys.argv[1]) if len(sys.argv) > 1 else 200
     SEL = sys.argv[2].split(",") if len(sys.argv) > 2 else None        # e.g. "nom-0,nom-1" (rate form - fci: 0, 1 = same form, or an FCI form name)
     TREND = len(sys.argv) > 3 and sys.argv[3] == "trend"
-    MAC_SETS = {"u,pi": ["u", "pi"], "u,pi,ip": ["u", "pi", "ip"]}
+    MAC_SETS = {"u,pi": ["u", "pi"], "u,pi,ip": ["u", "pi", "ip"], "u,pi,ebp": ["u", "pi", "ebp"]}
     if os.environ.get("MACRO_ONLY"): MAC_SETS = {k: v for k, v in MAC_SETS.items() if k == os.environ["MACRO_ONLY"]}
     rows, irfrows = [], []; t0 = time.time()
     print("Core cases, NS surprise, 1994+, MODEL; per +1 pp window move in the 2-year; u gap pp, core PCE price level %, IP %; point [90%],", B, "draws\n")
@@ -164,7 +199,8 @@ if __name__ == "__main__":
         combos = [s_.split("-") for s_ in SEL] if SEL else [(f, c) for f in ("nom", "real", "rstar") for c in ("0", "1")]
         for form, fci in combos:
                 fci = int(fci) if fci in ("0", "1") else fci
-                K, nd = len(mvars), 1 + (fci != 0); Bd = har_block(form, fci, mvars)
+                K, nd = len(mvars), daily_frame(form, fci).shape[1]; Bd = har_block(form, fci, mvars)
+                if fci in ("baa", "cmp"): print(f"   [{form}-{fci}] window impact per +1 pp 2-year (daily-block order {list(daily_frame(form, fci).columns)}): " + " ".join(f"{v:+.3f}" for v in impact(fci, idx0)), flush=True)
                 for L in LAGS:
                     X, Y = macro_data(form, fci, mvars, L); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
                     def tr(m):
@@ -176,7 +212,9 @@ if __name__ == "__main__":
                         return np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0]
                     sd = np.array([tr(irf(har_boot(form, fci, mvars) if BOOT_DAILY else Bd, cdraw(), K, nd, L, ib, pb, fci)) for ib, pb in zip(bidx, bpos)])
                     lo, hi = np.percentile(sd, [5, 95], axis=0); lo68, hi68 = np.percentile(sd, [16, 84], axis=0)
-                    names = ["u", "P"] + (["ip"] if "ip" in mvars else [])
+                    if fci in ("baa", "cmp"):
+                        fp = irf(Bd, C0, K, nd, L, idx0, pos0, fci, fin=True); print(f"      monthly-average financial responses at h=0,6,12,24 ({list(daily_frame(form, fci).columns)}): " + "; ".join(f"h{h}: " + " ".join(f"{v:+.2f}" for v in fp[h]) for h in (0, 6, 12, 24)), flush=True)
+                    names = ["P" if v == "pi" else v for v in mvars]
                     case = f"[{mlab}] rate {form}, {'FCI ' + (form if fci == 1 else fci) if fci else 'no FCI'}{', trend' if TREND else ''}, {L} lags"
                     print(f"{case:40s}: " + "  ".join(f"{n} " + " ".join(f"{h}:{s0[h, j]:+.2f}[{lo[h, j]:+.2f},{hi[h, j]:+.2f}]" for h in (12, 24, 36)) for j, n in enumerate(names)) + f"  ({time.time() - t0:.0f}s)", flush=True)
                     for j, n in enumerate(names):

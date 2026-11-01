@@ -1,0 +1,18 @@
+nom    L= 3 u  : 6 restrictions, F = 0.78, p = 0.582
+nom    L= 3 pi : 6 restrictions, F = 2.23, p = 0.040
+nom    L= 6 u  : 12 restrictions, F = 0.90, p = 0.544
+nom    L= 6 pi : 12 restrictions, F = 1.98, p = 0.025
+nom    L=12 u  : 24 restrictions, F = 1.12, p = 0.320
+nom    L=12 pi : 24 restrictions, F = 1.68, p = 0.026
+real   L= 3 u  : 6 restrictions, F = 0.89, p = 0.502
+real   L= 3 pi : 6 restrictions, F = 1.70, p = 0.120
+real   L= 6 u  : 12 restrictions, F = 0.78, p = 0.669
+real   L= 6 pi : 12 restrictions, F = 1.70, p = 0.065
+real   L=12 u  : 24 restrictions, F = 1.11, p = 0.327
+real   L=12 pi : 24 restrictions, F = 1.79, p = 0.014
+rstar  L= 3 u  : 6 restrictions, F = 1.78, p = 0.101
+rstar  L= 3 pi : 6 restrictions, F = 1.70, p = 0.121
+rstar  L= 6 u  : 12 restrictions, F = 1.39, p = 0.167
+rstar  L= 6 pi : 12 restrictions, F = 1.26, p = 0.244
+rstar  L=12 u  : 24 restrictions, F = 1.28, p = 0.175
+rstar  L=12 pi : 24 restrictions, F = 1.45, p = 0.082
