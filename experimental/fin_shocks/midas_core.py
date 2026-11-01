@@ -56,6 +56,33 @@ LAGS = tuple(int(x) for x in os.environ.get("LAGS", "3,6,12").split(","))
 TREND = False   # robustness (FS-A19): quadratic time trend (t, t^2; t in decades from 2010) in every monthly equation
 MAC = MB.MAC
 
+# Long-sample dynamics (FS-A29): MSTART = first month of the monthly equations (default 1994-02, the baseline). Shocks, events, daily HAR block
+# (1990-) are unchanged. Before the daily data exist, the monthly average of each financial variable is taken from monthly series:
+#   FCI: the FCI note's monthly index in the matching form (1973-);
+#   2-year yield: FRED DGS2 monthly mean (1976-06-); before that the Gurkaynak-Sack-Wright fitted 2-year zero yield (SVENY02, 1961-), shifted by the
+#   mean DGS2 - SVENY02 gap over 1976-06..1989-12 (zero-coupon vs constant-maturity par yield);
+#   expected inflation: Cleveland Fed EXPINF2YR (1982-); before that the FCI note's 1-year expectation series (Livingston-based) -- a splice, flagged;
+#   r*: Laubach-Williams (1961-).
+MSTART = os.environ.get("MSTART", "")
+_gsw = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "gsw_sveny02.csv"), parse_dates=["Date"]).set_index("Date").SVENY02
+_gswm = _gsw.groupby(_gsw.index.to_period("M")).mean()
+_dgs = fred("DGS2").dropna(); _dgsm = _dgs.groupby(_dgs.index.to_period("M")).mean()
+_shift = (_dgsm - _gswm).loc["1976-06":"1989-12"].mean()
+Y2M = _dgsm.combine_first(_gswm + _shift)
+_e2m = _e2.combine_first(_d0["einf_1y"])
+RATEM = {"nom": Y2M, "real": Y2M - _e2m, "rstar": Y2M - _e2m - _d0["rstar LW"]}
+FCIM = {"nom": MM0.market_nominal, "real": MM0.market_real, "rstar": MM0.market_rstar}
+
+def fin_monthly(form, fci):
+    """Monthly averages of the daily financial block; months without daily data filled from the monthly extension when MSTART is set."""
+    ff = form if fci == 1 else fci
+    FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean()
+    if MSTART and form in RATEM:
+        ext = pd.DataFrame({"pol": RATEM[form], **({"idx": FCIM[ff]} if fci else {})})
+        FB = FB.combine_first(ext) if not FB.empty else ext
+        FB = FB[FB.index >= pd.Period("1973-01", "M")]
+    return FB
+
 def daily_frame(form, fci):
     """form = rate form; fci = 0 (no FCI), 1 (FCI in the same form as the rate) or the name of an FCI form."""
     ff = form if fci == 1 else fci
@@ -80,9 +107,9 @@ def har_boot(form, fci, mvars, blk=66):
 
 def macro_data(form, fci, mvars, L):
     ROWS.clear()
-    FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean(); MMv = MAC[mvars]; X, Y = [], []
+    FB = fin_monthly(form, fci); MMv = MAC[mvars]; X, Y = [], []
     for p in MMv.index:
-        if p < pd.Period("1994-02", "M") or p > pd.Period(f"{END_Y}-12" if END_Y else "2026-09", "M") or (p.year == 2020 and p.month >= 3): continue
+        if p < pd.Period(MSTART or "1994-02", "M") or p > pd.Period(f"{END_Y}-12" if END_Y else "2026-09", "M") or (p.year == 2020 and p.month >= 3): continue
         if DROP_Y and p.year == DROP_Y: continue
         try:
             xm = np.concatenate([MMv.loc[p - l].values for l in range(1, L + 1)]); xf = np.concatenate([FB.loc[p - l].values for l in range(1, L + 1)])
@@ -103,7 +130,7 @@ def rec_boot_data(form, fci, mvars, L, C, res):
     then rebuild the regressors. Returns (Xb, Yb). Array version."""
     key = (form, fci, tuple(mvars), L, len(ROWS))
     if key not in _REC_CACHE:
-        FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean(); MMv = MAC[mvars]
+        FB = fin_monthly(form, fci); MMv = MAC[mvars]
         idx = MMv.index; FBa = FB.reindex(idx).values; pos = np.array([idx.get_loc(p) for p in ROWS])
         tt = np.array([(p.year + (p.month - 1) / 12 - 2010) / 10 for p in ROWS])
         _REC_CACHE[key] = (MMv.values.copy(), FBa, pos, tt)
@@ -153,9 +180,9 @@ if __name__ == "__main__":
                     case = f"[{mlab}] rate {form}, {'FCI ' + (form if fci == 1 else fci) if fci else 'no FCI'}{', trend' if TREND else ''}, {L} lags"
                     print(f"{case:40s}: " + "  ".join(f"{n} " + " ".join(f"{h}:{s0[h, j]:+.2f}[{lo[h, j]:+.2f},{hi[h, j]:+.2f}]" for h in (12, 24, 36)) for j, n in enumerate(names)) + f"  ({time.time() - t0:.0f}s)", flush=True)
                     for j, n in enumerate(names):
-                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
+                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), mstart=(MSTART or "1994-02"), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
                                          **{f"lo68_{h}": lo68[h, j] for h in (12, 24, 36)}, **{f"hi68_{h}": hi68[h, j] for h in (12, 24, 36)}))
-                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
-    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_" + SAMPLE if SAMPLE else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "") + ("" if SHOCK == "NS" else "_" + SHOCK) + ("_bootd" if BOOT_DAILY else "") + ("_bootrec" if BOOT_REC else "") + ("_L" + "-".join(map(str, LAGS)) if LAGS != (3, 6, 12) else "")
+                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), mstart=(MSTART or "1994-02"), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
+    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_" + SAMPLE if SAMPLE else "") + ("_m" + MSTART.replace("-", "") if MSTART else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "") + ("" if SHOCK == "NS" else "_" + SHOCK) + ("_bootd" if BOOT_DAILY else "") + ("_bootrec" if BOOT_REC else "") + ("_L" + "-".join(map(str, LAGS)) if LAGS != (3, 6, 12) else "")
     pd.DataFrame(rows).to_csv(f"midas_core{suf}.csv", index=False, float_format="%.4f")
     pd.concat(irfrows).to_csv(f"midas_core{suf}_irf.csv", index=False, float_format="%.4f")
