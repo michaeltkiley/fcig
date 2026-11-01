@@ -16,12 +16,13 @@ def _load(irf_files):
         if "trend" not in z: z["trend"] = 0
         if "shock" not in z: z["shock"] = "NS"
         if "bootd" not in z: z["bootd"] = 0
+        if "mstart" not in z: z["mstart"] = "1994-02"
         out.append(z)
     z = pd.concat(out); z["fci"] = z.fci.astype(str); z["trend"] = z.trend.fillna(0).astype(int)
     z["shock"] = z.shock.fillna("NS"); z["bootd"] = z.bootd.fillna(0).astype(int)
-    keys = ["macro", "rate", "fci", "trend", "sample", "shock", "bootd", "lags", "var"] + (["h"] if irf_files else [])
+    keys = ["macro", "rate", "fci", "trend", "mstart", "sample", "shock", "bootd", "lags", "var"] + (["h"] if irf_files else [])
     return z.drop_duplicates(keys, keep="last")
-D_ALL = _load(False); IRF_ALL = _load(True)
+D_FULL = _load(False); D_ALL = D_FULL[D_FULL.mstart == "1994-02"]; IRF_ALL = _load(True); IRF_ALL = IRF_ALL[IRF_ALL.mstart == "1994-02"]   # long-sample rows (FS-A29) only enter through sel(ms=...)
 d = D_ALL[(D_ALL.shock == "NS") & (D_ALL.bootd == 0)]; irf = IRF_ALL[(IRF_ALL.shock == "NS") & (IRF_ALL.bootd == 0)]
 TR = 1   # FS-A24: quadratic time trend in every monthly equation is the baseline assumption for all results
 os.makedirs(os.path.join(HERE, "tables"), exist_ok=True); os.makedirs(os.path.join(HERE, "figures"), exist_ok=True)
@@ -35,9 +36,9 @@ def cell(r, h):
 
 COLS = ["\\begin{tabular}{llccccccccc}", "\\toprule", " & & \\multicolumn{3}{c}{12 months} & \\multicolumn{3}{c}{24 months} & \\multicolumn{3}{c}{36 months}\\\\",
         "\\cmidrule(lr){3-5}\\cmidrule(lr){6-8}\\cmidrule(lr){9-11}"]
-def sel(rate, fci, var, macro="u,pi", tr=TR, smp="", shock="NS", bootd=0):
-    return D_ALL[(D_ALL.macro == macro) & (D_ALL["var"] == var) & (D_ALL.rate == rate) & (D_ALL.fci == fci) & (D_ALL.trend == tr)
-                 & (D_ALL["sample"] == smp) & (D_ALL.shock == shock) & (D_ALL.bootd == bootd)].sort_values("lags")
+def sel(rate, fci, var, macro="u,pi", tr=TR, smp="", shock="NS", bootd=0, ms="1994-02"):
+    return D_FULL[(D_FULL.macro == macro) & (D_FULL["var"] == var) & (D_FULL.rate == rate) & (D_FULL.fci == fci) & (D_FULL.trend == tr)
+                 & (D_FULL["sample"] == smp) & (D_FULL.shock == shock) & (D_FULL.bootd == bootd) & (D_FULL.mstart == ms)].sort_values("lags")
 def ptable(panels, name, h1="Step", h2="FCI"):
     """panels: list of (title, rows); row = (col1, col2, dict of sel() arguments)."""
     out = COLS + [f"{h1} & {h2} & 3 & 6 & 12 & 3 & 6 & 12 & 3 & 6 & 12 \\\\"]
@@ -56,6 +57,10 @@ ptable([("A. Unemployment gap (percentage points)", core_rows("u")), ("B. Core P
 ptable([("A. Unemployment gap (percentage points)", core_rows("u", "u,pi,ip")), ("B. Industrial production (percent)", core_rows("ip", "u,pi,ip"))], "tabA_ip")
 ptable([("A. Unemployment gap (percentage points)", core_rows("u", tr=0)), ("B. Core PCE price level (percent)", core_rows("P", tr=0))], "tabA_notrend")
 ptable([("A. Unemployment gap (percentage points)", core_rows("u", bootd=3)), ("B. Core PCE price level (percent)", core_rows("P", bootd=3))], "tabA_boot")
+# FS-A29: long-sample dynamics (monthly equations from 1973 / 1977 / 1982; shocks and daily model unchanged)
+LONGP = [("1973", dict(ms="1973-01")), ("1977", dict(ms="1977-01")), ("1982", dict(ms="1982-01")), ("1973, no trend", dict(ms="1973-01", tr=0))]
+for var, nm, ttl in (("u", "tabA_long_u", "Unemployment gap (percentage points)"), ("P", "tabA_long_p", "Core PCE price level (percent)")):
+    ptable([(f"Monthly equations estimated from {lab}: {ttl.lower() if False else ttl}", core_rows(var, **kw)) for lab, kw in LONGP], nm)
 FCI4 = [("none", "0"), ("nominal", "nom"), ("real", "real"), ("$r^*$-gap", "rstar")]
 def adj_rows(rate, var):
     same = {"rstar": "rstar", "nom": "nom"}.get(rate)

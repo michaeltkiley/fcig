@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.10.31)  31 OCT 2026 22:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.1)  1 NOV 2026 00:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -596,10 +596,11 @@ File: figures/fig3_loyo.pdf Graphic file (type pdf)
 <use figures/fig3_loyo.pdf>
 Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 158.
 (pdftex.def)             Requested size: 422.77664pt x 140.92813pt.
- [10 <./figures/fig2_recent.pdf>] [11 <./figures/fig3_loyo.pdf>] [12] [13] (./t
-ables/tabA_ip.tex)
-(./tables/tabA_shocks.tex) [14] (./tables/tabA_notrend.tex)
-(./tables/tabA_boot.tex) [15] [16] (./mp_transmission.aux)
+ [10 <./figures/fig2_recent.pdf>] [11 <./figures/fig3_loyo.pdf>] [12] [13] [14]
+ (./tables/tabA_ip.tex) (./tables/tabA_shocks.tex) (./tables/tabA_notrend.tex) 
+[15]
+(./tables/tabA_boot.tex) (./tables/tabA_long_u.tex) [16]
+(./tables/tabA_long_p.tex) [17] [18] [19] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -608,13 +609,13 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: 2BF05798D49B1F1DA7C2A731D65543E9;829.
  ) 
 Here is how much of TeX's memory you used:
- 13349 strings out of 476182
- 208053 string characters out of 5795594
- 1994975 words of memory out of 5000000
- 35057 multiletter control sequences out of 15000+600000
+ 13368 strings out of 476182
+ 208424 string characters out of 5795595
+ 2004975 words of memory out of 5000000
+ 35065 multiletter control sequences out of 15000+600000
  634355 words of font info for 97 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,79p,1240b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,1503b,645s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/p
@@ -625,10 +626,10 @@ onts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/t
 ype1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (16 pages, 356296 bytes).
+Output written on mp_transmission.pdf (19 pages, 367237 bytes).
 PDF statistics:
- 631 PDF objects out of 1000 (max. 8388607)
- 421 compressed objects within 5 object streams
- 75 named destinations out of 1000 (max. 500000)
+ 651 PDF objects out of 1000 (max. 8388607)
+ 438 compressed objects within 5 object streams
+ 80 named destinations out of 1000 (max. 500000)
  72 words of extra memory for PDF output out of 10000 (max. 10000000)
 
