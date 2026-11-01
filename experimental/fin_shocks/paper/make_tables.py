@@ -76,6 +76,23 @@ SHK = [("Nakamura--Steinsson", "NS"), ("Nakamura--Steinsson, Greenbook part remo
 def shk_rows(var): return [(lab if i == 0 else "", st, dict(rate=r, fci="1", var=var, shock=sk)) for lab, sk in SHK for i, (st, r) in enumerate((("Nominal", "nom"), ("$r^*$-gap", "rstar")))]
 ptable([("A. Unemployment gap (percentage points)", shk_rows("u")), ("B. Core PCE price level (percent)", shk_rows("P"))], "tabA_shocks", h1="Shock", h2="Step")
 
+# FS-A31: relaxing the key assumptions: daily Baa-10-year spread added (responds on impact); FCI replaced by its three components
+def cc_rows(var):
+    out = []
+    for st, r in (("Nominal", "nom"), ("Real", "real"), ("$r^*$-gap", "rstar")):
+        out += [(st, "FCI (baseline)", dict(rate=r, fci="1", var=var)), ("", "FCI and Baa spread", dict(rate=r, fci="baa", var=var)), ("", "Components instead of FCI", dict(rate=r, fci="cmp", var=var))]
+    return out
+ptable([("A. Unemployment gap (percentage points)", cc_rows("u")), ("B. Core PCE price level (percent)", cc_rows("P"))], "tabA_cc", h1="Step", h2="Financial block")
+# F tests of the proportional-weights restriction (prop_test.py): p-values, FCI versus its three components
+_pt = pd.read_csv(os.path.join(UP, "prop_test.csv"))
+_o = ["\\begin{tabular}{llccc}", "\\toprule", "Step & Equation & 3 lags & 6 lags & 12 lags \\\\", "\\midrule"]
+for st, r in (("Nominal", "nom"), ("Real", "real"), ("$r^*$-gap", "rstar")):
+    for k, (eq, lab) in enumerate((("u", "Unemployment gap"), ("pi", "Core PCE inflation"))):
+        g = _pt[(_pt["step"] == r) & (_pt["eq"] == eq)].sort_values("lags")
+        _o.append((st if k == 0 else "") + f" & {lab} & " + " & ".join(f"{v:.2f}" for v in g.p) + " \\\\")
+_o += ["\\bottomrule", "\\end{tabular}"]
+open(os.path.join(HERE, "tables", "tabA_prop.tex"), "w").write("\n".join(_o) + "\n")
+
 # Figure 2: the r*-gap 2-year, the r*-gap FCI and core inflation, 2015-2026 (monthly)
 import sys; sys.path.insert(0, os.path.join(UP, "..", "mp_var_fci")); sys.path.insert(0, UP)
 from mf_common import M as _M
