@@ -387,3 +387,5 @@ Supporting numbers to check when drafting: real-case level correlation market-GS
   market responses to policy news), not dependent on FRB/US, which is a black box to most readers and not widely used in research. The cost (less rich data) is secondary.
 - **Addition (user, 30 Oct):** a second benefit: besides weights from policy surprises, the dynamics come from a transparent VAR (unemployment gap and the index), not from a
   structural model's lag structure.
+
+**Q57 (7 Nov 2026, OPEN; proposed, not decided).** Should Note A use the word "neutral"? The literature uses it in three senses (statistical zero = sample average: NFCI, GS; impulse: FCI-G; macro: FCI* of Caballero et al., conditions that close the expected output gap). Proposal: one sentence in the intro naming the three, and describe the r*-gap case as "measured relative to a neutral rate", not as FCI*, until FCI-star is read. Needs first: read FCI-star; re-read Ajello et al. on what FCI-G zero means (a supplied summary calls it "structurally neutral"; the repo reads it as a flow). See `path_fci/lit/lit_neutral_fci_framing.md`.

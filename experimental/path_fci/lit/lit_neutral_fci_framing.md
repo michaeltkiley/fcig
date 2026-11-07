@@ -1,0 +1,54 @@
+# Literature notes: "neutral" financial conditions, why FCIs, core questions (user-supplied summary, 7 Nov 2026)
+
+**Status: [secondhand] throughout.** The user pasted a summary (source of the summary not stated; looks machine-generated). Nothing here was checked against the papers on 7 Nov 2026, except where a repo note is cited. Do not quote from this file in a note without reading the paper. Tags: [verified] = already read in this repo (see cited file); [secondhand] = from the pasted summary only; [inference] = my reading of how it fits; [CONFLICT] = disagrees with something verified in the repo.
+
+## 1. Who defines "neutral" financial conditions, and how (pasted claims)
+| Source | Claim in the summary | Tag / check |
+|---|---|---|
+| Caballero-Caravello-Simsek (and Caballero-Simsek), "FCI-star" | Defines FCI* = the level of broad financial conditions that closes the expected output gap, the analogue of r*. | [secondhand]. The repo has NOT read "FCI-star" (Jan 2026, MIT faculty page only; `lit_transmission_caballero_simsek.md` lines 10, 85, 99). Only the repo-verified fact: FCT and FCI-plot use FCI-G as the observable index [verified]. |
+| Ajello et al. (2023), FCI-G | Zero = "structurally neutral" (neither headwind nor tailwind to next year's growth). | **[CONFLICT, to resolve before use].** Repo glossary: FCI-G is a flow built from past changes (3-year cumulation in the C-S version), so zero is better read as "no net impulse relative to the benchmark", not a neutral *level*. This is the project's own point (FCI-G has no level; INDEX_QA A56). Re-read Ajello et al. on what zero means before writing "neutral". |
+| Brave-Butters (Chicago Fed NFCI) | Zero = historical average. | [verified] for NFCI: zero mean, unit SD since 1971 (NOTE_PLAN 7.2). The summary writes "Brave and Kelley"; the repo bibliography has Brave and Butters (2011, 2012). Check the author. |
+| Hatzius et al. (2010) / Goldman | Zero = historical average; "FCI impulse" says whether conditions are tight, loose or neutral for growth. | [secondhand] on the normalization; GS weights and the FRB/US-derivation statement are [verified] (NOTE_PLAN 7.2). Whether the GS index is normalized to a sample mean of zero is not checked. |
+| Kiley (2020), "Financial Conditions and Economic Activity: Insights from Machine Learning", FEDS 2020-095 | Summary says both "left-tail risks of unemployment and GDP" and "machine learning optimized for predicting unemployment". | [secondhand] and internally inconsistent; the user is the author, so check against the paper. **Not the same Kiley (2020) as the repo's `kiley2020` (IJCB 16(3), r\* estimate).** Two Kiley 2020 papers need distinct keys (e.g. `kiley2020ml`, `kiley2020rstar`). |
+
+[inference] Fit with this project: our r*-gap case (nominal -> real -> r*) is the same idea as FCI*: a market index measured relative to a neutral level. Difference: C-S define FCI* by the output gap in a macro-finance model; ours adjusts rates for r* (Laubach-Williams) and keeps the index zero = sample average, with the VAR dynamics from the unemployment gap. DYNAMICS_PLAN line 103 already linked "neutral level" to FCI*. Worth stating in Note A that "neutral" has three meanings in this literature: statistical (zero = sample average: NFCI, GS), flow/impulse (FCI-G), and macro (FCI*, output gap closed).
+
+## 2. Why researchers care about FCIs (pasted; use for motivation/intro only after verification)
+1. Transmission: policy works through the broad set of asset prices, not the funds rate alone (Hatzius et al. 2010) [secondhand; the "only" is too strong; BKM 2010 is the verified transmission source, `lit_transmission_caballero_simsek.md` section 1].
+2. Downside vulnerability: conditions drive the conditional distribution/left tail of GDP growth (Adrian, Boyarchenko, Giannone 2019, AER 109(4): 1263-1289, doi 10.1257/aer.20161923) [secondhand; paper not read in the repo].
+3. Exogenous impulses: separate exogenous financial shocks from endogenous responses to the cycle (Ajello et al. 2023) [secondhand; fits FCI-G design, verified in NOTE_PLAN 7.2].
+4. Noise and "tantrums": central bank targeting an optimal FCI could reduce excess volatility from arbitrageurs misreading policy (Caballero-Simsek) [secondhand; consistent with FCT/FCI-plot read in the repo].
+5. High-dimensional synthesis: one real-time statistic from hundreds of series (Brave-Butters NFCI) [verified: 105 indicators].
+
+## 3. Core research questions (pasted) and where each lands in this project
+| Question | Where in project |
+|---|---|
+| Variable selection / dimension reduction; optimal weights out of sample (Kiley 2020) | Our weights come from policy-news responses, not prediction; ML/out-of-sample prediction is not done. Possible robustness: compare market-index weights with predictive weights. [inference] |
+| Orthogonalization: purge past activity (Hatzius 2010) | ANFCI is the purged comparator; in Note A it is labelled conditional on activity and inflation (NOTE_PLAN 7.6 item 4). The market index puts unemployment first in the VAR instead. |
+| Distributional impact / growth-at-risk (Adrian et al. 2019) | NOT covered. Our index is a mean (VAR) measure. Candidate extension: quantile regressions of the unemployment gap on the market index vs FCI-G/NFCI. [inference] |
+| Linear factor models vs ML vs direct mapping to growth (FCI-G) | The note positions the market index between GS (policy-news weights) and FCI-G; ML not used. |
+| Policy communication ("FCI-plot") | Caballero-Simsek [verified read, March 2026 version]; the market index in funds-rate/2-year equivalents offers the unit such a plot needs [inference]. |
+
+## 4. Open questions (pasted)
+1. Neutral level in real time and its drift when r* shifts: directly our r*-gap case (one-sided LW; Kiley check). Real-time vs full-sample r* is a robustness item.
+2. Goodhart's law: if the central bank targets an FCI, do the weights/dynamics break? Our weights are estimated from policy-news responses in FOMC windows; a targeting regime would alter exactly those responses. Mention as a limitation. [inference]
+3. Regime non-linearity (high inflation, fiscal dominance, QT; models calibrated on post-1990): our VAR spans 1973-2026 and Note A has a post-1990 comparison (1973 vs 1990 sample result in PROJECT_MEMORY section 9). Extend with a 2021-26 check. [inference]
+
+## 5. Overlap and differences (pasted; keep as the one-paragraph lit framing)
+Common thread: broad financial conditions, not the policy rate alone, drive outcomes; financial variables lead; raw data need processing to isolate signal. Differences: target (growth impulse vs activity prediction vs tail risk vs theoretical neutral), method (dynamic factor/VAR vs direct percentage-point mapping vs ML vs macro-finance theory). [secondhand]
+
+## 6. References as supplied (Google-Scholar "cited by" counts in the summary are undated and not recorded here)
+- Adrian, Boyarchenko, Giannone (2019), Vulnerable Growth, AER 109(4): 1263-1289, doi 10.1257/aer.20161923. [not in repo bibliography before 7 Nov]
+- Ajello, Cavallo, Favara, Peterman, Schindler, Sinha (2023), A New Index to Measure U.S. Financial Conditions, FEDS Notes, doi 10.17016/2380-7172.3281. [already in repo; verified]
+- Hatzius, Hooper, Mishkin, Schoenholtz, Watson (2010), Financial Conditions Indexes: A Fresh Look after the Financial Crisis, NBER WP 16150, doi 10.3386/w16150. [already in repo; verified]
+- Kiley (2020), Financial Conditions and Economic Activity: Insights from Machine Learning, FEDS 2020-095, doi 10.17016/feds.2020.095. [new; note the key clash above]
+- Caballero, Caravello, Simsek; Caballero-Simsek "FCI-star" (2025/26): [in repo as unread; add to the read list]
+
+## 7. To-do from this note (also in NOTE_PLAN 4i and PROJECT_MEMORY section 9)
+1. Read "FCI-star" (and the multi-asset paper) and write the actual definition of FCI* here with page numbers.
+2. Re-read Ajello et al. 2023 on the meaning of zero; correct this file's [CONFLICT] row.
+3. Read Adrian et al. 2019 and Kiley 2020 (FEDS) and replace the [secondhand] tags.
+4. Check the NFCI author attribution (Brave-Butters vs "Brave and Kelley") and the GS normalization.
+5. Decide (user) whether Note A uses "neutral" at all, and the three-meanings sentence (INDEX_QA Q57, open).
+6. Optional extensions flagged: growth-at-risk quantile check; 2021-26 regime check; real-time r*.
+7. Add `adrian2019`, `kiley2020ml` to `fci_note.tex` bibliography only if cited; rename `kiley2020` -> `kiley2020rstar` at that time (not done; the notes are unchanged).
