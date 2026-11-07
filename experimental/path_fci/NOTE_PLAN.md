@@ -293,6 +293,7 @@ Read status: R = full text read; A = abstract or search summary only; U = unveri
 - Flagged conflict: the summary calls FCI-G zero "structurally neutral"; the repo reading is a flow. Resolve by re-reading Ajello et al. before the note says "neutral".
 - New references to track: Adrian-Boyarchenko-Giannone (2019, AER 109(4):1263-1289; growth-at-risk, not covered by the market index), Kiley (2020, FEDS 2020-095, machine learning; distinct from the IJCB r* paper cited as `kiley2020`).
 - Open questions it raises for the note's limitations: real-time neutral level, Goodhart, regime non-linearity (high inflation/QT).
+- **Hatzius references (7 Nov 2026):** full list and a review of Hatzius et al. (2010) in `lit/lit_hatzius.md` (Dudley-Hatzius 2000; Dudley-Hatzius-McKelvey 2005; Hatzius et al. 2010; Dudley 2010 comments; Hatzius-Stehn-Fawcett 2016; Hatzius-Stehn 2018; Hatzius 2019 and 2025 slides; Hamilton-Harris-Hatzius-West 2016). The GS items other than 2010, 2019, 2025 are unread. Note A cites Dudley-Hatzius 2000, Hatzius-Stehn 2018, Dudley 2010 as of this date.
 
 ## Appendix A. Annotated bibliography
 
