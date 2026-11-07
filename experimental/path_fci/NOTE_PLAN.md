@@ -213,6 +213,13 @@ Built (experimental folders `path_fci`, `ms_fci`, `fci_compare`): the market-bas
   and one figure (FCI-G response profile, 1974-2026 vs 1990-2026).
 - **Possible extension (not started):** a common experiment (a permanent change in the underlying variables pushed through every index, responses from VARs with the path held).
 
+## 4i. Literature additions and to-dos (7 Nov 2026; `lit/lit_neutral_fci_framing.md`)
+1. Read FCI-star (and the multi-asset paper): define FCI* with page numbers; compare with the r*-gap case.
+2. Re-read Ajello et al. 2023 on what FCI-G zero means; settle "neutral" wording (INDEX_QA Q57 open).
+3. Read Adrian et al. 2019 and Kiley 2020 (FEDS 2020-095); distinguish the two Kiley 2020 bibliography keys.
+4. Verify NFCI authors (Brave-Butters vs "Brave and Kelley" in the supplied summary) and the GS normalization.
+5. Optional: growth-at-risk quantile check; 2021-26 regime check; real-time r*; Goodhart caveat in limitations.
+
 ## 5. Assessment of the contribution (revised)
 **What the note would add.** (a) A common funds-rate unit across several widely used indexes, with comparison by group and by episode: shared understanding for communication. (b) A triangulation of the financial block of macro-model-based indexes with event-window evidence. (c) A funds-rate-unit version of FCI-G (the agent found no Fed source that provides one). (d) One more simple, transparent construction, offered as an alternative and not as a competitor.
 **What is already known or close (after reading).** Arnaut-Bauer (2024): four FCIs overlaid, a decomposition of the GS FCI only, and an event study of the GS FCI only; no common unit, no cross-index comparison. Aramonte-Rosen-Schindler (2013): twelve indexes in z-scores, correlations 22-96%, predictability only with 2008 in the sample, no policy-rate unit, no event study; stance: no index is uniquely accurate. Beaton-Lalonde-Luu (2009): the one FCI expressed in funds-rate terms (about 300 bp tightening since 2007; 625 bp with another model's multiplier), so the answer is very model-sensitive. Sack-Swanson (2023): FCI response to policy-induced 2-year yield moves (units of the 2-year yield). SF Fed proxy funds rate (policy-rate units from market variables). Chicago Fed Letter (Aug 2024) discusses FCI-G versus NFCI differences qualitatively via weights. Novelty risk assessed as low to moderate: the funds-rate-equivalent, by-group, episode and model-versus-market comparison were not found in any source read, and a targeted follow-up search for conversions (sell-side, staff, central bank blogs) found only single-index or asset-price-unit versions (section 7.4); Sack-Swanson's closing paragraph is the closest published statement of the idea. The narrow contribution is the combination of a common funds-rate unit, several index families, group and episode decomposition, and a market-based benchmark.
@@ -277,9 +284,16 @@ Read status: R = full text read; A = abstract or search summary only; U = unveri
 5. Chicago Fed Letter 498 already explains FCI-G versus NFCI differences through weights, qualitatively: position the note as quantifying such differences in a common unit.
 6. Motivation can rest on the verified quotes (7.1), in particular the Chair's remark that different indicators give different answers.
 7. Variable grouping: justify putting corporate rates in "rates" (BKM treat spreads under credit); the dollar is justified by the Caballero-Simsek emphasis on risky-asset prices even though BKM find a small net exchange-rate effect.
-8. Still to read: Brave-Butters (2011) full text and the Chicago Fed technical report; the BKM Handbook text; NBER WP 34325 text; "FCI-star" and the multi-asset paper; Bauer-Swanson (2023); Sack-Swanson raw text; Chicago Fed Letter 498; Koop-Korobilis (2014); Arregui et al. (2018); ALFRED coverage; current STLFSI4 coefficients.
+8. Still to read: Brave-Butters (2011) full text and the Chicago Fed technical report; the BKM Handbook text; NBER WP 34325 text; "FCI-star" and the multi-asset paper (priority, 7 Nov); Adrian et al. (2019); Kiley (2020, FEDS ML paper); Bauer-Swanson (2023); Sack-Swanson raw text; Chicago Fed Letter 498; Koop-Korobilis (2014); Arregui et al. (2018); ALFRED coverage; current STLFSI4 coefficients.
 
 ---
+
+### 7.7 "Neutral" financial conditions and why FCIs (added 7 Nov 2026 from a user-supplied summary; [secondhand], full tagging in `lit/lit_neutral_fci_framing.md`)
+- Three meanings of "neutral" in this literature: statistical (zero = sample average: NFCI verified; GS unchecked), impulse (FCI-G: flow, no level), macro (FCI*: Caballero et al., conditions that close the expected output gap; paper unread). The r*-gap case is the project's version of the third.
+- Flagged conflict: the summary calls FCI-G zero "structurally neutral"; the repo reading is a flow. Resolve by re-reading Ajello et al. before the note says "neutral".
+- New references to track: Adrian-Boyarchenko-Giannone (2019, AER 109(4):1263-1289; growth-at-risk, not covered by the market index), Kiley (2020, FEDS 2020-095, machine learning; distinct from the IJCB r* paper cited as `kiley2020`).
+- Open questions it raises for the note's limitations: real-time neutral level, Goodhart, regime non-linearity (high inflation/QT).
+- **Hatzius references (7 Nov 2026):** full list and a review of Hatzius et al. (2010) in `lit/lit_hatzius.md` (Dudley-Hatzius 2000; Dudley-Hatzius-McKelvey 2005; Hatzius et al. 2010; Dudley 2010 comments; Hatzius-Stehn-Fawcett 2016; Hatzius-Stehn 2018; Hatzius 2019 and 2025 slides; Hamilton-Harris-Hatzius-West 2016). The GS items other than 2010, 2019, 2025 are unread. Note A cites Dudley-Hatzius 2000, Hatzius-Stehn 2018, Dudley 2010 as of this date.
 
 ## Appendix A. Annotated bibliography
 
@@ -296,6 +310,8 @@ Flags: V = verified; P = partly verified; U = unverified.
 - V. Caballero and Simsek (2025/2026), "FCI-plot: Central Bank Communication Through Financial Conditions," NBER WP 34325, CEPR DP 20680; presented at the Fed's Laubach conference May 2025. FCI used empirically: U.
 - P. Caballero and Simsek, "FCI-star" (Jan 2026) and "Financial Conditions Targeting in a Multi-Asset Open Economy" (Mar 2026): listed on the MIT faculty page only; U.
 - V. Caballero and Simsek (2022), "Monetary Policy with Opinionated Markets," American Economic Review 112(7): 2353-2392 (NBER WP 27313, CEPR DP 14830). Content on FCIs: U. (Cited in the brief; only the publication record was checked.)
+- W. Adrian, Boyarchenko, Giannone (2019), "Vulnerable Growth," American Economic Review 109(4): 1263-1289, doi 10.1257/aer.20161923. Added 7 Nov 2026 from a user-supplied summary; U (not read). Growth-at-risk: financial conditions drive the left tail of GDP growth.
+- X. Kiley (2020), "Financial Conditions and Economic Activity: Insights from Machine Learning," FEDS 2020-095, doi 10.17016/feds.2020.095. Added 7 Nov 2026; U (the summary describes it inconsistently: tail risks vs unemployment prediction). Not the IJCB r* paper.
 - P. Caballero and Simsek, VoxEU column "Financial conditions matter more than interest rates: A new framework for monetary policy" (CEPR; only snippet seen; mentions FCI-G loosening in 2024).
 - V. Beaton, Lalonde, Luu (2009), "A Financial Conditions Index for the United States," Bank of Canada Discussion Paper 2009-11; funds-rate equivalent of about 300 bp tightening since mid-2007 per abstract.
 - V. Aramonte, Rosen, Schindler (2013), "Assessing and Combining Financial Conditions Indexes," FEDS 2013-39 (verified in repo NOTES; includes the older Morgan Stanley FCI).
