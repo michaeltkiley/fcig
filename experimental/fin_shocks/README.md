@@ -10,8 +10,9 @@
 | `mf_common.py`, `route_a_pos.py`, `midas_var.py`, `midas_bs.py` | Shared data, events, shocks (NS, MP1, NS-GB, BS-ORTH, NS-JK), window responses; helpers |
 | `omit_fci_sim.py` | Simulation in Section 2 of the note: true four-variable VAR, estimated with and without the FCI (FS-A34) |
 | `monthly_proxy.py` | Purely monthly VAR comparison: proxy and window-impact identification, with and without the FCI (FS-A38) |
+| `window_scope.py` | Scope of the window impact: R2 of window moves on the surprise, b_F by state and period, trace of the unexplained FCI move; commodity table (FS-A39) |
 | `data/` | GSW 9-10y forward rate; Bauer-Swanson posted surprises |
-| `FS_QA.md` | Decisions FS-A1..A38 |
+| `FS_QA.md` | Decisions FS-A1..A39 |
 | `MF_REPORT.md` | Older markdown version of the note (superseded) |
 | `MF_DEVELOPMENT.md`, `MF_PLAN.md`, `MIXED_FREQUENCY_NOTES.md`, `LITERATURE_MIDAS.md`, `PROPOSALS.md` | Exploratory history, literature notes, original proposals |
 | other `*.py`, `*.log`, `*.csv`, `runs68/` | Exploratory routes (stage 0, routes A/B, MIDAS variants, direct regressions) and run logs |

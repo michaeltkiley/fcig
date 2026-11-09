@@ -1,0 +1,26 @@
+Window scope. 252 announcements 1996-01-31..2026-07-29.
+
+(1) R2 of window moves on the NS surprise (with constant)
+   2-year   R2 0.80  (n=252)
+   10-year  R2 0.32  (n=252)
+   S&P 500  R2 0.31  (n=252)
+   DXY      R2 0.34  (n=252)
+   FCI      R2 0.48  (n=252)
+
+(2) Window ratio b_F (FCI per pp 2-year), 90% interval from event resampling. Full sample 0.99
+   VIX  lowest quartile  1.12 [0.98,1.36] n=63
+   VIX  highest quartile 1.01 [0.84,1.32] n=63
+   EBP  lowest quartile  1.13 [0.99,1.29] n=63
+   EBP  highest quartile 0.88 [0.70,1.21] n=63
+   1996-2007             0.87 [0.73,1.08] n=102
+   2008-2019             1.17 [0.95,1.46] n=99
+   2020-2026             1.07 [0.93,1.24] n=51
+   2020-2023             1.06 [0.86,1.29] n=30
+
+(3) Residual window FCI move: s.d. 0.06 index units (policy-news FCI move per pp 2-year: 0.99). Responses to a 1-s.d. residual move, no 2-year move.
+   nom    3 lags: u12 +0.03[+0.02,+0.03]  u24 +0.04[+0.03,+0.04]  P12 -0.00[-0.01,+0.01]  P24 -0.01[-0.02,+0.01]
+   nom    6 lags: u12 +0.03[+0.02,+0.03]  u24 +0.03[+0.02,+0.04]  P12 -0.01[-0.01,+0.00]  P24 -0.01[-0.03,+0.01]
+   nom   12 lags: u12 +0.03[+0.02,+0.04]  u24 +0.03[+0.02,+0.04]  P12 -0.00[-0.01,+0.00]  P24 -0.01[-0.03,+0.01]
+   rstar  3 lags: u12 +0.03[+0.02,+0.03]  u24 +0.03[+0.02,+0.04]  P12 -0.01[-0.02,-0.00]  P24 -0.02[-0.03,-0.00]
+   rstar  6 lags: u12 +0.03[+0.02,+0.04]  u24 +0.03[+0.02,+0.04]  P12 -0.01[-0.02,-0.00]  P24 -0.02[-0.04,-0.01]
+   rstar 12 lags: u12 +0.03[+0.02,+0.04]  u24 +0.03[+0.02,+0.04]  P12 -0.01[-0.02,-0.01]  P24 -0.03[-0.04,-0.01]

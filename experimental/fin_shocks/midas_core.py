@@ -188,7 +188,7 @@ if __name__ == "__main__":
     B = int(sys.argv[1]) if len(sys.argv) > 1 else 200
     SEL = sys.argv[2].split(",") if len(sys.argv) > 2 else None        # e.g. "nom-0,nom-1" (rate form - fci: 0, 1 = same form, or an FCI form name)
     TREND = len(sys.argv) > 3 and sys.argv[3] == "trend"
-    MAC_SETS = {"u,pi": ["u", "pi"], "u,pi,ip": ["u", "pi", "ip"], "u,pi,ebp": ["u", "pi", "ebp"]}
+    MAC_SETS = {"u,pi": ["u", "pi"], "u,pi,ip": ["u", "pi", "ip"], "u,pi,ebp": ["u", "pi", "ebp"], "u,pi,ip,com": ["u", "pi", "ip", "com"]}   # FS-A39: + IMF commodity index (100 log PALLFNFINDEXM)
     if os.environ.get("MACRO_ONLY"): MAC_SETS = {k: v for k, v in MAC_SETS.items() if k == os.environ["MACRO_ONLY"]}
     rows, irfrows = [], []; t0 = time.time()
     print("Core cases, NS surprise, 1994+, MODEL; per +1 pp window move in the 2-year; u gap pp, core PCE price level %, IP %; point [90%],", B, "draws\n")
