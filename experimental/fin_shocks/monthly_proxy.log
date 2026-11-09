@@ -1,0 +1,257 @@
+Monthly VAR comparison. 252 announcements, instrument months 1996-01..2026-07. Average share of the month after the announcement phi = 0.461.
+
+ step  fci  lags policy    F   n  impact_fci  impact_u  impact_pi
+  nom    0     3     y2 5.57 357         NaN     -0.32      -1.19
+  nom    0     3     ff 7.72 357         NaN     -0.16       0.36
+  nom    0     6     y2 5.39 357         NaN     -0.22      -0.90
+  nom    0     6     ff 6.48 357         NaN     -0.17       0.77
+  nom    0    12     y2 5.51 357         NaN     -0.21      -0.23
+  nom    0    12     ff 7.29 357         NaN     -0.24       0.66
+  nom    1     3     y2 3.09 357        0.23     -0.12      -1.55
+  nom    1     3     ff 7.86 357       -0.27     -0.15       0.40
+  nom    1     6     y2 2.52 357        0.20     -0.09      -1.70
+  nom    1     6     ff 6.67 357       -0.29     -0.16       0.62
+  nom    1    12     y2 1.69 357        0.13     -0.09      -2.08
+  nom    1    12     ff 8.11 357       -0.29     -0.15       0.57
+ real    0     3     y2 6.08 357         NaN     -0.40      -0.93
+ real    0     3     ff 8.03 357         NaN     -0.21       0.53
+ real    0     6     y2 5.76 357         NaN     -0.30      -1.10
+ real    0     6     ff 7.48 357         NaN     -0.19       0.70
+ real    0    12     y2 5.04 357         NaN     -0.35      -1.38
+ real    0    12     ff 8.35 357         NaN     -0.22       0.30
+ real    1     3     y2 4.11 357        0.24     -0.20      -0.97
+ real    1     3     ff 7.27 357       -0.32     -0.21       0.51
+ real    1     6     y2 3.41 357        0.21     -0.13      -1.64
+ real    1     6     ff 6.87 357       -0.27     -0.17       0.55
+ real    1    12     y2 1.67 357        0.30     -0.23      -3.30
+ real    1    12     ff 7.88 357       -0.20     -0.16       0.06
+rstar    0     3     y2 5.80 357         NaN     -0.42      -0.89
+rstar    0     3     ff 6.37 357         NaN     -0.22       0.35
+rstar    0     6     y2 6.33 357         NaN     -0.33      -0.85
+rstar    0     6     ff 5.79 357         NaN     -0.21       0.28
+rstar    0    12     y2 4.92 357         NaN     -0.40      -1.63
+rstar    0    12     ff 6.52 357         NaN     -0.23      -0.21
+rstar    1     3     y2 6.41 357        0.46     -0.15      -1.21
+rstar    1     3     ff 5.63 357       -0.28     -0.23       0.33
+rstar    1     6     y2 5.88 357        0.47     -0.11      -1.75
+rstar    1     6     ff 5.31 357       -0.22     -0.20       0.09
+rstar    1    12     y2 3.18 357        0.62     -0.18      -3.68
+rstar    1    12     ff 6.30 357       -0.16     -0.17      -0.47
+
+ step  fci  lags policy case var  h     r     lo    hi  unbounded
+  nom    0     3     y2   P1   u 12 -0.24  -1.58  0.36          0
+  nom    0     3     y2   P1   P 24 -0.27  -1.29  0.56          0
+  nom    0     3     y2   P0   u 12  0.13    NaN   NaN          0
+  nom    0     3     y2   P0   P 24 -0.17    NaN   NaN          0
+  nom    0     3     y2   WE   u 12  0.06  -0.07  0.18          0
+  nom    0     3     y2   WE   P 24 -0.08  -0.30  0.11          0
+  nom    0     3     y2   WS   u 12  0.13  -0.14  0.36          0
+  nom    0     3     y2   WS   P 24 -0.17  -0.55  0.26          0
+  nom    0     3     ff   P1   u 12 -0.37  -0.69  0.31          0
+  nom    0     3     ff   P1   P 24 -0.15  -1.41  0.50          0
+  nom    0     3     ff   P0   u 12 -0.15    NaN   NaN          0
+  nom    0     3     ff   P0   P 24 -0.25    NaN   NaN          0
+  nom    0     6     y2   P1   u 12 -0.44  -1.82  0.36          0
+  nom    0     6     y2   P1   P 24 -0.28  -1.78  0.76          0
+  nom    0     6     y2   P0   u 12 -0.11    NaN   NaN          0
+  nom    0     6     y2   P0   P 24 -0.18    NaN   NaN          0
+  nom    0     6     y2   WE   u 12 -0.05  -0.21  0.07          0
+  nom    0     6     y2   WE   P 24 -0.08  -0.31  0.08          0
+  nom    0     6     y2   WS   u 12 -0.11  -0.39  0.20          0
+  nom    0     6     y2   WS   P 24 -0.18  -0.60  0.23          0
+  nom    0     6     ff   P1   u 12 -0.73  -1.22  0.01          0
+  nom    0     6     ff   P1   P 24  0.03  -1.76  1.02          0
+  nom    0     6     ff   P0   u 12 -0.42    NaN   NaN          0
+  nom    0     6     ff   P0   P 24 -0.22    NaN   NaN          0
+  nom    0    12     y2   P1   u 12 -0.64  -2.01  0.04          0
+  nom    0    12     y2   P1   P 24 -0.04  -1.49  1.36          0
+  nom    0    12     y2   P0   u 12 -0.30    NaN   NaN          0
+  nom    0    12     y2   P0   P 24 -0.07    NaN   NaN          0
+  nom    0    12     y2   WE   u 12 -0.14  -0.27 -0.04          0
+  nom    0    12     y2   WE   P 24 -0.03  -0.23  0.15          0
+  nom    0    12     y2   WS   u 12 -0.30  -0.57 -0.08          0
+  nom    0    12     y2   WS   P 24 -0.07  -0.53  0.30          0
+  nom    0    12     ff   P1   u 12 -0.90  -1.38 -0.27          0
+  nom    0    12     ff   P1   P 24  0.26  -1.55  1.26          0
+  nom    0    12     ff   P0   u 12 -0.52    NaN   NaN          0
+  nom    0    12     ff   P0   P 24 -0.03    NaN   NaN          0
+  nom    1     3     y2   P1   u 12 -0.04  -3.65  1.60          0
+  nom    1     3     y2   P1   P 24 -0.35  -4.29  1.14          0
+  nom    1     3     y2   P0   u 12  0.06  -1.56  2.01          0
+  nom    1     3     y2   P0   P 24 -0.13  -0.61  0.26          0
+  nom    1     3     y2   WE   u 12  0.21   0.09  0.34          0
+  nom    1     3     y2   WE   P 24 -0.11  -0.30  0.04          0
+  nom    1     3     y2   WS   u 12  0.46   0.25  0.70          0
+  nom    1     3     y2   WS   P 24 -0.23  -0.58  0.18          0
+  nom    1     3     ff   P1   u 12 -0.74  -1.17 -0.03          0
+  nom    1     3     ff   P1   P 24  0.06  -1.13  0.70          0
+  nom    1     3     ff   P0   u 12 -0.59  -0.94 -0.14          0
+  nom    1     3     ff   P0   P 24 -0.02  -0.20  0.11          0
+  nom    1     6     y2   P1   u 12 -0.18 -15.00 15.00          1
+  nom    1     6     y2   P1   P 24 -0.50 -15.00 15.00          1
+  nom    1     6     y2   P0   u 12 -0.10 -15.00 15.00          1
+  nom    1     6     y2   P0   P 24 -0.18 -15.00 15.00          1
+  nom    1     6     y2   WE   u 12  0.17   0.05  0.31          0
+  nom    1     6     y2   WE   P 24 -0.15  -0.32  0.04          0
+  nom    1     6     y2   WS   u 12  0.36   0.12  0.70          0
+  nom    1     6     y2   WS   P 24 -0.32  -0.89  0.13          0
+  nom    1     6     ff   P1   u 12 -0.98  -1.47 -0.35          0
+  nom    1     6     ff   P1   P 24  0.15  -1.51  1.11          0
+  nom    1     6     ff   P0   u 12 -0.78  -1.14 -0.39          0
+  nom    1     6     ff   P0   P 24 -0.03  -0.24  0.16          0
+  nom    1    12     y2   P1   u 12 -0.38 -15.00 15.00          1
+  nom    1    12     y2   P1   P 24 -0.50 -15.00 15.00          1
+  nom    1    12     y2   P0   u 12 -0.28 -15.00 15.00          1
+  nom    1    12     y2   P0   P 24 -0.06 -15.00 15.00          1
+  nom    1    12     y2   WE   u 12  0.11  -0.00  0.24          0
+  nom    1    12     y2   WE   P 24 -0.10  -0.28  0.09          0
+  nom    1    12     y2   WS   u 12  0.23  -0.04  0.54          0
+  nom    1    12     y2   WS   P 24 -0.22  -0.65  0.21          0
+  nom    1    12     ff   P1   u 12 -1.02  -1.51 -0.42          0
+  nom    1    12     ff   P1   P 24  0.28  -1.38  1.29          0
+  nom    1    12     ff   P0   u 12 -0.84  -1.18 -0.49          0
+  nom    1    12     ff   P0   P 24  0.07  -0.13  0.26          0
+ real    0     3     y2   P1   u 12 -0.30  -1.95  0.29          0
+ real    0     3     y2   P1   P 24 -0.31  -1.20  0.57          0
+ real    0     3     y2   P0   u 12  0.17    NaN   NaN          0
+ real    0     3     y2   P0   P 24 -0.25    NaN   NaN          0
+ real    0     3     y2   WE   u 12  0.08  -0.01  0.18          0
+ real    0     3     y2   WE   P 24 -0.12  -0.29  0.03          0
+ real    0     3     y2   WS   u 12  0.17  -0.03  0.38          0
+ real    0     3     y2   WS   P 24 -0.25  -0.60  0.04          0
+ real    0     3     ff   P1   u 12 -0.16  -0.56  0.36          0
+ real    0     3     ff   P1   P 24 -0.18  -1.39  0.38          0
+ real    0     3     ff   P0   u 12  0.14    NaN   NaN          0
+ real    0     3     ff   P0   P 24 -0.32    NaN   NaN          0
+ real    0     6     y2   P1   u 12 -0.51  -2.43  0.28          0
+ real    0     6     y2   P1   P 24 -0.37  -1.67  0.81          0
+ real    0     6     y2   P0   u 12 -0.03    NaN   NaN          0
+ real    0     6     y2   P0   P 24 -0.25    NaN   NaN          0
+ real    0     6     y2   WE   u 12 -0.01  -0.15  0.13          0
+ real    0     6     y2   WE   P 24 -0.12  -0.29  0.06          0
+ real    0     6     y2   WS   u 12 -0.03  -0.30  0.26          0
+ real    0     6     y2   WS   P 24 -0.25  -0.64  0.18          0
+ real    0     6     ff   P1   u 12 -0.42  -1.10  0.20          0
+ real    0     6     ff   P1   P 24 -0.08  -1.68  0.82          0
+ real    0     6     ff   P0   u 12 -0.06    NaN   NaN          0
+ real    0     6     ff   P0   P 24 -0.31    NaN   NaN          0
+ real    0    12     y2   P1   u 12 -0.76  -3.03 -0.04          0
+ real    0    12     y2   P1   P 24 -0.33  -1.97  1.17          0
+ real    0    12     y2   P0   u 12 -0.21    NaN   NaN          0
+ real    0    12     y2   P0   P 24 -0.15    NaN   NaN          0
+ real    0    12     y2   WE   u 12 -0.10  -0.21  0.03          0
+ real    0    12     y2   WE   P 24 -0.07  -0.27  0.11          0
+ real    0    12     y2   WS   u 12 -0.21  -0.48  0.06          0
+ real    0    12     y2   WS   P 24 -0.15  -0.51  0.30          0
+ real    0    12     ff   P1   u 12 -0.59  -1.21 -0.03          0
+ real    0    12     ff   P1   P 24 -0.04  -1.79  0.89          0
+ real    0    12     ff   P0   u 12 -0.22    NaN   NaN          0
+ real    0    12     ff   P0   P 24 -0.21    NaN   NaN          0
+ real    1     3     y2   P1   u 12 -0.11  -1.83  0.86          0
+ real    1     3     y2   P1   P 24 -0.32  -1.79  0.77          0
+ real    1     3     y2   P0   u 12  0.08  -0.66  1.26          0
+ real    1     3     y2   P0   P 24 -0.20  -0.49 -0.03          0
+ real    1     3     y2   WE   u 12  0.23   0.11  0.32          0
+ real    1     3     y2   WE   P 24 -0.14  -0.32  0.01          0
+ real    1     3     y2   WS   u 12  0.49   0.26  0.72          0
+ real    1     3     y2   WS   P 24 -0.31  -0.68  0.02          0
+ real    1     3     ff   P1   u 12 -0.47  -1.21  0.19          0
+ real    1     3     ff   P1   P 24 -0.03  -1.31  0.57          0
+ real    1     3     ff   P0   u 12 -0.24  -0.74  0.18          0
+ real    1     3     ff   P0   P 24 -0.14  -0.30  0.05          0
+ real    1     6     y2   P1   u 12 -0.19  -2.79  1.53          0
+ real    1     6     y2   P1   P 24 -0.54  -4.12  1.04          0
+ real    1     6     y2   P0   u 12 -0.04  -0.95  2.18          0
+ real    1     6     y2   P0   P 24 -0.25  -1.00  0.06          0
+ real    1     6     y2   WE   u 12  0.19   0.06  0.35          0
+ real    1     6     y2   WE   P 24 -0.19  -0.41  0.02          0
+ real    1     6     y2   WS   u 12  0.42   0.13  0.73          0
+ real    1     6     y2   WS   P 24 -0.41  -0.89  0.01          0
+ real    1     6     ff   P1   u 12 -0.60  -1.50  0.07          0
+ real    1     6     ff   P1   P 24 -0.02  -1.63  0.95          0
+ real    1     6     ff   P0   u 12 -0.36  -0.88  0.08          0
+ real    1     6     ff   P0   P 24 -0.18  -0.38  0.05          0
+ real    1    12     y2   P1   u 12 -0.37 -15.00 15.00          1
+ real    1    12     y2   P1   P 24 -0.83 -15.00 15.00          1
+ real    1    12     y2   P0   u 12 -0.12 -15.00 15.00          1
+ real    1    12     y2   P0   P 24 -0.17 -15.00 15.00          1
+ real    1    12     y2   WE   u 12  0.14   0.03  0.29          0
+ real    1    12     y2   WE   P 24 -0.12  -0.34  0.06          0
+ real    1    12     y2   WS   u 12  0.30   0.07  0.63          0
+ real    1    12     y2   WS   P 24 -0.27  -0.66  0.12          0
+ real    1    12     ff   P1   u 12 -0.62  -1.40 -0.04          0
+ real    1    12     ff   P1   P 24 -0.10  -1.93  0.91          0
+ real    1    12     ff   P0   u 12 -0.41  -0.82 -0.04          0
+ real    1    12     ff   P0   P 24 -0.19  -0.34 -0.03          0
+rstar    0     3     y2   P1   u 12 -0.22  -1.94  0.31          0
+rstar    0     3     y2   P1   P 24 -0.61  -1.43  0.14          0
+rstar    0     3     y2   P0   u 12  0.25    NaN   NaN          0
+rstar    0     3     y2   P0   P 24 -0.53    NaN   NaN          0
+rstar    0     3     y2   WE   u 12  0.11   0.01  0.20          0
+rstar    0     3     y2   WE   P 24 -0.25  -0.40 -0.11          0
+rstar    0     3     y2   WS   u 12  0.25   0.06  0.43          0
+rstar    0     3     y2   WS   P 24 -0.53  -0.86 -0.28          0
+rstar    0     3     ff   P1   u 12 -0.04  -0.50  0.45          0
+rstar    0     3     ff   P1   P 24 -0.50  -1.75  0.01          0
+rstar    0     3     ff   P0   u 12  0.25    NaN   NaN          0
+rstar    0     3     ff   P0   P 24 -0.58    NaN   NaN          0
+rstar    0     6     y2   P1   u 12 -0.40  -2.27  0.33          0
+rstar    0     6     y2   P1   P 24 -0.68  -1.55  0.24          0
+rstar    0     6     y2   P0   u 12  0.14    NaN   NaN          0
+rstar    0     6     y2   P0   P 24 -0.62    NaN   NaN          0
+rstar    0     6     y2   WE   u 12  0.06  -0.05  0.18          0
+rstar    0     6     y2   WE   P 24 -0.29  -0.48 -0.13          0
+rstar    0     6     y2   WS   u 12  0.14  -0.10  0.44          0
+rstar    0     6     y2   WS   P 24 -0.62  -0.99 -0.26          0
+rstar    0     6     ff   P1   u 12 -0.25  -1.12  0.37          0
+rstar    0     6     ff   P1   P 24 -0.55  -2.17  0.22          0
+rstar    0     6     ff   P0   u 12  0.12    NaN   NaN          0
+rstar    0     6     ff   P0   P 24 -0.66    NaN   NaN          0
+rstar    0    12     y2   P1   u 12 -0.68  -3.39  0.08          0
+rstar    0    12     y2   P1   P 24 -0.77  -2.09  0.35          0
+rstar    0    12     y2   P0   u 12  0.00    NaN   NaN          0
+rstar    0    12     y2   P0   P 24 -0.58    NaN   NaN          0
+rstar    0    12     y2   WE   u 12  0.00  -0.12  0.12          0
+rstar    0    12     y2   WE   P 24 -0.27  -0.41 -0.12          0
+rstar    0    12     y2   WS   u 12  0.00  -0.23  0.27          0
+rstar    0    12     y2   WS   P 24 -0.58  -0.96 -0.27          0
+rstar    0    12     ff   P1   u 12 -0.43  -1.23  0.19          0
+rstar    0    12     ff   P1   P 24 -0.60  -2.47  0.22          0
+rstar    0    12     ff   P0   u 12 -0.06    NaN   NaN          0
+rstar    0    12     ff   P0   P 24 -0.61    NaN   NaN          0
+rstar    1     3     y2   P1   u 12  0.02  -0.84  0.81          0
+rstar    1     3     y2   P1   P 24 -0.57  -1.60  0.07          0
+rstar    1     3     y2   P0   u 12  0.15  -0.44  0.97          0
+rstar    1     3     y2   P0   P 24 -0.41  -0.93 -0.04          0
+rstar    1     3     y2   WE   u 12  0.22   0.10  0.32          0
+rstar    1     3     y2   WE   P 24 -0.29  -0.49 -0.13          0
+rstar    1     3     y2   WS   u 12  0.48   0.24  0.72          0
+rstar    1     3     y2   WS   P 24 -0.62  -0.96 -0.30          0
+rstar    1     3     ff   P1   u 12 -0.39  -1.58  0.27          0
+rstar    1     3     ff   P1   P 24 -0.13  -1.41  0.62          0
+rstar    1     3     ff   P0   u 12 -0.18  -1.02  0.33          0
+rstar    1     3     ff   P0   P 24 -0.13  -0.56  0.56          0
+rstar    1     6     y2   P1   u 12 -0.01  -1.09  1.09          0
+rstar    1     6     y2   P1   P 24 -0.81  -2.25 -0.05          0
+rstar    1     6     y2   P0   u 12  0.14  -0.55  1.25          0
+rstar    1     6     y2   P0   P 24 -0.57  -1.39 -0.05          0
+rstar    1     6     y2   WE   u 12  0.23   0.09  0.37          0
+rstar    1     6     y2   WE   P 24 -0.39  -0.59 -0.23          0
+rstar    1     6     y2   WS   u 12  0.51   0.18  0.87          0
+rstar    1     6     y2   WS   P 24 -0.84  -1.30 -0.42          0
+rstar    1     6     ff   P1   u 12 -0.52  -2.19  0.20          0
+rstar    1     6     ff   P1   P 24 -0.22  -1.70  0.80          0
+rstar    1     6     ff   P0   u 12 -0.26  -1.26  0.32          0
+rstar    1     6     ff   P0   P 24 -0.20  -0.75  0.74          0
+rstar    1    12     y2   P1   u 12 -0.11  -3.18  2.52          0
+rstar    1    12     y2   P1   P 24 -1.07 -10.15 -0.03          0
+rstar    1    12     y2   P0   u 12  0.17  -1.10  4.92          0
+rstar    1    12     y2   P0   P 24 -0.54  -3.84  0.34          0
+rstar    1    12     y2   WE   u 12  0.21   0.11  0.35          0
+rstar    1    12     y2   WE   P 24 -0.34  -0.49 -0.21          0
+rstar    1    12     y2   WS   u 12  0.47   0.20  0.76          0
+rstar    1    12     y2   WS   P 24 -0.75  -1.14 -0.47          0
+rstar    1    12     ff   P1   u 12 -0.54  -1.84  0.13          0
+rstar    1    12     ff   P1   P 24 -0.24  -1.90  0.63          0
+rstar    1    12     ff   P0   u 12 -0.32  -1.08  0.23          0
+rstar    1    12     ff   P0   P 24 -0.15  -0.66  0.54          0

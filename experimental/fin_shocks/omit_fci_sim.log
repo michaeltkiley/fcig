@@ -1,0 +1,70 @@
+Omitted-FCI simulation. Window ratio FCI/2-year 0.992. 2000 draws at the actual sample length; 300 at 10 times it.
+
+
+nom: FCI residual per unit of 2-year residual in ordinary months 0.36 (window ratio 0.99)
+nom, true model 6 lags, T=382, largest root 0.956; true u 12m +0.36 24m +0.56 36m +0.47; true P 12m -0.13 24m -0.32 36m -0.39
+  actual sample: estimate mean (sd) [share wrong sign]
+    with FCI      3 lags: u 12m +0.36 (0.18) [3%]   P 24m -0.22 (0.24) [19%]
+    without FCI   3 lags: u 12m +0.04 (0.18) [41%]   P 24m -0.12 (0.22) [29%]
+    with FCI      6 lags: u 12m +0.32 (0.18) [4%]   P 24m -0.34 (0.25) [8%]
+    without FCI   6 lags: u 12m -0.08 (0.18) [66%]   P 24m -0.21 (0.23) [18%]
+    with FCI     12 lags: u 12m +0.31 (0.21) [7%]   P 24m -0.32 (0.28) [12%]
+    without FCI  12 lags: u 12m -0.07 (0.19) [63%]   P 24m -0.19 (0.26) [22%]
+  long sample: estimate mean (sd) [share wrong sign]
+    with FCI      3 lags: u 12m +0.40 (0.06) [0%]   P 24m -0.16 (0.08) [3%]
+    without FCI   3 lags: u 12m +0.06 (0.06) [18%]   P 24m -0.09 (0.08) [12%]
+    with FCI      6 lags: u 12m +0.37 (0.06) [0%]   P 24m -0.33 (0.09) [0%]
+    without FCI   6 lags: u 12m -0.08 (0.06) [92%]   P 24m -0.20 (0.09) [1%]
+    with FCI     12 lags: u 12m +0.36 (0.07) [0%]   P 24m -0.32 (0.09) [0%]
+    without FCI  12 lags: u 12m -0.09 (0.06) [90%]   P 24m -0.18 (0.09) [3%]
+
+nom: FCI residual per unit of 2-year residual in ordinary months 0.34 (window ratio 0.99)
+nom, true model 12 lags, T=382, largest root 0.986; true u 12m +0.23 24m +0.37 36m +0.41; true P 12m -0.08 24m -0.22 36m -0.27
+  actual sample: estimate mean (sd) [share wrong sign]
+    with FCI      3 lags: u 12m +0.32 (0.18) [4%]   P 24m -0.22 (0.25) [19%]
+    without FCI   3 lags: u 12m -0.04 (0.18) [58%]   P 24m -0.09 (0.22) [33%]
+    with FCI      6 lags: u 12m +0.24 (0.17) [8%]   P 24m -0.21 (0.24) [18%]
+    without FCI   6 lags: u 12m -0.19 (0.16) [88%]   P 24m -0.05 (0.22) [41%]
+    with FCI     12 lags: u 12m +0.17 (0.17) [15%]   P 24m -0.25 (0.23) [14%]
+    without FCI  12 lags: u 12m -0.30 (0.16) [97%]   P 24m -0.08 (0.24) [36%]
+  long sample: estimate mean (sd) [share wrong sign]
+    with FCI      3 lags: u 12m +0.41 (0.06) [0%]   P 24m -0.02 (0.09) [37%]
+    without FCI   3 lags: u 12m +0.02 (0.06) [37%]   P 24m +0.01 (0.08) [56%]
+    with FCI      6 lags: u 12m +0.34 (0.05) [0%]   P 24m -0.15 (0.08) [4%]
+    without FCI   6 lags: u 12m -0.13 (0.06) [99%]   P 24m -0.06 (0.07) [19%]
+    with FCI     12 lags: u 12m +0.23 (0.05) [0%]   P 24m -0.22 (0.08) [1%]
+    without FCI  12 lags: u 12m -0.30 (0.06) [100%]   P 24m -0.08 (0.08) [15%]
+
+rstar: FCI residual per unit of 2-year residual in ordinary months 0.42 (window ratio 0.99)
+rstar, true model 6 lags, T=382, largest root 0.971; true u 12m +0.51 24m +0.54 36m +0.35; true P 12m -0.46 24m -0.84 36m -0.92
+  actual sample: estimate mean (sd) [share wrong sign]
+    with FCI      3 lags: u 12m +0.39 (0.18) [1%]   P 24m -0.53 (0.24) [1%]
+    without FCI   3 lags: u 12m +0.15 (0.17) [19%]   P 24m -0.42 (0.21) [3%]
+    with FCI      6 lags: u 12m +0.43 (0.19) [1%]   P 24m -0.75 (0.25) [0%]
+    without FCI   6 lags: u 12m +0.11 (0.17) [26%]   P 24m -0.57 (0.22) [1%]
+    with FCI     12 lags: u 12m +0.42 (0.20) [2%]   P 24m -0.73 (0.27) [0%]
+    without FCI  12 lags: u 12m +0.12 (0.18) [26%]   P 24m -0.54 (0.24) [1%]
+  long sample: estimate mean (sd) [share wrong sign]
+    with FCI      3 lags: u 12m +0.45 (0.06) [0%]   P 24m -0.59 (0.08) [0%]
+    without FCI   3 lags: u 12m +0.17 (0.06) [0%]   P 24m -0.45 (0.07) [0%]
+    with FCI      6 lags: u 12m +0.51 (0.06) [0%]   P 24m -0.83 (0.08) [0%]
+    without FCI   6 lags: u 12m +0.15 (0.06) [1%]   P 24m -0.62 (0.08) [0%]
+    with FCI     12 lags: u 12m +0.51 (0.07) [0%]   P 24m -0.83 (0.09) [0%]
+    without FCI  12 lags: u 12m +0.14 (0.06) [1%]   P 24m -0.59 (0.08) [0%]
+
+rstar: FCI residual per unit of 2-year residual in ordinary months 0.42 (window ratio 0.99)
+rstar, true model 12 lags, T=382, largest root 0.985; true u 12m +0.47 24m +0.44 36m +0.35; true P 12m -0.37 24m -0.75 36m -0.86
+  actual sample: estimate mean (sd) [share wrong sign]
+    with FCI      3 lags: u 12m +0.36 (0.19) [3%]   P 24m -0.44 (0.23) [3%]
+    without FCI   3 lags: u 12m +0.06 (0.18) [37%]   P 24m -0.31 (0.20) [6%]
+    with FCI      6 lags: u 12m +0.39 (0.18) [2%]   P 24m -0.55 (0.26) [1%]
+    without FCI   6 lags: u 12m +0.04 (0.17) [42%]   P 24m -0.36 (0.22) [5%]
+    with FCI     12 lags: u 12m +0.38 (0.17) [1%]   P 24m -0.66 (0.22) [0%]
+    without FCI  12 lags: u 12m -0.00 (0.16) [51%]   P 24m -0.45 (0.22) [2%]
+  long sample: estimate mean (sd) [share wrong sign]
+    with FCI      3 lags: u 12m +0.46 (0.07) [0%]   P 24m -0.39 (0.07) [0%]
+    without FCI   3 lags: u 12m +0.12 (0.06) [3%]   P 24m -0.26 (0.07) [0%]
+    with FCI      6 lags: u 12m +0.50 (0.06) [0%]   P 24m -0.57 (0.09) [0%]
+    without FCI   6 lags: u 12m +0.12 (0.06) [2%]   P 24m -0.39 (0.07) [0%]
+    with FCI     12 lags: u 12m +0.46 (0.06) [0%]   P 24m -0.74 (0.07) [0%]
+    without FCI  12 lags: u 12m +0.02 (0.06) [40%]   P 24m -0.49 (0.07) [0%]
