@@ -11,6 +11,7 @@
 | `omit_fci_sim.py` | Simulation in Section 2 of the note: true four-variable VAR, estimated with and without the FCI (FS-A34) |
 | `monthly_proxy.py` | Purely monthly VAR comparison: proxy and window-impact identification, with and without the FCI (FS-A38) |
 | `window_scope.py` | Scope of the window impact: R2 of window moves on the surprise, b_F by state and period, trace of the unexplained FCI move; commodity table (FS-A39) |
+| `tradeoff.py` | Implied tradeoff: Phillips multiplier with Anderson-Rubin-type sets, and the shock's 2-year/FCI paths; table and headline figure built in `paper/make_tables.py` (FS-A40) |
 | `data/` | GSW 9-10y forward rate; Bauer-Swanson posted surprises |
 | `FS_QA.md` | Decisions FS-A1..A39 |
 | `MF_REPORT.md` | Older markdown version of the note (superseded) |
