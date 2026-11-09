@@ -83,6 +83,20 @@ DROP_Y = int(SAMPLE[4:]) if SAMPLE.startswith("drop") else None
 BOOT_REC = os.environ.get("BOOT_REC", "") == "1"      # FS-A26: recursive-design wild (Rademacher) bootstrap of the monthly block
 LAGS = tuple(int(x) for x in os.environ.get("LAGS", "3,6,12").split(","))
 TREND = False   # robustness (FS-A19): quadratic time trend (t, t^2; t in decades from 2010) in every monthly equation
+TRENDTYPE = os.environ.get("TRENDTYPE", "quad")   # "quad" (baseline, t, t^2) or "spline" (natural cubic spline, knots at NBER peaks inside the sample, boundary knots at the sample ends)
+NBER_PEAKS = ["2001-03", "2007-12", "2020-02"]     # business-cycle peaks after 1994 (NBER)
+
+def _dec(p):
+    return (p.year + (p.month - 1) / 12 - 2010) / 10
+
+def trend_cols(periods):
+    """Deterministic trend columns (without the constant) for a list of monthly Periods."""
+    t = np.array([_dec(p) for p in periods])
+    if TRENDTYPE != "spline": return np.c_[t, t * t]
+    a = pd.Period(MSTART or "1994-02", "M"); b = pd.Period(f"{END_Y}-12" if END_Y else "2026-09", "M")
+    kn = [_dec(a)] + [_dec(pd.Period(k, "M")) for k in NBER_PEAKS if a < pd.Period(k, "M") < b] + [_dec(b)]
+    K = len(kn); d = lambda k: (np.maximum(t - kn[k], 0) ** 3 - np.maximum(t - kn[-1], 0) ** 3) / (kn[-1] - kn[k])
+    return np.c_[t, *[d(k) - d(K - 2) for k in range(K - 2)]]
 MAC = MB.MAC
 MAC["ebp"] = MM0.ebp          # FS-A32: monthly excess bond premium (Favara et al.), pp; a third monthly variable treated like u and inflation
 
@@ -148,8 +162,7 @@ def macro_data(form, fci, mvars, L):
         try:
             xm = np.concatenate([MMv.loc[p - l].values for l in range(1, L + 1)]); xf = np.concatenate([FB.loc[p - l].values for l in range(1, L + 1)])
         except KeyError: continue
-        tt = (p.year + (p.month - 1) / 12 - 2010) / 10
-        x = np.r_[1.0, xm, xf] if not TREND else np.r_[1.0, xm, xf, tt, tt * tt]; y = MMv.loc[p].values
+        x = np.r_[1.0, xm, xf] if not TREND else np.r_[1.0, xm, xf, trend_cols([p])[0]]; y = MMv.loc[p].values
         if np.isnan(x).any() or np.isnan(y).any(): continue
         X.append(x); Y.append(y); ROWS.append(p)
     return np.array(X), np.array(Y)
@@ -166,13 +179,13 @@ def rec_boot_data(form, fci, mvars, L, C, res):
     if key not in _REC_CACHE:
         FB = fin_monthly(form, fci); MMv = MAC[mvars]
         idx = MMv.index; FBa = FB.reindex(idx).values; pos = np.array([idx.get_loc(p) for p in ROWS])
-        tt = np.array([(p.year + (p.month - 1) / 12 - 2010) / 10 for p in ROWS])
+        tt = trend_cols(ROWS)
         _REC_CACHE[key] = (MMv.values.copy(), FBa, pos, tt)
     MM0, FBa, pos, tt = _REC_CACHE[key]; MMb = MM0.copy(); eta = rng.choice([-1.0, 1.0], size=len(res))
     lagi = np.arange(1, L + 1)
     def xrow(k):
         q = pos[k]; xm = MMb[q - lagi].ravel(); xf = FBa[q - lagi].ravel()
-        return np.r_[1.0, xm, xf] if not TREND else np.r_[1.0, xm, xf, tt[k], tt[k] ** 2]
+        return np.r_[1.0, xm, xf] if not TREND else np.r_[1.0, xm, xf, tt[k]]
     for k in range(len(pos)):
         MMb[pos[k]] = xrow(k) @ C + eta[k] * res[k]
     Xb = np.array([xrow(k) for k in range(len(pos))]); Yb = MMb[pos]
@@ -218,9 +231,9 @@ if __name__ == "__main__":
                     case = f"[{mlab}] rate {form}, {'FCI ' + (form if fci == 1 else fci) if fci else 'no FCI'}{', trend' if TREND else ''}, {L} lags"
                     print(f"{case:40s}: " + "  ".join(f"{n} " + " ".join(f"{h}:{s0[h, j]:+.2f}[{lo[h, j]:+.2f},{hi[h, j]:+.2f}]" for h in (12, 24, 36)) for j, n in enumerate(names)) + f"  ({time.time() - t0:.0f}s)", flush=True)
                     for j, n in enumerate(names):
-                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), mstart=(MSTART or "1994-02"), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
+                        rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND) * (2 if TRENDTYPE == "spline" else 1), mstart=(MSTART or "1994-02"), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
                                          **{f"lo68_{h}": lo68[h, j] for h in (12, 24, 36)}, **{f"hi68_{h}": hi68[h, j] for h in (12, 24, 36)}))
-                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND), mstart=(MSTART or "1994-02"), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
-    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_" + SAMPLE if SAMPLE else "") + ("_m" + MSTART.replace("-", "") if MSTART else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "") + ("" if SHOCK == "NS" else "_" + SHOCK) + ("_bootd" if BOOT_DAILY else "") + ("_bootrec" if BOOT_REC else "") + ("_L" + "-".join(map(str, LAGS)) if LAGS != (3, 6, 12) else "")
+                        irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND) * (2 if TRENDTYPE == "spline" else 1), mstart=(MSTART or "1994-02"), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
+    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_spl" if TREND and TRENDTYPE == "spline" else "") + ("_" + SAMPLE if SAMPLE else "") + ("_m" + MSTART.replace("-", "") if MSTART else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "") + ("" if SHOCK == "NS" else "_" + SHOCK) + ("_bootd" if BOOT_DAILY else "") + ("_bootrec" if BOOT_REC else "") + ("_L" + "-".join(map(str, LAGS)) if LAGS != (3, 6, 12) else "")
     pd.DataFrame(rows).to_csv(f"midas_core{suf}.csv", index=False, float_format="%.4f")
     pd.concat(irfrows).to_csv(f"midas_core{suf}_irf.csv", index=False, float_format="%.4f")
