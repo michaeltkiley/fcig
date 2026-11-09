@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.10.16)  9 NOV 2026 16:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.10.16)  9 NOV 2026 17:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -549,98 +549,109 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 20.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-di
+st/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/
+lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.en
+c}]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
 0.
 
 (/usr/share/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-di
-st/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/
-lm/lm-mathit.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.en
-c}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+)
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 40.
- [2] [3] [4] [5{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/us
-r/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}] (./tables/tab0_si
-m.tex) [6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+(Font)              <10.95> on input line 39.
+ [2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] [3{/usr/share
+/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}] [4] [5] (./tables/tab0_sim.t
+ex) [6{/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}] [7] [8]
+
+Underfull \hbox (badness 10000) in paragraph at lines 158--158
 []\T1/lmr/m/n/10 Window
  []
 
 
-Underfull \hbox (badness 1622) in paragraph at lines 178--178
+Underfull \hbox (badness 1622) in paragraph at lines 160--160
 []\T1/lmr/m/n/10 Unemployment and in-fla-tion,
  []
 
-[9] [10] [11] [12] (./tables/tab1_core.tex)
+[9] [10] [11] (./tables/tab1_core.tex)
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 255.
-<figures/fig1_steps.pdf, id=522, 794.97pt x 361.35pt>
+(Font)              <9> on input line 214.
+<figures/fig1_steps.pdf, id=612, 794.97pt x 361.35pt>
 File: figures/fig1_steps.pdf Graphic file (type pdf)
 <use figures/fig1_steps.pdf>
-Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 259.
+Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 218.
 (pdftex.def)             Requested size: 469.75502pt x 213.53099pt.
- [13] [14 <./figures/fig1_steps.pdf>] (./tables/tab2_rob_u.tex) [15] (./tables/
-tab2_rob_p.tex) [16] [17]
-(./tables/tab3_smp.tex)
-<figures/fig2_recent.pdf, id=662, 578.16pt x 231.26399pt>
+ [12] [13 <./figures/fig1_steps.pdf>]
+<figures/fig0_headline.pdf, id=711, 794.97pt x 404.712pt>
+File: figures/fig0_headline.pdf Graphic file (type pdf)
+<use figures/fig0_headline.pdf>
+Package pdftex.def Info: figures/fig0_headline.pdf  used on input line 234.
+(pdftex.def)             Requested size: 469.75502pt x 239.15471pt.
+
+[14 <./figures/fig0_headline.pdf>]
+<figures/fig_long.pdf, id=785, 722.7pt x 231.26399pt>
+File: figures/fig_long.pdf Graphic file (type pdf)
+<use figures/fig_long.pdf>
+Package pdftex.def Info: figures/fig_long.pdf  used on input line 252.
+(pdftex.def)             Requested size: 469.75502pt x 150.32333pt.
+ [15 <./figures/fig_long.pdf>]
+(./tables/tab_tradeoff.tex) [16] [17] (./tables/tab3_smp.tex) [18]
+<figures/fig2_recent.pdf, id=889, 578.16pt x 231.26399pt>
 File: figures/fig2_recent.pdf Graphic file (type pdf)
 <use figures/fig2_recent.pdf>
-Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 317.
+Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 309.
 (pdftex.def)             Requested size: 399.29463pt x 159.717pt.
-<figures/fig3_loyo.pdf, id=663, 650.43pt x 216.81pt>
+<figures/fig3_loyo.pdf, id=890, 650.43pt x 216.81pt>
 File: figures/fig3_loyo.pdf Graphic file (type pdf)
 <use figures/fig3_loyo.pdf>
-Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 322.
+Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 314.
 (pdftex.def)             Requested size: 422.77664pt x 140.92813pt.
- [18 <./figures/fig2_recent.pdf>] [19 <./figures/fig3_loyo.pdf>] [20] [21] [22]
- [23] [24] [25] [26] (./tables/tabA_ip.tex)
-(./tables/tabA_shocks.tex) [27] (./tables/tabA_notrend.tex)
-(./tables/tabA_boot.tex) [28] (./tables/tabA_long_u.tex)
-(./tables/tabA_long_p.tex) [29] [30] (./tables/tabA_monthly.tex) [31]
-(./tables/tabA_scope.tex) (./tables/tabA_com.tex) [32]
-Underfull \hbox (badness 10000) in paragraph at lines 517--517
+ [19 <./figures/fig2_recent.pdf>] [20 <./figures/fig3_loyo.pdf>] [21] [22] [23]
+ [24]
+[25] [26] [27] [28] (./tables/tabA_ip.tex) (./tables/tabA_notrend.tex)
+(./tables/tabA_monthly.tex) [29] (./tables/tabA_scope.tex) [30]
+(./tables/tabA_com.tex) [31] (./tables/tab2_rob_u.tex) (./tables/tab2_rob_p.tex
+) [32] (./tables/tabA_shocks.tex) [33] (./tables/tabA_long_u.tex) [34]
+(./tables/tabA_long_p.tex) [35] (./tables/tabA_boot.tex) [36] [37] [38]
+Underfull \hbox (badness 10000) in paragraph at lines 580--580
 []\T1/lmr/m/n/10 Industrial pro-duc-tion; com-mod-ity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 522--522
+Underfull \hbox (badness 10000) in paragraph at lines 585--585
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 523--524
+Underfull \hbox (badness 7168) in paragraph at lines 586--587
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF2YR, EX-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 528--529
+Underfull \hbox (badness 10000) in paragraph at lines 591--592
 []\T1/lmr/m/n/10 FRED DTWEXBGS, ear-lier DTWEXB,
  []
 
-[33] [34] (./tables/tabA_cc.tex) (./tables/tabA_ebp.tex) [35]
-(./tables/tabA_prop.tex) [36] [37] (./mp_transmission.aux)
+[39] [40] (./tables/tabA_cc.tex) (./tables/tabA_ebp.tex) [41]
+(./tables/tabA_prop.tex) [42] [43] (./mp_transmission.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
-(rerunfilecheck)             Checksum: C026013F8B88FEF1510C9090BF3A5B72;2754.
+(rerunfilecheck)             Checksum: B5166656F19D75C7A53F545EB32C95D0;4491.
  ) 
 Here is how much of TeX's memory you used:
- 13789 strings out of 467363
- 215772 string characters out of 5419000
- 713839 words of memory out of 6000000
- 42456 multiletter control sequences out of 15000+600000
+ 13934 strings out of 467363
+ 218436 string characters out of 5419000
+ 706018 words of memory out of 6000000
+ 42558 multiletter control sequences out of 15000+600000
  709987 words of font info for 103 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,2300b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1623b,756s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/public/lm/lmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
@@ -659,10 +670,10 @@ fonts/type1/public/lm/lmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
 lic/lm/lmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy7.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/tex
 live/texmf-dist/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (37 pages, 545129 bytes).
+Output written on mp_transmission.pdf (43 pages, 630126 bytes).
 PDF statistics:
- 1122 PDF objects out of 1200 (max. 8388607)
- 872 compressed objects within 9 object streams
- 173 named destinations out of 1000 (max. 500000)
- 144 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1371 PDF objects out of 1440 (max. 8388607)
+ 1040 compressed objects within 11 object streams
+ 213 named destinations out of 1000 (max. 500000)
+ 226 words of extra memory for PDF output out of 10000 (max. 10000000)
 

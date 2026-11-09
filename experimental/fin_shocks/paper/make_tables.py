@@ -156,3 +156,103 @@ def shock_table(var, name):
     out += ["\\bottomrule", "\\end{tabular}"]
     open(os.path.join(HERE, "tables", name + ".tex"), "w").write("\n".join(out) + "\n")
 for var, nm in (("u", "tab8_shocks_u"), ("P", "tab8_shocks_p")): shock_table(var, nm)
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------
+# FS-A40: implied policy trade-off (Phillips multiplier, tradeoff.py), the headline figure with the shock's financial paths, and the long view
+# of nominal versus r*-gap rates. PAPER_* = values stated in the text; checked below (OK / MISMATCH).
+def _tload(name):
+    fn = os.path.join(UP, name)
+    return pd.read_csv(fn) if os.path.exists(fn) else None
+TB = _tload("tradeoff_nom-0_nom-1_real-0_real-1_rstar-0_rstar-1.csv")
+TF = _tload("tradeoff_nom-0_nom-1_real-0_real-1_rstar-0_rstar-1_fin.csv")
+TS = {"end2019": _tload("tradeoff_nom-1_rstar-0_rstar-1_end2019.csv"), "drop2021": _tload("tradeoff_nom-1_rstar-1_drop2021.csv"),
+      "m1973": _tload("tradeoff_nom-1_rstar-1_m197301.csv")}
+def kcell(r):
+    """Point estimate with its 90% Anderson-Rubin-type set; ** when the set excludes zero; open-ended sets shown with infinity."""
+    if r is None: return "", ""
+    lo_inf = not bool(r.bounded) and r.k_lo <= -5.99; hi_inf = not bool(r.bounded) and r.k_hi >= 2.99
+    v = "---" if (lo_inf and hi_inf) else f"{r.kappa:.2f}".replace("-", "$-$")      # set covers the whole grid: point estimate not informative
+    if r.k_hi < 0 or r.k_lo > 0: v += "$^{**}$"
+    lo = "$-\\infty$" if lo_inf else f"{r.k_lo:.2f}".replace("-", "$-$")
+    hi = "$\\infty$" if hi_inf else f"{r.k_hi:.2f}".replace("-", "$-$")
+    return v, f"{{\\scriptsize [{lo}, {hi}]}}"
+def krows(T, case, label, lab2):
+    out1, out2 = [f"{label} & {lab2}"], [" & "]
+    for Hh in (24, 36):
+        for L in (3, 6, 12):
+            g = T[(T.case == case) & (T.H == Hh) & (T.lags == L)]
+            a, b = kcell(g.iloc[0]) if len(g) else ("", ""); out1.append(a); out2.append(b)
+    return [" & ".join(out1) + " \\\\", " & ".join(out2) + " \\\\[2pt]"]
+if TB is not None:
+    o = ["\\begin{tabular}{llcccccc}", "\\toprule", " & & \\multicolumn{3}{c}{24 months} & \\multicolumn{3}{c}{36 months}\\\\", "\\cmidrule(lr){3-5}\\cmidrule(lr){6-8}",
+         "Step & FCI & 3 & 6 & 12 & 3 & 6 & 12 \\\\", "\\midrule", "\\multicolumn{8}{l}{\\textit{A. Baseline sample}}\\\\"]
+    for lab, lab2, c in (("Nominal", "none", "nom-0"), ("", "included", "nom-1"), ("Real", "none", "real-0"), ("", "included", "real-1"), ("$r^*$-gap", "none", "rstar-0"), ("", "included", "rstar-1")):
+        o += krows(TB, c, lab, lab2)
+    o += ["\\midrule", "\\multicolumn{8}{l}{\\textit{B. Other samples, with the FCI}}\\\\"]
+    for sk, slab in (("end2019", "End in 2019"), ("drop2021", "Also drop 2021"), ("m1973", "Monthly equations from 1973")):
+        if TS[sk] is None: continue
+        o += krows(TS[sk], "nom-1", slab, "nominal") + krows(TS[sk], "rstar-1", "", "$r^*$-gap")
+    o += ["\\midrule", "\\multicolumn{8}{l}{\\textit{C. Difference, $r^*$-gap minus nominal (both with the FCI), baseline sample}}\\\\"]
+    o += krows(TB, "diff rstar-1 minus nom-1", "", "")
+    o += ["\\bottomrule", "\\end{tabular}"]
+    open(os.path.join(HERE, "tables", "tab_tradeoff.tex"), "w").write("\n".join(o) + "\n")
+
+# Figure 1 (headline): baseline (r*-gap 2-year and FCI) vs the standard approach (nominal 2-year alone), 6 lags; financial paths from tradeoff.py
+if TF is not None and TB is not None:
+    fig, ax = plt.subplots(2, 3, figsize=(11, 5.6))
+    def band(a, g, col, lab, fill=True):
+        if fill: a.fill_between(g.h, g.lo, g.hi, color=col, alpha=0.18, lw=0)
+        a.plot(g.h, g.r, color=col, lw=1.6, ls="-" if fill else "--", label=lab)
+    spec = (("rstar-1", "rstar", "1", "k", "$r^*$-gap two-year yield and FCI (baseline)", True), ("nom-0", "nom", "0", "tab:red", "Nominal two-year yield alone", False))
+    for case, rate, fci, col, lab, fill in spec:
+        g = TF[(TF.case == case) & (TF.lags == 6) & (TF["var"] == "pol")].sort_values("h"); band(ax[0, 0], g, col, lab, fill)
+        if fci == "1": g = TF[(TF.case == case) & (TF.lags == 6) & (TF["var"] == "idx")].sort_values("h"); band(ax[0, 1], g, col, lab, fill)
+        for a, var, mac in ((ax[0, 2], "u", "u,pi"), (ax[1, 0], "P", "u,pi"), (ax[1, 1], "ip", "u,pi,ip")):
+            g = irf[(irf.macro == mac) & (irf["var"] == var) & (irf.rate == rate) & (irf.fci == fci) & (irf.lags == 6) & (irf.trend == TR) & (irf["sample"] == "")].sort_values("h")
+            if len(g): band(a, g, col, lab, fill)
+    # tradeoff path: price level against cumulative unemployment (pp-years), months 0-36
+    for case, col, lab in (("rstar-1", "k", "$r^*$-gap, with FCI"), ("nom-1", "tab:blue", "Nominal, with FCI")):
+        ru = irf[(irf.macro == "u,pi") & (irf["var"] == "u") & (irf.rate == case[:-2]) & (irf.fci == "1") & (irf.lags == 6) & (irf.trend == TR) & (irf["sample"] == "")].sort_values("h")
+        rp = irf[(irf.macro == "u,pi") & (irf["var"] == "P") & (irf.rate == case[:-2]) & (irf.fci == "1") & (irf.lags == 6) & (irf.trend == TR) & (irf["sample"] == "")].sort_values("h")
+        cu = np.cumsum(ru.r.values) / 12; ax[1, 2].plot(cu, rp.r.values, color=col, lw=1.6, label=lab)
+        for hh in (12, 24, 36): ax[1, 2].plot(cu[hh], rp.r.values[hh], "o", ms=3.5, color=col)
+    ax[1, 2].set_xlabel("Cumulative unemployment gap (pp-years)", fontsize=8); ax[1, 2].legend(fontsize=7, frameon=False, loc="lower left")
+    titles = ("Two-year yield (pp)", "FCI (index units)", "Unemployment gap (pp)", "Core PCE price level (%)", "Industrial production (%)", "Price level against cumulative unemployment")
+    for a, t in zip(ax.ravel(), titles):
+        a.set_title(t, fontsize=9); a.axhline(0, color="0.4", lw=0.6); a.tick_params(labelsize=8)
+    for a in list(ax[0]) + list(ax[1, :2]): a.set_xlabel("Months", fontsize=8)
+    ax[0, 0].legend(fontsize=7, frameon=False, loc="upper right")
+    fig.tight_layout(); fig.savefig(os.path.join(HERE, "figures", "fig0_headline.pdf")); plt.close(fig)
+
+# Figure: nominal versus r*-gap two-year yield and FCI, with the unemployment gap, 1994-2026
+_Z = pd.DataFrame({"y2n": _M.gs2, "y2r": gap2, "fn": _M.market_nominal, "fr": _M.market_rstar, "u": _M.u_gap}).loc["1994-01":"2026-09"]
+fig, ax = plt.subplots(1, 2, figsize=(10, 3.2), sharey=False); x = _Z.index.to_timestamp()
+ax[0].plot(x, _Z.y2n, color="tab:red", lw=1.3, label="Nominal two-year yield"); ax[0].plot(x, _Z.y2r, color="k", lw=1.5, label="$r^*$-gap two-year yield")
+ax[1].plot(x, _Z.fn, color="tab:red", lw=1.3, label="Nominal FCI"); ax[1].plot(x, _Z.fr, color="k", lw=1.5, label="$r^*$-gap FCI")
+for a in ax:
+    a.plot(x, _Z.u, color="0.55", lw=1.0, ls=":", label="Unemployment gap"); a.axhline(0, color="0.5", lw=0.6); a.legend(fontsize=7, frameon=False); a.tick_params(labelsize=8)
+ax[0].set_ylabel("Percent / index units", fontsize=8)
+fig.tight_layout(); fig.savefig(os.path.join(HERE, "figures", "fig_long.pdf")); plt.close(fig)
+
+# PAPER checks for FS-A40 (values stated in mp_transmission.tex, section 4.2 and 4.4)
+PAPER_TRADE = {  # (file key, case, H): (min, max) over lags 3/6/12 of the multiplier, as stated in the text
+    ("base", "rstar-1", 24): (-1.06, -0.77), ("base", "rstar-1", 36): (-0.84, -0.52),
+    ("base", "nom-1", 24): (-0.49, -0.29), ("base", "nom-1", 36): (-0.36, -0.20),
+    ("end2019", "rstar-1", 24): (-0.15, 0.03), ("end2019", "rstar-1", 36): (-0.16, 0.03),
+    ("drop2021", "rstar-1", 24): (-1.13, -0.45)}
+PAPER_FIN = {0: 0.46, 1: 0.97, 12: 0.61, 24: 0.28}     # r*-gap 2-year path (monthly average), r*-gap + FCI, 6 lags
+if TB is not None:
+    src = {"base": TB, **TS}
+    for (fk, case, Hh), (a, b) in PAPER_TRADE.items():
+        g = src[fk][(src[fk].case == case) & (src[fk].H == Hh)].kappa
+        ok = abs(g.min() - a) < 0.006 and abs(g.max() - b) < 0.006
+        print(f"PAPER multiplier {fk} {case} H{Hh}: text [{a}, {b}] data [{g.min():.2f}, {g.max():.2f}] {'OK' if ok else 'MISMATCH'}")
+    allex = TB[(TB.case == "rstar-1") & (TB.H.isin([24, 36]))]
+    print("PAPER r*-gap+FCI sets exclude zero and -0.15:", "OK" if ((allex.k_hi < -0.15) & allex.bounded).all() else "MISMATCH")
+    nomin = TB[(TB.case == "nom-1") & (TB.H.isin([24, 36]))]
+    print("PAPER nominal+FCI sets include zero:", "OK" if ((nomin.k_lo < 0) & (nomin.k_hi > 0)).all() else "MISMATCH")
+    dd = TB[(TB.case == "diff rstar-1 minus nom-1") & (TB.H.isin([24, 36]))]
+    print("PAPER difference interval includes zero:", "OK" if ((dd.k_lo < 0) & (dd.k_hi > 0)).all() else "MISMATCH")
+if TF is not None:
+    g = TF[(TF.case == "rstar-1") & (TF.lags == 6) & (TF["var"] == "pol")].set_index("h").r
+    for h, v in PAPER_FIN.items(): print(f"PAPER 2-year path h{h}: text {v} data {g[h]:.2f} {'OK' if abs(g[h] - v) < 0.006 else 'MISMATCH'}")
