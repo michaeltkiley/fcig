@@ -8,8 +8,10 @@
 | `paper/REVIEW_*.md`, `paper/REFERENCE_CHECK.md` | Colleague reviews, plain-language review, reference check |
 | `midas_core.py` | Model used by the note: daily HAR block (2-year, FCI) + monthly VAR rows (u gap, core PCE [, IP]); options for rate/FCI forms, trend, samples, shocks, bootstrap |
 | `mf_common.py`, `route_a_pos.py`, `midas_var.py`, `midas_bs.py` | Shared data, events, shocks (NS, MP1, NS-GB, BS-ORTH, NS-JK), window responses; helpers |
+| `omit_fci_sim.py` | Simulation in Section 2 of the note: true four-variable VAR, estimated with and without the FCI (FS-A34) |
+| `monthly_proxy.py` | Purely monthly VAR comparison: proxy and window-impact identification, with and without the FCI (FS-A38) |
 | `data/` | GSW 9-10y forward rate; Bauer-Swanson posted surprises |
-| `FS_QA.md` | Decisions FS-A1..A28 |
+| `FS_QA.md` | Decisions FS-A1..A38 |
 | `MF_REPORT.md` | Older markdown version of the note (superseded) |
 | `MF_DEVELOPMENT.md`, `MF_PLAN.md`, `MIXED_FREQUENCY_NOTES.md`, `LITERATURE_MIDAS.md`, `PROPOSALS.md` | Exploratory history, literature notes, original proposals |
 | other `*.py`, `*.log`, `*.csv`, `runs68/` | Exploratory routes (stage 0, routes A/B, MIDAS variants, direct regressions) and run logs |
