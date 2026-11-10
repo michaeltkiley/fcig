@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 18:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 18:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -403,10 +403,11 @@ LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count297
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 7.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 17
-.
 
-(/usr/share/texmf/tex/latex/lm/t1lmr.fd
+(../baseline/report/numbers.tex)
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 18
+.
+ (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -417,24 +418,24 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 (./mp_transmission.aux)
 \openout1 = `mp_transmission.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -504,134 +505,135 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 17.
+Package hyperref Info: Link coloring ON on input line 18.
 
 (./mp_transmission.out) (./mp_transmission.out)
 \@outlinefile=\write3
 \openout3 = `mp_transmission.out'.
 
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-9.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 2
+0.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-9.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
+0.
 
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-19.
+20.
 
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-19.
+20.
 
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <17.28> on input line 19.
+(Font)              <17.28> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 19.
+(Font)              <12> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 19.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 19.
+(Font)              <10> on input line 20.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 20.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 19.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 20.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 19.
+(Font)              <8> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 19.
+(Font)              <6> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 21.
+(Font)              <7> on input line 22.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 21.
+(Font)              <5> on input line 22.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/
 dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/sha
 re/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
-3.
+4.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 42.
+(Font)              <10.95> on input line 43.
  [2{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}] [3{/usr/share/texmf/fonts/
 enc/dvips/lm/lm-rm.enc}] [4] [5{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.e
 nc}]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 117.
+(hyperref)                removing `math shift' on input line 118.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 117.
+(hyperref)                removing `superscript' on input line 118.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 117.
+(hyperref)                removing `math shift' on input line 118.
 
 [6] [7] (./tables/tab0_sim.tex) [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 185--185
+Underfull \hbox (badness 10000) in paragraph at lines 186--186
 []\T1/lmr/m/n/10 Window
  []
 
 
-Underfull \hbox (badness 1622) in paragraph at lines 187--187
+Underfull \hbox (badness 1622) in paragraph at lines 188--188
 []\T1/lmr/m/n/10 Unemployment and in-fla-tion,
  []
 
-[10] [11] [12] (./tables/tab1_core.tex)
+[10] [11] [12] [13] (../baseline/report/tab_main_B.tex
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 245.
- [13]
-<figures/fig1_steps.pdf, id=685, 794.97pt x 361.35pt>
-File: figures/fig1_steps.pdf Graphic file (type pdf)
-<use figures/fig1_steps.pdf>
-Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 249.
-(pdftex.def)             Requested size: 469.75502pt x 213.53099pt.
- [14 <./figures/fig1_steps.pdf>]
-<figures/fig0_headline.pdf, id=775, 794.97pt x 404.712pt>
+(Font)              <9> on input line 3.
+)
+<../baseline/report/fig_steps.pdf, id=683, 520.34402pt x 317.98799pt>
+File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
+<use ../baseline/report/fig_steps.pdf>
+Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
+47.
+(pdftex.def)             Requested size: 469.75502pt x 287.08902pt.
+ [14] [15 <../baseline/report/fig_steps.pdf>]
+<figures/fig0_headline.pdf, id=767, 794.97pt x 404.712pt>
 File: figures/fig0_headline.pdf Graphic file (type pdf)
 <use figures/fig0_headline.pdf>
 Package pdftex.def Info: figures/fig0_headline.pdf  used on input line 270.
 (pdftex.def)             Requested size: 469.75502pt x 239.15471pt.
-
-[15] [16 <./figures/fig0_headline.pdf>] (./tables/tab_tradeoff.tex) [17]
-[18]
-<figures/fig_long.pdf, id=884, 722.7pt x 231.26399pt>
+ [16] [17 <./figures/fig0_headline.pdf>]
+(./tables/tab_tradeoff.tex) [18] [19]
+<figures/fig_long.pdf, id=879, 722.7pt x 231.26399pt>
 File: figures/fig_long.pdf Graphic file (type pdf)
 <use figures/fig_long.pdf>
 Package pdftex.def Info: figures/fig_long.pdf  used on input line 318.
 (pdftex.def)             Requested size: 469.75502pt x 150.32333pt.
- [19] [20 <./figures/fig_long.pdf>] (./tables/tab3_smp.tex) [21]
-<figures/fig2_recent.pdf, id=964, 578.16pt x 231.26399pt>
+ [20] [21 <./figures/fig_long.pdf>]
+(./tables/tab3_smp.tex) [22]
+<figures/fig2_recent.pdf, id=958, 578.16pt x 231.26399pt>
 File: figures/fig2_recent.pdf Graphic file (type pdf)
 <use figures/fig2_recent.pdf>
 Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 358.
 (pdftex.def)             Requested size: 399.29463pt x 159.717pt.
-<figures/fig3_loyo.pdf, id=965, 650.43pt x 216.81pt>
+<figures/fig3_loyo.pdf, id=959, 650.43pt x 216.81pt>
 File: figures/fig3_loyo.pdf Graphic file (type pdf)
 <use figures/fig3_loyo.pdf>
 Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 363.
 (pdftex.def)             Requested size: 422.77664pt x 140.92813pt.
- [22 <./figures/fig2_recent.pdf>]
+ [23 <./figures/fig2_recent.pdf>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 370.
@@ -644,45 +646,46 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 370.
 
-[23 <./figures/fig3_loyo.pdf>] [24] [25] [26] [27] [28] [29] [30]
-(./tables/tabA_ip.tex) (./tables/tabA_notrend.tex) [31]
-(./tables/tabA_monthly.tex) (./tables/tabA_scope.tex) [32]
-(./tables/tabA_com.tex) [33] (./tables/tab2_rob_u.tex) (./tables/tab2_rob_p.tex
-) [34] (./tables/tabA_shocks.tex) [35] (./tables/tabA_long_u.tex) [36]
-(./tables/tabA_long_p.tex) [37] (./tables/tabA_boot.tex) [38] [39] [40]
-Underfull \hbox (badness 10000) in paragraph at lines 630--630
+[24 <./figures/fig3_loyo.pdf>] [25] [26] [27] [28] [29] [30] [31]
+(../baseline/report/tab_app_B.tex) (./tables/tabA_ip.tex)
+(./tables/tabA_notrend.tex) [32] [33] (./tables/tabA_monthly.tex)
+(./tables/tabA_scope.tex) [34] (./tables/tabA_com.tex) [35]
+(./tables/tab2_rob_u.tex) (./tables/tab2_rob_p.tex) [36]
+(./tables/tabA_shocks.tex) [37] (./tables/tabA_long_u.tex) [38]
+(./tables/tabA_long_p.tex) [39] (./tables/tabA_boot.tex) [40] [41] [42]
+Underfull \hbox (badness 10000) in paragraph at lines 631--631
 []\T1/lmr/m/n/10 Industrial pro-duc-tion; com-mod-ity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
+Underfull \hbox (badness 10000) in paragraph at lines 636--636
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 636--637
+Underfull \hbox (badness 7168) in paragraph at lines 637--638
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF2YR, EX-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 641--642
+Underfull \hbox (badness 10000) in paragraph at lines 642--643
 []\T1/lmr/m/n/10 FRED DTWEXBGS, ear-lier DTWEXB,
  []
 
-[41] [42] (./tables/tabA_cc.tex) (./tables/tabA_ebp.tex) [43]
-(./tables/tabA_prop.tex) [44] [45] (./mp_transmission.aux)
+[43] [44] (./tables/tabA_cc.tex) (./tables/tabA_ebp.tex) [45]
+(./tables/tabA_prop.tex) [46] [47] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
-(rerunfilecheck)             Checksum: 1B8F4A7A2C6319ACB20CF8D6FC6AD782;6401.
+(rerunfilecheck)             Checksum: C8CC71A79B2DCD9569A0852441ED7571;6429.
  ) 
 Here is how much of TeX's memory you used:
- 13837 strings out of 476182
- 216433 string characters out of 5795594
+ 14046 strings out of 476182
+ 220421 string characters out of 5795594
  1999975 words of memory out of 5000000
- 35363 multiletter control sequences out of 15000+600000
+ 35562 multiletter control sequences out of 15000+600000
  640335 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,13n,79p,1597b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -700,10 +703,10 @@ share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public
 mf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lms
 y6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/font
 s/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (45 pages, 638558 bytes).
+Output written on mp_transmission.pdf (47 pages, 644695 bytes).
 PDF statistics:
- 1414 PDF objects out of 1440 (max. 8388607)
- 1081 compressed objects within 11 object streams
- 224 named destinations out of 1000 (max. 500000)
+ 1413 PDF objects out of 1440 (max. 8388607)
+ 1086 compressed objects within 11 object streams
+ 227 named destinations out of 1000 (max. 500000)
  282 words of extra memory for PDF output out of 10000 (max. 10000000)
 

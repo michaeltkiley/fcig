@@ -11,7 +11,7 @@ Note A's code that Note B needs (the market index, its weights and inputs) is ve
 | 4 | `04_monthly_var.py` | `cases.py`, `output/`, `data/` | `results/monthly_<step>_<fci>_<start>.csv` |
 | 5 | `05_tradeoff.py` | `output/draws/` | `results/tradeoff.csv`, `results/tradeoff_diff.csv` |
 | 6 | `06_proxy_simulation.py` | `results/monthly_*`, `output/`, `data/` | `results/proxy_sim_rstar.csv`, `results/proxy_sim_summary.csv` |
-| 7 | `07_report.py` | `results/`, `output/` | `report/tab_*.tex`, `report/fig_*.pdf` |
+| 7 | `07_report.py` | `results/`, `output/` | `report/tab_*.tex`, `report/fig_*.pdf`, `report/numbers.tex` (macros for every number quoted in the note's text); also asserts the qualitative claims of Note B Sections 3.1-3.2 and fails if they stop being true |
 
 Then `cd report && pdflatex baseline_robustness.tex` (twice).
 
