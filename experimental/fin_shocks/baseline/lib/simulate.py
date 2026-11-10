@@ -6,7 +6,9 @@ b = (1, b_F) the window impact; monthly macro m_t = c + sum A_l m_{t-l} + sum G_
 unemployment and inflation only through the 2-year yield and the FCI. Innovations are bootstrapped: daily eps_d from the model's daily residuals (non-announcement days; announcement
 days purged of b s_j), monthly e_t jointly from its residuals; s_j drawn with replacement from the observed Nakamura-Steinsson surprises. Pre-sample lags are the actual 1995 data.
 On each simulated sample the proxy VAR of lib/monthly.py (12 lags, instrument = surprises summed over the month, instrument months as in the data) is estimated with and without
-the FCI, and the window-impact monthly estimator too. Compared with the data and with the true response, per +1 pp on the monthly-average 2-year yield
+the FCI, and the window-impact monthly estimator too. The true process is always the r*-gap model with the FCI. The nominal and real versions are what a researcher who measures the 2-year yield and the FCI in nominal or real form
+observes: the simulated r*-gap series plus the actual monthly gap between the nominal (real) and the r*-gap series (expected inflation and r*, and the corresponding terms of the index),
+which do not depend on the policy shock. Compared with the data and with the true response, per +1 pp on the monthly-average 2-year yield
 (true response = model response per +1 pp window / its contemporaneous monthly-average 2-year response [inference: ratio of averages])."""
 import numpy as np, pandas as pd, zlib
 from . import model as M
@@ -49,6 +51,8 @@ class DGP:
         self.F0 = M.daily_frame(form, fci).ffill().iloc[T0 - 70:T0].values; assert not np.isnan(self.F0).any()
         pre = pd.period_range("1995-01", "1995-12", freq="M")
         self.m0 = M.MAC[self.mv].loc[pre].values; self.fb0 = M.fin_monthly(form, fci).loc[pre].values
+        allm = pd.period_range("1995-01", "2026-09", freq="M"); base = M.fin_monthly("rstar", "rstar").loc[allm]
+        self.offset = {"rstar": np.zeros((len(allm), 2)), "nom": (M.fin_monthly("nom", "nom").loc[allm] - base).values, "real": (M.fin_monthly("real", "real").loc[allm] - base).values}
 
     def simulate(self, S, rng):
         """S simulated samples: monthly macro (S, M, 2), monthly financial averages (S, M, nd) and the monthly instrument (S, M)."""
@@ -88,14 +92,19 @@ def proxy_stats(Z, z, ok, K, per_ok_first=None):
 def window_stats(T, b, phi, K):
     s = phi * np.r_[0, 0, b]; return {f"we_{v}{h}": float(MO.row_of(T, v, h) @ s) for v, h in TARGETS}
 
-def run(form, fci, S=500, seed=None, start="1996-01"):
-    dg = DGP(form, fci, start); rng = np.random.default_rng(zlib.crc32(f"sim|{form}|{fci}".encode()) if seed is None else seed)
+def run(S=500, start="1996-01"):
+    """Simulate from the r*-gap model and analyse the samples with the 2-year yield and FCI in r*-gap, nominal and real form. Returns the DGP and {form: DataFrame}."""
+    dg = DGP("rstar", "rstar", start); rng = np.random.default_rng(zlib.crc32(b"sim|rstar|rstar"))
     m, fb, z = dg.simulate(S, rng)
     idx0 = dg.idx0; ev = EV.iloc[idx0]; mon = ev.Date.dt.to_period("M"); first, last = mon.min(), mon.max(); ok = np.asarray((dg.months >= first) & (dg.months <= last))
-    phi = MO.share(idx0); rows = []
-    for s in range(S):
-        Z4 = np.concatenate([m[s], fb[s]], axis=1); Z3 = np.concatenate([m[s], fb[s][:, :1]], axis=1)
-        r4, T4 = proxy_stats(Z4, z[s], ok, 4); r3, T3 = proxy_stats(Z3, z[s], ok, 3)
-        row = {f"fci_{k}": v for k, v in r4.items()}; row.update({f"nofci_{k}": v for k, v in r3.items()}); row.update({f"fci_{k}": v for k, v in window_stats(T4, dg.b, phi, 4).items()})
-        row["sim"] = s; rows.append(row)
-    return dg, pd.DataFrame(rows)
+    phi = MO.share(idx0); out = {}
+    for form in ("rstar", "nom", "real"):
+        rows = []
+        for s_ in range(S):
+            f = fb[s_] + dg.offset[form]
+            Z4 = np.concatenate([m[s_], f], axis=1); Z3 = np.concatenate([m[s_], f[:, :1]], axis=1)
+            r4, T4 = proxy_stats(Z4, z[s_], ok, 4); r3, T3 = proxy_stats(Z3, z[s_], ok, 3)
+            row = {f"fci_{k}": v for k, v in r4.items()}; row.update({f"nofci_{k}": v for k, v in r3.items()}); row.update({f"fci_{k}": v for k, v in window_stats(T4, dg.b, phi, 4).items()})
+            row["sim"] = s_; rows.append(row)
+        out[form] = pd.DataFrame(rows)
+    return dg, out

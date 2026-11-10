@@ -1,7 +1,7 @@
 """Step 6. Would a monthly proxy VAR look like the data if the estimated model were true?  (lib/simulate.py describes the design)
    python3 06_proxy_simulation.py [--sims 1000]
-For each step (nominal, real, r*-gap) the model with the FCI is the data-generating process; each simulated sample has the data's calendar and announcement days (369 months).
-On each sample: the proxy VAR with and without the FCI, and the window-impact estimator. Output: results/proxy_sim_<step>.csv (one row per sample) and results/proxy_sim_summary.csv
+The data-generating process is the r*-gap model with the FCI (the paper's baseline). Each simulated sample has the data's calendar and announcement days (369 months) and is analysed with
+the 2-year yield and FCI in r*-gap form and in nominal and real form (the r*-gap series plus the actual expected-inflation and r* terms): the proxy VAR with and without the FCI, and the window-impact estimator. Output: results/proxy_sim_<step>.csv (one row per sample) and results/proxy_sim_summary.csv
 (data value, true value, simulated median and 5th/95th percentiles, share of simulated samples at or below the data value; for yes/no quantities the simulated frequency)."""
 import os, argparse
 os.environ.setdefault("OMP_NUM_THREADS", "1")
@@ -12,8 +12,9 @@ from lib.paths import RESULTS
 
 ap = argparse.ArgumentParser(); ap.add_argument("--sims", type=int, default=1000); a = ap.parse_args()
 rows = []
-for step in ("nom", "real", "rstar"):
-    dg, df = SM.run(step, step, S=a.sims); df.round(5).to_csv(RESULTS / f"proxy_sim_{step}.csv", index=False)
+dg, sims = SM.run(S=a.sims)
+for step in ("rstar", "nom", "real"):
+    df = sims[step]; df.round(5).to_csv(RESULTS / f"proxy_sim_{step}.csv", index=False)
     obs = {sys_: pd.read_csv(RESULTS / f"monthly_{step}_{f}_1996-01.csv") for sys_, f in (("nofci", 0), ("fci", step))}
     def dat(sys_, ident, var, h, col="r"):
         d = obs[sys_]; return float(d[(d.lags == 12) & (d.ident == ident) & (d["var"] == var) & (d.h == h)].iloc[0][col])
