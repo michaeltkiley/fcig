@@ -4,7 +4,7 @@ One case = (rate form, FCI, monthly macro set, first month, last year, treatment
   NS surprise (252 announcements, window-identified), macro first within the month, no deterministic trend, 3/6/12 monthly lags,
   u gap and core PCE inflation (+ monthly EBP in the EBP case), responses per +1 pp 2-year yield, price LEVEL (cumulated inflation).
 Rate forms: nom | real | rstar (Laubach-Williams r*) | kiley (Kiley's r*). FCI: 0 (none) | nom | real | rstar | kiley (Note A's market index in that form).
-Trend: none | quad (t, t^2; t in decades from 2010) | spline (natural cubic spline in time, interior knots at the NBER business-cycle peaks inside the sample, boundary knots at the sample ends; estimated in every monthly equation).
+Trend: none | spline (natural cubic spline in time, interior knots at the NBER business-cycle peaks inside the sample, boundary knots at the sample ends; estimated in every monthly equation).
 Start before 1990: monthly series fill the months before the daily data (splices flagged in ../FS_QA.md FS-A29).
 2020: 'in' = all data; 'out' = monthly rows and daily HAR rows for March-December 2020 dropped (2020 values still enter as lags).
 The low-level data modules (mf_common, midas_var, midas_bs, route_a_pos, fci) are still imported from the parent folder."""
@@ -90,7 +90,6 @@ def macro_data(form, fci, mvars, L, start, end, t2020, trend="none"):
         X.append(x); Y.append(y); P.append(p)
     X = np.array(X)
     if trend == "spline": X = np.c_[X, trend_cols(P, start, end)]
-    elif trend == "quad": t = np.array([_dec(p) for p in P]); X = np.c_[X, t, t * t]
     return X, np.array(Y)
 
 def irf(Bd, C, K, nd, L, idx, pos, fci):

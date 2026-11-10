@@ -1,5 +1,5 @@
 """The case list for the baseline and robustness tables (edit here; run_all.py and make_report.py read it).
-Every case is run without the FCI and with the FCI. No deterministic trend except Robustness 2c-f (quadratic and natural cubic spline). u gap and core PCE price level, 3/6/12 lags.
+Every case is run without the FCI and with the FCI. No deterministic trend except Robustness 2c-d (natural cubic spline). u gap and core PCE price level, 3/6/12 lags.
 A case is (form, fci, macro, start, end, t2020, trend); see engine.py."""
 FORMS = {"nom": "Nominal", "real": "Real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)"}
 FCI_LABEL = {0: "none", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)"}
@@ -29,15 +29,10 @@ PANELS = [
  panel("R2a", "Robustness 2a: Kiley r*, start 1994", "2-year minus expected inflation minus Kiley's r*; the FCI is Note A's index built with Kiley's r* (same adjustment in rate and FCI).",
        pair("kiley", "kiley")),
  panel("R2b", "Robustness 2b: Kiley r*, start 1973", "As 2a.", pair("kiley", "kiley", start="1973-01")),
- panel("R2c", "Robustness 2c: real 2-year and real FCI with a quadratic trend, start 1994",
-       "No r* measure: the trend is a quadratic in time ($t$ and $t^2$, $t$ in decades from 2010), estimated in every monthly equation.",
-       pair("real", "real", trend="quad")),
- panel("R2d", "Robustness 2d: real 2-year and real FCI with a quadratic trend, start 1973", "As 2c.",
-       pair("real", "real", start="1973-01", trend="quad")),
- panel("R2e", "Robustness 2e: real 2-year and real FCI with a cubic spline trend, start 1994",
+ panel("R2c", "Robustness 2c: real 2-year and real FCI with a cubic spline trend, start 1994",
        "No r* measure: the trend is a natural cubic spline in time (knots at the sample ends and at the NBER business-cycle peaks inside the sample), estimated in every monthly equation.",
        pair("real", "real", trend="spline")),
- panel("R2f", "Robustness 2f: real 2-year and real FCI with a cubic spline trend, start 1973", "As 2e; knots at the NBER peaks of 1973, 1980, 1981, 1990, 2001, 2007 and 2020.",
+ panel("R2d", "Robustness 2d: real 2-year and real FCI with a cubic spline trend, start 1973", "As 2c; knots at the NBER peaks of 1973, 1980, 1981, 1990, 2001, 2007 and 2020.",
        pair("real", "real", start="1973-01", trend="spline")),
  panel("R3a", "Robustness 3a: excess bond premium as a third monthly variable, start 1994",
        "r*-gap. Monthly system u, inflation, EBP (EBP treated like u and inflation; responses shown for u and the price level).",
