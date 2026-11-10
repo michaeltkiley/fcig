@@ -1,5 +1,7 @@
 # Note B: u and price-level responses, 12 lags, r*-gap 2-year, per +1 pp
 
+> **Caveat (10 Nov 2026):** the `spline` rows for the 1973, 1977 and 1982 starts in this file used only the post-1994 NBER peaks (2001, 2007, 2020) as knots, not the earlier peaks inside those samples. Only the 1994-start spline rows are as intended. The corrected long-sample spline is in `baseline/` (Robustness 2d, real version).
+
 Unemployment gap (pp) and core PCE price level (%), at 12, 24, 36 months; * = 90% interval excludes zero. 200 draws, daily block not re-bootstrapped, NS shocks 1994+, 2020-03..12 dropped. End = full (to 2026-09) or 2019-12. Trend: none, quadratic, natural cubic spline with knots at NBER peaks (FS_QA, midas_core.py TRENDTYPE=spline). Pre-1994 starts use the spliced monthly series (FS-A29).
 
 | Start | End | Trend | FCI | u 12 | u 24 | u 36 | P 12 | P 24 | P 36 |

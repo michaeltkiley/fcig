@@ -19,7 +19,7 @@ if a.list or not jobs: sys.exit()
 import engine as E, pandas as pd, time
 def work(c):
     t0 = time.time(); i = CS.case_id(c)
-    pd.DataFrame(E.run_case(c["form"], c["fci"], c["macro"], c["start"], c["end"], c["t2020"], a.draws)).to_csv(os.path.join(HERE, "results", i + ".csv"), index=False, float_format="%.4f")
+    pd.DataFrame(E.run_case(c["form"], c["fci"], c["macro"], c["start"], c["end"], c["t2020"], c["trend"], a.draws)).to_csv(os.path.join(HERE, "results", i + ".csv"), index=False, float_format="%.4f")
     return f"{i} done in {time.time() - t0:.0f}s"
 if a.jobs > 1:
     from multiprocessing import Pool
