@@ -5,9 +5,9 @@ and the actual announcement days:  daily block f_d = B'x_d + eps_d (HAR regresso
 b = (1, b_F) the window impact; monthly macro m_t = c + sum A_l m_{t-l} + sum G_l fbar_{t-l} + e_t, fbar the monthly average of the daily block. Policy therefore reaches unemployment
 and inflation only through the 2-year yield and the FCI. Innovations are bootstrapped independently: daily eps_d from the model's daily residuals (non-announcement days; announcement days
 purged of b s_j), monthly e_t jointly from its residuals; s_j drawn with replacement from the observed Nakamura-Steinsson surprises. Pre-sample lags are the actual 1995 data.
-On each simulated sample the proxy VAR of lib/monthly.py (12 lags, instrument = surprises summed over the month, instrument months as in the data) is estimated with and without the FCI,
-and the monthly window-impact estimator too. True responses: the model's own, per +1 pp in the window, and in the proxy VAR's unit (+1 pp on the monthly-average 2-year yield) as the ratio of the
-window response to its contemporaneous monthly-average response [inference: ratio of averages]."""
+On each simulated sample the proxy VAR of lib/monthly.py (end-of-month values, 12 lags, instrument = surprises summed over the month, instrument months as in the data) is estimated with and
+without the FCI, and the monthly window-impact estimator too. True responses: the model's own, per +1 pp in the window, and per +1 pp on the end-of-month 2-year yield (the proxy VAR's unit: the window
+response divided by the model's end-of-month response of the 2-year yield, 0.95-0.99, so the two units differ by at most 5%)."""
 import numpy as np, pandas as pd, zlib
 from . import model as M
 from . import monthly as MO
@@ -30,20 +30,20 @@ class DGP:
         sj = pd.Series(self.s_obs, index=pd.DatetimeIndex(EV.d.values[self.idx0])); s_on = sj.reindex(self.rd_dates[isev]).values
         self.pool_ev = self.rd[isev] - np.outer(s_on, self.b); self.nd = self.rd.shape[1]          # event-day residuals purged of the policy impact
         est = next(M.estimate(form, fci, "u,pi", start, None, "in", "none", 5, (L,)))             # the model's own responses (point estimates)
-        self.s0, self.f0 = est["s0"], est["f0"]; self.mon_avg = self.f0[0, 0]
-        self.truth = {(v, h): self.s0[h, 0 if v == "u" else 1] / self.mon_avg for v, h in TARGETS}; self.truth_window = {(v, h): self.s0[h, 0 if v == "u" else 1] for v, h in TARGETS}
-        self.truth_fci = self.f0[0, 1] / self.f0[0, 0]
+        self.s0, self.f0 = est["s0"], est["f0"]; self.eom = est["e0"][0]                       # end-of-month 2-year (and FCI) response per +1 pp in the window
+        self.truth = {(v, h): self.s0[h, 0 if v == "u" else 1] / self.eom[0] for v, h in TARGETS}; self.truth_window = {(v, h): self.s0[h, 0 if v == "u" else 1] for v, h in TARGETS}
+        self.truth_fci = self.eom[1] / self.eom[0]
         T0 = int(np.argmax(CALW >= pd.Timestamp("1996-01-01"))); T1 = int(np.max(np.where(CALW <= pd.Timestamp("2026-09-30"))[0])); self.T0, self.T1 = T0, T1
         self.months = pd.period_range("1996-01", "2026-09", freq="M"); mday = MON[T0:T1 + 1]
         self.bounds = [(int(np.argmax(mday == m)) + T0, int(np.max(np.where(mday == m)[0])) + T0) for m in self.months]
         self.F0 = M.daily_frame(form, fci).ffill().iloc[T0 - 70:T0].values; assert not np.isnan(self.F0).any()
-        pre = pd.period_range("1995-01", "1995-12", freq="M"); self.m0 = M.MAC[self.mv].loc[pre].values; self.fb0 = M.fin_monthly(form, fci).loc[pre].values
+        pre = pd.period_range("1995-01", "1995-12", freq="M"); self.m0 = M.MAC[self.mv].loc[pre].values; self.fb0 = M.fin_monthly(form, fci).loc[pre].values; self.fe0 = M.fin_eom(form, fci).loc[pre].values
 
     def simulate(self, S, rng):
-        """S simulated samples: monthly macro (S, 12+M, 2) and financial averages (S, 12+M, 2) with the 12 pre-sample months first, and the monthly instrument (S, M)."""
+        """S simulated samples: monthly macro (S, 12+M, 2) and end-of-month financial values (S, 12+M, 2) with the 12 pre-sample months first, and the monthly instrument (S, M)."""
         nd, K, nm = self.nd, 2, len(self.months); T = self.T1 + 1 - (self.T0 - 70)
         F = np.zeros((S, T, nd)); F[:, :70] = self.F0; cs = np.zeros((S, T + 1, nd)); cs[:, 1:71] = np.cumsum(F[:, :70], axis=1)
-        m = np.zeros((S, 12 + nm, K)); m[:, :12] = self.m0; fb = np.zeros((S, 12 + nm, nd)); fb[:, :12] = self.fb0
+        m = np.zeros((S, 12 + nm, K)); m[:, :12] = self.m0; fb = np.zeros((S, 12 + nm, nd)); fb[:, :12] = self.fb0; fe = np.zeros((S, 12 + nm, nd)); fe[:, :12] = self.fe0
         s_draw = rng.choice(self.s_obs, size=(S, len(self.s_obs)), replace=True); ev_day = {int(p) - (self.T0 - 70): j for j, p in enumerate(self.ev_pos)}
         z = np.zeros((S, nm)); starts = [b[0] for b in self.bounds]
         for j, p in enumerate(self.ev_pos): z[:, int(np.searchsorted(starts, p, side="right") - 1)] += s_draw[:, j]
@@ -57,8 +57,8 @@ class DGP:
                 if k in ev_day: eps = self.pool_ev[rng.integers(0, len(self.pool_ev), S)] + s_draw[:, ev_day[k]][:, None] * self.b[None, :]
                 else: eps = self.pool_non[rng.integers(0, len(self.pool_non), S)]
                 F[:, k] = xd @ self.Bd + eps; cs[:, k + 1] = cs[:, k] + F[:, k]
-            fb[:, 12 + t] = F[:, lo - (self.T0 - 70):hi - (self.T0 - 70) + 1].mean(axis=1)
-        return m, fb, z
+            fb[:, 12 + t] = F[:, lo - (self.T0 - 70):hi - (self.T0 - 70) + 1].mean(axis=1); fe[:, 12 + t] = F[:, hi - (self.T0 - 70)]
+        return m, fe, z
 
 def proxy_stats(Z, z, ok, K):
     """Proxy VAR (12 lags, no trend) on Z = (12 pre-sample rows + sample, K variables [u, pi, i, (FCI)]): first stage, impact vector, point estimates and exact AR sets."""
@@ -73,10 +73,10 @@ def proxy_stats(Z, z, ok, K):
 
 def run(S=1000):
     """Simulate S samples and estimate on each: proxy VAR with and without the FCI, and the monthly window-impact estimator (with the FCI)."""
-    dg = DGP(); rng = np.random.default_rng(zlib.crc32(b"sim|rstar|rstar")); m, fb, z = dg.simulate(S, rng)
-    ev = EV.iloc[dg.idx0]; mon = ev.Date.dt.to_period("M"); ok = np.asarray((dg.months >= mon.min()) & (dg.months <= mon.max())); phi = MO.share(dg.idx0); rows = []
+    dg = DGP(); rng = np.random.default_rng(zlib.crc32(b"sim|rstar|rstar")); m, fe, z = dg.simulate(S, rng)
+    ev = EV.iloc[dg.idx0]; mon = ev.Date.dt.to_period("M"); ok = np.asarray((dg.months >= mon.min()) & (dg.months <= mon.max())); rows = []
     for s in range(S):
-        r4, T4 = proxy_stats(np.concatenate([m[s], fb[s]], axis=1), z[s], ok, 4); r3, _ = proxy_stats(np.concatenate([m[s], fb[s][:, :1]], axis=1), z[s], ok, 3)
+        r4, T4 = proxy_stats(np.concatenate([m[s], fe[s]], axis=1), z[s], ok, 4); r3, _ = proxy_stats(np.concatenate([m[s], fe[s][:, :1]], axis=1), z[s], ok, 3)
         row = {f"fci_{k}": v for k, v in r4.items()}; row.update({f"nofci_{k}": v for k, v in r3.items()})
-        row.update({f"we_{v}{h}": float(MO.row_of(T4, v, h) @ (phi * np.r_[0, 0, dg.b])) for v, h in TARGETS}); row["sim"] = s; rows.append(row)
+        row.update({f"we_{v}{h}": float(MO.row_of(T4, v, h) @ np.r_[0, 0, dg.eom]) for v, h in TARGETS}); row["sim"] = s; rows.append(row)
     return dg, pd.DataFrame(rows)

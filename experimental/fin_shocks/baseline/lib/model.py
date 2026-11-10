@@ -57,6 +57,11 @@ def fin_monthly(form, fci):
     FB = FB.combine_first(ext)
     return FB[FB.index >= pd.Period("1973-01", "M")]
 
+def fin_eom(form, fci):
+    """End-of-month values of the daily block (the last weekday of each month, forward-filled): the 2-year yield and, when included, the FCI. Used by the monthly VAR
+    benchmarks, whose unit is then +1 pp on the end-of-month yield (0.95-0.99 of the announcement-window move in this model)."""
+    return daily_frame(form, fci).ffill().set_index(MON).groupby(level=0).last()
+
 def impact(fci, idx):
     wi = window_impact(idx)
     return wi if fci else wi[:1]

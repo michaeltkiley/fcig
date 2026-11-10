@@ -53,7 +53,6 @@ for p in CS.PANELS:                                                             
 
 # ---------------------------------------------------------------- monthly VAR benchmark tables
 MON = {CS.monthly_id(m): pd.read_csv(RESULTS / f"{CS.monthly_id(m)}.csv") for m in CS.MONTHLY}
-START_LABEL = {"1996-01": "1996 sample", "1973-01": "1973 sample"}
 IDENT = {"P1": "Proxy VAR", "WE": "Window impact"}
 def mcells(d, L, ident):
     g = d[(d.lags == L) & (d.ident == ident)]; pts, ivs = [], []
@@ -78,23 +77,19 @@ def monthly_table(title, label, lags, note, start, place="H"):
                     out += [f"{a} & {f} & {IDENT[ident] if L == lags[0] else ''} & {L} & {n} & " + " & ".join(pts) + r"\\", r" & & & & & " + " & ".join(rf"{{\tiny {x}}}" for x in ivs) + r"\\"]
     out += [r"\bottomrule\end{tabular}", rf"\par\smallskip\parbox{{0.96\linewidth}}{{\scriptsize {note}}}", r"\end{table}"]
     return "\n".join(out)
-MNOTE = (r"Monthly VAR in the unemployment gap, core PCE inflation, the 2-year yield and, when included, the FCI (same step), sample as in the title, to September 2026, no trend, nothing dropped. "
-         r"Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects; unit +1 pp on the monthly-average 2-year yield. "
-         r"Window impact: impact vector measured in the announcement window and scaled by the share of the month after the announcement; 90\% bootstrap intervals; unit +1 pp 2-year in the window. The two units differ. $^{*}$ = 90\% interval excludes zero.")
-for st, tag in (("1996-01", "1996"), ("1973-01", "1973")):
-    (REPORT / f"tab_main_monthly{tag}.tex").write_text(monthly_table(f"Monthly VAR benchmark, {START_LABEL[st]} (12 lags)", f"tab:mainmonthly{tag}", (12,), MNOTE, st) + "\n")
-    (REPORT / f"tab_app_monthly{tag}.tex").write_text(monthly_table(f"Monthly VAR benchmark, {START_LABEL[st]} (3, 6 and 12 lags)", f"tab:appmonthly{tag}", (3, 6, 12), MNOTE, st, "p") + "\n")
+MNOTE = (r"Monthly VAR in the unemployment gap, core PCE inflation, the end-of-month 2-year yield and, when included, the end-of-month FCI (same step), 1996 to September 2026, no trend, nothing dropped. "
+         r"Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects. "
+         r"Window impact: impact vector taken from the daily model (the end-of-month response to a window surprise); 90\% bootstrap intervals. Unit in both: +1 pp on the 2-year yield (the end-of-month response to a +1 pp window surprise is 0.95 to 0.99, so the two units are the same up to 5\%). $^{*}$ = 90\% interval excludes zero.")
+(REPORT / "tab_main_monthly.tex").write_text(monthly_table("Monthly VAR benchmark (12 lags)", "tab:mainmonthly", (12,), MNOTE, "1996-01") + "\n")
+(REPORT / "tab_app_monthly.tex").write_text(monthly_table("Monthly VAR benchmark (3, 6 and 12 lags)", "tab:appmonthly", (3, 6, 12), MNOTE, "1996-01", "p") + "\n")
 frows = []
-for st in ("1996-01", "1973-01"):
-    if st != "1996-01": frows.append(r"\addlinespace")
-    for step in ("nom", "real", "rstar"):
-        for fci in (0, step):
-            d = MON[CS.monthly_id(dict(step=step, fci=fci, start=st))]; g = d[(d.ident == "P1") & (d["var"] == "u") & (d.h == 12)].set_index("lags")
-            frows.append(f"{START_LABEL[st][:4] if (step == 'nom' and fci == 0) else ''} & {CS.FORMS[step] if fci == 0 else ''} & {CS.FCI_LABEL[fci]} & " + " & ".join(f"{g.F[L]:.1f}" for L in (3, 6, 12)) + " & "
-                         + (f"{num(g.impact_fci[12])} & {num(g.win_bF[12])}" if fci else " & ") + r"\\")
+for step in ("nom", "real", "rstar"):
+    for fci in (0, step):
+        d = MON[CS.monthly_id(dict(step=step, fci=fci, start="1996-01"))]; g = d[(d.ident == "P1") & (d["var"] == "u") & (d.h == 12)].set_index("lags")
+        frows.append(f"{CS.FORMS[step] if fci == 0 else ''} & {CS.FCI_LABEL[fci]} & " + " & ".join(f"{g.F[L]:.1f}" for L in (3, 6, 12)) + " & " + (f"{num(g.impact_fci[12])} & {num(g.eom_fci[12])}" if fci else " & ") + r"\\")
 (REPORT / "tab_monthly_F.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Monthly proxy VAR: first-stage strength and impact on the FCI}\label{tab:monthlyF}",
-    r"\begin{tabular}{lllrrrrr}\toprule Start & 2-year & FCI & $F$ (3 lags) & $F$ (6) & $F$ (12) & Proxy impact on FCI & Window impact on FCI\\ \midrule", *frows, r"\bottomrule\end{tabular}",
-    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize $F$: robust first-stage statistic of the policy-variable residual on the instrument (instrument months only). The instrument exists from 1996, so the first stage uses the 1996--2026 instrument months in both samples. Impact on FCI: response of the FCI per +1 pp on the 2-year yield, estimated from monthly residuals (proxy VAR, 12 lags) and measured in the announcement window.}", r"\end{table}"]) + "\n")
+    r"\begin{tabular}{llrrrrr}\toprule 2-year & FCI & $F$ (3 lags) & $F$ (6) & $F$ (12) & Proxy impact on FCI & Model impact on FCI\\ \midrule", *frows, r"\bottomrule\end{tabular}",
+    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize $F$: robust first-stage statistic of the policy-variable residual on the instrument (instrument months only, 1996--2026). Impact on FCI: end-of-month response of the FCI per +1 pp on the end-of-month 2-year yield, estimated from monthly residuals (proxy VAR, 12 lags) and implied by the daily model.}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- how noisy is the monthly proxy VAR if the model is true?
 SIM = pd.read_csv(RESULTS / "proxy_sim_summary.csv")
@@ -107,7 +102,7 @@ def sim_table():
         for _, r in SIM[SIM.system == system].iterrows():
             f = "{:.1f}" if r.quantity == "F" else "{:.2f}"; sg = lambda x: ("$-$" if x < 0 and f.format(abs(x)) != "0.00" else "") + f.format(abs(x))
             out.append(f"\\quad {lab[(system, r.quantity)]} & {sg(r.data)} & {sg(r.truth) if pd.notna(r.truth) else ''} & {sg(r.sim_median)} & [{sg(r.sim_p05)}, {sg(r.sim_p95)}]\\\\")
-    out += [r"\bottomrule\end{tabular}", r"\par\smallskip\parbox{0.9\linewidth}{\scriptsize 1,000 samples of 369 months generated by the estimated r*-gap model with the FCI (12 lags), with the data's calendar and announcement days; policy reaches unemployment and prices only through the 2-year yield and the FCI. Data: the 1996 sample, 12 lags, r*-gap measures. True: the model's response per +1 pp on the monthly-average 2-year yield (panels A and B; ratio of the window response to its contemporaneous monthly-average response, an approximation) and per +1 pp in the window (panel C). Simulated: median and 5th--95th percentiles of the estimates.}", r"\end{table}"]
+    out += [r"\bottomrule\end{tabular}", r"\par\smallskip\parbox{0.9\linewidth}{\scriptsize 1,000 samples of 369 months generated by the estimated r*-gap model with the FCI (12 lags), with the data's calendar and announcement days; policy reaches unemployment and prices only through the 2-year yield and the FCI. Data: the 1996 sample, 12 lags, r*-gap measures; end-of-month series in the monthly VAR. True: the model's response per +1 pp on the 2-year yield, in the window (panel C) and on the end-of-month yield (panels A and B; the window response divided by the model's end-of-month response of 0.95--0.99). Simulated: median and 5th--95th percentiles of the estimates.}", r"\end{table}"]
     return "\n".join(out)
 (REPORT / "tab_proxy_sim.tex").write_text(sim_table() + "\n")
 
