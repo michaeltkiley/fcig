@@ -57,6 +57,11 @@ def fin_monthly(form, fci):
     FB = FB.combine_first(ext)
     return FB[FB.index >= pd.Period("1973-01", "M")]
 
+def fin_eom(form, fci):
+    """End-of-month values of the daily block (the last weekday of each month, forward-filled): the 2-year yield and, when included, the FCI. Used by the monthly VAR
+    benchmarks, whose unit is then +1 pp on the end-of-month yield (0.95-0.99 of the announcement-window move in this model)."""
+    return daily_frame(form, fci).ffill().set_index(MON).groupby(level=0).last()
+
 def impact(fci, idx):
     wi = window_impact(idx)
     return wi if fci else wi[:1]
@@ -95,9 +100,9 @@ def macro_data(form, fci, mvars, L, start, end, t2020, trend):
     return X, np.array(Y)
 
 def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21):
-    """Macro first in each month (from lags), then the days of the month (event day = b_day). Returns monthly macro and monthly-average financial paths."""
+    """Macro first in each month (from lags), then the days of the month (event day = b_day). Returns monthly macro, monthly-average financial paths and end-of-month financial values."""
     lens = [n0] + [nother] * (months - 1); start = np.concatenate([[0], np.cumsum(lens)]); off = 70
-    f = np.zeros((start[-1] + off, nd)); macro = np.zeros((months, K)); fb = np.zeros((months, nd))
+    f = np.zeros((start[-1] + off, nd)); macro = np.zeros((months, K)); fb = np.zeros((months, nd)); fe = np.zeros((months, nd))
     A = C[1:1 + K * L].T.reshape(K, L, K); G = C[1 + K * L:1 + K * L + nd * L].T.reshape(K, L, nd)
     for t in range(months):
         macro[t] = sum(A[:, l - 1] @ macro[t - l] for l in range(1, L + 1) if t - l >= 0) + sum(G[:, l - 1] @ fb[t - l] for l in range(1, L + 1) if t - l >= 0) if t else 0.0
@@ -106,13 +111,13 @@ def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21):
             if tau == k0: f[off + tau] = b_day; continue
             x = np.concatenate([[0.0]] + [f[off + tau - h:off + tau].mean(axis=0) for h in HAR] + [macro[t - 1] if t >= 1 else np.zeros(K), macro[t]])
             f[off + tau] = x @ Bd
-        fb[t] = f[off + start[t]:off + start[t + 1]].mean(axis=0)
-    return macro, fb
+        fb[t] = f[off + start[t]:off + start[t + 1]].mean(axis=0); fe[t] = f[off + start[t + 1] - 1]
+    return macro, fb, fe
 
 def irf(Bd, C, K, nd, L, idx, pos, fci):
-    """Event-position-weighted monthly macro and financial responses to a unit shock, h = 0..H."""
+    """Event-position-weighted monthly macro, monthly-average and end-of-month financial responses to a unit shock, h = 0..H."""
     b = impact(fci, idx); out = [(w, simulate(Bd, C, K, nd, L, b, k0, n0)) for k0, n0, w in pos]
-    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out)
+    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out), sum(w * m[2] for w, m in out)
 
 _EV = {}
 def events(B):
@@ -126,17 +131,17 @@ def to_level(m):
     """Cumulate the inflation response (column 1) to the price-level response, percent."""
     z = m.copy(); z[:, 1] = np.cumsum(z[:, 1]) / 12; return z
 
-def estimate(form, fci, macro="u,pi", start="1994-02", end=None, t2020="in", trend="none", B=200, lags=LAGS):
+def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=200, lags=LAGS):
     """Point responses and B draws for each lag length. Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd)."""
     mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
     idx0, pos0, bidx, bpos = events(B); Bd = har_block(form, fci, mvars, end, t2020)
     for L in lags:
         X, Y = macro_data(form, fci, mvars, L, start, end, t2020, trend); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
         rng = np.random.default_rng(zlib.crc32((f"{form}|{fci}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)).encode()))
-        m0, f0 = irf(Bd, C0, K, nd, L, idx0, pos0, fci)
+        m0, f0, e0 = irf(Bd, C0, K, nd, L, idx0, pos0, fci)
         draws = [irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci) for ib, pb in zip(bidx, bpos)]
         yield dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
-                   f0=f0, fd=np.array([d[1] for d in draws]))
+                   f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
 
 # ---------------------------------------------------------------- summaries
 def pct(a, q): return np.percentile(a, q, axis=0)
@@ -154,22 +159,34 @@ def summary_rows(spec, est):
 def path_rows(spec, est):
     """Response paths h = 0..H: macro variables (and the price level) and the monthly-average 2-year yield and FCI, with 90% and 68% bands."""
     out = []
+    eom = pd.DataFrame(dict(**spec, lags=est["lags"], kind="fin_eom", var="pol", h=np.arange(H + 1), r=est["e0"][:, 0], lo=np.nan, hi=np.nan, lo68=np.nan, hi68=np.nan))   # 2-year yield at the end of the month (point estimate)
     for kind, names, s0, sd in (("macro", est["names"], est["s0"], est["sd"]), ("fin", ["pol", "idx"][:est["f0"].shape[1]], est["f0"], est["fd"])):
         for j, n in enumerate(names):
             out.append(pd.DataFrame(dict(**spec, lags=est["lags"], kind=kind, var=n, h=np.arange(H + 1), r=s0[:, j], lo=pct(sd[:, :, j], 5), hi=pct(sd[:, :, j], 95),
                                          lo68=pct(sd[:, :, j], 16), hi68=pct(sd[:, :, j], 84))))
-    return pd.concat(out)
+    return pd.concat(out + [eom])
 
 # ---------------------------------------------------------------- implied trade-off (Phillips multiplier, Barnichon-Mesters 2021)
-GRID = np.round(np.arange(-6.0, 3.0001, 0.01), 2)
+KAPPA = np.sort(np.concatenate([-np.logspace(-3, 4, 3000), [0.0], np.logspace(-3, 4, 3000)]))     # -1e4 .. 1e4, dense near zero
 
 def ar_set(Pd, Ud):
-    """Confidence set for kappa = P_H / U_H (Anderson-Rubin style): {kappa : the 90% bootstrap interval of P_H - kappa U_H contains 0} on a grid.
-    Returns (lo, hi, bounded, connected); unbounded when the set reaches the grid edge."""
-    ok = np.array([np.percentile(Pd - k * Ud, 5) <= 0 <= np.percentile(Pd - k * Ud, 95) for k in GRID])
-    if not ok.any(): return np.nan, np.nan, True, True
+    """Confidence set for kappa = P_H / U_H (Anderson-Rubin style): {kappa : the 90% bootstrap interval of P_H - kappa U_H contains 0}, computed on a wide
+    log-spaced grid (|kappa| up to 1e4) with each boundary refined by bisection, so a finite boundary is never cut off by the grid. A side is reported as
+    infinite only if the set still contains +-1e4; for large |kappa| the condition reduces to the 90% interval of U_H containing zero, so that is a statistical
+    result (the data cannot rule out arbitrarily steep trade-offs), not a grid limit. Returns (lo, hi, connected); lo = -inf / hi = +inf when unbounded."""
+    inside = lambda k: np.percentile(Pd - k * Ud, 5) <= 0 <= np.percentile(Pd - k * Ud, 95)
+    Z = Pd[:, None] - KAPPA[None, :] * Ud[:, None]; ok = (np.percentile(Z, 5, axis=0) <= 0) & (np.percentile(Z, 95, axis=0) >= 0)
+    if not ok.any(): return np.nan, np.nan, True
     i = np.where(ok)[0]
-    return GRID[i[0]], GRID[i[-1]], not (ok[0] or ok[-1]), bool(np.all(np.diff(i) == 1))
+    def edge(a, b):                                   # a outside, b inside the set: bisect to the boundary
+        for _ in range(40):
+            mid = (a + b) / 2
+            if inside(mid): b = mid
+            else: a = mid
+        return b
+    lo = -np.inf if ok[0] else edge(KAPPA[i[0] - 1], KAPPA[i[0]])
+    hi = np.inf if ok[-1] else edge(KAPPA[i[-1] + 1], KAPPA[i[-1]])
+    return lo, hi, bool(np.all(np.diff(i) == 1))
 
 def cum_u(s):
     """Cumulative unemployment-gap response, percentage-point years: index h holds sum_{1..h} u_h / 12 (axis -2 is time)."""
@@ -179,6 +196,7 @@ def multiplier_rows(spec, est):
     """kappa_H = P_H / U_H at H = 12, 24, 36 with the confidence set; P is the price level (%), U the cumulative unemployment gap (pp-years)."""
     s0, sd = est["s0"], est["sd"]; U0 = np.cumsum(s0[:, 0]) / 12; Ud = np.cumsum(sd[:, :, 0], axis=1) / 12; rows = []
     for h in HORIZ:
-        lo, hi, bnd, con = ar_set(sd[:, h, 1], Ud[:, h])
-        rows.append(dict(**spec, lags=est["lags"], H=h, P=s0[h, 1], U=U0[h], kappa=s0[h, 1] / U0[h], k_lo=lo, k_hi=hi, bounded=bnd, connected=con))
+        lo, hi, con = ar_set(sd[:, h, 1], Ud[:, h])
+        rows.append(dict(**spec, lags=est["lags"], H=h, P=s0[h, 1], U=U0[h], U_lo=np.percentile(Ud[:, h], 5), U_hi=np.percentile(Ud[:, h], 95),
+                         kappa=s0[h, 1] / U0[h], k_lo=lo, k_hi=hi, connected=con))
     return rows

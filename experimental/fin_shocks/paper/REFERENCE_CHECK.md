@@ -41,3 +41,26 @@ Each entry checked against Crossref (DOI metadata), RePEc/EconPapers, or the iss
 
 Added after a search for related work (all verified on Crossref): Jacobson, Matthes and Walker, "Temporal Aggregation Bias and Monetary Policy Transmission," J. Political Economy Macroeconomics (2026, doi 10.1086/741548; volume/pages not yet assigned in Crossref; first-name initials from memory); Brennan, Jacobson, Matthes and Walker (2025), B.E. J. Macroeconomics 25(2), 595-659 (initials from memory); Bu, Rogers and Wu (2021), JME 118, 331-349; Plagborg-Moller and Wolf (2021), Econometrica 89(2), 955-980.
 Related but not cited: Lee and Sekhposyan (temporal aggregation and shock propagation; presented EABCN April 2026 and Princeton Sept 2024; no text found); Garabedian (Central Bank of Ireland RTP 4/2025, r* measures and monetary shocks); BIS WP 1288 ("The capital puzzle", stance relative to r*). No paper found that propagates high-frequency surprises through a broad FCI measured relative to r*.
+
+
+## 10 Nov 2026: references for the monthly VAR benchmarks (all checked on Crossref, [verified])
+- Montiel Olea, J. L., J. H. Stock and M. W. Watson (2021), "Inference in Structural Vector Autoregressions identified with an external instrument," Journal of Econometrics 225(1), 74-87, doi:10.1016/j.jeconom.2020.05.014. Added (`montiel2021`).
+- Lunsford, K. G. (2015), "Identifying Structural VARs with a Proxy Variable and a Test for a Weak Proxy," Federal Reserve Bank of Cleveland, published 2 Dec 2015, doi:10.26509/frbc-wp-201528. Added (`lunsford2015`). The working-paper number 15-28 is read from the DOI suffix [inference]; Crossref gives no number field.
+- Jacobson, Matthes and Walker (2026), JPE Macroeconomics, online 26 Mar 2026, doi:10.1086/741548: author names with middle initials confirmed against the FEDS 2022-054r1 record (Margaret M. Jacobson, Christian Matthes, Todd B. Walker). Volume, issue and pages are not yet in Crossref; entry now reads "advance online publication".
+- Brennan, Jacobson, Matthes and Walker (2025), B.E. Journal of Macroeconomics 25(2), 595-659, doi:10.1515/bejm-2024-0175: initials confirmed (Connor M. Brennan).
+- Stock and Watson (2018), Economic Journal 128(610), 917-948, doi:10.1111/ecoj.12593 and Mertens and Ravn (2013), AER 103(4), 1212-1247, doi:10.1257/aer.103.4.1212: bibliographic details confirmed against Crossref.
+
+## 10 Nov 2026: content checks for Note B Sections 3.2-3.3 (Bauer and Swanson 2023, NBER WP 29939; the PDF was read page by page) [verified]
+- Figure 8 (p. 50): benchmark responses to a 25 bp shock (two-year yield, end-of-month, VAR 1973:1-2020:2, orthogonalized surprise from FOMC announcements and Fed Chair speeches, 90% bands); the unemployment and CPI values used (per 1 pp = 4 x) match the values recorded earlier in the note (+0.19, +0.17, +0.15; -0.36, -0.48, -0.60).
+- Figure B.1 (p. 56), last column: unadjusted surprise, includes unemployment: used for the 'unadjusted' markers. Figure 3 (left column) shows small responses of IP and CPI to the unadjusted surprise.
+- Figure 7 (p. 48) replicates Miranda-Agrippino and Ricco (2021) Figure 3 (shock: 100 bp in the one-year yield): unadjusted Gertler-Karadi instrument, unemployment negative on impact and positive after about nine months; the paper states that with the orthogonalized instrument there is no output or unemployment puzzle. The one-year scaling means no size comparison.
+- The earlier draft's attributions of the post-1994 unemployment/price pattern to Ramey (2016) and of the lag sensitivity to Coibion (2012) were NOT re-checked against those papers and were removed from Section 3.2; re-add only after reading them.
+- Jacobson-Matthes-Walker (FEDS 2022-054r1, pdf read): Figure 6 and the text around it support the sentence added to Section 3.3 (adverse initial inflation response when the daily index is aggregated to monthly; conventional at daily frequency after about a month). [verified from the printed text]
+- Brennan et al. (FEDS 2024-011r1, pdf read): Figures 9-10 as described in `baseline/data/SOURCES.md`; not cited in the text.
+- Correction (10 Nov 2026): Bauer-Swanson Figure 7, unadjusted Gertler-Karadi instrument: the unemployment response crosses zero after about six to seven months (zoomed reading), not nine; text and sources corrected.
+- Update (10 Nov 2026): the Jacobson-Matthes-Walker Figure 6 sentence in Section 3.3 was removed by decision (too different); that line and the Brennan et al. line above record readings that are no longer used in the text.
+
+## Added 10 Nov 2026 (Section 3.1)
+- ramey2016: read from the user's PDF (Handbook of Macroeconomics ch. 2, sections 3.4-3.5, Figures 1-2). Quotes in Section 3.1 checked against the text: [verified]. Her proxy SVAR result is for 1969-2007, her CEE and RR-VAR results for 1983-2007.
+- caldara2019: read from the FEDS 2016-049 working paper PDF (baseline 1994-2007; sections 4.1): IP about -0.2 percent in the bivariate model (credible set includes positive), about -0.75 percent with the excess bond premium; 1 s.d. shock raises the funds rate about 20 bp. [verified against the working paper, not the AEJ version].
+- barakchian2013: cited through Ramey's description (expansionary effects 1988-2007) and its abstract; full text not read [secondhand].

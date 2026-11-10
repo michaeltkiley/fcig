@@ -1,0 +1,7 @@
+case,label,nobs,F
+chol_2y_1996,"Cholesky, 2-year yield, 1996-2026",369,
+chol_2y_1984,"Cholesky, 2-year yield, 1984-2026",513,
+chol_ffr_1984_2007,"Cholesky, funds rate, 1984-2007",288,
+chol_2y_1996_com,"Cholesky with commodity prices, 2-year yield, 1996-2026",369,
+chol_ffr_1984_2007_com,"Cholesky with commodity prices, funds rate, 1984-2007",288,
+proxy_2y_1996,"Monthly proxy VAR (NS instrument), 2-year yield, no FCI, 1996-2026",369,4.536

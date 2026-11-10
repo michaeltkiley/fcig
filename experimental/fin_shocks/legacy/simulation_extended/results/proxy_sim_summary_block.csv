@@ -1,0 +1,46 @@
+step,system,quantity,data,truth,sim_median,sim_p05,sim_p95,share_le_data,sim_freq,binary,data_in_90
+rstar,nofci,F,5.6603,,3.2736,0.0915,14.2420,0.6910,,0,1
+rstar,nofci,u12 estimate,-0.4700,0.7179,-0.0501,-2.0557,2.1065,0.2910,,0,1
+rstar,nofci,u12 set unbounded,0.0000,,0.0000,0.0000,1.0000,,0.4330,1,-1
+rstar,nofci,P24 estimate,-0.8904,-1.7024,-0.5908,-3.2826,1.9912,0.3900,,0,1
+rstar,nofci,P24 set unbounded,0.0000,,0.0000,0.0000,1.0000,,0.4330,1,-1
+rstar,fci,F,3.5313,,3.2167,0.0752,13.3775,0.5300,,0,1
+rstar,fci,u12 estimate,-0.0552,0.7179,0.3199,-1.8649,3.0732,0.3310,,0,1
+rstar,fci,u12 set unbounded,0.0000,,0.0000,0.0000,1.0000,,0.4360,1,-1
+rstar,fci,P24 estimate,-1.2997,-1.7024,-0.8305,-3.9753,2.3964,0.3380,,0,1
+rstar,fci,P24 set unbounded,0.0000,,0.0000,0.0000,1.0000,,0.4360,1,-1
+rstar,nofci,u12 estimate negative,1.0000,,1.0000,0.0000,1.0000,,0.5280,1,-1
+rstar,nofci,u12 set bounded and below zero,0.0000,,0.0000,0.0000,1.0000,,0.0630,1,-1
+rstar,fci,impact on FCI per +1 pp 2-year,0.4505,1.0405,0.9964,-0.7319,3.3456,0.2050,,0,1
+rstar,we,u12 window impact (window units),0.1509,0.3297,0.1641,-0.0990,0.4261,0.4660,,0,1
+rstar,we,P24 window impact (window units),-0.3661,-0.7818,-0.4083,-0.6928,-0.1338,0.5990,,0,1
+nom,nofci,F,5.1620,,2.1899,0.0253,11.9611,0.7560,,0,1
+nom,nofci,u12 estimate,-1.2686,0.7179,-0.0329,-2.6429,2.2937,0.1070,,0,1
+nom,nofci,u12 set unbounded,0.0000,,1.0000,0.0000,1.0000,,0.5440,1,-1
+nom,nofci,P24 estimate,-0.0720,-1.7024,-0.2255,-3.9261,3.2572,0.5750,,0,1
+nom,nofci,P24 set unbounded,0.0000,,1.0000,0.0000,1.0000,,0.5440,1,-1
+nom,fci,F,1.9074,,2.3020,0.0339,11.9024,0.4520,,0,1
+nom,fci,u12 estimate,-0.8745,0.7179,0.2251,-1.8829,3.2819,0.1040,,0,1
+nom,fci,u12 set unbounded,1.0000,,1.0000,0.0000,1.0000,,0.5490,1,-1
+nom,fci,P24 estimate,-0.4711,-1.7024,-0.3597,-4.4085,2.9180,0.4640,,0,1
+nom,fci,P24 set unbounded,1.0000,,1.0000,0.0000,1.0000,,0.5490,1,-1
+nom,nofci,u12 estimate negative,1.0000,,1.0000,0.0000,1.0000,,0.5250,1,-1
+nom,nofci,u12 set bounded and below zero,1.0000,,0.0000,0.0000,0.0000,,0.0490,1,-1
+nom,fci,impact on FCI per +1 pp 2-year,0.1009,1.0405,0.9301,-1.5720,4.5113,0.1360,,0,1
+nom,we,u12 window impact (window units),-0.1573,0.3297,0.1512,-0.0878,0.3824,0.0100,,0,0
+nom,we,P24 window impact (window units),-0.1957,-0.7818,-0.2128,-0.4362,0.0041,0.5570,,0,1
+real,nofci,F,5.1742,,3.2272,0.0702,13.6607,0.6560,,0,1
+real,nofci,u12 estimate,-0.8876,0.7179,-0.0961,-2.4529,1.9178,0.1770,,0,1
+real,nofci,u12 set unbounded,0.0000,,0.0000,0.0000,1.0000,,0.4400,1,-1
+real,nofci,P24 estimate,-0.5818,-1.7024,-0.4176,-2.8980,2.5949,0.4310,,0,1
+real,nofci,P24 set unbounded,0.0000,,0.0000,0.0000,1.0000,,0.4400,1,-1
+real,fci,F,2.3828,,3.0773,0.0616,13.4221,0.4190,,0,1
+real,fci,u12 estimate,-0.3778,0.7179,0.1583,-1.7494,3.0233,0.2370,,0,1
+real,fci,u12 set unbounded,1.0000,,0.0000,0.0000,1.0000,,0.4440,1,-1
+real,fci,P24 estimate,-0.8692,-1.7024,-0.5637,-3.4352,2.4797,0.3870,,0,1
+real,fci,P24 set unbounded,1.0000,,0.0000,0.0000,1.0000,,0.4440,1,-1
+real,nofci,u12 estimate negative,1.0000,,1.0000,0.0000,1.0000,,0.5500,1,-1
+real,nofci,u12 set bounded and below zero,1.0000,,0.0000,0.0000,1.0000,,0.0770,1,-1
+real,fci,impact on FCI per +1 pp 2-year,0.1610,1.0405,1.0061,-0.5469,4.0568,0.1240,,0,1
+real,we,u12 window impact (window units),-0.0178,0.3297,0.0946,-0.1653,0.3690,0.2220,,0,1
+real,we,P24 window impact (window units),-0.2579,-0.7818,-0.2948,-0.5513,-0.0297,0.5800,,0,1

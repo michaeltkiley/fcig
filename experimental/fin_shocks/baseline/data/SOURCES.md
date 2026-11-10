@@ -19,3 +19,8 @@ Every file is a public series or a file of the repository; nothing is downloaded
 | `usmpd_monetary_events.csv` | 30-minute-window changes around FOMC announcements (MP1, MP2, ED2-ED4, 2- and 10-year yields, S&P 500, dollar) | Federal Reserve Board USMPD (Bauer and Swanson), 'Monetary Events' sheet [secondhand] |
 | `gsw_sveny02.csv` | fitted 2-year zero-coupon yield, 1961 on (months before DGS2 exists, start before 1976-06) | Gurkaynak-Sack-Wright, Federal Reserve Board [secondhand] |
 | `ebp.csv` | excess bond premium (`ebp`) | Favara, Gilchrist, Lewis and Zakrajsek [secondhand]; the file's origin and vintage are not documented [unverified] |
+
+## DFF.csv and PPIACO.csv (for the standard-method comparisons, `08_literature_style.py`)
+Effective federal funds rate, daily, FRED series DFF (copied from `experimental/mp_var_fci/data/DFF.csv`; [secondhand]: not re-downloaded, vintage not recorded). Used only as the policy variable of the funds-rate Cholesky VAR cross-checks.
+`PPIACO.csv`: producer price index for all commodities, monthly, FRED series PPIACO (copied from `experimental/mp_var_fci/data/PPIACO.csv`; [secondhand]: not re-downloaded). Used only in the commodity-price check of the Cholesky VARs (log, monthly average).
+Literature impulse responses (Bauer and Swanson 2023 etc.) are no longer used: Section 3.1 of Note B compares standard methods estimated on our own data (Ramey 2016 and Caldara and Herbst 2019 are cited in text only; read from the papers).

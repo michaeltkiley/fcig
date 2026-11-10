@@ -36,10 +36,10 @@ EV["p"] = EV.d.map(POS)
 EV["n"] = [NB.iloc[int(p)] if pd.notna(p) else np.nan for p in EV.p]                                                      # trading days in the event month
 EV["k"] = [int((MONTH.iloc[:int(p) + 1] == MONTH.iloc[int(p)]).sum()) - 1 if pd.notna(p) else np.nan for p in EV.p]      # position of the event day in its month
 EV["idx_win"] = W["y10"] * EV.UST10Y + W["equities"] * EV.SP500 + W["dollar"] * EV.DXY                                    # index change in the window
-GOOD = (EV.p.notna() & (EV.p >= 1) & (EV.p + WINDOW_DAYS < len(CAL)) & (EV.d >= "1994-02-01")).values
+GOOD = (EV.p.notna() & (EV.p >= 1) & (EV.p + WINDOW_DAYS < len(CAL)) & (EV.d >= "1996-01-01")).values
 
 def event_index():
-    """Announcements used: inside the daily calendar with a full window, from February 1994, with a policy-news value (252)."""
+    """Announcements used: inside the daily calendar with a full window, from January 1996 (the first announcement with all window variables), with a policy-news value (252)."""
     return np.where(GOOD & ~EV.ns.isna().values)[0]
 
 def window_impact(idx):

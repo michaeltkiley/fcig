@@ -1,0 +1,16 @@
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{2.4pt}
+\caption{Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate}\label{tab:standard}
+\begin{tabular}{llrrrrrrr}\toprule
+ & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){4-6}\cmidrule(lr){7-9}
+Method & Sample & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule
+Cholesky, 2-year yield & 1996--2026 & 369 & $-$0.95$^{*}$ & $-$0.66$^{*}$ & $-$0.36 & 0.13 & 0.07 & $-$0.10\\
+ & & & {\scriptsize [$-$1.53, $-$0.55]} & {\scriptsize [$-$1.41, $-$0.28]} & {\scriptsize [$-$0.94, 0.09]} & {\scriptsize [$-$0.09, 0.36]} & {\scriptsize [$-$0.39, 0.57]} & {\scriptsize [$-$0.79, 0.58]}\\
+Cholesky, 2-year yield & 1984--2026 & 513 & $-$0.61$^{*}$ & $-$0.36$^{*}$ & $-$0.16 & 0.11 & 0.15 & 0.13\\
+ & & & {\scriptsize [$-$0.98, $-$0.33]} & {\scriptsize [$-$0.78, $-$0.10]} & {\scriptsize [$-$0.63, 0.06]} & {\scriptsize [$-$0.02, 0.29]} & {\scriptsize [$-$0.10, 0.47]} & {\scriptsize [$-$0.26, 0.57]}\\
+Cholesky, federal funds rate & 1984--2007 & 288 & $-$0.04 & $-$0.02 & 0.00 & $-$0.01 & $-$0.01 & 0.00\\
+ & & & {\scriptsize [$-$0.07, 0.00]} & {\scriptsize [$-$0.06, 0.02]} & {\scriptsize [$-$0.05, 0.03]} & {\scriptsize [$-$0.06, 0.03]} & {\scriptsize [$-$0.09, 0.07]} & {\scriptsize [$-$0.13, 0.10]}\\
+Proxy VAR, 2-year yield & 1996--2026 & 369 & $-$0.91$^{*}$ & $-$0.61$^{*}$ & $-$0.32 & 0.03 & $-$0.08 & $-$0.26\\
+ & & & {\scriptsize [$-$1.37, $-$0.42]} & {\scriptsize [$-$1.08, $-$0.05]} & {\scriptsize [$-$0.71, 0.17]} & {\scriptsize [$-$1.20, 0.97]} & {\scriptsize [$-$1.83, 1.25]} & {\scriptsize [$-$2.27, 1.25]}\\
+\bottomrule\end{tabular}
+\par\smallskip\parbox{0.96\linewidth}{\scriptsize Monthly data, 12 lags, constant, no trend; unemployment gap, core PCE inflation and the end-of-month policy rate (the 2-year Treasury yield, or the effective federal funds rate where stated), policy rate ordered last in the Cholesky VARs; price level = cumulated inflation/12. Proxy VAR: Nakamura--Steinsson policy news summed within the month as instrument; first-stage $F$ = 4.5. Unit: +1 pp on the policy rate on impact. Brackets: 90\% intervals (residual bootstrap for the Cholesky VARs; exact Anderson--Rubin sets for the proxy VAR). $^{*}$ = excludes zero. Specification: baseline/lib/litstyle.py.}
+\end{table}
