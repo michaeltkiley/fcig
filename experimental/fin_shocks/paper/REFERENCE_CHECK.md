@@ -59,3 +59,8 @@ Related but not cited: Lee and Sekhposyan (temporal aggregation and shock propag
 - Brennan et al. (FEDS 2024-011r1, pdf read): Figures 9-10 as described in `baseline/data/SOURCES.md`; not cited in the text.
 - Correction (10 Nov 2026): Bauer-Swanson Figure 7, unadjusted Gertler-Karadi instrument: the unemployment response crosses zero after about six to seven months (zoomed reading), not nine; text and sources corrected.
 - Update (10 Nov 2026): the Jacobson-Matthes-Walker Figure 6 sentence in Section 3.3 was removed by decision (too different); that line and the Brennan et al. line above record readings that are no longer used in the text.
+
+## Added 10 Nov 2026 (Section 3.1)
+- ramey2016: read from the user's PDF (Handbook of Macroeconomics ch. 2, sections 3.4-3.5, Figures 1-2). Quotes in Section 3.1 checked against the text: [verified]. Her proxy SVAR result is for 1969-2007, her CEE and RR-VAR results for 1983-2007.
+- caldara2019: read from the FEDS 2016-049 working paper PDF (baseline 1994-2007; sections 4.1): IP about -0.2 percent in the bivariate model (credible set includes positive), about -0.75 percent with the excess bond premium; 1 s.d. shock raises the funds rate about 20 bp. [verified against the working paper, not the AEJ version].
+- barakchian2013: cited through Ramey's description (expansionary effects 1988-2007) and its abstract; full text not read [secondhand].

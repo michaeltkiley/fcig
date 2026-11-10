@@ -1,0 +1,2456 @@
+Financial Conditions, r∗, and the Transmission of Monetary Policy
+                             Surprises
+                                           Draft for discussion
+
+                                            9 November 2026
+
+
+                                                  Abstract
+      Monetary policy is the main tool for stabilizing the economy, but recent estimates of its effects
+      are troubling. Surprise tightenings often have small or wrong-signed effects on unemployment
+      and inflation. Read through a Phillips curve, the estimates imply that lowering inflation is
+      very costly. We keep standard interest-rate surprises around Federal Reserve announcements
+      and change only how their effects are traced through the economy. We build in two well-
+      established features of how policy works. It acts through financial conditions as a whole, not
+      through one interest rate. And what matters is the level of rates relative to the neutral rate r∗ ,
+      the rate that neither stimulates nor restrains the economy. Traced through the two-year yield
+      alone, the surprises give the familiar wrong signs. Traced through a broad financial conditions
+      index measured relative to r∗ , they give standard and precisely estimated effects. A policy
+      move that raises the two-year yield 1 percentage point raises the unemployment rate about
+      0.4 percentage point and lowers industrial production about 1 percent within a year. It lowers
+      the core price level about 0.6 percent after two years. The implied tradeoff between inflation
+      and unemployment is much steeper than recent estimates of a flat Phillips curve, and steeper
+      than when conditions are measured in nominal terms. Financial conditions matter most for the
+      unemployment result. Measuring them relative to r∗ matters most for the price result and the
+      tradeoff, which rely on data since 2020.
+
+[TO DO: Abstract: rewrite last, after Section 3 is final. It must state the three
+problems, the baseline (r*-gap 2-year yield and FCI, no trend, 12 lags) and where the
+price result is conditional.]
+
+
+1    Introduction
+Monetary policy is the main tool for stabilizing the economy. Its use rests on estimates of how
+much a change in policy moves unemployment and inflation. Those estimates have become harder
+to defend. In samples since the mid-1990s, a surprise tightening often has small effects on unem-
+ployment, or effects of the wrong sign (Ramey, 2016). Its effects on inflation look smaller still.
+Two concerns follow. One is that policy has become less powerful (Boivin and Giannoni, 2006;
+Boivin et al., 2010). The other is that inflation responds little to slack: the Phillips curve is flat
+(Hazell et al., 2022; Del Negro et al., 2020), so lowering inflation requires a large and lasting rise in
+unemployment. If both were true, policy would be weaker and more costly than standard models
+suggest. This paper asks whether these findings reflect how policy works or how its effects are
+measured.
+    The question matters in practice. From 2022 to 2023 the Federal Reserve raised its policy rate
+by more than 5 percentage points. Policymakers expected costs: in August 2022 the Chair warned
+
+
+                                                      1
+of “some softening of labor market conditions” and called these “the unfortunate costs of reducing
+inflation” (Powell, 2022). They also described policy as working through broad financial conditions.
+In November 2023 the Chair noted that “Financial conditions have tightened significantly in recent
+months, driven by higher longer-term bond yields, among other factors” (Powell, 2023). Yet the
+standard tools for measuring the effects of policy leave those conditions out.
+    Interest-rate surprises around Federal Reserve announcements were meant to settle the mea-
+surement problem. The FOMC makes its decision before the announcement, so market moves in
+a narrow window around the announcement, at most about 100 minutes long, cannot have caused
+the decision. The change in interest-rate futures and Treasury yields in that window is then news
+about policy, or at least about the part of policy that moves interest rates (Kuttner, 2001; Gürkay-
+nak et al., 2005). These surprises measure the effects of policy on asset prices precisely (Bernanke
+and Kuttner, 2005; Hanson and Stein, 2015; Nakamura and Steinsson, 2018; Swanson, 2021). But
+when they are used to measure effects on unemployment and inflation, the old puzzles often return.
+Recent work offers several explanations, each with a fix, and the fixes complement one another.
+  • Information. An announcement reveals the Fed’s view of the economy as well as its policy,
+    so a surprise tightening can signal good news (Romer and Romer, 2000; Nakamura and
+    Steinsson, 2018). Separating the two gives larger price effects (Jarociński and Karadi, 2020;
+    Miranda-Agrippino and Ricco, 2021).
+  • Predictable surprises. Part of each surprise can be predicted from earlier public data. Remov-
+    ing it, and adding surprises from the Chair’s speeches, gives larger and more precise effects
+    (Bauer and Swanson, 2023a,b).
+  • Timing. Markets react within minutes, but unemployment and inflation are monthly averages.
+    Measuring inflation daily removes most of the wrong-signed response (Jacobson et al., 2026).
+  • Credit and risk appetite. Credit costs carry part of the effect (Gertler and Karadi, 2015;
+    Caldara and Herbst, 2019). Announcements also move stock prices and the dollar much more
+    than interest-rate surprises can explain. Treated as a separate shock, this news has large
+    effects (Kroencke et al., 2021; Bauer et al., 2023; Boehm and Kroner, 2024; Bauer et al.,
+    2026; Boehm et al., 2026).
+Most of this work, however, traces the surprise forward through a single interest rate, measured in
+nominal terms. That leaves out two basic parts of how monetary policy works.
+    First, policy affects spending through financial conditions as a whole: the cost of long-term
+credit, the value of wealth and the exchange rate (Boivin et al., 2010). A surprise tightening moves
+long-term yields, stock prices and the dollar, not only the two-year yield. A model that omits these
+variables traces the wrong experiment. The financial conditions index (FCI) used below combines
+the 10-year yield, stock valuations and the dollar. It is scaled so that, in the announcement windows,
+it rises about 1 unit per percentage point rise in the two-year yield. In ordinary months it moves
+only about 0.35 to 0.4 unit per point. A model with the two-year yield alone therefore traces the
+typical move in that yield. That move comes with a much smaller change in financial conditions
+than a policy surprise brings.
+    Second, what matters for spending and inflation is the level of real interest rates compared with
+the neutral rate r∗ , the rate that neither speeds up nor slows down the economy. The neutral rate fell
+a lot from the 1990s to the 2010s (Laubach and Williams, 2003; Holston et al., 2017, 2023; Hamilton
+et al., 2016; Kiley, 2020b), and it shaped the long-run trend in yields (Bauer and Rudebusch, 2020).
+Since 1994, interest rates have trended down along with r∗ , while activity has trended up. A model
+that links the level of rates to activity then partly picks up these opposite trends, and finds that
+higher rates go with stronger activity. Activity responds to changes in financial conditions, but
+
+                                                  2
+inflation depends on how long real rates stay above or below r∗ . So measuring rates relative to r∗
+should matter most for prices.
+    Our contribution is to hold the surprise fixed and change only the variables that carry it to
+the economy. Broad financial conditions, measured relative to r∗ , replace a single nominal rate.
+Doing so removes the post-1994 wrong-signed unemployment response. It also gives price and
+output effects comparable to cleaned-shock benchmarks, and a tradeoff much steeper than recent
+post-1990 estimates.
+    Our design is simple. The shock is the policy-news surprise of Nakamura and Steinsson (2018),
+measured in narrow windows around 252 FOMC announcements from 1996 to 2026. We measure its
+effect on the two-year yield and on the FCI within these windows, and assume that unemployment
+and inflation do not move within them. A daily model then traces how the two-year yield and
+the FCI evolve after each announcement. Monthly unemployment and core inflation then respond
+to the monthly averages of these daily series, as in a standard vector autoregression (VAR). Like
+Jacobson et al. (2026), we take into account when each announcement falls within its month. The
+FCI and the order of steps (nominal, real, then relative to r∗ ) come from a companion note on
+financial conditions and were fixed before this analysis (FCI note, 2026).
+    We build up the channel from policy to the economy in four steps. Every step includes a
+smooth quadratic time trend in the monthly equations. Below, “significant” means that the 90
+percent interval excludes zero.
+  • With the nominal two-year yield as the only channel, the post-1994 puzzles appear. The
+    unemployment response changes sign with the number of monthly lags and is significantly
+    negative with 12. Prices barely move, and industrial production rises.
+  • Adding the FCI makes the unemployment response standard, large and significant. Prices
+    fall only a little.
+  • Measuring rates in real terms changes little.
+  • Measuring the two-year yield and the FCI relative to r∗ completes the picture. Unemployment
+    rises 0.36 to 0.40 percentage point after 12 months. The core price level falls 0.53 to 0.72
+    percent after 24 months. Industrial production falls about 1 percent after 12 months. All are
+    significant for every number of lags.
+These effects are not small. Per point on the two-year yield, the unemployment effect is about
+twice that of the benchmark of Bauer and Swanson (2023a), and the price effect is similar for two
+years and larger after that.
+    The results also bear on the inflation-unemployment tradeoff. We measure it by the “Phillips
+multiplier” of Barnichon and Mesters (2021): the fall in the price level per percentage-point-year
+of higher unemployment. With financial conditions measured relative to r∗ , the multiplier is about
+−0.8 to −1.1 after two years and −0.5 to −0.85 after three, and its 90 percent sets exclude zero.
+With conditions measured in nominal terms, it is about half as large and not significantly different
+from zero. With the two-year yield alone, it cannot be measured at all. Our estimates are much
+steeper than the post-1990 estimate of Barnichon and Mesters (2021), about −0.15, which lies
+outside our sets. They are flatter than the pre-1990 estimate in that paper, and flatter than the
+tradeoff implied by the benchmark of Bauer and Swanson (2023a), whose price effects are similar
+to ours but whose unemployment effects are smaller.
+    The steps play different roles. Within our design, the FCI delivers the unemployment result,
+with its response to the surprise measured in the window. Without the FCI, no adjustment of the
+two-year yield gives a reliable unemployment response. With it, every adjustment does. Measuring
+conditions relative to r∗ delivers the price result. The unemployment result holds however we treat
+
+                                                 3
+the pandemic and is larger in a sample that ends in 2019. The price result, and with it the steeper
+tradeoff, depends on data from 2020–22, which include the large tightening relative to r∗ after
+2021: in a sample that ends in 2019, the multiplier is close to zero. The results hold with the
+cleaned surprises of Bauer and Swanson (2023a) and the pure-policy surprises of Jarociński and
+Karadi (2020). Two limits stand out. First, credit conditions offer a partial alternative: the excess
+bond premium, a corporate bond spread net of expected default, also removes the wrong-signed
+unemployment response without the FCI. Second, adding the FCI to a standard monthly proxy
+VAR, which uses the surprise as an instrument, is not enough. The FCI’s response to the surprise
+must be measured in the window.
+[TO DO: Introduction: restate around the three problems in the literature (perverse
+responses; effects hard to find in recent decades; implausible sacrifice ratio); update
+the roadmap paragraph to the new section order; numbers as in Section 3.]
+
+1.1   Connection to the literature
+Identifying the effects of policy. Our paper is closest in spirit to Jacobson et al. (2026). Like
+them, we hold the surprise and the method fixed and change one measurement. They change how
+often the outcome is measured; we change how the channel from policy to the economy is measured.
+They study inflation only, while our main result is for activity. Both changes remove wrong-signed
+responses, and both point to a mismatch between what the economist measures and what drives
+decisions. Bauer and Swanson (2023a) and Jarociński and Karadi (2020) improve the surprise itself.
+In our design a surprise enters only through its immediate effect on the two-year yield and the FCI,
+and through its timing. Their cleaned surprises change our results little and make them slightly
+stronger, so their fixes and ours can be combined. Our approach also changes which assumptions
+the estimates rest on. It depends less on how strongly the surprise moves rates over a month, and
+less on its link to earlier news. It relies instead on the assumption that the economy responds to a
+given change in financial conditions in the same way, whatever caused it.
+    The use of futures-based surprises in monthly models goes back to Faust et al. (2004). The
+choice of surprise series can matter (Bu et al., 2021; Brennan et al., 2025), and so can the number of
+lags (Coibion, 2012). Related work on timing and mixed frequencies includes Kilian (2024), Chudik
+and Georgiadis (2022), Francis et al. (2011), Ghysels (2016) and Gazzani and Vicondoa (2020).
+    Financial channels and risk appetite. Gertler and Karadi (2015) and Caldara and Herbst
+(2019) are closest in emphasizing financial channels. We use a broad index and measure it relative
+to r∗ , but leave credit spreads out of the baseline. Recent studies of risk appetite and the “non-
+yield” shock, the announcement news that moves stocks and the dollar beyond what interest rates
+explain, differ from ours in where they place risk premia (Bauer et al., 2026; Boehm and Kroner,
+2024; Boehm et al., 2026). They treat policy-driven moves in risk premia as a second shock; we
+treat them as part of financial conditions. The channels are the same in both views: stock prices,
+the dollar and credit costs. Our estimates keep only the part of the stock and dollar moves that
+comes with interest-rate news, so they measure the effects of that dimension of policy, not of all
+policy news. The response of stock prices to policy-driven moves in long rates has also changed
+over time (Kiley, 2014). Section 2.2.4 shows how large the rest is. Caballero et al. (2026) propose a
+neutral level of the FCI itself, FCI∗ , because r∗ must otherwise absorb asset-price movements that
+the index already captures. We keep r∗ for the rates inside the two-year yield and the index; using
+gaps to FCI∗ is a natural extension.
+    The power of policy and the Phillips curve. A long literature finds that the effects of
+policy shocks became smaller after the early 1980s. It attributes the change to a more systematic
+response of policy and to better-anchored expectations (Boivin and Giannoni, 2006; Boivin et al.,
+
+                                                  4
+2010; Primiceri, 2005). Others argue that standard identification fails after the late 1980s because
+policy became more forward-looking (Barakchian and Crowe, 2013). Our results do not suggest
+that policy has lost power. Our effects are larger than in samples that start in the 1970s, though
+that comparison is not a formal test of change over time.
+    On the Phillips curve, recent work finds a small slope (Hazell et al., 2022; Del Negro et al.,
+2020; Ball and Mazumder, 2019; Fitzgerald et al., 2024). It also stresses that the slope is hard to
+identify when policy offsets demand shocks (McLeay and Tenreyro, 2020), and that conventional
+methods tend to understate it (Barnichon and Mesters, 2020). Policy shocks offer one way to
+identify it. Barnichon and Mesters (2021) measure the tradeoff by the ratio of cumulative inflation
+to cumulative unemployment after such shocks. In that metric they find a much flatter tradeoff after
+1990 than before. Responses to policy shocks also map directly into the outcomes of alternative
+policies (McKay and Wolf, 2023). We add evidence of this kind and show that the measured
+tradeoff depends on how the stance of policy is measured. Our price result relies on 2020–22, when
+inflation surged and then began to fall. Others read that episode as evidence of a steeper, nonlinear
+Phillips curve (Benigno and Eggertsson, 2023), or as the unwinding of supply shocks (Bernanke
+and Blanchard, 2025); we return to this in Section 4.1.
+
+
+2     Empirical approach
+The model has three pieces. A surprise moves the two-year yield and the FCI by amounts measured
+in the announcement window: the vector b in equation (13). A daily VAR, equation (14), carries
+those two series forward. Their monthly averages then enter a monthly VAR for unemployment and
+inflation, equation (15). Section 2.1 defines the FCI, Section 2.3 sets out the timing assumptions
+at each frequency, and Section 2.4 gives the model. Appendix B gives the daily construction of the
+series, the algorithm for tracing responses and the bootstrap. Appendix C lists the data.
+[TO DO: Overview: rewrite for the new Section 2 (2.1 data and measurement; 2.2
+why financial conditions and r*; 2.3 timing and identification; 2.4 the model).]
+
+2.1   Measuring financial conditions
+The FCI is the market index of FCI note (2026): a weighted sum of the 10-year Treasury yield,
+stock valuations and the real broad dollar. Indexes of this kind are weighted sums of financial
+variables (Hatzius et al., 2010). They differ mainly in where the weights come from. FCI-G takes
+them from large macroeconomic models (Ajello et al., 2023). Ours come from the event-study
+regressions long used to measure how asset prices respond to policy (Kuttner, 2001; Bernanke and
+Kuttner, 2005; Hanson and Stein, 2015; Nakamura and Steinsson, 2018).
+    Policy news. Let ∆Xa be the 5 × 1 vector of changes in the current- and next-meeting federal
+funds futures and the second to fourth eurodollar futures in the window around announcement a.
+Following Nakamura and Steinsson (2018), let pa be the first principal component of these changes,
+signed so that it moves with the fourth eurodollar future. Policy news is pa rescaled so that one
+unit moves the two-year yield y 2 by 1 percentage point:
+                                                      P         2
+                                                        a pa ∆ya
+                                  sa = γ pa ,    γ=     P 2 .                                    (1)
+                                                           a pa
+
+    Weights. Let ∆Aa be the vector of changes in the 10-year yield, the S&P 500 and the DXY
+dollar index in the announcement window. The companion note treats these changes as
+
+                                         ∆Aa = ψ sa + ηa ,                                       (2)
+
+                                                 5
+where ψ holds the policy responses and ηa is other news, with covariance matrix Σ. It estimates
+ψ by regressing each element of ∆Aa on sa and a constant, and Σ from the residuals, over 253
+announcements from January 1996 to September 2026. The weights are those that recover the
+policy component most precisely (one-factor generalized least squares):
+
+                                                       Σ−1 ψ
+                                                w=              .                                        (3)
+                                                      ψ ′ Σ−1 ψ
+Because w′ ψ = 1 and sa is scaled to the two-year yield, a policy move that raises the two-year yield
+1 percentage point raises the index by 1 unit. The weights are 0.61 on the 10-year yield, −0.051
+per percent on stock valuations and 0.065 per percent on the dollar. Each of the three accounts for
+about a third of the index’s response to policy.
+   Three versions. In month t, the index in version v is
+
+                                      Ftv = wB Btv + wQ Qvt + wD Dt ,                                    (4)
+
+measured as a deviation from its sample mean. Here Dt is 100 times the log of the real broad dollar
+in every version. With yt10 the 10-year yield, πt10 10-year expected inflation, and (E/P )t the inverse
+of the cyclically adjusted price-earnings ratio (CAPE), the other two terms are:
+
+                   Nominal: Bt = yt10 ,                                Qt = 100 ln CAPEt ,               (5)
+                       Real:    Bt = yt10 − πt10 ,                     Qt = 100 ln CAPEt ,               (6)
+                                                                              100
+          r∗ -gap (baseline): Bt = yt10 − πt10 − rt∗ ,                 Qt = −       [(E/P )t − rt∗ ] .   (7)
+                                                                              E/P
+In the r∗ -gap version, stocks are measured by the gap between their earnings yield and r∗ . The
+term 100/E/P , with E/P the sample average, converts this gap to the units of the log CAPE, so
+that the weight on stocks is the same in every version. CAPE is a real valuation measure, so stocks
+do not change between the nominal and real versions. For r∗ we use the New York Fed’s current
+Laubach–Williams estimates (Holston et al., 2023). These “one-sided” estimates use only data up
+to each date, with the model’s parameters estimated on the full sample.
+    The two-year yield. The two-year yield is adjusted in the same steps. With yt2 the nominal
+yield and πt2 two-year expected inflation (from the Cleveland Fed; Haubrich et al., 2012),
+                                                                       ∗
+                  Rtnominal = yt2 ,      Rtreal = yt2 − πt2 ,       Rtr -gap = yt2 − πt2 − rt∗ .         (8)
+
+Expected inflation and r∗ are monthly or quarterly and move slowly. The daily series add their
+interpolated monthly values to daily market prices, so day-to-day moves come from markets (Ap-
+pendix B).
+
+2.2   Why financial conditions and r∗
+[TO DO: Moved from old Section 2 (background) and old Section 5 (scope). Rewrite
+as the mechanism case for the FCI and the r* adjustment and how they connect to
+the other solutions in the literature; keep the risk-appetite material (subsubsection
+below, without extra tables).]
+    This section sets out the reasoning behind the design. We first describe how monetary policy
+is thought to reach spending and prices. We then show why a standard VAR can miss this route,
+and why that could produce the puzzles. Finally, we connect the argument to work on financial
+conditions and economic activity.
+
+                                                       6
+2.2.1   The standard transmission mechanism
+Monetary policy sets the short-term interest rate today and, through its communications, shapes
+what people expect that rate to be in the future. Few households and businesses borrow at the
+policy rate. They face the rates on consumer credit, mortgages and business debt, which arbitrage
+links to current and expected short-term rates. The same rise in rates raises the return investors
+require on stocks. For businesses, a higher cost of capital raises the user cost of new equipment and
+buildings, and investment falls (Jorgenson, 1963; Hall and Jorgenson, 1967). The value of existing
+capital relative to its replacement cost falls as well (Tobin, 1969). For households, lower stock
+prices lower wealth, and consumption depends on wealth as well as on current income (Ando and
+Modigliani, 1963; Friedman, 1957). Higher rates also strengthen the dollar, which shifts spending
+toward imports and reduces exports (Fleming, 1962; Mundell, 1963).
+     Interest rates of many maturities, equity prices and the dollar therefore form the core of the
+transmission mechanism (Boivin et al., 2010). These links run from the early work cited above to
+modern models of the business cycle, in closed and open economies (Christiano et al., 2005; Smets
+and Wouters, 2007; Galí and Monacelli, 2005). Models with heterogeneous households give more
+weight to the indirect effects that work through income (Kaplan et al., 2018; Auclert, 2019). But
+in all of these models the short-term rate matters mainly because of what it does to the prices and
+rates that people actually face. And they act with a lag (Friedman, 1961).
+     What matters in these models is not the nominal rate but the real rate relative to the neutral
+rate r∗ . The same holds for the other parts of financial conditions: a given yield or stock valuation
+is tighter when r∗ is low than when it is high. The distinction matters most for inflation. Spending
+responds to financial conditions within months. Inflation responds to the slack that builds up over
+time, so it depends on how long, and by how much, conditions stay tight relative to r∗ . A measure
+of conditions that ignores a falling r∗ will overstate how tight policy has been, and by more the
+longer the period. That error is largest for the cumulative effects that drive inflation.
+
+2.2.2   What standard VARs leave out
+The workhorse evidence on monetary policy comes from VARs with a few macroeconomic variables
+and one interest rate (Bernanke and Blinder, 1992; Christiano et al., 1999). Some studies add a
+credit spread (Gertler and Karadi, 2015; Caldara and Herbst, 2019), and factor models bring in
+many more series (Bernanke et al., 2005). But long-term yields, equity valuations and the dollar
+are usually absent from the small models used to measure the effects of policy, although some recent
+work adds the dollar and stock-market volatility (Boehm et al., 2026). These are the variables that,
+on the mechanism above, carry those effects. Concern about missing variables is not new: Sims
+(1992) argued that the price puzzle arises because the Federal Reserve responds to information that
+small VARs do not contain (see also Castelnuovo and Surico, 2010). Our concern is different. Here
+the missing variables are the channel itself.
+    A simple model shows what this omission can do. Let Ut be the unemployment gap, it the
+policy rate and ft financial conditions, with a higher ft meaning tighter conditions:
+
+                                     Ut = ρU Ut−1 + κ ft−1 + εU
+                                                              t ,                                  (9)
+                                     ft = ρf ft−1 + λ it + εft .                                  (10)
+
+Unemployment responds to financial conditions and not directly to the policy rate. Financial
+conditions respond to the policy rate and to other forces, εft , such as changes in risk appetite. Some
+of these other forces may themselves be policy news that does not move interest rates (Boehm and
+Kroner, 2024; Bauer et al., 2026). Suppose the economist observes only Ut and it . To remove ft ,
+
+                                                   7
+lag equation (9) one month, multiply it by ρf , subtract it from equation (9), and use equation (10).
+This gives
+                                                                                 f
+                Ut = (ρU + ρf ) Ut−1 − ρU ρf Ut−2 + κλ it−1 + εU        U
+                                                                t − ρf εt−1 + κ εt−1 .           (11)
+                                                                        |          {z            }
+                                                                                  error
+
+The policy rate has no direct effect in this model. It appears in equation (11) because it stands
+in for financial conditions. The error is a moving average that includes past financial shocks, so a
+VAR in Ut and it with few lags cannot capture it. The VAR is misspecified. With the lags and
+samples available in practice, this can make the effects of monetary policy harder to measure. In
+some settings a policy shock may not be recoverable at all from a small set of variables (Fernández-
+Villaverde et al., 2007), but our argument does not depend on that.
+    A second problem matters more for the size and sign of the response: the omission changes the
+experiment being traced. In the announcement windows, the FCI used below rises about 1 unit
+per percentage point rise in the two-year yield. In ordinary months, its unexpected movements are
+only about 0.35 to 0.4 unit per percentage point. A VAR without financial conditions traces the
+typical move in the two-year yield, which comes with a much smaller change in financial conditions
+than a policy surprise does.
+    A small simulation shows the size of the problem. The true model is a monthly VAR in
+the unemployment gap, core PCE inflation, the two-year yield and the FCI, with six lags and a
+quadratic trend, estimated on the data of Section 2. Macroeconomic variables are ordered first.
+We generate 2,000 artificial samples of the same length (382 months) from this model. On each,
+we estimate the VAR with all four variables and again without the FCI. We then trace a policy
+move that raises the two-year yield 1 percentage point, with no immediate effect on unemployment
+or inflation. With the FCI in the VAR, the move also raises the FCI by 0.99 unit, the amount
+measured in the announcement windows. Without it, the same move raises only the yield. Table 1
+shows the results. These VARs are monthly and simpler than the model of Section 2, so their true
+responses are not the estimates of Section 3.
+
+       Table 1: Simulation: estimating the effects of policy with and without financial conditions
+
+                                             True            With the FCI                    Without the FCI
+                                           response    Mean (s.d.)    Wrong sign          Mean (s.d.)   Wrong sign
+ Nominal Unemployment, 12 months            +0.36     +0.32 (0.18)          4%          -0.08 (0.18)       66%
+         Price level, 24 months             -0.32     -0.34 (0.25)          8%          -0.21 (0.23)       18%
+ r∗ -gap Unemployment, 12 months            +0.51     +0.43 (0.19)          1%          +0.11 (0.17)       26%
+         Price level, 24 months             -0.84     -0.75 (0.25)          0%          -0.57 (0.22)        1%
+  Responses to a policy move that raises the two-year yield 1 percentage point; unemployment gap in percentage
+  points, core PCE price level in percent. True model: monthly VAR in the unemployment gap, core PCE
+  inflation, the two-year yield and the FCI (six lags, quadratic trend), estimated on 1994–2026, with the two-year
+  yield and the FCI in the form shown. 2,000 samples of 382 months; estimated VARs have six lags. Mean and
+  s.d.: across samples. “Wrong sign”: share of samples in which the estimate has the opposite sign to the true
+  response.
+
+
+     The VAR with the FCI comes close to the true responses. The VAR without it does not. In the
+nominal case, the true unemployment response after 12 months is +0.36. The VAR without the FCI
+gives −0.08 on average, and the estimate has the wrong sign in two-thirds of the samples. In the
+r∗ -gap case, it gives +0.11 against a true response of +0.51. The price effects are also understated,
+though less severely. More data would reduce the noise but not this error: with ten times as many
+months, the nominal estimate is still −0.08. The simulation illustrates the mechanism and does
+
+
+                                                         8
+not prove it, because the true model is one in which financial conditions matter by construction.
+But it shows that if they do matter, a small VAR that omits them can produce the wrong-signed
+responses found in practice.
+    High-frequency surprises help identify the shock, but they do not by themselves fix how it
+is carried forward. Our design therefore does two things. It includes financial conditions in the
+system, so that they carry the effects of the surprise forward, as in equation (9). And it measures
+the immediate effect of the surprise on the two-year yield and on financial conditions directly in
+the announcement window, where policy news is the main force at work. The measurement of ft
+also matters. If activity responds to financial conditions relative to r∗ , a measure that ignores r∗
+differs from the true ft by a slow-moving error, and that error enters equation (9).
+
+2.2.3   Financial conditions and real activity
+A separate literature asks how financial conditions are related to economic activity. Asset prices
+help forecast output and inflation, but which ones help changes over time (Stock and Watson,
+2003). Credit spreads, and especially their excess bond premium component, are strong predictors
+of activity (Gilchrist and Zakrajšek, 2012). Broad indexes summarize many such series and are
+used to assess the outlook (Hatzius et al., 2010; Brave and Butters, 2011). Financial conditions
+are also linked to the risks around growth, not only to its average (Adrian et al., 2019), and their
+relationship with unemployment may be nonlinear (Kiley, 2020a). Federal Reserve staff now publish
+a measure of the effect of financial conditions on growth, with weights from large macroeconomic
+models (Ajello et al., 2023).
+    This work has a limit that the event-study literature does not. A correlation between financial
+conditions and later activity need not reflect a causal effect, because financial conditions also
+respond to the economy. Hatzius et al. (2010) address part of this problem by removing the effects
+of past growth and inflation from their indicators. The companion note uses the timing in a VAR
+for the same purpose (FCI note, 2026). The two literatures have complementary strengths. Work
+on high-frequency surprises identifies policy shocks cleanly but carries them through a small set of
+variables. Work on financial conditions studies a broad set of variables but does not isolate policy
+shocks. We bring them together: the weights in our index come from how its components respond
+to policy news, and the surprise is carried forward through the estimated relationship between that
+index and the economy.
+
+2.2.4   Policy news beyond interest rates, and risk appetite
+Policy news beyond interest rates. Recent work finds that announcements move stock prices
+and the dollar much more than interest-rate surprises can explain (Boehm and Kroner, 2024; Bauer
+et al., 2026). Appendix Table A7 checks what this means for our design. In our 252 windows, the
+policy-news surprise explains 80 percent of the variance of the move in the two-year yield, but
+only about a third for the 10-year yield (32 percent), the S&P 500 (31 percent) and the dollar (34
+percent), and 48 percent for the FCI. The part of the FCI’s move that the surprise does not explain
+is as large as the part we use: its standard deviation is 0.06 index unit, against 0.05 for the move
+that comes with a one-standard-deviation surprise.
+    The window ratio bF is fairly stable. It ranges from 0.87 to 1.17 across 1996–2007, 2008–2019,
+2020–2026 and 2020–2023, and its 90 percent intervals overlap when announcements are split by
+the level of the VIX or the excess bond premium. Bauer et al. (2026) find that the link between
+interest-rate surprises and risk appetite varies a lot with the state of markets; in our windows, the
+link between the surprise and the FCI varies less.
+
+
+                                                 9
+    The unexplained part of the FCI’s move has effects of the standard sign. We trace a one-
+standard-deviation move in it through our model, with no move in the two-year yield. Unemploy-
+ment rises 0.03 percentage point after 12 months, and the core price level falls 0.02 to 0.03 percent
+after 24 months at the r∗ step, both significant. These signs match those that Bauer et al. (2026)
+and Boehm et al. (2026) find for policy-driven shifts in risk appetite, and the sizes are similar to
+those of a one-standard-deviation policy surprise.
+    There are two readings of this unexplained part. On one, it is mostly news unrelated to policy
+that happens to arrive in the window, and our estimates capture the effects of policy. On the other,
+much of it is policy news that does not move interest rates, as Boehm and Kroner (2024) and Bauer
+et al. (2026) argue. Then our estimates are the effects of one dimension of policy news, and the
+effects of all policy news through financial conditions could be up to about twice as large. Both
+readings agree on the channel: policy news reaches the economy through broad financial conditions.
+    Credit. Credit is the most important channel we leave out of the baseline (Gilchrist and
+Zakrajšek, 2012; Caldara and Herbst, 2019). Appendix D adds it in two ways. Adding the daily
+Baa-10-year spread, and letting it respond on the announcement day, barely changes the results:
+at the r∗ step, unemployment rises 0.28 to 0.35 percentage point after 12 months and the price
+level falls 0.48 to 0.65 percent after 24 months, significant for all lag lengths. Adding the monthly
+excess bond premium as a third monthly variable leaves the results with the FCI almost unchanged.
+But without the FCI, the premium removes the wrong-signed unemployment response. So credit
+conditions offer a partial alternative to the FCI for the unemployment puzzle, though not for the
+price result. One reading is that the premium, like the FCI, absorbs policy-driven moves in risk
+premia (Bauer et al., 2026).
+    The parts of the FCI. Replacing the FCI with its three weighted parts, entered separately,
+leaves the signs unchanged but makes the estimates less precise. The price result is then significant
+only with 12 lags. A test of the proportional-weights restriction does not reject it at the 5 percent
+level for unemployment at any step, or for either variable at the r∗ step (Appendix D).
+    Commodity prices and output. Commodity prices mark a limit of the approach. Appendix
+Table A8 adds the IMF all-commodity price index. Commodity prices then rise after a tightening,
+by 2.7 to 7.2 percent after 24 months at the r∗ step (not significant), and by more at the nominal
+step. This differs from Boehm et al. (2026) and Bauer et al. (2026), who find that oil and commodity
+prices fall after a contractionary shock. In this larger model, industrial production also rises rather
+than falls, and the unemployment effect is smaller (0.16 to 0.25 percentage point after 12 months at
+the r∗ step). The price-level effect is similar (0.30 to 0.62 percent after 24 months). Our assumptions
+are least plausible for prices like these, which look ahead and respond strongly to demand.
+
+2.3   Timing assumptions and identification
+The shock is the Nakamura–Steinsson policy-news surprise, sa in equation (1), from the San Fran-
+cisco Fed’s U.S. Monetary Policy Event-Study Database (Acosta et al., 2025). We use the 252
+FOMC announcements from January 1996 to July 2026 with all the window measures available
+(Appendix B). The window runs from 10 minutes before the statement to 60 minutes after the
+press conference starts, or 30 minutes around the statement when there is no press conference.
+Identification comes from timing, at three frequencies. Table 2 summarizes the assumptions.
+
+
+
+
+                                                  10
+                                         Table 2: Timing assumptions
+
+  Frequency     What can move                        Assumption                                   Equation
+  Window        Two-year yield and FCI, by the       News about the path of interest rates is     (13)
+  (minutes)     amounts measured in the win-         the main systematic force in the window,
+                dow                                  and the only one correlated with the sur-
+                                                     prise. Unemployment and inflation do
+                                                     not move.
+  Daily         Two-year yield and FCI, each         They depend on their own recent history      (14)
+                day after the announcement           and on the unemployment and inflation
+                                                     of this month and last month.
+  Monthly       Unemployment and inflation,          Within a month, unemployment and in-         (15)
+                from the month after the an-         flation are set first. They respond to fi-
+                nouncement                           nancial variables only with a lag of at
+                                                     least one month.
+
+
+   The window. The window move in the FCI is computed with the weights in equation (3):
+
+                            ∆Fa = wB ∆ya10 + wQ ∆SPa + wD ∆DXYa .                                        (12)
+
+These are the measures available within the day, and the ones used to estimate the weights. Percent
+changes in the S&P 500 equal percent changes in CAPE within a window, because earnings are
+fixed. We express all effects per percentage point on the two-year yield in the window. The effect
+on the FCI is the ratio of two regression slopes on the surprise, an instrumental-variables estimate
+with sa as the instrument:
+                                 !
+                                                     (∆Fa − ∆F ) (sa − s̄)
+                                                 P
+                             1
+                      b=             ,     bF = Pa                         = 0.99.                       (13)
+                            bF                          2     2
+                                                   a (∆ya − ∆y ) (sa − s̄)
+
+This is close to one because the weights are normalized that way. It is not exactly one because this
+regression includes a constant, which the scaling in equation (1) does not, and because it uses one
+fewer announcement. Expected inflation and r∗ move slowly, so we take the window move to be
+the same in every version.
+    The day. On the announcement day, the two-year yield and the FCI shift by the vector b.
+We use the window move rather than the change over the whole day, because the full-day change
+contains other news. On later days, the two series move as equation (14) implies. They affect each
+other only through the daily lags, so no ordering between them is needed within the day. The
+window fixes their joint move.
+    The month. Within each month, unemployment and inflation are set first, and markets then
+respond to them. So in the month of the announcement, unemployment and inflation have not
+moved. They respond from the next month on, through the monthly average of the daily financial
+series. That average depends on when in the month the announcement falls: an announcement
+late in a month affects few days of that month’s average. This is how the model takes the timing
+of announcements into account, as Jacobson et al. (2026) recommend. The ordering is the famil-
+iar recursive one, in which slow-moving macroeconomic variables come before financial variables
+(Bernanke and Blinder, 1992; Christiano et al., 1999). It also means that the daily equations include
+the current month’s unemployment and inflation, even though those figures are published later. We
+treat this as a modeling convention: the monthly values summarize conditions that markets observe
+as the month unfolds.
+
+
+                                                     11
+    The key assumptions. Two assumptions carry the results. The first is the usual one in
+a VAR. Once the shock has been identified, the economy responds to a change in the financial
+variables in the same way whatever caused it. A policy shock identified by a Cholesky ordering or
+an external instrument is traced through the same estimated dynamics as every other shock, and
+we do the same. This has a familiar cost. Stock prices partly anticipate future activity, so a move
+that policy news pushes through stocks need not act on the economy like a move with another
+cause. This is the same problem as the information effect in any VAR with a high-frequency shock;
+as in the companion note, we acknowledge it and set it aside.
+    The second assumption is specific to this paper and has two parts. A standard VAR estimates
+the effect of the shock on every variable in the system. Here, the surprise reaches unemployment
+and prices only through the two-year yield and the FCI, and has no direct effect on them in the
+window. Anything else it moves, such as credit spreads or expectations, is left out. So are the
+moves in stock prices and the dollar in the window that are unrelated to sa ; the surprise explains
+only about a third of those moves (Section 2.2.4). The non-yield shock of Boehm and Kroner
+(2024) is uncorrelated with policy-news surprises, so such moves do not bias bF . But the weights
+in equation (3) treat them as noise, and part of them may be policy news (Boehm and Kroner,
+2024; Bauer et al., 2026). In addition, the monthly equations see the FCI as a single index. Its
+weights show how the three components respond to policy news, not how the economy responds to
+each. So we assume that the three affect unemployment and prices in proportion to those weights.
+Section 2.2.4 and Appendix D relax both parts.
+
+2.4   A mixed-frequency VAR
+Structure. The model has a daily block and a monthly block. Let xτ = (Rτ , Fτ )′ hold the two-year
+yield and the FCI on day τ , in the same version. Let mt = (Ut , πt )′ hold the two monthly variables.
+The unemployment gap Ut is the unemployment rate minus the CBO estimate of its natural rate.
+The CBO estimate does not respond to the surprise, so the response of the gap equals that of
+the unemployment rate. Inflation is πt = 1200 ∆ ln Pt , where Pt is the price index for personal
+consumption expenditures excluding food and energy (core PCE).
+    The daily block is a VAR in the style of the heterogeneous autoregression of Corsi (2009):
+                                      X                (k)
+                    xτ = α +                      Φk x̄τ −1 + Γ0 mt(τ ) + Γ1 mt(τ )−1 + ξτ ,              (14)
+                                  k∈{1,5,22,66}
+
+        (k)
+where x̄τ −1 is the average of x over the k days through τ − 1, and t(τ ) is the month of day τ .
+Averages over about a day, a week, a month and a quarter capture persistence with few coefficients.
+When the FCI is left out, xτ is the two-year yield alone.
+   The monthly block is
+                         L                 L
+                         X                 X                                               1 X
+              mt = c +         Al mt−l +         Gl x̄t−l + θ1 t + θ2 t2 + ζt ,    x̄t =           xτ ,   (15)
+                         l=1               l=1
+                                                                                           nt τ ∈t
+
+with nt the number of weekdays in month t. The model is a mixed-frequency VAR (Ghysels, 2016).
+In the language of mixed-data sampling, the weights are equal across days within a month and
+unrestricted across months (Ghysels et al., 2007; Foroni et al., 2015). The equation contains no
+current-month term in x̄t , which is the timing assumption of Table 2.
+    Relation to a monthly VAR and a proxy VAR. Suppose the daily block were replaced by
+a monthly equation for x̄t , and every announcement occurred on the first day of the month. With
+Zt = (m′t , x̄′t )′ , the model would then be a standard monthly VAR with a recursive ordering, the
+
+                                                             12
+macroeconomic variables first, and impact vector (0, 0, b′ )′ . The daily block adds two things: the
+position of each announcement in its month, and fast dynamics of the financial variables, estimated
+on many more observations. A proxy VAR (Gertler and Karadi, 2015; Mertens and Ravn, 2013;
+                                                 P
+Stock and Watson, 2018) instead estimates Zt = l Cl Zt−l + ιt and uses as an instrument zt the
+surprises summed over the month. The effect on the FCI per unit effect on the two-year yield is
+then
+                                          Cov(ιF,t , zt )
+                                                          .                                     (16)
+                                          Cov(ιR,t , zt )
+The window ratio bF in equation (13) has the same form, with three differences. It replaces monthly
+VAR residuals with changes measured inside the window, which do not depend on how strongly
+the surprise predicts monthly residuals. It sets the entries for unemployment and inflation to zero
+rather than estimating them. And it dates each shock to its day rather than summing shocks over
+a month. Section 3.5 estimates both monthly benchmarks.
+    The time trend. Every monthly equation includes a smooth quadratic time trend. Over 1994–
+2026, unemployment, inflation and interest rates contain slow movements that a short monthly
+model cannot capture. Rates drifted down along with r∗ . Inflation was low in the 2010s and rose
+after 2020. The natural rate of unemployment may have shifted in ways the CBO estimate misses.
+Without a trend, these slow movements show up in the estimated effect of the financial variables,
+and trend gets mixed with transmission. A quadratic is the simplest smooth trend that allows
+inflation to fall and then rise. Section 3.4 shows that measuring rates relative to r∗ does much of
+the trend’s work.
+    Estimation and inference. We estimate each block by ordinary least squares. The daily
+block uses January 1990 to September 2026, including 2020. The monthly block uses February
+1994 to September 2026, leaving out March–December 2020, which leaves 382 months. We use L =
+3, 6 or 12 monthly lags. Responses are computed recursively, month by month and day by day,
+as deviations from a path with no surprise, and averaged over the positions of the announcements
+within their months (Appendix B). The response of the price level after h months is hj=0 π̃j /12.
+                                                                                        P
+
+A bootstrap with 200 draws resamples the announcements, which gives new values of b and of the
+announcement positions, and the residuals of the monthly block. We report 90 percent intervals,
+as recent studies in this area do (Bauer and Swanson, 2023a; Caldara and Herbst, 2019; Miranda-
+Agrippino and Ricco, 2021; Ramey, 2016), and 68 percent intervals, which Jarociński and Karadi
+(2020) report alongside them. The FCI weights and r∗ are held fixed. In large samples a VAR of
+this kind estimates the same effects as local projections (Plagborg-Møller and Wolf, 2021).
+
+
+3     Baseline results
+[TO DO: Section 3 rewritten 10 Nov 2026 in the agreed order: standard methods
+first (empirical motivation), then the FCI model, the tradeoff, what accounts for the
+change, and the proxy VAR with the FCI and its simulation. Not yet rewritten:
+Sections 1, 2 (the mechanism and approach text still describes the earlier quadratic-
+trend design), 4, the abstract, conclusion and appendix. Sample: monthly equations
+and shocks both start in January 1996.]
+
+3.1   Standard methods after the early 1980s
+Standard identification schemes have not delivered conventional effects of monetary policy in sam-
+ples that start after the early 1980s. Ramey (2016) makes the point with the specification of
+
+
+                                                13
+Christiano et al. (1999): estimated on 1965–1995 it gives the classic responses, but on 1983–2007
+“the results change dramatically and imply that increases in the federal funds rate lower the un-
+employment rate”; a version of the Romer–Romer hybrid VAR gives, on the same later sample,
+contractionary shocks that “appear to be expansionary”, as Barakchian and Crowe (2013) found
+for 1988–2007; and a proxy SVAR with the Romer–Romer shock as instrument, estimated on 1969–
+2007, gives a “pronounced, statistically significant price puzzle” (her Figures 1 and 2). Her reading
+is that, because policy has been conducted well, true monetary shocks are rare, and it is hard
+to extract shocks that are not contaminated by the central bank’s foresight. Caldara and Herbst
+(2019) find, for 1994–2007 with a proxy SVAR that uses high-frequency surprises, that without
+a credit spread in the system the response of industrial production is weak and uncertain (about
+−0.2 percent at the posterior mean, with a credible set that includes positive values), against about
+−0.75 percent when the excess bond premium is added.
+     We start from the same two standard methods, estimated on our own data and units, so that
+they can be compared directly with the model below. Both use the monthly unemployment gap,
+core PCE inflation and the end-of-month two-year Treasury yield, with 12 lags and no trend. The
+first is the recursive (Cholesky) VAR of Christiano et al. (1999), with the policy rate ordered
+last, so that unemployment and inflation do not respond to it within the month. The second is a
+proxy VAR (Stock and Watson, 2018; Mertens and Ravn, 2013; Gertler and Karadi, 2015) in which
+the instrument is the Nakamura–Steinsson policy news (Nakamura and Steinsson, 2018) summed
+over the announcements of the month, the same 252 announcements that identify the model of
+Section 3.2. All responses are to a 1 percentage point rise in the policy rate. Figure 1 and Table 3
+show the results.
+
+
+                          1.0
+                                                                                                              2
+                          0.5
+                                                                                  Core PCE price level (%)
+ Unemployment gap (pp)
+
+
+
+
+                                                                                                              1
+                          0.0
+
+                         −0.5                                                                                 0
+
+                         −1.0
+                                                                                                             −1
+                         −1.5
+                                                                                                             −2
+                         −2.0
+                                0   5    10     15      20      25   30      35                                   0   5    10     15      20      25   30   35
+                                        Months after the policy move                                                      Months after the policy move
+                                                   Recursive (Cholesky) VAR; 90% bootstrap band
+                                                   Proxy VAR, Nakamura-Steinsson instrument; 90% Anderson-Rubin set
+
+Figure 1: Responses to a 1 percentage point rise in the two-year yield, 1996–2026, from a recursive
+(Cholesky) VAR and a proxy VAR with the Nakamura–Steinsson instrument. The monthly unemploy-
+ment gap, core PCE inflation and the two-year yield; 12 lags. Bands: 90 percent (bootstrap for the Cholesky
+VAR, Anderson–Rubin sets for the proxy VAR, truncated at ±4).
+
+
+
+
+                                                                              14
+Table 3: Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate
+
+                                                            Unemployment gap (pp)                              Price level (%)
+Method                          Sample       Obs            12 m             24 m          36 m          12 m           24 m        36 m
+                                                                 ∗                ∗
+Cholesky, 2-year yield          1996–2026 369             −0.95           −0.66           −0.36           0.13           0.07      −0.10
+                                                   [−1.53, −0.55] [−1.41, −0.28] [−0.94, 0.09] [−0.09, 0.36] [−0.39, 0.57] [−0.79, 0.58]
+Cholesky, 2-year yield          1984–2026 513             −0.61∗          −0.36∗          −0.16           0.11           0.15        0.13
+                                                   [−0.98, −0.33] [−0.78, −0.10] [−0.63, 0.06] [−0.02, 0.29] [−0.10, 0.47] [−0.26, 0.57]
+Cholesky, federal funds rate 1984–2007 288                 −0.04            −0.02           0.00        −0.01          −0.01         0.00
+                                                     [−0.07, 0.00]   [−0.06, 0.02] [−0.05, 0.03] [−0.06, 0.03] [−0.09, 0.07] [−0.13, 0.10]
+Proxy VAR, 2-year yield         1996–2026 369             −0.91∗          −0.61∗          −0.32           0.03         −0.08       −0.26
+                                                   [−1.37, −0.42] [−1.08, −0.05] [−0.71, 0.17] [−1.20, 0.97] [−1.83, 1.25] [−2.27, 1.25]
+
+  Monthly data, 12 lags, constant, no trend; unemployment gap, core PCE inflation and the end-of-month policy rate (the
+  2-year Treasury yield, or the effective federal funds rate where stated), policy rate ordered last in the Cholesky VARs; price
+  level = cumulated inflation/12. Proxy VAR: Nakamura–Steinsson policy news summed within the month as instrument;
+  first-stage F = 4.5. Unit: +1 pp on the policy rate on impact. Brackets: 90% intervals (residual bootstrap for the Cholesky
+  VARs; exact Anderson–Rubin sets for the proxy VAR). ∗ = excludes zero. Specification: baseline/lib/litstyle.py.
+
+
+    In both, unemployment falls after a tightening: by 0.95 percentage point after 12 months in
+the Cholesky VAR (significant) and by 0.91 in the proxy VAR (significant). The responses are
+significantly negative at 24 months as well, and the Cholesky VAR gives the same answer when the
+sample starts in 1984 (−0.61 after 12 months). The price level does not respond significantly in any
+of them (0.13 and 0.03 after 12 months). With the federal funds rate on a 1984–2007 sample, close
+to the 1983–2007 sample of Ramey (2016), the Cholesky VAR gives the same sign but a response
+that is small and borderline (−0.04 after 12 months, with a 90 percent band of [−0.07, 0.00]);
+we think the small size is because a funds-rate innovation is short-lived, so that one percentage
+point on impact is a much smaller change in the path of the rate than one percentage point on
+the two-year yield [inference]. Her system is richer than ours (industrial production, commodity
+prices and reserves), and her result of an unemployment fall is stated for that system. Adding a
+commodity price index, the standard remedy for the price puzzle (Sims, 1992; Ramey, 2016), leaves
+the two-year-yield response negative and significant after 12 months (−0.81; Appendix Table A2).
+    The proxy VAR is not a stronger test. Its first-stage F statistic is 4.5, in the range in which
+weak-instrument problems matter (Lewis and Mertens, 2026; Bauer et al., 2026), so the confidence
+sets are conservative and wide for the price level; they are exact Anderson–Rubin sets (Montiel
+Olea et al., 2021; Lunsford, 2015), valid whatever the strength of the instrument. We read these
+results as the starting point, not as findings about policy: they are what the standard recipe gives
+in a sample in which the rate responds to the economy and the surprises are few. The question for
+the rest of the section is whether a different way of using the same surprises, which measures the
+response of financial conditions in the announcement window and traces it through the economy,
+changes the answer.
+
+3.2    The FCI model: baseline results
+Figure 2 shows the baseline: the response of the unemployment gap and the core PCE price level
+to a policy move that raises the two-year yield 1 percentage point in the announcement window,
+from the model of Section 2.4 with the two-year yield and the FCI both measured relative to r∗
+(solid line, with 68 and 90 percent bands). The dashed line is the nominal two-year yield alone in
+the same model, and the dash-dotted line is the Cholesky VAR of Section 3.1. The units are the
+same: the end-of-month two-year yield rises 0.97 (nominal) to 0.99 (r∗ step) of the window move,
+so one percentage point in the window and one percentage point in the monthly VARs are the same
+
+
+                                                               15
+shock up to about 5 percent.
+
+
+                          0.75
+                                                                                                                         0.00
+                          0.50                                                                                          −0.25
+
+
+
+
+                                                                                             Core PCE price level (%)
+ Unemployment gap (pp)
+
+
+
+
+                          0.25                                                                                          −0.50
+
+                          0.00                                                                                          −0.75
+
+                         −0.25                                                                                          −1.00
+
+                                                                                                                        −1.25
+                         −0.50
+                                                                                                                        −1.50
+                         −0.75
+                                                                                                                        −1.75
+                         −1.00
+                                 0     5       10     15      20      25   30           35                                      0     5       10     15      20      25   30           35
+                                              Months after the policy move                                                                   Months after the policy move
+
+                                 r*-gap 2-year yield and FCI (baseline; bands: 68 and 90 percent)                               Nominal 2-year yield and FCI (same model)
+                                 Nominal 2-year yield alone (same model)                                                        Recursive (Cholesky) VAR, 2-year yield (Section 3.1)
+
+Figure 2: Responses to a policy move that raises the two-year yield 1 percentage point: the baseline (r∗ -gap
+two-year yield and FCI; 12 lags; shaded bands 68 and 90 percent), the nominal two-year yield alone and
+with the FCI in the same model, and the Cholesky VAR of Section 3.1.
+
+    With the nominal yield alone the model gives what the standard methods give. Unemployment
+falls, to −0.84 percentage point after 12 months at its lowest, and is still −0.25 after 36 months;
+the price level hardly moves (within 0.15 percent of zero at every horizon in Table 4). The baseline
+is different. Unemployment rises, to 0.50 percentage point after 22 months, and the price level falls
+steadily, by 1.06 percent after 36 months. The dotted line shows how much of the difference the
+FCI alone makes: unemployment is 0.38 after 36 months and the price level falls by 0.82 percent.
+    The three steps are reported separately in Table 4 and Figure 3. In each step the two-year yield
+enters alone and then together with the FCI of the same step: nominal measures; real measures,
+net of expected inflation; and measures relative to r∗ , net of expected inflation and of the Laubach–
+Williams estimate of r∗ (Section 2.1 defines them). The tables show 12, 24 and 36 months; the
+monthly equations have 12 lags, fixed in advance, and Appendix Table A1 shows 3, 6 and 12 lags.
+The shocks and the monthly equations both start in January 1996, the first announcement for
+which all window measures are available (369 monthly observations).
+
+
+
+
+                                                                                          16
+                                               Table 4: Baseline: 1996 to the present, all data in, no trend (12 lags)
+
+                                                                       Unemployment gap (pp)                                      Price level (%)
+      Case                         FCI         Lags Obs                12 m               24 m           36 m            12 m               24 m             36 m
+                                                                           ∗                  ∗
+      Nominal none                               12    369           −0.84              −0.46          −0.25              0.09               0.01            −0.13
+                                                               [−1.27, −0.39] [−0.76, −0.13] [−0.60, 0.10]        [−0.11, 0.34]     [−0.37, 0.45]   [−0.70, 0.51]
+                                   nominal       12    369            −0.01                0.30         0.38∗           −0.15            −0.49∗           −0.82∗
+                                                                [−0.54, 0.45]    [−0.05, 0.60]     [0.05, 0.69]   [−0.41, 0.10] [−0.94, −0.01] [−1.43, −0.12]
+
+      Real                         none          12    369           −0.62∗              −0.33         −0.20            −0.04              −0.11             −0.22
+                                                               [−0.96, −0.19]    [−0.64, 0.03] [−0.52, 0.15]      [−0.24, 0.17]     [−0.46, 0.22]   [−0.76, 0.27]
+                                   real          12    369              0.13               0.33         0.31∗          −0.25∗            −0.53∗           −0.73∗
+                                                                [−0.30, 0.55]    [−0.03, 0.67]     [0.01, 0.63] [−0.47, −0.03] [−0.97, −0.07] [−1.43, −0.07]
+
+      r*-gap                       none          12    369            −0.28              −0.06            0.04         −0.22∗            −0.44∗           −0.68∗
+                                                                [−0.91, 0.18]    [−0.68, 0.31] [−0.56, 0.47] [−0.40, −0.01] [−0.82, −0.03] [−1.34, −0.07]
+                                   r*-gap        12    369              0.33              0.50∗         0.43∗          −0.41∗            −0.78∗           −1.06∗
+                                                                [−0.17, 0.67]     [0.12, 0.76]     [0.10, 0.70] [−0.59, −0.19] [−1.25, −0.35] [−1.90, −0.32]
+
+          Nominal, real and r*-gap 2-year yield; the FCI is Note A’s index in the matching form in each case. Per +1 pp on the
+          2-year yield. ∗ = 90% interval excludes zero; intervals in brackets. Obs = monthly observations in the equations.
+
+
+
+                                   Response to a policy move that raises the 2-year yield 1 percentage point (12 lags; bands: 90% intervals)
+
+                                          Nominal 2-year yield                             Real 2-year yield                           r*-gap 2-year yield
+ Unemployment gap (pp)
+
+
+
+
+                             0.5           2-year yield only               0.5
+                                           with FCI                                                                     0.5
+                             0.0                                           0.0                                          0.0
+                            −0.5
+                                                                          −0.5                                         −0.5
+                            −1.0
+                                                                          −1.0
+
+                             0.5                                                                                        0.0
+ Core PCE price level (%)
+
+
+
+
+                                                                           0.0
+                             0.0                                                                                       −0.5
+                                                                          −0.5
+                            −0.5                                                                                       −1.0
+
+                            −1.0                                          −1.0                                          −1.5
+                            −1.5                                          −1.5
+                                   0        10        20       30                 0        10        20       30               0        10        20       30
+                                       Months after the policy move                   Months after the policy move                 Months after the policy move
+
+Figure 3: Responses to a policy move that raises the two-year yield 1 percentage point, without and with
+the FCI (12 lags). Bands: 90 percent intervals.
+
+    The two-year yield alone. At the nominal and real steps unemployment falls after a tight-
+ening, by 0.84 and 0.62 percentage point after 12 months (significant and significant), and the price
+level does not respond (0.01 and −0.11 percent after 24 months). Relative to r∗ , the yield alone
+gives no rise in unemployment (−0.28 after 12 months) but does give a price fall of 0.44 percent
+after 24 months (significant).
+    With the FCI. Adding the FCI removes the fall in unemployment at every step: after 12
+months the response is −0.01, 0.13 and 0.33 at the nominal, real and r∗ steps, and after 24 months
+
+
+                                                                                             17
+0.30, 0.33 and 0.50. The price level falls at every step, by 0.49, 0.53 and 0.78 percent after 24
+months and by 0.82, 0.73 and 1.06 percent after 36.
+    Reading across the steps. With the FCI, the price fall is significant after 24 and 36 months
+at every step. The unemployment rise is significant after 36 months at every step but after 24
+months only at the r∗ step. The r∗ step gives the largest price response and the unemployment
+response that is significant at the most horizons; but the FCI alone already removes the fall in
+unemployment and produces a significant price fall. We do not claim that the FCI and r∗ explain
+why standard methods give the responses of Section 3.1; we report that they identify specifications
+in which the responses are conventional, and Section 3.4 asks what accounts for the change.
+
+3.3    The implied inflation-unemployment tradeoff
+Do the responses imply a good tradeoff for policy? Larger effects on both unemployment and prices
+need not: what matters is the ratio. Following Barnichon and Mesters (2021), we define the Phillips
+multiplier at horizon H as
+                                                           H
+                                         P̃H            1 X
+                                 PH =        ,   ŨH =         Ũh ,                          (17)
+                                         ŨH           12 h=1
+
+where P̃H is the response of the core price level after H months, in percent, and ŨH is the cumulative
+response of the unemployment gap, in percentage-point years. Because the price level cumulates
+inflation, PH is the cumulative change in inflation per unit of cumulative unemployment. Its inverse,
+−1/PH , is a sacrifice ratio: the percentage-point years of unemployment needed to lower the price
+level 1 percent. A more negative PH means a steeper Phillips curve.
+    ŨH can be close to zero, and then the ratio is not well defined. So we form 90 percent sets for
+PH in the spirit of Anderson and Rubin (1949): the set contains every value P for which the 90
+percent bootstrap interval of P̃H − P ŨH contains zero. The sets are computed exactly, not on a
+grid, and can be unbounded, which shows when the data cannot pin down the tradeoff. Table 5
+reports P24 and P36 for each step and for the main sample variations.
+
+                           Table 5: Implied trade-off: Phillips multiplier κH (12 lags)
+
+        Case                                    FCI                 H = 24 months                H = 36 months
+        Nominal                                 none           −0.01 [−0.31, 0.42]            0.08 [−0.25, 0.66]
+                                                nominal                unbounded                    unbounded
+        Real                                    none             0.14 [−0.24, 1.37]           0.21 [−0.22, 3.19]
+                                                real                   unbounded                    unbounded
+        r*-gap                                  none                   unbounded                    unbounded
+                                                r*-gap        −1.06 [−6.84, −0.40]         −0.88 [−3.34, −0.27]
+        Start 1973                              r*-gap       −2.16 [−27.06, −1.20]        −2.19 [−29.88, −1.29]
+        2020 dropped                            r*-gap        −0.95 [−1.83, −0.38]         −0.80 [−1.74, −0.27]
+        2020 dropped, start 1973                r*-gap        −1.47 [−2.50, −0.89]         −1.59 [−2.84, −0.90]
+        Ends 2019                               r*-gap         −0.35 [−1.23, 0.15]          −0.38 [−2.98, 0.12]
+        Ends 2019, start 1973                   r*-gap        −1.03 [−1.87, −0.48]         −1.25 [−2.42, −0.67]
+        r*-gap minus nominal, with FCI                                  [−1.57, 6.37]                [−0.89, 4.05]
+      κH = core PCE price level at month H (percent) per percentage-point year of cumulative unemployment-gap
+      response (Barnichon and Mesters 2021); the sacrifice ratio is −1/κH . Point estimate and 90% confidence set
+      (Anderson–Rubin type) in brackets, computed exactly (a wide grid refined by bisection), so a finite end is never
+      an artifact of the grid. An infinite end means that the 90% interval of the cumulative unemployment response
+      includes zero: the data then cannot rule out arbitrarily steep trade-offs on that side; “unbounded”: both sides.
+      Last row: paired difference over common announcement draws.
+
+
+
+                                                            18
+     Only the baseline gives a tradeoff that can be measured. With the r∗ -gap two-year yield and
+FCI, P24 =-1.06 with a 90 percent set of [−6.84, −0.40] and P36 =-0.88 with [−3.34, −0.27];
+both sets exclude zero. A sacrifice ratio is then 0.9 percentage-point years of unemployment per
+1 percent of price level after 24 months. At the nominal and real steps with the FCI, and for the
+r∗ -gap yield alone, the sets are unbounded: the cumulative unemployment response is too close to
+zero to pin down the ratio. With the nominal or real yield alone, the multiplier is close to zero
+and the sets include zero, which restates the puzzle of Section 3.1: a tightening that does not raise
+unemployment says nothing about the cost of lowering inflation. The multiplier is similar when
+2020 is dropped, steeper when the monthly equations start in 1973, and includes zero when the
+sample starts in 1996 and ends in 2019, though not when it starts in 1973 (Table 5); the difference
+between the r∗ -gap and the nominal baseline is imprecise (last row of the table).
+[TO DO: Comparison with Barnichon and Mesters (2021) values: their numbers
+quoted in the earlier draft (−0.15 for 1990–2008; about −2 before 1990) are not verified
+in REFERENCE_CHECK; verify against the paper or drop.]
+
+3.4     What accounts for the change
+Table 4 can be read as a two-by-two comparison. Including the FCI is what gives a reliable
+unemployment response. Measuring rates relative to r∗ is what gives a strong price response.
+Without the FCI, the r∗ -gap two-year yield already gives a strong price effect, but its unemployment
+effect is weak. With the nominal FCI, unemployment rises but prices fall less. Only with both
+does the economy respond in the standard way on both counts. Section 4 reports how this pattern
+changes with the sample, the adjustment of the yield and the time trend.
+    Why does the FCI matter? The model assumes that policy reaches unemployment and prices
+through the two-year yield and the FCI, the broad index of the 10-year yield, equity valuations and
+the real dollar, weighted by their responses to policy news (Table 6). In the announcement window
+the FCI moves with the two-year yield: a policy move that raises the two-year yield 1 percentage
+point raises the FCI by 0.99 (in the same units). The monthly VAR of Section 3.1 has no FCI; if the
+FCI matters for unemployment and responds to policy, the two-year yield alone omits a channel.
+Figure 4 shows the responses of the two-year yield and the FCI to the policy move in the baseline.
+
+                                Table 6: Market-index weights from policy news
+
+      Component                                  Response to policy news       Weight      Share of a policy move
+      10-year Treasury yield (pp)                               +0.53 (0.06)   +0.609                           0.33
+      Equity valuation, 100 ln CAPE (%)                         −7.78 (0.93)   −0.051                           0.40
+      Real broad dollar, 100 ln (%)                             +4.22 (0.53)   +0.065                           0.28
+      Response of each 30-minute announcement-window change to the policy-news factor (scaled so the 2-year yield
+      moves 1 pp), with robust standard errors; weights from the one-factor GLS of Note A; share = weight × response
+      (the three shares sum to 1).
+
+
+
+
+                                                           19
+                                                    Financial response (monthly averages; 12 lags; 90% bands)
+                                                                                         2-year yield, r*-gap form
+                                          1.0                                            FCI (2-year-yield units)
+                                          0.8
+
+
+
+                     Percentage points
+                                          0.6
+                                          0.4
+                                          0.2
+                                          0.0
+                                         −0.2
+                                                0         5       10      15       20       25      30       35
+                                                                   Months after the policy move
+
+Figure 4: Response of the r∗ -gap two-year yield and the FCI (in two-year-yield units) to a policy move that
+raises the two-year yield 1 percentage point in the window (monthly averages; 12 lags; 90 percent bands).
+
+
+3.5    Proxy VARs with the FCI, and a simulation
+Is the standard monthly approach the problem because it omits the FCI, or because it uses the
+surprise as a noisy proxy? We extend the monthly VAR of Section 3.1 with the end-of-month FCI
+of the same step and estimate it in two ways, with the same 1996 sample and announcements (equa-
+tions, assumptions and references in baseline/lib/monthly.py). In the proxy VAR the immediate
+effect of the surprise on every variable is estimated from the monthly residuals and the instrument,
+as in Section 3.1. In the window-impact VAR it is not estimated: the effect on the two-year yield
+and the FCI is taken from the announcement windows (the model’s end-of-month response to a
+window surprise), and the effect on unemployment and inflation is set to zero within the month,
+the same restriction as in the main model. Table 7 gives the results at each step.
+
+
+
+
+                                                                          20
+                                   Table 7: Monthly VAR benchmark (12 lags)
+
+                                                      Unemployment gap (pp)                                   Price level (%)
+2-year   FCI      Identification   Lags Obs           12 m              24 m            36 m             12 m             24 m             36 m
+Nominal none      Proxy VAR        12   369         −0.91∗           −0.61∗            −0.32              0.03           −0.08            −0.26
+                                            [−1.37, −0.42] [−1.08, −0.05]        [−0.71, 0.17]    [−1.20, 0.97]    [−1.83, 1.25]    [−2.27, 1.25]
+                  Window impact    12   369       −0.92∗         −0.64∗                −0.35              0.13             0.06           −0.10
+                                              [−1.48, −0.49] [−1.19, −0.26]      [−0.96, 0.07]    [−0.10, 0.39]    [−0.42, 0.57]    [−0.79, 0.68]
+         nominal Proxy VAR         12   369            0.72              0.51            0.32           −0.67            −1.02            −1.17
+                                                 unbounded        unbounded       unbounded        unbounded        unbounded        unbounded
+                  Window impact    12   369          −0.16             −0.11           −0.02            −0.13            −0.36            −0.57
+                                               [−0.61, 0.36]     [−0.73, 0.44]   [−0.67, 0.47]    [−0.39, 0.09]    [−0.81, 0.08]    [−1.25, 0.07]
+
+Real     none     Proxy VAR        12   369         −0.72∗           −0.48∗            −0.22            −0.12            −0.29            −0.46
+                                            [−1.29, −0.35] [−0.99, −0.07]        [−0.62, 0.15]    [−0.97, 0.71]    [−1.50, 0.85]    [−1.85, 0.80]
+                  Window impact    12   369       −0.64∗         −0.46∗                −0.23            −0.04            −0.16            −0.29
+                                              [−1.17, −0.23] [−1.00, −0.02]      [−0.76, 0.30]    [−0.27, 0.18]    [−0.62, 0.26]    [−1.00, 0.36]
+         real     Proxy VAR        12   369            0.72              0.49            0.30           −0.72            −1.05            −1.12
+                                              [−0.21, 24.27]    [−0.33, 19.69] [−0.25, 12.47]    [−11.42, 0.16]   [−16.08, 0.22]   [−16.57, 0.33]
+                  Window impact    12   369          −0.02             −0.04             0.00         −0.26∗             −0.49            −0.63
+                                               [−0.50, 0.47]     [−0.61, 0.46]   [−0.59, 0.58] [−0.63, −0.01]      [−1.10, 0.02]    [−1.52, 0.09]
+
+r*-gap   none     Proxy VAR        12   369          −0.33             −0.10             0.06           −0.29            −0.57            −0.79
+                                               [−0.98, 0.02]     [−0.64, 0.24]   [−0.30, 0.32]    [−0.97, 0.48]    [−1.51, 0.47]    [−1.83, 0.31]
+                  Window impact    12   369          −0.19             −0.03             0.09         −0.27∗           −0.50∗           −0.68∗
+                                               [−0.69, 0.30]     [−0.52, 0.43]   [−0.27, 0.60] [−0.51, −0.05] [−0.98, −0.08] [−1.36, −0.06]
+         r*-gap   Proxy VAR        12   369          0.95∗               0.73            0.47        −0.84∗         −1.24∗         −1.35∗
+                                                 [0.01, 5.87]    [−0.04, 4.55]   [−0.05, 2.89] [−3.17, −0.15] [−4.39, −0.24] [−4.51, −0.24]
+                  Window impact    12   369            0.32              0.30            0.24        −0.44∗         −0.76∗         −0.92∗
+                                               [−0.19, 0.75]     [−0.17, 0.88]   [−0.22, 0.79] [−0.68, −0.22] [−1.25, −0.32] [−1.70, −0.35]
+
+  Monthly VAR in the unemployment gap, core PCE inflation, the end-of-month 2-year yield and, when included, the
+  end-of-month FCI (same step), 1996 to September 2026, no trend, nothing dropped. Proxy VAR: Nakamura–Steinsson
+  surprise as instrument; sets are exact 90% Anderson–Rubin sets, “unbounded” when the instrument cannot reject large
+  effects. Window impact: impact vector taken from the daily model (the end-of-month response to a window surprise);
+  90% bootstrap intervals. Unit in both: +1 pp on the 2-year yield (the end-of-month response to a +1 pp window surprise
+  is 0.95 to 0.99, so the two units are the same up to 5%). ∗ = 90% interval excludes zero.
+
+
+    The proxy VAR remains weak with the FCI: the first-stage F statistic is 4.4 at the r∗ step, and
+Appendix Table A3 reports it for each step. The proxy also implies an end-of-month response of the
+FCI of 1.44 per percentage point of the two-year yield, against 1.04 in the window; the 12-month
+response of unemployment at the r∗ step is 0.95 with a 90 percent set of [0.01, 5.87], and at the
+nominal step with the FCI the set is [−∞, +∞]. The window-impact VAR is close to the main
+model: with the r∗ -gap yield and FCI, unemployment rises 0.32 percentage point after 12 months
+and the price level falls 0.76 percent after 24, and without the FCI it does not rise (−0.19 after 12
+months). The two methods differ because they estimate the immediate effect differently; the VAR
+dynamics are the same.
+    Which should be believed? If the model were the true process, how noisy would the proxy VAR
+be in samples like ours? We simulate 1,000 samples of 369 months from the estimated r∗ -gap model,
+with the data’s calendar and announcement days, resample the daily and monthly innovations and
+the surprises, and apply the monthly estimators to the end-of-month series of each sample (Table 8).
+
+
+
+
+                                                                21
+                 Table 8: A monthly proxy VAR when the r*-gap model is the true process
+
+          Estimate                             Data      True     Simulated median       5th–95th percentile
+          A. Proxy VAR with the FCI
+            First-stage F               4.4                                      9.8               [1.8, 26.8]
+            Unemployment gap, 12 m     0.95    0.33                             0.34             [−0.32, 1.37]
+            Price level, 24 m         −1.24 −0.79                              −0.72             [−1.81, 0.21]
+          B. Proxy VAR without the FCI
+            Unemployment gap, 12 m −0.33       0.33                               0.02           [−0.67, 0.77]
+          C. Monthly VAR with the window impact and the FCI
+            Unemployment gap, 12 m     0.32    0.33                               0.33           [−0.07, 0.78]
+      1,000 samples of 369 months generated by the estimated r*-gap model with the FCI (12 lags), with the data’s
+      calendar and announcement days; policy reaches unemployment and prices only through the 2-year yield and the
+      FCI. Data: the 1996 sample, 12 lags, r*-gap measures; end-of-month series in the monthly VAR. True: the model’s
+      response per +1 pp on the 2-year yield, in the window (panel C) and on the end-of-month yield (panels A and B;
+      the window response divided by the model’s end-of-month response of 0.95–0.99). Simulated: median and 5th–95th
+      percentiles of the estimates.
+
+
+    Under the model the true response of unemployment after 12 months is 0.33 percentage point.
+The proxy VAR with the FCI is centred on it (median 0.34) but very noisy: the 5th to 95th
+percentile range is [−0.32, 1.37], and the first-stage F is below the data value (4.4) in 17 percent
+of samples, with a median of 9.8. Our data value 0.95 lies inside that range. Without the FCI
+the proxy VAR is biased toward zero (median 0.02 against the truth 0.33); the data value −0.33
+is within the simulated range. The window-impact VAR recovers the truth (median 0.33) with a
+narrower range. These comparisons are conditional on the model being the true process, and they
+do not show that it is; they show that, if it is, the monthly proxy VAR is a weak way to estimate
+the effect, and that the weakness of the proxy in the data is what the model predicts.
+
+
+4     Robustness
+[TO DO: Core cases only (baseline/cases.py): sample (start 1973; 2020 dropped; end-
+ing 2019), the r* adjustment and trends (Kiley; real with spline), and EBP. All start
+in 1996, the first announcement with all window variables. Numbers in this part come
+from the earlier quadratic-trend, multi-lag draft; replace with the no-trend, 12-lag
+baseline using macros generated by baseline/07_report.py.]
+
+4.1    The role of 2020–22
+The baseline drops March–December 2020 from the months used to fit the monthly equations. But
+2020 values still enter the 2021 equations as lags. Table 9 therefore also drops 2021, then ends
+the sample in December 2022, and separately in December 2019. In the shorter samples, the daily
+model is also estimated only over the shorter period.
+    With the r∗ -gap two-year yield and FCI, the unemployment response holds up in every sample,
+but the price response does not. After 12 months, it is 0.26 to 0.31 percentage point when 2021 is
+dropped, 0.32 to 0.34 when the sample ends in 2022, and 0.42 to 0.44 when it ends in 2019. It is
+significant at almost every horizon and lag length. Without the FCI, its 90 percent interval includes
+zero in all three samples. The price effect, by contrast, depends on 2020–22. It is unchanged when
+the sample ends in 2022, so the data since 2023 play no special role. It stays significant with 6 and
+12 lags when 2021 is dropped (−0.43 and −0.63 percent after 24 months). But in the sample that
+ends in 2019, the price level barely moves.
+
+                                                            22
+                             Table 9: Different samples: r∗ -gap two-year yield, without and with the r∗ -gap FCI
+
+                                                                        12 months                       24 months                       36 months
+Sample                                            FCI           3           6            12      3          6          12        3             6        12
+A. Unemployment gap (percentage points)
+Baseline (excl. Mar–Dec 2020) none    0.19∗∗                              0.10       −0.03    0.34∗∗      0.21        0.04    0.38∗∗        0.25†      0.07
+                              r∗ -gap 0.40∗∗                             0.37∗∗      0.36∗∗   0.47∗∗     0.48∗∗      0.50∗∗   0.35∗∗        0.40∗∗    0.43∗∗
+Also drop 2021                none      0.03                             −0.03       −0.09     0.09      −0.01       −0.09     0.12         −0.01     −0.11
+                              r∗ -gap 0.31∗∗                             0.26∗∗      0.30∗∗   0.38∗∗     0.33∗∗      0.38∗∗   0.29∗∗        0.28†     0.30∗∗
+End in 2022                   none      0.11                              0.07       −0.04    0.19†       0.11       −0.01    0.21†          0.13      0.01
+                              r∗ -gap 0.32∗∗                             0.33∗∗      0.34∗∗   0.35∗∗     0.38∗∗      0.43∗∗   0.23∗∗        0.30∗∗    0.37∗∗
+End in 2019                   none      0.05                              0.05        0.00     0.09       0.14        0.14     0.11          0.19      0.28
+                              r∗ -gap 0.42∗∗                             0.42∗∗      0.44∗∗   0.45∗∗     0.50∗∗      0.60∗∗   0.34∗∗        0.42∗∗    0.59∗∗
+B. Core PCE price level (percent)
+Baseline (excl. Mar–Dec 2020) none                          −0.27∗∗      −0.22∗∗    −0.23∗∗   −0.45∗∗    −0.51∗∗    −0.52∗∗   −0.55∗∗       −0.70∗∗   −0.80∗∗
+                               r∗ -gap                      −0.34∗∗      −0.33∗∗    −0.33∗∗   −0.53∗∗    −0.68∗∗    −0.72∗∗   −0.57∗∗       −0.85∗∗   −0.97∗∗
+Also drop 2021                 none                         −0.11†        −0.09     −0.13†    −0.18†     −0.25†     −0.35∗∗   −0.22†        −0.38†    −0.59∗∗
+                               r∗ -gap                      −0.16†       −0.21∗∗    −0.28∗∗   −0.24†     −0.43∗∗    −0.63∗∗   −0.29†        −0.60∗∗   −0.93∗∗
+End in 2022                    none                         −0.25∗∗      −0.20∗∗    −0.21∗∗   −0.42∗∗    −0.49∗∗    −0.51∗∗   −0.51∗∗       −0.70∗∗   −0.83∗∗
+                               r∗ -gap                      −0.34∗∗      −0.33∗∗    −0.30∗∗   −0.51∗∗    −0.68∗∗    −0.71∗∗   −0.56∗∗       −0.87∗∗   −1.02∗∗
+End in 2019                    none                          0.02          0.02      0.08†     0.06       0.02       0.03      0.10           0.02     −0.06
+                               r∗ -gap                       −0.02        −0.03      −0.05     0.02       −0.00      −0.12     0.03          −0.03    −0.22†
+  See Table 4. In the “End in” samples, the daily model is also estimated over the shorter period.
+
+
+    Figure 5 shows why these years are informative. After 2021, the r∗ -gap two-year yield and FCI
+rose by about 4 percentage points, the largest swing in the stance of policy relative to r∗ in the
+sample, and core inflation then fell. No single year drives the results. Figure 6 drops one calendar
+year at a time. The unemployment response after 12 months ranges from 0.26 (dropping 2021) to
+0.41, and the price level after 24 months from −0.43 (dropping 2021) to −0.86. The 90 percent
+intervals exclude zero in every case. So the price result rests on the 2020–22 episode as a whole, a
+large tightening relative to r∗ followed by falling inflation, not on any one year.
+
+                                     r*-gap 2-year yield
+                                     r*-gap FCI (market index)
+                                 4   Core PCE inflation, 12-month (%)
+         Percent / index units
+
+
+
+
+                                 2
+
+                                 0
+
+                                 2
+
+                                 4
+                                           2016               2018                2020           2022               2024             2026
+
+   Figure 5: The r∗ -gap two-year yield, the r∗ -gap FCI and 12-month core PCE inflation, 2015–2026.
+
+
+
+
+                                                                                         23
+                    Unemployment gap, 12 months (pp)                                  Core PCE price level, 24 months (%)
+      0.6                                                               0.0
+      0.5                                                               0.2
+      0.4                                                               0.4
+      0.3                                                               0.6
+      0.2                                                               0.8
+      0.1                                                               1.0
+
+      0.0                                                               1.2
+            1995   2000   2005       2010     2015   2020   2025              1995   2000   2005       2010     2015   2020   2025
+                                 Year dropped                                                      Year dropped
+
+
+Figure 6: Dropping one year at a time. Baseline version (r∗ -gap two-year yield and FCI, 6 lags; 100
+bootstrap draws rather than 200, to limit computation). Each point drops one calendar year from the
+monthly equations. Bars: 90 percent intervals. Dashed line: full-sample estimate.
+
+     There are two readings of this dependence. On one, the episode is informative because it is
+the only large, sustained change in the stance of policy relative to r∗ since the mid-1990s; earlier
+episodes were too small to move prices measurably. This reading fits evidence that the Phillips
+curve is steeper when the economy runs hot (Benigno and Eggertsson, 2023). On the other, the
+fall in inflation after 2022 partly reflects the unwinding of supply shocks (Bernanke and Blanchard,
+2025) that happened to coincide with the tightening, and a linear model attributes some of it
+to policy. Our data cannot fully separate the two. A related concern is that r∗ and expected
+inflation are themselves estimated partly from inflation data, which could link the r∗ -gap measures
+mechanically to inflation in these years. We do not test these alternatives here.
+
+4.2   The r∗ adjustment and trends
+[TO DO: Write from baseline Robustness 2a-d.]
+
+4.3   Credit conditions
+[TO DO: Write from baseline Robustness 3a-b (EBP).]
+
+4.4   Earlier robustness text (to be split into the subsections above, or cut)
+How should the two-year yield be adjusted? The pattern of Section 3.4 holds however the
+two-year yield is adjusted. Appendix Tables A9 and A10 keep the FCI as one of the companion
+note’s three indexes and change only the adjustment of the yield. We try five: none; expected
+inflation and the Laubach–Williams r∗ (baseline); expected inflation and Kiley (2020b)’s r∗ ; the
+9–10-year forward rate from the Federal Reserve Board’s estimated yield curve (Gürkaynak et al.,
+2007), a market-based neutral rate that replaces both adjustments; and the average of the two-year
+yield over the past 8 years. Without the FCI, the unemployment response is weak with a model-
+based r∗ , and significantly negative with the nominal rate, the forward rate or the 8-year average.
+With any of the FCIs, it is positive at every horizon and significant in almost all cases. With the
+r∗ -gap FCI, the price level falls 0.3 to 0.7 percent after 24 months for every adjustment of the yield,
+significant for every lag length. With the nominal or real FCI, the price effect is strong when the
+yield is adjusted with a model-based r∗ , and weaker with the forward rate, which also contains a
+term premium that fell over the sample, or with the 8-year average. Kiley’s r∗ gives results close to
+
+
+                                                                   24
+those with Laubach–Williams, though somewhat weaker for prices. The r∗ -gap FCI always uses the
+Laubach–Williams r∗ , so these checks do not show that the choice of r∗ in the FCI is unimportant.
+    Other surprise measures. Appendix Table A11 replaces the Nakamura–Steinsson surprise
+with three others: the surprise with the part predicted by the Fed staff’s Greenbook forecasts
+removed; the surprise of Bauer and Swanson (2023a), with the part predicted by public data
+removed (201 of our announcements, through 2019); and the “pure policy” surprise of Jarociński and
+Karadi (2020) (157 announcements). In our design, a surprise enters only through its window moves,
+scaled to a 1 percentage point rise in the two-year yield, and through the timing of announcements.
+So this check really tests how much the FCI moves per point on the two-year yield: 0.99 for the
+baseline, 1.07 for the Bauer–Swanson surprise and 1.09 for the Jarociński–Karadi surprise. With
+these ratios, the effects are slightly larger than in the baseline. At the r∗ step, unemployment rises
+0.40 to 0.45 percentage point after 12 months, and the price level falls 0.55 to 0.77 percent after 24
+months. The Greenbook-cleaned surprise gives results within 0.02 of the baseline.
+    Longer samples for the monthly equations. Some studies estimate the dynamics on a
+longer sample and apply the surprises only to the recent period. Appendix Tables A12 and A13 start
+the monthly equations in 1973, 1977 or 1982; the surprises, windows and daily model are unchanged.
+Before the daily data exist, the model uses monthly averages, with three splices described in the
+table notes. The signs survive whenever the FCI is included or the yield is adjusted for r∗ , but the
+effects are smaller.
+  • The unemployment puzzle depends on the 1994 start. With the nominal two-year yield alone
+    and the 1973 start, no point estimate is negative, but the responses are small (+0.02 to +0.09
+    at 12 months) and mostly not significant.
+  • The FCI still matters for unemployment in the long samples. The response has the standard
+    sign in every sample, horizon and lag length, and is significant at 12 months. But it is smaller:
+    at the r∗ step, 0.11 to 0.27 percentage point after 12 months with a 1973 start, against 0.36
+    to 0.40 in the baseline.
+  • A price puzzle appears with the nominal yield in the 1973 sample, though not significantly, as
+    Castelnuovo and Surico (2010) would predict for samples that include the 1970s. Adjusting
+    for r∗ removes it. At the r∗ step, with and without the FCI, the price level falls significantly
+    at 24 months with 6 and 12 lags in every long sample, by 0.31 to 0.54 percent with the FCI.
+  • The signs agree across starts whenever the FCI is included or the yield is adjusted for r∗ .
+    The 1994 effects are larger by a factor of about 1.5 to 4, depending on the horizon. Industrial
+    production falls in the 1973 and 1977 samples when the FCI is included.
+These comparisons fit dynamics on different samples with the same surprises and the same window
+impact, and impose constant parameters within each. They are not a test of whether transmission
+has changed. But they give no sign that policy has become less powerful since the mid-1990s.
+    A fuller measure of uncertainty. Appendix Table A14 uses 1,000 draws. In each draw, it
+also re-estimates the daily model on randomly redrawn blocks of 66 consecutive days, and rebuilds
+the monthly data from the estimated model with randomly sign-flipped errors. The intervals barely
+change. At the r∗ step, every marker of significance is the same.
+    Daily weights and a direct regression. To test equal weighting of days within a month, we
+replace x̄t in equation (15) with a weighted average whose weight on the d-th weekday of a month
+is proportional to 1 + δ (2d − nt − 1)/(nt − 1), choose δ on a grid from −1 to 1, and test δ = 0. This
+check uses 12 lags, the nominal two-year yield, the r∗ -gap FCI and no trend. The test does not
+reject equal weights for unemployment (F = 2.1). It rejects them for inflation (F = 4.6, against a
+5 percent critical value of 3.9), but the gain in fit is very small: the R2 rises from 0.435 to 0.443.
+
+                                                 25
+    A direct regression. We also tried a method that does not need the timing assumptions: a
+direct regression of monthly unemployment on the daily surprises (Chudik and Georgiadis, 2022;
+Chudik and Kilian, 2026). With sa the surprise on day τa , it estimates a daily response βℓ from
+                                       1 X X
+                                Ut =                   βτ −τa sa + error,                       (18)
+                                       nt τ ∈t a: τ ≤τ
+                                                 a
+
+
+with βℓ piecewise linear in ℓ and knots at 0, 1, 2, 3, 6, 9, 12, 18, 24, 30 and 36 months. It gives
+wrong-signed estimates, driven largely by the 2007–09 announcements. Its intervals are more than
+ten times as wide as ours, so it cannot tell our estimates apart from zero.
+   Other checks. Adding the Baa-Treasury spread to the daily model without any response
+on impact lowers the unemployment response by a third to a half. Letting it respond on the
+announcement day, as in Appendix D, removes most of that difference. Replacing the daily model’s
+path for the financial variables in the first one to two months with the path estimated directly from
+the data gives larger but much less precise effects.
+
+
+5     Conclusion and policy
+[TO DO: Redo when Sections 2 to 4 are final: the policy claims (sacrifice ratio, ’FCI
+essential’, size relative to Bauer-Swanson) wait until Section 3 is rewritten.]
+
+5.1   Implications for policy
+Policy has not lost power. Measured through broad financial conditions (longer-term yields,
+equity prices and the dollar), a policy move that raises the two-year yield 1 percentage point,
+and tightens financial conditions by about as much for a time, raises unemployment about 0.4
+percentage point within a year and lowers core prices about 0.6 percent within two (Section 3.2).
+The unemployment effect is larger than in recent benchmarks and in a rough reading of FRB/US.
+The price effect is similar to the cleaned-shock benchmark for two years and larger after that. The
+weak or wrong-signed effects found with the nominal two-year yield alone reflect how the stance of
+policy was measured, not a lack of power.
+    Judge the stance by financial conditions relative to r∗ . Policy affects the economy
+roughly in proportion to how much it moves broad financial conditions, and the right yardstick for
+those conditions is the neutral rate r∗ , not zero or their past average. This supports the practice
+of monitoring financial conditions when setting policy, as the FOMC did in 2023 (Powell, 2023).
+It also explains why the same policy rate can be more or less restrictive at different times. Two
+cautions apply. First, r∗ is uncertain, and our intervals hold it fixed. The Laubach–Williams
+estimates we use are one-sided, but their parameters are estimated on the full sample, so they are
+not what a policymaker could have known in real time. Second, with Kiley’s r∗ , the price effect is
+somewhat weaker.
+    The cost of disinflation. Measured relative to r∗ , lowering the core price level 1 percent
+through tighter financial conditions costs about 1 percentage-point year of unemployment over two
+years (for example, unemployment half a point higher for two years). Measured in nominal terms,
+it would appear to cost two to three times as much, and with the two-year yield alone the cost
+cannot be measured at all. So part of the apparent flattening of the Phillips curve, and of the
+high cost of disinflation it implies, may reflect how the stance of policy has been measured. Two
+cautions apply. The difference between the two measures is imprecise. And it rests on 2020–22:
+
+
+
+                                                     26
+before 2020, our estimates show no measurable tradeoff, in line with the flat post-1990 estimates.
+That period may simply have lacked a tightening relative to r∗ large enough to reveal one.
+   What this paper does not do. Our estimates are effects of surprises. They do not by
+themselves say how much of the 2022–24 disinflation, or of the rise in unemployment, was caused
+by the tightening; that requires a decomposition of the whole episode, which we leave to future
+work. We also do not test whether tightenings and easings, or periods of high and low inflation,
+have different effects.
+
+5.2   Conclusion
+Interest-rate surprises around Federal Reserve announcements measure policy shocks well, at least
+the part of policy news that moves interest rates. The hard part has been tracing their effects
+on the economy. We keep the surprise as it is and change only how its effects are traced. Two
+standard parts of the transmission mechanism explain much of the post-1994 puzzle: policy works
+through financial conditions as a whole, and what matters for spending and inflation is the level
+of rates and financial conditions relative to a slow-moving neutral rate. Traced this way, the
+effects on unemployment, prices and industrial production have the standard signs and are precisely
+estimated. The unemployment effect is larger than cleaned-shock benchmarks. The price effect
+is similar for two years and larger after that. And the implied tradeoff between inflation and
+unemployment is of conventional size: steeper than when conditions are measured in nominal
+terms, and much steeper than recent estimates of a flat Phillips curve, though not steeper than
+cleaned-shock benchmarks.
+    The two parts play different roles. Within our design, the FCI, with its response measured
+in the window, delivers the unemployment effect, in every version and sample we try. Measuring
+conditions relative to r∗ delivers the price effect and the steeper tradeoff, which rest mainly on the
+years since 2020, when the stance of policy relative to r∗ moved most.
+    These findings complement work on information effects, predictable surprises, timing and policy-
+driven risk appetite. That last line of work and ours agree that stock prices and the dollar carry
+much of the effect of policy. They differ in whether to treat those moves as a separate shock or as
+part of financial conditions. Several mechanisms can operate at once, and a natural next step is to
+trace cleaned or separated surprises through our approach.
+    Our results have limits. They rest on the assumption that the economy responds to financial
+conditions the same way whatever moved them, and on the time trend. Commodity prices rise
+after a tightening in our model. Credit conditions offer a partial alternative explanation of the
+unemployment puzzle. And our intervals do not include uncertainty about r∗ or the FCI weights.
+    The broader lesson is that the fall in r∗ over the past three decades is more than a fact about
+the level of interest rates. Unless rates are measured relative to r∗ , that fall also makes the effects
+of policy, and the cost of lowering inflation, harder to measure.
+
+
+References
+Acosta, M., A. Ajello, M. Bauer, F. Loria and S. Miranda-Agrippino (2025), “Financial Market Effects of
+  FOMC Communication: Evidence from a New Event-Study Database,” Federal Reserve Bank of San
+  Francisco Working Paper 2025-30.
+
+Adrian, T., N. Boyarchenko and D. Giannone (2019), “Vulnerable Growth,” American Economic Review
+  109(4), 1263–1289.
+
+
+
+
+                                                  27
+Ajello, A., M. Cavallo, G. Favara, W. Peterman, J. Schindler and N. Sinha (2023), “A New Index to Measure
+  U.S. Financial Conditions,” FEDS Notes, Board of Governors of the Federal Reserve System, June 30.
+
+Anderson, T. W. and H. Rubin (1949), “Estimation of the Parameters of a Single Equation in a Complete
+  System of Stochastic Equations,” Annals of Mathematical Statistics 20(1), 46–63.
+
+Ando, A. and F. Modigliani (1963), “The ‘Life Cycle’ Hypothesis of Saving: Aggregate Implications and
+  Tests,” American Economic Review 53(1), 55–84.
+
+Auclert, A. (2019), “Monetary Policy and the Redistribution Channel,” American Economic Review 109(6),
+  2333–2367.
+
+Ball, L. and S. Mazumder (2019), “A Phillips Curve with Anchored Expectations and Short-Term Unem-
+  ployment,” Journal of Money, Credit and Banking 51(1), 111–137.
+
+Barakchian, S. M. and C. Crowe (2013), “Monetary Policy Matters: Evidence from New Shocks Data,”
+  Journal of Monetary Economics 60(8), 950–966.
+
+Barnichon, R. and G. Mesters (2020), “Identifying Modern Macro Equations with Old Shocks,” Quarterly
+  Journal of Economics 135(4), 2255–2298.
+
+Barnichon, R. and G. Mesters (2021), “The Phillips Multiplier,” Journal of Monetary Economics 117, 689–
+  705.
+
+Bauer, M. D. and E. T. Swanson (2023a), “A Reassessment of Monetary Policy Surprises and High-Frequency
+  Identification,” NBER Macroeconomics Annual 2022, Vol. 37, 87–155.
+
+Bauer, M. D. and E. T. Swanson (2023b), “An Alternative Explanation for the ‘Fed Information Effect’,”
+  American Economic Review 113(3), 664–700.
+
+Bauer, M. D. and G. D. Rudebusch (2020), “Interest Rates under Falling Stars,” American Economic Review
+  110(5), 1316–1354.
+
+Bauer, M. D., B. S. Bernanke and E. Milstein (2023), “Risk Appetite and the Risk-Taking Channel of
+  Monetary Policy,” Journal of Economic Perspectives 37(1), 77–100.
+
+Bauer, M., M. Schmeling and A. Schrimpf (2026), “Risk Appetite and Monetary Transmission,” Federal
+  Reserve Bank of San Francisco Working Paper 2026-20, September, doi:10.24148/wp2026-20.
+
+Benigno, P. and G. B. Eggertsson (2023), “It’s Baaack: The Surge in Inflation in the 2020s and the Return
+  of the Non-Linear Phillips Curve,” NBER Working Paper 31197.
+
+Bernanke, B. S. and A. S. Blinder (1992), “The Federal Funds Rate and the Channels of Monetary Trans-
+  mission,” American Economic Review 82(4), 901–921.
+
+Bernanke, B. S. and K. N. Kuttner (2005), “What Explains the Stock Market’s Reaction to Federal Reserve
+  Policy?” Journal of Finance 60(3), 1221–1257.
+
+Bernanke, B. S. and O. Blanchard (2025), “What Caused the U.S. Pandemic-Era Inflation?” American
+  Economic Journal: Macroeconomics 17(3), 1–35.
+
+Bernanke, B. S., J. Boivin and P. Eliasz (2005), “Measuring the Effects of Monetary Policy: A Factor-
+  Augmented Vector Autoregressive (FAVAR) Approach,” Quarterly Journal of Economics 120(1), 387–422.
+
+Boehm, C. and T. N. Kroner (2024), “Monetary Policy without Moving Interest Rates: The Fed Non-Yield
+  Shock,” NBER Working Paper 32636, June 2024, revised September 2025.
+
+Boehm, C., H. Kim and T. N. Kroner (2026), “The Main Monetary Policy Shock,” NBER Working Paper
+  36004, November.
+
+
+                                                   28
+Boivin, J. and M. P. Giannoni (2006), “Has Monetary Policy Become More Effective?” Review of Economics
+  and Statistics 88(3), 445–462.
+
+Boivin, J., M. T. Kiley and F. S. Mishkin (2010), “How Has the Monetary Transmission Mechanism Evolved
+  Over Time?” in B. M. Friedman and M. Woodford (eds.), Handbook of Monetary Economics, Vol. 3A,
+  369–422.
+
+Brave, S. and R. A. Butters (2011), “Monitoring Financial Stability: A Financial Conditions Index Ap-
+  proach,” Federal Reserve Bank of Chicago Economic Perspectives 35(1), 22–43.
+
+Brennan, C. M., M. M. Jacobson, C. Matthes and T. B. Walker (2025), “Monetary Policy Shocks: Data or
+  Methods?” B.E. Journal of Macroeconomics 25(2), 595–659.
+
+Bu, C., J. Rogers and W. Wu (2021), “A Unified Measure of Fed Monetary Policy Shocks,” Journal of
+  Monetary Economics 118, 331–349.
+
+Caballero, R. J., T. E. Caravello and A. Simsek (2026), “FCI-star,” NBER Working Paper 33952 (version
+  of January 12, 2026).
+
+Caldara, D. and E. Herbst (2019), “Monetary Policy, Real Activity, and Credit Spreads: Evidence from
+  Bayesian Proxy SVARs,” American Economic Journal: Macroeconomics 11(1), 157–192.
+
+Castelnuovo, E. and P. Surico (2010), “Monetary Policy, Inflation Expectations and the Price Puzzle,”
+  Economic Journal 120(549), 1262–1283.
+
+Christiano, L. J., M. Eichenbaum and C. L. Evans (1999), “Monetary Policy Shocks: What Have We Learned
+  and to What End?” in J. B. Taylor and M. Woodford (eds.), Handbook of Macroeconomics, Vol. 1A,
+  65–148.
+
+Christiano, L. J., M. Eichenbaum and C. L. Evans (2005), “Nominal Rigidities and the Dynamic Effects of
+  a Shock to Monetary Policy,” Journal of Political Economy 113(1), 1–45.
+
+Chudik, A. and G. Georgiadis (2022), “Estimation of Impulse Response Functions When Shocks Are Ob-
+  served at a Higher Frequency Than Outcome Variables,” Journal of Business and Economic Statistics
+  40(3), 965–979.
+
+Chudik, A. and L. Kilian (2026), “Mean Group and Pooled Mixed-Frequency Estimators of Responses of
+  Low-Frequency Variables to High-Frequency Shocks,” Federal Reserve Bank of Dallas Working Paper
+  2603.
+
+Coibion, O. (2012), “Are the Effects of Monetary Policy Shocks Big or Small?” American Economic Journal:
+  Macroeconomics 4(2), 1–32.
+
+Companion note (2026), “A Simple Market-Based Financial Conditions Index: Weights from Policy News,
+  Dynamics from a Transparent VAR, Measured Relative to r∗ ,” draft.
+
+Corsi, F. (2009), “A Simple Approximate Long-Memory Model of Realized Volatility,” Journal of Financial
+  Econometrics 7(2), 174–196.
+
+Del Negro, M., M. Lenza, G. E. Primiceri and A. Tambalotti (2020), “What’s Up with the Phillips Curve?”
+  Brookings Papers on Economic Activity, Spring, 301–373.
+
+Faust, J., E. T. Swanson and J. H. Wright (2004), “Identifying VARs Based on High Frequency Futures
+  Data,” Journal of Monetary Economics 51(6), 1107–1131.
+
+Fernández-Villaverde, J., J. F. Rubio-Ramírez, T. J. Sargent and M. W. Watson (2007), “ABCs (and Ds) of
+  Understanding VARs,” American Economic Review 97(3), 1021–1026.
+
+
+
+                                                  29
+Fitzgerald, T., C. Jones, M. Kulish and J. P. Nicolini (2024), “Is There a Stable Relationship between
+  Unemployment and Future Inflation?” American Economic Journal: Macroeconomics 16(4), 114–142.
+
+Fleming, J. M. (1962), “Domestic Financial Policies under Fixed and under Floating Exchange Rates,” IMF
+  Staff Papers 9(3), 369–380.
+
+Foroni, C., M. Marcellino and C. Schumacher (2015), “Unrestricted Mixed Data Sampling (MIDAS): MIDAS
+  Regressions with Unrestricted Lag Polynomials,” Journal of the Royal Statistical Society Series A 178(1),
+  57–82.
+
+Francis, N., E. Ghysels and M. T. Owyang (2011), “The Low-Frequency Impact of Daily Monetary Policy
+  Shocks,” Federal Reserve Bank of St. Louis Working Paper 2011-009.
+
+Friedman, M. (1957), A Theory of the Consumption Function, Princeton University Press.
+
+Friedman, M. (1961), “The Lag in Effect of Monetary Policy,” Journal of Political Economy 69(5), 447–466.
+
+Galí, J. and T. Monacelli (2005), “Monetary Policy and Exchange Rate Volatility in a Small Open Economy,”
+  Review of Economic Studies 72(3), 707–734.
+
+Gazzani, A. and A. Vicondoa (2020), “Bridge Proxy-SVAR: Estimating the Macroeconomic Effects of Shocks
+  Identified at High-Frequency,” Banca d’Italia Working Paper 1274.
+
+Gertler, M. and P. Karadi (2015), “Monetary Policy Surprises, Credit Costs, and Economic Activity,” Amer-
+  ican Economic Journal: Macroeconomics 7(1), 44–76.
+
+Ghysels, E. (2016), “Macroeconomics and the Reality of Mixed Frequency Data,” Journal of Econometrics
+  193(2), 294–314.
+
+Ghysels, E., A. Sinko and R. Valkanov (2007), “MIDAS Regressions: Further Results and New Directions,”
+  Econometric Reviews 26(1), 53–90.
+
+Gilchrist, S. and E. Zakrajšek (2012), “Credit Spreads and Business Cycle Fluctuations,” American Economic
+  Review 102(4), 1692–1720.
+
+Gürkaynak, R. S., B. Sack and E. T. Swanson (2005), “Do Actions Speak Louder Than Words? The Response
+  of Asset Prices to Monetary Policy Actions and Statements,” International Journal of Central Banking
+  1(1), 55–93.
+
+Gürkaynak, R. S., B. Sack and J. H. Wright (2007), “The U.S. Treasury Yield Curve: 1961 to the Present,”
+  Journal of Monetary Economics 54(8), 2291–2304.
+
+Hall, R. E. and D. W. Jorgenson (1967), “Tax Policy and Investment Behavior,” American Economic Review
+  57(3), 391–414.
+
+Hamilton, J. D., E. S. Harris, J. Hatzius and K. D. West (2016), “The Equilibrium Real Funds Rate: Past,
+  Present, and Future,” IMF Economic Review 64(4), 660–707.
+
+Hanson, S. G. and J. C. Stein (2015), “Monetary Policy and Long-Term Real Rates,” Journal of Financial
+  Economics 115(3), 429–448.
+
+Hatzius, J., P. Hooper, F. Mishkin, K. Schoenholtz and M. Watson (2010), “Financial Conditions Indexes: A
+  Fresh Look after the Financial Crisis,” NBER Working Paper 16150; also in U.S. Monetary Policy Forum
+  Report 2010, 3–59.
+
+Haubrich, J., G. Pennacchi and P. Ritchken (2012), “Inflation Expectations, Real Rates, and Risk Premia:
+  Evidence from Inflation Swaps,” Review of Financial Studies 25(5), 1588–1629.
+
+Hazell, J., J. Herreño, E. Nakamura and J. Steinsson (2022), “The Slope of the Phillips Curve: Evidence
+  from U.S. States,” Quarterly Journal of Economics 137(3), 1299–1344.
+
+
+                                                    30
+Holston, K., T. Laubach and J. C. Williams (2023), “Measuring the Natural Rate of Interest after COVID-
+  19,” Federal Reserve Bank of New York Staff Report 1063.
+
+Holston, K., T. Laubach and J. C. Williams (2017), “Measuring the Natural Rate of Interest: International
+  Trends and Determinants,” Journal of International Economics 108, S59–S75.
+
+Jacobson, M. M., C. Matthes and T. B. Walker (2026), “Temporal Aggregation Bias and Monetary Policy
+  Transmission,” Journal of Political Economy Macroeconomics, advance online publication 26 March 2026,
+  doi:10.1086/741548.
+
+Jarociński, M. and P. Karadi (2020), “Deconstructing Monetary Policy Surprises—The Role of Information
+  Shocks,” American Economic Journal: Macroeconomics 12(2), 1–43.
+
+Jorgenson, D. W. (1963), “Capital Theory and Investment Behavior,” American Economic Review 53(2),
+  247–259.
+
+Kaplan, G., B. Moll and G. L. Violante (2018), “Monetary Policy According to HANK,” American Economic
+  Review 108(3), 697–743.
+
+Kiley, M. T. (2014), “The Response of Equity Prices to Movements in Long-Term Interest Rates Associated
+  with Monetary Policy Statements: Before and After the Zero Lower Bound,” Journal of Money, Credit
+  and Banking 46(5), 1057–1071.
+
+Kiley, M. T. (2020a), “Financial Conditions and Economic Activity: Insights from Machine Learning,”
+  Finance and Economics Discussion Series 2020-095, Board of Governors of the Federal Reserve System.
+
+Kiley, M. T. (2020b), “What Can the Data Tell Us about the Equilibrium Real Interest Rate?” International
+  Journal of Central Banking 16(3), 181–209.
+
+Kilian, L. (2024), “How to Construct Monthly VAR Proxies Based on Daily Surprises in Futures Markets,”
+  Journal of Economic Dynamics and Control 168, 104966.
+
+Kroencke, T. A., M. Schmeling and A. Schrimpf (2021), “The FOMC Risk Shift,” Journal of Monetary
+  Economics 120, 21–39.
+
+Kuttner, K. N. (2001), “Monetary Policy Surprises and Interest Rates: Evidence from the Fed Funds Futures
+  Market,” Journal of Monetary Economics 47(3), 523–544.
+
+Lunsford, K. G. (2015), “Identifying Structural VARs with a Proxy Variable and a Test for a Weak Proxy,”
+  Federal Reserve Bank of Cleveland Working Paper 15-28, doi:10.26509/frbc-wp-201528.
+
+Laubach, T. and J. C. Williams (2003), “Measuring the Natural Rate of Interest,” Review of Economics and
+  Statistics 85(4), 1063–1070.
+
+Lewis, D. and K. Mertens (2026), “Weak Instrument Bias in Impulse Response Estimators,” CeMMAP
+  Working Paper 01/26, Institute for Fiscal Studies.
+
+McKay, A. and C. K. Wolf (2023), “What Can Time-Series Regressions Tell Us About Policy Counterfactu-
+ als?” Econometrica 91(5), 1695–1725.
+
+McLeay, M. and S. Tenreyro (2020), “Optimal Inflation and the Identification of the Phillips Curve,” NBER
+ Macroeconomics Annual 2019, Vol. 34.
+
+Mertens, K. and M. O. Ravn (2013), “The Dynamic Effects of Personal and Corporate Income Tax Changes
+ in the United States,” American Economic Review 103(4), 1212–1247.
+
+Miranda-Agrippino, S. and G. Ricco (2021), “The Transmission of Monetary Policy Shocks,” American
+  Economic Journal: Macroeconomics 13(3), 74–107.
+
+
+                                                   31
+Mundell, R. A. (1963), “Capital Mobility and Stabilization Policy under Fixed and Flexible Exchange Rates,”
+ Canadian Journal of Economics and Political Science 29(4), 475–485.
+
+Montiel Olea, J. L., J. H. Stock and M. W. Watson (2021), “Inference in Structural Vector Autoregressions
+ Identified with an External Instrument,” Journal of Econometrics 225(1), 74–87.
+
+Nakamura, E. and J. Steinsson (2018), “High-Frequency Identification of Monetary Non-Neutrality: The
+  Information Effect,” Quarterly Journal of Economics 133(3), 1283–1330.
+
+Plagborg-Møller, M. and C. K. Wolf (2021), “Local Projections and VARs Estimate the Same Impulse
+  Responses,” Econometrica 89(2), 955–980.
+
+Powell, J. H. (2022), “Monetary Policy and Price Stability,” speech at the Federal Reserve Bank of Kansas
+  City Economic Policy Symposium, Jackson Hole, August 26.
+
+Powell, J. H. (2023), “Transcript of Chair Powell’s Press Conference,” Board of Governors of the Federal
+  Reserve System, November 1.
+
+Primiceri, G. E. (2005), “Time Varying Structural Vector Autoregressions and Monetary Policy,” Review of
+  Economic Studies 72(3), 821–852.
+
+Ramey, V. A. (2016), “Macroeconomic Shocks and Their Propagation,” in J. B. Taylor and H. Uhlig (eds.),
+  Handbook of Macroeconomics, Vol. 2A, 71–162.
+
+Romer, C. D. and D. H. Romer (2004), “A New Measure of Monetary Shocks: Derivation and Implications,”
+  American Economic Review 94(4), 1055–1084.
+
+Romer, C. D. and D. H. Romer (2000), “Federal Reserve Information and the Behavior of Interest Rates,”
+  American Economic Review 90(3), 429–457.
+
+Sims, C. A. (1992), “Interpreting the Macroeconomic Time Series Facts: The Effects of Monetary Policy,”
+  European Economic Review 36(5), 975–1000.
+
+Smets, F. and R. Wouters (2007), “Shocks and Frictions in US Business Cycles: A Bayesian DSGE Ap-
+  proach,” American Economic Review 97(3), 586–606.
+
+Stock, J. H. and M. W. Watson (2003), “Forecasting Output and Inflation: The Role of Asset Prices,”
+  Journal of Economic Literature 41(3), 788–829.
+
+Stock, J. H. and M. W. Watson (2018), “Identification and Estimation of Dynamic Causal Effects in Macroe-
+  conomics Using External Instruments,” Economic Journal 128(610), 917–948.
+
+Swanson, E. T. (2021), “Measuring the Effects of Federal Reserve Forward Guidance and Asset Purchases
+  on Financial Markets,” Journal of Monetary Economics 118, 32–53.
+
+Tobin, J. (1969), “A General Equilibrium Approach to Monetary Theory,” Journal of Money, Credit and
+  Banking 1(1), 15–29.
+[TO DO: Appendix: replace with the 3/6/12-lag tables, data sources and construction
+from baseline/ and baseline/data/SOURCES.md; drop the exploratory tables.]
+
+
+
+
+                                                    32
+                        Table A1: Baseline: 1996 to the present, all data in, no trend
+
+                                        Unemployment gap (pp)                                    Price level (%)
+Case     FCI       Lags Obs              12 m            24 m           36 m            12 m              24 m            36 m
+                                             ∗               ∗
+Nominal none        3     369         −0.60            −0.43          −0.31              0.11              0.08            0.04
+                                [−0.83, −0.28] [−0.74, −0.06] [−0.62, 0.06]      [−0.06, 0.29]     [−0.20, 0.39]   [−0.35, 0.48]
+                    6     369         −0.56∗           −0.39∗         −0.25              0.08              0.01          −0.11
+                                [−0.82, −0.27] [−0.67, −0.08] [−0.59, 0.09]      [−0.14, 0.28]     [−0.43, 0.35]   [−0.72, 0.40]
+                    12    369         −0.84∗           −0.46∗         −0.25              0.09              0.01          −0.13
+                                [−1.27, −0.39] [−0.76, −0.13] [−0.60, 0.10]      [−0.11, 0.34]     [−0.37, 0.45]   [−0.70, 0.51]
+         nominal    3     369             0.03            0.20         0.20∗           −0.11             −0.32           −0.46
+                                 [−0.25, 0.35]    [−0.04, 0.50]   [0.03, 0.42]   [−0.33, 0.08]     [−0.73, 0.02]   [−1.01, 0.00]
+                    6     369             0.06            0.30         0.33∗           −0.16             −0.45          −0.70∗
+                                 [−0.23, 0.34]    [−0.01, 0.60]   [0.07, 0.59]   [−0.45, 0.12]     [−1.00, 0.01] [−1.43, −0.07]
+                    12    369          −0.01              0.30         0.38∗           −0.15            −0.49∗          −0.82∗
+                                 [−0.54, 0.45]    [−0.05, 0.60]   [0.05, 0.69]   [−0.41, 0.10] [−0.94, −0.01] [−1.43, −0.12]
+
+Real     none       3     369         −0.36∗            −0.33         −0.28            −0.05             −0.07           −0.09
+                                [−0.56, −0.04]    [−0.55, 0.04] [−0.54, 0.06]    [−0.25, 0.11]     [−0.40, 0.17]   [−0.53, 0.27]
+                    6     369          −0.34            −0.29         −0.21            −0.01             −0.09           −0.20
+                                 [−0.63, 0.01]    [−0.59, 0.08] [−0.56, 0.13]    [−0.19, 0.18]     [−0.41, 0.21]   [−0.59, 0.23]
+                    12    369         −0.62∗            −0.33         −0.20            −0.04             −0.11           −0.22
+                                [−0.96, −0.19]    [−0.64, 0.03] [−0.52, 0.15]    [−0.24, 0.17]     [−0.46, 0.22]   [−0.76, 0.27]
+         real       3     369             0.16            0.15           0.11          −0.21             −0.35           −0.42
+                                 [−0.16, 0.43]    [−0.14, 0.40] [−0.10, 0.23]    [−0.40, 0.02]     [−0.65, 0.02]   [−0.79, 0.02]
+                    6     369             0.18            0.29         0.25∗          −0.21∗            −0.47∗          −0.67∗
+                                 [−0.07, 0.49]    [−0.01, 0.57]   [0.03, 0.47] [−0.42, −0.02] [−0.83, −0.10] [−1.17, −0.08]
+                    12    369             0.13            0.33         0.31∗          −0.25∗            −0.53∗          −0.73∗
+                                 [−0.30, 0.55]    [−0.03, 0.67]   [0.01, 0.63] [−0.47, −0.03] [−0.97, −0.07] [−1.43, −0.07]
+
+r*-gap   none       3     369          −0.17            −0.16         −0.13            −0.12             −0.15           −0.16
+                                 [−0.43, 0.19]    [−0.50, 0.24] [−0.44, 0.20]    [−0.26, 0.05]     [−0.42, 0.16]   [−0.54, 0.26]
+                    6     369          −0.08            −0.06         −0.01            −0.16             −0.35           −0.53
+                                 [−0.42, 0.20]    [−0.49, 0.32] [−0.48, 0.39]    [−0.36, 0.04]     [−0.74, 0.07]   [−1.07, 0.02]
+                    12    369          −0.28            −0.06            0.04         −0.22∗            −0.44∗          −0.68∗
+                                 [−0.91, 0.18]    [−0.68, 0.31] [−0.56, 0.47] [−0.40, −0.01] [−0.82, −0.03] [−1.34, −0.07]
+         r*-gap     3     369             0.26            0.17           0.07          −0.20             −0.25           −0.27
+                                 [−0.11, 0.54]    [−0.17, 0.41] [−0.19, 0.21]    [−0.42, 0.00]     [−0.63, 0.09]   [−0.74, 0.19]
+                    6     369           0.33∗            0.37∗         0.28∗          −0.32∗            −0.61∗          −0.84∗
+                                   [0.07, 0.54]    [0.07, 0.64]   [0.00, 0.49] [−0.53, −0.11] [−1.10, −0.21] [−1.67, −0.24]
+                    12    369             0.33           0.50∗         0.43∗          −0.41∗            −0.78∗          −1.06∗
+                                 [−0.17, 0.67]     [0.12, 0.76]   [0.10, 0.70] [−0.59, −0.19] [−1.25, −0.35] [−1.90, −0.32]
+
+Nominal, real and r*-gap 2-year yield; the FCI is the matching index of Note A in each case. Per +1 pp on the 2-year
+yield. ∗ = 90% interval excludes zero; intervals in brackets. Obs = monthly observations in the equations.
+
+
+
+
+                                                            33
+A     Additional tables
+
+                Table A2: Standard methods with a commodity price index in the first block
+
+                                                                                       Unemployment gap (pp)                           Price level (%)
+Method                                                   Sample        Obs             12 m          24 m           36 m           12 m        24 m
+                                                                                             ∗
+Cholesky + commodity prices, 2-year yield                1996–2026 369               −0.81          −0.44           −0.13           0.11        0.06
+                                                                              [−1.32, −0.39] [−0.95, 0.06] [−0.67, 0.46] [−0.13, 0.39] [−0.45, 0.63] [−
+Cholesky + commodity prices, federal funds rate 1984–2007 288                          −0.03        −0.02           −0.01          −0.02      −0.04
+                                                                               [−0.08, 0.00] [−0.07, 0.02] [−0.05, 0.03] [−0.07, 0.02] [−0.12, 0.04] [−
+
+ Monthly data, 12 lags, constant, no trend; unemployment gap, core PCE inflation and the end-of-month policy rate (the
+ 2-year Treasury yield, or the effective federal funds rate where stated), policy rate ordered last in the Cholesky VARs; price
+ level = cumulated inflation/12. The log PPI for all commodities (monthly average) is added to the system and ordered
+ before the policy rate. Unit: +1 pp on the policy rate on impact. Brackets: 90% intervals (residual bootstrap for the
+ Cholesky VARs; exact Anderson–Rubin sets for the proxy VAR). ∗ = excludes zero. Specification: baseline/lib/litstyle.py.
+
+
+
+                 Table A3: Monthly proxy VAR: first-stage strength and impact on the FCI
+
+    2-year       FCI          F (3 lags)         F (6)   F (12)       Proxy impact on FCI           Model impact on FCI
+    Nominal      none                  5.0         4.6        4.5
+                 nominal               2.7         2.1        1.6                            1.73                           1.11
+    Real         none                  9.0         7.3        6.9
+                 real                  6.0         4.2        3.0                            1.50                           1.03
+    r*-gap       none                  9.1         8.2        8.0
+                 r*-gap                8.4         6.7        4.4                            1.44                           1.04
+    F : robust first-stage statistic of the policy-variable residual on the instrument (instrument months only, 1996–2026).
+    Impact on FCI: end-of-month response of the FCI per +1 pp on the end-of-month 2-year yield, estimated from
+    monthly residuals (proxy VAR, 12 lags) and implied by the daily model.
+
+
+
+               Table A4: Responses with industrial production added to the monthly model
+
+                                       12 months                             24 months                      36 months
+    Step        FCI              3           6           12           3          6         12         3         6       12
+    A. Unemployment gap (percentage points)
+    Nominal none       0.07     −0.04 −0.19†                        0.26†      0.16      −0.04       0.26 0.30†    0.19
+                           ∗∗
+            included 0.41       0.36∗∗    0.22∗∗                    0.60∗∗    0.59∗∗     0.47∗∗     0.51∗∗ 0.56∗∗ 0.49∗∗
+    Real    none       0.12      0.03    −0.14†                     0.24†      0.15      −0.02      0.24†   0.23   0.15
+                           ∗∗        ∗∗
+            included 0.41       0.37      0.24∗∗                    0.54∗∗    0.53∗∗     0.46∗∗     0.43∗∗ 0.48∗∗ 0.45∗∗
+     ∗                      †         †
+    r -gap  none       0.16     0.16       0.03                     0.30∗∗    0.27†       0.14      0.33∗∗ 0.30† 0.25†
+            included 0.44∗∗     0.42∗∗    0.34∗∗                    0.52∗∗    0.50∗∗     0.50∗∗     0.42∗∗ 0.42∗∗ 0.42∗∗
+    B. Industrial production (percent)
+    Nominal none          1.06∗∗   1.26∗∗ 1.65∗∗ 1.03† 1.26† 1.64∗∗                                 1.16†     1.00†    1.10†
+              included −0.16       −0.29   0.11  −0.09 −0.04  0.15                                  0.45      0.39      0.43
+    Real      none        0.64†    0.77∗∗ 1.13∗∗ 0.72  0.97† 1.28∗∗                                 0.87†     0.85†    0.91†
+              included −0.33       −0.52  −0.23 −0.11 −0.11 −0.01                                   0.42      0.31     0.34
+    r∗ -gap   none         0.13    −0.04   0.27  0.13  0.23   0.32                                  0.31      0.44      0.21
+              included −0.84∗∗ −1.05∗∗ −0.95∗∗ −0.46† −0.48 −0.80∗∗                                 0.18      0.08     −0.21
+  See Table 4. Price-level responses are similar to Table 4. Bauer and Swanson (2023a), industrial production:
+  about −1.5, −1.0 and −0.85 at 12, 24 and 36 months, read from their Figure 8.
+
+
+                                                               34
+                            Table A5: Main steps without the time trend
+
+                             12 months                       24 months                      36 months
+Step      FCI          3         6         12         3         6          12        3         6          12
+A. Unemployment gap (percentage points)
+Nominal none     −0.13† −0.27∗∗ −0.34∗∗             −0.01     −0.19†     −0.36∗∗    0.08     −0.08      −0.25†
+        included 0.18∗∗     0.09      0.07          0.38∗∗    0.29∗∗      0.19†    0.42∗∗    0.37∗∗     0.24∗∗
+Real    none      −0.02 −0.14† −0.25∗∗               0.07     −0.10      −0.28∗∗    0.12     −0.03      −0.21†
+        included 0.25∗∗    0.18†      0.12          0.40∗∗    0.33∗∗      0.24∗∗   0.38∗∗    0.36∗∗     0.26∗∗
+ ∗
+r -gap  none       0.08     0.03     −0.08          0.16†      0.04      −0.15†    0.20†      0.05      −0.16
+        included 0.30∗∗ 0.32∗∗      0.34∗∗          0.38∗∗    0.39∗∗      0.41∗∗   0.34∗∗    0.38∗∗     0.37∗∗
+B. Core PCE price level (percent)
+Nominal none        0.01      0.06 0.01             −0.08   0.03    0.05           −0.17 −0.07     0.03
+         included −0.09 −0.07      −0.10            −0.28† −0.24†   −0.23          −0.42† −0.41† −0.36†
+Real     none      −0.10† −0.02    −0.07            −0.19† −0.08    −0.06          −0.26† −0.16    −0.08
+         included −0.17† −0.14† −0.18∗∗             −0.33† −0.32† −0.31†           −0.44† −0.47∗∗ −0.41†
+r∗ -gap  none      −0.15† −0.13† −0.19∗∗            −0.22† −0.26† −0.31†           −0.28† −0.39 −0.44†
+         included −0.18† −0.25∗∗ −0.33∗∗            −0.28† −0.48∗∗ −0.61∗∗         −0.37† −0.68∗∗ −0.84∗∗
+As Table 4, but without the quadratic time trend.
+
+
+
+
+                                                     35
+                                    Table A6: Comparison with purely monthly VARs
+
+                                                                     Nominal                    Real                     r∗ -gap
+Model                                             FCI          3        6       12       3        6       12       3        6      12
+A. Unemployment gap after 12 months (percentage points)
+Baseline mixed-frequency model               none       +0.07 −0.13 −0.27∗∗ +0.14 −0.04 −0.20∗∗ +0.19∗∗ +0.10 −0.03
+                                             included +0.44∗∗ +0.36∗∗ +0.28∗∗ +0.44∗∗ +0.38∗∗ +0.29∗∗ +0.40∗∗ +0.37∗∗ +0.36∗∗
+Monthly, window impact, announcement timing none        +0.06 −0.05 −0.14∗∗ +0.08 −0.01 −0.10 +0.11∗∗ +0.06 +0.00
+                                             included +0.21∗∗ +0.17∗∗ +0.11 +0.23∗∗ +0.19∗∗ +0.14∗∗ +0.22∗∗ +0.23∗∗ +0.21∗∗
+Monthly, window impact, first day of month   none       +0.13 −0.11 −0.30∗∗ +0.17 −0.03 −0.21 +0.25∗∗ +0.14 +0.00
+                                             included +0.46∗∗ +0.36∗∗ +0.23 +0.49∗∗ +0.42∗∗ +0.30∗∗ +0.48∗∗ +0.51∗∗ +0.47∗∗
+Monthly proxy, macro zero on impact          none       +0.13 −0.11 −0.30 +0.17 −0.03 −0.21 +0.25 +0.14 +0.00
+                                             included +0.06 −0.10◦ −0.28◦ +0.08 −0.04 −0.12◦ +0.15 +0.14 +0.17
+Monthly proxy, standard                      none       −0.24 −0.44 −0.64 −0.30 −0.51 −0.76∗∗ −0.22 −0.40 −0.68
+                                             included −0.04 −0.18◦ −0.38◦ −0.11 −0.19 −0.37◦ +0.02 −0.01 −0.11
+Monthly proxy, standard, funds rate and MP1 none        −0.37 −0.73 −0.90∗∗ −0.16 −0.42 −0.59∗∗ −0.04 −0.25 −0.43
+                                             included −0.74∗∗ −0.98∗∗ −1.02∗∗ −0.47 −0.60 −0.62∗∗ −0.39 −0.52 −0.54
+B. Core PCE price level after 24 months (percent)
+Baseline mixed-frequency model                  none         −0.16   −0.16     −0.07 −0.25      −0.23   −0.16    −0.45∗∗ −0.51∗∗ −0.52∗∗
+                                                included     −0.24   −0.36     −0.31 −0.30      −0.40   −0.36    −0.53∗∗ −0.68∗∗ −0.72∗∗
+Monthly, window impact, announcement timing none             −0.08   −0.08     −0.03 −0.12      −0.12   −0.07    −0.25∗∗ −0.29∗∗ −0.27∗∗
+                                                included     −0.11   −0.15     −0.10 −0.14      −0.19   −0.12    −0.29∗∗ −0.39∗∗ −0.34∗∗
+Monthly, window impact, first day of month      none         −0.17   −0.18     −0.07 −0.25      −0.25   −0.15    −0.53∗∗ −0.62∗∗ −0.58∗∗
+                                                included     −0.23   −0.32     −0.22 −0.31      −0.41   −0.27    −0.62∗∗ −0.84∗∗ −0.75∗∗
+Monthly proxy, macro zero on impact             none         −0.17   −0.18     −0.07 −0.25      −0.25   −0.15     −0.53 −0.62 −0.58
+                                                included     −0.13   −0.18◦    −0.06◦ −0.20∗∗   −0.25   −0.17◦   −0.41∗∗ −0.57∗∗ −0.54
+Monthly proxy, standard                         none         −0.27   −0.28     −0.04 −0.31      −0.37   −0.33     −0.61 −0.68 −0.77
+                                                included     −0.35   −0.50◦    −0.50◦ −0.32     −0.54   −0.83◦    −0.57 −0.81∗∗ −1.07∗∗
+Monthly proxy, standard, funds rate and MP1 none             −0.15   +0.03     +0.26 −0.18      −0.08   −0.04     −0.50 −0.55 −0.60
+                                                included     +0.06   +0.15     +0.28 −0.03      −0.02   −0.10     −0.13 −0.22 −0.24
+C. First-stage F statistic of the monthly proxy
+Two-year yield, NS surprise                       none        5.6      5.4      5.5     6.1      5.8     5.0       5.8     6.3     4.9
+                                                  included    3.1      2.5      1.7     4.1      3.4     1.7       6.4     5.9     3.2
+Funds rate, MP1 surprise                          none        7.7      6.5      7.3     8.0      7.5     8.3       6.4     5.8     6.5
+                                                  included    7.9      6.7      8.1     7.3      6.9     7.9       5.6     5.3     6.3
+  Columns: step, then the number of monthly lags. All models include the quadratic time trend. Proxy cases:
+  per percentage point on the monthly average of the two-year yield (funds rate in the last proxy row); first-day
+  case: the same; baseline and announcement-timing case: per percentage point on the two-year yield in the
+  window. ∗∗ : 90 percent interval or Anderson–Rubin set excludes zero. ◦ : the 90 percent Anderson–Rubin set
+  is unbounded. In the funds-rate rows, the funds rate receives the same adjustment as the two-year yield.
+
+
+
+
+                                                                     36
+                              Table A7: Policy news beyond interest rates
+
+      A. Share of each window move explained by the surprise (R2 )
+                 2-year        10-year          S&P 500 DXY                     FCI
+                  0.80           0.32             0.31       0.34               0.48
+      B. Window FCI move per percentage point on the two-year yield, bF [90 percent interval]
+      VIX, lowest quartile (63 announcements) 1.12 [0.98, 1.36]
+      VIX, highest quartile (63 announcements) 1.01 [0.84, 1.32]
+      EBP, lowest quartile (63 announcements) 1.13 [0.99, 1.29]
+      EBP, highest quartile (63 announcements) 0.88 [0.70, 1.21]
+      1996–2007 (102 announcements)            0.87 [0.73, 1.08]
+      2008–2019 (99 announcements)             1.17 [0.95, 1.46]
+      2020–2026 (51 announcements)             1.07 [0.93, 1.24]
+      2020–2023 (30 announcements)             1.06 [0.86, 1.29]
+      C. Response to a one-standard-deviation window FCI move not explained by the surprise
+                       Unemployment, 12 months                 Price level, 24 months
+      Step         3               6               12       3         6            12
+      Nominal +0.03∗∗           +0.03∗∗          +0.03∗∗ −0.01     −0.01         −0.01
+      r∗ -gap  +0.03∗∗          +0.03∗∗          +0.03∗∗ −0.02∗∗ −0.02∗∗        −0.03∗∗
+252 announcements, 1996–2026. Panel A: R2 of a regression of each window move on the policy-news surprise
+and a constant. Panel B: quartiles of the VIX on the previous day and the excess bond premium in the previous
+month; intervals from 1,000 resamples of announcements. Panel C: impact of one standard deviation (0.06 unit)
+of the window FCI move not explained by the surprise, with no move in the two-year yield, traced through
+the model with the quadratic trend; 200 draws resample announcements and monthly errors. ∗∗ : 90 percent
+interval excludes zero; † : 68 percent only.
+
+
+        Table A8: Commodity prices and industrial production added to the monthly model
+
+                                                            Nominal                        r∗ -gap
+Response                             FCI           3          6        12              3       6      12
+                                                                            †
+Unemployment gap, 12 months      none      +0.00             −0.12 −0.24          +0.00     −0.04   −0.08
+                                 included +0.32∗∗           +0.23∗∗ +0.11        +0.25∗∗   +0.19∗∗ +0.16†
+Core PCE price level, 24 months none       −0.16             −0.10   +0.15       −0.43∗∗   −0.37∗∗ −0.05
+                                 included −0.20†             −0.18   −0.01       −0.58∗∗   −0.62∗∗ −0.30†
+Industrial production, 12 months none     +1.42∗∗           +1.61∗∗ +1.96∗∗      +0.87∗∗   +1.10∗∗ +1.09∗∗
+                                 included +0.45              +0.40 +0.76†         +0.09     +0.29 +0.46†
+Commodity prices, 24 months      none     +5.36†            +6.16∗∗ +7.32∗∗       +2.44    +3.67† +7.50∗∗
+                                 included +6.53†            +8.34∗∗ +8.84∗∗       +2.68     +2.89 +7.23†
+See Table 4. The monthly block has the unemployment gap, core PCE inflation, 100 times the log of industrial
+production and 100 times the log of the IMF all-commodity price index (FRED PALLFNFINDEXM). All
+versions include the quadratic trend.
+
+
+
+
+                                                       37
+   Table A9: Different adjustments of the two-year yield: unemployment gap (percentage points)
+
+                          12 months                       24 months                  36 months
+       FCI           3         6         12        3          6        12        3        6       12
+     Two-year yield: nominal
+      none        0.07    −0.13       −0.27∗∗    0.36†       0.10     −0.19    0.53∗∗    0.29    −0.00
+      nominal 0.44∗∗      0.36∗∗       0.28∗∗    0.76∗∗     0.75∗∗    0.63∗∗   0.76∗∗   0.83∗∗   0.77∗∗
+      real       0.41∗∗   0.32∗∗       0.25†     0.69∗∗     0.67∗∗    0.57∗∗   0.68∗∗   0.74∗∗   0.70∗∗
+       ∗              ∗∗
+      r -gap     0.39     0.31∗∗       0.29∗∗    0.58∗∗     0.57∗∗    0.55∗∗   0.52∗∗   0.57∗∗   0.60∗∗
+     Two-year yield: Laubach–Williams r∗ -gap (baseline)
+      none       0.19∗∗    0.10    −0.03     0.34∗∗    0.21            0.04    0.38∗∗   0.25†   0.07
+                      ∗∗       ∗∗      ∗∗
+      nominal 0.48        0.43     0.35      0.63∗∗ 0.63∗∗            0.58∗∗   0.49∗∗   0.53∗∗ 0.53∗∗
+      real       0.46∗∗   0.42∗∗   0.36∗∗    0.59∗∗ 0.59∗∗            0.57∗∗   0.45∗∗   0.49∗∗ 0.51∗∗
+       ∗              ∗∗       ∗∗      ∗∗
+      r -gap     0.40     0.37     0.36      0.47∗∗ 0.48∗∗            0.50∗∗   0.35∗∗   0.40∗∗ 0.43∗∗
+     Two-year yield: Kiley r∗ -gap
+      none       0.13†     −0.02      −0.15†     0.26†       0.07     −0.11    0.30∗∗    0.13    −0.03
+      nominal 0.44∗∗       0.38∗∗     0.32∗∗     0.58∗∗     0.60∗∗    0.58∗∗   0.43∗∗   0.50∗∗   0.56∗∗
+      real       0.44∗∗    0.38∗∗     0.32∗∗     0.55∗∗     0.58∗∗    0.57∗∗   0.40∗∗   0.48∗∗   0.54∗∗
+       ∗              ∗∗
+      r -gap     0.39      0.36∗∗     0.33∗∗     0.45∗∗     0.48∗∗    0.52∗∗   0.31∗∗   0.39∗∗   0.45∗∗
+     Two-year yield: minus 9–10-year forward rate
+      none      −0.20∗∗ −0.20† −0.23∗∗ −0.25∗∗              −0.17 −0.23† −0.24∗∗        −0.11 −0.14
+      nominal 0.26∗∗      0.25∗∗   0.18†    0.33∗∗          0.42∗∗ 0.35∗∗ 0.26∗∗        0.35∗∗ 0.35∗∗
+                      ∗∗       ∗∗       †
+      real       0.26     0.26     0.20     0.31∗∗          0.40∗∗ 0.35†  0.24∗∗        0.33∗∗ 0.34†
+       ∗              ∗∗       ∗∗      ∗∗
+      r -gap     0.22     0.23     0.26     0.26∗∗          0.35∗∗
+                                                                   0.40∗∗
+                                                                          0.21∗∗        0.30∗∗ 0.37∗∗
+     Two-year yield: minus average over past 8 years
+      none      −0.16† −0.28∗∗ −0.30∗∗ −0.05                −0.18 −0.30†        0.02    −0.06    −0.18
+      nominal 0.30∗∗      0.25∗∗   0.21∗∗    0.39∗∗         0.43∗∗ 0.40∗∗      0.27∗∗   0.35∗∗   0.38∗∗
+                      ∗∗       ∗∗        †
+      real       0.27     0.21      0.17     0.36∗∗         0.39∗∗ 0.36∗∗      0.26∗∗   0.33∗∗   0.36∗∗
+       ∗              ∗∗       ∗∗       ∗∗
+      r -gap     0.22     0.17     0.21      0.33∗∗         0.36∗∗ 0.41∗∗      0.29∗∗   0.37∗∗   0.46∗∗
+See Table 4. The FCI is always one of the companion note’s three indexes; the r∗ -gap FCI uses the Laubach–
+Williams r∗ . All specifications include the quadratic trend.
+
+
+
+
+                                                    38
+       Table A10: Different adjustments of the two-year yield: core PCE price level (percent)
+
+                        12 months                        24 months                        36 months
+    FCI            3          6         12         3          6         12          3         6         12
+  Two-year yield: nominal
+   none       −0.03    −0.01    −0.02   −0.16   −0.16   −0.07                   −0.26†     −0.34       −0.18
+   nominal −0.09       −0.11    −0.11   −0.24 −0.36† −0.31†                     −0.33      −0.54†     −0.49†
+   real       −0.09    −0.11    −0.13   −0.23 −0.34†    −0.33                   −0.31      −0.51†      −0.50
+    ∗              ∗∗       ∗∗      ∗∗
+   r -gap −0.20       −0.22    −0.21   −0.32∗∗ −0.50∗∗ −0.52∗∗                  −0.32†     −0.61†     −0.72∗∗
+  Two-year yield: Laubach–Williams r∗ -gap (baseline)
+   none      −0.27∗∗ −0.22∗∗ −0.23∗∗ −0.45∗∗ −0.51∗∗                 −0.52∗∗    −0.55∗∗    −0.70∗∗    −0.80∗∗
+   nominal −0.25∗∗ −0.28∗∗ −0.30∗∗ −0.42∗∗ −0.59∗∗                   −0.66∗∗    −0.50∗∗    −0.75∗∗    −0.92∗∗
+   real      −0.26∗∗ −0.29∗∗ −0.33∗∗ −0.44∗∗ −0.59∗∗                 −0.70∗∗    −0.52∗∗    −0.75∗∗    −0.97∗∗
+   r -gap −0.34∗∗ −0.33∗∗ −0.33∗∗ −0.53∗∗ −0.68∗∗
+    ∗
+                                                                     −0.72∗∗    −0.57∗∗    −0.85∗∗    −0.97∗∗
+  Two-year yield: Kiley r∗ -gap
+   none      −0.23∗∗ −0.16† −0.18∗∗            −0.37∗∗ −0.34† −0.29†            −0.44∗∗ −0.48† −0.41†
+   nominal −0.23∗∗ −0.24∗∗ −0.21†              −0.39∗∗ −0.50∗∗ −0.41†           −0.43∗∗ −0.61∗∗ −0.53†
+   real      −0.25∗∗ −0.25∗∗ −0.25∗∗           −0.40∗∗ −0.51∗∗ −0.46†           −0.44∗∗ −0.62∗∗ −0.58†
+   r∗ -gap −0.34∗∗ −0.33∗∗ −0.29∗∗             −0.48∗∗ −0.62∗∗ −0.58∗∗          −0.47∗∗ −0.69∗∗ −0.68∗∗
+  Two-year yield: minus 9–10-year forward rate
+   none        0.01    −0.04    −0.08     0.04 −0.04 −0.06                       0.05       −0.06   −0.07
+   nominal −0.05       −0.12 −0.14†      −0.07 −0.21 −0.25                      −0.06       −0.22   −0.31
+   real       −0.06 −0.14† −0.18†        −0.07 −0.21 −0.30†                     −0.06       −0.21   −0.37
+   r∗ -gap −0.22∗∗ −0.27∗∗ −0.30∗∗ −0.29∗∗ −0.48∗∗ −0.62∗∗                      −0.30†     −0.53∗∗ −0.81∗∗
+  Two-year yield: minus average over past 8 years
+   none       −0.08    −0.06    −0.08 −0.25† −0.27† −0.23† −0.37† −0.47† −0.45†
+                    †        †
+   nominal −0.13      −0.15     −0.16† −0.27† −0.38∗∗ −0.39† −0.31† −0.49∗∗ −0.56†
+                    †        †
+   real      −0.14    −0.15     −0.18† −0.28† −0.37∗∗ −0.42† −0.32† −0.49∗∗ −0.61†
+    ∗              ∗∗       ∗∗
+   r -gap −0.25       −0.24    −0.24∗∗ −0.46∗∗ −0.61∗∗ −0.63∗∗ −0.56∗∗ −0.83∗∗ −0.96∗∗
+See Table A9. The 8-year average and the Laubach–Williams trend in the two-year yield (two-year expected
+inflation plus r∗ ) are close until 2015 (averages 5.3 and 5.5 percent over 1994–2007; 2.3 and 2.5 over 2008–2015)
+and diverge after 2016 (1.4 and 3.6).
+
+
+
+
+                                                       39
+                                    Table A11: Other surprise measures, with the FCI
+
+                                                               12 months                       24 months                       36 months
+Shock                                       Step        3          6         12         3          6         12         3          6         12
+A. Unemployment gap (percentage points)
+Nakamura–Steinsson                         Nominal   0.44∗∗     0.36∗∗     0.28∗∗    0.76∗∗     0.75∗∗     0.63∗∗    0.76∗∗     0.83∗∗     0.77∗∗
+                                           r∗ -gap   0.40∗∗     0.37∗∗     0.36∗∗    0.47∗∗     0.48∗∗     0.50∗∗    0.35∗∗     0.40∗∗     0.43∗∗
+Nakamura–Steinsson, Greenbook part removed Nominal   0.43∗∗     0.34∗∗     0.27∗∗    0.75∗∗     0.73∗∗     0.62∗∗    0.75∗∗     0.81∗∗     0.76∗∗
+                                           r∗ -gap   0.39∗∗     0.36∗∗     0.34∗∗    0.46∗∗     0.47∗∗     0.48∗∗    0.34∗∗     0.39∗∗     0.42∗∗
+Bauer–Swanson, predictable part removed    Nominal   0.47∗∗     0.39∗∗     0.32∗∗    0.81∗∗     0.79∗∗     0.67∗∗    0.81∗∗     0.87∗∗     0.80∗∗
+                                           r∗ -gap   0.44∗∗     0.41∗∗     0.40∗∗    0.52∗∗     0.52∗∗     0.54∗∗    0.40∗∗     0.44∗∗     0.46∗∗
+Jarociński–Karadi pure policy              Nominal   0.48∗∗     0.40∗∗     0.33∗∗    0.82∗∗     0.81∗∗     0.69∗∗    0.83∗∗     0.89∗∗     0.81∗∗
+                                           r∗ -gap   0.45∗∗     0.42∗∗     0.41∗∗    0.53∗∗     0.54∗∗     0.55∗∗    0.41∗∗     0.45∗∗     0.47∗∗
+B. Core PCE price level (percent)
+Nakamura–Steinsson                         Nominal    −0.09      −0.11      −0.11     −0.24     −0.36†     −0.31†     −0.33     −0.54†     −0.49†
+                                           r∗ -gap   −0.34∗∗    −0.33∗∗    −0.33∗∗   −0.53∗∗    −0.68∗∗    −0.72∗∗   −0.57∗∗    −0.85∗∗    −0.97∗∗
+Nakamura–Steinsson, Greenbook part removed Nominal    −0.08      −0.11      −0.11     −0.24     −0.35†      −0.30     −0.33     −0.54†      −0.48
+                                           r∗ -gap   −0.34∗∗    −0.33∗∗    −0.33∗∗   −0.52∗∗    −0.67∗∗    −0.71∗∗   −0.56∗∗    −0.83∗∗    −0.95∗∗
+Bauer–Swanson, predictable part removed    Nominal    −0.09      −0.12      −0.12     −0.25     −0.37†      −0.32     −0.34     −0.55†      −0.51
+                                           r∗ -gap   −0.36∗∗    −0.35∗∗    −0.35∗∗   −0.55∗∗    −0.71∗∗    −0.76∗∗   −0.59∗∗    −0.88∗∗    −1.01∗∗
+Jarociński–Karadi pure policy              Nominal    −0.09      −0.12      −0.12     −0.25     −0.37†      −0.33     −0.34     −0.56†      −0.51
+                                           r∗ -gap   −0.36∗∗    −0.36∗∗    −0.35∗∗   −0.55∗∗    −0.72∗∗    −0.77∗∗   −0.60∗∗    −0.89∗∗    −1.03∗∗
+
+  See Table 4. Each surprise is scaled to raise the two-year yield 1 percentage point in the window. Step: the
+  nominal, or the r∗ -gap, two-year yield and FCI.
+
+
+
+
+                                                                 40
+   Table A12: Unemployment response with the monthly equations estimated on longer samples
+
+                                  12 months                   24 months              36 months
+      Step       FCI          3        6       12         3       6       12     3        6       12
+      Monthly equations estimated from 1973: Unemployment gap (percentage points)
+      Nominal none         0.02   0.03    0.09 0.11† 0.10†     0.16 0.16†     0.10              0.11
+                              ∗∗      ∗∗     ∗∗     ∗∗     ∗∗
+               included 0.09     0.20    0.29   0.13   0.16   0.24∗∗ 0.14∗∗ 0.09†               0.11†
+      Real     none        0.02   0.03    0.06   0.05   0.03   0.04   0.07    0.01              −0.01
+               included 0.07∗∗ 0.18∗∗ 0.24∗∗ 0.08† 0.10† 0.15∗∗ 0.08†         0.02              0.05
+      r∗ -gap  none       0.06† 0.10† 0.16∗∗ 0.10†      0.08 0.13† 0.11†      0.02              0.04
+                              ∗∗      ∗∗     ∗∗      †
+               included 0.11     0.23    0.27   0.10   0.12† 0.18∗∗ 0.06      0.02               0.08
+      Monthly equations estimated from 1977: Unemployment gap (percentage points)
+      Nominal none       0.13∗∗ 0.14∗∗ 0.08 0.31∗∗ 0.30∗∗ 0.17† 0.41∗∗ 0.35∗∗ 0.14
+               included 0.20∗∗ 0.27∗∗ 0.26∗∗ 0.31∗∗ 0.33∗∗ 0.29∗∗ 0.33∗∗ 0.28∗∗ 0.19∗∗
+      Real     none       0.07† 0.12∗∗ 0.09† 0.15∗∗ 0.15†       0.07 0.18∗∗ 0.12 −0.03
+                              ∗∗      ∗∗     ∗∗      ∗∗     ∗∗
+               included 0.14     0.24    0.24   0.18    0.19   0.18∗∗ 0.17∗∗ 0.11† 0.04
+       ∗                      ∗∗      ∗∗     ∗∗      ∗∗     ∗∗
+      r -gap   none      0.12    0.19    0.18   0.20    0.20   0.15† 0.23∗∗ 0.14†  0.01
+               included 0.19∗∗ 0.28∗∗ 0.28∗∗ 0.20∗∗ 0.20∗∗ 0.20∗∗ 0.15∗∗ 0.09†     0.07
+      Monthly equations estimated from 1982: Unemployment gap (percentage points)
+      Nominal none        0.12† −0.01 −0.06 0.40∗∗ 0.22†        0.09 0.58∗∗ 0.38∗∗ 0.19
+                              ∗∗      ∗∗      †      ∗∗     ∗∗
+               included 0.27     0.18    0.15 0.51      0.39   0.28∗∗ 0.56∗∗ 0.43∗∗ 0.28∗∗
+                              ∗∗                    ∗∗       †
+      Real     none      0.15     0.03 −0.03 0.35       0.19    0.05 0.46∗∗ 0.28†    0.07
+                              ∗∗      ∗∗     ∗∗     ∗∗      ∗∗
+               included 0.29     0.21    0.17   0.46    0.35   0.25∗∗ 0.44∗∗ 0.35∗∗ 0.21†
+      r∗ -gap  none      0.21∗∗ 0.13†     0.09 0.39∗∗ 0.26†     0.15 0.46∗∗ 0.28†    0.09
+                              ∗∗      ∗∗     ∗∗     ∗∗      ∗∗
+               included 0.29     0.25    0.21   0.38    0.29   0.25∗∗ 0.31∗∗ 0.23∗∗ 0.18∗∗
+      Monthly equations estimated from 1973, no trend: Unemployment gap (percentage points)
+      Nominal none        −0.00 0.03 0.12† 0.08†        0.07 0.18† 0.14∗∗ 0.09 0.13†
+                               †     ∗∗     ∗∗
+               included 0.05 0.19       0.32     0.07 0.14∗∗ 0.27∗∗ 0.08†
+                                                     †
+                                                                              0.08 0.15†
+                                             †       †                    †
+      Real     none        0.02   0.05 0.10      0.07   0.05   0.08 0.10      0.03    0.02
+               included 0.07∗∗ 0.20∗∗ 0.28∗∗ 0.07† 0.12∗∗ 0.20∗∗ 0.07†        0.05 0.11†
+      r∗ -gap  none       0.06† 0.11∗∗ 0.18∗∗ 0.11† 0.10† 0.14† 0.13†         0.04    0.04
+               included 0.13∗∗ 0.26∗∗ 0.31∗∗ 0.13∗∗ 0.18∗∗ 0.26∗∗ 0.11† 0.10† 0.20∗∗
+As Table 4, but the monthly equations are fitted from the year shown; surprises (1996 on), announcement
+windows and the daily model (1990 on) are unchanged. Before the daily data begin, monthly averages are used.
+FCI: the companion note’s monthly index for the step. Two-year yield: FRED before 1990, and before June
+1976 the Gürkaynak–Sack–Wright fitted two-year zero-coupon yield, shifted by its average gap to the FRED
+yield over 1976–1989 (about 0.25 percentage point). Expected inflation: Cleveland Fed from 1982; before 1982,
+the companion note’s one-year expectations (Livingston survey based), which is a splice. The 1977 start avoids
+the yield splice, and the 1982 start avoids both. The last panel drops the time trend.
+
+
+
+
+                                                     41
+       Table A13: Price-level response with the monthly equations estimated on longer samples
+
+                           12 months                    24 months                     36 months
+Step     FCI           3        6        12        3        6        12        3          6         12
+Monthly equations estimated from 1973: Core PCE price level (percent)
+Nominal none         0.09†     0.09†    0.08    0.15†     0.06      0.04    0.19†       0.00       −0.06
+                         †                           †
+         included 0.08         0.07     0.07    0.13      0.03     −0.01    0.15†       −0.03      −0.09
+                           †         †      ∗∗         †       ∗∗       ∗∗
+Real     none       −0.05     −0.06 −0.13      −0.10 −0.17        −0.27    −0.14†      −0.26∗∗    −0.35∗∗
+                                     †      ∗∗         †       ∗∗       ∗∗
+         included −0.04 −0.09 −0.15            −0.09 −0.21        −0.32    −0.13†      −0.30∗∗    −0.40∗∗
+ ∗                         †       ∗∗       ∗∗         †       ∗∗       ∗∗
+r -gap   none       −0.08 −0.10        −0.15   −0.16 −0.25        −0.35    −0.21†      −0.36∗∗    −0.48∗∗
+                           †       ∗∗       ∗∗       ∗∗        ∗∗       ∗∗
+         included −0.09 −0.13          −0.18   −0.18     −0.31    −0.40    −0.26∗∗     −0.44∗∗    −0.53∗∗
+Monthly equations estimated from 1977: Core PCE price level (percent)
+Nominal none          0.02     0.02    −0.01   0.02      −0.07     −0.16     0.01       −0.20     −0.37†
+         included     0.01    −0.00    −0.06  −0.00      −0.10 −0.23†        −0.00      −0.20     −0.42∗∗
+Real     none       −0.09† −0.09∗∗ −0.15∗∗ −0.18∗∗ −0.24∗∗ −0.37∗∗          −0.24∗∗    −0.38∗∗    −0.56∗∗
+         included −0.09∗∗ −0.11∗∗ −0.19∗∗ −0.18∗∗ −0.26∗∗ −0.43∗∗           −0.24∗∗    −0.38∗∗    −0.62∗∗
+ ∗
+r -gap   none      −0.13∗∗ −0.13∗∗ −0.19∗∗ −0.24∗∗ −0.32∗∗ −0.46∗∗          −0.31∗∗    −0.47∗∗    −0.70∗∗
+         included −0.14∗∗ −0.15∗∗ −0.24∗∗ −0.26∗∗ −0.35∗∗ −0.54∗∗           −0.34∗∗    −0.52∗∗    −0.81∗∗
+Monthly equations estimated from 1982: Core PCE price level (percent)
+Nominal none         −0.00     0.02    −0.01  −0.02      −0.06     −0.08  −0.04  −0.14  −0.18
+         included −0.02       −0.02    −0.05  −0.05      −0.11 −0.20†     −0.07  −0.19 −0.33†
+Real     none       −0.07†    −0.05 −0.08†    −0.12 −0.15†         −0.16  −0.16 −0.23†  −0.24
+                          †         †       †       †          †       ∗∗
+         included −0.08       −0.08   −0.12   −0.14     −0.20 −0.28       −0.17† −0.28† −0.40†
+r∗ -gap  none      −0.15∗∗ −0.14∗∗ −0.16∗∗ −0.25∗∗ −0.32∗∗ −0.39∗∗ −0.32∗∗ −0.45∗∗ −0.59∗∗
+         included −0.17∗∗ −0.17∗∗ −0.22∗∗ −0.28∗∗ −0.39∗∗ −0.51∗∗ −0.32∗∗ −0.52∗∗ −0.74∗∗
+Monthly equations estimated from 1973, no trend: Core PCE price level (percent)
+Nominal none         0.16∗∗    0.10†   −0.01    0.44∗∗   0.20†     −0.09     0.72∗∗     0.29       −0.16
+                         ∗∗                         ∗∗
+         included 0.13         0.06    −0.01    0.29     0.05      −0.18     0.40∗∗     0.00      −0.36†
+                                     †      ∗∗                 †        ∗∗
+Real     none        −0.03 −0.10 −0.24           0.01   −0.21 −0.51           0.05     −0.32†     −0.72∗∗
+         included −0.03 −0.14† −0.26∗∗ −0.06 −0.32∗∗ −0.57∗∗ −0.10                     −0.47∗∗    −0.81∗∗
+r∗ -gap  none       −0.11† −0.17∗∗ −0.29∗∗ −0.20 −0.39∗∗ −0.64∗∗ −0.27                 −0.62∗∗    −0.96∗∗
+         included −0.10† −0.20∗∗ −0.32∗∗ −0.23† −0.49∗∗ −0.75∗∗ −0.39†                 −0.78∗∗    −1.12∗∗
+ See Table A12.
+
+
+
+
+                                                  42
+                         Table A14: Main steps with a fuller measure of uncertainty
+
+                                12 months                       24 months                      36 months
+Step        FCI            3         6         12         3         6         12        3          6        12
+A. Unemployment gap (percentage points)
+Nominal none       0.07    −0.13† −0.27∗∗              0.36†      0.10      −0.19†    0.53∗∗     0.29      −0.00
+                       ∗∗
+        included 0.44       0.36∗∗    0.28∗∗           0.76∗∗    0.75∗∗     0.63∗∗    0.76∗∗    0.83∗∗     0.77∗∗
+                        †
+Real    none       0.14     −0.04 −0.20∗∗              0.33∗∗     0.12      −0.13†    0.42∗∗     0.23      −0.01
+                       ∗∗
+        included 0.44       0.38∗∗    0.29∗∗           0.65∗∗    0.65∗∗     0.59∗∗    0.57∗∗    0.64∗∗     0.64∗∗
+ ∗                     ∗∗
+r -gap  none      0.19       0.10     −0.03            0.34∗∗    0.21†       0.04     0.38∗∗    0.25†       0.07
+        included 0.40∗∗     0.37∗∗    0.36∗∗           0.47∗∗    0.48∗∗     0.50∗∗    0.35∗∗    0.40∗∗     0.43∗∗
+B. Core PCE price level (percent)
+Nominal none        −0.03     −0.01   −0.02   −0.16  −0.16  −0.07   −0.26   −0.34   −0.18
+         included −0.09       −0.11   −0.11   −0.24 −0.36† −0.31†   −0.33 −0.54† −0.49†
+Real     none       −0.14†    −0.08   −0.10 −0.25† −0.23†   −0.16 −0.33† −0.37†     −0.26
+                          †         †       †      †      †
+         included −0.17       −0.17   −0.18   −0.30  −0.40  −0.36† −0.35† −0.54† −0.49†
+r∗ -gap  none      −0.27∗∗ −0.22∗∗ −0.23∗∗ −0.45∗∗ −0.51∗∗ −0.52∗∗ −0.55∗∗ −0.70∗∗ −0.80∗∗
+         included −0.34∗∗ −0.33∗∗ −0.33∗∗ −0.53∗∗ −0.68∗∗ −0.72∗∗ −0.57∗∗ −0.85∗∗ −0.97∗∗
+    As Table 4, with 1,000 draws. Each draw resamples the announcements, re-estimates the daily model on
+    resampled 66-day blocks, and rebuilds and re-estimates the monthly data with randomly sign-flipped errors. r∗
+    and the FCI weights are held fixed.
+
+
+B      Construction and estimation details
+Events. We use the 252 FOMC announcements from January 1996 to July 2026 with all the
+window measures available in the U.S. Monetary Policy Event-Study Database (Acosta et al.,
+2025). As in the companion note, we leave out unscheduled announcements with no change in the
+policy rate, and March–April 2020. The one later announcement in the database, September 2026,
+is left out because too few later days are available. The DXY index used in the window covers
+fewer currencies than the broad dollar used in the daily and monthly index, which we treat as a
+measurement difference.
+    From monthly to daily. Expected inflation and r∗ are not available daily, and they move
+slowly. We take the monthly gap between Rtv in equation (8) and yt2 , interpolate it linearly between
+the middles of adjacent months, and add it to the daily yield. The daily index is
+
+                         Fτv = wB yτ10 + wQ 100 ln CAPEτ + wD 100 ln DOLτ + ovτ ,                              (19)
+
+where DOLτ is the daily nominal broad dollar. The offset ovτ is the monthly difference between
+the index in equation (4) and the average of the first three terms, interpolated in the same way.
+It also absorbs the difference between the real and the nominal dollar. The monthly averages of
+the daily series are very close to the monthly measures: the root-mean-square difference is at most
+0.02 unit for the FCI and 0.04 percentage point for the two-year yield. The offsets change little
+from day to day, so day-to-day moves in the index come from market prices. Table A15 shows the
+measures used at each frequency. The daily calendar has every weekday; missing values, such as
+on holidays, are filled from the previous observation for up to three days. Each daily equation has
+13 coefficients with the FCI; each monthly equation has 3 + 4L.
+
+
+
+
+                                                         43
+                      Table A15: Measures of stocks and the dollar at each frequency
+
+            Frequency    Stocks                                      Dollar
+            Window       S&P 500                                     DXY index
+            Daily        CAPE                                        Nominal broad dollar, plus offset
+            Monthly      CAPE, or earnings-yield gap to r∗           Real broad dollar
+
+
+   Tracing the effect of a surprise. The response is computed recursively, as a deviation from
+a path with no surprise. Let the announcement occur on weekday d0 of the announcement month,
+and let h = 0, 1, . . . , 36 count months from then. Tildes denote responses.
+    1. In each month, unemployment and inflation come first: m̃0 = 0, and for h ≥ 1,
+                                                  L
+                                                  X                  L
+                                                                     X
+                                          m̃h =         Al m̃h−l +         Gl x̃M
+                                                                                h−l ,                    (20)
+                                                  l=1                l=1
+
+      with terms dated before the announcement month equal to zero, and x̃M
+                                                                          h the response of the
+      monthly average of x.
+    2. The days of the month follow. Before day d0 , x̃τ = 0. On day d0 , x̃τ = b from equation (13).
+                                  (k)
+       On every later day, with x̃τ −1 the average of the responses over the k days through τ − 1,
+                                          X                (k)
+                              x̃τ =                   Φk x̃τ −1 + Γ0 m̃h(τ ) + Γ1 m̃h(τ )−1 ,            (21)
+                                      k∈{1,5,22,66}
+
+      where h(τ ) is the month of day τ , counted from the announcement month.
+    3. The monthly average x̃M
+                             h then enters equation (20) for later months.
+Months after the announcement month have 21 weekdays. To avoid computing a path for every
+date, we form six groups of announcement dates by the weekday of the month, in blocks of four
+days, and compute the path at each group’s average day and month length. With ωg the share of
+                                                    P        (g)
+announcements in group g, the reported response is g ωg m̃h . Because the model is linear, these
+responses do not depend on the constant or the trend.
+    Bootstrap. In each of 200 draws, we resample the 252 announcements with replacement, which
+gives new values b∗ in equation (13) and new group shares ωg∗ . We also resample the residuals ζ̂t
+of equation (15) jointly across equations, add them to the fitted values, holding the regressors
+fixed, and re-estimate the monthly block. The daily block is held at its estimate. We compute
+the response for each draw and report percentile intervals. The fuller version in Table A14 also re-
+estimates the daily model and rebuilds the monthly data from the model. The sets for the Phillips
+multiplier in Table 5 use the same 200 draws, with the announcement draws shared across steps.
+
+
+C      Data sources
+Table A16 lists the data. Series from FRED are identified by their mnemonics. Quarterly series
+are placed in the middle month of the quarter and interpolated linearly.
+
+
+
+
+                                                          44
+                                       Table A16: Data sources
+
+ Series                                  Frequency      Source
+ Unemployment rate                       Monthly        FRED UNRATE
+ Industrial production;   commodity      Monthly        FRED INDPRO; IMF, FRED PALLFNFIND-
+ prices                                                 EXM
+ VIX                                     Daily          FRED VIXCLS
+ Natural rate of unemployment            Quarterly      CBO, FRED NROU
+ Core PCE price index                    Monthly        FRED PCEPILFE
+ Two-year Treasury yield                 Daily          FRED DGS2
+ 10-year Treasury yield                  Daily,         FRED DGS10, GS10
+                                         monthly
+ Expected inflation, 2 and 10 years      Monthly        Cleveland Fed, FRED EXPINF2YR, EX-
+                                                        PINF10YR
+ r∗ , Laubach–Williams                   Quarterly      New York Fed, one-sided estimates
+ CAPE                                    Monthly        Shiller, spliced over 1990–92 to the monthly av-
+                                                        erage of daily CAPE
+ Daily CAPE                              Daily          S&P 500 (FRED SP500; before October 2016,
+                                                        Dow Jones S&P 500 history, level-matched) over
+                                                        Shiller’s 10-year earnings
+ Real broad dollar                       Monthly        FRED RTWEXBGS, spliced to TWEXBPA in
+                                                        2006
+ Nominal broad dollar                    Daily          FRED DTWEXBGS, earlier DTWEXB,
+                                                        TWEXBMTH
+ Futures, yields, S&P 500 and DXY in     Event          U.S. Monetary Policy Event-Study Database,
+ the window                                             “monetary events” (Acosta et al., 2025)
+
+
+
+D     Relaxing the key assumptions
+Section 2.3 describes two restrictions specific to this paper. The surprise reaches unemployment
+and prices only through the two-year yield and the FCI, and the three parts of the FCI act in
+proportion to their weights. This appendix relaxes each in turn, and then adds a monthly credit
+measure to the monthly block. Table A17 repeats the main steps for the first two exercises. In
+each exercise the daily model and the monthly equations are extended with the new variables.
+Everything else is as in the baseline, including the quadratic trend and 200 draws.
+    Adding a credit spread. The daily model and the monthly equations now include the Baa-
+10-year spread: Moody’s Baa corporate yield minus the 10-year Treasury yield, available daily from
+1986. It is a rough measure of credit conditions. Unlike the other variables in the model, it can
+respond to the surprise on impact. It has no 30-minute series, so its impact is the change over the
+announcement day regressed on the surprise, scaled to a 1 percentage point window move in the
+two-year yield. The impact is −0.25 percentage point. A tightening narrows this spread on the
+day, because corporate yields rise less than the 10-year Treasury yield. This is not the widening
+that a credit channel would suggest. After the announcement the spread moves little: its monthly
+average response stays between −0.16 and +0.01 percentage point over two years.
+    The effects of the surprise barely change (Table A17). At the r∗ step, unemployment rises 0.28
+to 0.35 percentage point after 12 months, compared with 0.36 to 0.40 in the baseline, and the price
+level falls 0.48 to 0.65 percent after 24 months, compared with 0.53 to 0.72. All are significant at
+the 90 percent level for every lag length. The nominal and real steps are also close to the baseline.
+So leaving out this spread does not drive the results. The test is limited. The spread is crude,
+
+
+                                                   45
+because it includes expected default, and the excess bond premium that purges it is available only
+monthly. A better measure may behave differently.
+     Entering the parts of the FCI separately. The FCI is replaced by its three weighted parts:
+the 10-year yield, equity valuation (CAPE) and the real dollar, each in the same step (nominal,
+real or r∗ -gap) as the FCI. The parts sum to the FCI. Each enters the daily and monthly equations
+with its own coefficients, so their effects on unemployment and prices are no longer tied to the
+weights. Their impacts per 1 percentage point move in the two-year yield are 0.32, 0.39 and 0.27
+index units (together 0.99, as for the FCI).
+     Signs and broad size agree with the baseline (Table A17), but precision falls. At the r∗ step,
+unemployment rises 0.48, 0.33 and 0.18 percentage point after 12 months with 3, 6 and 12 lags. The
+first two are significant at the 90 percent level; the third is significant only at 68 percent. The price
+level falls 0.30 percent after 12 months with 12 lags and 0.50 percent after 24 months, significant
+at the 90 percent level; with 3 and 6 lags the 24-month falls are 0.24 and 0.41, significant only at
+the 68 percent level at 6 lags. At the nominal and real steps, unemployment is smaller and less
+precise at long lags, and prices barely move. The loss of precision is expected. The three parts add
+2L coefficients to each equation, for 382 months of data.
+     Table A19 tests the restriction directly. The FCI model is nested in the model with the parts,
+so an F test applies. It does not reject for unemployment at any step (p-values 0.10 to 0.67). For
+inflation it is rejected at the 5 percent level at the nominal step with every lag length and at the real
+step with 12 lags. At the r∗ step it is not rejected at 5 percent (p-values 0.08 to 0.24). The tests are
+plain F tests with many restrictions and no correction for serial correlation, so they are indicative.
+Taken together, the FCI weights, which come from the response to policy news, summarize how
+unemployment responds well. For inflation they are a worse summary when rates are not measured
+relative to r∗ , which fits the main result that the r∗ step matters most for prices.
+     Adding the monthly excess bond premium. The excess bond premium (Gilchrist and
+Zakrajšek, 2012) is the part of corporate bond spreads not explained by default risk. It is monthly,
+so it enters the monthly block as a third variable, treated like unemployment and inflation. It
+depends on its own lags and on lagged monthly averages of the two-year yield and the FCI. Within
+a month, it is set before the financial markets move, so the daily model responds to its current
+and lagged values. Its response to the surprise is not set to anything: as for unemployment and
+inflation, it is zero in the announcement window and then evolves with the model. Table A18 gives
+the results.
+     Without the FCI, the premium removes the wrong-signed unemployment response. At the
+nominal step, unemployment at 12 months is −0.27 with 12 lags in the baseline and +0.17 with
+the premium; at the real step it goes from −0.20 to +0.06. With the FCI, adding the premium
+changes little. At the r∗ step, unemployment at 12 months is 0.39 to 0.41, compared with 0.36 to
+0.40, and the price level at 24 months falls 0.52 to 0.71 percent, compared with 0.53 to 0.72. The
+prices result at the r∗ step without the FCI is also unchanged. The premium itself barely responds
+to the surprise: its response is within 0.13 percentage point at 12 months in every case, and is not
+significant with the FCI. So the FCI and the premium are substitutes for fixing the unemployment
+puzzle, but the FCI does not depend on the premium. Another reading is that the premium absorbs
+policy-driven moves in risk appetite, as in Bauer et al. (2026). On that reading, the FCI and the
+premium work in a similar way: both keep moves in risk premia from being attributed to interest
+rates.
+
+
+
+
+                                                   46
+Table A17: Relaxing the key assumptions: credit spread added, and the FCI replaced by its three parts
+
+                                               12 months                     24 months                     36 months
+Step     Financial block                3          6        12        3          6        12        3          6        12
+A. Unemployment gap (percentage points)
+Nominal FCI (baseline)                0.44∗∗    0.36∗∗     0.28∗∗   0.76∗∗    0.75∗∗     0.63∗∗   0.76∗∗    0.83∗∗     0.77∗∗
+        FCI and Baa spread            0.36∗∗    0.32∗∗     0.25∗∗   0.55∗∗    0.59∗∗     0.62∗∗   0.50∗∗    0.58∗∗     0.68∗∗
+        Components instead of FCI 0.37∗∗        0.24†       0.08    0.51∗∗    0.43∗∗     0.21†    0.45∗∗    0.42∗∗     0.31∗∗
+Real    FCI (baseline)                0.44∗∗    0.38∗∗     0.29∗∗   0.65∗∗    0.65∗∗     0.59∗∗   0.57∗∗    0.64∗∗     0.64∗∗
+        FCI and Baa spread            0.35∗∗    0.30∗∗     0.21†    0.46∗∗    0.48∗∗     0.51∗∗   0.35∗∗    0.41∗∗     0.49∗∗
+        Components instead of FCI 0.37∗∗        0.25∗∗      0.07    0.44∗∗    0.37∗∗      0.19    0.37∗∗    0.34∗∗     0.27†
+r∗ -gap FCI (baseline)                0.40∗∗    0.37∗∗     0.36∗∗   0.47∗∗    0.48∗∗     0.50∗∗   0.35∗∗    0.40∗∗     0.43∗∗
+        FCI and Baa spread            0.35∗∗    0.34∗∗     0.28∗∗   0.36∗∗    0.37∗∗     0.41∗∗   0.21∗∗    0.24∗∗     0.28∗∗
+        Components instead of FCI 0.48∗∗        0.33∗∗     0.18†    0.49∗∗    0.46∗∗     0.31†    0.28∗∗    0.33∗∗     0.29†
+B. Core PCE price level (percent)
+Nominal FCI (baseline)              −0.09   −0.11   −0.11   −0.24 −0.36† −0.31†     −0.33 −0.54† −0.49†
+         FCI and Baa spread         −0.10   −0.10   −0.13 −0.24† −0.38† −0.39† −0.31† −0.59† −0.66†
+         Components instead of FCI  0.01    −0.04   −0.11   0.00    −0.06   −0.10   −0.04   −0.11   −0.17
+Real     FCI (baseline)            −0.17† −0.17† −0.18† −0.30† −0.40† −0.36† −0.35† −0.54† −0.49†
+         FCI and Baa spread        −0.14†   −0.12   −0.13 −0.26† −0.35† −0.31† −0.32† −0.51† −0.47†
+         Components instead of FCI −0.07    −0.07 −0.13†    −0.08   −0.09   −0.09   −0.13   −0.14   −0.11
+r∗ -gap  FCI (baseline)            −0.34∗∗ −0.33∗∗ −0.33∗∗ −0.53∗∗ −0.68∗∗ −0.72∗∗ −0.57∗∗ −0.85∗∗ −0.97∗∗
+         FCI and Baa spread        −0.31∗∗ −0.28∗∗ −0.28∗∗ −0.48∗∗ −0.61∗∗ −0.65∗∗ −0.54∗∗ −0.79∗∗ −0.89∗∗
+         Components instead of FCI −0.22† −0.25† −0.30∗∗ −0.24 −0.41† −0.50∗∗ −0.23 −0.44† −0.59∗∗
+  See Table 4. “FCI and Baa spread”: the daily Baa-10-year spread is added and responds on impact (event-day
+  change). “Components instead of FCI”: the 10-year yield, equity valuation and real dollar enter separately,
+  each weighted as in the FCI and in the same step.
+
+
+
+
+                                                            47
+                     Table A18: Excess bond premium added to the monthly block
+
+                                        12 months                         24 months                         36 months
+Step     Model                     3        6         12           3           6         12          3          6         12
+A. Unemployment gap (percentage points)
+Nominal No FCI                0.07     −0.13        −0.27∗∗     0.36†        0.10      −0.19       0.53∗∗     0.29      −0.00
+        No FCI, with EBP 0.30∗∗         0.22†        0.17†      0.62∗∗      0.52∗∗     0.48∗∗      0.73∗∗    0.60∗∗     0.75∗∗
+                                 ∗∗
+        FCI                  0.44     0.36∗∗         0.28∗∗     0.76∗∗      0.75∗∗     0.63∗∗      0.76∗∗    0.83∗∗     0.77∗∗
+        FCI, with EBP        0.45∗∗   0.41∗∗         0.37∗∗     0.75∗∗      0.70∗∗     0.74∗∗      0.81∗∗    0.73∗∗     0.89∗∗
+Real    No FCI               0.14†     −0.04        −0.20∗∗     0.33∗∗       0.12      −0.13       0.42∗∗     0.23      −0.01
+        No FCI, with EBP 0.20∗∗         0.13†         0.06      0.36∗∗      0.26†       0.22       0.41†     0.29†      0.42†
+                                 ∗∗
+        FCI                  0.44     0.38∗∗         0.29∗∗     0.65∗∗      0.65∗∗     0.59∗∗      0.57∗∗    0.64∗∗     0.64∗∗
+        FCI, with EBP        0.35∗∗   0.29∗∗         0.22†      0.48∗∗      0.41†      0.46∗∗      0.44†     0.38†      0.55∗∗
+r∗ -gap No FCI               0.19∗∗     0.10         −0.03      0.34∗∗       0.21       0.04       0.38∗∗    0.25†       0.07
+        No FCI, with EBP 0.25∗∗       0.21∗∗         0.17†      0.35∗∗      0.28∗∗     0.31∗∗      0.31†      0.20      0.38∗∗
+        FCI                  0.40∗∗   0.37∗∗         0.36∗∗     0.47∗∗      0.48∗∗     0.50∗∗      0.35∗∗    0.40∗∗     0.43∗∗
+        FCI, with EBP        0.39∗∗   0.41∗∗         0.39∗∗     0.46∗∗      0.46∗∗     0.60∗∗      0.38∗∗    0.35∗∗     0.51∗∗
+B. Core PCE price level (percent)
+Nominal No FCI                 −0.03      −0.01      −0.02       −0.16       −0.16      −0.07    −0.26†       −0.34      −0.18
+         No FCI, with EBP −0.08           −0.07      −0.04      −0.22†       −0.23      −0.09    −0.32†       −0.37      −0.19
+         FCI                   −0.09      −0.11      −0.11       −0.24      −0.36†     −0.31†     −0.33      −0.54†     −0.49†
+         FCI, with EBP         −0.08      −0.10     −0.14†       −0.22       −0.33     −0.36†     −0.30      −0.51†     −0.62†
+Real     No FCI               −0.14†      −0.08      −0.10      −0.25†       −0.23      −0.16    −0.33†      −0.37†      −0.26
+         No FCI, with EBP −0.16∗∗         −0.08      −0.07      −0.26∗∗     −0.24†      −0.13    −0.32†      −0.38†      −0.22
+         FCI                  −0.17†     −0.17†     −0.18†      −0.30†      −0.40†     −0.36†    −0.35†      −0.54†     −0.49†
+         FCI, with EBP        −0.14†      −0.10     −0.14†      −0.24†      −0.31†     −0.31†    −0.29†      −0.47†     −0.49†
+ ∗
+r -gap   No FCI               −0.27∗∗    −0.22∗∗    −0.23∗∗     −0.45∗∗     −0.51∗∗    −0.52∗∗   −0.55∗∗     −0.70∗∗    −0.80∗∗
+         No FCI, with EBP −0.28∗∗        −0.21∗∗    −0.24∗∗     −0.45∗∗     −0.49∗∗    −0.53∗∗   −0.52∗∗     −0.67∗∗    −0.80∗∗
+         FCI                  −0.34∗∗    −0.33∗∗    −0.33∗∗     −0.53∗∗     −0.68∗∗    −0.72∗∗   −0.57∗∗     −0.85∗∗    −0.97∗∗
+         FCI, with EBP        −0.34∗∗    −0.29∗∗    −0.32∗∗     −0.52∗∗     −0.61∗∗    −0.71∗∗   −0.58∗∗     −0.77∗∗    −0.97∗∗
+C. Excess bond premium (percentage points)
+Nominal No FCI                0.13†     0.12†        0.07       0.07         0.03      0.19∗∗    −0.02        −0.03     0.10†
+          FCI                 0.06      0.04         0.05       0.01        −0.04       0.05     −0.01        −0.03     0.00
+Real      No FCI              0.03      0.00        −0.08†      −0.00       −0.02      0.10†     −0.04†       −0.05     0.08
+          FCI                 −0.02    −0.06        −0.07       −0.05       −0.07       0.00     −0.03        −0.02     0.01
+r∗ -gap   No FCI              0.02     −0.00        −0.10       −0.04       −0.07†      0.06     −0.07†      −0.08∗∗    0.02
+          FCI                 0.02     −0.00         0.04       −0.04       −0.07      −0.00     −0.02        −0.02     −0.00
+ See Table 4. “With EBP”: the monthly excess bond premium is a third monthly variable. Panel C is its
+ response to the surprise.
+
+
+                    Table A19: Tests of the proportional-weights restriction: p-values
+
+                         Step           Equation                   3 lags     6 lags     12 lags
+                         Nominal        Unemployment gap           0.58        0.54       0.32
+                                        Core PCE inflation         0.04        0.02       0.03
+                         Real           Unemployment gap           0.50        0.67       0.33
+                                        Core PCE inflation         0.12        0.06       0.01
+                         r∗ -gap        Unemployment gap           0.10        0.17       0.17
+                                        Core PCE inflation         0.12        0.24       0.08
+ F tests that the three parts of the FCI have equal coefficients in each monthly equation, with the same sample
+ and trend as the baseline. Number of restrictions: 2L.
+
+
+
+
+                                                           48
+

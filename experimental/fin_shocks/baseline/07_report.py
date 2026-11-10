@@ -129,9 +129,42 @@ def write_numbers():
         e = pth(f, fci); d("bl:eom:" + fk, f"{e[(e.kind == 'fin_eom') & (e.h == 0)].r.iloc[0]:.2f}")
     u = pth("nom", 0); u = u[(u.kind == "macro") & (u["var"] == "u")]; i = u.r.idxmin(); d("bl:path:nom:no:u:min", num(u.r[i])); d("bl:path:nom:no:u:minh", str(int(u.h[i])))
     u = pth("rstar", "rstar"); u = u[(u.kind == "macro") & (u["var"] == "u")]; i = u.r.idxmax(); d("bl:path:rstar:yes:u:max", num(u.r[i])); d("bl:path:rstar:yes:u:maxh", str(int(u.h[i])))
-    LIT = pd.read_csv(DATA / "literature_irfs.csv"); tag = {"Bauer-Swanson benchmark": "bsb", "Bauer-Swanson unadjusted": "bsu"}; vm = {"unemployment rate (pp)": "u", "CPI (%)": "P"}
-    for _, r in LIT.iterrows():
-        k = f"lit:{tag[r.study]}:{vm[r.variable]}:{int(r.horizon_months)}"; d("bl:" + k, num(r.response_per_1pp)); d("blabs:" + k, f"{abs(r.response_per_1pp):.2f}")
+    LS = pd.read_csv(RESULTS / "lit_style.csv"); LSI = pd.read_csv(RESULTS / "lit_style_info.csv").set_index("case")
+    for key, case in (("c2y96", "chol_2y_1996"), ("c2y84", "chol_2y_1984"), ("cffr", "chol_ffr_1984_2007"), ("c2ycom", "chol_2y_1996_com"), ("cffrcom", "chol_ffr_1984_2007_com"), ("prox", "proxy_2y_1996")):
+        for v in ("u", "P"):
+            for h in (0, 12, 24, 36):
+                r = LS[(LS.case == case) & (LS["var"] == v) & (LS.h == h)].iloc[0]; k = f"st:{key}:{v}:{h}"
+                d("bl:" + k, num(r.point)); d("blabs:" + k, f"{abs(r.point):.2f}"); d("bllo:" + k, num(r.lo)); d("blhi:" + k, num(r.hi)); d("blsig:" + k, "significant" if r.lo * r.hi > 0 else "not significant")
+        d("bl:st:" + key + ":nobs", str(int(LSI.nobs[case])))
+    d("bl:st:prox:F", f"{LSI.F['proxy_2y_1996']:.1f}")
+    # monthly VAR with the end-of-month 2-year yield and FCI (12 lags)
+    for f in ("nom", "real", "rstar"):
+        for fci, fk in ((0, "no"), (f, "yes")):
+            m = MON[CS.monthly_id(dict(step=f, fci=fci, start="1996-01"))]; m = m[m.lags == MAIN_LAGS]; d(f"bl:mo:{f}:{fk}:F", f"{m.F.iloc[0]:.1f}")
+            if fci: d(f"bl:mo:{f}:{fk}:impf", num(m.impact_fci.iloc[0])); d(f"bl:mo:{f}:{fk}:modf", num(m.eom_fci.iloc[0]))
+            for ident in ("P1", "WE"):
+                for v in ("u", "P"):
+                    for h in (12, 24, 36):
+                        r = m[(m.ident == ident) & (m["var"] == v) & (m.h == h)].iloc[0]; k = f"mo:{f}:{fk}:{ident}:{v}:{h}"
+                        d("bl:" + k, num(r.r)); d("blabs:" + k, f"{abs(r.r):.2f}"); d("bllo:" + k, "$-\\infty$" if np.isinf(r.lo) else num(r.lo)); d("blhi:" + k, "$+\\infty$" if np.isinf(r.hi) else num(r.hi))
+                        d("blsig:" + k, "unbounded" if r.unbounded else ("significant" if r.lo * r.hi > 0 else "not significant"))
+    # simulation (r*-gap model as the true process)
+    for _, r in SIM.iterrows():
+        k = f"sim:{r.system}:{r.quantity}"; f = "{:.1f}" if r.quantity == "F" else "{:.2f}"; sg = lambda x: ("$-$" if x < 0 and f.format(abs(x)) != "0.00" else "") + f.format(abs(x))
+        d("bl:" + k + ":data", sg(r.data)); d("bl:" + k + ":med", sg(r.sim_median)); d("bl:" + k + ":lo", sg(r.sim_p05)); d("bl:" + k + ":hi", sg(r.sim_p95)); d("bl:" + k + ":share", f"{100 * r.share_le_data:.0f}")
+        if pd.notna(r.truth): d("bl:" + k + ":truth", sg(r.truth))
+    # trade-off (Phillips multiplier)
+    TT = pd.read_csv(RESULTS / "tradeoff.csv"); TT["fci"] = TT.fci.astype(str); TD = pd.read_csv(RESULTS / "tradeoff_diff.csv")
+    for f in ("nom", "real", "rstar"):
+        for fci, fk in ((0, "no"), (f, "yes")):
+            t = TT[(TT.form == f) & (TT.fci == str(fci)) & (TT.macro == "u,pi") & (TT.start == "1996-01") & TT.end.isna() & (TT.t2020 == "in") & (TT.trend == "none") & (TT.lags == MAIN_LAGS)]
+            for H in (24, 36):
+                r = t[t.H == H].iloc[0]; k = f"tr:{f}:{fk}:{H}"
+                d("bl:" + k, num(r.kappa)); d("blabs:" + k, f"{abs(r.kappa):.2f}"); d("bl:" + k + ":sac", f"{abs(1 / r.kappa):.1f}")
+                d("bllo:" + k, "$-\\infty$" if np.isinf(r.k_lo) else num(r.k_lo)); d("blhi:" + k, "$+\\infty$" if np.isinf(r.k_hi) else num(r.k_hi))
+                d("blsig:" + k, "bounded away from zero" if (not np.isinf(r.k_lo) and not np.isinf(r.k_hi) and r.k_lo * r.k_hi > 0) or (np.isinf(r.k_lo) != np.isinf(r.k_hi) and (r.k_hi < 0 if np.isinf(r.k_lo) else r.k_lo > 0)) else "includes zero")
+    from lib.daily import window_impact, event_index
+    d("bl:bF", f"{window_impact(event_index())[1]:.2f}")
     (REPORT / "numbers.tex").write_text("\n".join(L) + "\n")
 write_numbers()
 
@@ -151,21 +184,25 @@ def check_claims():
         chk(f"{f}: with FCI, price level falls at 12, 24, 36 m, significantly at 24 and 36", all(est(f, "yes", "P", h) < 0 for h in (12, 24, 36)) and sig(f, "yes", "P", 24) and sig(f, "yes", "P", 36))
     chk("unemployment significant at 24 m with FCI only at the r*-gap step", sig("rstar", "yes", "u", 24) and not sig("nom", "yes", "u", 24) and not sig("real", "yes", "u", 24))
     chk("r*-gap with FCI has the largest price fall at 24 m", est("rstar", "yes", "P", 24) < min(est("nom", "yes", "P", 24), est("real", "yes", "P", 24)))
-    chk("r*-gap with FCI: unemployment (12, 24 m) and price (24 m) responses larger than the Bauer-Swanson values quoted (+0.19, +0.17; -0.48)", est("rstar", "yes", "u", 12) > 0.19 and est("rstar", "yes", "u", 24) > 0.17 and est("rstar", "yes", "P", 24) < -0.48)
-    LIT = pd.read_csv(DATA / "literature_irfs.csv"); lit = lambda st, v, h: float(LIT[(LIT.study == st) & (LIT.variable == {"u": "unemployment rate (pp)", "P": "CPI (%)"}[v]) & (LIT.horizon_months == h)].response_per_1pp.iloc[0])
-    def band(f, fk, v, h):
-        dd = R[CS.case_id(dict(form=f, fci=0 if fk == "no" else f, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"))]; r = dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0]; return r[f"lo{h}"], r[f"hi{h}"]
-    for v in ("u", "P"):
-        for h in (12, 24, 36):
-            lo, hi = band("rstar", "yes", v, h); chk(f"Bauer-Swanson benchmark {v} {h} m inside our r*-gap 90% band", lo <= lit("Bauer-Swanson benchmark", v, h) <= hi)
-            chk(f"r*-gap with FCI larger in absolute value than the Bauer-Swanson benchmark, {v} {h} m", abs(est("rstar", "yes", v, h)) > abs(lit("Bauer-Swanson benchmark", v, h)))
-    for h in (12, 24, 36): chk(f"nominal yield alone: unemployment below the Bauer-Swanson unadjusted response, {h} m", est("nom", "no", "u", h) < lit("Bauer-Swanson unadjusted", "u", h) and est("nom", "no", "u", h) < 0)
-    chk("nominal yield alone: price level within 0.15 of zero at 12, 24, 36 m", all(abs(est("nom", "no", "P", h)) <= 0.15 for h in (12, 24, 36)))
-    chk("Bauer-Swanson unadjusted unemployment negative on impact and positive at 12-36 m", lit("Bauer-Swanson unadjusted", "u", 0) < 0 and all(lit("Bauer-Swanson unadjusted", "u", h) > 0 for h in (12, 24, 36)))
-    LO = pd.read_csv(DATA / "literature_own_units.csv"); lv = lambda panel, ser, x: float(LO[(LO.panel == panel) & LO.series.str.startswith(ser) & (LO.x == x)].y.iloc[0])
-    chk("MAR unadjusted unemployment: negative on impact, positive from month 9", lv("MAR", "unadjusted", 0) < 0 and all(lv("MAR", "unadjusted", x) > 0 for x in (12, 18, 24)))
-    chk("MAR unadjusted unemployment crosses zero between months 3 and 9", lv("MAR", "unadjusted", 3) < 0 < lv("MAR", "unadjusted", 9))
-    chk("MAR orthogonalized unemployment: positive at every month", all(lv("MAR", "instrument", x) > 0 for x in (0, 3, 6, 9, 12, 15, 18, 21, 24)))
+    LS = pd.read_csv(RESULTS / "lit_style.csv"); ls = lambda c, v, h: LS[(LS.case == c) & (LS["var"] == v) & (LS.h == h)].iloc[0]; lsig = lambda c, v, h: ls(c, v, h).lo * ls(c, v, h).hi > 0
+    for c in ("chol_2y_1996", "chol_2y_1984", "proxy_2y_1996"):
+        chk(f"{c}: unemployment falls significantly at 12 m", ls(c, "u", 12).point < 0 and lsig(c, "u", 12)); chk(f"{c}: price level not significantly different from zero at 12, 24, 36 m", not any(lsig(c, "P", h) for h in (12, 24, 36)))
+    for c in ("chol_2y_1996", "chol_2y_1984"): chk(f"{c}: unemployment significantly negative also at 24 m", ls(c, "u", 24).point < 0 and lsig(c, "u", 24))
+    chk("proxy VAR: unemployment significantly negative at 24 m", ls("proxy_2y_1996", "u", 24).point < 0 and lsig("proxy_2y_1996", "u", 24))
+    chk("chol_ffr_1984_2007: unemployment point estimate negative at 12 and 24 m, upper bound at most 0.02 (borderline, not clearly significant)", all(ls("chol_ffr_1984_2007", "u", h).point < 0 and ls("chol_ffr_1984_2007", "u", h).hi <= 0.02 for h in (12, 24)))
+    chk("commodity-price control: 2-year Cholesky unemployment fall at 12 m still significant; funds-rate version negative at 12 m", ls("chol_2y_1996_com", "u", 12).point < 0 and lsig("chol_2y_1996_com", "u", 12) and ls("chol_ffr_1984_2007_com", "u", 12).point < 0)
+    chk("baseline unemployment response at 12 m is above the Cholesky 2-year response and positive; nominal yield alone is of the same sign as the Cholesky", est("rstar", "yes", "u", 12) > 0 > ls("chol_2y_1996", "u", 12).point and est("nom", "no", "u", 12) < 0)
+    mo = lambda f, fk, i, v, h: (lambda m: m[(m.lags == MAIN_LAGS) & (m.ident == i) & (m["var"] == v) & (m.h == h)].iloc[0])(MON[CS.monthly_id(dict(step=f, fci=0 if fk == "no" else f, start="1996-01"))])
+    chk("monthly proxy VAR r*-gap with FCI: first-stage F below 10", mo("rstar", "yes", "P1", "u", 12).F < 10)
+    chk("monthly window-impact VAR r*-gap with FCI: unemployment up and price level down, 12-36 m", all(mo("rstar", "yes", "WE", "u", h).r > 0 for h in (12, 24, 36)) and all(mo("rstar", "yes", "WE", "P", h).r < 0 for h in (12, 24, 36)))
+    chk("monthly proxy VAR nominal without FCI: unemployment falls significantly at 12 m", mo("nom", "no", "P1", "u", 12).r < 0 and mo("nom", "no", "P1", "u", 12).lo * mo("nom", "no", "P1", "u", 12).hi > 0)
+    sm = lambda s, q: SIM[(SIM.system == s) & (SIM.quantity == q)].iloc[0]
+    chk("simulation: proxy VAR with FCI is noisy (90% range of u at 12 m wider than 1 pp and covering zero)", sm("proxy_fci", "u12").sim_p95 - sm("proxy_fci", "u12").sim_p05 > 1 and sm("proxy_fci", "u12").sim_p05 < 0 < sm("proxy_fci", "u12").sim_p95)
+    chk("simulation: window-impact range narrower than the proxy-with-FCI range (u, 12 m)", sm("window", "u12").sim_p95 - sm("window", "u12").sim_p05 < sm("proxy_fci", "u12").sim_p95 - sm("proxy_fci", "u12").sim_p05)
+    chk("simulation: data values lie inside the simulated 5-95 ranges (proxy with FCI: F and u12; proxy without FCI: u12)", all(sm(a, b).sim_p05 <= sm(a, b).data <= sm(a, b).sim_p95 for a, b in (("proxy_fci", "F"), ("proxy_fci", "u12"), ("proxy_nofci", "u12"))))
+    chk("simulation: first-stage F below the data value in fewer than 25 percent of samples", sm("proxy_fci", "F").share_le_data < 0.25)
+    chk("simulation: window-impact VAR centred on the truth (median within 0.05 of truth)", abs(sm("window", "u12").sim_median - sm("window", "u12").truth) < 0.05)
+    chk("simulation: proxy VAR without FCI biased toward zero (median below half the truth)", sm("proxy_nofci", "u12").sim_median < 0.5 * sm("proxy_nofci", "u12").truth)
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
 
@@ -234,34 +271,58 @@ ax.set_xlabel("Months after the policy move"); ax.set_ylabel("Percentage points"
 ax.set_title("Financial response (monthly averages; 12 lags; 90% bands)", fontsize=8)
 fig.tight_layout(); fig.savefig(REPORT / "fig_financial.pdf"); plt.close(fig)
 
-# size-of-effects figure: nominal yield alone vs the baseline, with literature values
+# ---------------------------------------------------------------- standard methods (Section 3.1) and the baseline figure (Section 3.2)
+LSR = pd.read_csv(RESULTS / "lit_style.csv")
+def ls_path(case, v): return LSR[(LSR.case == case) & (LSR["var"] == v) & (LSR.h <= 36)]
+def fig_standard():
+    """Cholesky VAR and monthly proxy VAR on the 1996 sample, 2-year yield, no FCI: the puzzles that motivate the model."""
+    fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.4)); H_ = []
+    for ax, v, ylab in ((axs[0], "u", "Unemployment gap (pp)"), (axs[1], "P", "Core PCE price level (%)")):
+        ax.axhline(0, color=GREY, lw=0.8)
+        for case, col, ls_, ci in (("chol_2y_1996", ORANGE, "-", True), ("proxy_2y_1996", BLUE, "--", True)):
+            d = ls_path(case, v); lo, hi = d.lo.clip(-4, 4), d.hi.clip(-4, 4)
+            ax.fill_between(d.h, lo, hi, color=col, alpha=0.13, lw=0); H_.append(ax.plot(d.h, d.point, color=col, ls=ls_, lw=1.9)[0])
+        ax.set_xlabel("Months after the policy move"); ax.set_ylabel(ylab); ax.set_xlim(0, 36)
+    axs[0].set_ylim(-2.2, 1.2); axs[1].set_ylim(-2.5, 2.5)
+    fig.legend([H_[0], H_[1]], ["Recursive (Cholesky) VAR; 90% bootstrap band", "Proxy VAR, Nakamura-Steinsson instrument; 90% Anderson-Rubin set"], loc="lower center", ncol=1, frameon=False, fontsize=7.5)
+    fig.tight_layout(rect=[0, 0.13, 1, 1]); fig.savefig(REPORT / "fig_standard.pdf"); plt.close(fig)
+fig_standard()
+
+def standard_table(rows, fname, label, caption, extra=""):
+    out = [r"\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{2.4pt}", rf"\caption{{{caption}}}\label{{{label}}}",
+           r"\begin{tabular}{llrrrrrrr}\toprule" "\n" r" & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){4-6}\cmidrule(lr){7-9}" "\n" r"Method & Sample & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule"]
+    info = pd.read_csv(RESULTS / "lit_style_info.csv").set_index("case")
+    for case, lab, smp in rows:
+        cells = []
+        for v in ("u", "P"):
+            for h in (12, 24, 36):
+                r = LSR[(LSR.case == case) & (LSR["var"] == v) & (LSR.h == h)].iloc[0]; cells.append((num(r.point) + ("$^{*}$" if r.lo * r.hi > 0 else ""), f"[{num(r.lo)}, {num(r.hi)}]"))
+        out += [f"{lab} & {smp} & {int(info.nobs[case])} & " + " & ".join(c[0] for c in cells) + r"\\", r" & & & " + " & ".join(rf"{{\scriptsize {c[1]}}}" for c in cells) + r"\\"]
+    out += [r"\bottomrule\end{tabular}", r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Monthly data, 12 lags, constant, no trend; unemployment gap, core PCE inflation and the end-of-month policy rate (the 2-year Treasury yield, or the effective federal funds rate where stated), policy rate ordered last in the Cholesky VARs; price level = cumulated inflation/12. " 
+            + extra + r" Unit: +1 pp on the policy rate on impact. Brackets: 90\% intervals (residual bootstrap for the Cholesky VARs; exact Anderson--Rubin sets for the proxy VAR). $^{*}$ = excludes zero. Specification: baseline/lib/litstyle.py.}", r"\end{table}"]
+    (REPORT / fname).write_text("\n".join(out) + "\n")
+_F = pd.read_csv(RESULTS / "lit_style_info.csv").set_index("case").F["proxy_2y_1996"]
+standard_table([("chol_2y_1996", "Cholesky, 2-year yield", "1996--2026"), ("chol_2y_1984", "Cholesky, 2-year yield", "1984--2026"), ("chol_ffr_1984_2007", "Cholesky, federal funds rate", "1984--2007"), ("proxy_2y_1996", "Proxy VAR, 2-year yield", "1996--2026")],
+               "tab_standard.tex", "tab:standard", "Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate", f"Proxy VAR: Nakamura--Steinsson policy news summed within the month as instrument; first-stage $F$ = {_F:.1f}.")
+standard_table([("chol_2y_1996_com", "Cholesky + commodity prices, 2-year yield", "1996--2026"), ("chol_ffr_1984_2007_com", "Cholesky + commodity prices, federal funds rate", "1984--2007")],
+               "tab_standard_com.tex", "tab:standardcom", "Standard methods with a commodity price index in the first block", "The log PPI for all commodities (monthly average) is added to the system and ordered before the policy rate.")
+
 def fig_size():
+    """Baseline figure: r*-gap 2-year yield with the FCI (bands), the nominal yield alone and with the FCI in the same model, and the Cholesky VAR of Section 3.1."""
     base = dict(macro="u,pi", start="1996-01", end=None, t2020="in", trend="none")
     cs = dict(rstar=dict(form="rstar", fci="rstar", **base), nom0=dict(form="nom", fci=0, **base), nom1=dict(form="nom", fci="nom", **base))
-    LIT = pd.read_csv(DATA / "literature_irfs.csv"); vm = {"u": "unemployment rate (pp)", "P": "CPI (%)"}
     fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.9)); H_ = {}
     for ax, v, ylab in ((axs[0], "u", "Unemployment gap (pp)"), (axs[1], "P", "Core PCE price level (%)")):
         ax.axhline(0, color=GREY, lw=0.8)
         d = paths(cs["rstar"]); d = d[(d.kind == "macro") & (d["var"] == v)]
         ax.fill_between(d.h, d.lo, d.hi, color=BLUE, alpha=0.13, lw=0); ax.fill_between(d.h, d.lo68, d.hi68, color=BLUE, alpha=0.25, lw=0)
         H_["b"] = ax.plot(d.h, d.r, color=BLUE, lw=2.0)[0]
-        for key, ls in (("nom0", "--"), ("nom1", ":")):
-            e = paths(cs[key]); e = e[(e.kind == "macro") & (e["var"] == v)]; H_[key] = ax.plot(e.h, e.r, color=ORANGE, ls=ls, lw=1.9)[0]
-        for st, mk, fc, sz in (("Bauer-Swanson benchmark", "o", INK, 20), ("Bauer-Swanson unadjusted", "s", "none", 52)):
-            sub = LIT[(LIT.study == st) & (LIT.variable == vm[v]) & LIT.horizon_months.isin([12, 24, 36])]
-            H_[st] = ax.scatter(sub.horizon_months, sub.response_per_1pp, marker=mk, s=sz, facecolors=fc, edgecolors=INK, linewidths=1.2, zorder=5)
+        for key, ls_ in (("nom0", "--"), ("nom1", ":")):
+            e = paths(cs[key]); e = e[(e.kind == "macro") & (e["var"] == v)]; H_[key] = ax.plot(e.h, e.r, color=ORANGE, ls=ls_, lw=1.9)[0]
+        c = ls_path("chol_2y_1996", v); H_["chol"] = ax.plot(c.h, c.point, color=INK, ls="-.", lw=1.5)[0]
         ax.set_xlabel("Months after the policy move"); ax.set_ylabel(ylab); ax.set_xlim(0, 36)
-    labs = ["r*-gap 2-year yield and FCI (baseline; bands: 68 and 90 percent)", "Nominal 2-year yield alone", "Nominal 2-year yield and FCI", "Bauer and Swanson (2023), orthogonalized surprise (Fig. 8)", "Bauer and Swanson (2023), unadjusted surprise (Fig. B.1)"]
-    fig.legend([H_["b"], H_["nom0"], H_["nom1"], H_["Bauer-Swanson benchmark"], H_["Bauer-Swanson unadjusted"]], labs, loc="lower center", ncol=2, frameon=False, fontsize=7.2)
-    fig.tight_layout(rect=[0, 0.17, 1, 1]); fig.savefig(REPORT / "fig_size.pdf"); plt.close(fig)
+    labs = ["r*-gap 2-year yield and FCI (baseline; bands: 68 and 90 percent)", "Nominal 2-year yield alone (same model)", "Nominal 2-year yield and FCI (same model)", "Recursive (Cholesky) VAR, 2-year yield (Section 3.1)"]
+    fig.legend([H_["b"], H_["nom0"], H_["nom1"], H_["chol"]], labs, loc="lower center", ncol=2, frameon=False, fontsize=7.2)
+    fig.tight_layout(rect=[0, 0.13, 1, 1]); fig.savefig(REPORT / "fig_size.pdf"); plt.close(fig)
 fig_size()
-
-# a perverse-response study in its own units (not comparable in size with ours; shown for its sign pattern)
-def fig_lit():
-    L = pd.read_csv(DATA / "literature_own_units.csv"); fig, ax = plt.subplots(1, 1, figsize=(3.9, 3.3)); ax.axhline(0, color=GREY, lw=0.8)
-    for k, (name, g) in enumerate(L.groupby("series", sort=False)):
-        ax.plot(g.x, g.y, color=INK if k == 0 else GREY, ls="--" if k == 0 else "-", lw=1.8, label="Unadjusted instrument" if k == 0 else "Orthogonalized instrument")
-    ax.set_title("Unemployment rate, per 100 bp in the one-year yield\n(Miranda-Agrippino and Ricco 2021,\nas replicated by Bauer and Swanson 2023)", fontsize=7.2); ax.set_xlabel("Months after the shock"); ax.set_ylabel("Percentage points")
-    ax.legend(frameon=False, fontsize=7, loc="lower right"); fig.tight_layout(); fig.savefig(REPORT / "fig_lit.pdf"); plt.close(fig)
-fig_lit()
 print("report inputs written to", REPORT)
