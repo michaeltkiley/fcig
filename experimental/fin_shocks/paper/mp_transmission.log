@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 15:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 16:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -601,7 +601,7 @@ Underfull \hbox (badness 1622) in paragraph at lines 187--187
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 245.
  [13]
-<figures/fig1_steps.pdf, id=686, 794.97pt x 361.35pt>
+<figures/fig1_steps.pdf, id=685, 794.97pt x 361.35pt>
 File: figures/fig1_steps.pdf Graphic file (type pdf)
 <use figures/fig1_steps.pdf>
 Package pdftex.def Info: figures/fig1_steps.pdf  used on input line 249.
@@ -624,29 +624,29 @@ Package pdftex.def Info: figures/fig_long.pdf  used on input line 318.
 <figures/fig2_recent.pdf, id=964, 578.16pt x 231.26399pt>
 File: figures/fig2_recent.pdf Graphic file (type pdf)
 <use figures/fig2_recent.pdf>
-Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 355.
+Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 358.
 (pdftex.def)             Requested size: 399.29463pt x 159.717pt.
 <figures/fig3_loyo.pdf, id=965, 650.43pt x 216.81pt>
 File: figures/fig3_loyo.pdf Graphic file (type pdf)
 <use figures/fig3_loyo.pdf>
-Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 360.
+Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 363.
 (pdftex.def)             Requested size: 422.77664pt x 140.92813pt.
+ [22 <./figures/fig2_recent.pdf>]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 370.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 367.
+(hyperref)                removing `superscript' on input line 370.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 367.
+(hyperref)                removing `math shift' on input line 370.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 367.
-
-[22 <./figures/fig2_recent.pdf> <./figures/fig3_loyo.pdf>] [23] [24] [25]
-[26] [27] [28] [29] [30] (./tables/tabA_ip.tex) (./tables/tabA_notrend.tex)
-(./tables/tabA_monthly.tex) [31] (./tables/tabA_scope.tex) [32]
+[23 <./figures/fig3_loyo.pdf>] [24] [25] [26] [27] [28] [29] [30]
+(./tables/tabA_ip.tex) (./tables/tabA_notrend.tex) [31]
+(./tables/tabA_monthly.tex) (./tables/tabA_scope.tex) [32]
 (./tables/tabA_com.tex) [33] (./tables/tab2_rob_u.tex) (./tables/tab2_rob_p.tex
 ) [34] (./tables/tabA_shocks.tex) [35] (./tables/tabA_long_u.tex) [36]
 (./tables/tabA_long_p.tex) [37] (./tables/tabA_boot.tex) [38] [39] [40]
@@ -676,16 +676,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
-(rerunfilecheck)             Checksum: 860D4FD66A37F3E5F2CA0BBCD34F8EEB;6317.
+(rerunfilecheck)             Checksum: 1B8F4A7A2C6319ACB20CF8D6FC6AD782;6401.
  ) 
 Here is how much of TeX's memory you used:
- 13828 strings out of 476182
- 216267 string characters out of 5795594
- 1998975 words of memory out of 5000000
- 35356 multiletter control sequences out of 15000+600000
+ 13829 strings out of 476182
+ 216283 string characters out of 5795594
+ 1997975 words of memory out of 5000000
+ 35357 multiletter control sequences out of 15000+600000
  640335 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,1597b,767s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1597b,743s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -700,7 +700,7 @@ share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public
 mf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lms
 y6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/font
 s/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (45 pages, 637684 bytes).
+Output written on mp_transmission.pdf (45 pages, 638028 bytes).
 PDF statistics:
  1411 PDF objects out of 1440 (max. 8388607)
  1078 compressed objects within 11 object streams

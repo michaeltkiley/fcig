@@ -1,7 +1,7 @@
 """Step 3. Estimate every case in cases.py (resumable: a case with a results file is skipped unless --force).
    python3 03_estimate.py [--draws 200] [--jobs 4] [--panel B] [--force]
 Output per case: results/<id>.csv (responses at 12/24/36 months, 3/6/12 lags), results/<id>_paths.csv (response paths with bands, incl. the 2-year yield and FCI),
-output/draws/<id>_L<lags>.npz (bootstrap draws, used by 04_tradeoff.py; not kept in the repository)."""
+output/draws/<id>_L<lags>.npz (bootstrap draws, used by 05_tradeoff.py; not kept in the repository)."""
 import os, sys, argparse, time
 os.environ.setdefault("OMP_NUM_THREADS", "1"); os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 import numpy as np, pandas as pd
