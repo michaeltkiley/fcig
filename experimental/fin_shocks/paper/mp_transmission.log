@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 20:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 20:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -616,26 +616,27 @@ Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 26
 6.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
  [15]
-<../baseline/report/fig_lit.pdf, id=788, 520.34402pt x 238.49101pt>
+<../baseline/report/fig_lit.pdf, id=786, 281.85298pt x 238.49101pt>
 File: ../baseline/report/fig_lit.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_lit.pdf>
 Package pdftex.def Info: ../baseline/report/fig_lit.pdf  used on input line 273
 .
-(pdftex.def)             Requested size: 469.75502pt x 215.31679pt.
- [16 <../baseline/report/fig_size.pdf>] [17 <../baseline/report/fig_lit.pdf>] (
-./tables/tab_tradeoff.tex) [18]
-<figures/fig_long.pdf, id=977, 722.7pt x 231.26399pt>
+(pdftex.def)             Requested size: 258.36668pt x 218.62106pt.
+ [16 <../baseline/report/fig_size.pdf>]
+(./tables/tab_tradeoff.tex) [17 <../baseline/report/fig_lit.pdf>] [18]
+<figures/fig_long.pdf, id=960, 722.7pt x 231.26399pt>
 File: figures/fig_long.pdf Graphic file (type pdf)
 <use figures/fig_long.pdf>
 Package pdftex.def Info: figures/fig_long.pdf  used on input line 314.
 (pdftex.def)             Requested size: 469.75502pt x 150.32333pt.
- [19] [20 <./figures/fig_long.pdf>] (./tables/tab3_smp.tex) [21]
-<figures/fig2_recent.pdf, id=1057, 578.16pt x 231.26399pt>
+ [19]
+[20 <./figures/fig_long.pdf>] (./tables/tab3_smp.tex) [21]
+<figures/fig2_recent.pdf, id=1040, 578.16pt x 231.26399pt>
 File: figures/fig2_recent.pdf Graphic file (type pdf)
 <use figures/fig2_recent.pdf>
 Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 354.
 (pdftex.def)             Requested size: 399.29463pt x 159.717pt.
-<figures/fig3_loyo.pdf, id=1058, 650.43pt x 216.81pt>
+<figures/fig3_loyo.pdf, id=1041, 650.43pt x 216.81pt>
 File: figures/fig3_loyo.pdf Graphic file (type pdf)
 <use figures/fig3_loyo.pdf>
 Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 359.
@@ -695,7 +696,7 @@ Here is how much of TeX's memory you used:
  35602 multiletter control sequences out of 15000+600000
  640335 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,2338b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1924b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -710,10 +711,10 @@ share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public
 mf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lms
 y6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/font
 s/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (46 pages, 661287 bytes).
+Output written on mp_transmission.pdf (46 pages, 655749 bytes).
 PDF statistics:
- 1514 PDF objects out of 1728 (max. 8388607)
- 1107 compressed objects within 12 object streams
+ 1497 PDF objects out of 1728 (max. 8388607)
+ 1103 compressed objects within 12 object streams
  227 named destinations out of 1000 (max. 500000)
  287 words of extra memory for PDF output out of 10000 (max. 10000000)
 

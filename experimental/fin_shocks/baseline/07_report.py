@@ -166,8 +166,6 @@ def check_claims():
     chk("MAR unadjusted unemployment: negative on impact, positive from month 9", lv("MAR", "unadjusted", 0) < 0 and all(lv("MAR", "unadjusted", x) > 0 for x in (12, 18, 24)))
     chk("MAR unadjusted unemployment crosses zero between months 3 and 9", lv("MAR", "unadjusted", 3) < 0 < lv("MAR", "unadjusted", 9))
     chk("MAR orthogonalized unemployment: positive at every month", all(lv("MAR", "instrument", x) > 0 for x in (0, 3, 6, 9, 12, 15, 18, 21, 24)))
-    chk("JMW daily inflation: positive early, negative by day 60", lv("JMWd", "median response, daily", 3) > 0 > lv("JMWd", "median response, daily", 60))
-    chk("JMW monthly inflation: large positive response in month 1", lv("JMWm", "median response, daily index", 1) > 0.5)
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
 
@@ -258,21 +256,12 @@ def fig_size():
     fig.tight_layout(rect=[0, 0.17, 1, 1]); fig.savefig(REPORT / "fig_size.pdf"); plt.close(fig)
 fig_size()
 
-# perverse-response studies in their own units (not comparable in size with ours; shown for their sign patterns)
+# a perverse-response study in its own units (not comparable in size with ours; shown for its sign pattern)
 def fig_lit():
-    L = pd.read_csv(DATA / "literature_own_units.csv")
-    spec = [("MAR", "Unemployment rate, per 100 bp in the one-year yield\n(Miranda-Agrippino and Ricco 2021,\nas replicated by Bauer and Swanson 2023)", "Months after the shock", "Percentage points"),
-            ("JMWd", "Daily inflation, per 1 s.d. NS shock\n(Jacobson, Matthes and Walker 2026)", "Days after the shock", "Annualized 30-day inflation (pp)"),
-            ("JMWm", "Daily inflation aggregated to monthly,\nper 1 s.d. NS shock (same paper)", "Months after the shock", "Annualized monthly inflation (pp)")]
-    fig, axs = plt.subplots(1, 3, figsize=(7.2, 3.3))
-    for ax, (pid, title, xl, yl) in zip(axs, spec):
-        ax.axhline(0, color=GREY, lw=0.8); sub = L[L.panel == pid]
-        for k, (name, g) in enumerate(sub.groupby("series", sort=False)):
-            if pid == "MAR": ax.plot(g.x, g.y, color=INK if k == 0 else GREY, ls="--" if k == 0 else "-", lw=1.8, label="Unadjusted instrument" if k == 0 else "Orthogonalized instrument")
-            else: ax.plot(g.x, g.y, color=INK, lw=1.8, marker="o" if pid == "JMWm" else None, ms=3.5)
-        ax.set_title(title, fontsize=7.2); ax.set_xlabel(xl); ax.set_ylabel(yl)
-        if pid == "JMWm": ax.set_xticks(range(2, 13, 2))
-    axs[0].legend(frameon=False, fontsize=7, loc="lower right")
-    fig.tight_layout(); fig.savefig(REPORT / "fig_lit.pdf"); plt.close(fig)
+    L = pd.read_csv(DATA / "literature_own_units.csv"); fig, ax = plt.subplots(1, 1, figsize=(3.9, 3.3)); ax.axhline(0, color=GREY, lw=0.8)
+    for k, (name, g) in enumerate(L.groupby("series", sort=False)):
+        ax.plot(g.x, g.y, color=INK if k == 0 else GREY, ls="--" if k == 0 else "-", lw=1.8, label="Unadjusted instrument" if k == 0 else "Orthogonalized instrument")
+    ax.set_title("Unemployment rate, per 100 bp in the one-year yield\n(Miranda-Agrippino and Ricco 2021,\nas replicated by Bauer and Swanson 2023)", fontsize=7.2); ax.set_xlabel("Months after the shock"); ax.set_ylabel("Percentage points")
+    ax.legend(frameon=False, fontsize=7, loc="lower right"); fig.tight_layout(); fig.savefig(REPORT / "fig_lit.pdf"); plt.close(fig)
 fig_lit()
 print("report inputs written to", REPORT)

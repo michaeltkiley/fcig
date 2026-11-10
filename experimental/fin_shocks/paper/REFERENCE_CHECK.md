@@ -58,3 +58,4 @@ Related but not cited: Lee and Sekhposyan (temporal aggregation and shock propag
 - Jacobson-Matthes-Walker (FEDS 2022-054r1, pdf read): Figure 6 and the text around it support the sentence added to Section 3.3 (adverse initial inflation response when the daily index is aggregated to monthly; conventional at daily frequency after about a month). [verified from the printed text]
 - Brennan et al. (FEDS 2024-011r1, pdf read): Figures 9-10 as described in `baseline/data/SOURCES.md`; not cited in the text.
 - Correction (10 Nov 2026): Bauer-Swanson Figure 7, unadjusted Gertler-Karadi instrument: the unemployment response crosses zero after about six to seven months (zoomed reading), not nine; text and sources corrected.
+- Update (10 Nov 2026): the Jacobson-Matthes-Walker Figure 6 sentence in Section 3.3 was removed by decision (too different); that line and the Brennan et al. line above record readings that are no longer used in the text.
