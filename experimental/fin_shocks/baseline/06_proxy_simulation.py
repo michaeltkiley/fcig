@@ -34,3 +34,17 @@ for step in ("rstar", "nom", "real"):
         add("we", f"{v}{h} window impact (window units)", dat("fci", "WE", v, h), dg.truth_window[(v, h)], df[f"fci_we_{v}{h}"])
 S = pd.DataFrame(rows); S.to_csv(RESULTS / "proxy_sim_summary.csv", index=False, float_format="%.4f")
 print(S[S.step == "rstar"].round(2).drop(columns=["step", "binary"]).to_string(index=False))
+
+# ---------------------------------------------------------------- the paper's estimator (daily-block model) on the same simulated samples
+dg, D = SM.run_daily(S=a.sims); D.round(5).to_csv(RESULTS / "daily_sim.csv", index=False)
+drows = []
+for form in ("rstar", "nom", "real"):
+    for fci in (0, 1):
+        obs = pd.read_csv(RESULTS / f"{form}_{form if fci else 0}_upi_1996-01_all_in.csv"); obs = obs[obs.lags == 12]
+        sim = D[(D.form == form) & (D.fci == fci)]
+        for v, h in SM.DTARGETS:
+            data = float(obs[obs["var"] == v].iloc[0][f"r{h}"]); x = sim[f"{v}{h}"].values
+            drows.append(dict(form=form, fci=fci, quantity=f"{v}{h}", data=data, truth=float(dg.s0[h, 0 if v == "u" else 1]), sim_median=float(np.median(x)), sim_p05=float(np.percentile(x, 5)),
+                              sim_p95=float(np.percentile(x, 95)), share_le_data=float(np.mean(x <= data)), data_in_90=int(np.percentile(x, 5) <= data <= np.percentile(x, 95))))
+DS = pd.DataFrame(drows); DS.to_csv(RESULTS / "daily_sim_summary.csv", index=False, float_format="%.4f")
+print(DS.round(2).to_string(index=False))

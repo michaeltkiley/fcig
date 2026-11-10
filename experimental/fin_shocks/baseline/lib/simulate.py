@@ -52,6 +52,8 @@ class DGP:
         pre = pd.period_range("1995-01", "1995-12", freq="M")
         self.m0 = M.MAC[self.mv].loc[pre].values; self.fb0 = M.fin_monthly(form, fci).loc[pre].values
         allm = pd.period_range("1995-01", "2026-09", freq="M"); base = M.fin_monthly("rstar", "rstar").loc[allm]
+        T = self.T1 + 1 - (self.T0 - 70); sl = slice(self.T0 - 70, self.T1 + 1)
+        self.off_daily = {"rstar": np.zeros((T, 2)), **{f: np.column_stack([(M.RATE[f] - M.RATE["rstar"]).ffill().values[sl], (M.FCI[f] - M.FCI["rstar"]).ffill().values[sl]]) for f in ("nom", "real")}}
         self.offset = {"rstar": np.zeros((len(allm), 2)), "nom": (M.fin_monthly("nom", "nom").loc[allm] - base).values, "real": (M.fin_monthly("real", "real").loc[allm] - base).values}
 
     def simulate(self, S, rng):
@@ -76,7 +78,7 @@ class DGP:
                 else: eps = self.pool_non[rng.integers(0, len(self.pool_non), S)]
                 F[:, k] = xd @ self.Bd + eps; cs[:, k + 1] = cs[:, k] + F[:, k]
             fb[:, 12 + t] = F[:, lo - (self.T0 - 70):hi - (self.T0 - 70) + 1].mean(axis=1)
-        return m, fb, z
+        return m, fb, z, F
 
 def proxy_stats(Z, z, ok, K, per_ok_first=None):
     """Proxy VAR (12 lags, no trend) on Z = (pre-sample 12 rows + sample, K variables [u, pi, i, (FCI)]): first stage, impact vector, point estimates and exact AR sets."""
@@ -95,7 +97,7 @@ def window_stats(T, b, phi, K):
 def run(S=500, start="1996-01"):
     """Simulate from the r*-gap model and analyse the samples with the 2-year yield and FCI in r*-gap, nominal and real form. Returns the DGP and {form: DataFrame}."""
     dg = DGP("rstar", "rstar", start); rng = np.random.default_rng(zlib.crc32(b"sim|rstar|rstar"))
-    m, fb, z = dg.simulate(S, rng)
+    m, fb, z, _ = dg.simulate(S, rng)
     idx0 = dg.idx0; ev = EV.iloc[idx0]; mon = ev.Date.dt.to_period("M"); first, last = mon.min(), mon.max(); ok = np.asarray((dg.months >= first) & (dg.months <= last))
     phi = MO.share(idx0); out = {}
     for form in ("rstar", "nom", "real"):
@@ -108,3 +110,39 @@ def run(S=500, start="1996-01"):
             row["sim"] = s_; rows.append(row)
         out[form] = pd.DataFrame(rows)
     return dg, out
+
+
+# ---------------------------------------------------------------- the paper's estimator on the simulated samples
+_G = {}
+DTARGETS = [("u", 12), ("u", 24), ("P", 12), ("P", 24)]
+
+def model_stats(dg, F, m, form, use_fci):
+    """Estimate the mixed-frequency model (daily HAR block and monthly equations, 12 lags) on one simulated sample with the variables in the given form, with or without the FCI,
+    and return its impulse responses (window units) at 12 and 24 months. F: daily r*-gap-form series incl. the 70 pre-sample days; m: monthly macro incl. 12 pre-sample months."""
+    nd = 2 if use_fci else 1; K = 2; nm = len(dg.months); Fo = (F + dg.off_daily[form])[:, :nd]; T = Fo.shape[0]
+    mo = np.concatenate([np.zeros(70, int) - 1, np.concatenate([[t] * (hi - lo + 1) for t, (lo, hi) in enumerate(dg.bounds)])])        # month index of each day (-1 = pre-sample)
+    cs = np.vstack([np.zeros((1, nd)), np.cumsum(Fo, axis=0)]); kk = np.arange(70, T); mi = mo[kk]
+    Xd = np.column_stack([np.ones(len(kk))] + [(cs[kk] - cs[kk - h]) / h for h in HAR] + [m[12 + mi - 1], m[12 + mi]]); Bd = np.linalg.lstsq(Xd, Fo[kk], rcond=None)[0]
+    fbm = np.array([Fo[lo - (dg.T0 - 70):hi - (dg.T0 - 70) + 1].mean(axis=0) for lo, hi in dg.bounds]); fb = np.vstack([dg.fb0[:, :nd] + dg.offset[form][:12, :nd], fbm])
+    Xm = np.array([np.r_[1.0, np.concatenate([m[12 + t - l] for l in range(1, L + 1)]), np.concatenate([fb[12 + t - l] for l in range(1, L + 1)])] for t in range(nm)])
+    C = np.linalg.lstsq(Xm, m[12:], rcond=None)[0]
+    idx0, pos0 = dg.idx0, M.events(1)[1]; mac, _ = M.irf(Bd, C, K, nd, L, idx0, pos0, "x" if use_fci else 0); lev = M.to_level(mac)
+    return {f"{v}{h}": float(lev[h, 0 if v == "u" else 1]) for v, h in DTARGETS}
+
+def _one(s):
+    dg, F, m = _G["dg"], _G["F"][s], _G["m"][s]; rows = []
+    for form in ("rstar", "nom", "real"):
+        for use_fci in (0, 1): rows.append(dict(sim=s, form=form, fci=use_fci, **model_stats(dg, F, m, form, use_fci)))
+    return rows
+
+def run_daily(S=500, jobs=4):
+    """Re-estimate the daily-block model on each simulated sample (r*-gap, nominal, real measures; with and without the FCI)."""
+    dg = DGP("rstar", "rstar"); rng = np.random.default_rng(zlib.crc32(b"sim|rstar|rstar")); m, fb, z, F = dg.simulate(S, rng)
+    _G.update(dg=dg, F=F, m=m); rows = []
+    if jobs > 1:
+        from multiprocessing import Pool
+        with Pool(jobs) as p:
+            for r in p.imap_unordered(_one, range(S), chunksize=5): rows += r
+    else:
+        for s in range(S): rows += _one(s)
+    return dg, pd.DataFrame(rows).sort_values(["form", "fci", "sim"]).reset_index(drop=True)
