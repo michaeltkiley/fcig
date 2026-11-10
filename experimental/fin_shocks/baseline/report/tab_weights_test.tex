@@ -1,10 +1,10 @@
 \begin{table}[H]\centering\small
-\caption{Test of the proportional-weights restriction}\label{tab:weightstest}
-\begin{tabular}{lrrrrrr}\toprule & \multicolumn{3}{c}{Unemployment gap equation} & \multicolumn{3}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}
-Step & 3 lags & 6 lags & 12 lags & 3 lags & 6 lags & 12 lags\\ \midrule
-Nominal & 6.8 (0.304) & 6.7 (0.821) & 8.9 (0.978) & 19.7 (0.005) & 23.4 (0.022) & 41.9 (0.045)\\
-Real & 7.9 (0.185) & 5.9 (0.881) & 7.0 (0.988) & 18.8 (0.006) & 21.6 (0.066) & 42.9 (0.027)\\
-r*-gap & 11.6 (0.058) & 16.4 (0.134) & 21.7 (0.334) & 17.8 (0.011) & 23.6 (0.042) & 53.9 (0.005)\\
+\caption{Test of the proportional-weights restriction (12 lags)}\label{tab:weightstest}
+\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap equation} & \multicolumn{2}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Step & Wald & Bootstrap $p$ & Wald & Bootstrap $p$\\ \midrule
+Nominal & 8.9 & 0.970 & 41.9 & 0.044\\
+Real & 7.0 & 0.991 & 42.9 & 0.037\\
+r*-gap & 21.7 & 0.336 & 53.9 & 0.002\\
 \bottomrule\end{tabular}
-\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic and, in parentheses, the bootstrap p-value (999 residual draws under the restriction), for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (2 restrictions per lag), in each monthly equation; heteroskedasticity-robust (HC1) covariance matrix; 1996--2026, no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}
+\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 residual draws under the restriction); 1996--2026, no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}
 \end{table}
