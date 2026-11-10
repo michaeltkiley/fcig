@@ -163,8 +163,15 @@ def write_numbers():
                 d("bl:" + k, num(r.kappa)); d("blabs:" + k, f"{abs(r.kappa):.2f}"); d("bl:" + k + ":sac", f"{abs(1 / r.kappa):.1f}")
                 d("bllo:" + k, "$-\\infty$" if np.isinf(r.k_lo) else num(r.k_lo)); d("blhi:" + k, "$+\\infty$" if np.isinf(r.k_hi) else num(r.k_hi))
                 d("blsig:" + k, "bounded away from zero" if (not np.isinf(r.k_lo) and not np.isinf(r.k_hi) and r.k_lo * r.k_hi > 0) or (np.isinf(r.k_lo) != np.isinf(r.k_hi) and (r.k_hi < 0 if np.isinf(r.k_lo) else r.k_lo > 0)) else "includes zero")
-    from lib.daily import window_impact, event_index
+    from lib.daily import window_impact, event_index, EV
+    from lib import monthly as MO
+    from lib.model import MAC, fin_eom
     d("bl:bF", f"{window_impact(event_index())[1]:.2f}")
+    for f in ("nom", "real", "rstar"):                                  # FCI innovation per unit of 2-year-yield innovation in ordinary months (monthly VAR residuals, 12 lags, 1996+, end-of-month)
+        D = MAC[["u", "pi"]].join(fin_eom(f, f), how="inner").dropna(); X, Y, _ = MO.design(D, 12, "1996-01"); r = Y - X @ np.linalg.lstsq(X, Y, rcond=None)[0]
+        d(f"bl:ord:{f}", f"{np.cov(r[:, 3], r[:, 2])[0, 1] / np.var(r[:, 2], ddof=1):.2f}")
+    ie = event_index(); s_ = EV.ns.values[ie]                           # share of each window move explained by the policy-news surprise (R-squared)
+    for col, k in (("UST2Y", "y2"), ("UST10Y", "y10"), ("SP500", "sp"), ("DXY", "usd"), ("idx_win", "fci")): d(f"bl:r2:{k}", f"{100 * np.corrcoef(s_, EV[col].values[ie])[0, 1] ** 2:.0f}")
     (REPORT / "numbers.tex").write_text("\n".join(L) + "\n")
 write_numbers()
 
