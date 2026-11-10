@@ -107,6 +107,7 @@ MAC["ebp"] = MM0.ebp          # FS-A32: monthly excess bond premium (Favara et a
 #   mean DGS2 - SVENY02 gap over 1976-06..1989-12 (zero-coupon vs constant-maturity par yield);
 #   expected inflation: Cleveland Fed EXPINF2YR (1982-); before that the FCI note's 1-year expectation series (Livingston-based) -- a splice, flagged;
 #   r*: Laubach-Williams (1961-).
+T2020 = os.environ.get("T2020", "mout")   # treatment of 2020: "mout" (baseline: monthly rows Mar-Dec 2020 dropped, daily in), "in" (nothing dropped), "mdout" (monthly rows and daily HAR rows Mar-Dec 2020 dropped)
 MSTART = os.environ.get("MSTART", "")
 _gsw = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "gsw_sveny02.csv"), parse_dates=["Date"]).set_index("Date").SVENY02
 _gswm = _gsw.groupby(_gsw.index.to_period("M")).mean()
@@ -144,6 +145,7 @@ def har_block(form, fci, mvars):
     D = daily_frame(form, fci).loc["1990-01-02":(f"{END_Y}-12-31" if END_Y else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
     ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1)
+    if T2020 == "mdout": ok &= ~((D.index >= "2020-03-01") & (D.index <= "2020-12-31"))
     _HAR_DATA[(form, fci, tuple(mvars))] = (X[ok], Y[ok])
     return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
 
@@ -157,7 +159,7 @@ def macro_data(form, fci, mvars, L):
     ROWS.clear()
     FB = fin_monthly(form, fci); MMv = MAC[mvars]; X, Y = [], []
     for p in MMv.index:
-        if p < pd.Period(MSTART or "1994-02", "M") or p > pd.Period(f"{END_Y}-12" if END_Y else "2026-09", "M") or (p.year == 2020 and p.month >= 3): continue
+        if p < pd.Period(MSTART or "1994-02", "M") or p > pd.Period(f"{END_Y}-12" if END_Y else "2026-09", "M") or (p.year == 2020 and p.month >= 3 and T2020 != "in"): continue
         if DROP_Y and p.year == DROP_Y: continue
         try:
             xm = np.concatenate([MMv.loc[p - l].values for l in range(1, L + 1)]); xf = np.concatenate([FB.loc[p - l].values for l in range(1, L + 1)])
@@ -234,6 +236,6 @@ if __name__ == "__main__":
                         rows.append(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND) * (2 if TRENDTYPE == "spline" else 1), mstart=(MSTART or "1994-02"), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, **{f"r{h}": s0[h, j] for h in (6, 12, 24, 36)}, **{f"lo{h}": lo[h, j] for h in (12, 24, 36)}, **{f"hi{h}": hi[h, j] for h in (12, 24, 36)},
                                          **{f"lo68_{h}": lo68[h, j] for h in (12, 24, 36)}, **{f"hi68_{h}": hi68[h, j] for h in (12, 24, 36)}))
                         irfrows.append(pd.DataFrame(dict(macro=mlab, rate=form, fci=fci, trend=int(TREND) * (2 if TRENDTYPE == "spline" else 1), mstart=(MSTART or "1994-02"), shock=SHOCK, bootd=int(BOOT_DAILY) + 2 * int(BOOT_REC), draws=B, lags=L, var=n, h=np.arange(H + 1), r=s0[:, j], lo=lo[:, j], hi=hi[:, j], lo68=lo68[:, j], hi68=hi68[:, j])))
-    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_spl" if TREND and TRENDTYPE == "spline" else "") + ("_" + SAMPLE if SAMPLE else "") + ("_m" + MSTART.replace("-", "") if MSTART else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "") + ("" if SHOCK == "NS" else "_" + SHOCK) + ("_bootd" if BOOT_DAILY else "") + ("_bootrec" if BOOT_REC else "") + ("_L" + "-".join(map(str, LAGS)) if LAGS != (3, 6, 12) else "")
+    suf = ("" if not SEL else "_" + "_".join(SEL)) + ("_trend" if TREND else "") + ("_spl" if TREND and TRENDTYPE == "spline" else "") + ("_" + SAMPLE if SAMPLE else "") + ("_m" + MSTART.replace("-", "") if MSTART else "") + ("_" + os.environ["MACRO_ONLY"].replace(",", "") if os.environ.get("MACRO_ONLY") else "") + ("" if SHOCK == "NS" else "_" + SHOCK) + ("_t2020" + T2020 if T2020 != "mout" else "") + ("_bootd" if BOOT_DAILY else "") + ("_bootrec" if BOOT_REC else "") + ("_L" + "-".join(map(str, LAGS)) if LAGS != (3, 6, 12) else "")
     pd.DataFrame(rows).to_csv(f"midas_core{suf}.csv", index=False, float_format="%.4f")
     pd.concat(irfrows).to_csv(f"midas_core{suf}_irf.csv", index=False, float_format="%.4f")

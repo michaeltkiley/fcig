@@ -10,6 +10,7 @@ def _load(irf_files):
     out = []
     for fn in sorted(glob.glob(os.path.join(UP, "midas_core_*.csv")), key=os.path.getmtime):
         if fn.endswith("_irf.csv") != irf_files or os.path.basename(fn) in ("midas_core.csv", "midas_core_irf.csv"): continue
+        if any(t_ in os.path.basename(fn) for t_ in ("_L12", "_t2020")): continue   # exploratory grids (trend/start/end, 2020 treatment): not part of the note's tables
         import re as _re
         m_ = _re.search(r"_((?:drop|end)\d{4})", os.path.basename(fn)); smp = m_.group(1) if m_ else ""
         z = pd.read_csv(fn).assign(sample=smp)
