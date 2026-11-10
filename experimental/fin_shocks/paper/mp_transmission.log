@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 16:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 16:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -650,22 +650,22 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (./tables/tabA_com.tex) [33] (./tables/tab2_rob_u.tex) (./tables/tab2_rob_p.tex
 ) [34] (./tables/tabA_shocks.tex) [35] (./tables/tabA_long_u.tex) [36]
 (./tables/tabA_long_p.tex) [37] (./tables/tabA_boot.tex) [38] [39] [40]
-Underfull \hbox (badness 10000) in paragraph at lines 628--628
+Underfull \hbox (badness 10000) in paragraph at lines 630--630
 []\T1/lmr/m/n/10 Industrial pro-duc-tion; com-mod-ity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 633--633
+Underfull \hbox (badness 10000) in paragraph at lines 635--635
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 634--635
+Underfull \hbox (badness 7168) in paragraph at lines 636--637
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF2YR, EX-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 639--640
+Underfull \hbox (badness 10000) in paragraph at lines 641--642
 []\T1/lmr/m/n/10 FRED DTWEXBGS, ear-lier DTWEXB,
  []
 
@@ -679,13 +679,13 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: 1B8F4A7A2C6319ACB20CF8D6FC6AD782;6401.
  ) 
 Here is how much of TeX's memory you used:
- 13829 strings out of 476182
- 216283 string characters out of 5795594
- 1997975 words of memory out of 5000000
- 35357 multiletter control sequences out of 15000+600000
+ 13837 strings out of 476182
+ 216433 string characters out of 5795594
+ 1998975 words of memory out of 5000000
+ 35363 multiletter control sequences out of 15000+600000
  640335 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,1597b,743s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1597b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -700,10 +700,10 @@ share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public
 mf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lms
 y6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/font
 s/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (45 pages, 638028 bytes).
+Output written on mp_transmission.pdf (45 pages, 638519 bytes).
 PDF statistics:
- 1411 PDF objects out of 1440 (max. 8388607)
- 1078 compressed objects within 11 object streams
- 222 named destinations out of 1000 (max. 500000)
+ 1414 PDF objects out of 1440 (max. 8388607)
+ 1081 compressed objects within 11 object streams
+ 224 named destinations out of 1000 (max. 500000)
  282 words of extra memory for PDF output out of 10000 (max. 10000000)
 
