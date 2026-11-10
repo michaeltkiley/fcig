@@ -174,7 +174,7 @@ def write_numbers():
                     k = f"rb:{pid}{form_tag}:{fk}:{v}:{h}"; d("bl:" + k, num(r[f"r{h}"])); d("blabs:" + k, f"{abs(r[f'r{h}']):.2f}"); d("blsig:" + k, "significant" if r[f"lo{h}"] * r[f"hi{h}"] > 0 else "not significant")
                     d("bllo:" + k, num(r[f"lo{h}"])); d("blhi:" + k, num(r[f"hi{h}"]))
     WT = pd.read_csv(RESULTS / "weights_test.csv")
-    for _, r in WT[WT.lags == MAIN_LAGS].iterrows(): e_ = r["eq"]; d(f"bl:wt:{r.step}:{e_}:p", f"{r.p:.3f}"); d(f"bl:wt:{r.step}:{e_}:W", f"{r.wald:.1f}"); d(f"bl:wt:{r.step}:{e_}:q", str(int(r.restrictions)))
+    for _, r in WT[WT.lags == MAIN_LAGS].iterrows(): e_ = r["eq"]; d(f"bl:wt:{r.step}:{e_}:p", f"{r.p_boot:.3f}"); d(f"bl:wt:{r.step}:{e_}:W", f"{r.wald:.1f}"); d(f"bl:wt:{r.step}:{e_}:q", str(int(r.restrictions)))
     from lib.daily import window_impact, event_index, EV
     from lib import monthly as MO
     from lib.model import MAC, fin_eom
@@ -240,7 +240,7 @@ def check_claims():
     cm = lambda f, v, h: (lambda dd: dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0])(R[CS.case_id(dict(form=f, fci="cmp", macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"))])
     chk("R4 (components): no significant response of unemployment or the price level at any step and horizon; price level point estimate not negative at 24 m", all(cm(f, v, h)[f"lo{h}"] * cm(f, v, h)[f"hi{h}"] < 0 for f in S for v in ("u", "P") for h in (12, 24, 36)) and all(cm(f, "P", 24)["r24"] > 0 for f in S))
     chk("R4 r*-gap: baseline unemployment at 12 m inside the components interval; baseline price level at 24 m below the components interval", cm("rstar", "u", 12)["lo12"] <= est("rstar", "yes", "u", 12) <= cm("rstar", "u", 12)["hi12"] and est("rstar", "yes", "P", 24) < cm("rstar", "P", 24)["lo24"])
-    WT = pd.read_csv(RESULTS / "weights_test.csv"); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_)].p.iloc[0]
+    WT = pd.read_csv(RESULTS / "weights_test.csv"); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_)].p_boot.iloc[0]
     chk("weights test, 12 lags: no rejection at 5% in the unemployment equation at any step; rejection in the inflation equation at every step", all(wt(s_, "u", 12) > 0.05 for s_ in S) and all(wt(s_, "pi", 12) < 0.05 for s_ in S))
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
@@ -250,11 +250,11 @@ WTT = pd.read_csv(RESULTS / "weights_test.csv"); wrows = []
 for step in ("nom", "real", "rstar"):
     cells = []
     for eq in ("u", "pi"):
-        for L in (3, 6, 12): r = WTT[(WTT.step == step) & (WTT.lags == L) & (WTT["eq"] == eq)].iloc[0]; cells.append(f"{r.wald:.1f} ({r.p:.3f})")
+        for L in (3, 6, 12): r = WTT[(WTT.step == step) & (WTT.lags == L) & (WTT["eq"] == eq)].iloc[0]; cells.append(f"{r.wald:.1f} ({r.p_boot:.3f})")
     wrows.append(f"{CS.FORMS[step]} & " + " & ".join(cells) + r"\\")
 (REPORT / "tab_weights_test.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Test of the proportional-weights restriction}\label{tab:weightstest}",
     r"\begin{tabular}{lrrrrrr}\toprule & \multicolumn{3}{c}{Unemployment gap equation} & \multicolumn{3}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}", r"Step & 3 lags & 6 lags & 12 lags & 3 lags & 6 lags & 12 lags\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
-    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic and, in parentheses, the chi-square p-value, for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (2 restrictions per lag), in each monthly equation; heteroskedasticity-robust (HC1) covariance matrix; 1996--2026, no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
+    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic and, in parentheses, the bootstrap p-value (999 residual draws under the restriction), for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (2 restrictions per lag), in each monthly equation; heteroskedasticity-robust (HC1) covariance matrix; 1996--2026, no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- weights table (window responses)
 w = pd.read_csv(OUT / "market_weights.csv", index_col=0)
