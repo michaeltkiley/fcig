@@ -1,6 +1,6 @@
 """The window-identified mixed-frequency VAR of Note B.
 
-Daily block (1990 on): HAR regressions in levels of the 2-year yield form (`pol`) and, when included, the market index (`idx`), on 1/5/22/66-day averages
+Daily block (estimated from DAILY_START = January 1996, the same start as the shocks and the monthly equations; averages use earlier days): HAR regressions in levels of the 2-year yield form (`pol`) and, when included, the market index (`idx`), on 1/5/22/66-day averages
 and the monthly macro variables (this month and last: macro first within the month). Monthly block: for each macro variable (unemployment gap, core PCE
 inflation, optionally the excess bond premium) an OLS equation on its own lags and lagged monthly averages of the daily financial variables, 3/6/12 lags.
 Response to a policy surprise: the 30-minute window impact (2-year +1 pp; index = its window move; macro zero) applied on the event day, simulated forward
@@ -18,6 +18,7 @@ from .daily import (CALW, POL, MON, HAR, DAILY, W, lev, d10, interp_monthly, fre
 from . import noteA
 
 H = 36                       # response horizon (months)
+DAILY_START = "1996-01-01"    # first day of the daily-block estimation sample (lagged averages may use earlier days)
 LAGS = (3, 6, 12)
 HORIZ = (12, 24, 36)
 
@@ -108,7 +109,7 @@ def har_block(form, fci, mvars, end, t2020):
     and the 2-year yield's equation its own averages: 9 coefficients for the yield and 13 for each component (48 in all with three components, against 84 unrestricted)."""
     D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]; nd = D.shape[1]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
-    ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1)
+    ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1) & (D.index >= DAILY_START)
     if t2020 == "out": ok &= ~((D.index >= "2020-03-01") & (D.index <= "2020-12-31"))
     if fci not in CMPGROUPS: return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
     Bd = np.zeros((X.shape[1], nd)); macro_cols = list(range(1 + len(HAR) * nd, X.shape[1]))
