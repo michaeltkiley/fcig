@@ -14,7 +14,8 @@ the mean DGS2 - SVENY02 gap of 1976-06 to 1989-12; expected inflation: Cleveland
 import zlib
 import numpy as np, pandas as pd
 from .paths import DATA, OUT
-from .daily import (CALW, POL, MON, HAR, DAILY, interp_monthly, fred_daily, event_index, window_impact, positions)
+from .daily import (CALW, POL, MON, HAR, DAILY, W, lev, d10, interp_monthly, fred_daily, event_index, window_impact, window_impact_components, positions)
+from . import noteA
 
 H = 36                       # response horizon (months)
 LAGS = (3, 6, 12)
@@ -39,6 +40,20 @@ def _daily_fci(target):
     return _nomd + interp_monthly(off)
 FCI = {k: _daily_fci(v) for k, v in IDXM.items()}
 
+# The three weighted components of the index (weight x demeaned input), monthly and daily, in each step (used only when the FCI is replaced by its components).
+CMPKEYS = ["y10", "equities", "dollar"]; CMPNAMES = ["y10", "eq", "usd"]
+_cases = {"nom": ("nominal", "rstar LW"), "real": ("real", "rstar LW"), "rstar": ("rstar", "rstar LW"), "kiley": ("rstar", "rstar Kiley")}
+_wv = pd.Series(W, index=CMPKEYS)
+CMPM = {}; CMPD = {}
+_P = pd.DataFrame({"y10": d10.reindex(DAILY.index), "equities": 100 * np.log(lev.x_cape).reindex(DAILY.index), "dollar": 100 * np.log(lev.x_usd).reindex(DAILY.index)}) * _wv
+_P = _P.where(_P.notna().all(axis=1)).ffill(limit=3).reindex(CALW).ffill(limit=3)          # the same availability and filling as the daily index (DAILY.idx), so the components add up to it
+for _f, (_c, _r) in _cases.items():
+    _X = noteA.index_inputs(D0, _c, _r)[CMPKEYS]; CMPM[_f] = (_X - _X.loc[noteA.START:noteA.END].mean()) * _wv
+    _cols = {}
+    for _k in CMPKEYS:
+        _d = _P[_k]; _off = (CMPM[_f][_k] - _d.groupby(_d.index.to_period("M")).mean()).dropna(); _cols[_k] = _d + interp_monthly(_off)
+    CMPD[_f] = pd.DataFrame(_cols)
+
 # ---------------------------------------------------------------- monthly extension before the daily data
 _gsw = pd.read_csv(DATA / "gsw_sveny02.csv", parse_dates=["Date"]).set_index("Date").SVENY02
 _gswm = _gsw.groupby(_gsw.index.to_period("M")).mean()
@@ -48,12 +63,14 @@ _e2m = _e2.combine_first(D0["einf_1y"])
 RATEM = {"nom": Y2M, "real": Y2M - _e2m, "rstar": Y2M - _e2m - D0["rstar LW"], "kiley": Y2M - _e2m - D0["rstar Kiley"]}
 
 def daily_frame(form, fci):
+    """fci: 0 (none), a step name (Note A's index in that step) or "cmp" (the index replaced by its three weighted components in the same step as the rate)."""
+    if fci == "cmp": return pd.DataFrame({"pol": RATE[form], **{n: CMPD[form][k] for k, n in zip(CMPKEYS, CMPNAMES)}})
     return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[fci]} if fci else {})})
 
 def fin_monthly(form, fci):
     """Monthly averages of the daily block; months without daily data filled from the monthly series."""
     FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean()
-    ext = pd.DataFrame({"pol": RATEM[form], **({"idx": IDXM[fci]} if fci else {})})
+    ext = pd.DataFrame({"pol": RATEM[form], **({n: CMPM[form][k] for k, n in zip(CMPKEYS, CMPNAMES)} if fci == "cmp" else {"idx": IDXM[fci]} if fci else {})})
     FB = FB.combine_first(ext)
     return FB[FB.index >= pd.Period("1973-01", "M")]
 
@@ -63,6 +80,7 @@ def fin_eom(form, fci):
     return daily_frame(form, fci).ffill().set_index(MON).groupby(level=0).last()
 
 def impact(fci, idx):
+    if fci == "cmp": return window_impact_components(idx)
     wi = window_impact(idx)
     return wi if fci else wi[:1]
 
@@ -160,7 +178,7 @@ def path_rows(spec, est):
     """Response paths h = 0..H: macro variables (and the price level) and the monthly-average 2-year yield and FCI, with 90% and 68% bands."""
     out = []
     eom = pd.DataFrame(dict(**spec, lags=est["lags"], kind="fin_eom", var="pol", h=np.arange(H + 1), r=est["e0"][:, 0], lo=np.nan, hi=np.nan, lo68=np.nan, hi68=np.nan))   # 2-year yield at the end of the month (point estimate)
-    for kind, names, s0, sd in (("macro", est["names"], est["s0"], est["sd"]), ("fin", ["pol", "idx"][:est["f0"].shape[1]], est["f0"], est["fd"])):
+    for kind, names, s0, sd in (("macro", est["names"], est["s0"], est["sd"]), ("fin", (["pol", "idx"] if est["f0"].shape[1] <= 2 else ["pol"] + CMPNAMES)[:est["f0"].shape[1]], est["f0"], est["fd"])):
         for j, n in enumerate(names):
             out.append(pd.DataFrame(dict(**spec, lags=est["lags"], kind=kind, var=n, h=np.arange(H + 1), r=s0[:, j], lo=pct(sd[:, :, j], 5), hi=pct(sd[:, :, j], 95),
                                          lo68=pct(sd[:, :, j], 16), hi68=pct(sd[:, :, j], 84))))

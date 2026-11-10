@@ -49,6 +49,13 @@ def window_impact(idx):
     slope = lambda col: float(np.sum((EV[col].values[idx] - EV[col].values[idx].mean()) * x) / np.sum(x * x))
     return np.array([1.0, slope("idx_win") / slope("UST2Y")])
 
+def window_impact_components(idx):
+    """Window response of the three weighted components of the market index (10-year yield, equity valuation, dollar), per +1 pp on the 2-year yield:
+    [1, w_y10 * slope(10-year), w_equities * slope(S&P 500), w_dollar * slope(DXY)] / slope(2-year); the last three sum to the index entry of window_impact."""
+    s = EV.ns.values[idx]; ok = ~np.isnan(s); idx = idx[ok]; x = s[ok] - s[ok].mean()
+    slope = lambda col: float(np.sum((EV[col].values[idx] - EV[col].values[idx].mean()) * x) / np.sum(x * x))
+    return np.array([1.0, W["y10"] * slope("UST10Y") / slope("UST2Y"), W["equities"] * slope("SP500") / slope("UST2Y"), W["dollar"] * slope("DXY") / slope("UST2Y")])
+
 def positions(idx):
     """Event-position bins within the month (days 0-3, 4-7, ..., 20-23): (mean position, mean trading days in the month, share of events)."""
     k = np.array([int(EV.k[i]) for i in idx]); n = np.array([int(EV.n[i]) for i in idx])

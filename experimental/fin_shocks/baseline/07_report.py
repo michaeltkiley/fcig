@@ -42,13 +42,13 @@ for g, pids in CS.GROUPS.items():                                               
     blocks = []
     for pid in pids:
         p = CS.panel_by_id(pid)
-        if g == "B": blocks += [(CS.FORMS[f], [c for c in p["cases"] if c["form"] == f]) for f in ("nom", "real", "rstar")]
+        if g in ("B", "R4"): blocks += [(CS.FORMS[f], [c for c in p["cases"] if c["form"] == f]) for f in ("nom", "real", "rstar")]
         else: blocks.append((CS.SHORT[pid], p["cases"]))
     notes = CS.GROUP_NOTE[g]
     (REPORT / f"tab_main_{g}.tex").write_text(table(CS.GROUP_TITLE[g] + " (12 lags)", f"tab:main{g}", blocks, (MAIN_LAGS,), notes) + "\n")
 for p in CS.PANELS:                                                                  # appendix: 3, 6, 12 lags
     f = lambda c: CS.FORMS[c["form"]]
-    blocks = [(f(c0), [c for c in p["cases"] if c["form"] == c0["form"]]) for c0 in p["cases"][::2]] if p["id"] == "B" else [(f(p["cases"][0]), p["cases"])]
+    blocks = [(CS.FORMS[fm], [c for c in p["cases"] if c["form"] == fm]) for fm in dict.fromkeys(c["form"] for c in p["cases"])] if p["id"] in ("B", "R4") else [(f(p["cases"][0]), p["cases"])]
     (REPORT / f"tab_app_{p['id']}.tex").write_text(table(p["title"], f"tab:app{p['id']}", blocks, (3, 6, 12), p["notes"], "p") + "\n")
 
 # ---------------------------------------------------------------- monthly VAR benchmark tables
@@ -163,6 +163,18 @@ def write_numbers():
                 d("bl:" + k, num(r.kappa)); d("blabs:" + k, f"{abs(r.kappa):.2f}"); d("bl:" + k + ":sac", f"{abs(1 / r.kappa):.1f}")
                 d("bllo:" + k, "$-\\infty$" if np.isinf(r.k_lo) else num(r.k_lo)); d("blhi:" + k, "$+\\infty$" if np.isinf(r.k_hi) else num(r.k_hi))
                 d("blsig:" + k, "bounded away from zero" if (not np.isinf(r.k_lo) and not np.isinf(r.k_hi) and r.k_lo * r.k_hi > 0) or (np.isinf(r.k_lo) != np.isinf(r.k_hi) and (r.k_hi < 0 if np.isinf(r.k_lo) else r.k_lo > 0)) else "includes zero")
+    # robustness panels (12 lags): rb:<panel>:<no|yes>:<u|P>:<h> (no = same step without the FCI, yes = with it; panel R4: the FCI replaced by its components)
+    for pid in ("R1a", "R1b", "R1c", "R1d", "R1e", "R2a", "R2b", "R2c", "R2d", "R3a", "R3b", "R4"):
+        for cs in CS.panel_by_id(pid)["cases"]:
+            fk = "cmp" if cs["fci"] == "cmp" else ("no" if cs["fci"] == 0 else "yes"); form_tag = f":{cs['form']}" if pid == "R4" else ""
+            dd = R[CS.case_id(cs)]; g_ = dd[dd.lags == MAIN_LAGS]
+            for v in ("u", "P"):
+                r = g_[g_["var"] == v].iloc[0]
+                for h in (12, 24, 36):
+                    k = f"rb:{pid}{form_tag}:{fk}:{v}:{h}"; d("bl:" + k, num(r[f"r{h}"])); d("blabs:" + k, f"{abs(r[f'r{h}']):.2f}"); d("blsig:" + k, "significant" if r[f"lo{h}"] * r[f"hi{h}"] > 0 else "not significant")
+                    d("bllo:" + k, num(r[f"lo{h}"])); d("blhi:" + k, num(r[f"hi{h}"]))
+    WT = pd.read_csv(RESULTS / "weights_test.csv")
+    for _, r in WT[WT.lags == MAIN_LAGS].iterrows(): e_ = r["eq"]; d(f"bl:wt:{r.step}:{e_}:p", f"{r.p:.3f}"); d(f"bl:wt:{r.step}:{e_}:W", f"{r.wald:.1f}"); d(f"bl:wt:{r.step}:{e_}:q", str(int(r.restrictions)))
     from lib.daily import window_impact, event_index, EV
     from lib import monthly as MO
     from lib.model import MAC, fin_eom
@@ -210,8 +222,39 @@ def check_claims():
     chk("simulation: first-stage F below the data value in fewer than 25 percent of samples", sm("proxy_fci", "F").share_le_data < 0.25)
     chk("simulation: window-impact VAR centred on the truth (median within 0.05 of truth)", abs(sm("window", "u12").sim_median - sm("window", "u12").truth) < 0.05)
     chk("simulation: proxy VAR without FCI biased toward zero (median below half the truth)", sm("proxy_nofci", "u12").sim_median < 0.5 * sm("proxy_nofci", "u12").truth)
+    # Section 4 (robustness) claims
+    def rb(pid, fk, v, h):
+        cs = next(x for x in CS.panel_by_id(pid)["cases"] if (x["fci"] == 0) == (fk == "no")); dd = R[CS.case_id(cs)]; r = dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0]; return r[f"r{h}"], r[f"lo{h}"] * r[f"hi{h}"] > 0, r[f"lo{h}"], r[f"hi{h}"]
+    for pid in ("R1a", "R1b", "R1c", "R1d", "R1e"): chk(f"{pid}: with FCI unemployment positive at 12 m", rb(pid, "yes", "u", 12)[0] > 0)
+    chk("R1: with FCI unemployment significant at 12 m in all but the 1973 start", all(rb(p_, "yes", "u", 12)[1] for p_ in ("R1b", "R1c", "R1d", "R1e")) and not rb("R1a", "yes", "u", 12)[1])
+    chk("R1: price level significant at 12, 24, 36 m with and without the FCI in the three samples starting 1973", all(rb(p_, fk, "P", h)[1] and rb(p_, fk, "P", h)[0] < 0 for p_ in ("R1a", "R1c", "R1e") for fk in ("no", "yes") for h in (12, 24, 36)))
+    chk("R1b: price level significant with the FCI at 24 m; R1d (ends 2019, from 1996): not significant at 12, 24, 36 m", rb("R1b", "yes", "P", 24)[1] and not any(rb("R1d", "yes", "P", h)[1] for h in (12, 24, 36)))
+    chk("R1d: unemployment with FCI significant only at 12 m", rb("R1d", "yes", "u", 12)[1] and not rb("R1d", "yes", "u", 24)[1] and not rb("R1d", "yes", "u", 36)[1])
+    chk("R2a (Kiley): unemployment without FCI falls significantly at 12 m, with FCI rises significantly at 12 and 24 m; price level with FCI significant at 12 m, not at 24", rb("R2a", "no", "u", 12)[0] < 0 and rb("R2a", "no", "u", 12)[1] and rb("R2a", "yes", "u", 12)[1] and rb("R2a", "yes", "u", 24)[1] and rb("R2a", "yes", "P", 12)[1] and not rb("R2a", "yes", "P", 24)[1])
+    chk("R2b (Kiley, 1973): price level with FCI significant at 12, 24, 36 m; unemployment not", all(rb("R2b", "yes", "P", h)[1] for h in (12, 24, 36)) and not any(rb("R2b", "yes", "u", h)[1] for h in (12, 24, 36)))
+    chk("R2c (real + spline): unemployment without FCI falls significantly at 12 m, with FCI positive and not significant; price level with FCI not significant", rb("R2c", "no", "u", 12)[0] < 0 and rb("R2c", "no", "u", 12)[1] and rb("R2c", "yes", "u", 12)[0] > 0 and not any(rb("R2c", "yes", v, h)[1] for v in ("u", "P") for h in (12, 24, 36)))
+    chk("R2d (real + spline, 1973): with FCI unemployment and price significant at 12, 24, 36 m", all(rb("R2d", "yes", v, h)[1] for v in ("u", "P") for h in (12, 24, 36)))
+    chk("R3a (EBP): with FCI unemployment significant at 24 m (not 12); price significant at 12, 24, 36 m, also without the FCI", rb("R3a", "yes", "u", 24)[1] and not rb("R3a", "yes", "u", 12)[1] and all(rb("R3a", fk, "P", h)[1] for fk in ("no", "yes") for h in (12, 24, 36)))
+    chk("R3a: unemployment without FCI nearer zero than the baseline without FCI at 12 m", abs(rb("R3a", "no", "u", 12)[0]) < abs(est("rstar", "no", "u", 12)))
+    chk("R3b (EBP, 1973): unemployment close to zero (|r| < 0.1) with and without the FCI at 12, 24, 36 m; price significant in both", all(abs(rb("R3b", fk, "u", h)[0]) < 0.1 for fk in ("no", "yes") for h in (12, 24, 36)) and all(rb("R3b", fk, "P", h)[1] for fk in ("no", "yes") for h in (12, 24, 36)))
+    cm = lambda f, v, h: (lambda dd: dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0])(R[CS.case_id(dict(form=f, fci="cmp", macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"))])
+    chk("R4 (components): no significant response of unemployment or the price level at any step and horizon; price level point estimate not negative at 24 m", all(cm(f, v, h)[f"lo{h}"] * cm(f, v, h)[f"hi{h}"] < 0 for f in S for v in ("u", "P") for h in (12, 24, 36)) and all(cm(f, "P", 24)["r24"] > 0 for f in S))
+    chk("R4 r*-gap: baseline unemployment at 12 m inside the components interval; baseline price level at 24 m below the components interval", cm("rstar", "u", 12)["lo12"] <= est("rstar", "yes", "u", 12) <= cm("rstar", "u", 12)["hi12"] and est("rstar", "yes", "P", 24) < cm("rstar", "P", 24)["lo24"])
+    WT = pd.read_csv(RESULTS / "weights_test.csv"); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_)].p.iloc[0]
+    chk("weights test, 12 lags: no rejection at 5% in the unemployment equation at any step; rejection in the inflation equation at every step", all(wt(s_, "u", 12) > 0.05 for s_ in S) and all(wt(s_, "pi", 12) < 0.05 for s_ in S))
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
+
+# ---------------------------------------------------------------- test of the proportional-weights restriction
+WTT = pd.read_csv(RESULTS / "weights_test.csv"); wrows = []
+for step in ("nom", "real", "rstar"):
+    cells = []
+    for eq in ("u", "pi"):
+        for L in (3, 6, 12): r = WTT[(WTT.step == step) & (WTT.lags == L) & (WTT["eq"] == eq)].iloc[0]; cells.append(f"{r.wald:.1f} ({r.p:.3f})")
+    wrows.append(f"{CS.FORMS[step]} & " + " & ".join(cells) + r"\\")
+(REPORT / "tab_weights_test.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Test of the proportional-weights restriction}\label{tab:weightstest}",
+    r"\begin{tabular}{lrrrrrr}\toprule & \multicolumn{3}{c}{Unemployment gap equation} & \multicolumn{3}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}", r"Step & 3 lags & 6 lags & 12 lags & 3 lags & 6 lags & 12 lags\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
+    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic and, in parentheses, the chi-square p-value, for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (2 restrictions per lag), in each monthly equation; heteroskedasticity-robust (HC1) covariance matrix; 1996--2026, no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- weights table (window responses)
 w = pd.read_csv(OUT / "market_weights.csv", index_col=0)
