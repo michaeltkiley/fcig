@@ -35,6 +35,7 @@ class DGP:
         self.pool_non = self.rd[~isev]
         sj = pd.Series(self.s_obs, index=pd.DatetimeIndex(EV.d.values[self.idx0])); s_on = sj.reindex(self.rd_dates[isev]).values
         self.pool_ev = self.rd[isev] - np.outer(s_on, self.b)                 # event-day residuals purged of the policy impact
+        self.rd_pur = self.rd.copy(); self.rd_pur[isev] = self.pool_ev        # the whole daily residual series with announcement days purged (used by the block bootstrap)
         self.nd = self.rd.shape[1]
         # truth: model response (window units) and contemporaneous monthly-average response
         est = next(M.estimate(form, fci, "u,pi", start, None, "in", "none", 5, (L,)))
@@ -56,24 +57,31 @@ class DGP:
         self.off_daily = {"rstar": np.zeros((T, 2)), **{f: np.column_stack([(M.RATE[f] - M.RATE["rstar"]).ffill().values[sl], (M.FCI[f] - M.FCI["rstar"]).ffill().values[sl]]) for f in ("nom", "real")}}
         self.offset = {"rstar": np.zeros((len(allm), 2)), "nom": (M.fin_monthly("nom", "nom").loc[allm] - base).values, "real": (M.fin_monthly("real", "real").loc[allm] - base).values}
 
-    def simulate(self, S, rng):
-        """S simulated samples: monthly macro (S, M, 2), monthly financial averages (S, M, nd) and the monthly instrument (S, M)."""
+    def simulate(self, S, rng, block=None):
+        """S simulated samples: monthly macro (S, M, 2), monthly financial averages (S, M, nd), the monthly instrument (S, M) and the daily series (S, T, nd).
+        block=None: innovations drawn independently; block=(bm, bd): monthly residuals in blocks of bm months and daily residuals in blocks of bd days (keeps serial dependence and volatility clustering)."""
         nd, K, nm = self.nd, 2, len(self.months); T = self.T1 + 1 - (self.T0 - 70)
         F = np.zeros((S, T, nd)); F[:, :70] = self.F0; cs = np.zeros((S, T + 1, nd)); cs[:, 1:71] = np.cumsum(F[:, :70], axis=1)
         m = np.zeros((S, 12 + nm, K)); m[:, :12] = self.m0; fb = np.zeros((S, 12 + nm, nd)); fb[:, :12] = self.fb0
         s_draw = rng.choice(self.s_obs, size=(S, len(self.s_obs)), replace=True); ev_day = {int(p) - (self.T0 - 70): j for j, p in enumerate(self.ev_pos)}
         z = np.zeros((S, nm)); mon_of = {int(p): int(np.searchsorted([b[0] for b in self.bounds], p, side="right") - 1) for p in self.ev_pos}
         for j, p in enumerate(self.ev_pos): z[:, mon_of[int(p)]] += s_draw[:, j]
+        Tsim = self.T1 + 1 - self.T0
+        if block:
+            bm, bd = block; ib = lambda n, b, nn: (rng.integers(0, n - b + 1, (S, int(np.ceil(nn / b))))[:, :, None] + np.arange(b)).reshape(S, -1)[:, :nn]
+            e_all = self.rm[ib(len(self.rm), bm, nm)]; eps_all = self.rd_pur[ib(len(self.rd_pur), bd, Tsim)]
         for t in range(nm):
             # monthly macro first
             lags_m = np.concatenate([m[:, 12 + t - l] for l in range(1, L + 1)], axis=1); lags_f = np.concatenate([fb[:, 12 + t - l] for l in range(1, L + 1)], axis=1)
-            x = np.concatenate([np.ones((S, 1)), lags_m, lags_f], axis=1); m[:, 12 + t] = x @ self.C + self.rm[rng.integers(0, len(self.rm), S)]
+            x = np.concatenate([np.ones((S, 1)), lags_m, lags_f], axis=1); m[:, 12 + t] = x @ self.C + (e_all[:, t] if block else self.rm[rng.integers(0, len(self.rm), S)])
             lo, hi = self.bounds[t]
             for tau in range(lo, hi + 1):
                 k = tau - (self.T0 - 70)
                 means = [(cs[:, k] - cs[:, k - h]) / h for h in HAR]
                 xd = np.concatenate([np.ones((S, 1))] + means + [m[:, 12 + t - 1], m[:, 12 + t]], axis=1)
-                if k in ev_day:
+                if block:
+                    eps = eps_all[:, k - 70] + ((s_draw[:, ev_day[k]][:, None] * self.b[None, :]) if k in ev_day else 0.0)
+                elif k in ev_day:
                     j = ev_day[k]; eps = self.pool_ev[rng.integers(0, len(self.pool_ev), S)] + s_draw[:, j][:, None] * self.b[None, :]
                 else: eps = self.pool_non[rng.integers(0, len(self.pool_non), S)]
                 F[:, k] = xd @ self.Bd + eps; cs[:, k + 1] = cs[:, k] + F[:, k]
@@ -94,24 +102,6 @@ def proxy_stats(Z, z, ok, K, per_ok_first=None):
 def window_stats(T, b, phi, K):
     s = phi * np.r_[0, 0, b]; return {f"we_{v}{h}": float(MO.row_of(T, v, h) @ s) for v, h in TARGETS}
 
-def run(S=500, start="1996-01"):
-    """Simulate from the r*-gap model and analyse the samples with the 2-year yield and FCI in r*-gap, nominal and real form. Returns the DGP and {form: DataFrame}."""
-    dg = DGP("rstar", "rstar", start); rng = np.random.default_rng(zlib.crc32(b"sim|rstar|rstar"))
-    m, fb, z, _ = dg.simulate(S, rng)
-    idx0 = dg.idx0; ev = EV.iloc[idx0]; mon = ev.Date.dt.to_period("M"); first, last = mon.min(), mon.max(); ok = np.asarray((dg.months >= first) & (dg.months <= last))
-    phi = MO.share(idx0); out = {}
-    for form in ("rstar", "nom", "real"):
-        rows = []
-        for s_ in range(S):
-            f = fb[s_] + dg.offset[form]
-            Z4 = np.concatenate([m[s_], f], axis=1); Z3 = np.concatenate([m[s_], f[:, :1]], axis=1)
-            r4, T4 = proxy_stats(Z4, z[s_], ok, 4); r3, T3 = proxy_stats(Z3, z[s_], ok, 3)
-            row = {f"fci_{k}": v for k, v in r4.items()}; row.update({f"nofci_{k}": v for k, v in r3.items()}); row.update({f"fci_{k}": v for k, v in window_stats(T4, dg.b, phi, 4).items()})
-            row["sim"] = s_; rows.append(row)
-        out[form] = pd.DataFrame(rows)
-    return dg, out
-
-
 # ---------------------------------------------------------------- the paper's estimator on the simulated samples
 _G = {}
 DTARGETS = [("u", 12), ("u", 24), ("P", 12), ("P", 24)]
@@ -130,19 +120,25 @@ def model_stats(dg, F, m, form, use_fci):
     return {f"{v}{h}": float(lev[h, 0 if v == "u" else 1]) for v, h in DTARGETS}
 
 def _one(s):
-    dg, F, m = _G["dg"], _G["F"][s], _G["m"][s]; rows = []
+    dg, F, m, fb, z, ok, phi = (_G[k] for k in ("dg", "F", "m", "fb", "z", "ok", "phi")); mrows, drows = [], []
     for form in ("rstar", "nom", "real"):
-        for use_fci in (0, 1): rows.append(dict(sim=s, form=form, fci=use_fci, **model_stats(dg, F, m, form, use_fci)))
-    return rows
+        f = fb[s] + dg.offset[form]; Z4 = np.concatenate([m[s], f], axis=1); Z3 = np.concatenate([m[s], f[:, :1]], axis=1)
+        r4, T4 = proxy_stats(Z4, z[s], ok, 4); r3, _ = proxy_stats(Z3, z[s], ok, 3)
+        row = {f"fci_{k}": v for k, v in r4.items()}; row.update({f"nofci_{k}": v for k, v in r3.items()}); row.update({f"fci_{k}": v for k, v in window_stats(T4, dg.b, phi, 4).items()})
+        mrows.append(dict(sim=s, form=form, **row))
+        for use_fci in (0, 1): drows.append(dict(sim=s, form=form, fci=use_fci, **model_stats(dg, F[s], m[s], form, use_fci)))
+    return mrows, drows
 
-def run_daily(S=500, jobs=4):
-    """Re-estimate the daily-block model on each simulated sample (r*-gap, nominal, real measures; with and without the FCI)."""
-    dg = DGP("rstar", "rstar"); rng = np.random.default_rng(zlib.crc32(b"sim|rstar|rstar")); m, fb, z, F = dg.simulate(S, rng)
-    _G.update(dg=dg, F=F, m=m); rows = []
+def run_sims(S=500, block=None, jobs=4):
+    """Simulate S samples from the r*-gap model (innovations iid or in blocks) and analyse each with (i) the monthly proxy VAR and window-impact estimator and (ii) the full daily-block
+    model, with the 2-year yield and FCI in r*-gap, nominal and real form. Returns the DGP, a DataFrame of monthly estimators and a DataFrame of daily-block estimates."""
+    dg = DGP("rstar", "rstar"); rng = np.random.default_rng(zlib.crc32(b"sim|rstar|rstar" + (b"" if not block else f"|block{block}".encode())))
+    m, fb, z, F = dg.simulate(S, rng, block); ev = EV.iloc[dg.idx0]; mon = ev.Date.dt.to_period("M"); ok = np.asarray((dg.months >= mon.min()) & (dg.months <= mon.max()))
+    _G.update(dg=dg, F=F, m=m, fb=fb, z=z, ok=ok, phi=MO.share(dg.idx0)); mr, dr = [], []
     if jobs > 1:
         from multiprocessing import Pool
         with Pool(jobs) as p:
-            for r in p.imap_unordered(_one, range(S), chunksize=5): rows += r
+            for a, b in p.imap_unordered(_one, range(S), chunksize=5): mr += a; dr += b
     else:
-        for s in range(S): rows += _one(s)
-    return dg, pd.DataFrame(rows).sort_values(["form", "fci", "sim"]).reset_index(drop=True)
+        for s_ in range(S): a, b = _one(s_); mr += a; dr += b
+    return dg, pd.DataFrame(mr).sort_values(["form", "sim"]).reset_index(drop=True), pd.DataFrame(dr).sort_values(["form", "fci", "sim"]).reset_index(drop=True)

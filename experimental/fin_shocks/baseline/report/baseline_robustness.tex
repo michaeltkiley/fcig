@@ -35,9 +35,10 @@ The two units differ (monthly-average versus window 2-year). Plagborg-M{\o}ller 
 \subsection{Would a monthly proxy VAR look like the data if the model were true?}
 The proxy VAR is weak in the data (first-stage $F$ of 2 to 6) and, without the FCI, gives a falling unemployment rate. Is that what the estimated model implies for a monthly estimator? We use the estimated r*-gap model of Section~1, the paper's baseline, as the one true process: the daily block $f_d=B'x_d+\varepsilon_d+b\,s_j\mathbf 1[d\in\text{announcement } j]$ and the monthly equations, with the data's calendar (369 months) and announcement days, bootstrapped innovations and surprises $s_j$ drawn from the observed Nakamura--Steinsson surprises. Policy therefore reaches unemployment and inflation only through the 2-year yield and the FCI. On each of 1,000 simulated samples we estimate the monthly proxy VAR with and without the FCI and the window-impact version, exactly as in the data, and compare the distribution of the statistics with the data. The true values are the model's own responses, converted to the monthly-average unit of the proxy VAR as the ratio of averages (an approximation). The table first shows the data analysed with r*-gap measures. If the r*-gap model is true, a researcher who measures the 2-year yield and the FCI in nominal or real form observes the r*-gap series plus slow-moving terms (expected inflation and r*, and the corresponding terms of the index) that do not depend on the policy shock; the appendix repeats the exercise with those measures, with the same true responses, and compares with the nominal and real data.
 \input{tab_proxy_sim_rstar}
+\input{tab_monthly_irf_sim}
 
 \subsection{The same test for the paper's own estimator}
-The same simulated samples can be used to ask whether the nominal and real results of Section~1 are what the r*-gap model implies. On each sample we re-estimate the full daily-block model, with the 2-year yield and the FCI measured in r*-gap, nominal and real form, and record the responses of unemployment and the price level after 12 and 24 months. The r*-gap estimates are centred on the true responses, so the estimator is approximately unbiased. With the FCI, the nominal and real data estimates lie inside the simulated bands. Without the FCI, the data estimates of the unemployment response with nominal and real measures lie below the simulated bands: the r*-gap model with mismeasured rates does not by itself generate a response that negative.
+The same simulated samples can be used to ask whether the nominal and real results of Section~1 are what the r*-gap model implies. On each sample we re-estimate the full daily-block model, with the 2-year yield and the FCI measured in r*-gap, nominal and real form, and record the responses of unemployment and the price level after 12 and 24 months. The r*-gap estimates are centred on the true responses, so the estimator is approximately unbiased. With the FCI, the nominal and real data estimates lie inside the simulated bands. Without the FCI, the data estimates of the unemployment response with nominal and real measures lie below the simulated bands: the r*-gap model with mismeasured rates does not by itself generate a response that negative. Resampling the innovations in blocks, which keeps serial dependence and volatility clustering, widens the bands only slightly and leaves these conclusions unchanged (appendix).
 \input{tab_daily_sim}
 
 \section{Robustness}
@@ -49,6 +50,8 @@ The same simulated samples can be used to ask whether the nominal and real resul
 \section{Results for 3, 6 and 12 lags}
 \input{tab_app_B}\input{tab_app_R1a}\input{tab_app_R1b}\input{tab_app_R1c}\input{tab_app_R1d}\input{tab_app_R1e}
 \input{tab_app_R2a}\input{tab_app_R2b}\input{tab_app_R2c}\input{tab_app_R2d}\input{tab_app_R3a}\input{tab_app_R3b}\input{tab_app_monthly1996}\input{tab_app_monthly1973}\input{tab_proxy_sim_nom}\input{tab_proxy_sim_real}
+\subsection*{Block bootstrap of the innovations}
+\input{tab_monthly_irf_sim_block}\input{tab_daily_sim_block}
 
 
 \section*{References cited in the monthly-VAR specification}
