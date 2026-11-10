@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 23:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 23:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -613,14 +613,14 @@ Overfull \hbox (37.21986pt too wide) in paragraph at lines 3--15
  [][] 
  []
 
-) [12 <../baseline/report/fig_standard.pdf>]
-<../baseline/report/fig_size.pdf, id=723, 520.34402pt x 281.85298pt>
+) [12 <../baseline/report/fig_standard.pdf>] [13]
+<../baseline/report/fig_size.pdf, id=737, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 23
 0.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
- [13]
+
 (../baseline/report/tab_main_B.tex) [14 <../baseline/report/fig_size.pdf>]
 <../baseline/report/fig_steps.pdf, id=818, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
@@ -739,7 +739,7 @@ Here is how much of TeX's memory you used:
  37131 multiletter control sequences out of 15000+600000
  640335 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,1507b,771s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1539b,771s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -753,9 +753,9 @@ hare/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/publi
 c/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/t
 exmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lm
 sy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (41 pages, 571970 bytes).
+Output written on mp_transmission.pdf (41 pages, 572064 bytes).
 PDF statistics:
- 1282 PDF objects out of 1440 (max. 8388607)
+ 1281 PDF objects out of 1440 (max. 8388607)
  977 compressed objects within 10 object streams
  223 named destinations out of 1000 (max. 500000)
  245 words of extra memory for PDF output out of 10000 (max. 10000000)
