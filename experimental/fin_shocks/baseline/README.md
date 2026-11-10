@@ -1,17 +1,20 @@
-# Baseline and robustness tables for Note B (clean replication set)
+# Note B: baseline and robustness results (self-contained replication package)
 
-Replaces the experimental `../midas_core.py` driver for the tables below. No trends except the spline in Robustness 2c-d, NS surprise only, u gap and core PCE price level (plus EBP in one case).
+Everything in the results document is built from raw inputs in `data/` by the scripts below, in order. Each step writes files that the next reads, and each can be re-run alone.
+Note A's code that Note B needs (the market index, its weights and inputs) is vendored in `lib/noteA.py`; step 2 checks it against Note A's published files when the Note A package is present.
 
-| File | Role |
-|---|---|
-| `cases.py` | the case list (12 tables, 28 estimations); edit here to add or drop cases |
-| `engine.py` | estimation (trimmed from `../midas_core.py`; agrees with it to within 0.0005 on the cases compared) |
-| `run_all.py` | runs the cases, one CSV each in `results/` (resumable; ~1 min per case, 4 workers) |
-| `make_report.py` | writes `report/tab_*.tex` from `results/` |
-| `report/baseline_robustness.tex`, `.pdf` | the document |
+| Step | Script | Reads | Writes |
+|---|---|---|---|
+| 1 | `01_data.py` | `data/` | `output/data_monthly.csv`, `output/macro_monthly.csv` |
+| 2 | `02_indexes.py` | `output/data_monthly.csv`, `data/usmpd_monetary_events.csv` | `output/market_weights.csv`, `output/indexes_*.csv` |
+| 3 | `03_estimate.py` | `cases.py`, `output/`, `data/` | `results/<case>.csv`, `results/<case>_paths.csv`, `output/draws/` |
+| 4 | `04_tradeoff.py` | `output/draws/` | `results/tradeoff.csv`, `results/tradeoff_diff.csv` |
+| 5 | `05_report.py` | `results/`, `output/` | `report/tab_*.tex`, `report/fig_*.pdf` |
 
-Reproduce: `pip install statsmodels scipy matplotlib pandas openpyxl`; `cd experimental/fin_shocks/baseline && python3 run_all.py --jobs 4 && python3 make_report.py && cd report && pdflatex baseline_robustness.tex` (twice).
+Then `cd report && pdflatex baseline_robustness.tex` (twice).
 
-Still imported from the parent folder (to be consolidated later): `mf_common`, `midas_var`, `midas_bs`, `route_a_pos`, and the `fci` utilities of Note A. The engine changes directory to `fin_shocks/` on import because those modules use relative paths.
+Reproduce: `pip install -r requirements.txt`; `python3 01_data.py && python3 02_indexes.py && python3 03_estimate.py --jobs 4 && python3 04_tradeoff.py && python3 05_report.py` (about 8 minutes).
 
-Specification choices to confirm are listed in the PDF introduction (what "drop 2020" means; five, not six, sample cases in Robustness 1; Kiley FCI in 2a-b; spline knots at NBER peaks in 2c-d). Intervals: 200 draws; the same announcement resamples are used for every case, and the monthly resampling is seeded per case, so results do not depend on run order.
+* `cases.py` is the single list of cases (12 panels, 28 estimations; edit it to add or drop cases). `lib/model.py` documents the model; `lib/daily.py` the daily data and announcements; `data/SOURCES.md` the inputs and what is unverified.
+* Specification: Nakamura-Steinsson policy news (252 announcements), 12 monthly lags in the main tables (3 and 6 in the appendix), no deterministic trend except the spline of Robustness 2c-d, 200 bootstrap draws (announcements and monthly residuals; the daily block is not re-estimated).
+* Verification: the model reproduces the earlier experimental engine (`../legacy/`) to the rounding of its stored results (5e-5) on seven case types, and the market index and weights reproduce Note A's files exactly.

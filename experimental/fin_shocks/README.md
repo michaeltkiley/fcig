@@ -6,16 +6,19 @@
 |---|---|
 | `paper/mp_transmission.tex`, `.pdf` | The note (plain language). Tables `paper/tables/`, figures `paper/figures/`, built by `paper/make_tables.py` |
 | `paper/REVIEW_*.md`, `paper/REFERENCE_CHECK.md` | Colleague reviews, plain-language review, reference check |
-| `midas_core.py` | Model used by the note: daily HAR block (2-year, FCI) + monthly VAR rows (u gap, core PCE [, IP]); options for rate/FCI forms, trend, samples, shocks, bootstrap |
+| `baseline/` | **Clean, self-contained replication package for the baseline and robustness results** (raw data in `baseline/data/`, scripts `01_` to `05_`, `README.md` there). Use this for new work |
+| `legacy/midas_core.py` | Model used by the note: daily HAR block (2-year, FCI) + monthly VAR rows (u gap, core PCE [, IP]); options for rate/FCI forms, trend, samples, shocks, bootstrap |
 | `mf_common.py`, `route_a_pos.py`, `midas_var.py`, `midas_bs.py` | Shared data, events, shocks (NS, MP1, NS-GB, BS-ORTH, NS-JK), window responses; helpers |
 | `omit_fci_sim.py` | Simulation in Section 2 of the note: true four-variable VAR, estimated with and without the FCI (FS-A34) |
 | `monthly_proxy.py` | Purely monthly VAR comparison: proxy and window-impact identification, with and without the FCI (FS-A38) |
 | `window_scope.py` | Scope of the window impact: R2 of window moves on the surprise, b_F by state and period, trace of the unexplained FCI move; commodity table (FS-A39) |
 | `tradeoff.py` | Implied tradeoff: Phillips multiplier with Anderson-Rubin-type sets, and the shock's 2-year/FCI paths; table and headline figure built in `paper/make_tables.py` (FS-A40) |
-| `data/` | GSW 9-10y forward rate; Bauer-Swanson posted surprises |
+| `legacy/data/` | GSW 9-10y forward rate; Bauer-Swanson posted surprises |
 | `FS_QA.md` | Decisions FS-A1..A39 |
 | `MF_REPORT.md` | Older markdown version of the note (superseded) |
 | `MF_DEVELOPMENT.md`, `MF_PLAN.md`, `MIXED_FREQUENCY_NOTES.md`, `LITERATURE_MIDAS.md`, `PROPOSALS.md` | Exploratory history, literature notes, original proposals |
-| other `*.py`, `*.log`, `*.csv`, `runs68/` | Exploratory routes (stage 0, routes A/B, MIDAS variants, direct regressions) and run logs |
+| `legacy/` (all scripts, logs, CSV outputs, `runs68/`) | Exploratory routes (stage 0, routes A/B, MIDAS variants, direct regressions) and run logs |
+
+**10 Nov 2026:** all experimental scripts and their outputs were moved to `legacy/` (`legacy/README.md`); the scripts named above (`midas_core.py`, `mf_common.py`, `omit_fci_sim.py`, `monthly_proxy.py`, `window_scope.py`, `tradeoff.py`, ...) are now in `legacy/`. `paper/make_tables.py` reads its estimation outputs from `legacy/`.
 
 Not used by the daily workflow.

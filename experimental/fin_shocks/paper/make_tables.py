@@ -3,12 +3,12 @@ Run from this folder: python3 make_tables.py   Output: tables/*.tex, figures/fig
 Markers: ** = 90% interval excludes zero; dagger = 68% interval excludes zero (but not the 90%)."""
 import os, numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
-HERE = os.path.dirname(os.path.abspath(__file__)); UP = os.path.dirname(HERE)
+HERE = os.path.dirname(os.path.abspath(__file__)); UP = os.path.join(os.path.dirname(HERE), "legacy")      # experimental estimation outputs (moved to legacy/)
 import glob
 def _load(irf_files):
     """All midas_core outputs; the sample tag comes from the file name; duplicates (same case run twice) keep the newest file."""
     out = []
-    for fn in sorted(glob.glob(os.path.join(UP, "midas_core_*.csv")), key=os.path.getmtime):
+    for fn in sorted(glob.glob(os.path.join(UP, "midas_core_*.csv")), key=os.path.basename):
         if fn.endswith("_irf.csv") != irf_files or os.path.basename(fn) in ("midas_core.csv", "midas_core_irf.csv"): continue
         if any(t_ in os.path.basename(fn) for t_ in ("_L12", "_t2020")): continue   # exploratory grids (trend/start/end, 2020 treatment): not part of the note's tables
         import re as _re
@@ -103,9 +103,9 @@ _o += ["\\bottomrule", "\\end{tabular}"]
 open(os.path.join(HERE, "tables", "tabA_prop.tex"), "w").write("\n".join(_o) + "\n")
 
 # Figure 2: the r*-gap 2-year, the r*-gap FCI and core inflation, 2015-2026 (monthly)
-import sys; sys.path.insert(0, os.path.join(UP, "..", "mp_var_fci")); sys.path.insert(0, UP)
+import sys; sys.path.insert(0, os.path.join(UP, "..", "..", "mp_var_fci")); sys.path.insert(0, UP)
 from mf_common import M as _M
-_e2 = pd.read_csv(os.path.join(UP, "..", "mp_var_fci", "data", "EXPINF2YR.csv")); _e2 = pd.Series(_e2.iloc[:, 1].values, index=pd.PeriodIndex(pd.to_datetime(_e2.iloc[:, 0]), freq="M"))
+_e2 = pd.read_csv(os.path.join(UP, "..", "..", "mp_var_fci", "data", "EXPINF2YR.csv")); _e2 = pd.Series(_e2.iloc[:, 1].values, index=pd.PeriodIndex(pd.to_datetime(_e2.iloc[:, 0]), freq="M"))
 from mf_common import D0 as _D0
 _d0 = _D0.load()
 gap2 = (_M.gs2 - _e2.reindex(_M.index) - _d0["rstar LW"].reindex(_M.index))
