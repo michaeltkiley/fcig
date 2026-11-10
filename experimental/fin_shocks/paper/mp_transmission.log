@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 22:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 22:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -567,43 +567,43 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/sha
 re/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
-4.
+2.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 43.
- [2{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}] [3{/usr/share/texmf/fonts/
-enc/dvips/lm/lm-rm.enc}] [4] [5{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.e
+(Font)              <10.95> on input line 39.
+ [2{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}] [3] [4] [5{/usr/share/texm
+f/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.e
 nc}]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 116.
+(hyperref)                removing `math shift' on input line 105.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 116.
+(hyperref)                removing `superscript' on input line 105.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 116.
+(hyperref)                removing `math shift' on input line 105.
 
 [6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 167--167
+Underfull \hbox (badness 10000) in paragraph at lines 156--156
 []\T1/lmr/m/n/10 Window
  []
 
 
-Underfull \hbox (badness 1622) in paragraph at lines 169--169
+Underfull \hbox (badness 1622) in paragraph at lines 158--158
 []\T1/lmr/m/n/10 Unemployment and in-fla-tion,
  []
 
-[9] [10] [11] [12]
-<../baseline/report/fig_standard.pdf, id=649, 520.34402pt x 245.718pt>
+[9] [10] [11]
+<../baseline/report/fig_standard.pdf, id=638, 520.34402pt x 245.718pt>
 File: ../baseline/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline/report/fig_standard.pdf  used on input lin
-e 228.
+e 216.
 (pdftex.def)             Requested size: 469.75502pt x 221.84152pt.
  (../baseline/report/tab_standard.tex
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -613,57 +613,57 @@ Overfull \hbox (37.21986pt too wide) in paragraph at lines 3--15
  [][] 
  []
 
-) [13 <../baseline/report/fig_standard.pdf>]
-<../baseline/report/fig_size.pdf, id=737, 520.34402pt x 281.85298pt>
+) [12 <../baseline/report/fig_standard.pdf>]
+<../baseline/report/fig_size.pdf, id=723, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
-Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 24
-2.
+Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 23
+0.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
- [14]
-(../baseline/report/tab_main_B.tex) [15 <../baseline/report/fig_size.pdf>]
-<../baseline/report/fig_steps.pdf, id=829, 520.34402pt x 281.85298pt>
+ [13]
+(../baseline/report/tab_main_B.tex) [14 <../baseline/report/fig_size.pdf>]
+<../baseline/report/fig_steps.pdf, id=818, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
-53.
+41.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
 
-[16 <../baseline/report/fig_steps.pdf>] (../baseline/report/tab_tradeoff.tex)
-[17] (../baseline/report/tab_weights.tex)
-<../baseline/report/fig_financial.pdf, id=910, 317.98799pt x 202.356pt>
+[15 <../baseline/report/fig_steps.pdf>] (../baseline/report/tab_tradeoff.tex)
+[16] (../baseline/report/tab_weights.tex)
+<../baseline/report/fig_financial.pdf, id=899, 317.98799pt x 202.356pt>
 File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
-ne 284.
+ne 272.
 (pdftex.def)             Requested size: 291.2458pt x 185.34843pt.
- [18]
+ [17]
 (../baseline/report/tab_main_monthly.tex
 Overfull \hbox (3.81024pt too wide) in paragraph at lines 3--33
  [][] 
  []
 
-) [19 <../baseline/report/fig_financial.pdf>]
-(../baseline/report/tab_proxy_sim.tex) [20] (../baseline/report/tab_main_R1.tex
+) [18 <../baseline/report/fig_financial.pdf>]
+(../baseline/report/tab_proxy_sim.tex) [19] (../baseline/report/tab_main_R1.tex
 
 Overfull \hbox (36.0331pt too wide) in paragraph at lines 3--31
  [][] 
  []
 
-) [21]
+) [20]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 314.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 314.
+(hyperref)                removing `math shift' on input line 302.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 314.
+(hyperref)                removing `superscript' on input line 302.
 
-[22] (../baseline/report/tab_main_R2.tex
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 302.
+
+[21] (../baseline/report/tab_main_R2.tex
 Overfull \hbox (91.13708pt too wide) in paragraph at lines 3--26
  [][] 
  []
@@ -673,9 +673,9 @@ Overfull \hbox (27.65965pt too wide) in paragraph at lines 3--16
  [][] 
  []
 
-) [23] (../baseline/report/tab_main_R4.tex) [24]
-(../baseline/report/tab_weights_test.tex) [25] [26] [27] [28] [29] [30]
-(../baseline/report/tab_app_B.tex [31]) (../baseline/report/tab_app_R1a.tex)
+) [22] (../baseline/report/tab_main_R4.tex) [23]
+(../baseline/report/tab_weights_test.tex) [24] [25] [26] [27] [28] [29]
+(../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex)
 (../baseline/report/tab_app_R1b.tex) (../baseline/report/tab_app_R1c.tex)
 (../baseline/report/tab_app_R1d.tex) (../baseline/report/tab_app_R1e.tex)
 (../baseline/report/tab_app_R2a.tex
@@ -695,8 +695,8 @@ Overfull \hbox (115.98897pt too wide) in paragraph at lines 3--11
  [][] 
  []
 
-) (../baseline/report/tab_monthly_F.tex)
-(../baseline/report/tab_app_monthly.tex
+) (../baseline/report/tab_monthly_F.tex [30] [31] [32] [33] [34] [35] [36]
+[37]) (../baseline/report/tab_app_monthly.tex
 Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
  [][] 
  []
@@ -704,27 +704,27 @@ Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
 
 LaTeX Warning: Float too large for page by 162.00858pt on input line 82.
 
-) [32] [33] [34] [35] [36] [37] [38] [39] [40]
-Underfull \hbox (badness 10000) in paragraph at lines 527--527
+) [38] [39]
+Underfull \hbox (badness 10000) in paragraph at lines 513--513
 []\T1/lmr/m/n/10 Industrial pro-duc-tion; com-mod-ity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 532--532
+Underfull \hbox (badness 10000) in paragraph at lines 518--518
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 533--534
+Underfull \hbox (badness 7168) in paragraph at lines 519--520
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF2YR, EX-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 538--539
+Underfull \hbox (badness 10000) in paragraph at lines 524--525
 []\T1/lmr/m/n/10 FRED DTWEXBGS, ear-lier DTWEXB,
  []
 
-[41] [42] (./mp_transmission.aux)
+[40] [41] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -733,13 +733,13 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: A65E6F3A06D89779C6CC12E9032288D4;5434.
  ) 
 Here is how much of TeX's memory you used:
- 15635 strings out of 476182
- 256141 string characters out of 5795594
- 2106975 words of memory out of 5000000
+ 15634 strings out of 476182
+ 256134 string characters out of 5795594
+ 2071975 words of memory out of 5000000
  37131 multiletter control sequences out of 15000+600000
  640335 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,1597b,737s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1507b,747s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -753,10 +753,10 @@ hare/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/publi
 c/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/t
 exmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lm
 sy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (42 pages, 574553 bytes).
+Output written on mp_transmission.pdf (41 pages, 571102 bytes).
 PDF statistics:
- 1294 PDF objects out of 1440 (max. 8388607)
- 988 compressed objects within 10 object streams
- 224 named destinations out of 1000 (max. 500000)
+ 1282 PDF objects out of 1440 (max. 8388607)
+ 977 compressed objects within 10 object streams
+ 223 named destinations out of 1000 (max. 500000)
  245 words of extra memory for PDF output out of 10000 (max. 10000000)
 
