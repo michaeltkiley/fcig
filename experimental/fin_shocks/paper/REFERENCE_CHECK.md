@@ -41,3 +41,11 @@ Each entry checked against Crossref (DOI metadata), RePEc/EconPapers, or the iss
 
 Added after a search for related work (all verified on Crossref): Jacobson, Matthes and Walker, "Temporal Aggregation Bias and Monetary Policy Transmission," J. Political Economy Macroeconomics (2026, doi 10.1086/741548; volume/pages not yet assigned in Crossref; first-name initials from memory); Brennan, Jacobson, Matthes and Walker (2025), B.E. J. Macroeconomics 25(2), 595-659 (initials from memory); Bu, Rogers and Wu (2021), JME 118, 331-349; Plagborg-Moller and Wolf (2021), Econometrica 89(2), 955-980.
 Related but not cited: Lee and Sekhposyan (temporal aggregation and shock propagation; presented EABCN April 2026 and Princeton Sept 2024; no text found); Garabedian (Central Bank of Ireland RTP 4/2025, r* measures and monetary shocks); BIS WP 1288 ("The capital puzzle", stance relative to r*). No paper found that propagates high-frequency surprises through a broad FCI measured relative to r*.
+
+
+## 10 Nov 2026: references for the monthly VAR benchmarks (all checked on Crossref, [verified])
+- Montiel Olea, J. L., J. H. Stock and M. W. Watson (2021), "Inference in Structural Vector Autoregressions identified with an external instrument," Journal of Econometrics 225(1), 74-87, doi:10.1016/j.jeconom.2020.05.014. Added (`montiel2021`).
+- Lunsford, K. G. (2015), "Identifying Structural VARs with a Proxy Variable and a Test for a Weak Proxy," Federal Reserve Bank of Cleveland, published 2 Dec 2015, doi:10.26509/frbc-wp-201528. Added (`lunsford2015`). The working-paper number 15-28 is read from the DOI suffix [inference]; Crossref gives no number field.
+- Jacobson, Matthes and Walker (2026), JPE Macroeconomics, online 26 Mar 2026, doi:10.1086/741548: author names with middle initials confirmed against the FEDS 2022-054r1 record (Margaret M. Jacobson, Christian Matthes, Todd B. Walker). Volume, issue and pages are not yet in Crossref; entry now reads "advance online publication".
+- Brennan, Jacobson, Matthes and Walker (2025), B.E. Journal of Macroeconomics 25(2), 595-659, doi:10.1515/bejm-2024-0175: initials confirmed (Connor M. Brennan).
+- Stock and Watson (2018), Economic Journal 128(610), 917-948, doi:10.1111/ecoj.12593 and Mertens and Ravn (2013), AER 103(4), 1212-1247, doi:10.1257/aer.103.4.1212: bibliographic details confirmed against Crossref.

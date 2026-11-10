@@ -53,6 +53,7 @@ for p in CS.PANELS:                                                             
 
 # ---------------------------------------------------------------- monthly VAR benchmark tables
 MON = {CS.monthly_id(m): pd.read_csv(RESULTS / f"{CS.monthly_id(m)}.csv") for m in CS.MONTHLY}
+START_LABEL = {"1996-01": "1996 sample", "1973-01": "1973 sample"}
 IDENT = {"P1": "Proxy VAR", "WE": "Window impact"}
 def mcells(d, L, ident):
     g = d[(d.lags == L) & (d.ident == ident)]; pts, ivs = [], []
@@ -62,14 +63,14 @@ def mcells(d, L, ident):
             if r.unbounded: pts.append(num(r.r)); ivs.append("unbounded")
             else: pts.append(num(r.r) + ("$^{*}$" if r.lo * r.hi > 0 else "")); ivs.append(f"[{num(r.lo)}, {num(r.hi)}]")
     return int(g.nobs.iloc[0]), pts, ivs
-def monthly_table(title, label, lags, note, place="H"):
+def monthly_table(title, label, lags, note, start, place="H"):
     out = [rf"\begin{{table}}[{place}]\centering\scriptsize\setlength{{\tabcolsep}}{{2pt}}", rf"\caption{{{title}}}\label{{{label}}}",
            r"\begin{tabular}{lllcrrrrrrr}\toprule" "\n" r" & & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){6-8}\cmidrule(lr){9-11}" "\n"
            r"2-year & FCI & Identification & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule"]
     for si, step in enumerate(("nom", "real", "rstar")):
         if si: out.append(r"\addlinespace")
         for fci in (0, step):
-            d = MON[CS.monthly_id(dict(step=step, fci=fci))]
+            d = MON[CS.monthly_id(dict(step=step, fci=fci, start=start))]
             for ident in ("P1", "WE"):
                 for L in lags:
                     n, pts, ivs = mcells(d, L, ident)
@@ -77,20 +78,23 @@ def monthly_table(title, label, lags, note, place="H"):
                     out += [f"{a} & {f} & {IDENT[ident] if L == lags[0] else ''} & {L} & {n} & " + " & ".join(pts) + r"\\", r" & & & & & " + " & ".join(rf"{{\tiny {x}}}" for x in ivs) + r"\\"]
     out += [r"\bottomrule\end{tabular}", rf"\par\smallskip\parbox{{0.96\linewidth}}{{\scriptsize {note}}}", r"\end{table}"]
     return "\n".join(out)
-MNOTE = (r"Monthly VAR in the unemployment gap, core PCE inflation, the 2-year yield and, when included, the FCI (same step), 1996--2026, no trend, nothing dropped. "
+MNOTE = (r"Monthly VAR in the unemployment gap, core PCE inflation, the 2-year yield and, when included, the FCI (same step), sample as in the title, to September 2026, no trend, nothing dropped. "
          r"Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects; unit +1 pp on the monthly-average 2-year yield. "
          r"Window impact: impact vector measured in the announcement window and scaled by the share of the month after the announcement; 90\% bootstrap intervals; unit +1 pp 2-year in the window. The two units differ. $^{*}$ = 90\% interval excludes zero.")
-(REPORT / "tab_main_monthly.tex").write_text(monthly_table("Monthly VAR benchmark (12 lags)", "tab:mainmonthly", (12,), MNOTE) + "\n")
-(REPORT / "tab_app_monthly.tex").write_text(monthly_table("Monthly VAR benchmark (3, 6 and 12 lags)", "tab:appmonthly", (3, 6, 12), MNOTE, "p") + "\n")
+for st, tag in (("1996-01", "1996"), ("1973-01", "1973")):
+    (REPORT / f"tab_main_monthly{tag}.tex").write_text(monthly_table(f"Monthly VAR benchmark, {START_LABEL[st]} (12 lags)", f"tab:mainmonthly{tag}", (12,), MNOTE, st) + "\n")
+    (REPORT / f"tab_app_monthly{tag}.tex").write_text(monthly_table(f"Monthly VAR benchmark, {START_LABEL[st]} (3, 6 and 12 lags)", f"tab:appmonthly{tag}", (3, 6, 12), MNOTE, st, "p") + "\n")
 frows = []
-for step in ("nom", "real", "rstar"):
-    for fci in (0, step):
-        d = MON[CS.monthly_id(dict(step=step, fci=fci))]; g = d[(d.ident == "P1") & (d["var"] == "u") & (d.h == 12)].set_index("lags")
-        frows.append(f"{CS.FORMS[step] if fci == 0 else ''} & {CS.FCI_LABEL[fci]} & " + " & ".join(f"{g.F[L]:.1f}" for L in (3, 6, 12)) + " & "
-                     + (f"{num(g.impact_fci[12])} & {num(g.win_bF[12])}" if fci else " & ") + r"\\")
+for st in ("1996-01", "1973-01"):
+    if st != "1996-01": frows.append(r"\addlinespace")
+    for step in ("nom", "real", "rstar"):
+        for fci in (0, step):
+            d = MON[CS.monthly_id(dict(step=step, fci=fci, start=st))]; g = d[(d.ident == "P1") & (d["var"] == "u") & (d.h == 12)].set_index("lags")
+            frows.append(f"{START_LABEL[st][:4] if (step == 'nom' and fci == 0) else ''} & {CS.FORMS[step] if fci == 0 else ''} & {CS.FCI_LABEL[fci]} & " + " & ".join(f"{g.F[L]:.1f}" for L in (3, 6, 12)) + " & "
+                         + (f"{num(g.impact_fci[12])} & {num(g.win_bF[12])}" if fci else " & ") + r"\\")
 (REPORT / "tab_monthly_F.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Monthly proxy VAR: first-stage strength and impact on the FCI}\label{tab:monthlyF}",
-    r"\begin{tabular}{llrrrrr}\toprule 2-year & FCI & $F$ (3 lags) & $F$ (6) & $F$ (12) & Proxy impact on FCI & Window impact on FCI\\ \midrule", *frows, r"\bottomrule\end{tabular}",
-    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize $F$: robust first-stage statistic of the policy-variable residual on the instrument (instrument months only). Impact on FCI: response of the FCI per +1 pp on the 2-year yield, estimated from monthly residuals (proxy VAR, 12 lags) and measured in the announcement window.}", r"\end{table}"]) + "\n")
+    r"\begin{tabular}{lllrrrrr}\toprule Start & 2-year & FCI & $F$ (3 lags) & $F$ (6) & $F$ (12) & Proxy impact on FCI & Window impact on FCI\\ \midrule", *frows, r"\bottomrule\end{tabular}",
+    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize $F$: robust first-stage statistic of the policy-variable residual on the instrument (instrument months only). The instrument exists from 1996, so the first stage uses the 1996--2026 instrument months in both samples. Impact on FCI: response of the FCI per +1 pp on the 2-year yield, estimated from monthly residuals (proxy VAR, 12 lags) and measured in the announcement window.}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- weights table (window responses)
 w = pd.read_csv(OUT / "market_weights.csv", index_col=0)

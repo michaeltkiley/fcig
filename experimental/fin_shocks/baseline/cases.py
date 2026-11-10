@@ -69,7 +69,8 @@ GROUP_NOTE = {"B": "Nominal, real and r*-gap 2-year yield; the FCI is Note A's i
               "R2": "Kiley r*: 2-year minus expected inflation minus Kiley's r*, with Note A's index built with the same r*. Real, spline trend: real 2-year and real FCI with a natural cubic spline trend (knots at the sample ends and at NBER business-cycle peaks inside the sample) in every monthly equation, in place of any r* measure.",
               "R3": "The excess bond premium is a third monthly variable, treated like unemployment and inflation (u, inflation, EBP system); responses shown for u and the price level."}
 
-# Monthly VAR benchmarks (Robustness 4): every step without and with the FCI in the same form; sample and announcements as the main model (lib/monthly.py)
-MONTHLY_START = "1996-01"
-MONTHLY = [dict(step=s, fci=f) for s in ("nom", "real", "rstar") for f in (0, s)]
-def monthly_id(m): return f"monthly_{m['step']}_{m['fci']}"
+# Monthly VAR benchmarks: every step without and with the FCI in the same form, from 1996 (the main sample) and from 1973; the instrument (NS surprise) exists from 1996 only,
+# so the first stage always uses the 1996-2026 instrument months (lib/monthly.py)
+MONTHLY_STARTS = ("1996-01", "1973-01")
+MONTHLY = [dict(step=s, fci=f, start=st) for st in MONTHLY_STARTS for s in ("nom", "real", "rstar") for f in (0, s)]
+def monthly_id(m): return f"monthly_{m['step']}_{m['fci']}_{m['start']}"

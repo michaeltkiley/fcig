@@ -11,13 +11,13 @@ with the shock normalised to +1 pp on the 2-year yield:
      regressing each VAR residual on z_t over the instrument months (first to last announcement); every entry of s, including u and inflation, is estimated.
      Unit: +1 pp on the monthly-average 2-year yield. Inference: 90% Anderson-Rubin set for the response of a target, conditional on the VAR coefficients, with
      heteroskedasticity-robust (HC1) variance; solved exactly (a quadratic inequality in the response), so it is never cut off by a grid. "Unbounded" = weak instrument.
-     (Anderson-Rubin sets for proxy VARs: Montiel Olea, Stock and Watson 2021; Lunsford 2015 [not yet in the note's bibliography; check].)
+     (Anderson-Rubin sets for proxy VARs: Montiel Olea, Stock and Watson 2021; Lunsford 2015.)
  WE  Window impact with announcement timing: the impact vector is measured in the 30-minute announcement windows, not estimated from monthly residuals:
      s = phi * (0, 0, 1, b_F), with b_F the window move of the FCI per +1 pp 2-year (zero in the no-FCI system) and phi the average share of the month that follows the
      announcement (the monthly average sees only that part of the move). Assumption: the shock reaches unemployment and inflation only through the 2-year yield and the FCI,
      the same restriction as the main model. Unit: +1 pp on the 2-year yield in the window. Inference: 200 draws that resample announcements and monthly residuals.
 Relation to the main model: Plagborg-Moller and Wolf (2021) show that VARs and local projections estimate the same responses; here the difference is the temporal
-aggregation of a surprise that is concentrated on one day (see also Jacobson, Matthes and Walker 2026 [check initials/volume])."""
+aggregation of a surprise that is concentrated on one day (see also Jacobson, Matthes and Walker 2026)."""
 import zlib
 import numpy as np, pandas as pd
 from .daily import EV, event_index
