@@ -42,6 +42,10 @@ FCI = {k: _daily_fci(v) for k, v in IDXM.items()}
 
 # The three weighted components of the index (weight x demeaned input), monthly and daily, in each step (used only when the FCI is replaced by its components).
 CMPKEYS = ["y10", "equities", "dollar"]; CMPNAMES = ["y10", "eq", "usd"]
+# The three weighted components replace the FCI ("cmp"); the daily block is then restricted (see har_block) to keep the number of parameters reasonable.
+CMPGROUPS = {"cmp": [["y10"], ["equities"], ["dollar"]]}
+_short = {"y10": "y10", "equities": "eq", "dollar": "usd"}
+def cmp_cols(fci, frame): return {"+".join(_short[k] for k in g): frame[g].sum(axis=1) for g in CMPGROUPS[fci]}
 _cases = {"nom": ("nominal", "rstar LW"), "real": ("real", "rstar LW"), "rstar": ("rstar", "rstar LW"), "kiley": ("rstar", "rstar Kiley")}
 _wv = pd.Series(W, index=CMPKEYS)
 CMPM = {}; CMPD = {}
@@ -64,13 +68,13 @@ RATEM = {"nom": Y2M, "real": Y2M - _e2m, "rstar": Y2M - _e2m - D0["rstar LW"], "
 
 def daily_frame(form, fci):
     """fci: 0 (none), a step name (Note A's index in that step) or "cmp" (the index replaced by its three weighted components in the same step as the rate)."""
-    if fci == "cmp": return pd.DataFrame({"pol": RATE[form], **{n: CMPD[form][k] for k, n in zip(CMPKEYS, CMPNAMES)}})
+    if fci in CMPGROUPS: return pd.DataFrame({"pol": RATE[form], **cmp_cols(fci, CMPD[form])})
     return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[fci]} if fci else {})})
 
 def fin_monthly(form, fci):
     """Monthly averages of the daily block; months without daily data filled from the monthly series."""
     FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean()
-    ext = pd.DataFrame({"pol": RATEM[form], **({n: CMPM[form][k] for k, n in zip(CMPKEYS, CMPNAMES)} if fci == "cmp" else {"idx": IDXM[fci]} if fci else {})})
+    ext = pd.DataFrame({"pol": RATEM[form], **(cmp_cols(fci, CMPM[form]) if fci in CMPGROUPS else {"idx": IDXM[fci]} if fci else {})})
     FB = FB.combine_first(ext)
     return FB[FB.index >= pd.Period("1973-01", "M")]
 
@@ -80,7 +84,9 @@ def fin_eom(form, fci):
     return daily_frame(form, fci).ffill().set_index(MON).groupby(level=0).last()
 
 def impact(fci, idx):
-    if fci == "cmp": return window_impact_components(idx)
+    if fci in CMPGROUPS:
+        w = window_impact_components(idx)[1:]; pos = {k: i for i, k in enumerate(CMPKEYS)}
+        return np.r_[1.0, [sum(w[pos[k]] for k in g) for g in CMPGROUPS[fci]]]
     wi = window_impact(idx)
     return wi if fci else wi[:1]
 
@@ -97,11 +103,19 @@ def trend_cols(periods, start, end):
     return np.c_[t, *[d(k) - d(K - 2) for k in range(K - 2)]]
 
 def har_block(form, fci, mvars, end, t2020):
-    D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
+    """Daily block: OLS of each daily variable on a constant, the 1/5/22/66-day averages of the daily variables and the monthly macro variables (this month and last).
+    With the FCI replaced by its components (fci in CMPGROUPS) each component's equation keeps only its own averages and those of the 2-year yield (plus the macro variables),
+    and the 2-year yield's equation its own averages: 9 coefficients for the yield and 13 for each component (48 in all with three components, against 84 unrestricted)."""
+    D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]; nd = D.shape[1]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
     ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1)
     if t2020 == "out": ok &= ~((D.index >= "2020-03-01") & (D.index <= "2020-12-31"))
-    return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
+    if fci not in CMPGROUPS: return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
+    Bd = np.zeros((X.shape[1], nd)); macro_cols = list(range(1 + len(HAR) * nd, X.shape[1]))
+    for j in range(nd):
+        vars_ = sorted({0, j}); cols = [0] + [1 + a * nd + v for a in range(len(HAR)) for v in vars_] + macro_cols
+        Bd[cols, j] = np.linalg.lstsq(X[ok][:, cols], Y[ok][:, j], rcond=None)[0]
+    return Bd
 
 def macro_data(form, fci, mvars, L, start, end, t2020, trend):
     FB = fin_monthly(form, fci); MMv = MAC[mvars]; X, Y, P = [], [], []
@@ -178,7 +192,7 @@ def path_rows(spec, est):
     """Response paths h = 0..H: macro variables (and the price level) and the monthly-average 2-year yield and FCI, with 90% and 68% bands."""
     out = []
     eom = pd.DataFrame(dict(**spec, lags=est["lags"], kind="fin_eom", var="pol", h=np.arange(H + 1), r=est["e0"][:, 0], lo=np.nan, hi=np.nan, lo68=np.nan, hi68=np.nan))   # 2-year yield at the end of the month (point estimate)
-    for kind, names, s0, sd in (("macro", est["names"], est["s0"], est["sd"]), ("fin", (["pol", "idx"] if est["f0"].shape[1] <= 2 else ["pol"] + CMPNAMES)[:est["f0"].shape[1]], est["f0"], est["fd"])):
+    for kind, names, s0, sd in (("macro", est["names"], est["s0"], est["sd"]), ("fin", (["pol", "idx"] if est["f0"].shape[1] <= 2 else ["pol"] + [f"c{i}" for i in range(1, est["f0"].shape[1])]), est["f0"], est["fd"])):
         for j, n in enumerate(names):
             out.append(pd.DataFrame(dict(**spec, lags=est["lags"], kind=kind, var=n, h=np.arange(H + 1), r=s0[:, j], lo=pct(sd[:, :, j], 5), hi=pct(sd[:, :, j], 95),
                                          lo68=pct(sd[:, :, j], 16), hi68=pct(sd[:, :, j], 84))))
