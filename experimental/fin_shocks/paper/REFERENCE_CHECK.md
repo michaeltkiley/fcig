@@ -57,3 +57,4 @@ Related but not cited: Lee and Sekhposyan (temporal aggregation and shock propag
 - The earlier draft's attributions of the post-1994 unemployment/price pattern to Ramey (2016) and of the lag sensitivity to Coibion (2012) were NOT re-checked against those papers and were removed from Section 3.2; re-add only after reading them.
 - Jacobson-Matthes-Walker (FEDS 2022-054r1, pdf read): Figure 6 and the text around it support the sentence added to Section 3.3 (adverse initial inflation response when the daily index is aggregated to monthly; conventional at daily frequency after about a month). [verified from the printed text]
 - Brennan et al. (FEDS 2024-011r1, pdf read): Figures 9-10 as described in `baseline/data/SOURCES.md`; not cited in the text.
+- Correction (10 Nov 2026): Bauer-Swanson Figure 7, unadjusted Gertler-Karadi instrument: the unemployment response crosses zero after about six to seven months (zoomed reading), not nine; text and sources corrected.
