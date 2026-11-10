@@ -14,7 +14,7 @@ def wald(X, y, R):
     return float(Rb @ np.linalg.solve(R @ V @ R.T, Rb))
 rows = []
 for form in ("nom", "real", "rstar"):
-    for L in (3, 6, 12):
+    for L in (12,):
         X, Y = M.macro_data(form, "cmp", ["u", "pi"], L, "1996-01", None, "in", "none"); n, k = X.shape; K = 2; nd = 4
         Xr, _ = M.macro_data(form, form, ["u", "pi"], L, "1996-01", None, "in", "none")                  # restricted: the FCI as one regressor per lag
         for j, name in enumerate(("u", "pi")):

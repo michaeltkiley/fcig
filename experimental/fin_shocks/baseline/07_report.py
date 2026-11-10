@@ -250,11 +250,11 @@ WTT = pd.read_csv(RESULTS / "weights_test.csv"); wrows = []
 for step in ("nom", "real", "rstar"):
     cells = []
     for eq in ("u", "pi"):
-        for L in (3, 6, 12): r = WTT[(WTT.step == step) & (WTT.lags == L) & (WTT["eq"] == eq)].iloc[0]; cells.append(f"{r.wald:.1f} ({r.p_boot:.3f})")
+        r = WTT[(WTT.step == step) & (WTT.lags == MAIN_LAGS) & (WTT["eq"] == eq)].iloc[0]; cells.append(f"{r.wald:.1f} & {r.p_boot:.3f}")
     wrows.append(f"{CS.FORMS[step]} & " + " & ".join(cells) + r"\\")
-(REPORT / "tab_weights_test.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Test of the proportional-weights restriction}\label{tab:weightstest}",
-    r"\begin{tabular}{lrrrrrr}\toprule & \multicolumn{3}{c}{Unemployment gap equation} & \multicolumn{3}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}", r"Step & 3 lags & 6 lags & 12 lags & 3 lags & 6 lags & 12 lags\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
-    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic and, in parentheses, the bootstrap p-value (999 residual draws under the restriction), for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (2 restrictions per lag), in each monthly equation; heteroskedasticity-robust (HC1) covariance matrix; 1996--2026, no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
+(REPORT / "tab_weights_test.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Test of the proportional-weights restriction (12 lags)}\label{tab:weightstest}",
+    r"\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap equation} & \multicolumn{2}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Step & Wald & Bootstrap $p$ & Wald & Bootstrap $p$\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
+    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 residual draws under the restriction); 1996--2026, no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- weights table (window responses)
 w = pd.read_csv(OUT / "market_weights.csv", index_col=0)

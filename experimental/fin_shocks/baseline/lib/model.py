@@ -42,8 +42,8 @@ FCI = {k: _daily_fci(v) for k, v in IDXM.items()}
 
 # The three weighted components of the index (weight x demeaned input), monthly and daily, in each step (used only when the FCI is replaced by its components).
 CMPKEYS = ["y10", "equities", "dollar"]; CMPNAMES = ["y10", "eq", "usd"]
-# Groupings of the components that replace the FCI: "cmp" = all three separately; the others combine two of them (the sum of weighted components) and keep the third apart.
-CMPGROUPS = {"cmp": [["y10"], ["equities"], ["dollar"]], "cmpA": [["y10", "equities"], ["dollar"]], "cmpB": [["y10"], ["equities", "dollar"]], "cmpC": [["equities"], ["y10", "dollar"]]}
+# The three weighted components replace the FCI ("cmp"); the daily block is then restricted (see har_block) to keep the number of parameters reasonable.
+CMPGROUPS = {"cmp": [["y10"], ["equities"], ["dollar"]]}
 _short = {"y10": "y10", "equities": "eq", "dollar": "usd"}
 def cmp_cols(fci, frame): return {"+".join(_short[k] for k in g): frame[g].sum(axis=1) for g in CMPGROUPS[fci]}
 _cases = {"nom": ("nominal", "rstar LW"), "real": ("real", "rstar LW"), "rstar": ("rstar", "rstar LW"), "kiley": ("rstar", "rstar Kiley")}
@@ -103,11 +103,19 @@ def trend_cols(periods, start, end):
     return np.c_[t, *[d(k) - d(K - 2) for k in range(K - 2)]]
 
 def har_block(form, fci, mvars, end, t2020):
-    D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
+    """Daily block: OLS of each daily variable on a constant, the 1/5/22/66-day averages of the daily variables and the monthly macro variables (this month and last).
+    With the FCI replaced by its components (fci in CMPGROUPS) each component's equation keeps only its own averages and those of the 2-year yield (plus the macro variables),
+    and the 2-year yield's equation its own averages: 9 coefficients for the yield and 13 for each component (48 in all with three components, against 84 unrestricted)."""
+    D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]; nd = D.shape[1]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
     ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1)
     if t2020 == "out": ok &= ~((D.index >= "2020-03-01") & (D.index <= "2020-12-31"))
-    return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
+    if fci not in CMPGROUPS: return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
+    Bd = np.zeros((X.shape[1], nd)); macro_cols = list(range(1 + len(HAR) * nd, X.shape[1]))
+    for j in range(nd):
+        vars_ = sorted({0, j}); cols = [0] + [1 + a * nd + v for a in range(len(HAR)) for v in vars_] + macro_cols
+        Bd[cols, j] = np.linalg.lstsq(X[ok][:, cols], Y[ok][:, j], rcond=None)[0]
+    return Bd
 
 def macro_data(form, fci, mvars, L, start, end, t2020, trend):
     FB = fin_monthly(form, fci); MMv = MAC[mvars]; X, Y, P = [], [], []
