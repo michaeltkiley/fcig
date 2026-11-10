@@ -3,7 +3,7 @@
 System (end-of-month values, no trend, nothing dropped):   y_t = c + sum_{l=1}^{L} A_l y_{t-l} + u_t,     y_t = (unemployment gap, core PCE inflation, i_t [, FCI_t]),
 where i_t is the two-year yield on the last weekday of month t in the stated step (nominal, real or r*-gap) and FCI_t, when included, the Note A index in the same step on that day.
 End-of-month values follow Bauer and Swanson (2023), who argue that they correspond more naturally to a high-frequency surprise than the month-average yield of Gertler and Karadi (2015); in this model
-the end-of-month yield responds to a window surprise by 0.95 to 0.99 of the window move, so the unit of every response in the paper is the same: +1 pp on the two-year yield.
+the end-of-month yield responds to a window surprise by 0.92 to 1.01 of the window move, so the unit of every response in the paper is the same: +1 pp on the two-year yield.
 Moving-average matrices Theta_h (h = 0..36) map an impact vector into responses; the price level cumulates inflation / 12. Two identification schemes:
 
  P1  Standard proxy VAR (Stock and Watson 2018; Mertens and Ravn 2013; Gertler and Karadi 2015; with high-frequency surprises as in Bauer and Swanson 2023).

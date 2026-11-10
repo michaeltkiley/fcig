@@ -21,7 +21,7 @@ class DGP:
         form, fci = "rstar", "rstar"; self.mv = ["u", "pi"]
         D = M.daily_frame(form, fci).loc["1990-01-02":].dropna(); mo = D.index.to_period("M"); MMv = M.MAC[self.mv]
         X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
-        ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1)
+        ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1) & (D.index >= M.DAILY_START)       # same daily-block sample as the model (from 1996)
         self.Bd = np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]; self.rd = Y[ok] - X[ok] @ self.Bd; self.rd_dates = D.index[ok]
         Xm, Ym = M.macro_data(form, fci, self.mv, L, start, None, "in", "none"); self.C = np.linalg.lstsq(Xm, Ym, rcond=None)[0]; self.rm = Ym - Xm @ self.C
         self.idx0 = event_index(); self.s_obs = EV.ns.values[self.idx0]; self.b = M.impact(fci, self.idx0)
