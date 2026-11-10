@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 18:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  10 NOV 2026 19:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -602,78 +602,79 @@ Underfull \hbox (badness 1622) in paragraph at lines 188--188
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 3.
 )
-<../baseline/report/fig_steps.pdf, id=683, 520.34402pt x 317.98799pt>
+<../baseline/report/fig_steps.pdf, id=683, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
 47.
-(pdftex.def)             Requested size: 469.75502pt x 287.08902pt.
- [14] [15 <../baseline/report/fig_steps.pdf>]
-<figures/fig0_headline.pdf, id=767, 794.97pt x 404.712pt>
-File: figures/fig0_headline.pdf Graphic file (type pdf)
-<use figures/fig0_headline.pdf>
-Package pdftex.def Info: figures/fig0_headline.pdf  used on input line 270.
-(pdftex.def)             Requested size: 469.75502pt x 239.15471pt.
- [16] [17 <./figures/fig0_headline.pdf>]
-(./tables/tab_tradeoff.tex) [18] [19]
-<figures/fig_long.pdf, id=879, 722.7pt x 231.26399pt>
+(pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
+ [14 <../baseline/report/fig_steps.pdf>]
+<../baseline/report/fig_size.pdf, id=766, 520.34402pt x 281.85298pt>
+File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
+<use ../baseline/report/fig_size.pdf>
+Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 26
+6.
+(pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
+ [15] [16 <../baseline/report/fig_size.pdf>]
+(./tables/tab_tradeoff.tex) [17] [18]
+<figures/fig_long.pdf, id=891, 722.7pt x 231.26399pt>
 File: figures/fig_long.pdf Graphic file (type pdf)
 <use figures/fig_long.pdf>
-Package pdftex.def Info: figures/fig_long.pdf  used on input line 318.
+Package pdftex.def Info: figures/fig_long.pdf  used on input line 309.
 (pdftex.def)             Requested size: 469.75502pt x 150.32333pt.
- [20] [21 <./figures/fig_long.pdf>]
-(./tables/tab3_smp.tex) [22]
-<figures/fig2_recent.pdf, id=958, 578.16pt x 231.26399pt>
+ [19] [20 <./figures/fig_long.pdf>]
+(./tables/tab3_smp.tex) [21]
+<figures/fig2_recent.pdf, id=971, 578.16pt x 231.26399pt>
 File: figures/fig2_recent.pdf Graphic file (type pdf)
 <use figures/fig2_recent.pdf>
-Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 358.
+Package pdftex.def Info: figures/fig2_recent.pdf  used on input line 349.
 (pdftex.def)             Requested size: 399.29463pt x 159.717pt.
-<figures/fig3_loyo.pdf, id=959, 650.43pt x 216.81pt>
+<figures/fig3_loyo.pdf, id=972, 650.43pt x 216.81pt>
 File: figures/fig3_loyo.pdf Graphic file (type pdf)
 <use figures/fig3_loyo.pdf>
-Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 363.
+Package pdftex.def Info: figures/fig3_loyo.pdf  used on input line 354.
 (pdftex.def)             Requested size: 422.77664pt x 140.92813pt.
- [23 <./figures/fig2_recent.pdf>]
+ [22 <./figures/fig2_recent.pdf>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 370.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 370.
+(hyperref)                removing `math shift' on input line 361.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 370.
+(hyperref)                removing `superscript' on input line 361.
 
-[24 <./figures/fig3_loyo.pdf>] [25] [26] [27] [28] [29] [30] [31]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 361.
+
+[23 <./figures/fig3_loyo.pdf>] [24] [25] [26] [27] [28] [29] [30]
 (../baseline/report/tab_app_B.tex) (./tables/tabA_ip.tex)
-(./tables/tabA_notrend.tex) [32] [33] (./tables/tabA_monthly.tex)
-(./tables/tabA_scope.tex) [34] (./tables/tabA_com.tex) [35]
-(./tables/tab2_rob_u.tex) (./tables/tab2_rob_p.tex) [36]
-(./tables/tabA_shocks.tex) [37] (./tables/tabA_long_u.tex) [38]
-(./tables/tabA_long_p.tex) [39] (./tables/tabA_boot.tex) [40] [41] [42]
-Underfull \hbox (badness 10000) in paragraph at lines 631--631
+(./tables/tabA_notrend.tex) [31] [32] (./tables/tabA_monthly.tex)
+(./tables/tabA_scope.tex) [33] (./tables/tabA_com.tex) [34]
+(./tables/tab2_rob_u.tex) (./tables/tab2_rob_p.tex) [35]
+(./tables/tabA_shocks.tex) [36] (./tables/tabA_long_u.tex) [37]
+(./tables/tabA_long_p.tex) [38] (./tables/tabA_boot.tex) [39] [40] [41]
+Underfull \hbox (badness 10000) in paragraph at lines 622--622
 []\T1/lmr/m/n/10 Industrial pro-duc-tion; com-mod-ity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 636--636
+Underfull \hbox (badness 10000) in paragraph at lines 627--627
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 637--638
+Underfull \hbox (badness 7168) in paragraph at lines 628--629
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF2YR, EX-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 642--643
+Underfull \hbox (badness 10000) in paragraph at lines 633--634
 []\T1/lmr/m/n/10 FRED DTWEXBGS, ear-lier DTWEXB,
  []
 
-[43] [44] (./tables/tabA_cc.tex) (./tables/tabA_ebp.tex) [45]
-(./tables/tabA_prop.tex) [46] [47] (./mp_transmission.aux)
+[42] [43] (./tables/tabA_cc.tex) (./tables/tabA_ebp.tex) [44]
+(./tables/tabA_prop.tex) [45] [46] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -682,13 +683,13 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: C8CC71A79B2DCD9569A0852441ED7571;6429.
  ) 
 Here is how much of TeX's memory you used:
- 14046 strings out of 476182
- 220421 string characters out of 5795594
- 1999975 words of memory out of 5000000
- 35562 multiletter control sequences out of 15000+600000
+ 14077 strings out of 476182
+ 220989 string characters out of 5795594
+ 1998975 words of memory out of 5000000
+ 35594 multiletter control sequences out of 15000+600000
  640335 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,1597b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1671b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -703,10 +704,10 @@ share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public
 mf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lms
 y6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/font
 s/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (47 pages, 644695 bytes).
+Output written on mp_transmission.pdf (46 pages, 642115 bytes).
 PDF statistics:
- 1413 PDF objects out of 1440 (max. 8388607)
- 1086 compressed objects within 11 object streams
- 227 named destinations out of 1000 (max. 500000)
+ 1427 PDF objects out of 1440 (max. 8388607)
+ 1085 compressed objects within 11 object streams
+ 226 named destinations out of 1000 (max. 500000)
  282 words of extra memory for PDF output out of 10000 (max. 10000000)
 

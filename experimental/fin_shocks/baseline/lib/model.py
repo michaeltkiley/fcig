@@ -95,9 +95,9 @@ def macro_data(form, fci, mvars, L, start, end, t2020, trend):
     return X, np.array(Y)
 
 def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21):
-    """Macro first in each month (from lags), then the days of the month (event day = b_day). Returns monthly macro and monthly-average financial paths."""
+    """Macro first in each month (from lags), then the days of the month (event day = b_day). Returns monthly macro, monthly-average financial paths and end-of-month financial values."""
     lens = [n0] + [nother] * (months - 1); start = np.concatenate([[0], np.cumsum(lens)]); off = 70
-    f = np.zeros((start[-1] + off, nd)); macro = np.zeros((months, K)); fb = np.zeros((months, nd))
+    f = np.zeros((start[-1] + off, nd)); macro = np.zeros((months, K)); fb = np.zeros((months, nd)); fe = np.zeros((months, nd))
     A = C[1:1 + K * L].T.reshape(K, L, K); G = C[1 + K * L:1 + K * L + nd * L].T.reshape(K, L, nd)
     for t in range(months):
         macro[t] = sum(A[:, l - 1] @ macro[t - l] for l in range(1, L + 1) if t - l >= 0) + sum(G[:, l - 1] @ fb[t - l] for l in range(1, L + 1) if t - l >= 0) if t else 0.0
@@ -106,13 +106,13 @@ def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21):
             if tau == k0: f[off + tau] = b_day; continue
             x = np.concatenate([[0.0]] + [f[off + tau - h:off + tau].mean(axis=0) for h in HAR] + [macro[t - 1] if t >= 1 else np.zeros(K), macro[t]])
             f[off + tau] = x @ Bd
-        fb[t] = f[off + start[t]:off + start[t + 1]].mean(axis=0)
-    return macro, fb
+        fb[t] = f[off + start[t]:off + start[t + 1]].mean(axis=0); fe[t] = f[off + start[t + 1] - 1]
+    return macro, fb, fe
 
 def irf(Bd, C, K, nd, L, idx, pos, fci):
-    """Event-position-weighted monthly macro and financial responses to a unit shock, h = 0..H."""
+    """Event-position-weighted monthly macro, monthly-average and end-of-month financial responses to a unit shock, h = 0..H."""
     b = impact(fci, idx); out = [(w, simulate(Bd, C, K, nd, L, b, k0, n0)) for k0, n0, w in pos]
-    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out)
+    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out), sum(w * m[2] for w, m in out)
 
 _EV = {}
 def events(B):
@@ -133,10 +133,10 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
     for L in lags:
         X, Y = macro_data(form, fci, mvars, L, start, end, t2020, trend); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
         rng = np.random.default_rng(zlib.crc32((f"{form}|{fci}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)).encode()))
-        m0, f0 = irf(Bd, C0, K, nd, L, idx0, pos0, fci)
+        m0, f0, e0 = irf(Bd, C0, K, nd, L, idx0, pos0, fci)
         draws = [irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci) for ib, pb in zip(bidx, bpos)]
         yield dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
-                   f0=f0, fd=np.array([d[1] for d in draws]))
+                   f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
 
 # ---------------------------------------------------------------- summaries
 def pct(a, q): return np.percentile(a, q, axis=0)
@@ -154,11 +154,12 @@ def summary_rows(spec, est):
 def path_rows(spec, est):
     """Response paths h = 0..H: macro variables (and the price level) and the monthly-average 2-year yield and FCI, with 90% and 68% bands."""
     out = []
+    eom = pd.DataFrame(dict(**spec, lags=est["lags"], kind="fin_eom", var="pol", h=np.arange(H + 1), r=est["e0"][:, 0], lo=np.nan, hi=np.nan, lo68=np.nan, hi68=np.nan))   # 2-year yield at the end of the month (point estimate)
     for kind, names, s0, sd in (("macro", est["names"], est["s0"], est["sd"]), ("fin", ["pol", "idx"][:est["f0"].shape[1]], est["f0"], est["fd"])):
         for j, n in enumerate(names):
             out.append(pd.DataFrame(dict(**spec, lags=est["lags"], kind=kind, var=n, h=np.arange(H + 1), r=s0[:, j], lo=pct(sd[:, :, j], 5), hi=pct(sd[:, :, j], 95),
                                          lo68=pct(sd[:, :, j], 16), hi68=pct(sd[:, :, j], 84))))
-    return pd.concat(out)
+    return pd.concat(out + [eom])
 
 # ---------------------------------------------------------------- implied trade-off (Phillips multiplier, Barnichon-Mesters 2021)
 KAPPA = np.sort(np.concatenate([-np.logspace(-3, 4, 3000), [0.0], np.logspace(-3, 4, 3000)]))     # -1e4 .. 1e4, dense near zero

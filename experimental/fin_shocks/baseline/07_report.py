@@ -4,7 +4,7 @@ import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import cases as CS
-from lib.paths import RESULTS, REPORT, OUT
+from lib.paths import RESULTS, REPORT, OUT, DATA
 
 R = {CS.case_id(c): pd.read_csv(RESULTS / f"{CS.case_id(c)}.csv") for c in CS.unique_cases()}
 MAIN_LAGS = 12
@@ -128,6 +128,15 @@ def write_numbers():
                     k = f"{f}:{fk}:{v}:{h}"; d("bl:" + k, num(r[f"r{h}"])); d("blabs:" + k, f"{abs(r[f'r{h}']):.2f}"); d("blsig:" + k, "significant" if r[f"lo{h}"] * r[f"hi{h}"] > 0 else "not significant")
                     d("bllo:" + k, num(r[f"lo{h}"])); d("blhi:" + k, num(r[f"hi{h}"]))
     n = R[CS.case_id(dict(form="rstar", fci="rstar", macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"))]; d("bl:nobs", str(int(n[n.lags == MAIN_LAGS].nobs.iloc[0])))
+    BASE = dict(macro="u,pi", start="1996-01", end=None, t2020="in", trend="none")
+    pth = lambda f, fci: (lambda d: d[d.lags == MAIN_LAGS])(pd.read_csv(RESULTS / f"{CS.case_id(dict(form=f, fci=fci, **BASE))}_paths.csv"))
+    for f, fci, fk in (("nom", 0, "nom"), ("rstar", "rstar", "rstar")):                               # 2-year yield at the end of the announcement month, per +1 pp in the window
+        e = pth(f, fci); d("bl:eom:" + fk, f"{e[(e.kind == 'fin_eom') & (e.h == 0)].r.iloc[0]:.2f}")
+    u = pth("nom", 0); u = u[(u.kind == "macro") & (u["var"] == "u")]; i = u.r.idxmin(); d("bl:path:nom:no:u:min", num(u.r[i])); d("bl:path:nom:no:u:minh", str(int(u.h[i])))
+    u = pth("rstar", "rstar"); u = u[(u.kind == "macro") & (u["var"] == "u")]; i = u.r.idxmax(); d("bl:path:rstar:yes:u:max", num(u.r[i])); d("bl:path:rstar:yes:u:maxh", str(int(u.h[i])))
+    LIT = pd.read_csv(DATA / "literature_irfs.csv"); tag = {"Bauer-Swanson benchmark": "bsb", "Bauer-Swanson unadjusted": "bsu"}; vm = {"unemployment rate (pp)": "u", "CPI (%)": "P"}
+    for _, r in LIT.iterrows():
+        k = f"lit:{tag[r.study]}:{vm[r.variable]}:{int(r.horizon_months)}"; d("bl:" + k, num(r.response_per_1pp)); d("blabs:" + k, f"{abs(r.response_per_1pp):.2f}")
     (REPORT / "numbers.tex").write_text("\n".join(L) + "\n")
 write_numbers()
 
@@ -148,6 +157,16 @@ def check_claims():
     chk("unemployment significant at 24 m with FCI only at the r*-gap step", sig("rstar", "yes", "u", 24) and not sig("nom", "yes", "u", 24) and not sig("real", "yes", "u", 24))
     chk("r*-gap with FCI has the largest price fall at 24 m", est("rstar", "yes", "P", 24) < min(est("nom", "yes", "P", 24), est("real", "yes", "P", 24)))
     chk("r*-gap with FCI: unemployment (12, 24 m) and price (24 m) responses larger than the Bauer-Swanson values quoted (+0.19, +0.17; -0.48)", est("rstar", "yes", "u", 12) > 0.19 and est("rstar", "yes", "u", 24) > 0.17 and est("rstar", "yes", "P", 24) < -0.48)
+    LIT = pd.read_csv(DATA / "literature_irfs.csv"); lit = lambda st, v, h: float(LIT[(LIT.study == st) & (LIT.variable == {"u": "unemployment rate (pp)", "P": "CPI (%)"}[v]) & (LIT.horizon_months == h)].response_per_1pp.iloc[0])
+    def band(f, fk, v, h):
+        dd = R[CS.case_id(dict(form=f, fci=0 if fk == "no" else f, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"))]; r = dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0]; return r[f"lo{h}"], r[f"hi{h}"]
+    for v in ("u", "P"):
+        for h in (12, 24, 36):
+            lo, hi = band("rstar", "yes", v, h); chk(f"Bauer-Swanson benchmark {v} {h} m inside our r*-gap 90% band", lo <= lit("Bauer-Swanson benchmark", v, h) <= hi)
+            chk(f"r*-gap with FCI larger in absolute value than the Bauer-Swanson benchmark, {v} {h} m", abs(est("rstar", "yes", v, h)) > abs(lit("Bauer-Swanson benchmark", v, h)))
+    for h in (12, 24, 36): chk(f"nominal yield alone: unemployment below the Bauer-Swanson unadjusted response, {h} m", est("nom", "no", "u", h) < lit("Bauer-Swanson unadjusted", "u", h) and est("nom", "no", "u", h) < 0)
+    chk("nominal yield alone: price level within 0.15 of zero at 12, 24, 36 m", all(abs(est("nom", "no", "P", h)) <= 0.15 for h in (12, 24, 36)))
+    chk("Bauer-Swanson unadjusted unemployment negative on impact and positive at 12-36 m", lit("Bauer-Swanson unadjusted", "u", 0) < 0 and all(lit("Bauer-Swanson unadjusted", "u", h) > 0 for h in (12, 24, 36)))
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
 
@@ -195,7 +214,7 @@ def line(ax, d, color, ls, label, lo="lo", hi="hi", alpha=0.14):
     ax.fill_between(d.h, d[lo], d[hi], color=color, alpha=alpha, lw=0); ax.plot(d.h, d.r, color=color, ls=ls, lw=1.8, label=label)
 
 base = CS.PANELS[0]["cases"]
-fig, axs = plt.subplots(2, 3, figsize=(7.2, 4.4), sharex=True)
+fig, axs = plt.subplots(2, 3, figsize=(7.2, 3.9), sharex=True)
 for j, f in enumerate(("nom", "real", "rstar")):
     cs = {c["fci"]: c for c in base if c["form"] == f}
     for i, v in enumerate(("u", "P")):
@@ -215,4 +234,26 @@ line(ax, d[d["var"] == "pol"], INK, "-", "2-year yield, r*-gap form", alpha=0.10
 ax.set_xlabel("Months after the policy move"); ax.set_ylabel("Percentage points"); ax.legend(frameon=False, fontsize=7.5)
 ax.set_title("Financial response (monthly averages; 12 lags; 90% bands)", fontsize=8)
 fig.tight_layout(); fig.savefig(REPORT / "fig_financial.pdf"); plt.close(fig)
+
+# size-of-effects figure: nominal yield alone vs the baseline, with literature values
+def fig_size():
+    base = dict(macro="u,pi", start="1996-01", end=None, t2020="in", trend="none")
+    cs = dict(rstar=dict(form="rstar", fci="rstar", **base), nom0=dict(form="nom", fci=0, **base), nom1=dict(form="nom", fci="nom", **base))
+    LIT = pd.read_csv(DATA / "literature_irfs.csv"); vm = {"u": "unemployment rate (pp)", "P": "CPI (%)"}
+    fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.9)); H_ = {}
+    for ax, v, ylab in ((axs[0], "u", "Unemployment gap (pp)"), (axs[1], "P", "Core PCE price level (%)")):
+        ax.axhline(0, color=GREY, lw=0.8)
+        d = paths(cs["rstar"]); d = d[(d.kind == "macro") & (d["var"] == v)]
+        ax.fill_between(d.h, d.lo, d.hi, color=BLUE, alpha=0.13, lw=0); ax.fill_between(d.h, d.lo68, d.hi68, color=BLUE, alpha=0.25, lw=0)
+        H_["b"] = ax.plot(d.h, d.r, color=BLUE, lw=2.0)[0]
+        for key, ls in (("nom0", "--"), ("nom1", ":")):
+            e = paths(cs[key]); e = e[(e.kind == "macro") & (e["var"] == v)]; H_[key] = ax.plot(e.h, e.r, color=ORANGE, ls=ls, lw=1.9)[0]
+        for st, mk, fc, sz in (("Bauer-Swanson benchmark", "o", INK, 20), ("Bauer-Swanson unadjusted", "s", "none", 52)):
+            sub = LIT[(LIT.study == st) & (LIT.variable == vm[v]) & LIT.horizon_months.isin([12, 24, 36])]
+            H_[st] = ax.scatter(sub.horizon_months, sub.response_per_1pp, marker=mk, s=sz, facecolors=fc, edgecolors=INK, linewidths=1.2, zorder=5)
+        ax.set_xlabel("Months after the policy move"); ax.set_ylabel(ylab); ax.set_xlim(0, 36)
+    labs = ["r*-gap 2-year yield and FCI (baseline; bands: 68 and 90 percent)", "Nominal 2-year yield alone", "Nominal 2-year yield and FCI", "Bauer and Swanson (2023), orthogonalized surprise (Fig. 8)", "Bauer and Swanson (2023), unadjusted surprise (Fig. B.1)"]
+    fig.legend([H_["b"], H_["nom0"], H_["nom1"], H_["Bauer-Swanson benchmark"], H_["Bauer-Swanson unadjusted"]], labs, loc="lower center", ncol=2, frameon=False, fontsize=7.2)
+    fig.tight_layout(rect=[0, 0.17, 1, 1]); fig.savefig(REPORT / "fig_size.pdf"); plt.close(fig)
+fig_size()
 print("report inputs written to", REPORT)

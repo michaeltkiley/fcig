@@ -116,7 +116,7 @@ def model_stats(dg, F, m, form, use_fci):
     fbm = np.array([Fo[lo - (dg.T0 - 70):hi - (dg.T0 - 70) + 1].mean(axis=0) for lo, hi in dg.bounds]); fb = np.vstack([dg.fb0[:, :nd] + dg.offset[form][:12, :nd], fbm])
     Xm = np.array([np.r_[1.0, np.concatenate([m[12 + t - l] for l in range(1, L + 1)]), np.concatenate([fb[12 + t - l] for l in range(1, L + 1)])] for t in range(nm)])
     C = np.linalg.lstsq(Xm, m[12:], rcond=None)[0]
-    idx0, pos0 = dg.idx0, M.events(1)[1]; mac, _ = M.irf(Bd, C, K, nd, L, idx0, pos0, "x" if use_fci else 0); lev = M.to_level(mac)
+    idx0, pos0 = dg.idx0, M.events(1)[1]; mac, _, _ = M.irf(Bd, C, K, nd, L, idx0, pos0, "x" if use_fci else 0); lev = M.to_level(mac)
     return {f"{v}{h}": float(lev[h, 0 if v == "u" else 1]) for v, h in DTARGETS}
 
 def _one(s):
