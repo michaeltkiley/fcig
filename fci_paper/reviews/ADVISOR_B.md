@@ -107,3 +107,25 @@ Do not add further robustness. The existing robustness table suffices.
 - *Worth it if* the tail result differs from the mean result. Otherwise leave it out. Lowest priority; about five recessions limit power.
 
 **The one question for Note A.** *Which way of measuring financial conditions, in what units, relative to what, and with which weights, says the most about the economy ahead?* The agreement exhibits become the first section, and the outcome tests (items 1 to 3) are the answer. Note B then holds all the surprise-based material and the paper cites it only for the weights.
+
+## Round 4: buttressing the foundation
+
+**(a) Three questions, in the order Note B's reader will ask them.**
+1. *Does the index measure the right thing?* Is the market index a comparable-unit measure of conditions that stands apart from stress? Have: weights not beaten by any alternative; outcomes cannot rank them. Missing: its relation to NFCI/ANFCI, which beat it for unemployment and recessions. Must show: what the market index carries that the NFCI does not, and the reverse.
+2. *Is its content causal in direction, or a reflection of activity?* Have: nothing. Missing: the exogeneity purge that Hatzius et al. build in and ANFCI applies. Must show: the flow's content survives removing what activity and inflation explain, since Note B uses the index as a channel that moves before activity.
+3. *Does the r* basis do its job?* Its job is to remove opposite trends in rates and activity. Have: small forecast gains, not significant after correction. Missing: a test of that job. Must show: the basis stabilizes the index-unemployment relationship and is not a unit-coefficient imposition.
+
+**(b) Engage more directly.** Hatzius et al.: the purge. Brave-Butters: conditions versus stress; the NFCI level carries content the rate-based indexes lack, so say plainly what the market index is not. Adrian et al.: the NFCI level carries the tail, and rate-based indexes carry it through changes; state this, with the in-sample caveat. Caballero-Simsek: FCI* does not co-move with r*, while I subtract r* from rates only. Ajello et al.: state FCI-G's own scale (0.13 against 0.5) beside the market index's yardstick.
+
+**(c) Additional analyses.**
+1. *Purged index.* Regress each of the three variables on 12 lags of the unemployment gap and core inflation (Hatzius, ANFCI), rebuild the level and flow, and rerun the level-flow regressions and the VAR response. Buttress: the 12-month response and flow t keep most of their size. Undermine: they vanish; the index is then expected activity.
+2. *Complement or substitute for NFCI.* Put the market flow and the NFCI level in one regression for unemployment, payrolls and the in-sample lower tail. Buttress: both keep their t; they carry different things. Undermine: one absorbs the other.
+3. *Does the r* basis stabilize the relationship?* Estimate the 12-month response by subperiod (pre-1990, 1990-2008, after 2008) and in rolling windows for the nominal, real and r* versions, and free the r* coefficient (enter r* beside the index; the unit restriction predicts a coefficient of one). Buttress: the response is stable at the r* step and not at nominal, and the coefficient is near one. Undermine: the response is as stable at nominal, or the coefficient is far from one.
+
+**(d) Not to lean on.**
+- *"r* leans right" (69 of 91):* the tests share data, no test survives Holm, the gains sit in 2008-16, where nominal and r* differ mechanically at the lower bound,.
+- *"r* raises the flow t" (3.9, 4.3, 5.2):* step differences were not tested, and 12-month overlapping changes inflate t.
+- *"Market weights forecast best":* 4 to 7 percent, not significant, and possibly the equity weight. Say only that they are not beaten.
+- *"Sum p=0.17 resolves the tension":* absence of evidence on the level, not evidence of absence.
+
+**One question.** *Can the market index, measured relative to r*, be trusted as a channel: does it measure conditions in comparable units, carry information that is not just activity reflected back, and is the neutral-rate basis what stabilizes it?*

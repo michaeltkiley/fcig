@@ -109,3 +109,28 @@ Choose A as the frame and use B as the one new analysis. Drop robustness expansi
 - Worth it if the probability is far from one half. If it is near one half, the paper reports that the indexes cannot say, which is still a plain finding.
 
 **3. Organizing question.** *Does measuring financial conditions relative to the neutral rate change what an index says about the economy ahead?* Item I is the answer, II is the second test of it (which part of the index carries the information), and III applies it to today. Agreement among indexes becomes the first exhibit. If I returns a null, say so and organize the paper around III.
+
+## Round 4: buttressing the foundation
+
+**(a) Questions.** A reader of Note B must trust three things. Each is a question for Note A.
+
+1. *Does the index carry what the literature asks of an index: information about activity ahead?* Given: flows, not levels, carry it for the market, GS and FRB/US indexes in sample (HAC t 3.8 to 5.9), and the market weights are not beaten (`levelflow/`, `weights/`). Unanswered: out of sample the rate-based indexes add nothing, and NFCI/ANFCI beat them for unemployment and recessions. The paper must say what the market index is for, and not claim a forecaster.
+2. *Is relative to r* the right basis?* Given: a lean toward r*, 2 to 5 percent of RMSE, nothing after Holm (`rstar_test/`). Unanswered: a test of the basis that does not ride on forecast gains. The paper must show that r* is what makes the index's meaning stable over time.
+3. *Does the index say something about the stance beyond the policy rate?* This is the first purpose in Hatzius et al. and in Dudley. Nothing in the follow-ups addresses it directly.
+
+**(b) Literature to engage directly.** Hatzius et al.: state the stance purpose (a Taylor-rule counterpart) and the purge of activity (exogeneity). FCI-star (Caballero et al.): the neutral level is the same object as the r* step, so test it as one. Growth-at-risk: report the lower-tail result as a finding, with NFCI as the benchmark that carries the level. Brave-Butters: say plainly that NFCI measures stress and has a different job. Dudley (2010): the link from equity prices to the equilibrium rate is the argument for the r* basis.
+
+**(c) Additional analyses** (no window surprises).
+
+1. *Neutrality test.* Question: at an unemployment gap of zero, is the index's level stable across regimes? Design: estimate the implied index level at gap zero (VAR constants or a level regression) for 1990-2007 and 2009-2019, for nominal, real and r*. Data: in package. Buttressing: stable only in r*, with the nominal and real shifts exceeding the bootstrap band. Undermining: no basis is more stable.
+2. *Stance beyond the funds rate.* Question: does the market index add to the funds-rate gap (funds rate minus r*) in explaining unemployment 12 months ahead, especially in 2009-15 at the zero bound? Design: add the funds-rate gap to the Round 3 regressions, with the index and with the flow. Data: have. Buttressing: the index adds, with an interval excluding zero in the zero-bound years. Undermining: it adds nothing, so it is a rates summary.
+3. *Exogeneity (the Hatzius purge).* Question: does the flow's content survive removing the part predicted by lagged unemployment and inflation (the ANFCI purge)? Design: purge the market flow and rerun `levelflow/`. Data: have. Buttressing: coefficients stay. Undermining: they fall to zero, so the flow reflects activity, and Note B's use of the index as a channel needs a caveat.
+4. *Encompassing NFCI.* Question: does the market flow add to the NFCI level, or the reverse? Design: joint regression and out-of-sample forecast combination for unemployment and payrolls. Buttressing: both add, so they measure different channels, and rates are the one Note B uses.
+
+**(d) Do not lean on.**
+- The count of 69 of 91 for r* (`rstar_test/`): the tests share data, so counts are descriptive, nothing survives Holm, and the gains sit in 2008-16, the zero-bound period.
+- "The r* basis raises the flow t" (`levelflow/`): step differences are untested, and 12-month overlapping changes inflate t-statistics even with HAC.
+- The in-sample tail result: five recessions, no out-of-sample support.
+- Activity-fitted weights (`weights/`): intervals of 0.00 to 0.59 rank nothing, and the dollar share of 0.00 is a corner.
+
+**One question for Note A:** *Is the market index, measured relative to r*, a stable measure of how far financial conditions stand from neutral that carries information about activity?* Items 1 and 2 test the first half, and the follow-ups already give the second half.
