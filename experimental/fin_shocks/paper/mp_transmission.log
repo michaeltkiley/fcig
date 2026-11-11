@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 05:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 05:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -598,7 +598,7 @@ Underfull \hbox (badness 1622) in paragraph at lines 140--140
  []
 
 [7] [8] [9]
-<../baseline/report/fig_standard.pdf, id=660, 520.34402pt x 245.718pt>
+<../baseline/report/fig_standard.pdf, id=661, 520.34402pt x 245.718pt>
 File: ../baseline/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline/report/fig_standard.pdf  used on input lin
@@ -613,14 +613,14 @@ Overfull \hbox (37.21986pt too wide) in paragraph at lines 3--15
  []
 
 ) [11 <../baseline/report/fig_standard.pdf>]
-<../baseline/report/fig_size.pdf, id=764, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_size.pdf, id=765, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 20
 6.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
  (../baseline/report/tab_main_B.tex) [12 <../baseline/report/fig_size.pdf>]
-<../baseline/report/fig_steps.pdf, id=850, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_steps.pdf, id=851, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
@@ -629,7 +629,7 @@ Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
  [13 <../baseline/report/fig_steps.pdf>] (../baseline/report/tab_tradeoff.tex) 
 [14]
 (../baseline/report/tab_weights.tex)
-<../baseline/report/fig_financial.pdf, id=936, 317.98799pt x 202.356pt>
+<../baseline/report/fig_financial.pdf, id=937, 317.98799pt x 202.356pt>
 File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
@@ -729,27 +729,27 @@ Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
 LaTeX Warning: Float too large for page by 162.00858pt on input line 82.
 
 [39]) (../baseline/report/tab_proxy_sim.tex) [40] [41] [42]
-Underfull \hbox (badness 10000) in paragraph at lines 501--501
+Underfull \hbox (badness 10000) in paragraph at lines 503--503
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 502--503
+Underfull \hbox (badness 7168) in paragraph at lines 504--505
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1496) in paragraph at lines 502--503
+Underfull \hbox (badness 1496) in paragraph at lines 504--505
 \T1/lmr/m/n/10 PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 508--509
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
 []\T1/lmr/m/n/10 FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 510--510
+Underfull \hbox (badness 10000) in paragraph at lines 512--512
 []\T1/lmr/m/n/10 Daily;
  []
 
@@ -783,10 +783,10 @@ c/lm/lmri8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/t
 exmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lm
 sy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fon
 ts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (44 pages, 621755 bytes).
+Output written on mp_transmission.pdf (44 pages, 621954 bytes).
 PDF statistics:
- 1396 PDF objects out of 1440 (max. 8388607)
- 1033 compressed objects within 11 object streams
+ 1397 PDF objects out of 1440 (max. 8388607)
+ 1034 compressed objects within 11 object streams
  233 named destinations out of 1000 (max. 500000)
  274 words of extra memory for PDF output out of 10000 (max. 10000000)
 
