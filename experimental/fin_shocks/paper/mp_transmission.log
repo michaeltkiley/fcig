@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 05:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 05:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -598,7 +598,7 @@ Underfull \hbox (badness 1622) in paragraph at lines 140--140
  []
 
 [8] [9]
-<../baseline/report/fig_standard.pdf, id=667, 520.34402pt x 245.718pt>
+<../baseline/report/fig_standard.pdf, id=663, 520.34402pt x 245.718pt>
 File: ../baseline/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline/report/fig_standard.pdf  used on input lin
@@ -613,14 +613,14 @@ Overfull \hbox (37.21986pt too wide) in paragraph at lines 3--15
  []
 
 ) [11 <../baseline/report/fig_standard.pdf>]
-<../baseline/report/fig_size.pdf, id=773, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_size.pdf, id=769, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 20
 6.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
  (../baseline/report/tab_main_B.tex) [12 <../baseline/report/fig_size.pdf>]
-<../baseline/report/fig_steps.pdf, id=859, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_steps.pdf, id=855, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
@@ -629,7 +629,7 @@ Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
  [13 <../baseline/report/fig_steps.pdf>] (../baseline/report/tab_tradeoff.tex) 
 [14]
 (../baseline/report/tab_weights.tex)
-<../baseline/report/fig_financial.pdf, id=945, 317.98799pt x 202.356pt>
+<../baseline/report/fig_financial.pdf, id=941, 317.98799pt x 202.356pt>
 File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
@@ -729,27 +729,27 @@ Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
 LaTeX Warning: Float too large for page by 162.00858pt on input line 82.
 
 [38]) (../baseline/report/tab_proxy_sim.tex) [39] [40] [41]
-Underfull \hbox (badness 10000) in paragraph at lines 504--504
+Underfull \hbox (badness 10000) in paragraph at lines 502--502
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 505--506
+Underfull \hbox (badness 7168) in paragraph at lines 503--504
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1496) in paragraph at lines 505--506
+Underfull \hbox (badness 1496) in paragraph at lines 503--504
 \T1/lmr/m/n/10 PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 511--512
+Underfull \hbox (badness 10000) in paragraph at lines 509--510
 []\T1/lmr/m/n/10 FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 513--513
+Underfull \hbox (badness 10000) in paragraph at lines 511--511
 []\T1/lmr/m/n/10 Daily;
  []
 
@@ -762,13 +762,13 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: 015875F6CBC38A4339BE5D8ED82429F7;5960.
  ) 
 Here is how much of TeX's memory you used:
- 15943 strings out of 476182
- 262654 string characters out of 5795594
+ 15935 strings out of 476182
+ 262504 string characters out of 5795594
  2083975 words of memory out of 5000000
- 37420 multiletter control sequences out of 15000+600000
+ 37414 multiletter control sequences out of 15000+600000
  644234 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,2025b,757s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,2025b,759s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -783,10 +783,10 @@ c/lm/lmri8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/t
 exmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lm
 sy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fon
 ts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (43 pages, 621755 bytes).
+Output written on mp_transmission.pdf (43 pages, 621277 bytes).
 PDF statistics:
- 1395 PDF objects out of 1440 (max. 8388607)
- 1033 compressed objects within 11 object streams
- 235 named destinations out of 1000 (max. 500000)
+ 1390 PDF objects out of 1440 (max. 8388607)
+ 1028 compressed objects within 11 object streams
+ 233 named destinations out of 1000 (max. 500000)
  274 words of extra memory for PDF output out of 10000 (max. 10000000)
 
