@@ -136,17 +136,6 @@
   Financial Conditions Index Approach.'' {\em Federal Reserve Bank of Chicago
   Economic Perspectives}, 35(1):~22--43.
 
-\harvarditem[Brennan et~al.]{C.~M. Brennan, M.~M. Jacobson, C. Matthes
-  \harvardand\ T.~B. Walker}{2025}{brennan2025}
-{\bf Brennan, C.~M., M.~M. Jacobson, C. Matthes, and T.~B. Walker.} 2025.
-  ``Monetary Policy Shocks: Data or Methods?'' {\em B.E. Journal of
-  Macroeconomics}, 25(2):~595--659.
-
-\harvarditem[Bu, Rogers \harvardand\ Wu]{C. Bu, J. Rogers \harvardand\ W.
-  Wu}{2021}{bu2021}
-{\bf Bu, C., J. Rogers, and W. Wu.} 2021. ``A Unified Measure of Fed Monetary
-  Policy Shocks.'' {\em Journal of Monetary Economics}, 118:~331--349.
-
 \harvarditem[Caballero, Caravello \harvardand\ Simsek]{R.~J. Caballero, T.~E.
   Caravello \harvardand\ A. Simsek}{2026}{caballero2026}
 {\bf Caballero, R.~J., T.~E. Caravello, and A. Simsek.} 2026. ``FCI-star.''
@@ -177,23 +166,6 @@
   Rigidities and the Dynamic Effects of a Shock to Monetary Policy.'' {\em
   Journal of Political Economy}, 113(1):~1--45.
 
-\harvarditem[Chudik \harvardand\ Georgiadis]{A. Chudik \harvardand\ G.
-  Georgiadis}{2022}{chudik2022}
-{\bf Chudik, A., and G. Georgiadis.} 2022. ``Estimation of Impulse Response
-  Functions When Shocks Are Observed at a Higher Frequency Than Outcome
-  Variables.'' {\em Journal of Business and Economic Statistics},
-  40(3):~965--979.
-
-\harvarditem[Chudik \harvardand\ Kilian]{A. Chudik \harvardand\ L.
-  Kilian}{2026}{chudik2026}
-{\bf Chudik, A., and L. Kilian.} 2026. ``Mean Group and Pooled Mixed-Frequency
-  Estimators of Responses of Low-Frequency Variables to High-Frequency
-  Shocks.'' {\em Federal Reserve Bank of Dallas Working Paper 2603}.
-
-\harvarditem[Coibion]{O. Coibion}{2012}{coibion2012}
-{\bf Coibion, O.} 2012. ``Are the Effects of Monetary Policy Shocks Big or
-  Small?'' {\em American Economic Journal: Macroeconomics}, 4(2):~1--32.
-
 \harvarditem[{Companion note}]{{Companion note}}{2026}{fcinote}
 {\bf {Companion note}.} 2026. ``A Simple Market-Based Financial Conditions
   Index: Weights from Policy News, Dynamics from a Transparent VAR, Measured
@@ -208,12 +180,6 @@
 {\bf Del~Negro, M., M. Lenza, G.~E. Primiceri, and A. Tambalotti.} 2020.
   ``What's Up with the Phillips Curve?'' {\em Brookings Papers on Economic
   Activity, Spring, 301--373}.
-
-\harvarditem[Faust, Swanson \harvardand\ Wright]{J. Faust, E.~T. Swanson
-  \harvardand\ J.~H. Wright}{2004}{faust2004}
-{\bf Faust, J., E.~T. Swanson, and J.~H. Wright.} 2004. ``Identifying VARs
-  Based on High Frequency Futures Data.'' {\em Journal of Monetary Economics},
-  51(6):~1107--1131.
 
 \harvarditem[Fern\'andez-Villaverde et~al.]{J. Fern\'andez-Villaverde, J.~F.
   Rubio-Ram\'irez, T.~J. Sargent \harvardand\ M.~W.
@@ -238,12 +204,6 @@
   Data Sampling (MIDAS): MIDAS Regressions with Unrestricted Lag Polynomials.''
   {\em Journal of the Royal Statistical Society Series A}, 178(1):~57--82.
 
-\harvarditem[Francis, Ghysels \harvardand\ Owyang]{N. Francis, E. Ghysels
-  \harvardand\ M.~T. Owyang}{2011}{francis2011}
-{\bf Francis, N., E. Ghysels, and M.~T. Owyang.} 2011. ``The Low-Frequency
-  Impact of Daily Monetary Policy Shocks.'' {\em Federal Reserve Bank of St.\
-  Louis Working Paper 2011-009}.
-
 \harvarditem[Friedman]{M. Friedman}{1957}{friedman1957}
 {\bf Friedman, M.} 1957. {\em A Theory of the Consumption Function.} Princeton
   University Press.
@@ -257,12 +217,6 @@
 {\bf Gal\'i, J., and T. Monacelli.} 2005. ``Monetary Policy and Exchange Rate
   Volatility in a Small Open Economy.'' {\em Review of Economic Studies},
   72(3):~707--734.
-
-\harvarditem[Gazzani \harvardand\ Vicondoa]{A. Gazzani \harvardand\ A.
-  Vicondoa}{2020}{gazzani2020}
-{\bf Gazzani, A., and A. Vicondoa.} 2020. ``Bridge Proxy-SVAR: Estimating the
-  Macroeconomic Effects of Shocks Identified at High-Frequency.'' {\em Banca
-  d'Italia Working Paper 1274}.
 
 \harvarditem[Gertler \harvardand\ Karadi]{M. Gertler \harvardand\ P.
   Karadi}{2015}{gertler2015}
@@ -373,12 +327,6 @@
 {\bf Kaplan, G., B. Moll, and G.~L. Violante.} 2018. ``Monetary Policy
   According to HANK.'' {\em American Economic Review}, 108(3):~697--743.
 
-\harvarditem[Kiley]{M.~T. Kiley}{2014}{kiley2014}
-{\bf Kiley, M.~T.} 2014. ``The Response of Equity Prices to Movements in
-  Long-Term Interest Rates Associated with Monetary Policy Statements: Before
-  and After the Zero Lower Bound.'' {\em Journal of Money, Credit and Banking},
-  46(5):~1057--1071.
-
 \harvarditem[Kiley]{M.~T. Kiley}{2020{\em a}}{kiley2020ml}
 {\bf Kiley, M.~T.} 2020{\em a}. ``Financial Conditions and Economic Activity:
   Insights from Machine Learning.'' {\em Finance and Economics Discussion
@@ -388,11 +336,6 @@
 {\bf Kiley, M.~T.} 2020{\em b}. ``What Can the Data Tell Us about the
   Equilibrium Real Interest Rate?'' {\em International Journal of Central
   Banking}, 16(3):~181--209.
-
-\harvarditem[Kilian]{L. Kilian}{2024}{kilian2024}
-{\bf Kilian, L.} 2024. ``How to Construct Monthly VAR Proxies Based on Daily
-  Surprises in Futures Markets.'' {\em Journal of Economic Dynamics and
-  Control}, 168:~104966.
 
 \harvarditem[Kroencke, Schmeling \harvardand\ Schrimpf]{T.~A. Kroencke, M.
   Schmeling \harvardand\ A. Schrimpf}{2021}{kroencke2021}
@@ -468,11 +411,6 @@
 {\bf Plagborg-M{\o}ller, M., and C.~K. Wolf.} 2021. ``Local Projections and
   VARs Estimate the Same Impulse Responses.'' {\em Econometrica},
   89(2):~955--980.
-
-\harvarditem[Powell]{J.~H. Powell}{2022}{powell2022}
-{\bf Powell, J.~H.} 2022. ``Monetary Policy and Price Stability.'' {\em speech
-  at the Federal Reserve Bank of Kansas City Economic Policy Symposium, Jackson
-  Hole, August 26}.
 
 \harvarditem[Powell]{J.~H. Powell}{2023}{powell2023}
 {\bf Powell, J.~H.} 2023. ``Transcript of Chair Powell's Press Conference.''
