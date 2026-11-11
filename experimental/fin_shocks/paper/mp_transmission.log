@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 04:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 04:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -636,47 +636,42 @@ File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
 ne 248.
 (pdftex.def)             Requested size: 291.2458pt x 185.34843pt.
- [16 <../baseline/report/fig_financial.pdf>] (../baseline/report/tab_main_month
-ly.tex
-Overfull \hbox (3.81024pt too wide) in paragraph at lines 3--33
- [][] 
- []
-
-) (../baseline/report/tab_proxy_sim.tex) [17]
+ [16 <../baseline/report/fig_financial.pdf>] (../baseline/report/tab_monthly_co
+mpact.tex) [17]
 (../baseline/report/tab_main_R1.tex
 Overfull \hbox (36.0331pt too wide) in paragraph at lines 3--31
  [][] 
  []
 
-) [18]
+)
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 277.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 277.
+(hyperref)                removing `math shift' on input line 271.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 277.
+(hyperref)                removing `superscript' on input line 271.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 271.
 
 (../baseline/report/tab_main_R2.tex
 Overfull \hbox (97.74829pt too wide) in paragraph at lines 3--26
  [][] 
  []
 
-) [19] (../baseline/report/tab_main_R3.tex
+) [18] (../baseline/report/tab_main_R3.tex
 Overfull \hbox (27.65965pt too wide) in paragraph at lines 3--16
  [][] 
  []
 
-) [20] (../baseline/report/tab_main_R4.tex
+) [19] (../baseline/report/tab_main_R4.tex
 Overfull \hbox (24.35971pt too wide) in paragraph at lines 3--24
  [][] 
  []
 
-) [21] (../baseline/report/tab_weights_test.tex) [22]
+) [20] (../baseline/report/tab_weights_test.tex) [21]
 (../baseline/report/tab_main_R5.tex
 Overfull \hbox (41.18619pt too wide) in paragraph at lines 3--16
  [][] 
@@ -694,7 +689,7 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-) [23] [24] [25] [26] [27] [28] [29] (../baseline/report/tab_lags.tex [30])
+) [22] [23] [24] [25] [26] [27] [28] (../baseline/report/tab_lags.tex [29])
 (../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex)
 (../baseline/report/tab_app_R1b.tex) (../baseline/report/tab_app_R1c.tex)
 (../baseline/report/tab_app_R1d.tex) (../baseline/report/tab_app_R1e.tex)
@@ -716,6 +711,12 @@ Overfull \hbox (115.98897pt too wide) in paragraph at lines 3--11
  []
 
 ) (../baseline/report/tab_monthly_F.tex)
+(../baseline/report/tab_main_monthly.tex
+Overfull \hbox (3.81024pt too wide) in paragraph at lines 3--33
+ [][] 
+ []
+
+[30] [31] [32] [33] [34] [35] [36] [37])
 (../baseline/report/tab_app_monthly.tex
 Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
  [][] 
@@ -724,28 +725,28 @@ Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
 
 LaTeX Warning: Float too large for page by 162.00858pt on input line 82.
 
-[31] [32] [33] [34] [35] [36] [37] [38]) [39] [40]
-Underfull \hbox (badness 10000) in paragraph at lines 514--514
+) (../baseline/report/tab_proxy_sim.tex) [38] [39] [40]
+Underfull \hbox (badness 10000) in paragraph at lines 512--512
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 515--516
+Underfull \hbox (badness 7168) in paragraph at lines 513--514
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1496) in paragraph at lines 515--516
+Underfull \hbox (badness 1496) in paragraph at lines 513--514
 \T1/lmr/m/n/10 PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 521--522
+Underfull \hbox (badness 10000) in paragraph at lines 519--520
 []\T1/lmr/m/n/10 FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 523--523
+Underfull \hbox (badness 10000) in paragraph at lines 521--521
 []\T1/lmr/m/n/10 Daily;
  []
 
@@ -755,13 +756,13 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
-(rerunfilecheck)             Checksum: 479E89A461D73086A2D7918CA4A47D86;5976.
+(rerunfilecheck)             Checksum: 015875F6CBC38A4339BE5D8ED82429F7;5960.
  ) 
 Here is how much of TeX's memory you used:
- 15913 strings out of 476182
- 261796 string characters out of 5795594
- 2116975 words of memory out of 5000000
- 37399 multiletter control sequences out of 15000+600000
+ 15923 strings out of 476182
+ 262187 string characters out of 5795594
+ 2090975 words of memory out of 5000000
+ 37405 multiletter control sequences out of 15000+600000
  644234 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,13n,79p,2025b,775s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -779,10 +780,10 @@ c/lm/lmri8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/t
 exmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lm
 sy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fon
 ts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (42 pages, 617510 bytes).
+Output written on mp_transmission.pdf (42 pages, 618372 bytes).
 PDF statistics:
- 1377 PDF objects out of 1440 (max. 8388607)
- 1016 compressed objects within 11 object streams
- 232 named destinations out of 1000 (max. 500000)
+ 1380 PDF objects out of 1440 (max. 8388607)
+ 1019 compressed objects within 11 object streams
+ 233 named destinations out of 1000 (max. 500000)
  274 words of extra memory for PDF output out of 10000 (max. 10000000)
 

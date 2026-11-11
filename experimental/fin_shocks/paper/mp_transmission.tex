@@ -249,18 +249,12 @@ The model assumes that policy reaches unemployment and prices through the two-ye
 \caption{Response of the $\rs$-gap two-year yield and the FCI (in two-year-yield units) to a policy move that raises the two-year yield 1 percentage point in the window (monthly averages; 12 lags; 68 and 90 percent bands).}\label{fig:financial}
 \end{figure}
 
-\subsection{Proxy VARs with the FCI, and a simulation}\label{sec:monthlyvar}
-The monthly VAR can be extended with the end-of-month FCI of the same step and estimated in two ways, with the same 1996 sample and announcements. In the \emph{proxy VAR} the immediate effect of the surprise on every variable is estimated from the monthly residuals and the instrument, as in the VARs without the FCI. In the \emph{window-impact VAR} it is not estimated: the effect on the two-year yield and the FCI is taken from the announcement windows (the model's end-of-month response to a window surprise), and the effect on unemployment and inflation is set to zero within the month, the same restriction as in the main model. Table~\ref{tab:mainmonthly} gives the results at each step.
+\subsection{Estimating the impact from monthly data}\label{sec:monthlyvar}
+A standard proxy VAR can also carry the FCI. It estimates the immediate effect of the surprise on every variable from monthly residuals and the instrument, instead of measuring it in the announcement window. A window-impact VAR takes the effect on the two-year yield and the FCI from the windows, as the main model does, and sets the effect on unemployment and inflation to zero within the month. Table~\ref{tab:monthlycompact} gives the results for the $\rs$-gap yield and FCI; Appendix Tables~\ref{tab:mainmonthly} and~\ref{tab:appmonthly} give all three steps.
 
-\input{../baseline/report/tab_main_monthly}
+\input{../baseline/report/tab_monthly_compact}
 
-The first-stage $F$ statistic of the proxy VAR with the FCI is \bl{mo:rstar:yes:F} at the $\rs$ step, and Appendix Table~\ref{tab:monthlyF} reports it for each step. The proxy also implies an end-of-month response of the FCI of \bl{mo:rstar:yes:impf} per percentage point of the two-year yield, against \bl{mo:rstar:yes:modf} in the window. The window-impact VAR is close to the main model: with the $\rs$-gap yield and FCI, unemployment rises \bl{mo:rstar:yes:WE:u:12} percentage point after 12 months and the price level falls \blabs{mo:rstar:yes:WE:P:24} percent after 24, and without the FCI unemployment does not rise (\bl{mo:rstar:no:WE:u:12} after 12 months).
-
-If the model were the true process, how noisy would the proxy VAR be in samples like mine? I simulate 1,000 samples of 369 months from the estimated $\rs$-gap model, with the data's calendar and announcement days, resample the daily and monthly innovations and the surprises, and apply the monthly estimators to the end-of-month series of each sample (Table~\ref{tab:proxysim}).
-
-\input{../baseline/report/tab_proxy_sim}
-
-Under the model the true response of unemployment after 12 months is \bl{sim:proxy_fci:u12:truth} percentage point. The proxy VAR with the FCI is centred on it (median \bl{sim:proxy_fci:u12:med}) with a wide range: the 5th to 95th percentile range is [\bl{sim:proxy_fci:u12:lo}, \bl{sim:proxy_fci:u12:hi}], and the first-stage $F$ is below the data value (\bl{sim:proxy_fci:F:data}) in \bl{sim:proxy_fci:F:share} percent of samples. Without the FCI the proxy VAR is biased toward zero (median \bl{sim:proxy_nofci:u12:med}). The window-impact VAR recovers the truth (median \bl{sim:window:u12:med}) with a narrower range. The data values lie inside the simulated ranges. If the model is the true process, a monthly proxy VAR is a noisy way to estimate the effect, and a first-stage statistic and responses like those in the data are what it produces.
+The proxy VAR has the signs of the main model: unemployment rises \bl{mo:rstar:yes:P1:u:12} after 12 months and the price level falls \blabs{mo:rstar:yes:P1:P:24} percent after 24. Its sets are wide, because the surprise is a weak instrument for monthly residuals (first-stage $F$ of \bl{mo:rstar:yes:F}). The window-impact VAR is close to the main model. To see how much noise to expect, I generate 1,000 samples of 369 months from the estimated $\rs$-gap model, with the data's calendar and announcement days, and estimate both monthly methods on each (Appendix Table~\ref{tab:proxysim}; design in Appendix~\ref{app:details}). The true unemployment response after 12 months is \bl{sim:proxy_fci:u12:truth}. The proxy VAR with the FCI is centred on it (median \bl{sim:proxy_fci:u12:med}) with a 5th to 95th percentile range of [\bl{sim:proxy_fci:u12:lo}, \bl{sim:proxy_fci:u12:hi}], and its first-stage $F$ has a median of \bl{sim:proxy_fci:F:med}, against \bl{sim:proxy_fci:F:data} in the data. Without the FCI the proxy VAR is biased toward zero (median \bl{sim:proxy_nofci:u12:med}). The window-impact VAR is centred on the true response (median \bl{sim:window:u12:med}) with a range of [\bl{sim:window:u12:lo}, \bl{sim:window:u12:hi}]. Measuring the impact in the window gives the same answer with less noise.
 
 
 \section{Robustness}\label{sec:rob}
@@ -462,7 +456,9 @@ The size of the responses and the strength of the evidence increase with the lag
 \input{../baseline/report/tab_app_R4}
 \input{../baseline/report/tab_standard_com}
 \input{../baseline/report/tab_monthly_F}
+\input{../baseline/report/tab_main_monthly}
 \input{../baseline/report/tab_app_monthly}
+\input{../baseline/report/tab_proxy_sim}
 \section{Construction and estimation details}\label{app:details}
 \textbf{Events.} I use the 252 FOMC announcements from January 1996 to July 2026 with all the window measures available in the U.S.\ Monetary Policy Event-Study Database \citep{acosta2025}. As in the companion note, I leave out unscheduled announcements with no change in the policy rate, and March--April 2020. The announcements of September and October 2026 are left out because too few later days are available. The DXY index used in the window covers fewer currencies than the broad dollar used in the daily and monthly index, which I treat as a measurement difference.
 
@@ -497,6 +493,8 @@ where $h(\tau)$ is the month of day $\tau$, counted from the announcement month.
 \item The monthly average $\tilde x^{M}_h$ then enters equation~\eqref{eq:irfm} for later months.
 \end{enumerate}
 Months after the announcement month have 21 weekdays. To avoid computing a path for every date, I form six groups of announcement dates by the weekday of the month, in blocks of four days, and compute the path at each group's average day and month length. With $\omega_g$ the share of announcements in group $g$, the reported response is $\sum_g \omega_g\, \tilde m_h^{(g)}$. Because the model is linear, these responses do not depend on the constant or the trend.
+
+\textbf{Simulation.} The process is the estimated $\rs$-gap model with the FCI (12 lags), on the data's calendar of weekdays from January 1996 to September 2026 (369 months) and the actual announcement days. Within each month the macro variables are set first and the days of the month follow. Daily innovations are drawn with replacement from the model's daily residuals, separately for announcement days and other days; on announcement days the policy impact $b\,s_a$ is first removed from the residual and then added back with a drawn surprise. Monthly innovations are drawn jointly from the monthly residuals. Surprises are drawn with replacement from the 252 observed surprises. The twelve months before the sample and the 70 days before it are the actual 1995 data. On each sample I estimate the proxy VAR with and without the FCI, with the instrument and instrument months as in the data, and the window-impact VAR, taking the impact on the yield and the FCI from the model.
 
 \textbf{Bootstrap.} The draws are those of Appendix~\ref{app:boot}: 500 block-bootstrap draws, from each of which I compute the response and report percentile intervals. The sets for the Phillips multiplier in Table~\ref{tab:tradeoff} use the same draws.
 

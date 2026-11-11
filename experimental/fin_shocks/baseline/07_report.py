@@ -110,6 +110,28 @@ def sim_table():
     return "\n".join(out)
 (REPORT / "tab_proxy_sim.tex").write_text(sim_table() + "\n")
 
+def monthly_compact():
+    """Table in Section 3.5: r*-gap yield and FCI; proxy VAR, window-impact VAR and the main model; unemployment at 12 and 24 months, price level at 12 and 24 months."""
+    m = MON[CS.monthly_id(dict(step="rstar", fci="rstar", start="1996-01"))]; m = m[m.lags == 12]
+    def mrow(ident, lab):
+        cs_ = []
+        for v in ("u", "P"):
+            for h in (12, 24):
+                r = m[(m.ident == ident) & (m["var"] == v) & (m.h == h)].iloc[0]; cs_.append((num(r.r) + ("$^{*}$" if r.lo * r.hi > 0 else ""), f"[{num(r.lo)}, {num(r.hi)}]"))
+        return [f"{lab} & " + " & ".join(c[0] for c in cs_) + r"\\", " & " + " & ".join(rf"{{\scriptsize {c[1]}}}" for c in cs_) + r"\\"]
+    dd = R[CS.case_id(dict(form="rstar", fci="rstar", macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"))]; dd = dd[dd.lags == MAIN_LAGS]; cs_ = []
+    for v in ("u", "P"):
+        for h in (12, 24):
+            r = dd[dd["var"] == v].iloc[0]; cs_.append((num(r[f"r{h}"]) + ("$^{*}$" if r[f"lo{h}"] * r[f"hi{h}"] > 0 else ""), f"[{num(r[f'lo{h}'])}, {num(r[f'hi{h}'])}]"))
+    main = [r"Main model (daily block) & " + " & ".join(c[0] for c in cs_) + r"\\", " & " + " & ".join(rf"{{\scriptsize {c[1]}}}" for c in cs_) + r"\\"]
+    out = [r"\begin{table}[H]\centering\small", r"\caption{Monthly VARs with the FCI and the main model ($r^*$-gap two-year yield and FCI; 12 lags)}\label{tab:monthlycompact}",
+           r"\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap (pp)} & \multicolumn{2}{c}{Price level (\%)}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5} & 12 m & 24 m & 12 m & 24 m\\ \midrule",
+           *mrow("P1", "Proxy VAR"), *mrow("WE", "Window-impact VAR"), *main, r"\bottomrule\end{tabular}",
+           r"\par\smallskip\parbox{0.8\linewidth}{\scriptsize Per +1 pp on the two-year yield. $^{*}$: the 90\% interval excludes zero; intervals in brackets (Anderson--Rubin sets for the proxy VAR; bootstrap for the others). Monthly VARs use end-of-month values.}", r"\end{table}"]
+    (REPORT / "tab_monthly_compact.tex").write_text("\n".join(out) + "\n")
+monthly_compact()
+
+
 # ---------------------------------------------------------------- numbers quoted in the text of the note (macros)
 def write_numbers():
     """report/numbers.tex: one macro per number quoted in the text, so the prose cannot drift from the tables.  \bl{step:fci:var:h} = estimate, \blabs{..} = absolute value,
