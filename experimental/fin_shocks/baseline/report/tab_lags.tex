@@ -1,0 +1,27 @@
+\begin{table}[H]\centering\scriptsize\setlength{\tabcolsep}{3pt}
+\caption{The main results with 3, 6 and 12 monthly lags}\label{tab:lags}
+\begin{tabular}{p{5.3cm}ccc}\toprule & 3 lags & 6 lags & 12 lags\\ \midrule
+\multicolumn{4}{l}{\textit{Standard methods (per +1 pp on the policy rate)}}\\
+Cholesky, 2-year yield: unemployment gap, 12 m & $-$0.64$^{*}$ [$-$0.94, $-$0.36] & $-$0.56$^{*}$ [$-$0.97, $-$0.23] & $-$0.95$^{*}$ [$-$1.53, $-$0.55]\\
+Cholesky, 2-year yield: price level, 36 m & 0.09 [$-$0.34, 0.61] & $-$0.08 [$-$0.64, 0.53] & $-$0.10 [$-$0.79, 0.58]\\
+Proxy VAR: unemployment gap, 24 m & $-$0.43$^{*}$ [$-$0.64, $-$0.10] & $-$0.36 [$-$0.76, 0.34] & $-$0.61$^{*}$ [$-$1.08, $-$0.05]\\
+\addlinespace\multicolumn{4}{l}{\textit{FCI model, $r^*$-gap 2-year yield (baseline)}}\\
+With FCI: unemployment gap, 24 m & 0.13 [$-$0.29, 0.53] & 0.36 [$-$0.11, 0.84] & 0.50 [0.00, 1.02]\\
+With FCI: price level, 24 m & $-$0.25 [$-$0.66, 0.12] & $-$0.63$^{*}$ [$-$1.20, $-$0.18] & $-$0.81$^{*}$ [$-$1.35, $-$0.32]\\
+With FCI: price level, 36 m & $-$0.27 [$-$0.78, 0.29] & $-$0.87$^{*}$ [$-$1.82, $-$0.14] & $-$1.11$^{*}$ [$-$2.25, $-$0.33]\\
+Without FCI: unemployment gap, 12 m & $-$0.17 [$-$0.50, 0.18] & $-$0.09 [$-$0.43, 0.23] & $-$0.29 [$-$0.83, 0.16]\\
+Phillips multiplier, 24 m & $-$0.65 [unbounded] & $-$1.07 [unbounded] & $-$1.07 [$-$12.40, $-$0.46]\\
+\addlinespace\multicolumn{4}{l}{\textit{All cases with the FCI in Sections 3 and 4 (16 cases, 3 horizons, 48 responses each)}}\\
+Price level falls & 48 of 48 & 48 of 48 & 48 of 48\\
+Price level falls significantly & 4 of 48 & 27 of 48 & 37 of 48\\
+Unemployment gap rises & 34 of 48 & 43 of 48 & 42 of 48\\
+Unemployment gap rises significantly & 3 of 48 & 6 of 48 & 9 of 48\\
+\addlinespace\multicolumn{4}{l}{\textit{Financial weights and simulation ($r^*$-gap)}}\\
+Proportional weights, 1996: bootstrap $p$, unemployment equation & 0.057 & 0.126 & 0.336\\
+Proportional weights, 1996: bootstrap $p$, inflation equation & 0.006 & 0.049 & 0.002\\
+Proportional weights, 1973: bootstrap $p$, inflation equation & 0.649 & 0.767 & 0.426\\
+Proxy VAR with FCI, simulated: median unemployment, 12 m (true value) & 0.25 (0.25) & 0.36 (0.33) & 0.35 (0.33)\\
+Proxy VAR with FCI, simulated: first-stage $F$, median & 12.2 & 11.8 & 11.1\\
+\bottomrule\end{tabular}
+\par\smallskip\parbox{0.96\linewidth}{\scriptsize Same sample (1996 to 2026), announcements and bootstrap (500 draws, daily block re-estimated) at every lag length. Responses per +1 pp on the policy rate; $^{*}$ = 90\% interval excludes zero; intervals in brackets. Counts: the 16 cases with the FCI in the baseline and Robustness 1, 2, 3 and 5 (components excluded), responses at 12, 24 and 36 months.}
+\end{table}

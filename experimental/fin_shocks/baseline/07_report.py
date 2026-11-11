@@ -130,7 +130,7 @@ def write_numbers():
         e = pth(f, fci); d("bl:eom:" + fk, f"{e[(e.kind == 'fin_eom') & (e.h == 0)].r.iloc[0]:.2f}")
     u = pth("nom", 0); u = u[(u.kind == "macro") & (u["var"] == "u")]; i = u.r.idxmin(); d("bl:path:nom:no:u:min", num(u.r[i])); d("bl:path:nom:no:u:minh", str(int(u.h[i])))
     u = pth("rstar", "rstar"); u = u[(u.kind == "macro") & (u["var"] == "u")]; i = u.r.idxmax(); d("bl:path:rstar:yes:u:max", num(u.r[i])); d("bl:path:rstar:yes:u:maxh", str(int(u.h[i])))
-    LS = pd.read_csv(RESULTS / "lit_style.csv"); LSI = pd.read_csv(RESULTS / "lit_style_info.csv").set_index("case")
+    LS = pd.read_csv(RESULTS / "lit_style.csv").query("lags == 12"); LSI = pd.read_csv(RESULTS / "lit_style_info.csv").query("lags == 12").set_index("case")
     for key, case in (("c2y96", "chol_2y_1996"), ("c2y84", "chol_2y_1984"), ("cffr", "chol_ffr_1984_2007"), ("c2ycom", "chol_2y_1996_com"), ("cffrcom", "chol_ffr_1984_2007_com"), ("prox", "proxy_2y_1996")):
         for v in ("u", "P"):
             for h in (0, 12, 24, 36):
@@ -213,7 +213,7 @@ def check_claims():
     chk("with FCI, unemployment not significantly negative at any step and horizon", not any(est(f, "yes", "u", h) < 0 and sig(f, "yes", "u", h) for f in ("nom", "real", "rstar") for h in (12, 24, 36)))
     chk("with FCI, price level significant at 24 and 36 m at the real and r*-gap steps, at 36 m only at the nominal step", all(sig(f, "yes", "P", h) for f in ("real", "rstar") for h in (24, 36)) and sig("nom", "yes", "P", 36) and not sig("nom", "yes", "P", 24))
     chk("r*-gap with FCI has the largest price fall at 24 m", est("rstar", "yes", "P", 24) < min(est("nom", "yes", "P", 24), est("real", "yes", "P", 24)))
-    LS = pd.read_csv(RESULTS / "lit_style.csv"); ls = lambda c, v, h: LS[(LS.case == c) & (LS["var"] == v) & (LS.h == h)].iloc[0]; lsig = lambda c, v, h: ls(c, v, h).lo * ls(c, v, h).hi > 0
+    LS = pd.read_csv(RESULTS / "lit_style.csv").query("lags == 12"); ls = lambda c, v, h: LS[(LS.case == c) & (LS["var"] == v) & (LS.h == h)].iloc[0]; lsig = lambda c, v, h: ls(c, v, h).lo * ls(c, v, h).hi > 0
     for c in ("chol_2y_1996", "chol_2y_1984", "proxy_2y_1996"):
         chk(f"{c}: unemployment falls significantly at 12 m", ls(c, "u", 12).point < 0 and lsig(c, "u", 12)); chk(f"{c}: price level not significantly different from zero at 12, 24, 36 m", not any(lsig(c, "P", h) for h in (12, 24, 36)))
     for c in ("chol_2y_1996", "chol_2y_1984"): chk(f"{c}: unemployment significantly negative also at 24 m", ls(c, "u", 24).point < 0 and lsig(c, "u", 24))
@@ -308,6 +308,83 @@ try:
 except FileNotFoundError:
     print("tradeoff.csv missing: run 04_tradeoff.py first")
 
+
+# ---------------------------------------------------------------- appendix: the main results at 3, 6 and 12 lags (same sample, announcements and bootstrap)
+def lag_summary():
+    """tab_lags.tex, macros bl:lag:* appended to numbers.tex, and the claims of the appendix on lag length."""
+    LG = (3, 6, 12); BASEC = dict(macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"); ml = []; bad = []
+    dm = lambda k, v: ml.append(r"\expandafter\gdef\csname bl:lag:" + k + r"\endcsname{" + v + "}")
+    chk = lambda name, ok: None if ok else bad.append(name)
+    sg = lambda r, h: r[f"lo{h}"] * r[f"hi{h}"] > 0
+    pi = lambda pt, lo, hi: (num(pt) + ("$^{*}$" if lo * hi > 0 else "") + f" [{num(lo)}, {num(hi)}]")
+    LSL = pd.read_csv(RESULTS / "lit_style.csv"); LSL["sig"] = LSL.lo * LSL.hi > 0
+    lit = lambda c, v, h, L: LSL[(LSL.lags == L) & (LSL.case == c) & (LSL["var"] == v) & (LSL.h == h)].iloc[0]
+    mod = lambda f, fci, L, ident, v, h: (lambda m: m[(m.lags == L) & (m.ident == ident) & (m["var"] == v) & (m.h == h)].iloc[0])(MON[CS.monthly_id(dict(step=f, fci=fci, start="1996-01"))])
+    def bl(f, fk, v, h, L):
+        dd = R[CS.case_id(dict(form=f, fci=0 if fk == "no" else f, **BASEC))]; return dd[(dd.lags == L) & (dd["var"] == v)].iloc[0]
+    rows = []
+    def line(label, cells): rows.append(f"{label} & " + " & ".join(cells) + r"\\")
+    rows.append(r"\multicolumn{4}{l}{\textit{Standard methods (per +1 pp on the policy rate)}}\\")
+    line("Cholesky, 2-year yield: unemployment gap, 12 m", [pi(lit("chol_2y_1996", "u", 12, L).point, lit("chol_2y_1996", "u", 12, L).lo, lit("chol_2y_1996", "u", 12, L).hi) for L in LG])
+    line("Cholesky, 2-year yield: price level, 36 m", [pi(lit("chol_2y_1996", "P", 36, L).point, lit("chol_2y_1996", "P", 36, L).lo, lit("chol_2y_1996", "P", 36, L).hi) for L in LG])
+    line("Proxy VAR: unemployment gap, 24 m", [pi(lit("proxy_2y_1996", "u", 24, L).point, lit("proxy_2y_1996", "u", 24, L).lo, lit("proxy_2y_1996", "u", 24, L).hi) for L in LG])
+    rows.append(r"\addlinespace\multicolumn{4}{l}{\textit{FCI model, $r^*$-gap 2-year yield (baseline)}}\\")
+    for fk, v, h, lab in (("yes", "u", 24, "With FCI: unemployment gap, 24 m"), ("yes", "P", 24, "With FCI: price level, 24 m"), ("yes", "P", 36, "With FCI: price level, 36 m"), ("no", "u", 12, "Without FCI: unemployment gap, 12 m")):
+        line(lab, [(lambda r: pi(r[f"r{h}"], r[f"lo{h}"], r[f"hi{h}"]))(bl("rstar", fk, v, h, L)) for L in LG])
+    try:
+        TL = pd.read_csv(RESULTS / "tradeoff.csv"); tt = lambda L, H: TL[(TL.form == "rstar") & (TL.fci == "rstar") & (TL.macro == "u,pi") & (TL.start == "1996-01") & TL.end.isna() & (TL.t2020 == "in") & (TL.trend == "none") & (TL.lags == L) & (TL.H == H)].iloc[0]
+        kc = lambda t: f"{num(t.kappa)} " + ("[unbounded]" if not np.isfinite(t.k_lo) or not np.isfinite(t.k_hi) else f"[{num(t.k_lo)}, {num(t.k_hi)}]")
+        line("Phillips multiplier, 24 m", [kc(tt(L, 24)) for L in LG]); mult_bounded = {L: bool(np.isfinite(tt(L, 24).k_lo) and np.isfinite(tt(L, 24).k_hi)) for L in LG}
+    except FileNotFoundError: mult_bounded = {}
+    rows.append(r"\addlinespace\multicolumn{4}{l}{\textit{All cases with the FCI in Sections 3 and 4 (16 cases, 3 horizons, 48 responses each)}}\\")
+    cnt = {L: dict(Pneg=0, Psig=0, upos=0, usig=0, n=0, usigneg=0, Psigpos=0) for L in LG}
+    for pn in CS.PANELS:
+        for c in pn["cases"]:
+            if c["fci"] in (0, "cmp"): continue
+            for L in LG:
+                g = R[CS.case_id(c)]; g = g[g.lags == L]
+                for v in ("u", "P"):
+                    r = g[g["var"] == v].iloc[0]
+                    for h in (12, 24, 36):
+                        x = r[f"r{h}"]
+                        if v == "P": cnt[L]["n"] += 1; cnt[L]["Pneg"] += x < 0; cnt[L]["Psig"] += bool(sg(r, h)); cnt[L]["Psigpos"] += bool(sg(r, h) and x > 0)
+                        else: cnt[L]["upos"] += x > 0; cnt[L]["usig"] += bool(sg(r, h)); cnt[L]["usigneg"] += bool(sg(r, h) and x < 0)
+    n_ = cnt[12]["n"]
+    line("Price level falls", [f"{cnt[L]['Pneg']} of {n_}" for L in LG]); line("Price level falls significantly", [f"{cnt[L]['Psig']} of {n_}" for L in LG])
+    line("Unemployment gap rises", [f"{cnt[L]['upos']} of {n_}" for L in LG]); line("Unemployment gap rises significantly", [f"{cnt[L]['usig']} of {n_}" for L in LG])
+    rows.append(r"\addlinespace\multicolumn{4}{l}{\textit{Financial weights and simulation ($r^*$-gap)}}\\")
+    WTL = pd.read_csv(RESULTS / "weights_test.csv"); wt = lambda st, eq, L: WTL[(WTL.start == st) & (WTL.step == "rstar") & (WTL["eq"] == eq) & (WTL.lags == L)].iloc[0].p_boot
+    line("Proportional weights, 1996: bootstrap $p$, unemployment equation", [f"{wt('1996-01', 'u', L):.3f}" for L in LG]); line("Proportional weights, 1996: bootstrap $p$, inflation equation", [f"{wt('1996-01', 'pi', L):.3f}" for L in LG])
+    line("Proportional weights, 1973: bootstrap $p$, inflation equation", [f"{wt('1973-01', 'pi', L):.3f}" for L in LG])
+    sm = {L: pd.read_csv(RESULTS / ("proxy_sim_summary.csv" if L == 12 else f"proxy_sim_summary_L{L}.csv")).set_index(["system", "quantity"]) for L in LG}
+    line("Proxy VAR with FCI, simulated: median unemployment, 12 m (true value)", [f"{sm[L].loc[('proxy_fci', 'u12')].sim_median:.2f} ({sm[L].loc[('proxy_fci', 'u12')].truth:.2f})" for L in LG])
+    line("Proxy VAR with FCI, simulated: first-stage $F$, median", [f"{sm[L].loc[('proxy_fci', 'F')].sim_median:.1f}" for L in LG])
+    (REPORT / "tab_lags.tex").write_text("\n".join([r"\begin{table}[H]\centering\scriptsize\setlength{\tabcolsep}{3pt}", r"\caption{The main results with 3, 6 and 12 monthly lags}\label{tab:lags}",
+        r"\begin{tabular}{p{5.3cm}ccc}\toprule & 3 lags & 6 lags & 12 lags\\ \midrule", *rows, r"\bottomrule\end{tabular}",
+        r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Same sample (1996 to 2026), announcements and bootstrap (500 draws, daily block re-estimated) at every lag length. Responses per +1 pp on the policy rate; $^{*}$ = 90\% interval excludes zero; intervals in brackets. Counts: the 16 cases with the FCI in the baseline and Robustness 1, 2, 3 and 5 (components excluded), responses at 12, 24 and 36 months.}", r"\end{table}"]) + "\n")
+    for L in LG:
+        for k in ("Pneg", "Psig", "upos", "usig", "usigneg", "Psigpos"): dm(f"{k}:{L}", str(int(cnt[L][k])))
+        dm(f"med:P:{L}", num(np.median([R[CS.case_id(c)].query("lags == @L and `var` == 'P'").iloc[0][f"r{h}"] for pn in CS.PANELS for c in pn["cases"] if c["fci"] not in (0, "cmp") for h in (12, 24, 36)])))
+    dm("n", str(int(n_)))
+    for L in LG:
+        t = lit("chol_2y_1996", "u", 12, L); dm(f"chol:u12:{L}", num(t.point))
+        b = bl("rstar", "yes", "P", 36, L); dm(f"rstar:P36:{L}", num(b.r36)); b = bl("rstar", "yes", "u", 24, L); dm(f"rstar:u24:{L}", num(b.r24))
+    (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
+    for L in LG:
+        chk(f"lags {L}: with the FCI the price level falls in every case and horizon", cnt[L]["Pneg"] == n_ and cnt[L]["Psigpos"] == 0)
+        chk(f"lags {L}: with the FCI no significant fall in unemployment", cnt[L]["usigneg"] == 0)
+        chk(f"lags {L}: unemployment rises in a large majority of responses with the FCI", cnt[L]["upos"] >= 0.7 * n_)
+        t = lit("chol_2y_1996", "u", 12, L); chk(f"lags {L}: Cholesky unemployment falls significantly at 12 m", t.point < 0 and t.sig)
+        pr = lit("proxy_2y_1996", "u", 24, L); chk(f"lags {L}: proxy VAR unemployment falls at 24 m", pr.point < 0)
+        chk(f"lags {L}: without the FCI the r*-gap unemployment gap is not significantly positive", not any(sg(bl("rstar", "no", "u", h, L), h) and bl("rstar", "no", "u", h, L)[f"r{h}"] > 0 for h in (12, 24, 36)))
+        chk(f"lags {L}: weights, 1996: inflation equation rejects proportional weights at 10% in every step, unemployment equation not at 5%", all(WTL[(WTL.start == "1996-01") & (WTL.lags == L) & (WTL["eq"] == "pi")].p_boot < 0.10) and all(WTL[(WTL.start == "1996-01") & (WTL.lags == L) & (WTL["eq"] == "u")].p_boot > 0.05))
+    chk("weights, 1973: no rejection of proportional weights at 5% at any lag length, step or equation", all(WTL[(WTL.start == "1973-01") & (WTL.lags.isin(LG))].p_boot > 0.05))
+    chk("price level significant in more cases with more lags", cnt[3]["Psig"] < cnt[6]["Psig"] < cnt[12]["Psig"])
+    chk("point estimates of the baseline price response grow with the lag length", abs(bl("rstar", "yes", "P", 36, 3).r36) < abs(bl("rstar", "yes", "P", 36, 6).r36) < abs(bl("rstar", "yes", "P", 36, 12).r36))
+    if mult_bounded: chk("the multiplier set at 24 m is bounded at 12 lags only", mult_bounded == {3: False, 6: False, 12: True})
+    assert not bad, "claims on lag length no longer hold: " + "; ".join(bad)
+lag_summary()
+
 # ---------------------------------------------------------------- figures
 BLUE, ORANGE, INK, GREY = "#2a78d6", "#eb6834", "#0b0b0b", "#6b6a66"      # validated pair (dataviz skill, light surface); ink for text and neutral series
 plt.rcParams.update({"font.size": 8, "axes.edgecolor": GREY, "axes.labelcolor": INK, "text.color": INK, "xtick.color": INK, "ytick.color": INK,
@@ -340,7 +417,7 @@ ax.set_title("Financial response (monthly averages; 12 lags; 90% bands)", fontsi
 fig.tight_layout(); fig.savefig(REPORT / "fig_financial.pdf"); plt.close(fig)
 
 # ---------------------------------------------------------------- standard methods (Section 3.1) and the baseline figure (Section 3.2)
-LSR = pd.read_csv(RESULTS / "lit_style.csv")
+LSR = pd.read_csv(RESULTS / "lit_style.csv").query("lags == 12")
 def ls_path(case, v): return LSR[(LSR.case == case) & (LSR["var"] == v) & (LSR.h <= 36)]
 def fig_standard():
     """Cholesky VAR and monthly proxy VAR on the 1996 sample, 2-year yield, no FCI: the puzzles that motivate the model."""
@@ -359,7 +436,7 @@ fig_standard()
 def standard_table(rows, fname, label, caption, extra=""):
     out = [r"\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{2.4pt}", rf"\caption{{{caption}}}\label{{{label}}}",
            r"\begin{tabular}{llrrrrrrr}\toprule" "\n" r" & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){4-6}\cmidrule(lr){7-9}" "\n" r"Method & Sample & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule"]
-    info = pd.read_csv(RESULTS / "lit_style_info.csv").set_index("case")
+    info = pd.read_csv(RESULTS / "lit_style_info.csv").query("lags == 12").set_index("case")
     for case, lab, smp in rows:
         cells = []
         for v in ("u", "P"):
@@ -369,7 +446,7 @@ def standard_table(rows, fname, label, caption, extra=""):
     out += [r"\bottomrule\end{tabular}", r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Monthly data, 12 lags, constant, no trend; unemployment gap, core PCE inflation and the end-of-month policy rate (the 2-year Treasury yield, or the effective federal funds rate where stated), policy rate ordered last in the Cholesky VARs; price level = cumulated inflation/12. " 
             + extra + r" Unit: +1 pp on the policy rate on impact. Brackets: 90\% intervals (residual bootstrap for the Cholesky VARs; exact Anderson--Rubin sets for the proxy VAR). $^{*}$ = excludes zero. Specification: baseline/lib/litstyle.py.}", r"\end{table}"]
     (REPORT / fname).write_text("\n".join(out) + "\n")
-_F = pd.read_csv(RESULTS / "lit_style_info.csv").set_index("case").F["proxy_2y_1996"]
+_F = pd.read_csv(RESULTS / "lit_style_info.csv").query("lags == 12").set_index("case").F["proxy_2y_1996"]
 standard_table([("chol_2y_1996", "Cholesky, 2-year yield", "1996--2026"), ("chol_2y_1984", "Cholesky, 2-year yield", "1984--2026"), ("chol_ffr_1984_2007", "Cholesky, federal funds rate", "1984--2007"), ("proxy_2y_1996", "Proxy VAR, 2-year yield", "1996--2026")],
                "tab_standard.tex", "tab:standard", "Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate", f"Proxy VAR: Nakamura--Steinsson policy news summed within the month as instrument; first-stage $F$ = {_F:.1f}.")
 standard_table([("chol_2y_1996_com", "Cholesky + commodity prices, 2-year yield", "1996--2026"), ("chol_ffr_1984_2007_com", "Cholesky + commodity prices, federal funds rate", "1984--2007")],

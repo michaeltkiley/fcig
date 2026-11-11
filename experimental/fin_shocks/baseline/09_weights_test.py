@@ -8,13 +8,15 @@ from scipy import stats
 from lib import model as M
 from lib.paths import RESULTS
 
-B = 999; rng = np.random.default_rng(7)
+B = 999
 def wald(X, y, R):
     n, k = X.shape; XX = np.linalg.inv(X.T @ X); b = XX @ X.T @ y; r = y - X @ b; V = XX @ (X.T * (r ** 2)) @ X @ XX * n / (n - k); Rb = R @ b
     return float(Rb @ np.linalg.solve(R @ V @ R.T, Rb))
 rows = []
-for start, form in [(st, f) for st in ("1996-01", "1973-01") for f in ("nom", "real", "rstar")]:
-    for L in (12,):
+for Ls, seed in (((12,), 7), ((6, 3), 8)):                                  # 12 lags (main text), then 6 and 3 (appendix), each with its own stream
+  rng = np.random.default_rng(seed)
+  for start, form in [(st, f) for st in ("1996-01", "1973-01") for f in ("nom", "real", "rstar")]:
+    for L in Ls:
         X, Y = M.macro_data(form, "cmp", ["u", "pi"], L, start, None, "in", "none"); n, k = X.shape; K = 2; nd = 4
         Xr, _ = M.macro_data(form, form, ["u", "pi"], L, start, None, "in", "none")                  # restricted: the FCI as one regressor per lag
         for j, name in enumerate(("u", "pi")):
