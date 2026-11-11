@@ -229,7 +229,9 @@ def check_claims():
     # Section 4 (robustness) claims
     def rb(pid, fk, v, h):
         cs = next(x for x in CS.panel_by_id(pid)["cases"] if (x["fci"] == 0) == (fk == "no")); dd = R[CS.case_id(cs)]; r = dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0]; return r[f"r{h}"], r[f"lo{h}"] * r[f"hi{h}"] > 0, r[f"lo{h}"], r[f"hi{h}"]
-    for pid in ("R1a", "R1b", "R1c", "R1d", "R1e"): chk(f"{pid}: with FCI unemployment positive at 12 m", rb(pid, "yes", "u", 12)[0] > 0)
+    for pid in ("R1a", "R1b", "R1c", "R1d", "R1e"): chk(f"{pid}: with FCI unemployment positive at 12 m", rb(pid, "yes", "u", 12)[0] > 0); chk(f"{pid}: with FCI price level negative at 12, 24, 36 m", all(rb(pid, "yes", "P", h)[0] < 0 for h in (12, 24, 36)))
+    chk("R2b and R2d (1973): price level negative with FCI at 12, 24, 36 m", all(rb(p_, "yes", "P", h)[0] < 0 for p_ in ("R2b", "R2d") for h in (12, 24, 36)))
+    chk("R2c: unemployment without FCI negative, with FCI positive at 12 m; R3a: unemployment with FCI positive at 24 m and price level negative at 24 m", rb("R2c", "no", "u", 12)[0] < 0 < rb("R2c", "yes", "u", 12)[0] and rb("R3a", "yes", "u", 24)[0] > 0 and rb("R3a", "yes", "P", 24)[0] < 0)
     chk("R1: with FCI unemployment significant at 12 m in all but the 1973 start", all(rb(p_, "yes", "u", 12)[1] for p_ in ("R1b", "R1c", "R1d", "R1e")) and not rb("R1a", "yes", "u", 12)[1])
     chk("R1: price level significant at 12, 24, 36 m with and without the FCI in the three samples starting 1973", all(rb(p_, fk, "P", h)[1] and rb(p_, fk, "P", h)[0] < 0 for p_ in ("R1a", "R1c", "R1e") for fk in ("no", "yes") for h in (12, 24, 36)))
     chk("R1b: price level significant with the FCI at 24 m; R1d (ends 2019, from 1996): not significant at 12, 24, 36 m", rb("R1b", "yes", "P", 24)[1] and not any(rb("R1d", "yes", "P", h)[1] for h in (12, 24, 36)))
