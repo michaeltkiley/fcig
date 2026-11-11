@@ -177,6 +177,7 @@ def write_numbers():
     WT = pd.read_csv(RESULTS / "weights_test.csv")
     for _, r in WT[(WT.lags == MAIN_LAGS) & (WT.start == "1996-01")].iterrows(): e_ = r["eq"]; d(f"bl:wt:{r.step}:{e_}:p", f"{r.p_boot:.3f}"); d(f"bl:wt:{r.step}:{e_}:W", f"{r.wald:.1f}"); d(f"bl:wt:{r.step}:{e_}:q", str(int(r.restrictions)))
     for _, r in WT[(WT.lags == MAIN_LAGS) & (WT.start == "1973-01")].iterrows(): d(f"bl:wt73:{r.step}:{r['eq']}:p", f"{r.p_boot:.3f}")
+    w73 = WT[(WT.lags == MAIN_LAGS) & (WT.start == "1973-01")].p_boot; d("bl:wt73:min", f"{w73.min():.2f}"); d("bl:wt73:max", f"{w73.max():.2f}")
     from lib.daily import window_impact, event_index, EV
     from lib import monthly as MO
     from lib.model import MAC, fin_eom
@@ -244,7 +245,10 @@ def check_claims():
     chk("R4 (components): unemployment point estimate positive at 12 and 24 m at every step", all(cm(f, "u", h)[f"r{h}"] > 0 for f in S for h in (12, 24)))
     chk("R4 (components): no significant response of unemployment or the price level at any step and horizon; price level point estimate not negative at 24 m", all(cm(f, v, h)[f"lo{h}"] * cm(f, v, h)[f"hi{h}"] < 0 for f in S for v in ("u", "P") for h in (12, 24, 36)) and all(cm(f, "P", 24)["r24"] > 0 for f in S))
     chk("R4 r*-gap: baseline unemployment at 12 m inside the components interval; baseline price level at 24 m below the components interval", cm("rstar", "u", 12)["lo12"] <= est("rstar", "yes", "u", 12) <= cm("rstar", "u", 12)["hi12"] and est("rstar", "yes", "P", 24) < cm("rstar", "P", 24)["lo24"])
-    WT = pd.read_csv(RESULTS / "weights_test.csv"); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_) & (WT.start == "1996-01")].p_boot.iloc[0]
+    c73 = lambda f, v, h: (lambda dd: dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0])(R[CS.case_id(dict(form=f, fci="cmp", macro="u,pi", start="1973-01", end=None, t2020="in", trend="none"))])
+    chk("R4b (components, start 1973), r*-gap: unemployment positive at 12, 24 m; price level negative at 12, 24, 36 m, significant at 12 and 24 m", all(c73("rstar", "u", h)["r%d" % h] > 0 for h in (12, 24)) and all(c73("rstar", "P", h)["r%d" % h] < 0 for h in (12, 24, 36)) and all(c73("rstar", "P", h)["lo%d" % h] * c73("rstar", "P", h)["hi%d" % h] > 0 for h in (12, 24)))
+    chk("R4b: nominal step price level not negative at 24 and 36 m", c73("nom", "P", 24)["r24"] > 0 and c73("nom", "P", 36)["r36"] > 0)
+    WT = pd.read_csv(RESULTS / "weights_test.csv"); chk("weights test, monthly equations from 1973, 12 lags: no rejection at 5% in either equation at any step", bool((WT[(WT.start == "1973-01") & (WT.lags == MAIN_LAGS)].p_boot > 0.05).all())); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_) & (WT.start == "1996-01")].p_boot.iloc[0]
     chk("weights test, 12 lags: no rejection at 5% in the unemployment equation at any step; rejection in the inflation equation at every step", all(wt(s_, "u", 12) > 0.05 for s_ in S) and all(wt(s_, "pi", 12) < 0.05 for s_ in S))
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
