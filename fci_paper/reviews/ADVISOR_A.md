@@ -83,3 +83,29 @@ Choose A as the frame and use B as the one new analysis. Drop robustness expansi
 **Not pursued:** a level-versus-flow quantile study (B's S3 alone); it reports a feature of indexes, not a question.
 
 **Organizing question if 1 and 2 succeed:** *How much of the tightening in financial conditions is policy, and does the non-policy part matter for activity as much?* The comparison with GS, FCI-G and FRB/US becomes validation. If only 3 succeeds, the question is B's: does measuring relative to neutral change what conditions say about the economy? If none succeeds, the paper is a measurement note and should say so.
+
+## Round 3: revised priorities (independent of Note B)
+
+**1. Split.**
+- *Best covered in Note B:* my A (policy-news versus other decomposition of index movements, stance by source); my B and B's S2 (do policy and non-policy components act in proportion to market weights); anything on transmission of surprises. Note B already has the components and weights tests. The weights-imprecision bootstrap stays in Note A as a measurement fact only.
+- *Independent for Note A:* my C (are conditions restrictive, with weight and r* uncertainty); B's S1 (does the r* basis improve what an index says about outcomes); B's S3 (level, flow and tails). None needs window surprises beyond the weights already used.
+
+**2. Independent items, ranked.**
+
+**I. Does measuring relative to neutral improve what an index says about the economy?** (B's S1.)
+- New: FCI-G, GS and the NFCI literature validate indexes by fit or correlation (Hatzius et al. 2010; Aramonte et al.), and FCI-star (Caballero et al.) posits a neutral level without testing the choice of basis against outcomes. Note B asks about transmission of a surprise; this asks about measurement of conditions.
+- Minimal analysis: for each index at nominal, real and r* steps, forecast or project outcomes at 6, 12 and 24 months; Clark-West or Diebold-Mariano tests on differences between steps, not against zero. Extend `06_activity.py`.
+- Outcomes: unemployment gap (have); PAYEMS, GDPC1, PCEPILFE, USREC in `followup/rstar_test/data/`.
+- Worth it if r* beats nominal with an interval excluding zero, especially in 2009-16 and 2022-24. A null stated as a fact is also a result: the r* step then rests on theory only.
+
+**II. Is the level, the flow or the lower tail what carries information, and does it depend on the basis?** (B's S3, restricted to the clean version.)
+- New: growth-at-risk (Adrian-Boyarchenko-Giannone) uses the NFCI level; nobody compares levels against FCI-G-form flows on a common basis, or tests whether r* shifts the tail.
+- Minimal analysis: regress the 12-month change in unemployment (and recession probability from USREC) on level, flow and both; add 10th and 90th percentile quantile regressions. Resolve the level-versus-flow contradiction noted in Advisor B.
+- Worth it if flows carry the signal in the tail and in the mean on the r* basis. Not worth it if tails are untestable with about five recessions, which should be said in one sentence.
+
+**III. Are conditions restrictive today, with intervals from weights and r*?** (My C.)
+- New: FCI-star gives a point estimate of neutral financial conditions, and Holston et al. give r* bands; no one combines r* and index-weight uncertainty into a statement about the stance.
+- Minimal analysis: add r* alternatives (Laubach-Williams, Kiley, Holston) to the existing bootstrap; report the probability that conditions are tighter than neutral for September 2026 and for 2022-24.
+- Worth it if the probability is far from one half. If it is near one half, the paper reports that the indexes cannot say, which is still a plain finding.
+
+**3. Organizing question.** *Does measuring financial conditions relative to the neutral rate change what an index says about the economy ahead?* Item I is the answer, II is the second test of it (which part of the index carries the information), and III applies it to today. Agreement among indexes becomes the first exhibit. If I returns a null, say so and organize the paper around III.

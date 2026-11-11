@@ -77,3 +77,33 @@ Do not add further robustness. The existing robustness table suffices.
 - Quantile regressions of the 12-month change in unemployment on level and flow, including NFCI/ANFCI. Same FRED series. Worth it only if the tail result differs from the mean result. Lowest priority; leave out unless items 1 and 3 leave room.
 
 **Organizing question if 1 and 2 succeed.** *When financial conditions move with or against policy, how restrictive is policy, and does the source of the movement change what it does to unemployment?* If 1 returns equality, the paper reads: one index measures the stance whatever moves it; if 2 shows large episodes of offset, the stance differs from the funds rate by amounts of that size. The comparison with GS, FCI-G and FRB/US becomes the validation section.
+
+## Round 3: revised priorities (independent of Note B)
+
+**Split.**
+- *Best covered in Note B:* my S2 and Round-2 item 1 (source-of-move, proportionality); Advisor A's A (policy versus remainder split), B (non-policy tightening) and C in its stance-in-2022-24 form where it relies on window news. All rest on window surprises or transmission. Note B already traces surprises, decomposes responses and tests proportionality. Drop them from Note A.
+- *Independent for Note A:* my S1 (does the r* step improve content), S3 (levels, flows and the tail), and the weights-versus-outcomes question restated below without surprises. The index weights are the only use of window news.
+
+**Revised priorities**
+
+1. **Does measuring relative to neutral improve what an index says about the economy?**
+- *Question.* For each index (market, GS, FCI-G, FRB/US, NFCI), do the real and r* versions predict later activity better than the nominal version?
+- *New relative to the literature.* FCI-G, GS and NFCI use nominal rates (GS and FCI-G) or no rates (NFCI); Dudley (2010) and FCI-star argue the neutral level matters but do not test whether adjusting the inputs improves content [secondhand]. Note B asks about transmission of a surprise, not about the content of the level for outcomes.
+- *Minimal analysis.* In `06_activity.py`, add paired comparisons of the three steps at 6, 12 and 24 months. Outcomes: payrolls, real GDP growth, core PCE, recession indicator. Use Diebold-Mariano on step differences, and show 2009-16 and 2022-24 separately.
+- *Series.* PAYEMS, GDPC1, PCEPILFE, USREC and USRECM are in `followup/rstar_test/data/`. None needed beyond them.
+- *Worth it if* r* versions beat nominal at 12 to 24 months with intervals that exclude zero, driven by those episodes. A null is reported as a null and the step stays a measurement choice.
+
+2. **Do weights chosen for activity beat weights chosen for policy response, for predicting activity?**
+- *Question.* Among market (event-study), model (FRB/US, GS, FCI-G), principal-component (NFCI) and activity-fitted weights on the same variables, which gives the best out-of-sample content?
+- *New relative to the literature.* Hatzius et al. (2010) classify weights by source but do not run them against one another on a common basis. Nothing here uses window news beyond the market weights already estimated.
+- *Minimal analysis.* Fit activity weights by regressing 12-month-ahead unemployment (or payrolls) on the three market variables, recursively. Compare their forecasts with the existing indexes. Bootstrap intervals.
+- *Series.* The same FRED series.
+- *Worth it if* the best weights are stable and differ from policy weights by more than the intervals. Not if they are imprecise (a three-variable, 50-year sample is thin): then report that the weight question cannot be settled from outcomes.
+
+3. **Do levels or flows carry the lower tail?**
+- *Question.* Do levels or flows of an index shift the lower quantile of 12-month activity changes, and does the r* basis matter?
+- *New relative to the literature.* Adrian, Boyarchenko and Giannone (2019) use the NFCI level and one basis [secondhand]; the level-versus-flow split on a common basis is new here.
+- *Minimal analysis.* Quantile regressions of payroll growth or the change in unemployment on level and flow for each index.
+- *Worth it if* the tail result differs from the mean result. Otherwise leave it out. Lowest priority; about five recessions limit power.
+
+**The one question for Note A.** *Which way of measuring financial conditions, in what units, relative to what, and with which weights, says the most about the economy ahead?* The agreement exhibits become the first section, and the outcome tests (items 1 to 3) are the answer. Note B then holds all the surprise-based material and the paper cites it only for the weights.
