@@ -301,7 +301,7 @@ for start, lab in (("1996-01", ""), ("1973-01", ", start 1973")):
         wrows.append(f"{CS.FORMS[step]}{lab} & " + " & ".join(cells) + r"\\")
 (REPORT / "tab_weights_test.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Test of the proportional-weights restriction (12 lags)}\label{tab:weightstest}",
     r"\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap equation} & \multicolumn{2}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Version & Wald & Bootstrap $p$ & Wald & Bootstrap $p$\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
-    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 block-bootstrap draws under the restriction); monthly equations from 1996 (first three rows) and from 1973 (last three), no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
+    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 block-bootstrap draws under the restriction); monthly equations from 1996 (first three rows) and from 1973 (last three), no trend, 2020 in. The unrestricted equation is the one used in Section 4.4.}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- weights table (window responses)
 w = pd.read_csv(OUT / "market_weights.csv", index_col=0)
@@ -393,7 +393,7 @@ def lag_summary():
     line("Proxy VAR with FCI, simulated: first-stage $F$, median", [f"{sm[L].loc[('proxy_fci', 'F')].sim_median:.1f}" for L in LG])
     (REPORT / "tab_lags.tex").write_text("\n".join([r"\begin{table}[H]\centering\scriptsize\setlength{\tabcolsep}{3pt}", r"\caption{The main results with 3, 6 and 12 monthly lags}\label{tab:lags}",
         r"\begin{tabular}{p{5.3cm}ccc}\toprule & 3 lags & 6 lags & 12 lags\\ \midrule", *rows, r"\bottomrule\end{tabular}",
-        r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Same sample (1996 to 2026), announcements and block bootstrap (500 draws) at every lag length. Responses per +1 pp on the policy rate; $^{**}$, $^{*}$: 95\% and 90\% intervals exclude zero; 90\% intervals in brackets. Counts (at the 10 percent level): the 16 cases with the FCI in the baseline and Robustness 1, 2, 3 and 5 (components excluded), responses at 12, 24 and 36 months.}", r"\end{table}"]) + "\n")
+        r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Same sample (1996 to 2026), announcements and block bootstrap (500 draws) at every lag length. Responses per +1 pp on the policy rate; $^{**}$, $^{*}$: 95\% and 90\% intervals exclude zero; 90\% intervals in brackets. Counts (at the 10 percent level): the 16 cases with the FCI in the baseline and Section 4.1, 2, 3 and 5 (components excluded), responses at 12, 24 and 36 months.}", r"\end{table}"]) + "\n")
     for L in LG:
         for k in ("Pneg", "Psig", "upos", "usig", "usigneg", "Psigpos"): dm(f"{k}:{L}", str(int(cnt[L][k])))
         dm(f"med:P:{L}", num(np.median([R[CS.case_id(c)].query("lags == @L and `var` == 'P'").iloc[0][f"r{h}"] for pn in CS.PANELS for c in pn["cases"] if c["fci"] not in (0, "cmp") for h in (12, 24, 36)])))
@@ -594,4 +594,6 @@ def fig_intro():
     fig.legend([h1, h2], ["Through the financial conditions index, relative to the neutral rate (bands: 68 and 90 percent)", "Through the nominal two-year yield alone"], loc="lower center", ncol=1, frameon=False, fontsize=7.5)
     fig.tight_layout(rect=[0, 0.12, 1, 1]); fig.savefig(REPORT / "fig_intro.pdf"); plt.close(fig)
 fig_intro()
+from lib import latex_style as LST
+LST.restyle_dir(REPORT)                                                              # house LaTeX style: [tp] floats, Title Case captions, notes below the table
 print("report inputs written to", REPORT)

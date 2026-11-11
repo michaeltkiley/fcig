@@ -1,47 +1,46 @@
 This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: mp_transmission.aux
-I found no \bibdata command---while reading file mp_transmission.aux
-I found no \bibstyle command---while reading file mp_transmission.aux
-You've used 91 entries,
-            0 wiz_defined-function locations,
-            174 strings with 1486 characters,
-and the built_in function-call counts, 0 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 0
-:= -- 0
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 0
-format.name$ -- 0
-if$ -- 0
-int.to.chr$ -- 0
+The style file: aea.bst
+Database file #1: references.bib
+You've used 94 entries,
+            2695 wiz_defined-function locations,
+            1081 strings with 16907 characters,
+and the built_in function-call counts, 497678 in all, are:
+= -- 82261
+> -- 6304
+< -- 3
++ -- 39635
+- -- 1976
+* -- 44673
+:= -- 97986
+add.period$ -- 661
+call.type$ -- 94
+change.case$ -- 1222
+chr.to.int$ -- 92
+cite$ -- 94
+duplicate$ -- 1411
+empty$ -- 3670
+format.name$ -- 2003
+if$ -- 89235
+int.to.chr$ -- 7
 int.to.str$ -- 0
 missing$ -- 0
-newline$ -- 0
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 0
-purify$ -- 0
+newline$ -- 289
+num.names$ -- 1037
+pop$ -- 90
+preamble$ -- 1
+purify$ -- 1410
 quote$ -- 0
-skip$ -- 0
+skip$ -- 1095
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 117290
+swap$ -- 590
+text.length$ -- 1319
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
+type$ -- 374
 warning$ -- 0
-while$ -- 0
+while$ -- 2380
 width$ -- 0
-write$ -- 0
-(There were 2 error messages)
+write$ -- 476

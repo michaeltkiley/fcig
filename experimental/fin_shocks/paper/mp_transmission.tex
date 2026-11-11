@@ -1,37 +1,78 @@
 \documentclass[11pt]{article}
+
+% --- Packages ---
 \usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,booktabs,graphicx,caption,hyperref,xcolor,enumitem,float}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[round]{natbib}
-\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black}
-\captionsetup{font=small,labelfont=bf}
-\setlist{itemsep=2pt,topsep=4pt}
-\newcommand{\todo}[1]{\par\noindent{\color{red}\textbf{[TO DO: #1]}}\par\smallskip}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{xcolor}
+\IfFileExists{soul.sty}{\usepackage{soul}}{}        % \hl{} for draft highlights (skipped where soul is not installed)
+\usepackage{makecell}
+\usepackage[title]{appendix}
+\usepackage{rotating}
+\usepackage{placeins}
+
+% Global float placement: top of page or own float page only
+\floatplacement{table}{tp}
+\floatplacement{figure}{tp}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=blue!60!black,
+  urlcolor=blue!60!black,
+}
+
 \input{../baseline/report/numbers} % generated numbers quoted in the text (baseline/07\_report.py)
 \newcommand{\rs}{r^{*}}
 
+% ============================================================
 \title{Financial Conditions, $r^*$, and the Transmission of Monetary Policy Surprises}
-\author{Draft for discussion}
-\date{11 November 2026}
+\author{Michael Kiley\thanks{Division of Monetary Affairs, Federal Reserve Board. Email: \href{mailto:michael.t.kiley@frb.gov}{michael.t.kiley@frb.gov}. The views expressed in this analysis are those of the author and do not reflect the views of the Federal Reserve Board or its staff. The author used Claude Code and related AI tools in this project. Responsibility for the analysis and results lies with the author.}}
+
+\date{\today}
 
 \begin{document}
+\pagenumbering{roman}
 \maketitle
 
 \begin{abstract}
-\noindent Monetary policy is the main tool for stabilizing the economy, but estimates of its effects have been unreliable. In samples that start in the mid-1990s, standard methods applied to surprises around Federal Reserve announcements give unemployment that falls after a tightening and prices that do not respond. I keep the surprises and change how their effects are carried through the economy. I measure how the two-year yield and a broad financial conditions index move in the half hour around each announcement, and carry those moves forward in a daily and a monthly model. Both are measured relative to the neutral rate. Carried through the two-year yield alone, the surprises give the familiar wrong signs. Carried through the index relative to the neutral rate, a tightening raises unemployment and lowers the price level, and the ratio of the price response to the unemployment response lies between earlier estimates for the periods after and before 1990. In every variation of the sample, the measure of the neutral rate, the trend, credit conditions and the surprise, the wrong-signed unemployment response disappears and the price level falls, and the price fall is significant in most.
+Monetary policy is the main tool for stabilizing the economy, but estimates of its effects have been unreliable. In samples that start in the mid-1990s, standard methods applied to surprises around Federal Reserve announcements give unemployment that falls after a tightening and prices that do not respond. I keep the surprises and change how their effects are carried through the economy. I measure how the two-year yield and a broad financial conditions index move in the half hour around each announcement, and carry those moves forward in a daily and a monthly model. Both are measured relative to the neutral rate. Carried through the two-year yield alone, the surprises give the familiar wrong signs. Carried through the index relative to the neutral rate, a tightening raises unemployment and lowers the price level, and the ratio of the price response to the unemployment response lies between earlier estimates for the periods after and before 1990. In every variation of the sample, the measure of the neutral rate, the trend, credit conditions and the surprise, the wrong-signed unemployment response disappears and the price level falls, and the price fall is significant in most.
 \end{abstract}
 
+\noindent\textbf{JEL Classification:} E43, E44, E52, C32
+
+\noindent\textbf{Keywords:} monetary policy transmission, high-frequency identification, financial conditions, neutral interest rate, Phillips multiplier
+
+\pagestyle{plain}
+
+\newpage
+\pagenumbering{arabic}
+
+% ============================================================
 \section{Introduction}
+\label{sec:intro}
 Monetary policy is the main tool for stabilizing the economy. Its use rests on estimates of how much a change in policy moves unemployment and inflation. In samples that start after the early 1980s, standard methods often give a surprise tightening small effects on unemployment, or effects of the wrong sign \citep{ramey2016}. Two concerns follow. One is that policy has become less powerful \citep{boivin2006,boivin2010}. The other is that inflation responds little to slack, so that lowering inflation requires a large and lasting rise in unemployment \citep{hazell2022,delnegro2020}. I ask whether these findings reflect how policy works or how its effects are measured.
 
 The question matters in practice. From 2022 to 2023 the Federal Reserve raised its policy rate by more than 5 percentage points. Policymakers expected costs: in August 2022 the Chair warned of ``some softening of labor market conditions'' and called these ``the unfortunate costs of reducing inflation'' \citep{powell2022}. They also described policy as working through broad financial conditions: in November 2023 the Chair noted that ``Financial conditions have tightened significantly in recent months, driven by higher longer-term bond yields, among other factors'' \citep{powell2023}. The standard tools for measuring the effects of policy leave those conditions out.
 
 The answer is that measurement matters. I use the policy-news surprise of \citet{nakamura2018} around 252 FOMC announcements from 1996 to 2026, and I change only how its effects are carried through the economy. Carried through the two-year yield alone, the surprises give the result of the standard methods: unemployment falls after a tightening, by \blabs{st:c2y96:u:12} percentage point after a year in a recursive VAR and \blabs{st:prox:u:12} in a proxy VAR, and prices do not respond. Carried through a broad financial conditions index, with the index and the yield both measured relative to the neutral rate $\rs$, a policy move that raises the two-year yield 1 percentage point raises unemployment by \bl{rstar:yes:u:24} percentage point after two years and lowers the core price level by \blabs{rstar:yes:P:24} percent. Lowering the price level 1 percent costs about \bl{tr:rstar:yes:24:sac} percentage-point years of unemployment (one point of unemployment for one year). These responses have the signs that theory predicts, where the standard methods give the wrong ones (Figure~\ref{fig:intro}). In the terms of \citet{barnichon2021}, the ratio of the price response to the unemployment response is \bl{tr:rstar:yes:36} after three years, between their estimates of about $-0.15$ for 1990--2008 and about $-3$ after five years before 1990.
 
-\begin{figure}[H]\centering
+\begin{figure}[tp]
+\centering
 \includegraphics[width=\textwidth]{../baseline/report/fig_intro.pdf}
-\caption{Responses to a policy move that raises the two-year yield 1 percentage point in the window around the announcement. Solid line: the surprise carried through the financial conditions index and the two-year yield, both measured relative to the neutral rate (shaded bands: 68 and 90 percent intervals). Dashed line: carried through the nominal two-year yield alone. 1996--2026, 12 monthly lags.}\label{fig:intro}
+\caption{Responses to a Policy Move That Raises the Two-Year Yield 1 Percentage Point}
+\label{fig:intro}
+\begin{flushleft}\footnotesize\textit{Notes:} The move occurs in the window around the announcement. Solid line: the surprise carried through the financial conditions index and the two-year yield, both measured relative to the neutral rate (shaded bands: 68 and 90 percent intervals). Dashed line: carried through the nominal two-year yield alone. 1996--2026, 12 monthly lags.\end{flushleft}
 \end{figure}
 
 The approach has three features.
@@ -44,7 +85,7 @@ Finally, I measure the yield and the index relative to $\rs$, the rate that neit
 
 Earlier fixes improve the surprise or the timing of the outcome. I leave both alone and change the channel: policy reaches the economy through long rates, stock prices and the dollar, which I measure relative to $\rs$. With the FCI, the wrong-signed unemployment response disappears and the price level falls in every variation of the sample, the measure of $\rs$, the trend, credit conditions and the surprise, and the price fall is significant in most (Section~\ref{sec:rob}).
 
-\subsection{Connection to the literature}
+\subsection{Connection to the Literature}
 \textbf{Surprises and their effects.} Interest-rate surprises around FOMC announcements were meant to settle the measurement problem: the decision precedes the announcement, so market moves in a narrow window around it cannot have caused it \citep{kuttner2001,gurkaynak2005}. They measure the effects of policy on asset prices precisely \citep{bernanke2005,hanson2015,nakamura2018,swanson2021}, but for unemployment and inflation the old puzzles often return. Four explanations come with fixes. Announcements reveal the Fed's view of the economy, and separating it gives larger price effects \citep{romer2000,nakamura2018,jarocinski2020,miranda2021}. Part of each surprise is predictable, and removing it sharpens the estimates \citep{bauer2023,bauer2023aer}. Markets react in minutes while unemployment and inflation are monthly averages, and measuring inflation daily removes most of the wrong sign \citep{jacobson2026}. And credit costs, stock prices and the dollar carry part of the effect \citep{gertler2015,caldara2019,kroencke2021,bauer2023jep,boehm2024,bauer2026,boehm2026}. Most of this work traces the surprise through a single nominal interest rate. The choice of surprise series \citep{bu2021,brennan2025} and of lags \citep{coibion2012} can matter. Futures-based surprises in monthly models go back to \citet{faust2004}, and related work on timing and mixed frequencies includes \citet{kilian2024,chudik2022,francis2011,ghysels2016,gazzani2020,chudik2026}.
 
 \textbf{What is new.} My paper is closest in spirit to \citet{jacobson2026}. Like them, I hold the surprise and the method fixed and change one measurement. They change how often the outcome is measured; I change how the channel from policy to the economy is measured, and my main result is for activity. \citet{bauer2023} and \citet{jarocinski2020} improve the surprise itself. In my design a surprise enters only through its immediate effect on the two-year yield and the FCI and through its timing, so their fixes and mine can in principle be combined.
@@ -54,10 +95,12 @@ Earlier fixes improve the surprise or the timing of the outcome. I leave both al
 \textbf{The power of policy and the Phillips curve.} The effects of policy shocks became smaller after the early 1980s, which the literature attributes to a more systematic policy response and better-anchored expectations \citep{boivin2006,boivin2010,primiceri2005}, or to a failure of standard identification once policy became more forward-looking \citep{barakchian2013}. Recent work finds a small Phillips-curve slope \citep{hazell2022,delnegro2020,ball2019,fitzgerald2024}, hard to identify when policy offsets demand shocks \citep{mcleay2020} and understated by conventional methods \citep{barnichon2020}. Policy shocks offer one way to identify it. \citet{barnichon2021} measure the tradeoff by the ratio of cumulative inflation to cumulative unemployment after such shocks and find it much flatter after 1990 than before. I add evidence of this kind and show that the measured tradeoff depends on how the stance of policy is measured.
 
 
-\section{Empirical approach}\label{sec:data}
+\FloatBarrier
+% ============================================================
+\section{Empirical Approach}\label{sec:data}
 The model has three pieces. A surprise moves the two-year yield and the FCI by amounts measured in the window: the vector $b$ in equation~\eqref{eq:impact}. A daily VAR, equation~\eqref{eq:daily}, carries those two series forward. Their monthly averages then enter a monthly VAR for unemployment and inflation, equation~\eqref{eq:monthly}. Appendix~\ref{app:details} gives the construction of the series, the algorithm for tracing responses and the bootstrap, and Appendix~\ref{app:data} lists the data.
 
-\subsection{Measuring financial conditions}\label{sec:measure}
+\subsection{Measuring Financial Conditions}\label{sec:measure}
 The FCI is the market index of \citet{fcinote}: a weighted sum of the 10-year Treasury yield, stock valuations and the real broad dollar. Indexes of this kind are weighted sums of financial variables \citep{hatzius2010}. They differ mainly in where the weights come from. FCI-G takes them from large macroeconomic models \citep{ajello2023}. Mine come from the event-study regressions long used to measure how asset prices respond to policy \citep{kuttner2001,bernanke2005,hanson2015,nakamura2018}.
 
 The weights come from the responses of the three variables to policy news in the window. Policy news is the first principal component of the changes in federal funds and eurodollar futures around the announcement, rescaled so that one unit moves the two-year yield 1 percentage point \citep{nakamura2018}. Regressing the window changes in the 10-year yield, the S\&P 500 and the dollar index on it, and weighting the three by how precisely each recovers the policy component, gives the weights: 0.61 on the 10-year yield, $-0.051$ per percent on stock valuations and 0.065 per percent on the dollar. Each of the three accounts for about a third of the index's response to policy. Because the weights are scaled to the policy news, a policy move that raises the two-year yield 1 percentage point raises the index by 1 unit.
@@ -65,17 +108,17 @@ The weights come from the responses of the three variables to policy news in the
 The index comes in three versions. The nominal version uses the nominal 10-year yield and the log of the cyclically adjusted price-earnings ratio (CAPE); the real version subtracts 10-year expected inflation from the yield; and the version relative to $\rs$ also subtracts $\rs$ from the yield and measures stocks by the gap between their earnings yield and $\rs$. The two-year yield is adjusted in the same three versions. For $\rs$ I use the New York Fed's current Laubach--Williams estimates \citep{holston2023}, which are ``one-sided'': they use only data up to each date. The FCI and the three versions come from a companion note on financial conditions and were fixed before this analysis \citep{fcinote}. Expected inflation and $\rs$ move slowly, and the daily series add their interpolated monthly values to daily market prices, so day-to-day moves come from markets. Appendix~\ref{app:index} gives the equations and Appendix~\ref{app:details} the daily construction.
 
 
-\subsection{Why financial conditions and $r^*$}\label{sec:background}
+\subsection{Why Financial Conditions and $r^*$}\label{sec:background}
 Policy reaches spending and prices through many interest rates, asset prices and the dollar. A standard VAR with one interest rate can miss most of that route, and the omission can produce the puzzles.
 
-\subsubsection{The standard transmission mechanism}
+\subsubsection{The Standard Transmission Mechanism}
 Monetary policy sets the short-term interest rate today and, through its communications, shapes what people expect that rate to be in the future. Few households and businesses borrow at the policy rate. They face the rates on consumer credit, mortgages and business debt, which arbitrage links to current and expected short-term rates. The same rise in rates raises the return investors require on stocks. For businesses, a higher cost of capital raises the user cost of new equipment and buildings, and investment falls \citep{jorgenson1963,hall1967}. The value of existing capital relative to its replacement cost falls as well \citep{tobin1969}. For households, lower stock prices lower wealth, and consumption depends on wealth as well as on current income \citep{ando1963,friedman1957}. Higher rates also strengthen the dollar, which shifts spending toward imports and reduces exports \citep{fleming1962,mundell1963}.
 
 Interest rates of many maturities, equity prices and the dollar therefore form the core of the transmission mechanism \citep{boivin2010}. The same links appear in modern models of the business cycle, in closed and open economies \citep{christiano2005,smets2007,gali2005}. Models with heterogeneous households give more weight to the indirect effects that work through income \citep{kaplan2018,auclert2019}. But in all of these models the short-term rate matters mainly because of what it does to the prices and rates that people actually face. The effects come with a lag \citep{friedman1961}.
 
 What matters in these models is not the nominal rate but the real rate relative to the neutral rate $\rs$. The same holds for the other parts of financial conditions: a given yield or stock valuation is tighter when $\rs$ is low than when it is high. The distinction matters most for inflation. Spending responds to financial conditions within months. Inflation responds to the slack that builds up over time, so it depends on how long, and by how much, conditions stay tight relative to $\rs$. A measure of conditions that ignores a falling $\rs$ will overstate how tight policy has been, and by more the longer the period. That error is largest for the cumulative effects that drive inflation.
 
-\subsubsection{What standard VARs leave out}
+\subsubsection{What Standard VARs Leave Out}
 The workhorse evidence on monetary policy comes from VARs with a few macroeconomic variables and one interest rate \citep{bernanke1992,christiano1999}. Some studies add a credit spread \citep{gertler2015,caldara2019}, and factor models bring in many more series \citep{bernanke2005favar}. But long-term yields, equity valuations and the dollar are usually absent from the small models used to measure the effects of policy, although some recent work adds the dollar and stock-market volatility \citep{boehm2026}. These are the variables that, on the mechanism above, carry those effects. Concern about missing variables is not new: \citet{sims1992} argued that the price puzzle arises because the Federal Reserve responds to information that small VARs do not contain \citep[see also][]{castelnuovo2010}. My concern is different. Here the missing variables are the channel itself.
 
 A simple two-equation model (Appendix~\ref{app:toy}) shows what this omission can do. If unemployment responds to financial conditions, and financial conditions respond to the policy rate and to other forces, a VAR in unemployment and the policy rate lets the rate stand in for financial conditions. Its error contains past financial shocks, which a VAR with few lags cannot capture, so the VAR is misspecified \citep[on missing variables in VARs, see][]{fernandez2007} and the effects of policy are harder to measure.
@@ -85,23 +128,23 @@ A second problem matters more for the size and sign of the response: the omissio
 
 High-frequency surprises help identify the shock, but they do not by themselves fix how it is carried forward. My design therefore puts financial conditions in the system, so that they carry the effects of the surprise forward, and measures the immediate effect of the surprise on the two-year yield and on financial conditions directly in the window, where policy news is the main force at work. The measurement of financial conditions also matters. If activity responds to conditions relative to $\rs$, a measure that ignores $\rs$ differs from the true one by a slow-moving error, and that error enters the equation for unemployment.
 
-\subsubsection{Financial conditions and real activity}
+\subsubsection{Financial Conditions and Real Activity}
 A separate literature asks how financial conditions are related to economic activity. Asset prices help forecast output and inflation, but which ones help changes over time \citep{stock2003}. Credit spreads, and especially their excess bond premium component, are strong predictors of activity \citep{gilchrist2012}. Broad indexes summarize many such series and are used to assess the outlook \citep{hatzius2010,brave2011}. Financial conditions are also linked to the risks around growth, not only to its average \citep{adrian2019}, and their relationship with unemployment may be nonlinear \citep{kiley2020ml}. Federal Reserve staff now publish a measure of the effect of financial conditions on growth, with weights from large macroeconomic models \citep{ajello2023}.
 
 This work has a limit that the event-study literature does not. A correlation between financial conditions and later activity need not reflect a causal effect, because financial conditions also respond to the economy. \citet{hatzius2010} address part of this problem by removing the effects of past growth and inflation from their indicators. The companion note uses the timing in a VAR for the same purpose \citep{fcinote}. The two literatures have complementary strengths. Work on high-frequency surprises identifies policy shocks cleanly but carries them through a small set of variables. Work on financial conditions studies a broad set of variables but does not isolate policy shocks. I bring them together: the weights in my index come from how its components respond to policy news, and the surprise is carried forward through the estimated relationship between that index and the economy.
 
 
-\subsubsection{Policy news beyond interest rates, and risk appetite}\label{sec:scope}
+\subsubsection{Policy News Beyond Interest Rates, and Risk Appetite}\label{sec:scope}
 Recent work finds that announcements move stock prices and the dollar much more than interest-rate surprises can explain \citep{boehm2024,bauer2026}. My windows show the same pattern. The policy-news surprise explains \bl{r2:y2} percent of the variance of the move in the two-year yield, but only \bl{r2:y10} percent for the 10-year yield, \bl{r2:sp} percent for the S\&P 500, \bl{r2:usd} percent for the dollar and \bl{r2:fci} percent for the FCI. The part of the FCI's move that the surprise does not explain is therefore large.
 
 There are two readings of this unexplained part. On one, it is mostly news unrelated to policy that happens to arrive in the window, and my estimates capture the effects of policy. On the other, much of it is policy news that does not move interest rates, as \citet{boehm2024} and \citet{bauer2026} argue. Then my estimates are the effects of one dimension of policy news, and the effects of all policy news through financial conditions could be larger. Both readings agree on the channel: policy news reaches the economy through broad financial conditions.
 
 % TODO: The earlier draft also reported (i) the window ratio by subperiod and by VIX/EBP state, (ii) the effect of a one-standard-deviation move in the unexplained part of the FCI, (iii) Baa/EBP credit, FCI-components and commodity-price robustness. None of these is in the clean package; (iii) credit moves to the EBP robustness subsection (Section 4); regenerate (i) and (ii) in baseline/ only if the paper needs them.
-\subsection{Timing assumptions and identification}\label{sec:timing}
+\subsection{Timing Assumptions and Identification}\label{sec:timing}
 The shock is the Nakamura--Steinsson policy-news surprise, $s_a$ in equation~\eqref{eq:ns}, from the San Francisco Fed's U.S.\ Monetary Policy Event-Study Database \citep{acosta2025}. I use the 252 FOMC announcements from January 1996 to July 2026 with all the window measures available (Appendix~\ref{app:details}). The window runs from 10 minutes before the statement to 60 minutes after the press conference starts, or 30 minutes around the statement when there is no press conference. Identification comes from timing, at three frequencies. Table~\ref{tab:timing} summarizes the assumptions.
 
-\begin{table}[H]\centering\small
-\caption{Timing assumptions}\label{tab:timing}
+\begin{table}[tp]\centering\small
+\caption{Timing Assumptions}\label{tab:timing}
 \begin{tabular}{p{0.12\textwidth}p{0.29\textwidth}p{0.38\textwidth}p{0.09\textwidth}}\toprule
 Frequency & What can move & Assumption & Equation \\\midrule
 Window (minutes) & Two-year yield and FCI, by the amounts measured in the window & News about the path of interest rates is the main systematic force in the window, and the only one correlated with the surprise. Unemployment and inflation do not move. & \eqref{eq:impact} \\[3pt]
@@ -129,7 +172,7 @@ This is close to one because the weights are normalized that way. It is not exac
 The second assumption is specific to this paper and has two parts. A standard VAR estimates the effect of the shock on every variable in the system. Here, the surprise reaches unemployment and prices only through the two-year yield and the FCI, and has no direct effect on them in the window. Anything else it moves, such as credit spreads or expectations, is left out. So are the moves in stock prices and the dollar in the window that are unrelated to $s_a$; the surprise explains only about a third of those moves (Section~\ref{sec:scope}). The non-yield shock of \citet{boehm2024} is uncorrelated with policy-news surprises, so such moves do not bias $b_F$. But the weights in equation~\eqref{eq:weights} treat them as noise, and part of them may be policy news \citep{boehm2024,bauer2026}. In addition, the monthly equations see the FCI as a single index. Its weights show how the three components respond to policy news, not how the economy responds to each. So I assume that the three affect unemployment and prices in proportion to those weights.
 
 
-\subsection{A mixed-frequency VAR}\label{sec:midas}
+\subsection{A Mixed-Frequency VAR}\label{sec:midas}
 \textbf{Structure.} The model has a daily block and a monthly block. Let $x_\tau=(R_\tau,F_\tau)'$ hold the two-year yield and the FCI on day $\tau$, in the same version. Let $m_t=(U_t,\pi_t)'$ hold the two monthly variables. The unemployment gap $U_t$ is the unemployment rate minus the CBO estimate of its natural rate. The CBO estimate does not respond to the surprise, so the response of the gap equals that of the unemployment rate. Inflation is $\pi_t=1200\,\Delta\ln P_t$, where $P_t$ is the price index for personal consumption expenditures excluding food and energy (core PCE).
 
 The daily block is a VAR that uses averages of the past day, week, month and quarter as regressors \citep{corsi2009}:
@@ -151,24 +194,29 @@ A monthly VAR with the same variables and a recursive ordering is the special ca
 \textbf{Estimation and inference.} I estimate each block by ordinary least squares, on the same sample: January 1996, the month of the first announcement with all window measures, to September 2026 (\bl{nobs} months, and the weekdays of those months for the daily block). The lagged daily averages and the monthly lags may use earlier observations. 2020 is kept in both blocks. The baseline has $L=12$ monthly lags, fixed in advance (Appendix~\ref{app:lags} shows 3 and 6). Responses are computed recursively, as deviations from a path with no surprise, and averaged over the positions of the announcements within their months (Appendix~\ref{app:details}); the response of the price level after $h$ months is $\sum_{j=0}^{h}\tilde\pi_j/12$. Intervals come from a block bootstrap with 500 draws \citep{kunsch1989,jentsch2019} that resamples calendar months in blocks of 12 and uses together the monthly residuals, the daily observations and the announcements of the months drawn (Appendix~\ref{app:boot}). A response is significant at the 5 or 10 percent level when its 95 or 90 percent interval excludes zero. I report 90 percent intervals, as recent studies in this area do \citep{bauer2023,caldara2019,miranda2021,ramey2016}, and 68 percent intervals, which \citet{jarocinski2020} report alongside them. The FCI weights and $\rs$ are held fixed.
 
 
-\section{Baseline results}\label{sec:results}
+\FloatBarrier
+% ============================================================
+\section{Baseline Results}\label{sec:results}
 % Numbers in this section are macros from baseline/report/numbers.tex; the qualitative claims are asserted in baseline/07_report.py (check_claims), which fails if they stop being true.
 
-\subsection{Standard methods after the early 1980s}\label{sec:standard}
+\subsection{Standard Methods after the Early 1980s}\label{sec:standard}
 Standard identification schemes have not delivered conventional effects of monetary policy in samples that start after the early 1980s. \citet{ramey2016} estimates the specification of \citet{christiano1999} on 1983--2007 and finds that ``the results change dramatically and imply that increases in the federal funds rate lower the unemployment rate.'' A hybrid VAR with the Romer--Romer shock \citep{romer2004} gives, on the same later sample, contractionary shocks that ``appear to be expansionary,'' as \citet{barakchian2013} found for 1988--2007, and a proxy SVAR with the Romer--Romer shock, estimated on 1969--2007, gives a ``pronounced, statistically significant price puzzle'' (her Figures~1 and~2). \citet{caldara2019} find, for 1994--2007 with a proxy SVAR that uses high-frequency surprises, that without a credit spread the response of industrial production is weak and uncertain (about $-0.2$ percent, with a credible set that includes positive values), against about $-0.75$ percent when the excess bond premium is added.
 
 I start from the same two standard methods, estimated on my own data and units, so that they can be compared directly with the model below. Both use the monthly unemployment gap, core PCE inflation and the end-of-month two-year Treasury yield, with 12 lags and no trend. The first is the recursive (Cholesky) VAR of \citet{christiano1999}, with the policy rate ordered last, so that unemployment and inflation do not respond to it within the month. The second is a proxy VAR \citep{stock2018,mertens2013,gertler2015}, which uses the surprise as an instrument for the policy rate: the instrument is the Nakamura--Steinsson policy news \citep{nakamura2018} summed over the announcements of the month, the same 252 announcements used throughout. All responses are to a 1 percentage point rise in the policy rate. Figure~\ref{fig:standard} and Table~\ref{tab:standard} show the results.
 
-\begin{figure}[H]\centering
+\begin{figure}[tp]
+\centering
 \includegraphics[width=\textwidth]{../baseline/report/fig_standard.pdf}
-\caption{Responses to a 1 percentage point rise in the two-year yield, 1996--2026, from a recursive (Cholesky) VAR and a proxy VAR with the Nakamura--Steinsson instrument. The monthly unemployment gap, core PCE inflation and the two-year yield; 12 lags. Bands: 90 percent (bootstrap for the Cholesky VAR, Anderson--Rubin sets for the proxy VAR, truncated at $\pm4$).}\label{fig:standard}
+\caption{Standard Methods: Responses to a 1 Percentage Point Rise in the Two-Year Yield, 1996--2026}
+\label{fig:standard}
+\begin{flushleft}\footnotesize\textit{Notes:} Recursive (Cholesky) VAR and proxy VAR with the Nakamura--Steinsson instrument, in the monthly unemployment gap, core PCE inflation and the two-year yield; 12 lags. Bands: 90 percent (bootstrap for the Cholesky VAR, Anderson--Rubin sets for the proxy VAR, truncated at $\pm4$).\end{flushleft}
 \end{figure}
 
 \input{../baseline/report/tab_standard}
 
 In both, unemployment \emph{falls} after a tightening: by \blabs{st:c2y96:u:12} percentage point after 12 months in the Cholesky VAR and by \blabs{st:prox:u:12} in the proxy VAR. The responses are still negative after 24 months, and the Cholesky VAR gives the same answer when the sample starts in 1984 (\bl{st:c2y84:u:12} after 12 months). The price level does not respond in any of them. With the federal funds rate on a 1984--2007 sample, close to the 1983--2007 sample of \citet{ramey2016}, the Cholesky VAR gives the same sign in smaller numbers (\bl{st:cffr:u:12} after 12 months), because a funds-rate innovation is short-lived. Adding a commodity price index, the standard remedy for the price puzzle \citep{sims1992,ramey2016}, leaves the two-year-yield response negative (\bl{st:c2ycom:u:12}; Appendix Table~\ref{tab:standardcom}). The first-stage $F$ statistic of the proxy VAR is \bl{st:prox:F}, in the range in which weak-instrument problems matter \citep{lewis2026,bauer2026}, so I report exact Anderson--Rubin sets \citep{montiel2021,lunsford2015}, intervals that stay valid when the instrument is weak. These are the responses when the surprises are carried through the two-year yield alone.
 
-\subsection{The FCI model: baseline results}\label{sec:baseline}
+\subsection{The FCI Model: Baseline Results}\label{sec:baseline}
 Figure~\ref{fig:intro} shows the baseline: the response of the unemployment gap and the core PCE price level to a policy move that raises the two-year yield 1 percentage point in the window, from the model of Section~\ref{sec:midas} with the two-year yield and the FCI both measured relative to $\rs$ (solid line, with 68 and 90 percent bands). The dashed line is the nominal two-year yield alone in the same model. Appendix Figure~\ref{fig:size} adds the nominal yield with the FCI and the Cholesky VAR of Section~\ref{sec:standard}. The units are the same: the end-of-month two-year yield moves 0.92 to 1.01 of the window move across the versions, so one percentage point in the window and one percentage point on the end-of-month yield in the monthly VARs are the same shock to within about 8 percent.
 
 With the nominal yield alone the model gives what the standard methods give: unemployment falls (to \bl{path:nom:no:u:min} percentage point after \bl{path:nom:no:u:minh} months) and the price level hardly moves. In the baseline unemployment rises (to \bl{path:rstar:yes:u:max} percentage point after \bl{path:rstar:yes:u:maxh} months) and the price level falls steadily (by \blabs{rstar:yes:P:36} percent after 36 months).
@@ -177,14 +225,17 @@ The three versions are reported separately in Table~\ref{tab:mainB} and Figure~\
 
 \input{../baseline/report/tab_main_B}
 
-\begin{figure}[H]\centering
+\begin{figure}[tp]
+\centering
 \includegraphics[width=\textwidth]{../baseline/report/fig_steps.pdf}
-\caption{Responses to a policy move that raises the two-year yield 1 percentage point, without and with the FCI (12 lags). Bands: 68 and 90 percent intervals.}\label{fig:steps}
+\caption{Responses to a Policy Move, without and with the FCI}
+\label{fig:steps}
+\begin{flushleft}\footnotesize\textit{Notes:} Policy move that raises the two-year yield 1 percentage point; 12 lags. Bands: 68 and 90 percent intervals.\end{flushleft}
 \end{figure}
 
 Adding the FCI removes the fall in unemployment and lowers the price level in every version, and measuring both relative to $\rs$ gives the largest responses. With the nominal or real yield alone, unemployment falls after a tightening (\bl{nom:no:u:12} and \bl{real:no:u:12} percentage point after 12 months) and the price level does not respond. Relative to $\rs$, the yield alone raises no unemployment but lowers the price level (\bl{rstar:no:P:24} percent after 24 months). After 24 months, unemployment with the FCI is \bl{rstar:yes:u:24} and the price level \bl{rstar:yes:P:24} in the $\rs$ version, against \bl{nom:yes:u:24} and \bl{nom:yes:P:24} in the nominal version and \bl{real:yes:u:24} and \bl{real:yes:P:24} in the real version. In the $\rs$ version the unemployment response after 24 months is significant at the 10 percent level (90 percent interval [\bllo{rstar:yes:u:24}, \blhi{rstar:yes:u:24}]) and the price response is significant at the 5 percent level at every horizon.
 
-\subsection{The implied inflation-unemployment tradeoff}\label{sec:tradeoff}
+\subsection{The Implied Inflation-Unemployment Tradeoff}\label{sec:tradeoff}
 What matters for policy is the ratio of the price response to the unemployment response. Following \citet{barnichon2021}, I measure it by the Phillips multiplier at horizon $H$, the cumulative price response per unit of cumulative unemployment response:
 \begin{equation}
 \mathcal{P}_H = \frac{\tilde P_H}{\tilde U_H}, \qquad \tilde U_H=\frac{1}{12}\sum_{h=1}^{H}\tilde U_h, \label{eq:pm}
@@ -201,17 +252,20 @@ Elsewhere the data pin the tradeoff down less well. In the nominal and real vers
 
 For comparison, \citet{barnichon2021} report a multiplier of about $-0.15$ after three to four years for 1990--2008, estimated with high-frequency surprises, and a multiplier that diverges before 1990 and is about $-3$ after five years, estimated with Romer--Romer shocks. Their multiplier is the ratio of the cumulative response of inflation to the cumulative response of unemployment, as in equation~\eqref{eq:pm}. At the baseline horizons it lies between the two: \bl{tr:rstar:yes:36} after three years.
 
-\subsection{Financial conditions in the window}\label{sec:resolve}
+\subsection{Financial Conditions in the Window}\label{sec:resolve}
 The model assumes that policy reaches unemployment and prices through the two-year yield and the FCI, the broad index of the 10-year yield, equity valuations and the real dollar, weighted by their responses to policy news (Table~\ref{tab:weights}). In the window the FCI moves with the two-year yield: a policy move that raises the two-year yield 1 percentage point raises the FCI by \bl{bF} (in the same units). A model with the two-year yield alone omits this channel. Figure~\ref{fig:financial} shows the responses of the two-year yield and the FCI to the policy move in the baseline.
 
 \input{../baseline/report/tab_weights}
 
-\begin{figure}[H]\centering
+\begin{figure}[tp]
+\centering
 \includegraphics[width=0.62\textwidth]{../baseline/report/fig_financial.pdf}
-\caption{Response of the two-year yield and the FCI relative to $\rs$ (in two-year-yield units) to a policy move that raises the two-year yield 1 percentage point in the window (monthly averages; 12 lags; 68 and 90 percent bands).}\label{fig:financial}
+\caption{Response of the Two-Year Yield and the FCI to a Policy Move}
+\label{fig:financial}
+\begin{flushleft}\footnotesize\textit{Notes:} The FCI is measured relative to $\rs$ and in two-year-yield units; the policy move raises the two-year yield 1 percentage point in the window. Monthly averages; 12 lags; 68 and 90 percent bands.\end{flushleft}
 \end{figure}
 
-\subsection{Estimating the impact from monthly data}\label{sec:monthlyvar}
+\subsection{Estimating the Impact from Monthly Data}\label{sec:monthlyvar}
 A standard proxy VAR can also carry the FCI. It estimates the immediate effect of the surprise on every variable from monthly residuals and the instrument, instead of measuring it in the window. A window-impact VAR takes the effect on the two-year yield and the FCI from the windows, as the main model does, and sets the effect on unemployment and inflation to zero within the month. Table~\ref{tab:monthlycompact} gives the results for the yield and FCI relative to $\rs$; Appendix Tables~\ref{tab:mainmonthly} and~\ref{tab:appmonthly} give all three versions.
 
 \input{../baseline/report/tab_monthly_compact}
@@ -219,6 +273,8 @@ A standard proxy VAR can also carry the FCI. It estimates the immediate effect o
 The proxy VAR has the signs of the main model: unemployment rises \bl{mo:rstar:yes:P1:u:12} after 12 months and the price level falls \blabs{mo:rstar:yes:P1:P:24} percent after 24. Its sets are wide, because the surprise is a weak instrument for monthly residuals (first-stage $F$ of \bl{mo:rstar:yes:F}). The window-impact VAR is close to the main model. A simulation shows that this is what to expect if the model is the true process. In 1,000 samples generated by the baseline model, with the data's calendar and announcement days, the proxy VAR with the FCI is centred on the true unemployment response (median \bl{sim:proxy_fci:u12:med} against \bl{sim:proxy_fci:u12:truth}) with a wide range, the proxy VAR without the FCI is biased toward zero, and the window-impact VAR recovers the true response with a narrower range (Appendix Table~\ref{tab:proxysim}). Measuring the impact in the window gives the same answer with less noise.
 
 
+\FloatBarrier
+% ============================================================
 \section{Robustness}\label{sec:rob}
 A result about the transmission of monetary policy can rest on one sample, one estimate of $\rs$, one choice of trend, one set of omitted variables or one surprise series. I vary each in turn. Each variation changes one feature of the baseline and keeps the rest: the shocks are the same announcements (except where the surprise itself changes), the monthly equations have 12 lags, and responses are to a policy move that raises the two-year yield 1 percentage point in the window. Table~\ref{tab:robsummary} shows the baseline and the 15 variations. Thirteen of them keep the baseline yield and FCI relative to $\rs$; the other two replace the FCI with its three components.
 
@@ -226,33 +282,35 @@ A result about the transmission of monetary policy can rest on one sample, one e
 
 With the FCI, the wrong-signed unemployment response disappears in every variation. Without the FCI, unemployment after 12 months falls in \bl{rob:no_uneg} of the 13 variations that keep the FCI relative to $\rs$; with it, unemployment rises in \bl{rob:upos} and never falls significantly. The price level falls after 24 months in all 13, and the fall is significant at the 5 percent level in \bl{rob:Psig5}. The three exceptions are all from 1996: the sample that ends in 2019, Kiley's $\rs$ and the spline trend. When the FCI is replaced by its three components, the price response after 24 months is not significant from either start. The subsections say what each variation tests and what it shows.
 
-\subsection{The sample}\label{sec:recent}
+\subsection{The Sample}\label{sec:recent}
 Three features of the sample could drive the result. It is short, so the monetary environment since 1996 may be special. It contains the pandemic, when unemployment moved by more than in any other period. And it ends with 2022--24, the years of the largest tightening in the sample, so the result could rest on them. In the first variation the monthly equations start in 1973 rather than 1996; the months before 1990, for which there are no daily data, use monthly series in place of the daily block, the daily block is still estimated from 1996, and the shocks are still the announcements from 1996. In the second, March to December 2020 are dropped from the monthly and daily equations (2020 values still enter as lags). In the third, all equations end in December 2019. Each is run with the monthly equations starting in 1996 and in 1973.
 
 From 1996 the price fall comes from the years after 2019. When the sample ends in 2019 the price response after 24 months is \bl{rb:R1d:yes:P:24}, with a 90 percent interval of [\bllo{rb:R1d:yes:P:24}, \blhi{rb:R1d:yes:P:24}]; from 1973 the same end date gives \bl{rb:R1e:yes:P:24}, significant at the 5 percent level. Starting in 1973 leaves the price response as in the baseline (\bl{rb:R1a:yes:P:24} after 24 months) and unemployment close to zero. Dropping 2020 leaves the price response (\bl{rb:R1b:yes:P:24}) and makes the unemployment response larger (\bl{rb:R1b:yes:u:24}, significant at the 5 percent level). When the monthly equations start in 1973 the yield alone moves unemployment little or raises it, so the wrong-signed response that the FCI removes belongs to the sample since 1996. Appendix Table~\ref{tab:mainR1} gives the full results.
 
-\subsection{The $r^*$ adjustment and trends}\label{sec:rstarrob}
+\subsection{The $r^*$ Adjustment and Trends}\label{sec:rstarrob}
 The neutral rate is not observed, and the baseline uses one estimate of it, that of Laubach and Williams. Two variations check that the result does not depend on that choice. The first replaces it with Kiley's estimate, in the two-year yield and in the FCI alike. The second uses no $\rs$ measure at all: it keeps the real two-year yield and the real FCI and adds a natural cubic spline in time to every monthly equation, with knots at the sample ends and at the NBER business-cycle peaks inside the sample. The price result would be an artifact of the $\rs$ estimate if it vanished here.
 
 The FCI removes the fall in unemployment in both. With Kiley's $\rs$ unemployment after 12 months is \bl{rb:R2a:no:u:12} without the FCI and \bl{rb:R2a:yes:u:12} with it; with real measures and the spline it is \bl{rb:R2c:no:u:12} and \bl{rb:R2c:yes:u:12}. The price response is smaller than in the baseline and, from 1996, not significant (\bl{rb:R2a:yes:P:24} and \bl{rb:R2c:yes:P:24} after 24 months). From 1973 it is significant at the 5 percent level in both (\bl{rb:R2b:yes:P:24} and \bl{rb:R2d:yes:P:24}). The choice of $\rs$ therefore matters for the size of the price response, and the sign pattern of unemployment does not depend on it. Appendix Table~\ref{tab:mainR2} gives the full results.
 
-\subsection{Credit conditions}\label{sec:credit}
+\subsection{Credit Conditions}\label{sec:credit}
 Credit is the most important channel that the baseline leaves out \citep{gilchrist2012,caldara2019}, and a premium that responds to policy could carry part of what the FCI carries. The variation adds the monthly excess bond premium as a third monthly variable, treated like unemployment and inflation, so that the premium responds to the financial variables and they enter its equation as well.
 
 With the FCI relative to $\rs$ the results are those of the baseline: unemployment rises (\bl{rb:R3a:yes:u:24} after 24 months) and the price level falls (\bl{rb:R3a:yes:P:24}); from 1973 the price level falls by \blabs{rb:R3b:yes:P:24} percent. Without the FCI the unemployment response moves toward zero (\bl{rb:R3a:no:u:12} after 12 months, against \bl{rstar:no:u:12} in the baseline), in the direction that adding the FCI moves it. Appendix Table~\ref{tab:mainR3} gives the full results.
 
-\subsection{The weights of the FCI}\label{sec:components}
+\subsection{The Weights of the FCI}\label{sec:components}
 The baseline assumes that the three parts of the FCI, the 10-year yield, equity valuation and the dollar, affect unemployment and prices in proportion to the weights with which they respond to policy news (Section~\ref{sec:timing}). That is an assumption about the economy, not about the surprise, and it can be tested. I enter the three weighted components separately in place of the FCI, each with its own window impact, and test whether their coefficients are equal at each lag, with bootstrap $p$-values (Table~\ref{tab:weightstest}). The specification restricts the daily block to keep the number of parameters reasonable (Appendix~\ref{app:details}). The monthly equations have 12 lags and start in 1996 or, as a further variation, in 1973.
 
 From 1996 the price result does not carry over: after 24 months the price response is \bl{rb:R4:rstar:cmp:P:24}, with a 90 percent interval of [\bllo{rb:R4:rstar:cmp:P:24}, \blhi{rb:R4:rstar:cmp:P:24}]. The test agrees. The restriction is not rejected in the unemployment equation, and in the inflation equation it is rejected from 1996 (bootstrap $p$ of \bl{wt:rstar:pi:p} in the $\rs$ version) and not from 1973 (\bl{wt73:rstar:pi:p}). From 1996 the price result therefore depends on the assumption of proportional weights, and from 1973 it does not: from 1973 the price response is \bl{rb:R4b:rstar:cmp:P:12} after 12 months, significant at the 5 percent level, as with the FCI. Unemployment still rises in both samples (\bl{rb:R4:rstar:cmp:u:12} after 12 months from 1996 and \bl{rb:R4b:rstar:cmp:u:12} from 1973), with wider intervals because the variation adds many coefficients. Appendix Table~\ref{tab:mainR4} gives the full results.
 
 \input{../baseline/report/tab_weights_test}
 
-\subsection{The surprise}\label{sec:surprise}
+\subsection{The Surprise}\label{sec:surprise}
 The baseline uses the Nakamura--Steinsson policy news. An announcement can reveal the Fed's view of the economy as well as a change in policy, and part of each surprise can be predicted from public data. Two variations change the surprise. The first uses the orthogonalized surprise of \citet{bauer2023}, which removes the part of each surprise that public information predicts; it is available for announcements through 2019 (\bl{ev:bs} announcements). The second keeps the Nakamura--Steinsson surprise only for announcements in which the two-year yield and the S\&P 500 move in opposite directions in the window, the sign restriction of \citet{jarocinski2020} (\bl{ev:jk} announcements).
 
 With the two-year yield alone the responses are the same as in the baseline, because the shock is scaled to the yield. With the FCI they are larger: unemployment rises \bl{rb:R5a:yes:u:24} and \bl{rb:R5b:yes:u:24} after 24 months, against \bl{rstar:yes:u:24} in the baseline, and the price level falls \blabs{rb:R5a:yes:P:24} and \blabs{rb:R5b:yes:P:24} percent, against \blabs{rstar:yes:P:24}. Both are significant at the 5 percent level. Appendix Table~\ref{tab:mainR5} gives the full results.
 
+\FloatBarrier
+% ============================================================
 \section{Conclusion}\label{sec:policy}
 Interest-rate surprises around Federal Reserve announcements measure policy shocks well, at least the part of policy news that moves interest rates. The hard part has been tracing their effects on the economy. I kept the surprise as it is and changed how its effects are traced: through broad financial conditions rather than one interest rate, and relative to the neutral rate $\rs$. Traced this way, the responses of unemployment and prices have the standard signs, where the nominal two-year yield alone and the standard methods give the wrong ones. The ratio of the price response to the unemployment response lies between earlier estimates for the periods after and before 1990: lowering the core price level 1 percent costs about \bl{tr:rstar:yes:24:sac} percentage-point years of unemployment over two years.
 
@@ -260,106 +318,21 @@ For policy, the results support judging the stance by financial conditions relat
 
 The broader lesson is that the fall in $\rs$ over the past three decades is more than a fact about the level of interest rates. Unless rates are measured relative to $\rs$, that fall also makes the effects of policy, and the cost of lowering inflation, harder to measure.
 
-\begin{thebibliography}{99}\small
-\bibitem[Acosta et al.(2025)]{acosta2025} Acosta, M., A. Ajello, M. Bauer, F. Loria and S. Miranda-Agrippino (2025), ``Financial Market Effects of FOMC Communication: Evidence from a New Event-Study Database,'' Federal Reserve Bank of San Francisco Working Paper 2025-30.
-\bibitem[Adrian et al.(2019)]{adrian2019} Adrian, T., N. Boyarchenko and D. Giannone (2019), ``Vulnerable Growth,'' American Economic Review 109(4), 1263--1289.
-\bibitem[Ajello et al.(2023)]{ajello2023} Ajello, A., M. Cavallo, G. Favara, W. Peterman, J. Schindler and N. Sinha (2023), ``A New Index to Measure U.S. Financial Conditions,'' FEDS Notes, Board of Governors of the Federal Reserve System, June 30.
-\bibitem[Anderson and Rubin(1949)]{anderson1949} Anderson, T. W. and H. Rubin (1949), ``Estimation of the Parameters of a Single Equation in a Complete System of Stochastic Equations,'' Annals of Mathematical Statistics 20(1), 46--63.
-\bibitem[Ando and Modigliani(1963)]{ando1963} Ando, A. and F. Modigliani (1963), ``The `Life Cycle' Hypothesis of Saving: Aggregate Implications and Tests,'' American Economic Review 53(1), 55--84.
-\bibitem[Auclert(2019)]{auclert2019} Auclert, A. (2019), ``Monetary Policy and the Redistribution Channel,'' American Economic Review 109(6), 2333--2367.
-\bibitem[Ball and Mazumder(2019)]{ball2019} Ball, L. and S. Mazumder (2019), ``A Phillips Curve with Anchored Expectations and Short-Term Unemployment,'' Journal of Money, Credit and Banking 51(1), 111--137.
-\bibitem[Barakchian and Crowe(2013)]{barakchian2013} Barakchian, S. M. and C. Crowe (2013), ``Monetary Policy Matters: Evidence from New Shocks Data,'' Journal of Monetary Economics 60(8), 950--966.
-\bibitem[Barnichon and Mesters(2020)]{barnichon2020} Barnichon, R. and G. Mesters (2020), ``Identifying Modern Macro Equations with Old Shocks,'' Quarterly Journal of Economics 135(4), 2255--2298.
-\bibitem[Barnichon and Mesters(2021)]{barnichon2021} Barnichon, R. and G. Mesters (2021), ``The Phillips Multiplier,'' Journal of Monetary Economics 117, 689--705.
-\bibitem[Bauer and Swanson(2023a)]{bauer2023} Bauer, M. D. and E. T. Swanson (2023a), ``A Reassessment of Monetary Policy Surprises and High-Frequency Identification,'' NBER Macroeconomics Annual 2022, Vol.\ 37, 87--155.
-\bibitem[Bauer and Swanson(2023b)]{bauer2023aer} Bauer, M. D. and E. T. Swanson (2023b), ``An Alternative Explanation for the `Fed Information Effect','' American Economic Review 113(3), 664--700.
-\bibitem[Bauer and Rudebusch(2020)]{bauer2020} Bauer, M. D. and G. D. Rudebusch (2020), ``Interest Rates under Falling Stars,'' American Economic Review 110(5), 1316--1354.
-\bibitem[Bauer et al.(2023)]{bauer2023jep} Bauer, M. D., B. S. Bernanke and E. Milstein (2023), ``Risk Appetite and the Risk-Taking Channel of Monetary Policy,'' Journal of Economic Perspectives 37(1), 77--100.
-\bibitem[Bauer et al.(2026)]{bauer2026} Bauer, M., M. Schmeling and A. Schrimpf (2026), ``Risk Appetite and Monetary Transmission,'' Federal Reserve Bank of San Francisco Working Paper 2026-20, September, doi:10.24148/wp2026-20.
-\bibitem[Bernanke and Blinder(1992)]{bernanke1992} Bernanke, B. S. and A. S. Blinder (1992), ``The Federal Funds Rate and the Channels of Monetary Transmission,'' American Economic Review 82(4), 901--921.
-\bibitem[Bernanke and Kuttner(2005)]{bernanke2005} Bernanke, B. S. and K. N. Kuttner (2005), ``What Explains the Stock Market's Reaction to Federal Reserve Policy?'' Journal of Finance 60(3), 1221--1257.
-\bibitem[Bernanke et al.(2005)]{bernanke2005favar} Bernanke, B. S., J. Boivin and P. Eliasz (2005), ``Measuring the Effects of Monetary Policy: A Factor-Augmented Vector Autoregressive (FAVAR) Approach,'' Quarterly Journal of Economics 120(1), 387--422.
-\bibitem[Boehm and Kroner(2024)]{boehm2024} Boehm, C. and T. N. Kroner (2024), ``Monetary Policy without Moving Interest Rates: The Fed Non-Yield Shock,'' NBER Working Paper 32636, June 2024, revised September 2025.
-\bibitem[Boehm et al.(2026)]{boehm2026} Boehm, C., H. Kim and T. N. Kroner (2026), ``The Main Monetary Policy Shock,'' NBER Working Paper 36004, November.
-\bibitem[Boivin and Giannoni(2006)]{boivin2006} Boivin, J. and M. P. Giannoni (2006), ``Has Monetary Policy Become More Effective?'' Review of Economics and Statistics 88(3), 445--462.
-\bibitem[Boivin et al.(2010)]{boivin2010} Boivin, J., M. T. Kiley and F. S. Mishkin (2010), ``How Has the Monetary Transmission Mechanism Evolved Over Time?'' in B. M. Friedman and M. Woodford (eds.), Handbook of Monetary Economics, Vol.\ 3A, 369--422.
-\bibitem[Brave and Butters(2011)]{brave2011} Brave, S. and R. A. Butters (2011), ``Monitoring Financial Stability: A Financial Conditions Index Approach,'' Federal Reserve Bank of Chicago Economic Perspectives 35(1), 22--43.
-\bibitem[Brennan et al.(2025)]{brennan2025} Brennan, C. M., M. M. Jacobson, C. Matthes and T. B. Walker (2025), ``Monetary Policy Shocks: Data or Methods?'' B.E. Journal of Macroeconomics 25(2), 595--659.
-\bibitem[Bu et al.(2021)]{bu2021} Bu, C., J. Rogers and W. Wu (2021), ``A Unified Measure of Fed Monetary Policy Shocks,'' Journal of Monetary Economics 118, 331--349.
-\bibitem[Caballero et al.(2026)]{caballero2026} Caballero, R. J., T. E. Caravello and A. Simsek (2026), ``FCI-star,'' NBER Working Paper 33952 (version of January 12, 2026).
-\bibitem[Caldara and Herbst(2019)]{caldara2019} Caldara, D. and E. Herbst (2019), ``Monetary Policy, Real Activity, and Credit Spreads: Evidence from Bayesian Proxy SVARs,'' American Economic Journal: Macroeconomics 11(1), 157--192.
-\bibitem[Castelnuovo and Surico(2010)]{castelnuovo2010} Castelnuovo, E. and P. Surico (2010), ``Monetary Policy, Inflation Expectations and the Price Puzzle,'' Economic Journal 120(549), 1262--1283.
-\bibitem[Christiano et al.(1999)]{christiano1999} Christiano, L. J., M. Eichenbaum and C. L. Evans (1999), ``Monetary Policy Shocks: What Have We Learned and to What End?'' in J. B. Taylor and M. Woodford (eds.), Handbook of Macroeconomics, Vol.\ 1A, 65--148.
-\bibitem[Christiano et al.(2005)]{christiano2005} Christiano, L. J., M. Eichenbaum and C. L. Evans (2005), ``Nominal Rigidities and the Dynamic Effects of a Shock to Monetary Policy,'' Journal of Political Economy 113(1), 1--45.
-\bibitem[Chudik and Georgiadis(2022)]{chudik2022} Chudik, A. and G. Georgiadis (2022), ``Estimation of Impulse Response Functions When Shocks Are Observed at a Higher Frequency Than Outcome Variables,'' Journal of Business and Economic Statistics 40(3), 965--979.
-\bibitem[Chudik and Kilian(2026)]{chudik2026} Chudik, A. and L. Kilian (2026), ``Mean Group and Pooled Mixed-Frequency Estimators of Responses of Low-Frequency Variables to High-Frequency Shocks,'' Federal Reserve Bank of Dallas Working Paper 2603.
-\bibitem[Coibion(2012)]{coibion2012} Coibion, O. (2012), ``Are the Effects of Monetary Policy Shocks Big or Small?'' American Economic Journal: Macroeconomics 4(2), 1--32.
-\bibitem[FCI note(2026)]{fcinote} Companion note (2026), ``A Simple Market-Based Financial Conditions Index: Weights from Policy News, Dynamics from a Transparent VAR, Measured Relative to $r^*$,'' draft.
-\bibitem[Corsi(2009)]{corsi2009} Corsi, F. (2009), ``A Simple Approximate Long-Memory Model of Realized Volatility,'' Journal of Financial Econometrics 7(2), 174--196.
-\bibitem[Del Negro et al.(2020)]{delnegro2020} Del Negro, M., M. Lenza, G. E. Primiceri and A. Tambalotti (2020), ``What's Up with the Phillips Curve?'' Brookings Papers on Economic Activity, Spring, 301--373.
-\bibitem[Faust et al.(2004)]{faust2004} Faust, J., E. T. Swanson and J. H. Wright (2004), ``Identifying VARs Based on High Frequency Futures Data,'' Journal of Monetary Economics 51(6), 1107--1131.
-\bibitem[Fern\'andez-Villaverde et al.(2007)]{fernandez2007} Fern\'andez-Villaverde, J., J. F. Rubio-Ram\'irez, T. J. Sargent and M. W. Watson (2007), ``ABCs (and Ds) of Understanding VARs,'' American Economic Review 97(3), 1021--1026.
-\bibitem[Fitzgerald et al.(2024)]{fitzgerald2024} Fitzgerald, T., C. Jones, M. Kulish and J. P. Nicolini (2024), ``Is There a Stable Relationship between Unemployment and Future Inflation?'' American Economic Journal: Macroeconomics 16(4), 114--142.
-\bibitem[Fleming(1962)]{fleming1962} Fleming, J. M. (1962), ``Domestic Financial Policies under Fixed and under Floating Exchange Rates,'' IMF Staff Papers 9(3), 369--380.
-\bibitem[Foroni et al.(2015)]{foroni2015} Foroni, C., M. Marcellino and C. Schumacher (2015), ``Unrestricted Mixed Data Sampling (MIDAS): MIDAS Regressions with Unrestricted Lag Polynomials,'' Journal of the Royal Statistical Society Series A 178(1), 57--82.
-\bibitem[Francis et al.(2011)]{francis2011} Francis, N., E. Ghysels and M. T. Owyang (2011), ``The Low-Frequency Impact of Daily Monetary Policy Shocks,'' Federal Reserve Bank of St.\ Louis Working Paper 2011-009.
-\bibitem[Friedman(1957)]{friedman1957} Friedman, M. (1957), \emph{A Theory of the Consumption Function}, Princeton University Press.
-\bibitem[Friedman(1961)]{friedman1961} Friedman, M. (1961), ``The Lag in Effect of Monetary Policy,'' Journal of Political Economy 69(5), 447--466.
-\bibitem[Gal\'i and Monacelli(2005)]{gali2005} Gal\'i, J. and T. Monacelli (2005), ``Monetary Policy and Exchange Rate Volatility in a Small Open Economy,'' Review of Economic Studies 72(3), 707--734.
-\bibitem[Gazzani and Vicondoa(2020)]{gazzani2020} Gazzani, A. and A. Vicondoa (2020), ``Bridge Proxy-SVAR: Estimating the Macroeconomic Effects of Shocks Identified at High-Frequency,'' Banca d'Italia Working Paper 1274.
-\bibitem[Gertler and Karadi(2015)]{gertler2015} Gertler, M. and P. Karadi (2015), ``Monetary Policy Surprises, Credit Costs, and Economic Activity,'' American Economic Journal: Macroeconomics 7(1), 44--76.
-\bibitem[Ghysels(2016)]{ghysels2016} Ghysels, E. (2016), ``Macroeconomics and the Reality of Mixed Frequency Data,'' Journal of Econometrics 193(2), 294--314.
-\bibitem[Ghysels et al.(2007)]{ghysels2007} Ghysels, E., A. Sinko and R. Valkanov (2007), ``MIDAS Regressions: Further Results and New Directions,'' Econometric Reviews 26(1), 53--90.
-\bibitem[Gilchrist and Zakraj\v{s}ek(2012)]{gilchrist2012} Gilchrist, S. and E. Zakraj\v{s}ek (2012), ``Credit Spreads and Business Cycle Fluctuations,'' American Economic Review 102(4), 1692--1720.
-\bibitem[G\"urkaynak et al.(2005)]{gurkaynak2005} G\"urkaynak, R. S., B. Sack and E. T. Swanson (2005), ``Do Actions Speak Louder Than Words? The Response of Asset Prices to Monetary Policy Actions and Statements,'' International Journal of Central Banking 1(1), 55--93.
-\bibitem[G\"urkaynak et al.(2007)]{gurkaynak2007} G\"urkaynak, R. S., B. Sack and J. H. Wright (2007), ``The U.S. Treasury Yield Curve: 1961 to the Present,'' Journal of Monetary Economics 54(8), 2291--2304.
-\bibitem[Hall and Jorgenson(1967)]{hall1967} Hall, R. E. and D. W. Jorgenson (1967), ``Tax Policy and Investment Behavior,'' American Economic Review 57(3), 391--414.
-\bibitem[Hamilton et al.(2016)]{hamilton2016} Hamilton, J. D., E. S. Harris, J. Hatzius and K. D. West (2016), ``The Equilibrium Real Funds Rate: Past, Present, and Future,'' IMF Economic Review 64(4), 660--707.
-\bibitem[Hanson and Stein(2015)]{hanson2015} Hanson, S. G. and J. C. Stein (2015), ``Monetary Policy and Long-Term Real Rates,'' Journal of Financial Economics 115(3), 429--448.
-\bibitem[Hatzius et al.(2010)]{hatzius2010} Hatzius, J., P. Hooper, F. Mishkin, K. Schoenholtz and M. Watson (2010), ``Financial Conditions Indexes: A Fresh Look after the Financial Crisis,'' NBER Working Paper 16150; also in U.S. Monetary Policy Forum Report 2010, 3--59.
-\bibitem[Haubrich et al.(2012)]{haubrich2012} Haubrich, J., G. Pennacchi and P. Ritchken (2012), ``Inflation Expectations, Real Rates, and Risk Premia: Evidence from Inflation Swaps,'' Review of Financial Studies 25(5), 1588--1629.
-\bibitem[Hazell et al.(2022)]{hazell2022} Hazell, J., J. Herre\~no, E. Nakamura and J. Steinsson (2022), ``The Slope of the Phillips Curve: Evidence from U.S. States,'' Quarterly Journal of Economics 137(3), 1299--1344.
-\bibitem[Holston et al.(2023)]{holston2023} Holston, K., T. Laubach and J. C. Williams (2023), ``Measuring the Natural Rate of Interest after COVID-19,'' Federal Reserve Bank of New York Staff Report 1063.
-\bibitem[Holston et al.(2017)]{holston2017} Holston, K., T. Laubach and J. C. Williams (2017), ``Measuring the Natural Rate of Interest: International Trends and Determinants,'' Journal of International Economics 108, S59--S75.
-\bibitem[Jacobson et al.(2026)]{jacobson2026} Jacobson, M. M., C. Matthes and T. B. Walker (2026), ``Temporal Aggregation Bias and Monetary Policy Transmission,'' Journal of Political Economy Macroeconomics, advance online publication 26 March 2026, doi:10.1086/741548.
-\bibitem[Jaroci\'nski and Karadi(2020)]{jarocinski2020} Jaroci\'nski, M. and P. Karadi (2020), ``Deconstructing Monetary Policy Surprises---The Role of Information Shocks,'' American Economic Journal: Macroeconomics 12(2), 1--43.
-\bibitem[Jorgenson(1963)]{jorgenson1963} Jorgenson, D. W. (1963), ``Capital Theory and Investment Behavior,'' American Economic Review 53(2), 247--259.
-\bibitem[Kaplan et al.(2018)]{kaplan2018} Kaplan, G., B. Moll and G. L. Violante (2018), ``Monetary Policy According to HANK,'' American Economic Review 108(3), 697--743.
-\bibitem[Jentsch and Lunsford(2019)]{jentsch2019} Jentsch, C. and K. G. Lunsford (2019), ``The Dynamic Effects of Personal and Corporate Income Tax Changes in the United States: Comment,'' American Economic Review 109(7), 2655--2678.
-\bibitem[Kiley(2014)]{kiley2014} Kiley, M. T. (2014), ``The Response of Equity Prices to Movements in Long-Term Interest Rates Associated with Monetary Policy Statements: Before and After the Zero Lower Bound,'' Journal of Money, Credit and Banking 46(5), 1057--1071.
-\bibitem[Kiley(2020a)]{kiley2020ml} Kiley, M. T. (2020a), ``Financial Conditions and Economic Activity: Insights from Machine Learning,'' Finance and Economics Discussion Series 2020-095, Board of Governors of the Federal Reserve System.
-\bibitem[Kiley(2020b)]{kiley2020} Kiley, M. T. (2020b), ``What Can the Data Tell Us about the Equilibrium Real Interest Rate?'' International Journal of Central Banking 16(3), 181--209.
-\bibitem[K\"unsch(1989)]{kunsch1989} K\"unsch, H. R. (1989), ``The Jackknife and the Bootstrap for General Stationary Observations,'' Annals of Statistics 17(3), 1217--1241.
-\bibitem[Kilian(2024)]{kilian2024} Kilian, L. (2024), ``How to Construct Monthly VAR Proxies Based on Daily Surprises in Futures Markets,'' Journal of Economic Dynamics and Control 168, 104966.
-\bibitem[Kroencke et al.(2021)]{kroencke2021} Kroencke, T. A., M. Schmeling and A. Schrimpf (2021), ``The FOMC Risk Shift,'' Journal of Monetary Economics 120, 21--39.
-\bibitem[Kuttner(2001)]{kuttner2001} Kuttner, K. N. (2001), ``Monetary Policy Surprises and Interest Rates: Evidence from the Fed Funds Futures Market,'' Journal of Monetary Economics 47(3), 523--544.
-\bibitem[Lunsford(2015)]{lunsford2015} Lunsford, K. G. (2015), ``Identifying Structural VARs with a Proxy Variable and a Test for a Weak Proxy,'' Federal Reserve Bank of Cleveland Working Paper 15-28, doi:10.26509/frbc-wp-201528.
-\bibitem[Laubach and Williams(2003)]{laubach2003} Laubach, T. and J. C. Williams (2003), ``Measuring the Natural Rate of Interest,'' Review of Economics and Statistics 85(4), 1063--1070.
-\bibitem[Lewis and Mertens(2026)]{lewis2026} Lewis, D. and K. Mertens (2026), ``Weak Instrument Bias in Impulse Response Estimators,'' CeMMAP Working Paper 01/26, Institute for Fiscal Studies.
-\bibitem[McLeay and Tenreyro(2020)]{mcleay2020} McLeay, M. and S. Tenreyro (2020), ``Optimal Inflation and the Identification of the Phillips Curve,'' NBER Macroeconomics Annual 2019, Vol.\ 34.
-\bibitem[Mertens and Ravn(2013)]{mertens2013} Mertens, K. and M. O. Ravn (2013), ``The Dynamic Effects of Personal and Corporate Income Tax Changes in the United States,'' American Economic Review 103(4), 1212--1247.
-\bibitem[Miranda-Agrippino and Ricco(2021)]{miranda2021} Miranda-Agrippino, S. and G. Ricco (2021), ``The Transmission of Monetary Policy Shocks,'' American Economic Journal: Macroeconomics 13(3), 74--107.
-\bibitem[Mundell(1963)]{mundell1963} Mundell, R. A. (1963), ``Capital Mobility and Stabilization Policy under Fixed and Flexible Exchange Rates,'' Canadian Journal of Economics and Political Science 29(4), 475--485.
-\bibitem[Montiel Olea et al.(2021)]{montiel2021} Montiel Olea, J. L., J. H. Stock and M. W. Watson (2021), ``Inference in Structural Vector Autoregressions Identified with an External Instrument,'' Journal of Econometrics 225(1), 74--87.
-\bibitem[Nakamura and Steinsson(2018)]{nakamura2018} Nakamura, E. and J. Steinsson (2018), ``High-Frequency Identification of Monetary Non-Neutrality: The Information Effect,'' Quarterly Journal of Economics 133(3), 1283--1330.
-\bibitem[Plagborg-M{\o}ller and Wolf(2021)]{plagborg2021} Plagborg-M{\o}ller, M. and C. K. Wolf (2021), ``Local Projections and VARs Estimate the Same Impulse Responses,'' Econometrica 89(2), 955--980.
-\bibitem[Powell(2022)]{powell2022} Powell, J. H. (2022), ``Monetary Policy and Price Stability,'' speech at the Federal Reserve Bank of Kansas City Economic Policy Symposium, Jackson Hole, August 26.
-\bibitem[Powell(2023)]{powell2023} Powell, J. H. (2023), ``Transcript of Chair Powell's Press Conference,'' Board of Governors of the Federal Reserve System, November 1.
-\bibitem[Primiceri(2005)]{primiceri2005} Primiceri, G. E. (2005), ``Time Varying Structural Vector Autoregressions and Monetary Policy,'' Review of Economic Studies 72(3), 821--852.
-\bibitem[Ramey(2016)]{ramey2016} Ramey, V. A. (2016), ``Macroeconomic Shocks and Their Propagation,'' in J. B. Taylor and H. Uhlig (eds.), Handbook of Macroeconomics, Vol.\ 2A, 71--162.
-\bibitem[Romer and Romer(2004)]{romer2004} Romer, C. D. and D. H. Romer (2004), ``A New Measure of Monetary Shocks: Derivation and Implications,'' American Economic Review 94(4), 1055--1084.
-\bibitem[Romer and Romer(2000)]{romer2000} Romer, C. D. and D. H. Romer (2000), ``Federal Reserve Information and the Behavior of Interest Rates,'' American Economic Review 90(3), 429--457.
-\bibitem[Sims(1992)]{sims1992} Sims, C. A. (1992), ``Interpreting the Macroeconomic Time Series Facts: The Effects of Monetary Policy,'' European Economic Review 36(5), 975--1000.
-\bibitem[Smets and Wouters(2007)]{smets2007} Smets, F. and R. Wouters (2007), ``Shocks and Frictions in US Business Cycles: A Bayesian DSGE Approach,'' American Economic Review 97(3), 586--606.
-\bibitem[Stock and Watson(2003)]{stock2003} Stock, J. H. and M. W. Watson (2003), ``Forecasting Output and Inflation: The Role of Asset Prices,'' Journal of Economic Literature 41(3), 788--829.
-\bibitem[Stock and Watson(2018)]{stock2018} Stock, J. H. and M. W. Watson (2018), ``Identification and Estimation of Dynamic Causal Effects in Macroeconomics Using External Instruments,'' Economic Journal 128(610), 917--948.
-\bibitem[Swanson(2021)]{swanson2021} Swanson, E. T. (2021), ``Measuring the Effects of Federal Reserve Forward Guidance and Asset Purchases on Financial Markets,'' Journal of Monetary Economics 118, 32--53.
-\bibitem[Tobin(1969)]{tobin1969} Tobin, J. (1969), ``A General Equilibrium Approach to Monetary Theory,'' Journal of Money, Credit and Banking 1(1), 15--29.
-\end{thebibliography}
-\appendix
+\FloatBarrier
+\bibliographystyle{aea}
+\bibliography{references}
+
+\FloatBarrier
+\newpage
+\begin{appendices}
+\renewcommand{\thetable}{\Alph{section}\arabic{table}}
+\renewcommand{\thefigure}{\Alph{section}\arabic{figure}}
+\setcounter{table}{0}
+\setcounter{figure}{0}
 % TODO: Appendix: the 3/6/12-lag tables now come from baseline/. Still to check: the data-sources table and the construction text against baseline/data/SOURCES.md (unverified items: EBP file origin, r* vintage, daily CAPE and dollar file, DFF and PPIACO copies).
-\renewcommand{\thetable}{A\arabic{table}}\setcounter{table}{0}
-\section{The financial conditions index}\label{app:index}
+\FloatBarrier
+% ============================================================
+\section{The Financial Conditions Index}\label{app:index}
 \textbf{Policy news.} Let $\Delta X_a$ be the $5\times 1$ vector of changes in the current- and next-meeting federal funds futures and the second to fourth eurodollar futures in the window around announcement $a$. Following \citet{nakamura2018}, let $p_a$ be the first principal component of these changes, signed so that it moves with the fourth eurodollar future. Policy news is $p_a$ rescaled so that one unit moves the two-year yield $y^{2}$ by 1 percentage point:
 \begin{equation}
 s_a = \gamma\, p_a, \qquad \gamma = \frac{\sum_a p_a\, \Delta y^{2}_a}{\sum_a p_a^{2}}. \label{eq:ns}
@@ -393,7 +366,9 @@ R_t^{\text{nominal}} = y^{2}_t, \qquad R_t^{\text{real}} = y^{2}_t - \pi^{2}_t, 
 \end{equation}
 Expected inflation and $\rs$ are monthly or quarterly and move slowly. The daily series add their interpolated monthly values to daily market prices, so day-to-day moves come from markets (Appendix~\ref{app:details}).
 
-\section{A two-equation illustration}\label{app:toy}
+\FloatBarrier
+% ============================================================
+\section{A Two-Equation Illustration}\label{app:toy}
 Let $U_t$ be the unemployment gap, $i_t$ the policy rate and $f_t$ financial conditions, with a higher $f_t$ meaning tighter conditions:
 \begin{align}
 U_t &= \rho_U\,U_{t-1} + \kappa\,f_{t-1} + \varepsilon^{U}_t, \label{eq:y}\\
@@ -405,17 +380,23 @@ U_t = (\rho_U+\rho_f)\,U_{t-1} - \rho_U\rho_f\,U_{t-2} + \kappa\lambda\,i_{t-1} 
 \end{equation}
 The policy rate has no direct effect in this model. It appears in equation~\eqref{eq:reduced} because it stands in for financial conditions. The error is a moving average that includes past financial shocks, so a VAR in $U_t$ and $i_t$ with few lags cannot capture it. The VAR is misspecified. With the lags and samples available in practice, this can make the effects of monetary policy harder to measure.
 
-\section{Relation to a monthly VAR and a proxy VAR}\label{app:relation}
+\FloatBarrier
+% ============================================================
+\section{Relation to a Monthly VAR and a Proxy VAR}\label{app:relation}
 Suppose the daily block were replaced by a monthly equation for $\bar x_t$, and every announcement occurred on the first day of the month. With $Z_t=(m_t',\bar x_t')'$, the model would then be a standard monthly VAR with a recursive ordering, the macroeconomic variables first, and impact vector $(0,0,b')'$. The daily block adds two things: the position of each announcement in its month, and fast dynamics of the financial variables, estimated on many more observations. A proxy VAR \citep{gertler2015,mertens2013,stock2018} instead estimates $Z_t=\sum_l C_l Z_{t-l}+\iota_t$ and uses as an instrument $z_t$ the surprises summed over the month. The effect on the FCI per unit effect on the two-year yield is then
 \begin{equation}
 \frac{\operatorname{Cov}(\iota_{F,t},z_t)}{\operatorname{Cov}(\iota_{R,t},z_t)}. \label{eq:proxy}
 \end{equation}
 The window ratio $b_F$ in equation~\eqref{eq:impact} has the same form, with three differences. It replaces monthly VAR residuals with changes measured inside the window, which do not depend on how strongly the surprise predicts monthly residuals. It sets the entries for unemployment and inflation to zero rather than estimating them. And it dates each shock to its day rather than summing shocks over a month. Section~\ref{sec:monthlyvar} estimates both monthly benchmarks. In large samples a VAR of this kind estimates the same effects as local projections \citep{plagborg2021}. In the language of mixed-data sampling, the monthly equation gives equal weights to the days within a month and unrestricted weights to the months \citep{ghysels2007,foroni2015}.
 
-\section{The bootstrap}\label{app:boot}
+\FloatBarrier
+% ============================================================
+\section{The Bootstrap}\label{app:boot}
 Every interval in the note comes from a block bootstrap. Each draw resamples the \bl{nobs} calendar months from January 1996 in moving blocks of 12 months and uses together the monthly residuals, the daily observations and the announcements of the months drawn, which keeps the dependence between them. The announcements drawn give new values of $b$ and new positions. The monthly equations are re-estimated on a series rebuilt recursively from the drawn residuals, with the macro lags taken from the simulated series and the financial lags from the data, and the daily block is re-estimated on the drawn daily observations. When the monthly equations start in 1973, the residuals before 1996 are drawn in blocks of 12 months of their own. A month without a monthly observation (2020 dropped, or a sample ending in 2019) contributes its daily observations and announcements but no residual. A simpler bootstrap resamples the three sources of sampling variation separately: the announcements and the monthly residuals independently across months (with the monthly lags held at their values in the data), and the daily observations in moving blocks of 66 days. I ran it with 12 lags and 500 draws for the nominal, real and $\rs$-relative two-year yield, each without and with the FCI of the same version. Across the \bl{bs:n} responses at 12, 24 and 36 months, its 90 percent intervals are wider than those of the block bootstrap in \bl{bs:wider}, by a median of \bl{bs:wr:med} times (range \bl{bs:wr:min} to \bl{bs:wr:max}). The two agree on whether a response is significant at the 10 percent level in \bl{bs:same10} of the \bl{bs:n} responses and at the 5 percent level in \bl{bs:same5}. The price response of the baseline is significant at the 5 percent level at every horizon under both. The 90 percent interval of the baseline unemployment response after 24 months is [\bl{bs:u24:lo5}, \bl{bs:u24:hi5}] under the block bootstrap and [\bl{bs:u24:lo}, \bl{bs:u24:hi}] under the simpler one.
 
-\section{Lag length}\label{app:lags}
+\FloatBarrier
+% ============================================================
+\section{Lag Length}\label{app:lags}
 The baseline uses 12 monthly lags, fixed in advance. Table~\ref{tab:lags} repeats the main results with 3 and 6 lags. The sample, the announcements and the bootstrap are the same at every lag length: the block bootstrap with 500 draws. The tables that follow give every case at 3, 6 and 12 lags.
 
 The direction of every result is the same at every lag length. With the FCI, the price level falls in all \bl{lag:n} responses (16 cases at 12, 24 and 36 months), and no response of unemployment is significantly negative. Unemployment rises in \bl{lag:upos:3} of the \bl{lag:n} responses with 3 lags, \bl{lag:upos:6} with 6 and \bl{lag:upos:12} with 12. Without the FCI, the Cholesky and proxy VARs show a fall in unemployment at every lag length; the Cholesky fall at 12 months is significant at all three. The weights test gives the same verdicts: in the sample from 1996 it rejects proportional weights in the inflation equation at the 10 percent level and does not reject them in the unemployment equation at the 5 percent level, and in the sample from 1973 it rejects in neither. In the simulation, the median proxy-VAR estimate of the unemployment response with the FCI is close to the true response at every lag length.
@@ -424,10 +405,15 @@ The size of the responses and the strength of the evidence increase with the lag
 
 \input{../baseline/report/tab_lags}
 
-\section{Additional tables}
-\begin{figure}[H]\centering
+\FloatBarrier
+% ============================================================
+\section{Additional Tables}
+\begin{figure}[tp]
+\centering
 \includegraphics[width=\textwidth]{../baseline/report/fig_size.pdf}
-\caption{Responses to a policy move that raises the two-year yield 1 percentage point: the baseline (two-year yield and FCI relative to $\rs$; 12 lags; shaded bands 68 and 90 percent), the nominal two-year yield alone and with the FCI in the same model, and the Cholesky VAR of Section~\ref{sec:standard}.}\label{fig:size}
+\caption{Responses to a Policy Move: Baseline, Nominal Yield Alone and with the FCI, and Cholesky VAR}
+\label{fig:size}
+\begin{flushleft}\footnotesize\textit{Notes:} Policy move that raises the two-year yield 1 percentage point. Baseline: two-year yield and FCI relative to $\rs$; 12 lags; shaded bands 68 and 90 percent. The nominal yield alone and with the FCI are in the same model; the Cholesky VAR is that of Section~\ref{sec:standard}.\end{flushleft}
 \end{figure}
 
 \input{../baseline/report/tab_main_R1}
@@ -453,7 +439,9 @@ The size of the responses and the strength of the evidence increase with the lag
 \input{../baseline/report/tab_main_monthly}
 \input{../baseline/report/tab_app_monthly}
 \input{../baseline/report/tab_proxy_sim}
-\section{Construction and estimation details}\label{app:details}
+\FloatBarrier
+% ============================================================
+\section{Construction and Estimation Details}\label{app:details}
 \textbf{Events.} I use the 252 FOMC announcements from January 1996 to July 2026 with all the window measures available in the U.S.\ Monetary Policy Event-Study Database \citep{acosta2025}. As in the companion note, I leave out unscheduled announcements with no change in the policy rate, and March--April 2020. The announcements of September and October 2026 are left out because too few later days are available. The DXY index used in the window covers fewer currencies than the broad dollar used in the daily and monthly index, which I treat as a measurement difference.
 
 \textbf{From monthly to daily.} Expected inflation and $\rs$ are not available daily, and they move slowly. I take the monthly gap between $R_t^{v}$ in equation~\eqref{eq:twoyear} and $y^{2}_t$, interpolate it linearly between the middles of adjacent months, and add it to the daily yield. The daily index is
@@ -462,8 +450,8 @@ F_\tau^{v} = w_B\, y^{10}_\tau + w_Q\, 100\ln\text{CAPE}_\tau + w_D\, 100\ln\tex
 \end{equation}
 where $\text{DOL}_\tau$ is the daily nominal broad dollar. The offset $o_\tau^{v}$ is the monthly difference between the index in equation~\eqref{eq:fci} and the average of the first three terms, interpolated in the same way. It also absorbs the difference between the real and the nominal dollar. The monthly averages of the daily series are very close to the monthly measures: the root-mean-square difference is at most 0.02 unit for the FCI and 0.04 percentage point for the two-year yield. The offsets change little from day to day, so day-to-day moves in the index come from market prices. Table~\ref{tab:measures} shows the measures used at each frequency. The daily calendar has every weekday; missing values, such as on holidays, are filled from the previous observation for up to three days. Each daily equation has 13 coefficients with the FCI; each monthly equation has $1+4L$ with the FCI and $1+3L$ without it.
 
-\begin{table}[H]\centering\small
-\caption{Measures of stocks and the dollar at each frequency}\label{tab:measures}
+\begin{table}[tp]\centering\small
+\caption{Measures of Stocks and the Dollar at Each Frequency}\label{tab:measures}
 \begin{tabular}{lll}\toprule
 Frequency & Stocks & Dollar \\\midrule
 Window & S\&P 500 & DXY index \\
@@ -496,11 +484,13 @@ Months after the announcement month have 21 weekdays. To avoid computing a path 
 
 \textbf{Bootstrap.} The draws are those of Appendix~\ref{app:boot}: 500 block-bootstrap draws, from each of which I compute the response and report percentile intervals. The sets for the Phillips multiplier in Table~\ref{tab:tradeoff} use the same draws.
 
-\section{Data sources}\label{app:data}
+\FloatBarrier
+% ============================================================
+\section{Data Sources}\label{app:data}
 Table~\ref{tab:data} lists the data. Series from FRED are identified by their mnemonics. Quarterly series are placed in the middle month of the quarter and interpolated linearly.
 
-\begin{table}[H]\centering\small
-\caption{Data sources}\label{tab:data}
+\begin{table}[tp]\centering\small
+\caption{Data Sources}\label{tab:data}
 \begin{tabular}{p{0.36\textwidth}p{0.11\textwidth}p{0.45\textwidth}}\toprule
 Series & Frequency & Source \\\midrule
 Unemployment rate & Monthly & FRED UNRATE \\
@@ -522,4 +512,5 @@ Orthogonalized surprise & Event & \citet{bauer2023}, posted data (announcements 
 \end{tabular}
 \end{table}
 
+\end{appendices}
 \end{document}
