@@ -14,6 +14,9 @@
 \citation{boivin2010}
 \citation{laubach2003,holston2017,holston2023,hamilton2016,kiley2020}
 \citation{fcinote}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Responses to a policy move that raises the two-year yield 1 percentage point in the announcement window. Solid line: the surprise traced through the financial conditions index and the two-year yield, both measured relative to the neutral rate (shaded bands: 68 and 90 percent intervals). Dashed line: traced through the nominal two-year yield alone. 1996--2026, 12 monthly lags.}}{2}{figure.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:intro}{{1}{2}{Responses to a policy move that raises the two-year yield 1 percentage point in the announcement window. Solid line: the surprise traced through the financial conditions index and the two-year yield, both measured relative to the neutral rate (shaded bands: 68 and 90 percent intervals). Dashed line: traced through the nominal two-year yield alone. 1996--2026, 12 monthly lags}{figure.caption.1}{}}
 \citation{kuttner2001,gurkaynak2005}
 \citation{bernanke2005,hanson2015,nakamura2018,swanson2021}
 \citation{romer2000,nakamura2018}
@@ -22,7 +25,6 @@
 \citation{jacobson2026}
 \citation{gertler2015,caldara2019}
 \citation{kroencke2021,bauer2023jep,boehm2024,bauer2026,boehm2026}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Connection to the literature}{2}{subsection.1.1}\protected@file@percent }
 \citation{jacobson2026}
 \citation{bauer2023}
 \citation{jarocinski2020}
@@ -39,6 +41,7 @@
 \citation{bauer2026,boehm2024,boehm2026}
 \citation{kiley2014}
 \citation{caballero2026}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Connection to the literature}{3}{subsection.1.1}\protected@file@percent }
 \citation{boivin2006,boivin2010,primiceri2005}
 \citation{barakchian2013}
 \citation{hazell2022,delnegro2020,ball2019,fitzgerald2024}
@@ -57,12 +60,16 @@
 \newlabel{sec:data}{{2}{4}{Empirical approach}{section.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Measuring financial conditions}{4}{subsection.2.1}\protected@file@percent }
 \newlabel{sec:measure}{{2.1}{4}{Measuring financial conditions}{subsection.2.1}{}}
-\newlabel{eq:ns}{{1}{4}{Measuring financial conditions}{equation.2.1}{}}
-\newlabel{eq:window}{{2}{4}{Measuring financial conditions}{equation.2.2}{}}
-\newlabel{eq:weights}{{3}{4}{Measuring financial conditions}{equation.2.3}{}}
-\newlabel{eq:fci}{{4}{4}{Measuring financial conditions}{equation.2.4}{}}
 \citation{holston2023}
 \citation{haubrich2012}
+\newlabel{eq:ns}{{1}{5}{Measuring financial conditions}{equation.2.1}{}}
+\newlabel{eq:window}{{2}{5}{Measuring financial conditions}{equation.2.2}{}}
+\newlabel{eq:weights}{{3}{5}{Measuring financial conditions}{equation.2.3}{}}
+\newlabel{eq:fci}{{4}{5}{Measuring financial conditions}{equation.2.4}{}}
+\newlabel{eq:nom}{{5}{5}{Measuring financial conditions}{equation.2.5}{}}
+\newlabel{eq:real}{{6}{5}{Measuring financial conditions}{equation.2.6}{}}
+\newlabel{eq:rstar}{{7}{5}{Measuring financial conditions}{equation.2.7}{}}
+\newlabel{eq:twoyear}{{8}{5}{Measuring financial conditions}{equation.2.8}{}}
 \citation{jorgenson1963,hall1967}
 \citation{tobin1969}
 \citation{ando1963,friedman1957}
@@ -71,24 +78,17 @@
 \citation{christiano2005,smets2007,gali2005}
 \citation{kaplan2018,auclert2019}
 \citation{friedman1961}
-\newlabel{eq:nom}{{5}{5}{Measuring financial conditions}{equation.2.5}{}}
-\newlabel{eq:real}{{6}{5}{Measuring financial conditions}{equation.2.6}{}}
-\newlabel{eq:rstar}{{7}{5}{Measuring financial conditions}{equation.2.7}{}}
-\newlabel{eq:twoyear}{{8}{5}{Measuring financial conditions}{equation.2.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Why financial conditions and $r^*$}{5}{subsection.2.2}\protected@file@percent }
-\newlabel{sec:background}{{2.2}{5}{Why financial conditions and $r^*$}{subsection.2.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}The standard transmission mechanism}{5}{subsubsection.2.2.1}\protected@file@percent }
 \citation{bernanke1992,christiano1999}
 \citation{gertler2015,caldara2019}
 \citation{bernanke2005favar}
 \citation{boehm2026}
 \citation{sims1992}
 \citation{castelnuovo2010}
-\citation{boehm2024,bauer2026}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Why financial conditions and $r^*$}{6}{subsection.2.2}\protected@file@percent }
+\newlabel{sec:background}{{2.2}{6}{Why financial conditions and $r^*$}{subsection.2.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}The standard transmission mechanism}{6}{subsubsection.2.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}What standard VARs leave out}{6}{subsubsection.2.2.2}\protected@file@percent }
-\newlabel{eq:y}{{9}{6}{What standard VARs leave out}{equation.2.9}{}}
-\newlabel{eq:f}{{10}{6}{What standard VARs leave out}{equation.2.10}{}}
-\newlabel{eq:reduced}{{11}{6}{What standard VARs leave out}{equation.2.11}{}}
+\citation{boehm2024,bauer2026}
 \citation{stock2003}
 \citation{gilchrist2012}
 \citation{hatzius2010,brave2011}
@@ -97,32 +97,34 @@
 \citation{ajello2023}
 \citation{hatzius2010}
 \citation{fcinote}
+\newlabel{eq:y}{{9}{7}{What standard VARs leave out}{equation.2.9}{}}
+\newlabel{eq:f}{{10}{7}{What standard VARs leave out}{equation.2.10}{}}
+\newlabel{eq:reduced}{{11}{7}{What standard VARs leave out}{equation.2.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Financial conditions and real activity}{7}{subsubsection.2.2.3}\protected@file@percent }
 \citation{boehm2024,bauer2026}
 \citation{boehm2024}
 \citation{bauer2026}
 \citation{acosta2025}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Financial conditions and real activity}{7}{subsubsection.2.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.4}Policy news beyond interest rates, and risk appetite}{7}{subsubsection.2.2.4}\protected@file@percent }
-\newlabel{sec:scope}{{2.2.4}{7}{Policy news beyond interest rates, and risk appetite}{subsubsection.2.2.4}{}}
-\citation{jacobson2026}
-\citation{bernanke1992,christiano1999}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.4}Policy news beyond interest rates, and risk appetite}{8}{subsubsection.2.2.4}\protected@file@percent }
+\newlabel{sec:scope}{{2.2.4}{8}{Policy news beyond interest rates, and risk appetite}{subsubsection.2.2.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Timing assumptions and identification}{8}{subsection.2.3}\protected@file@percent }
 \newlabel{sec:timing}{{2.3}{8}{Timing assumptions and identification}{subsection.2.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Timing assumptions}}{8}{table.caption.1}\protected@file@percent }
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:timing}{{1}{8}{Timing assumptions}{table.caption.1}{}}
-\newlabel{eq:winfci}{{12}{8}{Timing assumptions and identification}{equation.2.12}{}}
-\newlabel{eq:impact}{{13}{8}{Timing assumptions and identification}{equation.2.13}{}}
+\citation{jacobson2026}
+\citation{bernanke1992,christiano1999}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Timing assumptions}}{9}{table.caption.2}\protected@file@percent }
+\newlabel{tab:timing}{{1}{9}{Timing assumptions}{table.caption.2}{}}
+\newlabel{eq:winfci}{{12}{9}{Timing assumptions and identification}{equation.2.12}{}}
+\newlabel{eq:impact}{{13}{9}{Timing assumptions and identification}{equation.2.13}{}}
 \citation{boehm2024}
 \citation{boehm2024,bauer2026}
 \citation{corsi2009}
 \citation{ghysels2016}
 \citation{ghysels2007,foroni2015}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}A mixed-frequency VAR}{9}{subsection.2.4}\protected@file@percent }
-\newlabel{sec:midas}{{2.4}{9}{A mixed-frequency VAR}{subsection.2.4}{}}
-\newlabel{eq:daily}{{14}{9}{A mixed-frequency VAR}{equation.2.14}{}}
-\newlabel{eq:monthly}{{15}{9}{A mixed-frequency VAR}{equation.2.15}{}}
 \citation{gertler2015,mertens2013,stock2018}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}A mixed-frequency VAR}{10}{subsection.2.4}\protected@file@percent }
+\newlabel{sec:midas}{{2.4}{10}{A mixed-frequency VAR}{subsection.2.4}{}}
+\newlabel{eq:daily}{{14}{10}{A mixed-frequency VAR}{equation.2.14}{}}
+\newlabel{eq:monthly}{{15}{10}{A mixed-frequency VAR}{equation.2.15}{}}
 \citation{kunsch1989,jentsch2019}
 \citation{bauer2023,caldara2019,miranda2021,ramey2016}
 \citation{jarocinski2020}
@@ -131,83 +133,83 @@
 \citation{christiano1999}
 \citation{barakchian2013}
 \citation{caldara2019}
-\newlabel{eq:proxy}{{16}{10}{A mixed-frequency VAR}{equation.2.16}{}}
-\citation{christiano1999}
-\citation{stock2018,mertens2013,gertler2015}
-\citation{nakamura2018}
+\newlabel{eq:proxy}{{16}{11}{A mixed-frequency VAR}{equation.2.16}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Baseline results}{11}{section.3}\protected@file@percent }
 \newlabel{sec:results}{{3}{11}{Baseline results}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Standard methods after the early 1980s}{11}{subsection.3.1}\protected@file@percent }
 \newlabel{sec:standard}{{3.1}{11}{Standard methods after the early 1980s}{subsection.3.1}{}}
+\citation{christiano1999}
+\citation{stock2018,mertens2013,gertler2015}
+\citation{nakamura2018}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Responses to a 1 percentage point rise in the two-year yield, 1996--2026, from a recursive (Cholesky) VAR and a proxy VAR with the Nakamura--Steinsson instrument. The monthly unemployment gap, core PCE inflation and the two-year yield; 12 lags. Bands: 90 percent (bootstrap for the Cholesky VAR, Anderson--Rubin sets for the proxy VAR, truncated at $\pm 4$).}}{12}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:standard}{{2}{12}{Responses to a 1 percentage point rise in the two-year yield, 1996--2026, from a recursive (Cholesky) VAR and a proxy VAR with the Nakamura--Steinsson instrument. The monthly unemployment gap, core PCE inflation and the two-year yield; 12 lags. Bands: 90 percent (bootstrap for the Cholesky VAR, Anderson--Rubin sets for the proxy VAR, truncated at $\pm 4$)}{figure.caption.3}{}}
 \citation{ramey2016}
 \citation{sims1992,ramey2016}
 \citation{lewis2026,bauer2026}
 \citation{montiel2021,lunsford2015}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Responses to a 1 percentage point rise in the two-year yield, 1996--2026, from a recursive (Cholesky) VAR and a proxy VAR with the Nakamura--Steinsson instrument. The monthly unemployment gap, core PCE inflation and the two-year yield; 12 lags. Bands: 90 percent (bootstrap for the Cholesky VAR, Anderson--Rubin sets for the proxy VAR, truncated at $\pm 4$).}}{12}{figure.caption.2}\protected@file@percent }
-\newlabel{fig:standard}{{1}{12}{Responses to a 1 percentage point rise in the two-year yield, 1996--2026, from a recursive (Cholesky) VAR and a proxy VAR with the Nakamura--Steinsson instrument. The monthly unemployment gap, core PCE inflation and the two-year yield; 12 lags. Bands: 90 percent (bootstrap for the Cholesky VAR, Anderson--Rubin sets for the proxy VAR, truncated at $\pm 4$)}{figure.caption.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate}}{12}{table.caption.3}\protected@file@percent }
-\newlabel{tab:standard}{{2}{12}{Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate}{table.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate}}{13}{table.caption.4}\protected@file@percent }
+\newlabel{tab:standard}{{2}{13}{Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate}{table.caption.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}The FCI model: baseline results}{13}{subsection.3.2}\protected@file@percent }
 \newlabel{sec:baseline}{{3.2}{13}{The FCI model: baseline results}{subsection.3.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Responses to a policy move that raises the two-year yield 1 percentage point: the baseline ($r^{*}$-gap two-year yield and FCI; 12 lags; shaded bands 68 and 90 percent), the nominal two-year yield alone and with the FCI in the same model, and the Cholesky VAR of Section~\ref {sec:standard}.}}{13}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:size}{{2}{13}{Responses to a policy move that raises the two-year yield 1 percentage point: the baseline ($\rs $-gap two-year yield and FCI; 12 lags; shaded bands 68 and 90 percent), the nominal two-year yield alone and with the FCI in the same model, and the Cholesky VAR of Section~\ref {sec:standard}}{figure.caption.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Baseline: 1996 to the present, all data in, no trend (12 lags)}}{14}{table.caption.5}\protected@file@percent }
-\newlabel{tab:mainB}{{3}{14}{Baseline: 1996 to the present, all data in, no trend (12 lags)}{table.caption.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Responses to a policy move that raises the two-year yield 1 percentage point, without and with the FCI (12 lags). Bands: 68 and 90 percent intervals.}}{14}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:steps}{{3}{14}{Responses to a policy move that raises the two-year yield 1 percentage point, without and with the FCI (12 lags). Bands: 68 and 90 percent intervals}{figure.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Responses to a policy move that raises the two-year yield 1 percentage point: the baseline ($r^{*}$-gap two-year yield and FCI; 12 lags; shaded bands 68 and 90 percent), the nominal two-year yield alone and with the FCI in the same model, and the Cholesky VAR of Section~\ref {sec:standard}.}}{14}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:size}{{3}{14}{Responses to a policy move that raises the two-year yield 1 percentage point: the baseline ($\rs $-gap two-year yield and FCI; 12 lags; shaded bands 68 and 90 percent), the nominal two-year yield alone and with the FCI in the same model, and the Cholesky VAR of Section~\ref {sec:standard}}{figure.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Baseline: 1996 to the present, all data in, no trend (12 lags)}}{15}{table.caption.6}\protected@file@percent }
+\newlabel{tab:mainB}{{3}{15}{Baseline: 1996 to the present, all data in, no trend (12 lags)}{table.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Responses to a policy move that raises the two-year yield 1 percentage point, without and with the FCI (12 lags). Bands: 68 and 90 percent intervals.}}{15}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:steps}{{4}{15}{Responses to a policy move that raises the two-year yield 1 percentage point, without and with the FCI (12 lags). Bands: 68 and 90 percent intervals}{figure.caption.7}{}}
 \citation{barnichon2021}
 \citation{anderson1949}
 \citation{barnichon2021}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}The implied inflation-unemployment tradeoff}{15}{subsection.3.3}\protected@file@percent }
-\newlabel{sec:tradeoff}{{3.3}{15}{The implied inflation-unemployment tradeoff}{subsection.3.3}{}}
-\newlabel{eq:pm}{{17}{15}{The implied inflation-unemployment tradeoff}{equation.3.17}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Implied trade-off: Phillips multiplier $\kappa _H$ (12 lags)}}{15}{table.caption.7}\protected@file@percent }
-\newlabel{tab:tradeoff}{{4}{15}{Implied trade-off: Phillips multiplier $\kappa _H$ (12 lags)}{table.caption.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Financial conditions in the announcement window}{16}{subsection.3.4}\protected@file@percent }
-\newlabel{sec:resolve}{{3.4}{16}{Financial conditions in the announcement window}{subsection.3.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Market-index weights from policy news}}{16}{table.caption.8}\protected@file@percent }
-\newlabel{tab:weights}{{5}{16}{Market-index weights from policy news}{table.caption.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Response of the $r^{*}$-gap two-year yield and the FCI (in two-year-yield units) to a policy move that raises the two-year yield 1 percentage point in the window (monthly averages; 12 lags; 68 and 90 percent bands).}}{16}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:financial}{{4}{16}{Response of the $\rs $-gap two-year yield and the FCI (in two-year-yield units) to a policy move that raises the two-year yield 1 percentage point in the window (monthly averages; 12 lags; 68 and 90 percent bands)}{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Proxy VARs with the FCI, and a simulation}{17}{subsection.3.5}\protected@file@percent }
-\newlabel{sec:monthlyvar}{{3.5}{17}{Proxy VARs with the FCI, and a simulation}{subsection.3.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Monthly VAR benchmark (12 lags)}}{17}{table.caption.10}\protected@file@percent }
-\newlabel{tab:mainmonthly}{{6}{17}{Monthly VAR benchmark (12 lags)}{table.caption.10}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces A monthly proxy VAR when the r*-gap model is the true process}}{18}{table.caption.11}\protected@file@percent }
-\newlabel{tab:proxysim}{{7}{18}{A monthly proxy VAR when the r*-gap model is the true process}{table.caption.11}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Robustness}{18}{section.4}\protected@file@percent }
-\newlabel{sec:rob}{{4}{18}{Robustness}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}The sample}{18}{subsection.4.1}\protected@file@percent }
-\newlabel{sec:recent}{{4.1}{18}{The sample}{subsection.4.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Robustness 1: sample (r*-gap 2-year yield and FCI) (12 lags)}}{19}{table.caption.12}\protected@file@percent }
-\newlabel{tab:mainR1}{{8}{19}{Robustness 1: sample (r*-gap 2-year yield and FCI) (12 lags)}{table.caption.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}The $r^*$ adjustment and trends}{19}{subsection.4.2}\protected@file@percent }
-\newlabel{sec:rstarrob}{{4.2}{19}{The $r^*$ adjustment and trends}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}The implied inflation-unemployment tradeoff}{16}{subsection.3.3}\protected@file@percent }
+\newlabel{sec:tradeoff}{{3.3}{16}{The implied inflation-unemployment tradeoff}{subsection.3.3}{}}
+\newlabel{eq:pm}{{17}{16}{The implied inflation-unemployment tradeoff}{equation.3.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Implied trade-off: Phillips multiplier $\kappa _H$ (12 lags)}}{16}{table.caption.8}\protected@file@percent }
+\newlabel{tab:tradeoff}{{4}{16}{Implied trade-off: Phillips multiplier $\kappa _H$ (12 lags)}{table.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Financial conditions in the announcement window}{17}{subsection.3.4}\protected@file@percent }
+\newlabel{sec:resolve}{{3.4}{17}{Financial conditions in the announcement window}{subsection.3.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Market-index weights from policy news}}{17}{table.caption.9}\protected@file@percent }
+\newlabel{tab:weights}{{5}{17}{Market-index weights from policy news}{table.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Response of the $r^{*}$-gap two-year yield and the FCI (in two-year-yield units) to a policy move that raises the two-year yield 1 percentage point in the window (monthly averages; 12 lags; 68 and 90 percent bands).}}{17}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:financial}{{5}{17}{Response of the $\rs $-gap two-year yield and the FCI (in two-year-yield units) to a policy move that raises the two-year yield 1 percentage point in the window (monthly averages; 12 lags; 68 and 90 percent bands)}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Proxy VARs with the FCI, and a simulation}{18}{subsection.3.5}\protected@file@percent }
+\newlabel{sec:monthlyvar}{{3.5}{18}{Proxy VARs with the FCI, and a simulation}{subsection.3.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Monthly VAR benchmark (12 lags)}}{18}{table.caption.11}\protected@file@percent }
+\newlabel{tab:mainmonthly}{{6}{18}{Monthly VAR benchmark (12 lags)}{table.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces A monthly proxy VAR when the r*-gap model is the true process}}{19}{table.caption.12}\protected@file@percent }
+\newlabel{tab:proxysim}{{7}{19}{A monthly proxy VAR when the r*-gap model is the true process}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Robustness}{19}{section.4}\protected@file@percent }
+\newlabel{sec:rob}{{4}{19}{Robustness}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}The sample}{19}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:recent}{{4.1}{19}{The sample}{subsection.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Robustness 1: sample (r*-gap 2-year yield and FCI) (12 lags)}}{20}{table.caption.13}\protected@file@percent }
+\newlabel{tab:mainR1}{{8}{20}{Robustness 1: sample (r*-gap 2-year yield and FCI) (12 lags)}{table.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}The $r^*$ adjustment and trends}{20}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:rstarrob}{{4.2}{20}{The $r^*$ adjustment and trends}{subsection.4.2}{}}
 \citation{gilchrist2012,caldara2019}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Robustness 2: the r* adjustment and trends (12 lags)}}{20}{table.caption.13}\protected@file@percent }
-\newlabel{tab:mainR2}{{9}{20}{Robustness 2: the r* adjustment and trends (12 lags)}{table.caption.13}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Credit conditions}{20}{subsection.4.3}\protected@file@percent }
-\newlabel{sec:credit}{{4.3}{20}{Credit conditions}{subsection.4.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Robustness 3: excess bond premium (r*-gap) (12 lags)}}{21}{table.caption.14}\protected@file@percent }
-\newlabel{tab:mainR3}{{10}{21}{Robustness 3: excess bond premium (r*-gap) (12 lags)}{table.caption.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}The weights of the FCI}{21}{subsection.4.4}\protected@file@percent }
-\newlabel{sec:components}{{4.4}{21}{The weights of the FCI}{subsection.4.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Robustness 2: the r* adjustment and trends (12 lags)}}{21}{table.caption.14}\protected@file@percent }
+\newlabel{tab:mainR2}{{9}{21}{Robustness 2: the r* adjustment and trends (12 lags)}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Credit conditions}{21}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:credit}{{4.3}{21}{Credit conditions}{subsection.4.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Robustness 3: excess bond premium (r*-gap) (12 lags)}}{22}{table.caption.15}\protected@file@percent }
+\newlabel{tab:mainR3}{{10}{22}{Robustness 3: excess bond premium (r*-gap) (12 lags)}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}The weights of the FCI}{22}{subsection.4.4}\protected@file@percent }
+\newlabel{sec:components}{{4.4}{22}{The weights of the FCI}{subsection.4.4}{}}
 \citation{bauer2023}
 \citation{jarocinski2020}
-\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Robustness 4: the FCI replaced by its three weighted components (12 lags)}}{22}{table.caption.15}\protected@file@percent }
-\newlabel{tab:mainR4}{{11}{22}{Robustness 4: the FCI replaced by its three weighted components (12 lags)}{table.caption.15}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Test of the proportional-weights restriction (12 lags)}}{22}{table.caption.16}\protected@file@percent }
-\newlabel{tab:weightstest}{{12}{22}{Test of the proportional-weights restriction (12 lags)}{table.caption.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}The surprise}{22}{subsection.4.5}\protected@file@percent }
-\newlabel{sec:surprise}{{4.5}{22}{The surprise}{subsection.4.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Robustness 4: the FCI replaced by its three weighted components (12 lags)}}{23}{table.caption.16}\protected@file@percent }
+\newlabel{tab:mainR4}{{11}{23}{Robustness 4: the FCI replaced by its three weighted components (12 lags)}{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Test of the proportional-weights restriction (12 lags)}}{23}{table.caption.17}\protected@file@percent }
+\newlabel{tab:weightstest}{{12}{23}{Test of the proportional-weights restriction (12 lags)}{table.caption.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}The surprise}{23}{subsection.4.5}\protected@file@percent }
+\newlabel{sec:surprise}{{4.5}{23}{The surprise}{subsection.4.5}{}}
 \citation{bauer2023,jarocinski2020}
 \citation{jacobson2026}
 \citation{bauer2026,boehm2024,boehm2026}
 \citation{powell2023}
-\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Robustness 5: alternative surprises (r*-gap) (12 lags)}}{23}{table.caption.17}\protected@file@percent }
-\newlabel{tab:mainR5}{{13}{23}{Robustness 5: alternative surprises (r*-gap) (12 lags)}{table.caption.17}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{23}{section.5}\protected@file@percent }
-\newlabel{sec:policy}{{5}{23}{Conclusion}{section.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Robustness 5: alternative surprises (r*-gap) (12 lags)}}{24}{table.caption.18}\protected@file@percent }
+\newlabel{tab:mainR5}{{13}{24}{Robustness 5: alternative surprises (r*-gap) (12 lags)}{table.caption.18}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{24}{section.5}\protected@file@percent }
+\newlabel{sec:policy}{{5}{24}{Conclusion}{section.5}{}}
 \bibcite{acosta2025}{{1}{2025}{{Acosta et al.}}{{}}}
 \bibcite{adrian2019}{{2}{2019}{{Adrian et al.}}{{}}}
 \bibcite{ajello2023}{{3}{2023}{{Ajello et al.}}{{}}}
@@ -305,57 +307,57 @@
 \bibcite{stock2018}{{95}{2018}{{Stock and Watson}}{{}}}
 \bibcite{swanson2021}{{96}{2021}{{Swanson}}{{}}}
 \bibcite{tobin1969}{{97}{1969}{{Tobin}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}The bootstrap}{29}{appendix.A}\protected@file@percent }
-\newlabel{app:boot}{{A}{29}{The bootstrap}{appendix.A}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Lag length}{29}{appendix.B}\protected@file@percent }
-\newlabel{app:lags}{{B}{29}{Lag length}{appendix.B}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A1}{\ignorespaces The main results with 3, 6 and 12 monthly lags}}{30}{table.caption.19}\protected@file@percent }
-\newlabel{tab:lags}{{A1}{30}{The main results with 3, 6 and 12 monthly lags}{table.caption.19}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {C}Additional tables}{30}{appendix.C}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {A15}{\ignorespaces Standard methods with a commodity price index in the first block}}{30}{table.caption.33}\protected@file@percent }
-\newlabel{tab:standardcom}{{A15}{30}{Standard methods with a commodity price index in the first block}{table.caption.33}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A2}{\ignorespaces Baseline: 1996 to the present, all data in, no trend}}{31}{table.caption.20}\protected@file@percent }
-\newlabel{tab:appB}{{A2}{31}{Baseline: 1996 to the present, all data in, no trend}{table.caption.20}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A3}{\ignorespaces Robustness 1a: monthly equations start in 1973}}{32}{table.caption.21}\protected@file@percent }
-\newlabel{tab:appR1a}{{A3}{32}{Robustness 1a: monthly equations start in 1973}{table.caption.21}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A4}{\ignorespaces Robustness 1b: 2020 dropped from all equations, start 1996}}{32}{table.caption.22}\protected@file@percent }
-\newlabel{tab:appR1b}{{A4}{32}{Robustness 1b: 2020 dropped from all equations, start 1996}{table.caption.22}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A5}{\ignorespaces Robustness 1c: 2020 dropped from all equations, start 1973}}{33}{table.caption.23}\protected@file@percent }
-\newlabel{tab:appR1c}{{A5}{33}{Robustness 1c: 2020 dropped from all equations, start 1973}{table.caption.23}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A6}{\ignorespaces Robustness 1d: sample ends in December 2019, start 1996}}{33}{table.caption.24}\protected@file@percent }
-\newlabel{tab:appR1d}{{A6}{33}{Robustness 1d: sample ends in December 2019, start 1996}{table.caption.24}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A7}{\ignorespaces Robustness 1e: sample ends in December 2019, start 1973}}{34}{table.caption.25}\protected@file@percent }
-\newlabel{tab:appR1e}{{A7}{34}{Robustness 1e: sample ends in December 2019, start 1973}{table.caption.25}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A8}{\ignorespaces Robustness 2a: Kiley r*, start 1996}}{34}{table.caption.26}\protected@file@percent }
-\newlabel{tab:appR2a}{{A8}{34}{Robustness 2a: Kiley r*, start 1996}{table.caption.26}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A9}{\ignorespaces Robustness 2b: Kiley r*, start 1973}}{35}{table.caption.27}\protected@file@percent }
-\newlabel{tab:appR2b}{{A9}{35}{Robustness 2b: Kiley r*, start 1973}{table.caption.27}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A10}{\ignorespaces Robustness 2c: real 2-year and real FCI with a cubic spline trend, start 1996}}{35}{table.caption.28}\protected@file@percent }
-\newlabel{tab:appR2c}{{A10}{35}{Robustness 2c: real 2-year and real FCI with a cubic spline trend, start 1996}{table.caption.28}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A11}{\ignorespaces Robustness 2d: real 2-year and real FCI with a cubic spline trend, start 1973}}{36}{table.caption.29}\protected@file@percent }
-\newlabel{tab:appR2d}{{A11}{36}{Robustness 2d: real 2-year and real FCI with a cubic spline trend, start 1973}{table.caption.29}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A12}{\ignorespaces Robustness 3a: excess bond premium as a third monthly variable, start 1996}}{36}{table.caption.30}\protected@file@percent }
-\newlabel{tab:appR3a}{{A12}{36}{Robustness 3a: excess bond premium as a third monthly variable, start 1996}{table.caption.30}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A13}{\ignorespaces Robustness 3b: excess bond premium as a third monthly variable, start 1973}}{37}{table.caption.31}\protected@file@percent }
-\newlabel{tab:appR3b}{{A13}{37}{Robustness 3b: excess bond premium as a third monthly variable, start 1973}{table.caption.31}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A14}{\ignorespaces Robustness 4: the FCI replaced by its three weighted components}}{37}{table.caption.32}\protected@file@percent }
-\newlabel{tab:appR4}{{A14}{37}{Robustness 4: the FCI replaced by its three weighted components}{table.caption.32}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}The bootstrap}{30}{appendix.A}\protected@file@percent }
+\newlabel{app:boot}{{A}{30}{The bootstrap}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Lag length}{30}{appendix.B}\protected@file@percent }
+\newlabel{app:lags}{{B}{30}{Lag length}{appendix.B}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A1}{\ignorespaces The main results with 3, 6 and 12 monthly lags}}{31}{table.caption.20}\protected@file@percent }
+\newlabel{tab:lags}{{A1}{31}{The main results with 3, 6 and 12 monthly lags}{table.caption.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Additional tables}{31}{appendix.C}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {A15}{\ignorespaces Standard methods with a commodity price index in the first block}}{31}{table.caption.34}\protected@file@percent }
+\newlabel{tab:standardcom}{{A15}{31}{Standard methods with a commodity price index in the first block}{table.caption.34}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A2}{\ignorespaces Baseline: 1996 to the present, all data in, no trend}}{32}{table.caption.21}\protected@file@percent }
+\newlabel{tab:appB}{{A2}{32}{Baseline: 1996 to the present, all data in, no trend}{table.caption.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A3}{\ignorespaces Robustness 1a: monthly equations start in 1973}}{33}{table.caption.22}\protected@file@percent }
+\newlabel{tab:appR1a}{{A3}{33}{Robustness 1a: monthly equations start in 1973}{table.caption.22}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A4}{\ignorespaces Robustness 1b: 2020 dropped from all equations, start 1996}}{33}{table.caption.23}\protected@file@percent }
+\newlabel{tab:appR1b}{{A4}{33}{Robustness 1b: 2020 dropped from all equations, start 1996}{table.caption.23}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A5}{\ignorespaces Robustness 1c: 2020 dropped from all equations, start 1973}}{34}{table.caption.24}\protected@file@percent }
+\newlabel{tab:appR1c}{{A5}{34}{Robustness 1c: 2020 dropped from all equations, start 1973}{table.caption.24}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A6}{\ignorespaces Robustness 1d: sample ends in December 2019, start 1996}}{34}{table.caption.25}\protected@file@percent }
+\newlabel{tab:appR1d}{{A6}{34}{Robustness 1d: sample ends in December 2019, start 1996}{table.caption.25}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A7}{\ignorespaces Robustness 1e: sample ends in December 2019, start 1973}}{35}{table.caption.26}\protected@file@percent }
+\newlabel{tab:appR1e}{{A7}{35}{Robustness 1e: sample ends in December 2019, start 1973}{table.caption.26}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A8}{\ignorespaces Robustness 2a: Kiley r*, start 1996}}{35}{table.caption.27}\protected@file@percent }
+\newlabel{tab:appR2a}{{A8}{35}{Robustness 2a: Kiley r*, start 1996}{table.caption.27}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A9}{\ignorespaces Robustness 2b: Kiley r*, start 1973}}{36}{table.caption.28}\protected@file@percent }
+\newlabel{tab:appR2b}{{A9}{36}{Robustness 2b: Kiley r*, start 1973}{table.caption.28}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A10}{\ignorespaces Robustness 2c: real 2-year and real FCI with a cubic spline trend, start 1996}}{36}{table.caption.29}\protected@file@percent }
+\newlabel{tab:appR2c}{{A10}{36}{Robustness 2c: real 2-year and real FCI with a cubic spline trend, start 1996}{table.caption.29}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A11}{\ignorespaces Robustness 2d: real 2-year and real FCI with a cubic spline trend, start 1973}}{37}{table.caption.30}\protected@file@percent }
+\newlabel{tab:appR2d}{{A11}{37}{Robustness 2d: real 2-year and real FCI with a cubic spline trend, start 1973}{table.caption.30}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A12}{\ignorespaces Robustness 3a: excess bond premium as a third monthly variable, start 1996}}{37}{table.caption.31}\protected@file@percent }
+\newlabel{tab:appR3a}{{A12}{37}{Robustness 3a: excess bond premium as a third monthly variable, start 1996}{table.caption.31}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A13}{\ignorespaces Robustness 3b: excess bond premium as a third monthly variable, start 1973}}{38}{table.caption.32}\protected@file@percent }
+\newlabel{tab:appR3b}{{A13}{38}{Robustness 3b: excess bond premium as a third monthly variable, start 1973}{table.caption.32}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A14}{\ignorespaces Robustness 4: the FCI replaced by its three weighted components}}{38}{table.caption.33}\protected@file@percent }
+\newlabel{tab:appR4}{{A14}{38}{Robustness 4: the FCI replaced by its three weighted components}{table.caption.33}{}}
 \citation{acosta2025}
-\@writefile{lot}{\contentsline {table}{\numberline {A16}{\ignorespaces Monthly proxy VAR: first-stage strength and impact on the FCI}}{38}{table.caption.34}\protected@file@percent }
-\newlabel{tab:monthlyF}{{A16}{38}{Monthly proxy VAR: first-stage strength and impact on the FCI}{table.caption.34}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D}Construction and estimation details}{38}{appendix.D}\protected@file@percent }
-\newlabel{app:details}{{D}{38}{Construction and estimation details}{appendix.D}{}}
-\newlabel{eq:dailyfci}{{18}{38}{Construction and estimation details}{equation.D.18}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A18}{\ignorespaces Measures of stocks and the dollar at each frequency}}{38}{table.caption.36}\protected@file@percent }
-\newlabel{tab:measures}{{A18}{38}{Measures of stocks and the dollar at each frequency}{table.caption.36}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A17}{\ignorespaces Monthly VAR benchmark (3, 6 and 12 lags)}}{39}{table.caption.35}\protected@file@percent }
-\newlabel{tab:appmonthly}{{A17}{39}{Monthly VAR benchmark (3, 6 and 12 lags)}{table.caption.35}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A16}{\ignorespaces Monthly proxy VAR: first-stage strength and impact on the FCI}}{39}{table.caption.35}\protected@file@percent }
+\newlabel{tab:monthlyF}{{A16}{39}{Monthly proxy VAR: first-stage strength and impact on the FCI}{table.caption.35}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Construction and estimation details}{39}{appendix.D}\protected@file@percent }
+\newlabel{app:details}{{D}{39}{Construction and estimation details}{appendix.D}{}}
+\newlabel{eq:dailyfci}{{18}{39}{Construction and estimation details}{equation.D.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A18}{\ignorespaces Measures of stocks and the dollar at each frequency}}{39}{table.caption.37}\protected@file@percent }
+\newlabel{tab:measures}{{A18}{39}{Measures of stocks and the dollar at each frequency}{table.caption.37}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A17}{\ignorespaces Monthly VAR benchmark (3, 6 and 12 lags)}}{40}{table.caption.36}\protected@file@percent }
+\newlabel{tab:appmonthly}{{A17}{40}{Monthly VAR benchmark (3, 6 and 12 lags)}{table.caption.36}{}}
 \citation{acosta2025}
 \citation{bauer2023}
-\newlabel{eq:irfm}{{19}{40}{Construction and estimation details}{equation.D.19}{}}
-\newlabel{eq:irfd}{{20}{40}{Construction and estimation details}{equation.D.20}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E}Data sources}{40}{appendix.E}\protected@file@percent }
-\newlabel{app:data}{{E}{40}{Data sources}{appendix.E}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A19}{\ignorespaces Data sources}}{41}{table.caption.37}\protected@file@percent }
-\newlabel{tab:data}{{A19}{41}{Data sources}{table.caption.37}{}}
-\gdef \@abspage@last{41}
+\newlabel{eq:irfm}{{19}{41}{Construction and estimation details}{equation.D.19}{}}
+\newlabel{eq:irfd}{{20}{41}{Construction and estimation details}{equation.D.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}Data sources}{41}{appendix.E}\protected@file@percent }
+\newlabel{app:data}{{E}{41}{Data sources}{appendix.E}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A19}{\ignorespaces Data sources}}{42}{table.caption.38}\protected@file@percent }
+\newlabel{tab:data}{{A19}{42}{Data sources}{table.caption.38}{}}
+\gdef \@abspage@last{42}

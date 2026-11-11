@@ -499,4 +499,19 @@ def fig_size():
     fig.legend([H_["b"], H_["nom0"], H_["nom1"], H_["chol"]], labs, loc="lower center", ncol=2, frameon=False, fontsize=7.2)
     fig.tight_layout(rect=[0, 0.13, 1, 1]); fig.savefig(REPORT / "fig_size.pdf"); plt.close(fig)
 fig_size()
+
+def fig_intro():
+    """Figure 1 (introduction): the baseline (r*-gap 2-year yield and FCI, 68 and 90 percent bands) and the nominal 2-year yield alone, same model."""
+    base = dict(macro="u,pi", start="1996-01", end=None, t2020="in", trend="none")
+    cs = dict(rstar=dict(form="rstar", fci="rstar", **base), nom0=dict(form="nom", fci=0, **base))
+    fig, axs = plt.subplots(1, 2, figsize=(7.0, 3.3))
+    for ax, v, ylab in ((axs[0], "u", "Unemployment gap (pp)"), (axs[1], "P", "Core PCE price level (%)")):
+        ax.axhline(0, color=GREY, lw=0.8)
+        d = paths(cs["rstar"]); d = d[(d.kind == "macro") & (d["var"] == v)]
+        ax.fill_between(d.h, d.lo, d.hi, color=BLUE, alpha=0.13, lw=0); ax.fill_between(d.h, d.lo68, d.hi68, color=BLUE, alpha=0.25, lw=0); h1 = ax.plot(d.h, d.r, color=BLUE, lw=2.0)[0]
+        e = paths(cs["nom0"]); e = e[(e.kind == "macro") & (e["var"] == v)]; h2 = ax.plot(e.h, e.r, color=ORANGE, ls="--", lw=1.9)[0]
+        ax.set_xlabel("Months after the policy move"); ax.set_ylabel(ylab); ax.set_xlim(0, 36)
+    fig.legend([h1, h2], ["Through the financial conditions index, relative to the neutral rate (bands: 68 and 90 percent)", "Through the nominal two-year yield alone"], loc="lower center", ncol=1, frameon=False, fontsize=7.5)
+    fig.tight_layout(rect=[0, 0.12, 1, 1]); fig.savefig(REPORT / "fig_intro.pdf"); plt.close(fig)
+fig_intro()
 print("report inputs written to", REPORT)
