@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 05:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 05:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -584,7 +584,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 97.
 
-[5] [6] [7]
+[5] [6]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 136.
 
@@ -597,8 +597,8 @@ Underfull \hbox (badness 1622) in paragraph at lines 140--140
 []\T1/lmr/m/n/10 Unemployment and in-fla-tion,
  []
 
-[8] [9]
-<../baseline/report/fig_standard.pdf, id=663, 520.34402pt x 245.718pt>
+[7] [8] [9]
+<../baseline/report/fig_standard.pdf, id=652, 520.34402pt x 245.718pt>
 File: ../baseline/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline/report/fig_standard.pdf  used on input lin
@@ -613,14 +613,14 @@ Overfull \hbox (37.21986pt too wide) in paragraph at lines 3--15
  []
 
 ) [11 <../baseline/report/fig_standard.pdf>]
-<../baseline/report/fig_size.pdf, id=769, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_size.pdf, id=758, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 20
 6.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
  (../baseline/report/tab_main_B.tex) [12 <../baseline/report/fig_size.pdf>]
-<../baseline/report/fig_steps.pdf, id=855, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_steps.pdf, id=844, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
@@ -629,20 +629,20 @@ Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
  [13 <../baseline/report/fig_steps.pdf>] (../baseline/report/tab_tradeoff.tex) 
 [14]
 (../baseline/report/tab_weights.tex)
-<../baseline/report/fig_financial.pdf, id=941, 317.98799pt x 202.356pt>
+<../baseline/report/fig_financial.pdf, id=930, 317.98799pt x 202.356pt>
 File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
 ne 242.
 (pdftex.def)             Requested size: 291.2458pt x 185.34843pt.
- [15 <../baseline/report/fig_financial.pdf>] (../baseline/report/tab_monthly_co
-mpact.tex)
-(../baseline/report/tab_rob_summary.tex
+ [15]
+(../baseline/report/tab_monthly_compact.tex) [16 <../baseline/report/fig_financ
+ial.pdf>] (../baseline/report/tab_rob_summary.tex
 Overfull \hbox (30.52113pt too wide) in paragraph at lines 3--26
  [][] 
  []
 
-) [16] [17]
+) [17]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 266.
@@ -656,7 +656,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 266.
 
 [18] (../baseline/report/tab_weights_test.tex) [19] [20] [21] [22] [23]
-[24] [25] [26] (../baseline/report/tab_lags.tex)
+[24] [25] [26] (../baseline/report/tab_lags.tex) [27]
 (../baseline/report/tab_main_R1.tex
 Overfull \hbox (36.0331pt too wide) in paragraph at lines 3--31
  [][] 
@@ -667,12 +667,12 @@ Overfull \hbox (97.74829pt too wide) in paragraph at lines 3--26
  [][] 
  []
 
-[27]) (../baseline/report/tab_main_R3.tex
+[28]) (../baseline/report/tab_main_R3.tex
 Overfull \hbox (27.65965pt too wide) in paragraph at lines 3--16
  [][] 
  []
 
-[28]) (../baseline/report/tab_main_R4.tex
+[29]) (../baseline/report/tab_main_R4.tex
 Overfull \hbox (24.35971pt too wide) in paragraph at lines 3--24
  [][] 
  []
@@ -694,7 +694,7 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-[29]) (../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex)
+[30]) (../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex)
 (../baseline/report/tab_app_R1b.tex) (../baseline/report/tab_app_R1c.tex)
 (../baseline/report/tab_app_R1d.tex) (../baseline/report/tab_app_R1e.tex)
 (../baseline/report/tab_app_R2a.tex
@@ -714,8 +714,8 @@ Overfull \hbox (115.98897pt too wide) in paragraph at lines 3--11
  [][] 
  []
 
-) (../baseline/report/tab_monthly_F.tex [30] [31] [32] [33] [34] [35] [36]
-[37]) (../baseline/report/tab_main_monthly.tex
+) (../baseline/report/tab_monthly_F.tex [31] [32] [33] [34] [35] [36] [37]
+[38]) (../baseline/report/tab_main_monthly.tex
 Overfull \hbox (3.81024pt too wide) in paragraph at lines 3--33
  [][] 
  []
@@ -728,32 +728,32 @@ Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
 
 LaTeX Warning: Float too large for page by 162.00858pt on input line 82.
 
-[38]) (../baseline/report/tab_proxy_sim.tex) [39] [40] [41]
-Underfull \hbox (badness 10000) in paragraph at lines 502--502
+[39]) (../baseline/report/tab_proxy_sim.tex) [40] [41] [42]
+Underfull \hbox (badness 10000) in paragraph at lines 501--501
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 503--504
+Underfull \hbox (badness 7168) in paragraph at lines 502--503
 []\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1496) in paragraph at lines 503--504
+Underfull \hbox (badness 1496) in paragraph at lines 502--503
 \T1/lmr/m/n/10 PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 509--510
+Underfull \hbox (badness 10000) in paragraph at lines 508--509
 []\T1/lmr/m/n/10 FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 511--511
+Underfull \hbox (badness 10000) in paragraph at lines 510--510
 []\T1/lmr/m/n/10 Daily;
  []
 
-[42] [43] (./mp_transmission.aux)
+[43] [44] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -762,13 +762,13 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: 015875F6CBC38A4339BE5D8ED82429F7;5960.
  ) 
 Here is how much of TeX's memory you used:
- 15935 strings out of 476182
- 262504 string characters out of 5795594
+ 15932 strings out of 476182
+ 262446 string characters out of 5795594
  2083975 words of memory out of 5000000
- 37414 multiletter control sequences out of 15000+600000
+ 37411 multiletter control sequences out of 15000+600000
  644234 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,2025b,759s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,2033b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -783,9 +783,9 @@ c/lm/lmri8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/t
 exmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lm
 sy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fon
 ts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (43 pages, 621277 bytes).
+Output written on mp_transmission.pdf (44 pages, 621579 bytes).
 PDF statistics:
- 1390 PDF objects out of 1440 (max. 8388607)
+ 1391 PDF objects out of 1440 (max. 8388607)
  1028 compressed objects within 11 object streams
  233 named destinations out of 1000 (max. 500000)
  274 words of extra memory for PDF output out of 10000 (max. 10000000)

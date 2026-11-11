@@ -81,7 +81,7 @@ def monthly_table(title, label, lags, note, start, place="H"):
                     out += [f"{a} & {f} & {IDENT[ident] if L == lags[0] else ''} & {L} & {n} & " + " & ".join(pts) + r"\\", r" & & & & & " + " & ".join(rf"{{\tiny {x}}}" for x in ivs) + r"\\"]
     out += [r"\bottomrule\end{tabular}", rf"\par\smallskip\parbox{{0.96\linewidth}}{{\scriptsize {note}}}", r"\end{table}"]
     return "\n".join(out)
-MNOTE = (r"Monthly VAR in the unemployment gap, core PCE inflation, the end-of-month 2-year yield and, when included, the end-of-month FCI (same step), 1996 to September 2026, no trend, nothing dropped. "
+MNOTE = (r"Monthly VAR in the unemployment gap, core PCE inflation, the end-of-month 2-year yield and, when included, the end-of-month FCI (same version), 1996 to September 2026, no trend, nothing dropped. "
          r"Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects. "
          r"Window impact: impact vector taken from the daily model (the end-of-month response to a window surprise); 90\% bootstrap intervals. Unit in both: +1 pp on the 2-year yield (the end-of-month response to a +1 pp window surprise is 0.92 to 1.01, so the two units are the same up to 8\%). $^{*}$ = 90\% interval excludes zero.")
 (REPORT / "tab_main_monthly.tex").write_text(monthly_table("Monthly VAR benchmark (12 lags)", "tab:mainmonthly", (12,), MNOTE, "1996-01") + "\n")

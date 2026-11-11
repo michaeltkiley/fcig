@@ -42,7 +42,7 @@ PANELS = [
 ]
 
 PANELS.append(panel("R4", "Robustness 4: the FCI replaced by its three weighted components",
-       "The 10-year yield, equity valuation and the real dollar, each multiplied by its weight, enter the daily and monthly equations separately, in the same step as the 2-year yield; each has its own window impact. Replaces the FCI, so the same step without the FCI is the baseline row.",
+       "The 10-year yield, equity valuation and the real dollar, each multiplied by its weight, enter the daily and monthly equations separately, in the same version as the 2-year yield; each has its own window impact. Replaces the FCI, so the same step without the FCI is the baseline row.",
        [dict(form=f, fci="cmp") for f in ("nom", "real", "rstar")]))
 
 PANELS.append(panel("R4b", "Robustness 4b: the FCI replaced by its three weighted components, start 1973", "As 4: monthly equations from 1973 (monthly series before 1990); the daily block is still estimated from 1996.",
@@ -81,7 +81,7 @@ GROUP_NOTE = {"B": "Nominal, real and r*-gap 2-year yield; the FCI is Note A's i
               "R2": "Kiley r*: 2-year minus expected inflation minus Kiley's r*, with Note A's index built with the same r*. Real, spline trend: real 2-year and real FCI with a natural cubic spline trend (knots at the sample ends and at NBER business-cycle peaks inside the sample) in every monthly equation, in place of any r* measure.",
               "R3": "The excess bond premium is a third monthly variable, treated like unemployment and inflation (u, inflation, EBP system); responses shown for u and the price level.",
               "R5": "Bauer-Swanson: orthogonalized surprise of Bauer and Swanson (2023), announcements through 2019. Jarocinski-Karadi: Nakamura-Steinsson surprise kept when the 2-year yield and the S&P 500 move in opposite directions in the window. The window impact and the bootstrap use the events with a surprise.",
-              "R4": "Components: the 10-year yield, equity valuation and real dollar, each multiplied by its weight, enter separately in the daily and monthly equations in the same step as the 2-year yield, each with its own window impact (the three impacts sum to the FCI's). Baseline rows without the FCI are in the baseline table."}
+              "R4": "Components: the 10-year yield, equity valuation and real dollar, each multiplied by its weight, enter separately in the daily and monthly equations in the same version as the 2-year yield, each with its own window impact (the three impacts sum to the FCI's). Baseline rows without the FCI are in the baseline table."}
 
 # Monthly VAR benchmarks: every step without and with the FCI in the same form, on end-of-month series from 1996 (the main sample); the instrument (NS surprise) exists from 1996 only (lib/monthly.py).
 # A 1973 start is not offered: the FCI is daily only from 1990, so an end-of-month FCI cannot be built before then.
