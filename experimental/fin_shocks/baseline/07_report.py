@@ -434,6 +434,57 @@ def boot_summary():
     assert not bad, "claims on the bootstrap no longer hold: " + "; ".join(bad)
 boot_summary()
 
+
+# ---------------------------------------------------------------- Section 4: summary table of the robustness variations, macros and claims
+def rob_summary():
+    """tab_rob_summary.tex: baseline and every variation (r*-gap, 12 lags): the yield alone (unemployment at 12 m) and with the FCI (unemployment and price level at 24 m); macros bl:rob:*; claims."""
+    ROWS = [("B", "Baseline", ""), ("R1a", "Start 1973", "Sample"), ("R1b", "2020 dropped", ""), ("R1c", "2020 dropped, start 1973", ""), ("R1d", "Ends 2019", ""), ("R1e", "Ends 2019, start 1973", ""),
+            ("R2a", "Kiley $r^*$", "The $r^*$ adjustment and trends"), ("R2b", "Kiley $r^*$, start 1973", ""), ("R2c", "Real yield and FCI, spline trend", ""), ("R2d", "Real yield and FCI, spline trend, start 1973", ""),
+            ("R3a", "Excess bond premium added", "Credit conditions"), ("R3b", "Excess bond premium added, start 1973", ""),
+            ("R4", "Three components in place of the FCI", "Weights of the FCI"), ("R4b", "Three components, start 1973", ""),
+            ("R5a", "Bauer--Swanson surprise", "The surprise"), ("R5b", "Jarocinski--Karadi surprise", "")]
+    def row(pid, pick_fci):
+        p_ = CS.panel_by_id(pid) if pid != "B" else dict(cases=[c for c in CS.PANELS[0]["cases"] if c["form"] == "rstar"])
+        cs_ = [c for c in p_["cases"] if (c["fci"] == 0) == (not pick_fci) and (pid not in ("R4", "R4b") or c["form"] == "rstar")]
+        if not cs_: return None
+        d = R[CS.case_id(cs_[0])]; return d[d.lags == MAIN_LAGS]
+    def cellv(d, v, h):
+        r = d[d["var"] == v].iloc[0]; return r[f"r{h}"], stars(r, h), r
+    lines = []; cnt = dict(Pneg=0, Psig5=0, Psig10=0, upos=0, usig10=0, usig5=0, n=0, no_uneg=0, no_n=0); res = {}
+    for pid, lab, grp in ROWS:
+        if grp: lines.append(r"\addlinespace" + rf"\multicolumn{{4}}{{l}}{{\textit{{{grp}}}}}\\")
+        w, no = row(pid, True), row(pid, False)
+        cells = []
+        if no is not None: x, st, _ = cellv(no, "u", 12); cells.append(num(x) + st)
+        else: cells.append("--")
+        for v in ("u", "P"):
+            x, st, r = cellv(w, v, 24); cells.append(num(x) + st)
+        lines.append(f"{lab} & " + " & ".join(cells) + r"\\")
+        res[pid] = dict(u24=cellv(w, "u", 24), P24=cellv(w, "P", 24), no_u12=(cellv(no, "u", 12) if no is not None else None))
+        if pid not in ("B", "R4", "R4b"):
+            cnt["n"] += 1; xP, sP, rP = res[pid]["P24"]; xu, su, ru = res[pid]["u24"]
+            cnt["Pneg"] += xP < 0; cnt["Psig5"] += sP == "$^{**}$"; cnt["Psig10"] += sP != ""; cnt["upos"] += xu > 0; cnt["usig10"] += su != ""; cnt["usig5"] += su == "$^{**}$"
+            xn = res[pid]["no_u12"][0]; cnt["no_n"] += 1; cnt["no_uneg"] += xn < 0
+    out = [r"\begin{table}[H]\centering\small", r"\caption{The baseline and the robustness variations ($r^*$-gap two-year yield; 12 lags)}\label{tab:robsummary}",
+           r"\begin{tabular}{lccc}\toprule & Yield alone & \multicolumn{2}{c}{Yield and FCI}\\ \cmidrule(lr){2-2}\cmidrule(lr){3-4} & Unemployment, 12 m & Unemployment, 24 m & Price level, 24 m\\ \midrule", *lines, r"\bottomrule\end{tabular}",
+           r"\par\smallskip\parbox{0.9\linewidth}{\scriptsize Per +1 pp on the two-year yield; unemployment gap in percentage points, price level in percent. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero). The variations are described in Sections 4.1 to 4.5; Appendix Tables give each at 12, 24 and 36 months and at 3, 6 and 12 lags. The three-component rows replace the FCI, so they have no yield-alone entry.}", r"\end{table}"]
+    (REPORT / "tab_rob_summary.tex").write_text("\n".join(out) + "\n")
+    ml = []; dm = lambda k, v: ml.append(r"\expandafter\gdef\csname bl:rob:" + k + r"\endcsname{" + str(v) + "}")
+    for k, v in cnt.items(): dm(k, v)
+    (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
+    bad = []; chk = lambda name, ok: None if ok else bad.append(name); sig5 = lambda pid, k: res[pid][k][1] == "$^{**}$"; sig10 = lambda pid, k: res[pid][k][1] != ""
+    chk("with the FCI the price level at 24 m falls in every variation with the r*-gap FCI (13)", cnt["Pneg"] == cnt["n"] == 13)
+    chk("price level at 24 m: significant at 5% in 10 of 13 variations; not significant at 10% when the sample ends in 2019 (from 1996), with Kiley r* (from 1996) and with the spline trend (from 1996)", cnt["Psig5"] == 10 and cnt["Psig10"] == 10 and not any(sig10(k, "P24") for k in ("R1d", "R2a", "R2c")) and sig5("R1e", "P24"))
+    chk("with the FCI unemployment at 24 m is positive in 12 of 13, significant at 10% in 4 (2020 dropped, EBP from 1996, both alternative surprises)", cnt["upos"] == 12 and cnt["usig10"] == 4 and all(sig10(k, "u24") for k in ("R1b", "R3a", "R5a", "R5b")))
+    chk("with the FCI no variation has a significantly negative unemployment response at 24 m", not any(res[k]["u24"][0] < 0 and sig10(k, "u24") for k in res if k != "B"))
+    chk("without the FCI unemployment at 12 m is negative in 11 of 13 (positive when 2020 is dropped from 1973 and when the sample from 1973 ends in 2019)", cnt["no_uneg"] == 11)
+    chk("components from 1973: price level at 12 m negative and significant at 5%", (lambda r: r.r12 < 0 and r.lo95_12 * r.hi95_12 > 0)(R[CS.case_id([x for x in CS.panel_by_id("R4b")["cases"] if x["form"] == "rstar"][0])].query("lags == 12 and `var` == 'P'").iloc[0]))
+    chk("alternative surprises: unemployment and price level at 24 m both significant at 5%", all(sig5(k, q) for k in ("R5a", "R5b") for q in ("u24", "P24")))
+    chk("Kiley and spline from 1973: price level significant at 5% at 24 m", all(sig5(k, "P24") for k in ("R2b", "R2d")))
+    chk("components from 1996: price level at 24 m not significant, not negative (positive point estimate)", not sig10("R4", "P24") and res["R4"]["P24"][0] > 0 and res["R4"]["P24"][2]["lo24"] < 0 < res["R4"]["P24"][2]["hi24"])
+    assert not bad, "claims on the robustness section no longer hold: " + "; ".join(bad)
+rob_summary()
+
 # ---------------------------------------------------------------- figures
 BLUE, ORANGE, INK, GREY = "#2a78d6", "#eb6834", "#0b0b0b", "#6b6a66"      # validated pair (dataviz skill, light surface); ink for text and neutral series
 plt.rcParams.update({"font.size": 8, "axes.edgecolor": GREY, "axes.labelcolor": INK, "text.color": INK, "xtick.color": INK, "ytick.color": INK,
