@@ -138,6 +138,7 @@ def crow(lab, key, d=2, sign=False):
     return [lab] + [f(CMP.loc[key, c], d, sign) for c in ("nominal", "real", "rstar")]
 rows = [r"\multicolumn{4}{l}{\textit{Correlation of levels}} \\",
         crow("Market and GS", "mkt_gs"), crow("Market and FRB/US", "mkt_frbus"), crow("Market and FRB/US with house prices", "mkt_frbus_hp"), crow("Market and ANFCI (from 1990)", "mkt_anfci"),
+        crow("Market and GS, levels since 1990", "mkt_gs_ninety"), crow("Market and FRB/US, levels since 1990", "mkt_frbus_ninety"),
         r"\multicolumn{4}{l}{\textit{Correlation of 12-month changes}} \\", crow("Market and GS", "mkt_gs_chg"), crow("Market and FRB/US", "mkt_frbus_chg"),
         r"\multicolumn{4}{l}{\textit{Correlation of flows}} \\", crow("Forward impetus and FCI-G", "fi_fcig"), crow("Forward impetus and FRB/US growth impetus", "fi_frbus_gi"), crow("FCI-G and FRB/US growth impetus", "fcig_frbus_gi"),
         r"\multicolumn{4}{l}{\textit{Average range of the four level indexes (pp)}} \\", crow("1974--2026", "range_long"), crow("1990--2026, zero at the 1990--2026 mean", "range_ninety"),
@@ -334,6 +335,8 @@ chk(V.loc["rstar_p12_from1990", "sig_to"] < V.loc["rstar_p12", "sig_to"], "respo
 chk(V.loc["rstar_p4", "corr_fi_fcig"] < V.loc["rstar_p12", "corr_fi_fcig"], "4-lag flow correlates less with FCI-G")
 chk(SC["rstar_mkt_gfc"] > 0 > SC["real_mkt_gfc"] and SC["rstar_mkt_gfc"] > 0 > SC["nominal_mkt_gfc"], "2009-16: tight relative to r*, easy in real and nominal terms")
 chk(all(SC[f"rstar_{k_}_gfc"] > SC[f"nominal_{k_}_gfc"] for k_ in ("mkt", "gs", "frbus")) and all(SC[f"rstar_{k_}_gfc"] > 0 for k_ in ("mkt", "gs", "frbus")), "2009-16: all three indexes tighter at the r* step and above the 1990-2026 mean")
+chk(abs(SC["rstar_latest90_market"] - SC["rstar_latest_market"]) > 1, "1990 base moves the market reading by more than a point")
+chk(SC["rstar_mkt_frbus_ninety"] < 0.85 and SC["rstar_mkt_gs_ninety"] > 0.9, "since 1990: market-FRB/US below 0.85, market-GS above 0.9")
 chk(SC["cape_7780"] < 0.5 * SC["cape_mean"], "CAPE in 1977-80 below half its mean")
 chk(SC["step_nom_real_ninety"] > 0.95 and SC["step_real_rstar_ninety"] < 0.7, "nominal-real step changes little after 1990, r* step a lot")
 chk(abs(SC["real_fcig_seventyfour"]) < 0.1 and SC["nominal_fcig_seventyfour"] > 0.4, "FCI-G mid-1974: tightening in nominal, not real")

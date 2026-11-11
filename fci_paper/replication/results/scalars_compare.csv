@@ -3,6 +3,10 @@ nominal_mkt_gs,0.7643189593193582
 nominal_mkt_frbus,0.9764086428736375
 nominal_mkt_frbus_hp,0.9762867696367834
 nominal_mkt_anfci,0.17050842922310788
+nominal_mkt_gs_ninety,0.8416328165683047
+nominal_mkt_frbus_ninety,0.854675535260485
+nominal_mkt_gs_sd,2.4510278037062703
+nominal_mkt_frbus_sd,1.2573219640649587
 nominal_mkt_gs_chg,0.9480438640800923
 nominal_mkt_frbus_chg,0.9535028924553287
 nominal_gs_frbus,0.8054027981738325
@@ -27,6 +31,10 @@ real_mkt_gs,0.9943605474290073
 real_mkt_frbus,0.9519292256037434
 real_mkt_frbus_hp,0.9483618475024199
 real_mkt_anfci,0.22309887649387475
+real_mkt_gs_ninety,0.9656402861405454
+real_mkt_frbus_ninety,0.7775883037404648
+real_mkt_gs_sd,1.1296220061148152
+real_mkt_frbus_sd,1.2833855424724896
 real_mkt_gs_chg,0.9628690815850306
 real_mkt_frbus_chg,0.9514836916388493
 real_gs_frbus,0.9457137296630691
@@ -49,6 +57,10 @@ rstar_mkt_gs,0.9938607888684621
 rstar_mkt_frbus,0.9437610971476796
 rstar_mkt_frbus_hp,0.9390750413665634
 rstar_mkt_anfci,0.2209834870946049
+rstar_mkt_gs_ninety,0.9732253498026274
+rstar_mkt_frbus_ninety,0.7939207960401102
+rstar_mkt_gs_sd,1.1033131214407648
+rstar_mkt_frbus_sd,1.280195179516973
 rstar_mkt_gs_chg,0.9784452128812835
 rstar_mkt_frbus_chg,0.9610490042910864
 rstar_gs_frbus,0.9379349845353339

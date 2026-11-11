@@ -25,7 +25,8 @@ rows = {}
 for case in ("nominal", "real", "rstar"):
     I = IX[case]; z = zero90(I)
     r = {"mkt_gs": K.corr(I.market, I.gs), "mkt_frbus": K.corr(I.market, I.frbus), "mkt_frbus_hp": K.corr(I.market, I.frbus_hp),
-         "mkt_anfci": K.corr(z.market, z.anfci), "mkt_gs_chg": K.corr(I.market, I.gs, True), "mkt_frbus_chg": K.corr(I.market, I.frbus, True),
+         "mkt_anfci": K.corr(z.market, z.anfci), "mkt_gs_ninety": K.corr(z.market, z.gs), "mkt_frbus_ninety": K.corr(z.market, z.frbus),
+         "mkt_gs_sd": float(I.market.std() / I.gs.std()), "mkt_frbus_sd": float(I.market.std() / I.frbus.std()), "mkt_gs_chg": K.corr(I.market, I.gs, True), "mkt_frbus_chg": K.corr(I.market, I.frbus, True),
          "gs_frbus": K.corr(I.gs, I.frbus), "fi_fcig": K.corr(I.fi, I.fcig_1yr), "fi_frbus_gi": K.corr(I.fi, I.frbus_gi_hp), "fcig_frbus_gi": K.corr(I.fcig_1yr, I.frbus_gi_hp),
          "fcig_level": K.corr(I.fcig_1yr, I.market), "range_long": K.spread(I[LEVEL]).mean(), "range_ninety": K.spread(z[LEVEL]).mean(),
          "latest_market": I.market.iloc[-1], "latest_gs": I.gs.iloc[-1], "latest_frbus": I.frbus.iloc[-1], "latest_frbus_hp": I.frbus_hp.iloc[-1],
