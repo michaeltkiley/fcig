@@ -4,8 +4,8 @@ Daily block (estimated from DAILY_START = January 1996, the same start as the sh
 and the monthly macro variables (this month and last: macro first within the month). Monthly block: for each macro variable (unemployment gap, core PCE
 inflation, optionally the excess bond premium) an OLS equation on its own lags and lagged monthly averages of the daily financial variables, 3/6/12 lags.
 Response to a policy surprise: the 30-minute window impact (2-year +1 pp; index = its window move; macro zero) applied on the event day, simulated forward
-through the daily block and the monthly equations, averaged over six event-position bins. Price level = cumulated inflation / 12. Uncertainty: 200 draws that
-resample announcements and monthly residuals (the daily block is held fixed); the same announcement draws for every case.
+through the daily block and the monthly equations, averaged over six event-position bins. Price level = cumulated inflation / 12. Uncertainty: 500 draws that
+resample announcements and monthly residuals and re-estimate the daily block on moving blocks of 66 days; the same announcement draws for every case.
 Rate forms: nom | real | rstar (Laubach-Williams) | kiley (Kiley's r*). FCI: 0 | nom | real | rstar | kiley (Note A's index, same step).
 Trend: none | spline (natural cubic spline, knots at the sample ends and at NBER peaks inside the sample; monthly equations only).
 Start before 1990: months without daily data use the monthly series (2-year yield: FRED DGS2 monthly mean, before 1976-06 Gurkaynak-Sack-Wright SVENY02 shifted by
@@ -174,34 +174,26 @@ def to_level(m):
     """Cumulate the inflation response (column 1) to the price-level response, percent."""
     z = m.copy(); z[:, 1] = np.cumsum(z[:, 1]) / 12; return z
 
-def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=200, lags=LAGS):
-    """Point responses and B draws for each lag length. Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd)."""
-    mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
-    idx0, pos0, bidx, bpos = events(B); Bd = har_block(form, fci, mvars, end, t2020)
-    for L in lags:
-        X, Y = macro_data(form, fci, mvars, L, start, end, t2020, trend); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
-        rng = np.random.default_rng(zlib.crc32((f"{form}|{fci}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)).encode()))
-        m0, f0, e0 = irf(Bd, C0, K, nd, L, idx0, pos0, fci)
-        draws = [irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci) for ib, pb in zip(bidx, bpos)]
-        yield dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
-                   f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
-
 def block_rows(n, rng, length=66):
     """Row indices of a moving-block resample of n daily rows (blocks of `length` days, the longest HAR window)."""
     nb = -(-n // length); st = rng.integers(0, n - length + 1, nb); return np.concatenate([np.arange(a, a + length) for a in st])[:n]
 
-def estimate_full(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=200, L=12):
-    """As estimate for one lag length, but each draw also re-estimates the daily block on a moving-block resample of its rows (the same announcement and residual draws as estimate).
-    Returns the dict of estimate (point responses identical) with the draws of the fuller bootstrap."""
+def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=200, lags=LAGS):
+    """Point responses and B draws for each lag length. Each draw resamples the announcements (new window impact and event positions), resamples the monthly residuals and re-estimates the monthly
+    block, and re-estimates the daily block on a moving-block resample of its rows (66-day blocks). Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd)."""
     mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
     idx0, pos0, bidx, bpos = events(B); Xd, Yd = har_rows(form, fci, mvars, end, t2020); Bd0 = har_fit(Xd, Yd, fci)
-    X, Y = macro_data(form, fci, mvars, L, start, end, t2020, trend); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
-    rng = np.random.default_rng(zlib.crc32((f"full|{form}|{fci}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)).encode()))
-    m0, f0, e0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci); draws = []
-    for ib, pb in zip(bidx, bpos):
-        r = block_rows(len(Xd), rng); Bd = har_fit(Xd[r], Yd[r], fci)
-        draws.append(irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci))
-    return dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]), f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
+    for L in lags:
+        X, Y = macro_data(form, fci, mvars, L, start, end, t2020, trend); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
+        tag = f"{form}|{fci}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)
+        rng = np.random.default_rng(zlib.crc32(tag.encode())); rng_d = np.random.default_rng(zlib.crc32(("block|" + tag).encode()))
+        m0, f0, e0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci)
+        draws = []
+        for ib, pb in zip(bidx, bpos):
+            r = block_rows(len(Xd), rng_d); Bd = har_fit(Xd[r], Yd[r], fci)
+            draws.append(irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci))
+        yield dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
+                   f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
 
 # ---------------------------------------------------------------- summaries
 def pct(a, q): return np.percentile(a, q, axis=0)

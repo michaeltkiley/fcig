@@ -94,7 +94,6 @@ for step in ("nom", "real", "rstar"):
 
 # ---------------------------------------------------------------- how noisy is the monthly proxy VAR if the model is true?
 SIM = pd.read_csv(RESULTS / "proxy_sim_summary.csv")
-FB = pd.read_csv(RESULTS / "fullboot.csv"); FB["fci"] = FB.fci.astype(str)
 def sim_table():
     lab = {("proxy_fci", "F"): "First-stage $F$", ("proxy_fci", "u12"): "Unemployment gap, 12 m", ("proxy_fci", "P24"): "Price level, 24 m", ("proxy_nofci", "u12"): "Unemployment gap, 12 m", ("window", "u12"): "Unemployment gap, 12 m"}
     out = [r"\begin{table}[H]\centering\small", r"\caption{A monthly proxy VAR when the r*-gap model is the true process}\label{tab:proxysim}",
@@ -179,9 +178,9 @@ def write_numbers():
     for _, r in WT[(WT.lags == MAIN_LAGS) & (WT.start == "1996-01")].iterrows(): e_ = r["eq"]; d(f"bl:wt:{r.step}:{e_}:p", f"{r.p_boot:.3f}"); d(f"bl:wt:{r.step}:{e_}:W", f"{r.wald:.1f}"); d(f"bl:wt:{r.step}:{e_}:q", str(int(r.restrictions)))
     for _, r in WT[(WT.lags == MAIN_LAGS) & (WT.start == "1973-01")].iterrows(): d(f"bl:wt73:{r.step}:{r['eq']}:p", f"{r.p_boot:.3f}")
     w73 = WT[(WT.lags == MAIN_LAGS) & (WT.start == "1973-01")].p_boot; d("bl:wt73:min", f"{w73.min():.2f}"); d("bl:wt73:max", f"{w73.max():.2f}")
-    FBk = FB[(FB.form == "rstar") & (FB.fci == "rstar")]; FBk = FBk.assign(w=(FBk.hi_fuller - FBk.lo_fuller) / (FBk.hi_main - FBk.lo_main)); d("bl:fb:ratio", f"{100 * (FBk.w.mean() - 1):.0f}")
-    for v_, h_ in (("u", 24), ("u", 36), ("P", 24)):
-        r_ = FBk[(FBk["var"] == v_) & (FBk.h == h_)].iloc[0]; d(f"bllo:fb:{v_}:{h_}", num(r_.lo_fuller)); d(f"blhi:fb:{v_}:{h_}", num(r_.hi_fuller))
+    for nm_, st_, tz_ in (("R1b", "1996-01", "out"), ("R1c", "1973-01", "out")):                    # trade-off in the 2020-dropped samples
+        t = TT[(TT.form == "rstar") & (TT.fci == "rstar") & (TT.macro == "u,pi") & (TT.start == st_) & TT.end.isna() & (TT.t2020 == tz_) & (TT.trend == "none") & (TT.lags == MAIN_LAGS) & (TT.H == 24)].iloc[0]
+        d(f"bl:trs:{nm_}:24", num(t.kappa))
     from lib import daily as DD
     for nm in ("bs", "jk"): DD.use_surprise(nm); d(f"bl:ev:{nm}", str(len(DD.event_index())))
     DD.use_surprise("ns")
@@ -211,7 +210,7 @@ def check_claims():
         chk(f"{f}: with FCI, no significant fall in unemployment", all(not (est(f, "yes", "u", h) < 0 and sig(f, "yes", "u", h)) for h in (12, 24, 36)))
         chk(f"{f}: with FCI, unemployment positive at 24 and 36 m", est(f, "yes", "u", 24) > 0 and est(f, "yes", "u", 36) > 0)
         chk(f"{f}: with FCI, price level falls at 12, 24, 36 m", all(est(f, "yes", "P", h) < 0 for h in (12, 24, 36)))
-    chk("with FCI, unemployment significant (24 and 36 m) only at the r*-gap step", sig("rstar", "yes", "u", 24) and sig("rstar", "yes", "u", 36) and not any(sig(f, "yes", "u", h) for f in ("nom", "real") for h in (12, 24, 36)))
+    chk("with FCI, unemployment not significantly negative at any step and horizon", not any(est(f, "yes", "u", h) < 0 and sig(f, "yes", "u", h) for f in ("nom", "real", "rstar") for h in (12, 24, 36)))
     chk("with FCI, price level significant at 24 and 36 m at the real and r*-gap steps, at 36 m only at the nominal step", all(sig(f, "yes", "P", h) for f in ("real", "rstar") for h in (24, 36)) and sig("nom", "yes", "P", 36) and not sig("nom", "yes", "P", 24))
     chk("r*-gap with FCI has the largest price fall at 24 m", est("rstar", "yes", "P", 24) < min(est("nom", "yes", "P", 24), est("real", "yes", "P", 24)))
     LS = pd.read_csv(RESULTS / "lit_style.csv"); ls = lambda c, v, h: LS[(LS.case == c) & (LS["var"] == v) & (LS.h == h)].iloc[0]; lsig = lambda c, v, h: ls(c, v, h).lo * ls(c, v, h).hi > 0
@@ -243,7 +242,7 @@ def check_claims():
     chk("R1: price level significant at 12, 24, 36 m with and without the FCI in the three samples starting 1973", all(rb(p_, fk, "P", h)[1] and rb(p_, fk, "P", h)[0] < 0 for p_ in ("R1a", "R1c", "R1e") for fk in ("no", "yes") for h in (12, 24, 36)))
     chk("R1b: price level significant with the FCI at 24 m; R1d (ends 2019, from 1996): not significant at 12, 24, 36 m", rb("R1b", "yes", "P", 24)[1] and not any(rb("R1d", "yes", "P", h)[1] for h in (12, 24, 36)))
     chk("R1d: unemployment with FCI significant only at 12 m", rb("R1d", "yes", "u", 12)[1] and not rb("R1d", "yes", "u", 24)[1] and not rb("R1d", "yes", "u", 36)[1])
-    chk("R2a (Kiley): unemployment without FCI falls significantly at 12 m; with FCI positive at 12 and 24 m but not significant; price level with FCI significant at 12 m, not at 24", rb("R2a", "no", "u", 12)[0] < 0 and rb("R2a", "no", "u", 12)[1] and rb("R2a", "yes", "u", 12)[0] > 0 and rb("R2a", "yes", "u", 24)[0] > 0 and not rb("R2a", "yes", "u", 12)[1] and not rb("R2a", "yes", "u", 24)[1] and rb("R2a", "yes", "P", 12)[1] and not rb("R2a", "yes", "P", 24)[1])
+    chk("R2a (Kiley): unemployment without FCI falls significantly at 12 m; with FCI positive at 12 and 24 m, price level negative at 12 and 24 m", rb("R2a", "no", "u", 12)[0] < 0 and rb("R2a", "no", "u", 12)[1] and rb("R2a", "yes", "u", 12)[0] > 0 and rb("R2a", "yes", "u", 24)[0] > 0 and rb("R2a", "yes", "P", 12)[0] < 0 and rb("R2a", "yes", "P", 24)[0] < 0)
     chk("R2b (Kiley, 1973): price level with FCI significant at 12, 24, 36 m; unemployment not", all(rb("R2b", "yes", "P", h)[1] for h in (12, 24, 36)) and not any(rb("R2b", "yes", "u", h)[1] for h in (12, 24, 36)))
     chk("R2c (real + spline): unemployment without FCI falls significantly at 12 m, with FCI positive and not significant; price level with FCI not significant", rb("R2c", "no", "u", 12)[0] < 0 and rb("R2c", "no", "u", 12)[1] and rb("R2c", "yes", "u", 12)[0] > 0 and not any(rb("R2c", "yes", v, h)[1] for v in ("u", "P") for h in (12, 24, 36)))
     chk("R2d (real + spline, 1973): with FCI price level significant at 12, 24, 36 m; unemployment positive but not significant", all(rb("R2d", "yes", "P", h)[1] for h in (12, 24, 36)) and all(rb("R2d", "yes", "u", h)[0] > 0 and not rb("R2d", "yes", "u", h)[1] for h in (12, 24, 36)))
@@ -255,30 +254,13 @@ def check_claims():
     chk("R4 (components): no significant response of unemployment or the price level at any step and horizon; price level point estimate not negative at 24 m", all(cm(f, v, h)[f"lo{h}"] * cm(f, v, h)[f"hi{h}"] < 0 for f in S for v in ("u", "P") for h in (12, 24, 36)) and all(cm(f, "P", 24)["r24"] > 0 for f in S))
     chk("R4 r*-gap: baseline unemployment at 12 m inside the components interval; baseline price level at 24 m below the components interval", cm("rstar", "u", 12)["lo12"] <= est("rstar", "yes", "u", 12) <= cm("rstar", "u", 12)["hi12"] and est("rstar", "yes", "P", 24) < cm("rstar", "P", 24)["lo24"])
     c73 = lambda f, v, h: (lambda dd: dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0])(R[CS.case_id(dict(form=f, fci="cmp", macro="u,pi", start="1973-01", end=None, t2020="in", trend="none"))])
-    chk("R4b (components, start 1973), r*-gap: unemployment positive at 12, 24 m; price level negative at 12, 24, 36 m, significant at 12 and 24 m", all(c73("rstar", "u", h)["r%d" % h] > 0 for h in (12, 24)) and all(c73("rstar", "P", h)["r%d" % h] < 0 for h in (12, 24, 36)) and all(c73("rstar", "P", h)["lo%d" % h] * c73("rstar", "P", h)["hi%d" % h] > 0 for h in (12, 24)))
+    chk("R4b (components, start 1973), r*-gap: unemployment positive at 12, 24 m; price level negative at 12, 24, 36 m, significant at 12 m", all(c73("rstar", "u", h)["r%d" % h] > 0 for h in (12, 24)) and all(c73("rstar", "P", h)["r%d" % h] < 0 for h in (12, 24, 36)) and c73("rstar", "P", 12)["lo12"] * c73("rstar", "P", 12)["hi12"] > 0)
     chk("R4b: nominal step price level not negative at 24 and 36 m", c73("nom", "P", 24)["r24"] > 0 and c73("nom", "P", 36)["r36"] > 0)
-    fbk = FB[(FB.form == "rstar") & (FB.fci == "rstar")]; fbs = lambda v_, h_: fbk[(fbk["var"] == v_) & (fbk.h == h_)].iloc[0]
-    chk("fuller bootstrap, r*-gap with FCI: price level interval excludes zero at 12, 24, 36 m; unemployment lower bound within 0.1 of zero at 24 and 36 m; intervals wider on average than the main bootstrap", all(fbs("P", h_).lo_fuller * fbs("P", h_).hi_fuller > 0 for h_ in (12, 24, 36)) and all(abs(fbs("u", h_).lo_fuller) < 0.1 for h_ in (24, 36)) and ((fbk.hi_fuller - fbk.lo_fuller) / (fbk.hi_main - fbk.lo_main)).mean() > 1.2)
     chk("R5 (alternative surprises): with FCI unemployment positive and price level negative at 12, 24, 36 m; responses at 24 m at least as large as the baseline's", all(rb(p_, "yes", "u", h)[0] > 0 and rb(p_, "yes", "P", h)[0] < 0 for p_ in ("R5a", "R5b") for h in (12, 24, 36)) and all(rb(p_, "yes", "u", 24)[0] >= est("rstar", "yes", "u", 24) and rb(p_, "yes", "P", 24)[0] <= est("rstar", "yes", "P", 24) for p_ in ("R5a", "R5b")))
     WT = pd.read_csv(RESULTS / "weights_test.csv"); chk("weights test, monthly equations from 1973, 12 lags: no rejection at 5% in either equation at any step", bool((WT[(WT.start == "1973-01") & (WT.lags == MAIN_LAGS)].p_boot > 0.05).all())); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_) & (WT.start == "1996-01")].p_boot.iloc[0]
     chk("weights test, 12 lags: no rejection at 5% in the unemployment equation at any step; rejection in the inflation equation at every step", all(wt(s_, "u", 12) > 0.05 for s_ in S) and all(wt(s_, "pi", 12) < 0.05 for s_ in S))
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
-
-# ---------------------------------------------------------------- fuller bootstrap (daily block re-estimated in every draw)
-def fb_table():
-    out = [r"\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{2.2pt}", r"\caption{Baseline with the fuller bootstrap (12 lags)}\label{tab:fullboot}", HEAD.replace("Case & FCI & Lags & Obs &", "Case & FCI & & &")]
-    for f in ("nom", "real", "rstar"):
-        for k, fk in enumerate(("0", f)):
-            g = FB[(FB.form == f) & (FB.fci == fk)]; pts, ivs = [], []
-            for v in ("u", "P"):
-                for h in (12, 24, 36):
-                    r = g[(g["var"] == v) & (g.h == h)].iloc[0]; pts.append(num(r.point) + ("$^{*}$" if r.lo_fuller * r.hi_fuller > 0 else "")); ivs.append(f"[{num(r.lo_fuller)}, {num(r.hi_fuller)}]")
-            out += [f"{CS.FORMS[f] if k == 0 else ''} & {CS.FCI_LABEL[0 if k == 0 else f]} & & & " + " & ".join(pts) + r"\\", r" & & & & " + " & ".join(rf"{{\scriptsize {x}}}" for x in ivs) + r"\\"]
-        if f != "rstar": out.append(r"\addlinespace")
-    out += [r"\bottomrule\end{tabular}", r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Point estimates as in the baseline table. Intervals: 90\% percentile intervals from 500 draws, each of which resamples the announcements and the monthly residuals and also re-estimates the daily block on a moving-block resample of its rows (66-day blocks). $^{*}$ = interval excludes zero.}", r"\end{table}"]
-    return "\n".join(out)
-(REPORT / "tab_fullboot.tex").write_text(fb_table() + "\n")
 
 # ---------------------------------------------------------------- test of the proportional-weights restriction
 WTT = pd.read_csv(RESULTS / "weights_test.csv"); wrows = []

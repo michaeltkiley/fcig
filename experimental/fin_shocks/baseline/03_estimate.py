@@ -1,5 +1,5 @@
 """Step 3. Estimate every case in cases.py (resumable: a case with a results file is skipped unless --force).
-   python3 03_estimate.py [--draws 200] [--jobs 4] [--panel B] [--force]
+   python3 03_estimate.py [--draws 500] [--jobs 4] [--panel B] [--force]
 Output per case: results/<id>.csv (responses at 12/24/36 months, 3/6/12 lags), results/<id>_paths.csv (response paths with bands, incl. the 2-year yield and FCI),
 output/draws/<id>_L<lags>.npz (bootstrap draws, used by 05_tradeoff.py; not kept in the repository)."""
 import os, sys, argparse, time
@@ -9,7 +9,7 @@ import cases as CS
 from lib import model as M
 from lib.paths import RESULTS, OUT
 
-ap = argparse.ArgumentParser(); ap.add_argument("--draws", type=int, default=200); ap.add_argument("--jobs", type=int, default=4)
+ap = argparse.ArgumentParser(); ap.add_argument("--draws", type=int, default=500); ap.add_argument("--jobs", type=int, default=4)
 ap.add_argument("--panel"); ap.add_argument("--force", action="store_true"); a = ap.parse_args()
 (OUT / "draws").mkdir(exist_ok=True)
 jobs = [c for c in CS.unique_cases(a.panel) if a.force or not (RESULTS / f"{CS.case_id(c)}.csv").exists()]
