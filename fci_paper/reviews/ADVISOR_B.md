@@ -48,3 +48,32 @@ Do not add further robustness. The existing robustness table suffices.
 - S1 may return nulls (the r* gains are not significant in the draft). A null with intervals is still an answer, and it would make a sharper paper than "the indexes agree within a point".
 - S1 and Note B share the r* adjustment. State the division: B asks about transmission of a surprise, A about measurement of conditions. Do not cite B's estimates in A.
 - All "better" claims need out-of-sample evidence; the draft's own OOS results reverse after 2021 [verified].
+
+## Round 2: priorities
+
+**Comparison.** A.A (stance, policy versus remainder) and my S1 (does r* improve content) are complementary: A is a decomposition and a stance statement, S1 is an outcome test. A.B and my S2 are the same question and merge. A.C is a presentation of A.A with r* uncertainty, not a separate analysis. My S3 (tails, level versus flow) stands alone and ranks last. I agree with A that "agree?" should not be the question. I would add one caution: A.A alone is descriptive (a split of an index into pieces), and it earns its place only if the pieces behave differently for activity, which is B.
+
+**Ranked follow-ups**
+
+1. **Does the source of a financial move matter for unemployment? (merges my S2 and A.B)**
+- *Question.* Does a one-point rise in the index that policy news explains raise unemployment by the same amount as a one-point rise from the remainder (equities, dollar, term premium)?
+- *Minimal analysis.* Split each month's change in the index into the part projected on cumulated window news (Nakamura-Steinsson series, 1996 on, in `02_weights.py` output) and the residual. Enter both in the `04_var.py` VAR (unemployment first, 12 lags), then test equal responses at month 12 with the paired bootstrap already in the package. Add a second version with the three components entered freely, using Note B's `09_weights_test.py` as a template. No identification of non-policy shocks is needed for a first pass; Jarocinski-Karadi sign restrictions would be a later check.
+- *Series.* None new.
+- *Worth it if* the responses are statistically equal (the index is a valid single measure of the stance, and the weight dispute is shown not to matter), or clearly unequal (policy-news pieces act more, or less; the index must carry the split). *Not worth it if* the 90 percent intervals are too wide to separate either case. State that plainly and drop it.
+
+2. **How restrictive was policy in the 1994, 2004-06, 2015-19 and 2022-24 tightenings, and how much of that was policy? (A.A, with A.C as its summary)**
+- *Question.* Policy-equivalent funds rate relative to r*, with the split from item 1, and how much financial conditions amplified or offset the funds-rate path.
+- *Minimal analysis.* Express the index in funds-rate units, add the split, and draw bootstrap intervals that include r* alternatives (Laubach-Williams, Kiley, Holston et al.). Output: one figure and one table for the four episodes plus September 2026.
+- *Series.* None new.
+- *Worth it if* the stance differs materially from the funds rate alone, or the 2022-24 reading is clearly tight or loose with the intervals. *Not worth it if* the intervals cover both "tight" and "neutral"; then it only restates the paper's present result.
+
+3. **Does the r* step improve what indexes say about the economy ahead? (my S1)**
+- *Question.* Do r*-adjusted versions predict outcomes better than nominal and real versions of the same index?
+- *Minimal analysis.* The paired comparison across the three steps in `06_activity.py` (extend the horizons, add Diebold-Mariano on the step differences).
+- *Series.* Public series to add: real GDP growth, payrolls, core PCE, NBER recession dates (all FRED).
+- *Worth it if* r* versions beat the others at one to two years, with the episodes 2009-16 and 2022-24 contributing. *Not worth it if* nulls. Then say so and keep r* as a measurement step.
+
+4. **Do levels or flows predict the lower tail? (my S3)**
+- Quantile regressions of the 12-month change in unemployment on level and flow, including NFCI/ANFCI. Same FRED series. Worth it only if the tail result differs from the mean result. Lowest priority; leave out unless items 1 and 3 leave room.
+
+**Organizing question if 1 and 2 succeed.** *When financial conditions move with or against policy, how restrictive is policy, and does the source of the movement change what it does to unemployment?* If 1 returns equality, the paper reads: one index measures the stance whatever moves it; if 2 shows large episodes of offset, the stance differs from the funds rate by amounts of that size. The comparison with GS, FCI-G and FRB/US becomes the validation section.
