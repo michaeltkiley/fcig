@@ -570,8 +570,10 @@ def standard_table(rows, fname, label, caption, extra=""):
             + extra + r" Unit: +1 pp on the policy rate on impact. Brackets: 90\% intervals (residual bootstrap for the Cholesky VARs; exact Anderson--Rubin sets for the proxy VAR). $^{*}$ = excludes zero. Specification: baseline/lib/litstyle.py.}", r"\end{table}"]
     (REPORT / fname).write_text("\n".join(out) + "\n")
 _F = pd.read_csv(RESULTS / "lit_style_info.csv").query("lags == 12").set_index("case").F["proxy_2y_1996"]
+standard_table([("chol_2y_1996", "Cholesky, 2-year yield", "1996--2026"), ("proxy_2y_1996", "Proxy VAR, 2-year yield", "1996--2026")],
+               "tab_standard.tex", "tab:standard", "Standard Methods: Responses to a 1 Percentage Point Rise in the Policy Rate", f"Proxy VAR: Nakamura--Steinsson policy news summed within the month as instrument; first-stage $F$ = {_F:.1f}.")
 standard_table([("chol_2y_1996", "Cholesky, 2-year yield", "1996--2026"), ("chol_2y_1984", "Cholesky, 2-year yield", "1984--2026"), ("chol_ffr_1984_2007", "Cholesky, federal funds rate", "1984--2007"), ("proxy_2y_1996", "Proxy VAR, 2-year yield", "1996--2026")],
-               "tab_standard.tex", "tab:standard", "Standard methods after the early 1980s: responses to a 1 percentage point rise in the policy rate", f"Proxy VAR: Nakamura--Steinsson policy news summed within the month as instrument; first-stage $F$ = {_F:.1f}.")
+               "tab_standard_all.tex", "tab:standardall", "Standard methods with other samples and the federal funds rate", f"Proxy VAR: Nakamura--Steinsson policy news summed within the month as instrument; first-stage $F$ = {_F:.1f}.")
 standard_table([("chol_2y_1996_com", "Cholesky + commodity prices, 2-year yield", "1996--2026"), ("chol_ffr_1984_2007_com", "Cholesky + commodity prices, federal funds rate", "1984--2007")],
                "tab_standard_com.tex", "tab:standardcom", "Standard methods with a commodity price index in the first block", "The log PPI for all commodities (monthly average) is added to the system and ordered before the policy rate.")
 

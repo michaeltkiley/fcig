@@ -23,3 +23,6 @@ source named (in a separate scratch directory; the comparison script reads both 
 | `bauer_swanson_mps.csv` | Bauer and Swanson (2023) orthogonalized surprise (`MPS_ORTH`) for FOMC announcements 1988-2019 | the authors' posted data, copied from `experimental/fin_shocks/legacy/data/` [secondhand: the download link could not be located in this session, so not re-checked] |
 
 Not used in the baseline package: the literature impulse responses of earlier drafts (Bauer and Swanson 2023 etc.); Ramey (2016), Caldara and Herbst (2019) and Barnichon and Mesters (2021) are cited from the papers themselves (see `paper/REFERENCE_CHECK.md`).
+
+| `gs_replication_daily.csv` | daily replication of the Goldman Sachs FCI with its published weights (column `fci`), 1990 on | repository `fcig_gs.py` [derived]; not a Goldman series |
+| `gs_published_digitized.csv` | Goldman's monthly FCI, January 1990 to July 2022, read from the vector chart on slide 18 of the New York Fed's July 2022 Investor Advisory Committee presentation (about 0.01 resolution) | repository `history/gs_nyfed_digitized.csv`, `tools/digitize_nyfed.py` [secondhand: digitized from a chart, not checked against the original file] |

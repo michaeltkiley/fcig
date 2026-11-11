@@ -124,18 +124,33 @@ w = \frac{\Sigma^{-1}\psi}{\psi'\Sigma^{-1}\psi}. \label{eq:weights}
 \end{equation}
 Because $w'\psi=1$ and $s_a$ is scaled to the two-year yield, a policy move that raises the two-year yield 1 percentage point raises the index by 1 unit. The weights are 0.61 on the 10-year yield, $-0.051$ per percent on stock valuations and 0.065 per percent on the dollar. Each of the three accounts for about a third of the index's response to policy.
 
-The index comes in three versions, which differ in how interest rates and stock prices are measured. In the nominal version the 10-year yield is the nominal yield and stock prices enter as the log of the cyclically adjusted price-earnings ratio (CAPE). The real version subtracts 10-year expected inflation from the yield. The version relative to $\rs$ also subtracts $\rs$ from the yield, and it compares the earnings yield, the inverse of CAPE, with $\rs$. Stocks are expensive, and conditions loose, when the earnings yield is low relative to the neutral rate. That comparison enters with its sign reversed and is rescaled to the units of log CAPE, so the stock weight keeps its meaning. The dollar is the real broad dollar in all three versions.
-
 In month $t$, the index in version $v$ is
 \begin{equation}
 F_t^{v} = w_B\, B_t^{v} + w_Q\, Q_t^{v} + w_D\, D_t, \label{eq:fci}
 \end{equation}
-measured as a deviation from its sample mean. Here $D_t$ is 100 times the log of the real broad dollar in every version. With $y^{10}_t$ the 10-year yield, $\pi^{10}_t$ 10-year expected inflation, and $(E/P)_t$ the inverse of the cyclically adjusted price-earnings ratio (CAPE), the other two terms are:
+measured as a deviation from its sample mean. Here $B_t$ is the 10-year yield, $Q_t$ a measure of stock valuation and $D_t$ is 100 times the log of the real broad dollar in every version. The index comes in three versions, which differ in how the yield and stock prices are measured.
+
+\textbf{The nominal version.} The nominal version uses the nominal 10-year yield $y^{10}_t$ and measures stock valuation by the log of the cyclically adjusted price-earnings ratio (CAPE):
 \begin{align}
-\text{Nominal:}\quad & B_t = y^{10}_t, & Q_t &= 100\ln \text{CAPE}_t, \label{eq:nom}\\
+\text{Nominal:}\quad & B_t = y^{10}_t, & Q_t &= 100\ln \text{CAPE}_t, \label{eq:nom}
+\end{align}
+
+\textbf{Comparison with the Goldman Sachs index.} The nominal version is the natural point of comparison with indexes built from nominal variables, and a widely followed index offers a check on whether the approach captures what market participants mean by financial conditions. The Goldman Sachs index \citep{dudley2000,hatzius2018} gives published weights to the federal funds rate, the 10-year yield, a corporate spread, equity valuation and the dollar. The companion note rebuilds it from public data \citep{fcinote}, and Figure~\ref{fig:gs} plots it with Goldman's published series and the nominal version of my index. The rebuild tracks the published series closely: the correlation is \bl{gv:l:chg} in 12-month changes and \bl{gv:l:lev} in levels over 1990--2022. The nominal version tracks both. Against the rebuilt index its correlation is \bl{gs:l:chg} in 12-month changes and \bl{gs:l:lev} in levels from 1990, and \bl{gs:s:chg} and \bl{gs:s:lev} since 1996; against the published series it is \bl{gp:l:chg} and \bl{gp:l:lev} from 1990 and \bl{gp:s:chg} and \bl{gp:s:lev} since 1996. The agreement is somewhat higher since 1996, and it is already high in 1990--95 (\bl{gs:e:lev} in levels). An index whose weights come from policy responses and a widely used index built from a macroeconomic model therefore tell nearly the same story. That supports the approach.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.9\textwidth]{../baseline/report/fig_gs.pdf}
+\caption{The Nominal Index and the Goldman Sachs Index}
+\label{fig:gs}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly, January 1990 to September 2026, each series as a deviation from its 1996--2022 mean in units of its standard deviation. The Goldman Sachs index is rebuilt from public data with its published weights; the published series is read from a chart in a New York Fed presentation and ends in July 2022.\end{flushleft}
+\end{figure}
+
+\textbf{Why adjust for inflation and the neutral rate.} A nominal index treats a given yield or stock valuation the same whatever expected inflation and the neutral rate are doing. That is a reasonable approximation when they are stable. Since 1990 it is: the nominal and real versions of my index correlate \bl{gs:nr:post90}. Before 1990, when expected inflation fell sharply, they correlate only \bl{gs:nr:pre90}. The Goldman data start in 1990 and cannot show this. The real version subtracts 10-year expected inflation from the yield. The version relative to $\rs$ also subtracts $\rs$ from the yield, and it compares the earnings yield, the inverse of CAPE, with $\rs$. Stocks are expensive, and conditions loose, when the earnings yield is low relative to the neutral rate. That comparison enters with its sign reversed and is rescaled to the units of log CAPE, so the stock weight keeps its meaning:
+\begin{align}
 \text{Real:}\quad & B_t = y^{10}_t - \pi^{10}_t, & Q_t &= 100\ln \text{CAPE}_t, \label{eq:real}\\
 \text{$\rs$-gap (baseline):}\quad & B_t = y^{10}_t - \pi^{10}_t - \rs_t, & Q_t &= -\frac{100}{\overline{E/P}}\left[(E/P)_t - \rs_t\right]. \label{eq:rstar}
 \end{align}
+
 The term $100/\overline{E/P}$, with $\overline{E/P}$ the sample average, converts the earnings-yield gap to the units of log CAPE: since $d\ln\text{CAPE}=-d(E/P)/(E/P)$, a change in the earnings yield of $x$ points near the mean equals a change of $100x/\overline{E/P}$ in $100\ln\text{CAPE}$ with the opposite sign. CAPE is a real valuation measure, so stocks do not change between the nominal and real versions.
 
 \textbf{The two-year yield.} The two-year yield is adjusted in the same three versions. With $y^{2}_t$ the nominal yield and $\pi^{2}_t$ two-year expected inflation \citep[from the Cleveland Fed;][]{haubrich2012},
@@ -147,8 +162,6 @@ Expected inflation and $\rs$ are monthly or quarterly and move slowly. The daily
 
 
 For $\rs$ I use the New York Fed's one-sided Laubach--Williams estimate \citep{holston2023}. It is a filtered estimate that uses data only up to each quarter, from the August 2026 vintage with parameters estimated on the full sample, so it is not a real-time series.
-
-\textbf{Comparison with the Goldman Sachs index.} A widely followed index offers a check on whether the approach captures what market participants mean by financial conditions. The companion note rebuilds the Goldman Sachs index from public data with its published weights \citep{fcinote}. The rebuilt index tracks the published one: its monthly changes correlate 0.99 with Goldman's published monthly series from January 1990 to July 2022, and its level runs about 0.35 above it on average. The nominal version of my index correlates 0.95 with the rebuilt index in 12-month changes and 0.76 in levels. The gap in levels comes from the Goldman index's nominal dollar. An index weighted by policy responses and a widely used index built from a macroeconomic model therefore tell nearly the same story about changes in financial conditions. That agreement supports the approach.
 
 Figure~\ref{fig:fcis} plots the three versions of my index on a common scale. They move together at business-cycle and higher frequencies; the correlation of 12-month changes is at least \bl{fci:c12:nrs}. The real version differs little from the nominal one. The version relative to $\rs$ differs more, and the difference is mostly slow: it is negative in the late 1990s and early 2000s and positive after 2010, as $\rs$ fell.
 
@@ -226,7 +239,6 @@ A monthly VAR with the same variables and a recursive ordering is the special ca
 
 \textbf{Estimation and inference.} I estimate each block by ordinary least squares, on the same sample: January 1996, the month of the first announcement with all window measures, to September 2026 (\bl{nobs} months, and the weekdays of those months for the daily block). The lagged daily averages and the monthly lags may use earlier observations. I keep 2020 in both blocks. The baseline has $L=12$ monthly lags, fixed in advance. Fewer lags give the same signs and weaker evidence (Appendix~\ref{app:lags}).
 
-\input{../baseline/report/tab_lags}
  Intervals come from a block bootstrap with 500 draws \citep{kunsch1989,jentsch2019}. Each draw resamples calendar months in blocks of 12 and uses together the monthly residuals, the daily observations and the announcements of the months drawn. That keeps the dependence among them. The monthly equations and the daily block are re-estimated on each draw. A simpler bootstrap that resamples these sources separately gives wider intervals and the same conclusions about significance in almost all cases (Appendix~\ref{app:boot}). A response is significant at the 5 or 10 percent level when its 95 or 90 percent interval excludes zero. I report 90 percent intervals, as recent studies in this area do \citep{bauer2023,caldara2019,miranda2021,ramey2016}, and 68 percent intervals, which \citet{jarocinski2020} report alongside them. The FCI weights and $\rs$ are held fixed.
 
 \textbf{Data.} All inputs are public series (Appendix~\ref{app:data}). Daily market data are the 2-year and 10-year Treasury yields, the S\&P 500 and the broad dollar index. Monthly data are the unemployment rate, the CBO estimate of its natural rate, core PCE inflation, expected inflation from the Cleveland Fed and the neutral-rate estimates. Policy news comes from the San Francisco Fed's event-study database. For the 1973 starts of Section~\ref{sec:rob}, the months before 1990 use monthly series in place of the daily block. The main sample has \bl{nobs} months, from January 1996, when all the window measures become available, to September 2026.
@@ -251,7 +263,7 @@ I start from two standard methods, estimated on my own data and units so that th
 
 \input{../baseline/report/tab_standard}
 
-In both, unemployment falls after a tightening, by \blabs{st:c2y96:u:12} percentage point after 12 months in the Cholesky VAR and \blabs{st:prox:u:12} in the proxy VAR, and it is still lower after 24 months. The price level does not respond. A 1984 start gives the same answer, a funds-rate version on 1984--2007 gives the same sign in smaller numbers, and adding commodity prices, the standard remedy for the price puzzle \citep{sims1992,ramey2016}, leaves the response negative (Appendix Table~\ref{tab:standardcom}). The first-stage $F$ statistic of the proxy VAR is \bl{st:prox:F}, so I report exact Anderson--Rubin sets, which stay valid when the instrument is weak \citep{montiel2021,lunsford2015,lewis2026,bauer2026}. These are the responses when the surprises are carried through the two-year yield alone.
+In both, unemployment falls after a tightening, by \blabs{st:c2y96:u:12} percentage point after 12 months in the Cholesky VAR and \blabs{st:prox:u:12} in the proxy VAR, and it is still lower after 24 months. The price level does not respond. A 1984 start gives the same answer, a funds-rate version on 1984--2007 gives the same sign in smaller numbers, and adding commodity prices, the standard remedy for the price puzzle \citep{sims1992,ramey2016}, leaves the response negative (Appendix Tables~\ref{tab:standardall} and~\ref{tab:standardcom}). The first-stage $F$ statistic of the proxy VAR is \bl{st:prox:F}, so I report exact Anderson--Rubin sets, which stay valid when the instrument is weak \citep{montiel2021,lunsford2015,lewis2026,bauer2026}. These are the responses when the surprises are carried through the two-year yield alone.
 
 \subsection{The FCI Model: Baseline Results}\label{sec:baseline}
 Figure~\ref{fig:intro} shows the baseline. Table~\ref{tab:matched} compares the responses after 24 months with and without the FCI for the three versions of the yield, on common bootstrap draws. The units are the same in all results: the end-of-month two-year yield moves 0.92 to 1.01 of the window move, so a 1 percentage point move in the window and a 1 percentage point move in the end-of-month yield in the monthly VARs are the same shock to within about 8 percent.
@@ -336,7 +348,6 @@ The model assumes that policy reaches unemployment and prices through the yield 
 
 The days after announcements offer a check on that persistence. I measure the change in each series at 5, 22 and 66 trading days after each announcement, and its average over the first 22 days, on the same clock as the model (Appendix~\ref{app:persist}). For the yield the direct estimates agree with the model at every horizon. For the FCI they agree at 5 and 22 days and have little power at 66 days, where the interval runs from a complete reversal to more than the model's value (Figure~\ref{fig:persist}).
 
-\input{../baseline/report/tab_persist}
  The first-month average of the FCI is higher in the data than in the model when measured from the window, and about the same when measured from the close before the announcement, because part of the window's movement reverses by the close. Neither difference changes the responses. What the check cannot do is show that persistence beyond the first month is right. The model's persistence is consistent with the data, but the data at 66 days cannot narrow the range.
 
 \begin{figure}[tp]
@@ -457,6 +468,8 @@ The direction of every result is the same at every lag length. With the FCI, the
 The size of the responses and the strength of the evidence increase with the lag length. The median price response with the FCI across the 48 responses is \bl{lag:med:P:3} with 3 lags, \bl{lag:med:P:6} with 6 and \bl{lag:med:P:12} with 12. The baseline price response at 36 months is \bl{lag:rstar:P36:3}, \bl{lag:rstar:P36:6} and \bl{lag:rstar:P36:12} percent. The number of significant price responses is \bl{lag:Psig:3}, \bl{lag:Psig:6} and \bl{lag:Psig:12} of \bl{lag:n}. The Phillips multiplier is bounded at 12 lags only; with 3 or 6 lags the data do not rule out arbitrarily steep trade-offs.
 
 
+\input{../baseline/report/tab_lags}
+
 \FloatBarrier
 % ============================================================
 \section{Financial Persistence beyond the Announcement Window}\label{app:persist}
@@ -474,6 +487,8 @@ The one difference is the first-month average of the FCI. On the model's clock t
 
 
 
+
+\input{../baseline/report/tab_persist}
 
 \FloatBarrier
 % ============================================================
@@ -543,6 +558,8 @@ The direct projection allows all transmission channels to operate, including the
 \input{../baseline/report/tab_app_R4c}
 \FloatBarrier
 \input{../baseline/report/tab_wt_full}
+\FloatBarrier
+\input{../baseline/report/tab_standard_all}
 \FloatBarrier
 \input{../baseline/report/tab_standard_com}
 \FloatBarrier
