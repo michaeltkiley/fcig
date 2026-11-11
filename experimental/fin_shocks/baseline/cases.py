@@ -45,6 +45,9 @@ PANELS.append(panel("R4", "Robustness 4: the FCI replaced by its three weighted 
        "The 10-year yield, equity valuation and the real dollar, each multiplied by its weight, enter the daily and monthly equations separately, in the same step as the 2-year yield; each has its own window impact. Replaces the FCI, so the same step without the FCI is the baseline row.",
        [dict(form=f, fci="cmp") for f in ("nom", "real", "rstar")]))
 
+PANELS.append(panel("R4b", "Robustness 4b: the FCI replaced by its three weighted components, start 1973", "As 4: monthly equations from 1973 (monthly series before 1990); the daily block is still estimated from 1996.",
+       [dict(form=f, fci="cmp", start="1973-01") for f in ("nom", "real", "rstar")]))
+
 def spec(c):
     """The case as stored in the result files."""
     return dict(form=c["form"], fci=c["fci"], macro=c["macro"], start=c["start"], end=c["end"] or "", t2020=c["t2020"], trend=c["trend"])
@@ -63,8 +66,8 @@ def unique_cases(panel_id=None):
 # Short row labels and the sections of the main text (the 12-lag tables are grouped by section; appendix tables are per panel)
 SHORT = {"B": "", "R1a": "Start 1973", "R1b": "2020 dropped", "R1c": "2020 dropped, start 1973", "R1d": "Ends 2019", "R1e": "Ends 2019, start 1973",
          "R2a": "Kiley r*", "R2b": "Kiley r*, start 1973", "R2c": "Real, spline trend", "R2d": "Real, spline trend, start 1973",
-         "R3a": "EBP added", "R3b": "EBP added, start 1973", "R4": "Components"}
-GROUPS = {"B": ["B"], "R1": ["R1a", "R1b", "R1c", "R1d", "R1e"], "R2": ["R2a", "R2b", "R2c", "R2d"], "R3": ["R3a", "R3b"], "R4": ["R4"]}
+         "R3a": "EBP added", "R3b": "EBP added, start 1973", "R4": "Components", "R4b": "Components, start 1973"}
+GROUPS = {"B": ["B"], "R1": ["R1a", "R1b", "R1c", "R1d", "R1e"], "R2": ["R2a", "R2b", "R2c", "R2d"], "R3": ["R3a", "R3b"], "R4": ["R4", "R4b"]}
 GROUP_TITLE = {"B": "Baseline: 1996 to the present, all data in, no trend", "R1": "Robustness 1: sample (r*-gap 2-year yield and FCI)",
                "R2": "Robustness 2: the r* adjustment and trends", "R3": "Robustness 3: excess bond premium (r*-gap)", "R4": "Robustness 4: the FCI replaced by its three weighted components"}
 def panel_by_id(pid): return next(p for p in PANELS if p["id"] == pid)

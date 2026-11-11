@@ -42,13 +42,14 @@ for g, pids in CS.GROUPS.items():                                               
     blocks = []
     for pid in pids:
         p = CS.panel_by_id(pid)
-        if g in ("B", "R4"): blocks += [(CS.FORMS[f], [c for c in p["cases"] if c["form"] == f]) for f in ("nom", "real", "rstar")]
+        if g == "B": blocks += [(CS.FORMS[f], [c for c in p["cases"] if c["form"] == f]) for f in ("nom", "real", "rstar")]
+        elif g == "R4": blocks += [(CS.FORMS[f] + (", start 1973" if pid == "R4b" else ""), [c for c in p["cases"] if c["form"] == f]) for f in ("nom", "real", "rstar")]
         else: blocks.append((CS.SHORT[pid], p["cases"]))
     notes = CS.GROUP_NOTE[g]
     (REPORT / f"tab_main_{g}.tex").write_text(table(CS.GROUP_TITLE[g] + " (12 lags)", f"tab:main{g}", blocks, (MAIN_LAGS,), notes) + "\n")
 for p in CS.PANELS:                                                                  # appendix: 3, 6, 12 lags
     f = lambda c: CS.FORMS[c["form"]]
-    blocks = [(CS.FORMS[fm], [c for c in p["cases"] if c["form"] == fm]) for fm in dict.fromkeys(c["form"] for c in p["cases"])] if p["id"] in ("B", "R4") else [(f(p["cases"][0]), p["cases"])]
+    blocks = [(CS.FORMS[fm], [c for c in p["cases"] if c["form"] == fm]) for fm in dict.fromkeys(c["form"] for c in p["cases"])] if p["id"] in ("B", "R4", "R4b") else [(f(p["cases"][0]), p["cases"])]
     (REPORT / f"tab_app_{p['id']}.tex").write_text(table(p["title"], f"tab:app{p['id']}", blocks, (3, 6, 12), p["notes"], "p") + "\n")
 
 # ---------------------------------------------------------------- monthly VAR benchmark tables
@@ -164,9 +165,9 @@ def write_numbers():
                 d("bllo:" + k, "$-\\infty$" if np.isinf(r.k_lo) else num(r.k_lo)); d("blhi:" + k, "$+\\infty$" if np.isinf(r.k_hi) else num(r.k_hi))
                 d("blsig:" + k, "bounded away from zero" if (not np.isinf(r.k_lo) and not np.isinf(r.k_hi) and r.k_lo * r.k_hi > 0) or (np.isinf(r.k_lo) != np.isinf(r.k_hi) and (r.k_hi < 0 if np.isinf(r.k_lo) else r.k_lo > 0)) else "includes zero")
     # robustness panels (12 lags): rb:<panel>:<no|yes>:<u|P>:<h> (no = same step without the FCI, yes = with it; panel R4: the FCI replaced by its components)
-    for pid in ("R1a", "R1b", "R1c", "R1d", "R1e", "R2a", "R2b", "R2c", "R2d", "R3a", "R3b", "R4"):
+    for pid in ("R1a", "R1b", "R1c", "R1d", "R1e", "R2a", "R2b", "R2c", "R2d", "R3a", "R3b", "R4", "R4b"):
         for cs in CS.panel_by_id(pid)["cases"]:
-            fk = "cmp" if cs["fci"] == "cmp" else ("no" if cs["fci"] == 0 else "yes"); form_tag = f":{cs['form']}" if pid == "R4" else ""
+            fk = "cmp" if cs["fci"] == "cmp" else ("no" if cs["fci"] == 0 else "yes"); form_tag = f":{cs['form']}" if pid.startswith("R4") else ""
             dd = R[CS.case_id(cs)]; g_ = dd[dd.lags == MAIN_LAGS]
             for v in ("u", "P"):
                 r = g_[g_["var"] == v].iloc[0]
@@ -174,7 +175,9 @@ def write_numbers():
                     k = f"rb:{pid}{form_tag}:{fk}:{v}:{h}"; d("bl:" + k, num(r[f"r{h}"])); d("blabs:" + k, f"{abs(r[f'r{h}']):.2f}"); d("blsig:" + k, "significant" if r[f"lo{h}"] * r[f"hi{h}"] > 0 else "not significant")
                     d("bllo:" + k, num(r[f"lo{h}"])); d("blhi:" + k, num(r[f"hi{h}"]))
     WT = pd.read_csv(RESULTS / "weights_test.csv")
-    for _, r in WT[WT.lags == MAIN_LAGS].iterrows(): e_ = r["eq"]; d(f"bl:wt:{r.step}:{e_}:p", f"{r.p_boot:.3f}"); d(f"bl:wt:{r.step}:{e_}:W", f"{r.wald:.1f}"); d(f"bl:wt:{r.step}:{e_}:q", str(int(r.restrictions)))
+    for _, r in WT[(WT.lags == MAIN_LAGS) & (WT.start == "1996-01")].iterrows(): e_ = r["eq"]; d(f"bl:wt:{r.step}:{e_}:p", f"{r.p_boot:.3f}"); d(f"bl:wt:{r.step}:{e_}:W", f"{r.wald:.1f}"); d(f"bl:wt:{r.step}:{e_}:q", str(int(r.restrictions)))
+    for _, r in WT[(WT.lags == MAIN_LAGS) & (WT.start == "1973-01")].iterrows(): d(f"bl:wt73:{r.step}:{r['eq']}:p", f"{r.p_boot:.3f}")
+    w73 = WT[(WT.lags == MAIN_LAGS) & (WT.start == "1973-01")].p_boot; d("bl:wt73:min", f"{w73.min():.2f}"); d("bl:wt73:max", f"{w73.max():.2f}")
     from lib.daily import window_impact, event_index, EV
     from lib import monthly as MO
     from lib.model import MAC, fin_eom
@@ -242,21 +245,25 @@ def check_claims():
     chk("R4 (components): unemployment point estimate positive at 12 and 24 m at every step", all(cm(f, "u", h)[f"r{h}"] > 0 for f in S for h in (12, 24)))
     chk("R4 (components): no significant response of unemployment or the price level at any step and horizon; price level point estimate not negative at 24 m", all(cm(f, v, h)[f"lo{h}"] * cm(f, v, h)[f"hi{h}"] < 0 for f in S for v in ("u", "P") for h in (12, 24, 36)) and all(cm(f, "P", 24)["r24"] > 0 for f in S))
     chk("R4 r*-gap: baseline unemployment at 12 m inside the components interval; baseline price level at 24 m below the components interval", cm("rstar", "u", 12)["lo12"] <= est("rstar", "yes", "u", 12) <= cm("rstar", "u", 12)["hi12"] and est("rstar", "yes", "P", 24) < cm("rstar", "P", 24)["lo24"])
-    WT = pd.read_csv(RESULTS / "weights_test.csv"); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_)].p_boot.iloc[0]
+    c73 = lambda f, v, h: (lambda dd: dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0])(R[CS.case_id(dict(form=f, fci="cmp", macro="u,pi", start="1973-01", end=None, t2020="in", trend="none"))])
+    chk("R4b (components, start 1973), r*-gap: unemployment positive at 12, 24 m; price level negative at 12, 24, 36 m, significant at 12 and 24 m", all(c73("rstar", "u", h)["r%d" % h] > 0 for h in (12, 24)) and all(c73("rstar", "P", h)["r%d" % h] < 0 for h in (12, 24, 36)) and all(c73("rstar", "P", h)["lo%d" % h] * c73("rstar", "P", h)["hi%d" % h] > 0 for h in (12, 24)))
+    chk("R4b: nominal step price level not negative at 24 and 36 m", c73("nom", "P", 24)["r24"] > 0 and c73("nom", "P", 36)["r36"] > 0)
+    WT = pd.read_csv(RESULTS / "weights_test.csv"); chk("weights test, monthly equations from 1973, 12 lags: no rejection at 5% in either equation at any step", bool((WT[(WT.start == "1973-01") & (WT.lags == MAIN_LAGS)].p_boot > 0.05).all())); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_) & (WT.start == "1996-01")].p_boot.iloc[0]
     chk("weights test, 12 lags: no rejection at 5% in the unemployment equation at any step; rejection in the inflation equation at every step", all(wt(s_, "u", 12) > 0.05 for s_ in S) and all(wt(s_, "pi", 12) < 0.05 for s_ in S))
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
 
 # ---------------------------------------------------------------- test of the proportional-weights restriction
 WTT = pd.read_csv(RESULTS / "weights_test.csv"); wrows = []
-for step in ("nom", "real", "rstar"):
-    cells = []
-    for eq in ("u", "pi"):
-        r = WTT[(WTT.step == step) & (WTT.lags == MAIN_LAGS) & (WTT["eq"] == eq)].iloc[0]; cells.append(f"{r.wald:.1f} & {r.p_boot:.3f}")
-    wrows.append(f"{CS.FORMS[step]} & " + " & ".join(cells) + r"\\")
+for start, lab in (("1996-01", ""), ("1973-01", ", start 1973")):
+    for step in ("nom", "real", "rstar"):
+        cells = []
+        for eq in ("u", "pi"):
+            r = WTT[(WTT.step == step) & (WTT.lags == MAIN_LAGS) & (WTT["eq"] == eq) & (WTT.start == start)].iloc[0]; cells.append(f"{r.wald:.1f} & {r.p_boot:.3f}")
+        wrows.append(f"{CS.FORMS[step]}{lab} & " + " & ".join(cells) + r"\\")
 (REPORT / "tab_weights_test.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Test of the proportional-weights restriction (12 lags)}\label{tab:weightstest}",
     r"\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap equation} & \multicolumn{2}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Step & Wald & Bootstrap $p$ & Wald & Bootstrap $p$\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
-    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 residual draws under the restriction); 1996--2026, no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
+    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 residual draws under the restriction); monthly equations from 1996 (first three rows) and from 1973 (last three), no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- weights table (window responses)
 w = pd.read_csv(OUT / "market_weights.csv", index_col=0)
