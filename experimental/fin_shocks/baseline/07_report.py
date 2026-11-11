@@ -12,8 +12,11 @@ MAIN_LAGS = 12
 # ---------------------------------------------------------------- tables
 def num(x):
     s = f"{abs(x):.2f}"; return ("$-$" if x < 0 and s != "0.00" else "") + s
+def stars(r, h):
+    """Significance of a response: two stars if the 95% interval excludes zero (5 percent level), one if the 90% interval does (10 percent level)."""
+    return "$^{**}$" if r[f"lo95_{h}"] * r[f"hi95_{h}"] > 0 else ("$^{*}$" if r[f"lo{h}"] * r[f"hi{h}"] > 0 else "")
 def cell(r, h):
-    star = "$^{*}$" if r[f"lo{h}"] * r[f"hi{h}"] > 0 else ""
+    star = stars(r, h)
     return num(r[f"r{h}"]) + star, f"[{num(r[f'lo{h}'])}, {num(r[f'hi{h}'])}]"
 def get(c, L):
     d = R[CS.case_id(c)]; g = d[d.lags == L]; return g[g["var"] == "u"].iloc[0], g[g["var"] == "P"].iloc[0]
@@ -23,7 +26,7 @@ def two_lines(c, L):
 
 HEAD = (r"\begin{tabular}{llcrrrrrrr}\toprule" "\n" r" & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}" "\n"
         r"Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule")
-NOTE = r"Per +1 pp on the 2-year yield. $^{*}$ = 90\% interval excludes zero; intervals in brackets. Obs = monthly observations in the equations."
+NOTE = r"Per +1 pp on the 2-year yield. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero); 90\% intervals in brackets. Obs = monthly observations in the equations."
 
 def table(title, label, groups, lags, note, place="H"):
     """groups: list of (row label, [cases]); one block per label; lags: tuple of lag lengths shown for each case."""
@@ -392,7 +395,9 @@ plt.rcParams.update({"font.size": 8, "axes.edgecolor": GREY, "axes.labelcolor": 
 def paths(c, L=MAIN_LAGS):
     d = pd.read_csv(RESULTS / f"{CS.case_id(c)}_paths.csv"); return d[d.lags == L]
 def line(ax, d, color, ls, label, lo="lo", hi="hi", alpha=0.14):
-    ax.fill_between(d.h, d[lo], d[hi], color=color, alpha=alpha, lw=0); ax.plot(d.h, d.r, color=color, ls=ls, lw=1.8, label=label)
+    ax.fill_between(d.h, d[lo], d[hi], color=color, alpha=alpha, lw=0)
+    if "lo68" in d: ax.fill_between(d.h, d.lo68, d.hi68, color=color, alpha=min(2 * alpha, 0.4), lw=0)                  # 68% band inside the 90% band
+    ax.plot(d.h, d.r, color=color, ls=ls, lw=1.8, label=label)
 
 base = CS.PANELS[0]["cases"]
 fig, axs = plt.subplots(2, 3, figsize=(7.2, 3.9), sharex=True)
@@ -406,14 +411,14 @@ for j, f in enumerate(("nom", "real", "rstar")):
         if j == 0: ax.set_ylabel("Unemployment gap (pp)" if v == "u" else "Core PCE price level (%)")
         if i == 1: ax.set_xlabel("Months after the policy move")
 axs[0, 0].legend(frameon=False, loc="upper left", fontsize=7.5)
-fig.suptitle("Response to a policy move that raises the 2-year yield 1 percentage point (12 lags; bands: 90% intervals)", fontsize=8.5, y=0.995)
+fig.suptitle("Response to a policy move that raises the 2-year yield 1 percentage point (12 lags; bands: 68 and 90 percent intervals)", fontsize=8.5, y=0.995)
 fig.tight_layout(); fig.savefig(REPORT / "fig_steps.pdf"); plt.close(fig)
 
 fig, ax = plt.subplots(1, 1, figsize=(4.4, 2.8)); ax.axhline(0, color=GREY, lw=0.8)
 c = next(c for c in base if c["form"] == "rstar" and c["fci"] == "rstar"); d = paths(c); d = d[d.kind == "fin"]
 line(ax, d[d["var"] == "pol"], INK, "-", "2-year yield, r*-gap form", alpha=0.10); line(ax, d[d["var"] == "idx"], GREY, "--", "FCI (2-year-yield units)", alpha=0.10)
 ax.set_xlabel("Months after the policy move"); ax.set_ylabel("Percentage points"); ax.legend(frameon=False, fontsize=7.5)
-ax.set_title("Financial response (monthly averages; 12 lags; 90% bands)", fontsize=8)
+ax.set_title("Financial response (monthly averages; 12 lags; 68 and 90% bands)", fontsize=8)
 fig.tight_layout(); fig.savefig(REPORT / "fig_financial.pdf"); plt.close(fig)
 
 # ---------------------------------------------------------------- standard methods (Section 3.1) and the baseline figure (Section 3.2)

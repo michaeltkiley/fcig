@@ -1,13 +1,14 @@
 """Literature-style monthly estimators, run on the same data and units as the main model so that results are comparable (08_literature_style.py).
 Variables (end-of-month, unemployment gap, core PCE inflation, policy variable i_t in percentage points); 12 lags (3 and 6 for the appendix), constant, no trend; unit of every response: +1 pp on i.
  CHOL  Recursive (Cholesky) VAR, order (u, inflation, i): the policy variable responds within the month to unemployment and inflation, which do not respond to it within the month
-       (Christiano, Eichenbaum and Evans 1999 style). Impact vector (0, 0, 1) (or (0, 0, 0, 1) with the commodity-price control). Inference: 5-95% of 200 residual-bootstrap draws.
+       (Christiano, Eichenbaum and Evans 1999 style). Impact vector (0, 0, 1) (or (0, 0, 0, 1) with the commodity-price control). Inference: 5-95% of residual block-bootstrap draws (12-month blocks, lags rebuilt recursively).
        Check with a commodity price index (log PPI all commodities, monthly average, in the first block): the standard remedy for the price puzzle (Sims 1992; Ramey 2016, section 3.5).
  P1    The monthly proxy VAR of lib/monthly.py, all horizons."""
 import zlib
 import numpy as np, pandas as pd
 from .daily import EV, event_index, fred_daily, CALW
 from . import monthly as MO
+from . import model as M_
 from .model import MAC, fin_eom
 from .paths import DATA
 
@@ -27,13 +28,13 @@ def frame(kind, start, end, com=False, L=L):
     D = D.join(policy(kind).rename("i"), how="inner").dropna()
     return D[(D.index >= pd.Period(start, "M") - L) & (D.index <= pd.Period(end, "M"))]    # L months before the start supply the first lags, as in lib/monthly.py
 
-def paths_chol(D, start, B=200, seed="x", L=L):
+def paths_chol(D, start, B=500, seed="x", L=L):
     X, Y, per = MO.design(D, L, start, str(D.index.max())); K = D.shape[1]
     C = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C; res = Y - fit; s = np.zeros(K); s[-1] = 1.0
     def resp(Cm): T = MO.ma(Cm, K, L, H); return {v: np.array([MO.row_of(T, v, h) @ s for h in range(H + 1)]) for v in ("u", "P")}
-    pt = resp(C); rng = np.random.default_rng(zlib.crc32(seed.encode())); dr = {v: [] for v in pt}
-    for _ in range(B):
-        Cb = np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0]; r = resp(Cb)
+    pt = resp(C); rng = np.random.default_rng(zlib.crc32(seed.encode())); dr = {v: [] for v in pt}; LI = M_._lag_index(per, L)
+    for _ in range(B):                                                                  # block bootstrap: 12-month blocks of residuals, lags rebuilt recursively
+        Ys = M_._recursive(X, C, res[M_.block_rows(len(res), rng, M_.BLOCK_M)], K, L, LI); Cb = np.linalg.lstsq(M_._rebuild(X, K, L, LI, Ys), Ys, rcond=None)[0]; r = resp(Cb)
         for v in pt: dr[v].append(r[v])
     return {v: (pt[v], np.percentile(dr[v], 5, axis=0), np.percentile(dr[v], 95, axis=0)) for v in pt}, len(Y)
 

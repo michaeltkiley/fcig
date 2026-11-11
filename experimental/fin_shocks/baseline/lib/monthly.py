@@ -15,7 +15,7 @@ Moving-average matrices Theta_h (h = 0..36) map an impact vector into responses;
      (Anderson-Rubin sets for proxy VARs: Montiel Olea, Stock and Watson 2021; Lunsford 2015.)
  WE  Window impact: the impact vector is not estimated from monthly residuals but taken from the daily model: s = (0, 0, e_i, e_F), the model's response of the end-of-month 2-year yield and FCI to a +1 pp
      window surprise (e_i = 0.95-0.99, e_F the FCI's corresponding response), macro entries zero. Assumption: the shock reaches unemployment and inflation only through the 2-year yield and the FCI,
-     the same restriction as the main model. Unit: +1 pp in the window (= +1 pp end-of-month yield up to 5%). Inference: 500 draws that resample announcements and monthly residuals.
+     the same restriction as the main model. Unit: +1 pp in the window (= +1 pp end-of-month yield up to 5%). Inference: 500 draws of the block bootstrap of model.estimate (12-month blocks, recursive lags, announcements of the months drawn).
 Relation to the main model: Plagborg-Moller and Wolf (2021) show that VARs and local projections estimate the same responses; a monthly VAR still observes a surprise concentrated on one day
 only through one end-of-month value per month (see also the temporal-aggregation argument of Jacobson, Matthes and Walker 2026)."""
 import zlib
@@ -74,6 +74,7 @@ def run_case(step, fci, start="1996-01", B=200, lags=LAGS, design_fn=design):
     idx0 = event_index(); ev = EV.iloc[idx0]; mon = ev.Date.dt.to_period("M"); first, last = mon.min(), mon.max()
     z_all = ev.ns.groupby(mon).sum(); K = 3 + int(bool(fci)); rows = []; b0 = impact(fci, idx0)
     D = MAC[["u", "pi"]].join(fin_eom(step, fci), how="inner").dropna()
+    CAL = pd.period_range("1996-01", "2026-09", freq="M"); evm = ev.Date.dt.to_period("M").values; ERW = {m: idx0[evm == m] for m in CAL}
     for L in lags:
         e = next(M.estimate(step, fci, "u,pi", start, None, "in", "none", 1, (L,)))["e0"][0]           # model: end-of-month 2-year (and FCI) response per +1 pp window surprise
         X, Y, per = design_fn(D, L, start); C = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C; res = Y - fit; T = ma(C, K, L)
@@ -85,10 +86,13 @@ def run_case(step, fci, start="1996-01", B=200, lags=LAGS, design_fn=design):
             c = row_of(T, var, h); lo, hi, unb = ar_set(r @ c, r[:, 2], z)
             rows.append(dict(**info, ident="P1", var=var, h=h, r=float(c @ S), lo=lo, hi=hi, unbounded=int(unb)))
         s0 = np.r_[0, 0, e]; rng = np.random.default_rng(zlib.crc32(f"monthly|{step}|{fci}|{start}|{L}".encode()))
-        dr = {t: [] for t in TARGETS}
-        for _ in range(B):
-            Cb = np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0]; Tb = ma(Cb, K, L)
-            ib = rng.choice(idx0, size=len(idx0), replace=True); sb = np.r_[0, 0, e * (impact(fci, ib) / b0)]      # window ratio of the resampled announcements
+        dr = {t: [] for t in TARGETS}; LI = M._lag_index(per, L); prow = {p: i for i, p in enumerate(per)}
+        for _ in range(B):                                                                     # block bootstrap as in model.estimate: 12-month blocks of calendar months, recursive lags, announcements of the months drawn
+            mo = []; e_ = []
+            while len(e_) < len(per):
+                for r_ in M.block_rows(len(CAL), rng, M.BLOCK_M): mo.append(CAL[r_]); e_ += [res[prow[CAL[r_]]]] if CAL[r_] in prow else []
+            Ys = M._recursive(X, C, np.array(e_[:len(per)]), K, L, LI); Tb = ma(np.linalg.lstsq(M._rebuild(X, K, L, LI, Ys), Ys, rcond=None)[0], K, L)
+            ib = np.concatenate([ERW[m] for m in mo]); ib = ib if len(ib) >= 20 else idx0; sb = np.r_[0, 0, e * (impact(fci, ib) / b0)]      # window ratio of the announcements drawn
             for t in TARGETS: dr[t].append(row_of(Tb, *t) @ sb)
         for t in TARGETS:
             rows.append(dict(**info, ident="WE", var=t[0], h=t[1], r=float(row_of(T, *t) @ s0), lo=np.percentile(dr[t], 5), hi=np.percentile(dr[t], 95), unbounded=0))

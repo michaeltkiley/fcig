@@ -104,13 +104,13 @@ def trend_cols(periods, start, end):
     K = len(kn); d = lambda k: (np.maximum(t - kn[k], 0) ** 3 - np.maximum(t - kn[-1], 0) ** 3) / (kn[-1] - kn[k])
     return np.c_[t, *[d(k) - d(K - 2) for k in range(K - 2)]]
 
-def har_rows(form, fci, mvars, end, t2020):
+def har_rows(form, fci, mvars, end, t2020, months=False):
     """Regressors and outcomes (rows of the daily block's estimation sample): constant, the 1/5/22/66-day averages of the daily variables, the monthly macro variables (this month and last)."""
     D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
     ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1) & (D.index >= DAILY_START)
     if t2020 == "out": ok &= ~((D.index >= "2020-03-01") & (D.index <= "2020-12-31"))
-    return X[ok], Y[ok]
+    return (X[ok], Y[ok], mo[ok]) if months else (X[ok], Y[ok])
 
 def har_fit(X, Y, fci):
     """OLS of each daily variable on the regressors. With the FCI replaced by its components (fci in CMPGROUPS) each component's equation keeps only its own averages and those of the 2-year yield
@@ -127,7 +127,7 @@ def har_block(form, fci, mvars, end, t2020):
     """Daily block coefficients (estimated from DAILY_START; see har_fit)."""
     X, Y = har_rows(form, fci, mvars, end, t2020); return har_fit(X, Y, fci)
 
-def macro_data(form, fci, mvars, L, start, end, t2020, trend):
+def macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=False):
     FB = fin_monthly(form, fci); MMv = MAC[mvars]; X, Y, P = [], [], []
     for p in MMv.index:
         if p < pd.Period(start, "M") or p > last_month(end) or (t2020 == "out" and p.year == 2020 and p.month >= 3): continue
@@ -139,7 +139,7 @@ def macro_data(form, fci, mvars, L, start, end, t2020, trend):
         X.append(x); Y.append(y); P.append(p)
     X = np.array(X)
     if trend == "spline": X = np.c_[X, trend_cols(P, start, end)]
-    return X, np.array(Y)
+    return (X, np.array(Y), pd.PeriodIndex(P, freq="M")) if periods else (X, np.array(Y))
 
 def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21):
     """Macro first in each month (from lags), then the days of the month (event day = b_day). Returns monthly macro, monthly-average financial paths and end-of-month financial values."""
@@ -178,20 +178,61 @@ def block_rows(n, rng, length=66):
     """Row indices of a moving-block resample of n daily rows (blocks of `length` days, the longest HAR window)."""
     nb = -(-n // length); st = rng.integers(0, n - length + 1, nb); return np.concatenate([np.arange(a, a + length) for a in st])[:n]
 
-def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=200, lags=LAGS):
-    """Point responses and B draws for each lag length. Each draw resamples the announcements (new window impact and event positions), resamples the monthly residuals and re-estimates the monthly
-    block, and re-estimates the daily block on a moving-block resample of its rows (66-day blocks). Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd)."""
-    mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
-    idx0, pos0, bidx, bpos = events(B); Xd, Yd = har_rows(form, fci, mvars, end, t2020); Bd0 = har_fit(Xd, Yd, fci)
+BOOT = "j12r"      # default bootstrap (see estimate); "iid" = announcements, monthly residuals iid, daily moving blocks of 66 days (the earlier default)
+BLOCK_M = 12       # months per block
+
+def _lag_index(P, L):
+    """For each row t and lag l, the row index of month P[t] - l (or -1 if that month is not a row: pre-sample lags stay at the data)."""
+    pos = {p: i for i, p in enumerate(P)}; return np.array([[pos.get(p - l, -1) for l in range(1, L + 1)] for p in P])
+
+def _rebuild(X, K, L, LI, Ystar):
+    """Regressors with the macro lags replaced by the simulated series Ystar where the lagged month is a row (financial lags and pre-sample lags as in the data)."""
+    Xs = X.copy()
+    for l in range(L):
+        j = LI[:, l]; ok = j >= 0; Xs[ok, 1 + K * l:1 + K * (l + 1)] = Ystar[j[ok]]
+    return Xs
+
+def _recursive(X, C, e, K, L, LI):
+    """y*_t = X*_t C + e_t built forward in time, the macro lags of X* taken from y* itself."""
+    Xs = X.copy(); Y = np.zeros((len(X), K))
+    for t in range(len(X)):
+        for l in range(L):
+            j = LI[t, l]
+            if 0 <= j < t: Xs[t, 1 + K * l:1 + K * (l + 1)] = Y[j]
+        Y[t] = Xs[t] @ C + e[t]
+    return Y
+
+def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=500, lags=LAGS, boot=None):
+    """Point responses and B draws for each lag length. Default bootstrap ("j12r", the block bootstrap): the 369 calendar months from January 1996 are resampled in moving blocks of 12 months, and each draw
+    uses together the monthly residuals, the daily rows and the announcements of the months drawn; the monthly equations are re-estimated on a series rebuilt recursively from the drawn residuals (macro lags
+    from the simulated series, financial lags and pre-sample lags from the data), and the daily block is re-estimated on the drawn rows. Monthly residuals before 1996 (start 1973) are drawn in blocks of 12
+    months of their own. Months without a monthly row (2020 dropped, sample ends in 2019) contribute their daily rows and announcements but no residual. boot="iid": announcements, monthly residuals
+    (fixed design) and daily rows (moving blocks of 66 days) resampled independently (the earlier default). Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd), e0."""
+    boot = boot or BOOT; mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
+    idx0, pos0, bidx, bpos = events(B); Xd, Yd, dmon = har_rows(form, fci, mvars, end, t2020, months=True); Bd0 = har_fit(Xd, Yd, fci)
+    if boot == "j12r":
+        evm = _daily.EV.d.iloc[idx0].dt.to_period("M").values; cal = pd.period_range("1996-01", "2026-09", freq="M")
+        drows = {m: np.where(dmon == m)[0] for m in cal}; erows = {m: idx0[evm == m] for m in cal}
     for L in lags:
-        X, Y = macro_data(form, fci, mvars, L, start, end, t2020, trend); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
+        X, Y, P = macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=True); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
         tag = f"{form}|{fci}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)
         rng = np.random.default_rng(zlib.crc32(tag.encode())); rng_d = np.random.default_rng(zlib.crc32(("block|" + tag).encode()))
         m0, f0, e0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci)
+        if boot == "j12r":
+            LI = _lag_index(P, L); post = np.where(P >= pd.Period("1996-01", "M"))[0]; pre = np.where(P < pd.Period("1996-01", "M"))[0]; prow = {p: i for i, p in enumerate(P)}
         draws = []
-        for ib, pb in zip(bidx, bpos):
-            r = block_rows(len(Xd), rng_d); Bd = har_fit(Xd[r], Yd[r], fci)
-            draws.append(irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci))
+        for b in range(B):
+            if boot == "j12r":
+                mo = []; e_post = []
+                while len(e_post) < len(post):                                  # calendar months in blocks; a drawn month adds its residual if it is a row
+                    for r in block_rows(len(cal), rng, BLOCK_M): mo.append(cal[r]); e_post += [res[prow[cal[r]]]] if cal[r] in prow else []
+                e_post = e_post[:len(post)]; e = np.vstack([res[pre][block_rows(len(pre), rng, BLOCK_M)] if len(pre) else np.zeros((0, K)), np.array(e_post)])
+                dr = np.concatenate([drows[m] for m in mo]); ev_i = np.concatenate([erows[m] for m in mo]); ib = ev_i if len(ev_i) >= 20 else idx0; pb = positions(ib)
+                Ys = _recursive(X, C0, e, K, L, LI); Cb = np.linalg.lstsq(_rebuild(X, K, L, LI, Ys), Ys, rcond=None)[0]; Bd = har_fit(Xd[dr], Yd[dr], fci)
+            else:
+                r = block_rows(len(Xd), rng_d, 66); Bd = har_fit(Xd[r], Yd[r], fci); ib, pb = bidx[b], bpos[b]
+                Cb = np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0]
+            draws.append(irf(Bd, Cb, K, nd, L, ib, pb, fci))
         yield dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
                    f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
 
@@ -205,7 +246,9 @@ def summary_rows(spec, est):
         s0, sd = est["s0"][:, j], est["sd"][:, :, j]
         rows.append(dict(**spec, lags=est["lags"], var=n, nobs=est["nobs"], draws=len(sd), **{f"r{h}": s0[h] for h in HORIZ},
                          **{f"lo{h}": pct(sd, 5)[h] for h in HORIZ}, **{f"hi{h}": pct(sd, 95)[h] for h in HORIZ},
-                         **{f"lo68_{h}": pct(sd, 16)[h] for h in HORIZ}, **{f"hi68_{h}": pct(sd, 84)[h] for h in HORIZ}))
+                         **{f"lo68_{h}": pct(sd, 16)[h] for h in HORIZ}, **{f"hi68_{h}": pct(sd, 84)[h] for h in HORIZ},
+                         **{f"lo80_{h}": pct(sd, 10)[h] for h in HORIZ}, **{f"hi80_{h}": pct(sd, 90)[h] for h in HORIZ},
+                         **{f"lo95_{h}": pct(sd, 2.5)[h] for h in HORIZ}, **{f"hi95_{h}": pct(sd, 97.5)[h] for h in HORIZ}))
     return rows
 
 def path_rows(spec, est):
