@@ -291,13 +291,13 @@ def path_rows(spec, est):
 # ---------------------------------------------------------------- implied trade-off (Phillips multiplier, Barnichon-Mesters 2021)
 KAPPA = np.sort(np.concatenate([-np.logspace(-3, 4, 3000), [0.0], np.logspace(-3, 4, 3000)]))     # -1e4 .. 1e4, dense near zero
 
-def ar_set(Pd, Ud):
+def ar_set(Pd, Ud, q=(5, 95)):
     """Confidence set for kappa = P_H / U_H (Anderson-Rubin style): {kappa : the 90% bootstrap interval of P_H - kappa U_H contains 0}, computed on a wide
     log-spaced grid (|kappa| up to 1e4) with each boundary refined by bisection, so a finite boundary is never cut off by the grid. A side is reported as
     infinite only if the set still contains +-1e4; for large |kappa| the condition reduces to the 90% interval of U_H containing zero, so that is a statistical
     result (the data cannot rule out arbitrarily steep trade-offs), not a grid limit. Returns (lo, hi, connected); lo = -inf / hi = +inf when unbounded."""
-    inside = lambda k: np.percentile(Pd - k * Ud, 5) <= 0 <= np.percentile(Pd - k * Ud, 95)
-    Z = Pd[:, None] - KAPPA[None, :] * Ud[:, None]; ok = (np.percentile(Z, 5, axis=0) <= 0) & (np.percentile(Z, 95, axis=0) >= 0)
+    inside = lambda k: np.percentile(Pd - k * Ud, q[0]) <= 0 <= np.percentile(Pd - k * Ud, q[1])
+    Z = Pd[:, None] - KAPPA[None, :] * Ud[:, None]; ok = (np.percentile(Z, q[0], axis=0) <= 0) & (np.percentile(Z, q[1], axis=0) >= 0)
     if not ok.any(): return np.nan, np.nan, True
     i = np.where(ok)[0]
     def edge(a, b):                                   # a outside, b inside the set: bisect to the boundary
@@ -318,7 +318,7 @@ def multiplier_rows(spec, est):
     """kappa_H = P_H / U_H at H = 12, 24, 36 with the confidence set; P is the price level (%), U the cumulative unemployment gap (pp-years)."""
     s0, sd = est["s0"], est["sd"]; U0 = np.cumsum(s0[:, 0]) / 12; Ud = np.cumsum(sd[:, :, 0], axis=1) / 12; rows = []
     for h in HORIZ:
-        lo, hi, con = ar_set(sd[:, h, 1], Ud[:, h])
+        lo, hi, con = ar_set(sd[:, h, 1], Ud[:, h]); lo68, hi68, _ = ar_set(sd[:, h, 1], Ud[:, h], (16, 84))
         rows.append(dict(**spec, lags=est["lags"], H=h, P=s0[h, 1], U=U0[h], U_lo=np.percentile(Ud[:, h], 5), U_hi=np.percentile(Ud[:, h], 95),
-                         kappa=s0[h, 1] / U0[h], k_lo=lo, k_hi=hi, connected=con))
+                         kappa=s0[h, 1] / U0[h], k_lo=lo, k_hi=hi, connected=con, k68_lo=lo68, k68_hi=hi68))
     return rows

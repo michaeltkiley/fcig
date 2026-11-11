@@ -425,6 +425,29 @@ def lag_fact():
     g = z[(z.lags == 3) & (z["var"] == "u")].iloc[0]; mac("lag:k3:u24", num(g.r24)); mac("lag:k3:u24:lo", num(g.lo24)); mac("lag:k3:u24:hi", num(g.hi24))
 lag_fact()
 
+
+# =============================================================== compact multiplier table (Section 3.5)
+def tradeoff_compact():
+    T = pd.read_csv(RESULTS / "tradeoff.csv"); T["fci"] = T.fci.astype(str)
+    def row(f, start):
+        return {H_: T[(T.form == f) & (T.fci == f) & (T.macro == "u,pi") & (T.start == start) & T.end.isna() & (T.t2020 == "in") & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0] for H_ in (24, 36)}
+    def cellk(r):
+        if np.isfinite(r.k_lo) and np.isfinite(r.k_hi): return f"[{num(r.k_lo)}, {num(r.k_hi)}]"
+        return "undefined; 68\\%: " + (f"[{num(r.k68_lo)}, {num(r.k68_hi)}]" if np.isfinite(r.k68_lo) and np.isfinite(r.k68_hi) else "undefined")
+    body = [r"\begin{tabular}{lcccc}\toprule", r" & \multicolumn{2}{c}{24 months} & \multicolumn{2}{c}{36 months}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Yield and FCI, measured as & Estimate & 90\% set & Estimate & 90\% set\\ \midrule"]
+    for lab, f, st, bold in (("Nominal", "nom", "1996-01", False), ("Real", "real", "1996-01", False), ("Neutral rate, 1996 start (baseline)", "rstar", "1996-01", True), ("Neutral rate, 1973 start", "rstar", "1973-01", False)):
+        r = row(f, st); a = lambda x: rf"\textbf{{{x}}}" if bold else x
+        body.append(f"{a(lab)} & {a(num(r[24].kappa))} & {a(cellk(r[24]))} & {a(num(r[36].kappa))} & {a(cellk(r[36]))}" + r"\\")
+        chk(f"multiplier cell {lab}: baseline set bounded", bold == False or (np.isfinite(r[24].k_lo) and np.isfinite(r[24].k_hi)))
+    body.append(r"\bottomrule\end{tabular}")
+    note = (r"$\kappa_H$ is the core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response \citep{barnichon2021}; its inverse in absolute value is the sacrifice ratio. Estimate: ratio of the point responses. "
+            r"90\% set: Anderson--Rubin type, all values for which the 90\% bootstrap interval of $\tilde P_H-\kappa\tilde U_H$ contains zero. The ratio is undefined when the 90\% interval of the cumulative unemployment response includes zero, because the data then cannot rule out unemployment responses of zero or either sign; the 68\% set is then shown where it exists. 12 lags. All cases in Appendix Table~\ref{tab:tradefull}.")
+    (REPORT / "tab_tradeoff.tex").write_text(tbl("Implied Trade-Off: The Phillips Multiplier", "tab:tradeoff", "\n".join(body), note) + "\n")
+tradeoff_compact()
+
+
+_s = D.EV.ns.values[D.event_index()]; mac("sd:ns", f"{1000 * _s.std() / 10:.1f}"); mac("sd:ns:bp", f"{100 * _s.std():.0f}"); mac("sd:ns:p90", f"{100 * np.percentile(np.abs(_s), 90):.0f}")
+
 # =============================================================== write macros, restyle, assert claims
 (REPORT / "numbers_ext.tex").write_text("\n".join(ML) + "\n")
 LST.restyle_dir(REPORT)

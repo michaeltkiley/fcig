@@ -1,26 +1,13 @@
-\begin{table}[tp]\centering\small
-\caption{Implied Trade-Off: Phillips Multiplier $\kappa_H$ (12 Lags)}\label{tab:tradeoff}
+\begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{Implied Trade-Off: The Phillips Multiplier}\label{tab:tradeoff}
 \resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
-\begin{tabular}{llrr}\toprule Case & FCI & $H=24$ months & $H=36$ months\\ \midrule
-Nominal & none & $-$0.01 [$-$0.31, 0.47] & 0.08 [$-$0.25, 0.62]\\
- & nominal & unbounded & unbounded\\
-Real & none & 0.14 [$-$0.23, 0.71] & 0.21 [$-$0.21, 1.06]\\
- & real & unbounded & unbounded\\
-r*-gap & none & unbounded & unbounded\\
- & r*-gap & $-$1.07 [$-$3.78, $-$0.51] & $-$0.90 [$-$3.62, $-$0.39]\\
-\addlinespace
-Start 1973 & r*-gap & unbounded & unbounded\\
-2020 dropped & r*-gap & $-$0.95 [$-$2.00, $-$0.33] & $-$0.82 [$-$2.13, $-$0.17]\\
-2020 dropped, start 1973 & r*-gap & $-$1.49 [$-$2.91, $-$0.72] & $-$1.64 [$-$5.42, $-$0.72]\\
-Ends 2019 & r*-gap & unbounded & unbounded\\
-Ends 2019, start 1973 & r*-gap & $-$1.21 [$-$6.44, $-$0.39] & unbounded\\
-\addlinespace
-Kiley r* & r*-gap (Kiley) & $-$0.22 [$-$0.71, 0.46] & $-$0.03 [$-$0.58, 3.56]\\
-Kiley r*, start 1973 & r*-gap (Kiley) & unbounded & unbounded\\
-Real, spline trend & real & unbounded & unbounded\\
-Real, spline trend, start 1973 & real & unbounded & unbounded\\
-\addlinespace
-r*-gap minus nominal, with FCI & & [$-$1.12, 6.57] & [$-$1.08, 8.74]\\
+\begin{tabular}{lcccc}\toprule
+ & \multicolumn{2}{c}{24 months} & \multicolumn{2}{c}{36 months}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Yield and FCI, measured as & Estimate & 90\% set & Estimate & 90\% set\\ \midrule
+Nominal & 7.03 & undefined; 68\%: undefined & $-$4.85 & undefined; 68\%: undefined\\
+Real & $-$1.74 & undefined; 68\%: undefined & $-$1.32 & undefined; 68\%: undefined\\
+\textbf{Neutral rate, 1996 start (baseline)} & \textbf{$-$1.07} & \textbf{[$-$3.78, $-$0.51]} & \textbf{$-$0.90} & \textbf{[$-$3.62, $-$0.39]}\\
+Neutral rate, 1973 start & $-$2.24 & undefined; 68\%: [$-$30.98, $-$1.26] & $-$2.37 & undefined; 68\%: undefined\\
 \bottomrule\end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} $\kappa_H$ = core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response (Barnichon and Mesters 2021); the sacrifice ratio is $-1/\kappa_H$. Point estimate and 90\% confidence set (Anderson--Rubin type) in brackets, computed exactly (a wide grid refined by bisection), so a finite end is never an artifact of the grid. An infinite end means that the 90\% interval of the cumulative unemployment response includes zero: the data then cannot rule out arbitrarily steep trade-offs on that side; ``unbounded'': both sides. Last row: paired difference over common announcement draws.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} $\kappa_H$ is the core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response \citep{barnichon2021}; its inverse in absolute value is the sacrifice ratio. Estimate: ratio of the point responses. 90\% set: Anderson--Rubin type, all values for which the 90\% bootstrap interval of $\tilde P_H-\kappa\tilde U_H$ contains zero. The ratio is undefined when the 90\% interval of the cumulative unemployment response includes zero, because the data then cannot rule out unemployment responses of zero or either sign; the 68\% set is then shown where it exists. 12 lags. All cases in Appendix Table~\ref{tab:tradefull}.\end{flushleft}
 \end{table}

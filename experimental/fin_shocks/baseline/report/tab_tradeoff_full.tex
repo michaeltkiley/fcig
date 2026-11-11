@@ -1,0 +1,26 @@
+\begin{table}[tp]\centering\small
+\caption{Implied Trade-Off: Phillips Multiplier $\kappa_H$ (12 Lags), All Cases}\label{tab:tradefull}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{llrr}\toprule Case & FCI & $H=24$ months & $H=36$ months\\ \midrule
+Nominal & none & $-$0.01 [$-$0.31, 0.47] & 0.08 [$-$0.25, 0.62]\\
+ & nominal & 7.03 (undefined; 68\%: undefined) & $-$4.85 (undefined; 68\%: undefined)\\
+Real & none & 0.14 [$-$0.23, 0.71] & 0.21 [$-$0.21, 1.06]\\
+ & real & $-$1.74 (undefined; 68\%: undefined) & $-$1.32 (undefined; 68\%: undefined)\\
+r*-gap & none & 1.67 (undefined; 68\%: undefined) & 2.48 (undefined; 68\%: undefined)\\
+ & r*-gap & $-$1.07 [$-$3.78, $-$0.51] & $-$0.90 [$-$3.62, $-$0.39]\\
+\addlinespace
+Start 1973 & r*-gap & $-$2.24 (undefined; 68\%: [$-$30.98, $-$1.26]) & $-$2.37 (undefined; 68\%: undefined)\\
+2020 dropped & r*-gap & $-$0.95 [$-$2.00, $-$0.33] & $-$0.82 [$-$2.13, $-$0.17]\\
+2020 dropped, start 1973 & r*-gap & $-$1.49 [$-$2.91, $-$0.72] & $-$1.64 [$-$5.42, $-$0.72]\\
+Ends 2019 & r*-gap & $-$0.31 (undefined; 68\%: [$-$1.05, 0.01]) & $-$0.43 (undefined; 68\%: undefined)\\
+Ends 2019, start 1973 & r*-gap & $-$1.21 [$-$6.44, $-$0.39] & $-$1.58 (undefined; 68\%: [$-$7.95, $-$0.86])\\
+\addlinespace
+Kiley r* & r*-gap (Kiley) & $-$0.22 [$-$0.71, 0.46] & $-$0.03 [$-$0.58, 3.56]\\
+Kiley r*, start 1973 & r*-gap (Kiley) & 28.26 (undefined; 68\%: undefined) & 9.45 (undefined; 68\%: undefined)\\
+Real, spline trend & real & $-$0.55 (undefined; 68\%: undefined) & $-$0.39 (undefined; 68\%: undefined)\\
+Real, spline trend, start 1973 & real & $-$1.31 (undefined; 68\%: [$-$3.74, $-$0.69]) & $-$1.18 (undefined; 68\%: [$-$8.55, $-$0.61])\\
+\addlinespace
+r*-gap minus nominal, with FCI & & [$-$1.12, 6.57] & [$-$1.08, 8.74]\\
+\bottomrule\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} $\kappa_H$ = core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response (Barnichon and Mesters 2021); the sacrifice ratio is $-1/\kappa_H$. Point estimate and 90\% confidence set (Anderson--Rubin type) in brackets, computed exactly (a wide grid refined by bisection), so a finite end is never an artifact of the grid. An infinite end means that the 90\% interval of the cumulative unemployment response includes zero: the data then cannot rule out arbitrarily steep trade-offs on that side; ``unbounded'': both sides. Last row: paired difference over common announcement draws.\end{flushleft}
+\end{table}

@@ -329,9 +329,10 @@ rows = [f"{names[k]} & {sg(w.response[k], '{:.2f}')} ({w.se[k]:.2f}) & {sg(w.wei
 try:
     T = pd.read_csv(RESULTS / "tradeoff.csv"); T["fci"] = T.fci.astype(str); D = pd.read_csv(RESULTS / "tradeoff_diff.csv")
     def kset(r):
-        if np.isinf(r.k_lo) and np.isinf(r.k_hi): return "unbounded"
-        lo = "$(-\\infty$" if np.isinf(r.k_lo) else f"[{num(r.k_lo)}"; hi = "$+\\infty)$" if np.isinf(r.k_hi) else f"{num(r.k_hi)}]"
-        return f"{num(r.kappa)} {lo}, {hi}"
+        if np.isinf(r.k_lo) or np.isinf(r.k_hi):
+            s68 = "undefined" if (np.isinf(r.k68_lo) or np.isinf(r.k68_hi)) else f"[{num(r.k68_lo)}, {num(r.k68_hi)}]"
+            return f"{num(r.kappa)} (undefined; 68\\%: {s68})"
+        return f"{num(r.kappa)} [{num(r.k_lo)}, {num(r.k_hi)}]"
     lines = []
     def trow(lab, c):
         t = T[(T.form == c["form"]) & (T.fci == str(c["fci"])) & (T.macro == c["macro"]) & (T.start == c["start"]) & (T.end.fillna("").astype(str).str.replace(".0", "", regex=False) == (str(c["end"]) if c["end"] else ""))
@@ -347,7 +348,7 @@ try:
         lines.append(trow(CS.SHORT[pid], CS.panel_by_id(pid)["cases"][1]))
     d = D[D.lags == MAIN_LAGS].set_index("H")
     lines += [r"\addlinespace", "r*-gap minus nominal, with FCI & & " + " & ".join(f"[{num(d.lo[h])}, {num(d.hi[h])}]" for h in (24, 36)) + r"\\"]
-    (REPORT / "tab_tradeoff.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Implied trade-off: Phillips multiplier $\kappa_H$ (12 lags)}\label{tab:tradeoff}",
+    (REPORT / "tab_tradeoff_full.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Implied trade-off: Phillips multiplier $\kappa_H$ (12 lags), all cases}\label{tab:tradefull}",
         r"\begin{tabular}{llrr}\toprule Case & FCI & $H=24$ months & $H=36$ months\\ \midrule", *lines, r"\bottomrule\end{tabular}",
         r"\par\smallskip\parbox{0.9\linewidth}{\scriptsize $\kappa_H$ = core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response (Barnichon and Mesters 2021); the sacrifice ratio is $-1/\kappa_H$. Point estimate and 90\% confidence set (Anderson--Rubin type) in brackets, computed exactly (a wide grid refined by bisection), so a finite end is never an artifact of the grid. An infinite end means that the 90\% interval of the cumulative unemployment response includes zero: the data then cannot rule out arbitrarily steep trade-offs on that side; ``unbounded'': both sides. Last row: paired difference over common announcement draws.}", r"\end{table}"]) + "\n")
 except FileNotFoundError:
