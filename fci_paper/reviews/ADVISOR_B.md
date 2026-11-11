@@ -129,3 +129,29 @@ Do not add further robustness. The existing robustness table suffices.
 - *"Sum p=0.17 resolves the tension":* absence of evidence on the level, not evidence of absence.
 
 **One question.** *Can the market index, measured relative to r*, be trusted as a channel: does it measure conditions in comparable units, carry information that is not just activity reflected back, and is the neutral-rate basis what stabilizes it?*
+
+## Round 5: 1996+ design and real time
+
+**Recommendation in one line.** Estimate once on the full 1996-2026 sample, and call every other estimate in the paper a descriptive reading, not a forecast. Do not claim real-time out-of-sample performance the data cannot support. [inference throughout]
+
+**(1) Estimation scheme.**
+- *Weights.* The first announcement is 1996 and An expanding window from 2006 would have about 100 events, and the intervals are already wide. Use the fixed 1996-2026 weights as the baseline. Show expanding-window weights from 2008 in one figure for drift. "Out of sample" has no clean meaning when the weights use the later announcements: a forecast from 2005 that uses 2026 weights is in-sample for the weights. Say so.
+- *VAR and flow.* Keep the 1973+ unemployment-index VAR with weights from 1996+ (five recessions); the pre-1996 index extrapolates the weights, as the paper states. Re-estimate on 1996+ as a check, with 4 lags (two recessions plus 2020).
+- *Stance regressions.* Fixed sample, HAC or block-bootstrap intervals, 2020 dummied or dropped. No rolling 20-year window: about two recessions per window, mostly noise. For stability use an expanding window from 2010 and plot the coefficient with its band. Lower-bound years stay in; dropping them is already a check.
+- Forecast evaluation: recursive (expanding) windows only, with Clark-West. Rolling windows lose too much power here.
+
+**(2) What pseudo real time can be done.**
+| Input | Real time? |
+|---|---|
+| Weights | No. Full sample. Report expanding-window drift only. |
+| Policy rate, yields, dollar, S&P | Yes, never revised. |
+| CAPE | Mostly (price and trailing earnings; earnings are revised slightly). Treat as real time. |
+| Unemployment, payrolls, GDP, core PCE | Yes via ALFRED vintages for headline series (PAYEMS, UNRATE, GDPC1, PCEPILFE). Payrolls and GDP revisions are large; unemployment is small. |
+| NROU (CBO) | Partly: CBO vintages exist only back to about 1990s and are not all on ALFRED [secondhand]. Otherwise state that the gap is ex post. |
+| Expected inflation | Livingston and Cleveland Fed estimates are essentially real time (Cleveland is revised little). |
+| r* (Laubach-Williams) | One-sided but full-sample parameters. Real-time vintages exist from the New York Fed for recent years only [secondhand]. Cannot be made real time before about 2016. |
+State that predictive claims are pseudo real time in the variables, not in the weights or r*. Minimum: real-time unemployment rate and ALFRED vintages for payrolls and GDP outcomes.
+
+**(3) Presentation.** One main specification: fixed 1996+ weights, full-sample VAR, r* basis. Checks in one table of four rows: weights 1996-2019; expanding weights from 2008; VAR on 1996+; the 1973+ extrapolated sample.
+
+**(4) What would hold up.** 1996+ holds if the signs and rough size of the flow and r* effects agree across the four rows and the intervals overlap. It fails if the weights drift outside the baseline interval after 2010, if the VAR response changes sign on 1996+, or if the r* step helps only before 1996 (then the neutral-rate claim rests on the extrapolated period).

@@ -134,3 +134,25 @@ Choose A as the frame and use B as the one new analysis. Drop robustness expansi
 - Activity-fitted weights (`weights/`): intervals of 0.00 to 0.59 rank nothing, and the dollar share of 0.00 is a corner.
 
 **One question for Note A:** *Is the market index, measured relative to r*, a stable measure of how far financial conditions stand from neutral that carries information about activity?* Items 1 and 2 test the first half, and the follow-ups already give the second half.
+
+## Round 5: 1996+ design and real time
+
+**(1) Estimation scheme (my recommendation).**
+- **Weights:** fixed 1996-2026 full-sample estimate for the main index. The weights define the unit and the index's meaning, so they should not drift. The sample has 250 announcements and the 10-year weight is already imprecise (0.13 to 1.13), so a 20-year rolling window would be noisier than the instability it removes. Check the stability with an expanding window from 2010 (about 100 announcements) and report the weight path with its bands. Treat 2008-15 as part of the sample: drop it only as a check, since the zero-bound years are where the stance question is hardest. Use the Nakamura-Steinsson factor, which is built to survive the bound.
+- **VAR and flow:** expanding window, first estimate in 2006, with a 1973 start for the VAR (the VAR needs no announcements and a long sample is what pins down the dynamics). The weights then enter as fixed. Fitting the VAR on 30 years only (12 lags, 2 variables) is too thin and would change the flow for reasons unrelated to conditions.
+- **Stance regressions:** expanding window from 2006, recursive out-of-sample from the first estimate, 2020-21 dummied or dropped as in the package. Do not use a rolling window: with two recessions since 1996 a 20-year window can have one or none.
+
+**(2) What pseudo real time is honest.** Nothing in the plan is real time now. Input by input:
+- *Weights:* can be made recursive (expanding by announcement date). Real time in the sense of data known then; yes.
+- *r* (Laubach-Williams):* the NY Fed publishes historical vintages and LW real-time estimates; use them if available [secondhand, check]. Otherwise one-sided but full-sample parameters, which has to be said plainly. The Kiley series cannot be made real time.
+- *NROU (CBO):* ALFRED has CBO vintages [secondhand]; use them. Otherwise replace the CBO gap with a one-sided filter and say so.
+- *Unemployment, payrolls and core PCE:* the revisions are small for the civilian unemployment rate (seasonals) and payrolls revise materially; use ALFRED vintages for payrolls and core PCE and the first-release series for the target.
+- *Expected inflation:* survey measures (Cleveland, SPF) are not revised and are real time.
+- *CAPE:* constructed from revised earnings. It cannot be made real time with public vintages; say so.
+- *Yields, dollar, funds rate:* not revised.
+
+Claim "pseudo-real-time" only for the inputs above that were vintage-based or recursive, and call the rest "information available at the date, up to revisions I cannot remove". Do not use "real time" in the title or abstract.
+
+**(3) Presentation.** One main specification: weights fixed 1996+, VAR and regressions expanding from 2006. Four checks in one table: (a) fixed 1996+ throughout, (b) 20-year rolling weights, (c) 1973+ where no announcements are needed, (d) excluding 2008-15. Everything else goes unreported. One sentence on pseudo real time.
+
+**(4) What decides it.** 1996+ holds up if the stance-regression signs and the r*-basis ranking agree across the four checks, the weight path stays inside its bands, and the expanding-window flows correlate above about 0.9 with the full-sample flows. It fails if the r* ranking flips between (a) and (c), or if the weights move outside their bands after 2010. If it fails, the result belongs to a regime, and the paper should say that and not pool.
