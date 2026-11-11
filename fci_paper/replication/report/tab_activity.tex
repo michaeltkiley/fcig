@@ -1,0 +1,17 @@
+\begin{table}[tp]\centering\small
+\caption{Unemployment Gap 12 Months Ahead on the Current Index Reading, Relative to $r^*$}\label{tab:activity}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrrrrrr}
+\toprule
+ & Coefficient & Gain in adj.\ $R^2$ & RMSE ratio & 1995--2007 & 2008--19 & 2021--25 & DM $t$ \\
+\midrule
+Market index forward impetus & 0.50 (0.09) & 0.11 & 0.89 & 0.89 & 0.86 & 1.14 & $-$1.12 \\
+FCI-G, 1-year lookback & 0.70 (0.10) & 0.14 & 0.87 & 0.87 & 0.85 & 1.09 & $-$1.05 \\
+FRB/US growth impetus & 0.30 (0.05) & 0.12 & 0.93 & 0.94 & 0.91 & 1.09 & $-$0.62 \\
+Market index (level) & 0.07 (0.05) & 0.01 & 1.06 & 0.94 & 1.12 & 0.89 & 1.00 \\
+GS (level) & 0.09 (0.06) & 0.02 & 1.05 & 0.90 & 1.11 & 0.86 & 0.82 \\
+FRB/US index (level) & 0.07 (0.06) & 0.01 & 1.05 & 0.90 & 1.11 & 0.93 & 0.97 \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Local projection $u_{t+12}=a+b\,u_t+c\,x_t$, 1976--2026; coefficient $c$ (HAC standard error); gain in adjusted $R^2$ over $u_t$ alone. Out of sample: recursive estimates, forecast origins 1995--2025; ratio of root mean squared errors to the projection on $u_t$ alone (below 1: the index helps), also for three subperiods; DM: Diebold--Mariano $t$ (negative: index better). Months touching 2020 to March 2021 excluded.\end{flushleft}
+\end{table}

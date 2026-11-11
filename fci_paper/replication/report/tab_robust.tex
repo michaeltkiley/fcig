@@ -1,0 +1,19 @@
+\begin{table}[tp]\centering\small
+\caption{Variations of the Construction}\label{tab:robust}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+ & Market--GS & Market--FRB/US & Range & Latest & $\Phi(12)$ [90\%] & Flow--FCI-G [5--95\%] \\
+\midrule
+Baseline: Laubach-Williams r*, 12 lags, VAR 1973-2026 & 0.99 & 0.94 & 0.88 & $-$0.93 & 0.65 [0.39, 0.83] & 0.84 [0.52, 0.90] \\
+Kiley r* & 0.99 & 0.95 & 0.79 & $-$1.40 & 0.61 [0.33, 0.80] & 0.85 [0.56, 0.91] \\
+4 VAR lags & 0.99 & 0.94 & 0.88 & $-$0.93 & 0.40 [0.21, 0.58] & 0.72 [0.48, 0.90] \\
+VAR estimated from 1990 & 0.99 & 0.94 & 0.88 & $-$0.93 & 0.62 [0.21, 0.92] & 0.77 [$-$0.03, 0.88] \\
+VAR estimated to 2019 & 0.99 & 0.94 & 0.88 & $-$0.93 & 0.68 [0.42, 0.85] & 0.84 [0.54, 0.91] \\
+Weights: policy news is the 2-year yield & 0.91 & 0.96 & 0.96 & +0.41 & 0.52 [0.23, 0.71] & 0.76 [0.31, 0.85] \\
+Weights: announcements through 2019 & 0.99 & 0.91 & 1.06 & $-$1.49 & 0.62 [0.38, 0.78] & 0.84 [0.55, 0.90] \\
+Weights: no announcements at the lower bound & 0.95 & 0.95 & 1.05 & $-$0.22 & 0.52 [0.27, 0.69] & 0.79 [0.43, 0.87] \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Baseline: relative to $r^*$ (Laubach--Williams), 12 lags, VAR from 1973, announcement-window weights from the Nakamura--Steinsson factor. Market--GS and Market--FRB/US: correlations of monthly levels, 1974--2026. Range: average range of the four level indexes, 1990--2026. Latest: market index, September 2026. $\Phi(12)$: unemployment response after 12 months with 90 percent block-bootstrap interval. Flow--FCI-G: correlation of the forward impetus with FCI-G (1-year), with the 5th to 95th percentile over bootstrap draws of the response. In the three weights variations GS and FRB/US are the baseline ones.\end{flushleft}
+\end{table}

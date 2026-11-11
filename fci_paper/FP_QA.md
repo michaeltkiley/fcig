@@ -1,0 +1,24 @@
+# fci_paper: decisions and open items
+
+## Scope and style (the author, 11 Nov 2026; asked before the autonomous work began)
+- **FP-A1. Framing.** "Do indexes agree?": how tight are financial conditions, and how much of the disagreement between indexes is measurement (units, nominal or real, r*) and how much is weights. The market index is the tool for the comparison, not the headline. (Alternatives offered: new index as headline; r* as headline.)
+- **FP-A2. New work.** Presentation plus light additions: intervals on the key results; the post-1990 split of the VAR (noted earlier, never saved); sample-end robustness. No new indexes or specifications.
+- **FP-A3. Reviews.** Two independent reviewers (one against `WRITING_GUIDE.md`, one as a journal referee); common lessons applied, the rest recorded here (`reviews/`).
+- **FP-A4. Location.** New top-level `fci_paper/`, separate from `fci_note/` and `experimental/`, with a self-contained package `replication/` (own data copy) and the paper in `paper/`. Same author, affiliation, views disclaimer and AI-tools statement as Note B; house LaTeX style of Note B.
+
+## Choices I made (the conventional default or required by the design; change on request)
+- **FP-A5. Title** "Financial Conditions Indexes on a Common Basis". Open: the author may prefer another.
+- **FP-A6. Bootstrap.** Block bootstrap (12-month blocks, recursive) for the VAR, as Note B's default; 90 percent intervals in tables, 68 and 90 percent bands in the response figure. Note A used independent resampling and 95 percent bands; its "significant from month 1 to 33" becomes "1 to 36" at 90 percent.
+- **FP-A7. Sampling error of the weights.** Resample announcements with replacement (500 draws), recompute the policy-news factor and the weights; GS and FRB/US held fixed. Result: the weights are imprecise (10-year weight 90 percent interval 0.13 to 1.13), the FRB/US weights lie inside all three intervals, the September 2026 reading has a 90 percent interval wider than the GS-FRB/US gap. This changes the paper's message from "the indexes differ because of weights" to "the differences are of the order of the benchmark's own sampling error".
+- **FP-A8. Weights variations.** Window change of the two-year yield as the news measure; announcements through 2019; no announcements December 2008 to November 2015 (lower bound). Chosen as the cheapest tests of whether the weights depend on the news series and the period. The reading for September 2026 follows the equity weight.
+- **FP-A9. Headline comparator.** FRB/US index without house prices (the version with house prices is a column in Tables 5 and 6 and a check): the house-price detrending is a judgement that the comparison does not need.
+- **FP-A10. What was dropped from Note A's main text.** ANFCI beyond one correlation (a stress index, different object); the box on unemployment becomes Section 5.5 with one table; current pressure and the real-version activity tables are in the appendix.
+- **FP-A11. Claims corrected from Note A's text** (found while rewriting; asserted in `07_report.py`): "flows agree more than levels" is false (0.84 against 0.94 to 0.99); "closest to GS at every step" is false in the weights variations (two-year news: 0.91 against FRB/US 0.96); forward-impetus coefficient 0.50 against yardstick 0.65 is "inside the yardstick's 90 percent interval", not "consistent" in a tight sense.
+- **FP-A12. Today's reading.** The market index reads -0.93 relative to r*, GS -1.23, FRB/US +0.27 (September 2026, zero = 1973-2026 mean). Zero is not neutral; the paper says so in the discussion.
+
+## Open items (for the author)
+1. Read-through of the whole draft; title; whether Note B should now cite this paper instead of `fcinote` (its bibliography still carries the placeholder; not edited here).
+2. Unverified inputs (see `replication/data/SOURCES.md`): Kiley r*; FRB/US simulations (not re-run); daily CAPE and GS series; Livingston Survey; pre-2006 dollar splice; the FRED files not in Note B's verified list (FRED was unreachable from the session's network on 11 Nov).
+3. Citations: `sack2023` (Brookings, read only through a summary; initials of the authors unverified), `hatzius2019` (slides, read; exact venue unverified), `dudley2010` (read in an earlier session), Okun coefficient of two (assumption, no citation). Arnaut-Bauer (authors checked on the FRBSF page), Brayton-Laubach-Reifschneider and Aramonte-Rosen-Schindler (Crossref) verified. Other entries copied from Note B's `references.bib` (checked on 1 Nov 2026, `REFERENCE_CHECK.md`).
+4. r* uncertainty is not carried into the intervals (Laubach-Williams and Kiley are two points, not a distribution); FRB/US and GS weights are held fixed in the bootstrap.
+5. A neutral level for the index itself (FCI*-type) is not estimated.

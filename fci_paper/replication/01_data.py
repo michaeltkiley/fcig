@@ -11,5 +11,6 @@ for k, s, a, b in (("einf_1981", "einf_1y", "1981-01", "1981-12"), ("einf_1974",
                    ("rstar_ki_pre", "rstar Kiley", "1990-01", "2007-12")):
     S.add(k, D[s].loc[a:b].mean())
 S.add("einf_latest", D.einf_1y.iloc[-1]); S.add("rstar_lw_latest", D["rstar LW"].iloc[-1]); S.add("rstar_ki_latest", D["rstar Kiley"].iloc[-1])
+S.add("cape_7780", D.cape.loc["1977-01":"1980-12"].mean()); S.add("cape_mean", D.cape.loc["1973-01":"2026-09"].mean()); S.add("cape_latest", D.cape.iloc[-1])
 S.add("usd_nom_1973", D.usd_nominal.loc["1973-01"]); S.add("usd_nom_latest", D.usd_nominal.iloc[-1])
 S.save()

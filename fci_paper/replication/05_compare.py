@@ -45,7 +45,7 @@ z = {c: zero90(IX[c]) for c in ("nominal", "real", "rstar")}
 S.add("step_nom_real_ninety", K.corr(z["nominal"].market, z["real"].market)); S.add("step_real_rstar_ninety", K.corr(z["real"].market, z["rstar"].market))
 S.add("step_nom_real_long", K.corr(IX["nominal"].market, IX["real"].market)); S.add("step_real_rstar_long", K.corr(IX["real"].market, IX["rstar"].market))
 for c in ("nominal", "real", "rstar"):
-    S.add(f"{c}_mkt_gfc", z[c].market.loc["2009-01":"2016-12"].mean())
+    S.add(f"{c}_mkt_gfc", z[c].market.loc["2009-01":"2016-12"].mean()); S.add(f"{c}_gs_gfc", z[c].gs.loc["2009-01":"2016-12"].mean()); S.add(f"{c}_frbus_gfc", z[c].frbus.loc["2009-01":"2016-12"].mean())
     for nm, d in (("seventyfour", "1974-06"), ("seventynine", "1979-12"), ("eightyone", "1981-06"), ("gfc", "2008-12")):
         S.add(f"{c}_fcig_{nm}", IX[c].fcig_1yr.loc[d])
 # share of months with a cross-index range above 1 pp, r* baseline, 1990-
