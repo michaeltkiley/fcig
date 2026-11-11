@@ -1,3 +1,5 @@
+> Superseded on 11 Nov 2026 by `experimental/WRITING_GUIDE.md` (the confirmed guide). This file keeps the evidence from the author's earlier papers.
+
 # Style guide for Note B: DRAFT FOR THE AUTHOR TO CONFIRM (11 Nov 2026)
 
 Nothing in the note is changed on the basis of this draft until it is confirmed. Every point below is tied to a quotation in `style_evidence/` (four files: `ev_jmcb.md`, `ev_ijcb.md`, `ev_ramey.md`, `ev_notes.md`). Labels used: **OBSERVED** = in the text of a source; **AUTHOR RULE** = recorded in the author's FOMC project logs as the author's instruction (second-hand: the logs are written by Claude sessions); **AI REVIEW** = a reviewer agent's comment in those logs, not an author rule; **INTERPRETATION** = mine.

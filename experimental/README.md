@@ -18,3 +18,5 @@ Entry point: `PROJECT_MEMORY.md` (section 9 = where we are). Glossary of index n
 | `note_draft/` | Draft of note section 3 (market index) | full draft is in `../fci_note/paper/` |
 | `mp_var_fci/` | Monetary policy shocks in a VAR with the market index (Cholesky, Nakamura-Steinsson, Bauer-Swanson, Greenbook purge, Bayesian proxy-SVAR). Start with `SUMMARY_REPORT.md`; decisions in `MP_QA.md` | **closed 31 Oct 2026** (negative result: credit, not the index, fixes post-1994 identification) |
 | `fin_shocks/` | Transmission note (Note B): window-identified surprises traced through the FCI and r* | LaTeX note `fin_shocks/paper/mp_transmission.tex` (1 Nov 2026); uses the FCI of `../fci_note/` (Note A). Clean, self-contained baseline and robustness package: `fin_shocks/baseline/` (10 Nov 2026; `README.md` there); experimental code and outputs moved to `fin_shocks/legacy/` |
+
+- `WRITING_GUIDE.md`: the author's writing and working preferences for all papers (read before editing text); evidence from earlier papers in `fin_shocks/paper/STYLE_GUIDE_DRAFT.md`.
