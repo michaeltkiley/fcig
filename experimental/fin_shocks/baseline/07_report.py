@@ -203,8 +203,8 @@ def check_claims():
     """The qualitative claims made in the note's Sections 3.1-3.2; raises an error if any stops being true of the results."""
     def g(f, fk, v, h):
         dd = R[CS.case_id(dict(form=f, fci=0 if fk == "no" else f, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"))]; r = dd[(dd.lags == MAIN_LAGS) & (dd["var"] == v)].iloc[0]
-        return r[f"r{h}"], r[f"lo{h}"] * r[f"hi{h}"] > 0
-    est = lambda *k: g(*k)[0]; sig = lambda *k: g(*k)[1]; S = ("nom", "real", "rstar"); bad = []
+        return r[f"r{h}"], r[f"lo{h}"] * r[f"hi{h}"] > 0, r[f"lo95_{h}"] * r[f"hi95_{h}"] > 0
+    est = lambda *k: g(*k)[0]; sig = lambda *k: g(*k)[1]; sig5 = lambda *k: g(*k)[2]; S = ("nom", "real", "rstar"); bad = []
     chk = lambda name, ok: None if ok else bad.append(name)
     for f in ("nom", "real"):
         chk(f"{f}: yield alone, unemployment falls significantly at 12 m", est(f, "no", "u", 12) < 0 and sig(f, "no", "u", 12)); chk(f"{f}: yield alone, price level does not respond significantly at 24 m", not sig(f, "no", "P", 24))
@@ -214,7 +214,7 @@ def check_claims():
         chk(f"{f}: with FCI, unemployment positive at 24 and 36 m", est(f, "yes", "u", 24) > 0 and est(f, "yes", "u", 36) > 0)
         chk(f"{f}: with FCI, price level falls at 12, 24, 36 m", all(est(f, "yes", "P", h) < 0 for h in (12, 24, 36)))
     chk("with FCI, unemployment not significantly negative at any step and horizon", not any(est(f, "yes", "u", h) < 0 and sig(f, "yes", "u", h) for f in ("nom", "real", "rstar") for h in (12, 24, 36)))
-    chk("with FCI, price level significant at 24 and 36 m at the real and r*-gap steps, at 36 m only at the nominal step", all(sig(f, "yes", "P", h) for f in ("real", "rstar") for h in (24, 36)) and sig("nom", "yes", "P", 36) and not sig("nom", "yes", "P", 24))
+    chk("with FCI, price level significant at 10% at 24 and 36 m at every step, and at 5% at 12, 24 and 36 m at the real and r*-gap steps", all(sig(f, "yes", "P", h) for f in S for h in (24, 36)) and all(sig5(f, "yes", "P", h) for f in ("real", "rstar") for h in (12, 24, 36)))
     chk("r*-gap with FCI has the largest price fall at 24 m", est("rstar", "yes", "P", 24) < min(est("nom", "yes", "P", 24), est("real", "yes", "P", 24)))
     LS = pd.read_csv(RESULTS / "lit_style.csv").query("lags == 12"); ls = lambda c, v, h: LS[(LS.case == c) & (LS["var"] == v) & (LS.h == h)].iloc[0]; lsig = lambda c, v, h: ls(c, v, h).lo * ls(c, v, h).hi > 0
     for c in ("chol_2y_1996", "chol_2y_1984", "proxy_2y_1996"):
@@ -261,7 +261,11 @@ def check_claims():
     chk("R4b: nominal step price level not negative at 24 and 36 m", c73("nom", "P", 24)["r24"] > 0 and c73("nom", "P", 36)["r36"] > 0)
     chk("R5 (alternative surprises): with FCI unemployment positive and price level negative at 12, 24, 36 m; responses at 24 m at least as large as the baseline's", all(rb(p_, "yes", "u", h)[0] > 0 and rb(p_, "yes", "P", h)[0] < 0 for p_ in ("R5a", "R5b") for h in (12, 24, 36)) and all(rb(p_, "yes", "u", 24)[0] >= est("rstar", "yes", "u", 24) and rb(p_, "yes", "P", 24)[0] <= est("rstar", "yes", "P", 24) for p_ in ("R5a", "R5b")))
     WT = pd.read_csv(RESULTS / "weights_test.csv"); chk("weights test, monthly equations from 1973, 12 lags: no rejection at 5% in either equation at any step", bool((WT[(WT.start == "1973-01") & (WT.lags == MAIN_LAGS)].p_boot > 0.05).all())); wt = lambda s_, e_, L_: WT[(WT.step == s_) & (WT["eq"] == e_) & (WT.lags == L_) & (WT.start == "1996-01")].p_boot.iloc[0]
-    chk("weights test, 12 lags: no rejection at 5% in the unemployment equation at any step; rejection in the inflation equation at every step", all(wt(s_, "u", 12) > 0.05 for s_ in S) and all(wt(s_, "pi", 12) < 0.05 for s_ in S))
+    chk("weights test, 12 lags: no rejection at 10% in the unemployment equation at any step; rejection at 10% in the inflation equation at every step, at 5% at the real and r*-gap steps", all(wt(s_, "u", 12) > 0.10 for s_ in S) and all(wt(s_, "pi", 12) < 0.10 for s_ in S) and wt("real", "pi", 12) < 0.05 and wt("rstar", "pi", 12) < 0.05)
+    chk("r*-gap with FCI: unemployment at 24 m significant at 10% but not 5%; price level at 5% at every horizon", sig("rstar", "yes", "u", 24) and not sig5("rstar", "yes", "u", 24) and all(sig5("rstar", "yes", "P", h) for h in (12, 24, 36)))
+    TT_ = pd.read_csv(RESULTS / "tradeoff.csv"); tr_ = lambda st, e_, t2, H_: TT_[(TT_.form == "rstar") & (TT_.fci == "rstar") & (TT_.macro == "u,pi") & (TT_.start == st) & (TT_.end.fillna(0).astype(float) == e_) & (TT_.t2020 == t2) & (TT_.trend == "none") & (TT_.lags == 12) & (TT_.H == H_) & (TT_["shock"] == "ns")].iloc[0]
+    bnd = lambda r_: np.isfinite(r_.k_lo) and np.isfinite(r_.k_hi) and r_.k_hi < 0
+    chk("multiplier set bounded and below zero at 24 m: baseline, 2020 dropped (1996, 1973), ends 2019 from 1973; unbounded: from 1973, ends 2019 from 1996", all(bnd(tr_(*a)) for a in (("1996-01", 0, "in", 24), ("1996-01", 0, "out", 24), ("1973-01", 0, "out", 24), ("1973-01", 2019, "in", 24))) and not any(np.isfinite(tr_(*a).k_lo) for a in (("1973-01", 0, "in", 24), ("1996-01", 2019, "in", 24))))
     assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
 
@@ -364,7 +368,7 @@ def lag_summary():
     line("Proxy VAR with FCI, simulated: first-stage $F$, median", [f"{sm[L].loc[('proxy_fci', 'F')].sim_median:.1f}" for L in LG])
     (REPORT / "tab_lags.tex").write_text("\n".join([r"\begin{table}[H]\centering\scriptsize\setlength{\tabcolsep}{3pt}", r"\caption{The main results with 3, 6 and 12 monthly lags}\label{tab:lags}",
         r"\begin{tabular}{p{5.3cm}ccc}\toprule & 3 lags & 6 lags & 12 lags\\ \midrule", *rows, r"\bottomrule\end{tabular}",
-        r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Same sample (1996 to 2026), announcements and bootstrap (500 draws, daily block re-estimated) at every lag length. Responses per +1 pp on the policy rate; $^{*}$ = 90\% interval excludes zero; intervals in brackets. Counts: the 16 cases with the FCI in the baseline and Robustness 1, 2, 3 and 5 (components excluded), responses at 12, 24 and 36 months.}", r"\end{table}"]) + "\n")
+        r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Same sample (1996 to 2026), announcements and block bootstrap (500 draws) at every lag length. Responses per +1 pp on the policy rate; $^{**}$, $^{*}$: 95\% and 90\% intervals exclude zero; 90\% intervals in brackets. Counts (at the 10 percent level): the 16 cases with the FCI in the baseline and Robustness 1, 2, 3 and 5 (components excluded), responses at 12, 24 and 36 months.}", r"\end{table}"]) + "\n")
     for L in LG:
         for k in ("Pneg", "Psig", "upos", "usig", "usigneg", "Psigpos"): dm(f"{k}:{L}", str(int(cnt[L][k])))
         dm(f"med:P:{L}", num(np.median([R[CS.case_id(c)].query("lags == @L and `var` == 'P'").iloc[0][f"r{h}"] for pn in CS.PANELS for c in pn["cases"] if c["fci"] not in (0, "cmp") for h in (12, 24, 36)])))
@@ -387,6 +391,26 @@ def lag_summary():
     if mult_bounded: chk("the multiplier set at 24 m is bounded at 12 lags only", mult_bounded == {3: False, 6: False, 12: True})
     assert not bad, "claims on lag length no longer hold: " + "; ".join(bad)
 lag_summary()
+
+
+# ---------------------------------------------------------------- appendix: the default bootstrap against independent resampling
+def boot_summary():
+    """Macros bl:bs:* (appended to numbers.tex) and claims for the appendix paragraph on the bootstrap."""
+    if not (RESULTS / "boot_sens.csv").exists(): print("boot_sens.csv missing: run 10_bootstrap_sensitivity.py"); return
+    B_ = pd.read_csv(RESULTS / "boot_sens.csv"); B_["fci"] = B_.fci.astype(str); key = ["form", "fci", "var", "h"]
+    a = B_[B_.variant == "j12r"].set_index(key); b = B_[B_.variant == "iid"].set_index(key); a = a.loc[b.index]
+    wr = ((b.hi - b.lo) / (a.hi - a.lo)); s10 = lambda x: (x.lo * x.hi > 0); s5 = lambda x: (x.lo95 * x.hi95 > 0); n = len(a)
+    ml = []; dm = lambda k, v: ml.append(r"\expandafter\gdef\csname bl:bs:" + k + r"\endcsname{" + v + "}")
+    dm("n", str(n)); dm("wr:med", f"{wr.median():.2f}"); dm("wr:min", f"{wr.min():.2f}"); dm("wr:max", f"{wr.max():.2f}"); dm("wider", str(int((wr > 1).sum())))
+    dm("same10", str(int((s10(a) == s10(b)).sum()))); dm("same5", str(int((s5(a) == s5(b)).sum()))); dm("sig10:block", str(int(s10(a).sum()))); dm("sig10:iid", str(int(s10(b).sum())))
+    k = ("rstar", "rstar", "u", 24); dm("u24:lo", num(b.loc[k].lo)); dm("u24:hi", num(b.loc[k].hi)); dm("u24:lo5", num(a.loc[k].lo)); dm("u24:hi5", num(a.loc[k].hi))
+    (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
+    bad = []; chk = lambda name, ok: None if ok else bad.append(name)
+    chk("independent resampling gives wider 90% intervals than the block bootstrap in most of the responses", (wr > 1).mean() > 0.5)
+    chk("price level of the r*-gap FCI baseline significant at 5% at 12, 24, 36 m under both bootstraps", all(s5(x).loc[("rstar", "rstar", "P", h)] for x in (a, b) for h in (12, 24, 36)))
+    chk("nominal and real yield alone: unemployment at 12 m significantly negative at 5% under both bootstraps", all(s5(x).loc[(f, "0", "u", 12)] and x.loc[(f, "0", "u", 12)].r < 0 for x in (a, b) for f in ("nom", "real")))
+    assert not bad, "claims on the bootstrap no longer hold: " + "; ".join(bad)
+boot_summary()
 
 # ---------------------------------------------------------------- figures
 BLUE, ORANGE, INK, GREY = "#2a78d6", "#eb6834", "#0b0b0b", "#6b6a66"      # validated pair (dataviz skill, light surface); ink for text and neutral series
