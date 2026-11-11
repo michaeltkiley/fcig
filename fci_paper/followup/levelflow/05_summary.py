@@ -6,7 +6,6 @@ from common import *
 pd.set_option("display.width", 250)
 q = pd.read_csv(OUT / "quantile_results.csv")
 P = q[(q.freq == "M") & (q.tau == 0.1)].melt(id_vars=["series"], value_vars=["dm_lvl", "dm_flw", "dm_both"], var_name="spec", value_name="dm")
-P["p_one"] = stats.norm.cdf(-P.dm)   # H1: index loss lower than own-lags loss, DM t <0 means index better (loss diff = index - own)
 P["p_one"] = stats.norm.cdf(P.dm)
 P = P.sort_values("p_one").reset_index(drop=True); m = len(P)
 P["holm"] = np.minimum(1, np.maximum.accumulate((m - np.arange(m)) * P.p_one))
