@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 00:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 02:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -591,7 +591,7 @@ Underfull \hbox (badness 1622) in paragraph at lines 145--145
  []
 
 [8] [9] [10]
-<../baseline/report/fig_standard.pdf, id=616, 520.34402pt x 245.718pt>
+<../baseline/report/fig_standard.pdf, id=624, 520.34402pt x 245.718pt>
 File: ../baseline/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline/report/fig_standard.pdf  used on input lin
@@ -606,7 +606,7 @@ Overfull \hbox (37.21986pt too wide) in paragraph at lines 3--15
  []
 
 ) [11 <../baseline/report/fig_standard.pdf>]
-<../baseline/report/fig_size.pdf, id=701, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_size.pdf, id=709, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 21
@@ -614,7 +614,7 @@ Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 21
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
  [12]
 (../baseline/report/tab_main_B.tex) [13 <../baseline/report/fig_size.pdf>]
-<../baseline/report/fig_steps.pdf, id=796, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_steps.pdf, id=804, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
@@ -623,7 +623,7 @@ Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
 
 [14 <../baseline/report/fig_steps.pdf>] (../baseline/report/tab_tradeoff.tex)
 [15] (../baseline/report/tab_weights.tex)
-<../baseline/report/fig_financial.pdf, id=876, 317.98799pt x 202.356pt>
+<../baseline/report/fig_financial.pdf, id=887, 317.98799pt x 202.356pt>
 File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
@@ -669,11 +669,28 @@ Overfull \hbox (30.97092pt too wide) in paragraph at lines 3--24
  [][] 
  []
 
-) [21] (../baseline/report/tab_weights_test.tex) [22] [23] [24] [25] [26]
-[27] (../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex)
-(../baseline/report/tab_app_R1b.tex) (../baseline/report/tab_app_R1c.tex)
-(../baseline/report/tab_app_R1d.tex) (../baseline/report/tab_app_R1e.tex)
-(../baseline/report/tab_app_R2a.tex
+) [21] (../baseline/report/tab_weights_test.tex)
+(../baseline/report/tab_main_R5.tex
+Overfull \hbox (41.18619pt too wide) in paragraph at lines 3--16
+ [][] 
+ []
+
+! Misplaced alignment tab character &.
+<argument> ...ept when the 2-year yield and the S&
+                                                  P 500 move in opposite dir...
+l.16 ... = monthly observations in the equations.}
+                                                  
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+[22]) [23] [24] [25] [26] [27] [28] (../baseline/report/tab_app_B.tex)
+(../baseline/report/tab_app_R1a.tex) (../baseline/report/tab_app_R1b.tex)
+(../baseline/report/tab_app_R1c.tex) (../baseline/report/tab_app_R1d.tex)
+(../baseline/report/tab_app_R1e.tex) (../baseline/report/tab_app_R2a.tex
 Overfull \hbox (17.27327pt too wide) in paragraph at lines 3--19
  [][] 
  []
@@ -685,13 +702,14 @@ Overfull \hbox (23.88448pt too wide) in paragraph at lines 3--19
 
 ) (../baseline/report/tab_app_R2c.tex) (../baseline/report/tab_app_R2d.tex)
 (../baseline/report/tab_app_R3a.tex) (../baseline/report/tab_app_R3b.tex)
-(../baseline/report/tab_app_R4.tex) (../baseline/report/tab_standard_com.tex
+(../baseline/report/tab_app_R4.tex) (../baseline/report/tab_fullboot.tex)
+(../baseline/report/tab_standard_com.tex
 Overfull \hbox (115.98897pt too wide) in paragraph at lines 3--11
  [][] 
  []
 
-) (../baseline/report/tab_monthly_F.tex)
-(../baseline/report/tab_app_monthly.tex
+) (../baseline/report/tab_monthly_F.tex [29] [30] [31] [32] [33] [34] [35]
+[36]) (../baseline/report/tab_app_monthly.tex
 Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
  [][] 
  []
@@ -699,42 +717,47 @@ Overfull \hbox (9.03249pt too wide) in paragraph at lines 3--81
 
 LaTeX Warning: Float too large for page by 162.00858pt on input line 82.
 
-[28] [29] [30] [31] [32] [33] [34] [35]) [36] [37]
-Underfull \hbox (badness 10000) in paragraph at lines 476--476
-[]\T1/lmr/m/n/10 Industrial pro-duc-tion; com-mod-ity
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 481--481
+) [37] [38]
+Underfull \hbox (badness 10000) in paragraph at lines 490--490
 []\T1/lmr/m/n/10 Daily,
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 482--483
-[]\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF2YR, EX-
+Underfull \hbox (badness 7168) in paragraph at lines 491--492
+[]\T1/lmr/m/n/10 Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 487--488
-[]\T1/lmr/m/n/10 FRED DTWEXBGS, ear-lier DTWEXB,
+Underfull \hbox (badness 1496) in paragraph at lines 491--492
+\T1/lmr/m/n/10 PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
-[38] [39] (./mp_transmission.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 497--498
+[]\T1/lmr/m/n/10 FRED DTWEXBGS; ear-lier DTWEXB,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 499--499
+[]\T1/lmr/m/n/10 Daily;
+ []
+
+[39] [40] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
-(rerunfilecheck)             Checksum: 536B2610A2BC62723D0CD2495611619C;5184.
+(rerunfilecheck)             Checksum: CD3C59A45ADE1071364DB44E39FBB85B;5408.
  ) 
 Here is how much of TeX's memory you used:
- 15688 strings out of 476182
- 257489 string characters out of 5795594
- 2108975 words of memory out of 5000000
- 37194 multiletter control sequences out of 15000+600000
+ 15844 strings out of 476182
+ 260672 string characters out of 5795594
+ 2071975 words of memory out of 5000000
+ 37339 multiletter control sequences out of 15000+600000
  639970 words of font info for 98 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,1929b,761s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1929b,767s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/p
@@ -748,10 +771,10 @@ hare/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/publi
 c/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/t
 exmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lm
 sy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb>
-Output written on mp_transmission.pdf (39 pages, 558635 bytes).
+Output written on mp_transmission.pdf (40 pages, 564248 bytes).
 PDF statistics:
- 1248 PDF objects out of 1440 (max. 8388607)
- 947 compressed objects within 10 object streams
- 219 named destinations out of 1000 (max. 500000)
- 229 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1274 PDF objects out of 1440 (max. 8388607)
+ 972 compressed objects within 10 object streams
+ 224 named destinations out of 1000 (max. 500000)
+ 245 words of extra memory for PDF output out of 10000 (max. 10000000)
 

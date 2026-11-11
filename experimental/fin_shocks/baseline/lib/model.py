@@ -16,6 +16,7 @@ import numpy as np, pandas as pd
 from .paths import DATA, OUT
 from .daily import (CALW, POL, MON, HAR, DAILY, W, lev, d10, interp_monthly, fred_daily, event_index, window_impact, window_impact_components, positions)
 from . import noteA
+from . import daily as _daily
 
 H = 36                       # response horizon (months)
 DAILY_START = "1996-01-01"    # first day of the daily-block estimation sample (lagged averages may use earlier days)
@@ -103,20 +104,28 @@ def trend_cols(periods, start, end):
     K = len(kn); d = lambda k: (np.maximum(t - kn[k], 0) ** 3 - np.maximum(t - kn[-1], 0) ** 3) / (kn[-1] - kn[k])
     return np.c_[t, *[d(k) - d(K - 2) for k in range(K - 2)]]
 
-def har_block(form, fci, mvars, end, t2020):
-    """Daily block: OLS of each daily variable on a constant, the 1/5/22/66-day averages of the daily variables and the monthly macro variables (this month and last).
-    With the FCI replaced by its components (fci in CMPGROUPS) each component's equation keeps only its own averages and those of the 2-year yield (plus the macro variables),
-    and the 2-year yield's equation its own averages: 9 coefficients for the yield and 13 for each component (48 in all with three components, against 84 unrestricted)."""
-    D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]; nd = D.shape[1]
+def har_rows(form, fci, mvars, end, t2020):
+    """Regressors and outcomes (rows of the daily block's estimation sample): constant, the 1/5/22/66-day averages of the daily variables, the monthly macro variables (this month and last)."""
+    D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
     ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1) & (D.index >= DAILY_START)
     if t2020 == "out": ok &= ~((D.index >= "2020-03-01") & (D.index <= "2020-12-31"))
-    if fci not in CMPGROUPS: return np.linalg.lstsq(X[ok], Y[ok], rcond=None)[0]
+    return X[ok], Y[ok]
+
+def har_fit(X, Y, fci):
+    """OLS of each daily variable on the regressors. With the FCI replaced by its components (fci in CMPGROUPS) each component's equation keeps only its own averages and those of the 2-year yield
+    (plus the macro variables), and the 2-year yield's equation its own averages: 9 coefficients for the yield and 13 for each component (48 in all with three components, against 84 unrestricted)."""
+    nd = Y.shape[1]
+    if fci not in CMPGROUPS: return np.linalg.lstsq(X, Y, rcond=None)[0]
     Bd = np.zeros((X.shape[1], nd)); macro_cols = list(range(1 + len(HAR) * nd, X.shape[1]))
     for j in range(nd):
         vars_ = sorted({0, j}); cols = [0] + [1 + a * nd + v for a in range(len(HAR)) for v in vars_] + macro_cols
-        Bd[cols, j] = np.linalg.lstsq(X[ok][:, cols], Y[ok][:, j], rcond=None)[0]
+        Bd[cols, j] = np.linalg.lstsq(X[:, cols], Y[:, j], rcond=None)[0]
     return Bd
+
+def har_block(form, fci, mvars, end, t2020):
+    """Daily block coefficients (estimated from DAILY_START; see har_fit)."""
+    X, Y = har_rows(form, fci, mvars, end, t2020); return har_fit(X, Y, fci)
 
 def macro_data(form, fci, mvars, L, start, end, t2020, trend):
     FB = fin_monthly(form, fci); MMv = MAC[mvars]; X, Y, P = [], [], []
@@ -155,10 +164,11 @@ def irf(Bd, C, K, nd, L, idx, pos, fci):
 _EV = {}
 def events(B):
     """Announcements used and the bootstrap resamples of announcements: fixed seed, identical for every case (paired draws)."""
-    if B not in _EV:
+    key = (B, _daily.CURRENT[0])
+    if key not in _EV:
         idx0 = event_index(); r = np.random.default_rng(31); bidx = [r.choice(idx0, size=len(idx0), replace=True) for _ in range(B)]
-        _EV[B] = (idx0, positions(idx0), bidx, [positions(ib) for ib in bidx])
-    return _EV[B]
+        _EV[key] = (idx0, positions(idx0), bidx, [positions(ib) for ib in bidx])
+    return _EV[key]
 
 def to_level(m):
     """Cumulate the inflation response (column 1) to the price-level response, percent."""
@@ -175,6 +185,23 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
         draws = [irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci) for ib, pb in zip(bidx, bpos)]
         yield dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
                    f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
+
+def block_rows(n, rng, length=66):
+    """Row indices of a moving-block resample of n daily rows (blocks of `length` days, the longest HAR window)."""
+    nb = -(-n // length); st = rng.integers(0, n - length + 1, nb); return np.concatenate([np.arange(a, a + length) for a in st])[:n]
+
+def estimate_full(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=200, L=12):
+    """As estimate for one lag length, but each draw also re-estimates the daily block on a moving-block resample of its rows (the same announcement and residual draws as estimate).
+    Returns the dict of estimate (point responses identical) with the draws of the fuller bootstrap."""
+    mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
+    idx0, pos0, bidx, bpos = events(B); Xd, Yd = har_rows(form, fci, mvars, end, t2020); Bd0 = har_fit(Xd, Yd, fci)
+    X, Y = macro_data(form, fci, mvars, L, start, end, t2020, trend); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
+    rng = np.random.default_rng(zlib.crc32((f"full|{form}|{fci}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)).encode()))
+    m0, f0, e0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci); draws = []
+    for ib, pb in zip(bidx, bpos):
+        r = block_rows(len(Xd), rng); Bd = har_fit(Xd[r], Yd[r], fci)
+        draws.append(irf(Bd, np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0], K, nd, L, ib, pb, fci))
+    return dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]), f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
 
 # ---------------------------------------------------------------- summaries
 def pct(a, q): return np.percentile(a, q, axis=0)
