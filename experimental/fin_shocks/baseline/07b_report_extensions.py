@@ -461,11 +461,11 @@ def gs_comparison():
             mac(f"gs:{tg}:{per}:lev", f"{c(step, s_, e_):.2f}"); mac(f"gs:{tg}:{per}:chg", f"{c(step, s_, e_, True):.2f}")
     chk("nominal index and nominal GS: levels correlate about 0.76 from 1974 and above 0.9 since 1996; real and r*-gap versions above 0.99 from 1974", abs(c("nominal", "1974-01", "2026-09") - 0.76) < 0.01 and c("nominal", "1996-01", "2026-09") > 0.9 and c("real", "1974-01", "2026-09") > 0.99 and c("rstar", "1974-01", "2026-09") > 0.99)
     chk("12-month changes correlate above 0.94 in every step and sample", all(c(st_, a_, "2026-09", True) > 0.94 for st_ in ("nominal", "real", "rstar") for a_ in ("1974-01", "1996-01")))
-    for step, name, ttl in (("nominal", "fig_gs_nominal.pdf", "Nominal versions"), ("real", "fig_gs_real.pdf", "Real versions")):
-        Z = pd.DataFrame({"m": X[step], "g": G[f"gs_{step}"]}).dropna(); Z = (Z - Z.mean()) / Z.std(); t_ = Z.index.to_timestamp()
-        fig, ax = plt.subplots(figsize=(6.4, 2.8)); ax.axhline(0, color=GREY, lw=0.8)
-        ax.plot(t_, Z.m, color=BLUE, lw=1.7, label="Index of this paper"); ax.plot(t_, Z.g, color=ORANGE, lw=1.4, ls="--", label="Goldman Sachs index, rebuilt")
-        ax.set_ylabel("Standard deviations from the mean"); ax.legend(frameon=False, fontsize=7.5, loc="upper right"); fig.tight_layout(); fig.savefig(REPORT / name); plt.close(fig)
+    fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.0), sharex=True)
+    for ax, step, ttl in ((axs[0], "nominal", "Nominal versions"), (axs[1], "real", "Real versions")):
+        Z = pd.DataFrame({"m": X[step], "g": G[f"gs_{step}"]}).dropna(); Z = (Z - Z.mean()) / Z.std(); t_ = Z.index.to_timestamp(); ax.axhline(0, color=GREY, lw=0.8)
+        ax.plot(t_, Z.m, color=BLUE, lw=1.6, label="Index of this paper"); ax.plot(t_, Z.g, color=ORANGE, lw=1.3, ls="--", label="Goldman Sachs index, rebuilt"); ax.set_title(ttl, fontsize=8.5)
+    axs[0].set_ylabel("Standard deviations from the mean"); axs[0].legend(frameon=False, fontsize=7, loc="upper right"); fig.tight_layout(); fig.savefig(REPORT / "fig_gs.pdf"); plt.close(fig)
     for step, tg in (("nominal", "n"), ("real", "r"), ("rstar", "s")):
         y = X[step].dropna(); tt = np.arange(len(y)) / 120; mac(f"tr:{tg}:r2", f"{100 * np.corrcoef(tt, y)[0, 1] ** 2:.0f}")
     chk("a linear trend explains most of the variance of the nominal and real indexes and much less of the r*-gap index", float(ML[-3].split("{")[-1].rstrip("}")) > 60 and float(ML[-2].split("{")[-1].rstrip("}")) > 55 and float(ML[-1].split("{")[-1].rstrip("}")) < 35)
