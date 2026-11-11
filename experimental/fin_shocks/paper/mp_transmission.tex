@@ -128,51 +128,58 @@ In month $t$, the index in version $v$ is
 \begin{equation}
 F_t^{v} = w_B\, B_t^{v} + w_Q\, Q_t^{v} + w_D\, D_t, \label{eq:fci}
 \end{equation}
-measured as a deviation from its sample mean. Here $B_t$ is the 10-year yield, $Q_t$ a measure of stock valuation and $D_t$ is 100 times the log of the real broad dollar in every version. The index comes in three versions, which differ in how the yield and stock prices are measured.
+measured as a deviation from its sample mean. Here $B_t$ is the 10-year yield, $Q_t$ a measure of stock valuation and $D_t$ is 100 times the log of the real broad dollar in every version. The index comes in three versions, which differ in how the yield and stock prices are measured. I introduce them in turn, because each answers a problem with the one before.
 
 \textbf{The nominal version.} The nominal version uses the nominal 10-year yield $y^{10}_t$ and measures stock valuation by the log of the cyclically adjusted price-earnings ratio (CAPE):
 \begin{align}
-\text{Nominal:}\quad & B_t = y^{10}_t, & Q_t &= 100\ln \text{CAPE}_t, \label{eq:nom}
+\text{Nominal:}\quad & B_t = y^{10}_t, & Q_t &= 100\ln \text{CAPE}_t. \label{eq:nom}
 \end{align}
-
-\textbf{Comparison with the Goldman Sachs index.} The nominal version is the natural point of comparison with indexes built from nominal variables, and a widely followed index offers a check on whether the approach captures what market participants mean by financial conditions. The Goldman Sachs index \citep{dudley2000,hatzius2018} gives published weights to the federal funds rate, the 10-year yield, a corporate spread, equity valuation and the dollar. The companion note rebuilds it from public data and shows that the rebuild mimics the published series closely \citep{fcinote}. Figure~\ref{fig:gs} plots the nominal version of my index with the rebuilt Goldman index. The two track each other, and the agreement is much better since 1996 than over the whole sample. The correlation in levels is \bl{gs:n:p:lev} since 1996 and \bl{gs:n:l:lev} from 1974; in 1974--95 it is \bl{gs:n:e:lev}. In 12-month changes it is \bl{gs:n:p:chg} since 1996 and \bl{gs:n:l:chg} from 1974.
-
-The difference between the samples is the nominal and real issue. A nominal index treats a given yield or stock valuation the same whatever expected inflation and the neutral rate are doing. That is a reasonable approximation when they are stable, as they have been since the mid-1990s, and a poor one in the 1970s and 1980s, when expected inflation rose and fell and nominal yields and the level of the index drifted with it. The right panel of Figure~\ref{fig:gs} shows the point. When both indexes are built with real rates, they correlate \bl{gs:r:l:lev} in levels from 1974 and \bl{gs:r:p:lev} since 1996, so the agreement no longer depends on the period. The index of this paper and the Goldman index thus agree on changes in financial conditions in every period and on levels once inflation is taken into account. That agreement supports the approach, and the difference across samples motivates the adjustments for inflation and the neutral rate that follow.
+It is the natural point of comparison with indexes built from nominal variables, and a widely followed index offers a check on whether the approach captures what market participants mean by financial conditions. The Goldman Sachs index \citep{dudley2000,hatzius2018} gives published weights to the federal funds rate, the 10-year yield, a corporate spread, equity valuation and the dollar. The companion note rebuilds it from public data and shows that the rebuild mimics the published series closely \citep{fcinote}. Figure~\ref{fig:gsnom} plots the nominal version of my index with the rebuilt Goldman index. The two agree on changes: the correlation of 12-month changes is \bl{gs:n:l:chg} from 1974. They agree less on levels, and the agreement depends on the period. The correlation of levels is \bl{gs:n:p:lev} since 1996, \bl{gs:n:e:lev} in 1974--95 and \bl{gs:n:l:lev} over the whole sample.
 
 \begin{figure}[tp]
 \centering
-\includegraphics[width=\textwidth]{../baseline/report/fig_gs.pdf}
-\caption{The Nominal and Real Indexes and the Goldman Sachs Index}
-\label{fig:gs}
-\begin{flushleft}\footnotesize\textit{Notes:} Monthly, January 1973 to September 2026, each series in units of its standard deviation from its mean. The Goldman Sachs index is rebuilt from public data with its published weights, in the same nominal or real version as the index of this paper (companion note). Left: nominal versions. Right: real versions.\end{flushleft}
+\includegraphics[width=0.85\textwidth]{../baseline/report/fig_gs_nominal.pdf}
+\caption{The Nominal Index and the Goldman Sachs Index}
+\label{fig:gsnom}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly, January 1973 to September 2026, each series in units of its standard deviation from its mean. The Goldman Sachs index is rebuilt from public data with its published weights, in its nominal version (companion note).\end{flushleft}
 \end{figure}
 
-\textbf{The other two versions.} The real version subtracts 10-year expected inflation from the yield. The version relative to $\rs$ also subtracts $\rs$ from the yield, and it compares the earnings yield, the inverse of CAPE, with $\rs$. Stocks are expensive, and conditions loose, when the earnings yield is low relative to the neutral rate. That comparison enters with its sign reversed and is rescaled to the units of log CAPE, so the stock weight keeps its meaning:
+The reason is the trend in nominal variables. Nominal yields and valuation ratios carry the inflation of the period: they were very high in the early 1980s, when expected inflation was high, and fell for decades after. A nominal index reads that fall as a steady loosening of conditions, and a trend alone explains \bl{tr:n:r2} percent of the variance of the nominal version. Standardizing each index over the sample gives that trend a large weight, and the two indexes, with different weights and a different dollar, disagree about it. Since the mid-1990s, when inflation and its expectations were stable, the trend is weaker and the two agree. The trend is not a feature of financial conditions that policy affects. It is a feature of measuring them in nominal terms, and it motivates the real version.
+
+\textbf{The real version.} The real version subtracts 10-year expected inflation $\pi^{10}_t$ from the yield and leaves stock valuation as it is, because CAPE is already a real measure:
 \begin{align}
-\text{Real:}\quad & B_t = y^{10}_t - \pi^{10}_t, & Q_t &= 100\ln \text{CAPE}_t, \label{eq:real}\\
+\text{Real:}\quad & B_t = y^{10}_t - \pi^{10}_t, & Q_t &= 100\ln \text{CAPE}_t. \label{eq:real}
+\end{align}
+The Goldman index can be put on the same basis, and Figure~\ref{fig:gsreal} plots the two real versions. They are nearly indistinguishable. The correlation of levels is \bl{gs:r:l:lev} from 1974 and \bl{gs:r:p:lev} since 1996, so the agreement no longer depends on the period. An index whose weights come from the responses of asset prices to policy in narrow windows and a widely used index built from a macroeconomic model therefore tell the same story about financial conditions, in levels and in changes. That agreement supports the approach.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.85\textwidth]{../baseline/report/fig_gs_real.pdf}
+\caption{The Real Index and the Goldman Sachs Index}
+\label{fig:gsreal}
+\begin{flushleft}\footnotesize\textit{Notes:} As Figure~\ref{fig:gsnom}, with both indexes in their real versions: the 10-year yield less 10-year expected inflation.\end{flushleft}
+\end{figure}
+
+\textbf{The version relative to $r^*$.} The real indexes still trend. Both fall over four decades (a trend explains \bl{tr:r:r2} percent of the variance of the real version). Real interest rates fell as well, and they fell with the neutral rate, the real rate that neither speeds up nor slows down the economy. A real index reads a real rate of 1 percent in the 2010s as loose, but it was not loose if the neutral rate was lower still. Measuring the yield and stock valuation relative to the neutral rate $\rs$ removes that source of trend. The yield enters less expected inflation and less $\rs$. Stocks enter through the earnings yield, the inverse of CAPE, which I compare with $\rs$: stocks are expensive, and conditions loose, when the earnings yield is low relative to the neutral rate. That comparison enters with its sign reversed and is rescaled to the units of log CAPE, so the stock weight keeps its meaning:
+\begin{align}
 \text{$\rs$-gap (baseline):}\quad & B_t = y^{10}_t - \pi^{10}_t - \rs_t, & Q_t &= -\frac{100}{\overline{E/P}}\left[(E/P)_t - \rs_t\right]. \label{eq:rstar}
 \end{align}
-
-The term $100/\overline{E/P}$, with $\overline{E/P}$ the sample average, converts the earnings-yield gap to the units of log CAPE: since $d\ln\text{CAPE}=-d(E/P)/(E/P)$, a change in the earnings yield of $x$ points near the mean equals a change of $100x/\overline{E/P}$ in $100\ln\text{CAPE}$ with the opposite sign. CAPE is a real valuation measure, so stocks do not change between the nominal and real versions.
+The term $100/\overline{E/P}$, with $\overline{E/P}$ the sample average, converts the earnings-yield gap to the units of log CAPE: since $d\ln\text{CAPE}=-d(E/P)/(E/P)$, a change in the earnings yield of $x$ points near the mean equals a change of $100x/\overline{E/P}$ in $100\ln\text{CAPE}$ with the opposite sign.
 
 \textbf{The two-year yield.} The two-year yield is adjusted in the same three versions. With $y^{2}_t$ the nominal yield and $\pi^{2}_t$ two-year expected inflation \citep[from the Cleveland Fed;][]{haubrich2012},
 \begin{equation}
 R_t^{\text{nominal}} = y^{2}_t, \qquad R_t^{\text{real}} = y^{2}_t - \pi^{2}_t, \qquad R_t^{\rs\text{-gap}} = y^{2}_t - \pi^{2}_t - \rs_t. \label{eq:twoyear}
 \end{equation}
-Expected inflation and $\rs$ are monthly or quarterly and move slowly. The daily series add their interpolated monthly values to daily market prices, so day-to-day moves come from markets (Appendix~\ref{app:details}).
+For $\rs$ I use the New York Fed's one-sided Laubach--Williams estimate \citep{holston2023}. It is a filtered estimate that uses data only up to each quarter, from the August 2026 vintage with parameters estimated on the full sample, so it is not a real-time series. Expected inflation and $\rs$ are monthly or quarterly and move slowly. The daily series add their interpolated monthly values to daily market prices, so day-to-day moves come from markets (Appendix~\ref{app:details}).
 
-
-
-For $\rs$ I use the New York Fed's one-sided Laubach--Williams estimate \citep{holston2023}. It is a filtered estimate that uses data only up to each quarter, from the August 2026 vintage with parameters estimated on the full sample, so it is not a real-time series.
-
-Figure~\ref{fig:fcis} plots the three versions of my index on a common scale. They move together at business-cycle and higher frequencies; the correlation of 12-month changes is at least \bl{fci:c12:nrs}. The real version differs little from the nominal one. The version relative to $\rs$ differs more, and the difference is mostly slow: it is negative in the late 1990s and early 2000s and positive after 2010, as $\rs$ fell.
+Figure~\ref{fig:fcis} plots the three versions on a common scale. Each step removes some of the downward drift: a trend explains \bl{tr:n:r2}, \bl{tr:r:r2} and \bl{tr:s:r2} percent of the variance of the nominal, real and $\rs$-relative versions. The versions do not differ at high frequencies. The correlation of 12-month changes is \bl{fci:c12:nr} between the nominal and real versions and \bl{fci:c12:rr} between the real version and the version relative to $\rs$. The differences are slow. The real version is below the nominal one by about 2 units around 1980, when expected inflation was highest, and the two are close after 1990. The version relative to $\rs$ is below the real version until the mid-2000s and above it by 1 to 2 units after 2010, as $\rs$ fell.
 
 \begin{figure}[tp]
 \centering
 \includegraphics[width=0.9\textwidth]{../baseline/report/fig_fcis.pdf}
 \caption{The Three Versions of the FCI}
 \label{fig:fcis}
-\begin{flushleft}\footnotesize\textit{Notes:} Monthly, in two-year-yield equivalents (a policy move that raises the two-year yield 1 percentage point raises each by one unit in the window). Each series is shown as a deviation from its mean over January 1996 to September 2026. Lower panel: real minus nominal, and relative to $\rs$ minus real.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly, in two-year-yield equivalents (a policy move that raises the two-year yield 1 percentage point raises each by one unit in the window). Each series is shown as a deviation from its mean over January 1973 to September 2026. Lower panel: real minus nominal, and relative to $\rs$ minus real.\end{flushleft}
 \end{figure}
 
 \subsection{What the Window Shows}\label{sec:resolve0}

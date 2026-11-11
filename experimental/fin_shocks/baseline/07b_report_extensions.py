@@ -283,10 +283,10 @@ if DIR is not None: direct_table()
 
 # =============================================================== 6. the three FCIs
 def fcis():
-    ix = {k: pd.read_csv(OUT / f"indexes_{k}.csv", index_col=0).market for k in ("nominal", "real", "rstar")}; X = pd.DataFrame(ix); X.index = pd.PeriodIndex(X.index, freq="M"); X = X.loc["1996-01":"2026-09"]; X = X - X.mean()
+    ix = {k: pd.read_csv(OUT / f"indexes_{k}.csv", index_col=0).market for k in ("nominal", "real", "rstar")}; X = pd.DataFrame(ix); X.index = pd.PeriodIndex(X.index, freq="M"); X = X.loc["1973-01":"2026-09"]; X = X - X.mean()
     t = X.index.to_timestamp(); fig, axs = plt.subplots(2, 1, figsize=(7.0, 4.6), sharex=True)
     for k, col, ls, lab in (("nominal", ORANGE, "-", "Nominal"), ("real", GREEN, "--", "Real"), ("rstar", BLUE, "-", "Relative to $r^*$")): axs[0].plot(t, X[k], color=col, ls=ls, lw=1.5, label=lab)
-    axs[0].axhline(0, color=GREY, lw=0.8); axs[0].set_ylabel("2-year-yield equivalents (pp)"); axs[0].legend(frameon=False, fontsize=7.5, ncol=3, loc="upper left"); axs[0].set_title("The three FCIs (deviations from their 1996--2026 means)", fontsize=8.5)
+    axs[0].axhline(0, color=GREY, lw=0.8); axs[0].set_ylabel("2-year-yield equivalents (pp)"); axs[0].legend(frameon=False, fontsize=7.5, ncol=3, loc="upper left"); axs[0].set_title("The three versions of the FCI (deviations from their 1973--2026 means)", fontsize=8.5)
     d1, d2 = X.real - X.nominal, X.rstar - X.real; axs[1].plot(t, d1, color=GREEN, lw=1.5, label="Real minus nominal"); axs[1].plot(t, d2, color=BLUE, lw=1.5, label="Relative to $r^*$ minus real"); axs[1].axhline(0, color=GREY, lw=0.8)
     axs[1].set_ylabel("Difference (pp)"); axs[1].legend(frameon=False, fontsize=7.5, ncol=2, loc="upper left"); fig.tight_layout(); fig.savefig(REPORT / "fig_fcis.pdf"); plt.close(fig)
     slow = lambda s: s.rolling(60, center=True, min_periods=30).mean()
@@ -461,11 +461,14 @@ def gs_comparison():
             mac(f"gs:{tg}:{per}:lev", f"{c(step, s_, e_):.2f}"); mac(f"gs:{tg}:{per}:chg", f"{c(step, s_, e_, True):.2f}")
     chk("nominal index and nominal GS: levels correlate about 0.76 from 1974 and above 0.9 since 1996; real and r*-gap versions above 0.99 from 1974", abs(c("nominal", "1974-01", "2026-09") - 0.76) < 0.01 and c("nominal", "1996-01", "2026-09") > 0.9 and c("real", "1974-01", "2026-09") > 0.99 and c("rstar", "1974-01", "2026-09") > 0.99)
     chk("12-month changes correlate above 0.94 in every step and sample", all(c(st_, a_, "2026-09", True) > 0.94 for st_ in ("nominal", "real", "rstar") for a_ in ("1974-01", "1996-01")))
-    fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.1), sharex=True)
-    for ax, step, ttl in ((axs[0], "nominal", "Nominal versions"), (axs[1], "real", "Real versions")):
-        Z = pd.DataFrame({"m": X[step], "g": G[f"gs_{step}"]}).dropna(); Z = (Z - Z.mean()) / Z.std(); t_ = Z.index.to_timestamp(); ax.axhline(0, color=GREY, lw=0.8)
-        ax.plot(t_, Z.m, color=BLUE, lw=1.6, label="Index of this paper"); ax.plot(t_, Z.g, color=ORANGE, lw=1.3, ls="--", label="Goldman Sachs index, rebuilt"); ax.set_title(ttl, fontsize=8.5)
-    axs[0].set_ylabel("Standard deviations from the mean"); axs[0].legend(frameon=False, fontsize=7, loc="upper left"); fig.tight_layout(); fig.savefig(REPORT / "fig_gs.pdf"); plt.close(fig)
+    for step, name, ttl in (("nominal", "fig_gs_nominal.pdf", "Nominal versions"), ("real", "fig_gs_real.pdf", "Real versions")):
+        Z = pd.DataFrame({"m": X[step], "g": G[f"gs_{step}"]}).dropna(); Z = (Z - Z.mean()) / Z.std(); t_ = Z.index.to_timestamp()
+        fig, ax = plt.subplots(figsize=(6.4, 2.8)); ax.axhline(0, color=GREY, lw=0.8)
+        ax.plot(t_, Z.m, color=BLUE, lw=1.7, label="Index of this paper"); ax.plot(t_, Z.g, color=ORANGE, lw=1.4, ls="--", label="Goldman Sachs index, rebuilt")
+        ax.set_ylabel("Standard deviations from the mean"); ax.legend(frameon=False, fontsize=7.5, loc="upper right"); fig.tight_layout(); fig.savefig(REPORT / name); plt.close(fig)
+    for step, tg in (("nominal", "n"), ("real", "r"), ("rstar", "s")):
+        y = X[step].dropna(); tt = np.arange(len(y)) / 120; mac(f"tr:{tg}:r2", f"{100 * np.corrcoef(tt, y)[0, 1] ** 2:.0f}")
+    chk("a linear trend explains most of the variance of the nominal and real indexes and much less of the r*-gap index", float(ML[-3].split("{")[-1].rstrip("}")) > 60 and float(ML[-2].split("{")[-1].rstrip("}")) > 55 and float(ML[-1].split("{")[-1].rstrip("}")) < 35)
 gs_comparison()
 
 # =============================================================== write macros, restyle, assert claims
