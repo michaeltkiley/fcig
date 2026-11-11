@@ -1,0 +1,2 @@
+n_oos,months_recession_in_next12,brier_M_vs_base,brier_N_vs_base,brier_A_vs_base,brier_MN_vs_base,brier_MA_vs_base,brier_combo_MN_vs_base,dm_combo_MN_vs_M,dm_combo_MN_vs_N,dm_MN_joint_vs_N,dm_MN_joint_vs_M
+342,48,0.9167486829748921,0.6704667127823499,0.5983127001673381,0.7186851799764575,0.6478842947614166,0.7260985583746425,2.009930186447633,-0.6347195356718196,-1.2992833055234008,1.3379185545383299

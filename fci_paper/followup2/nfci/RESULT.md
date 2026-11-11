@@ -1,0 +1,19 @@
+# Market index and the NFCI/ANFCI: complement or substitute?
+
+**Question.** Does the market flow (12-month change of the r*-gap market index) carry something the NFCI/ANFCI does not, or the reverse?
+
+**Design (fixed in `common.py`).** Outcomes: unemployment-gap change and payroll growth at 6/12/24 months, GDP growth at 2/4/8 quarters, 12-month recession (logit). Own lags; standardised regressors; NFCI/ANFCI monthly means of the weekly levels. Origins 1976-03 on (n=532 to 569 monthly, 178 to 190 quarterly; 2020-21 dropped; five recessions). Inference: HAC with h+6 lags (18 at h=12), checked by block bootstrap (block h+6, 999 draws). 20 joint models, 40 coefficients; about 40 OOS tests. Shared data: read the pattern, not single t.
+
+**(a) Joint projections** [verified, `out/joint_lp.csv`]. Unemployment, h=6: market flow 0.20 (t 4.3, 90% bootstrap [0.10, 0.26]), NFCI 0.16 (t 3.1 [0.08, 0.27]). h=12: 0.22 (t 3.1 [0.05, 0.33]) and 0.35 (t 3.6 [0.19, 0.61]). Both keep their coefficients (alone 0.38 and 0.46 at h=12). h=24: market -0.04 (t -0.3), NFCI 0.67 (t 5.3). ANFCI is the same (h=12: 0.24, t 2.8; 0.34, t 2.5). Payrolls (h=6) and GDP (2 quarters): both about t -2; beyond that neither survives jointly (|t| 0.1 to 1.6). Recession: NFCI 1.77 (t 4.2), market 0.46 (t 1.3); ANFCI the same. The market flow is a horizon-to-12-months signal; the NFCI carries the two-year path and the recession signal.
+
+**(d) NFCI level versus flow** [verified]. For unemployment the NFCI level holds (joint t 3.2 to 3.7), its flow does not (0.5 to 1.6); ANFCI the same; recessions level t 5.1, flow -0.03. Payrolls: flow a little stronger (t -2.0 to -3.0 versus -1.0 to -1.6). The NFCI is a level index; the market index is a flow index.
+
+**(b) Out of sample from 1995** (306 to 343 months; 102 to 114 quarters; two recessions) [verified, `out/oos_encompassing.csv`]. Unemployment RMSE ratios to own lags (h=6/12/24): market 0.90/0.96/0.99, NFCI 0.87/0.90/0.95, both 0.83/0.90/0.95. Clark-West (1.28 is 10%): market flow added to the NFCI model t 2.2, 1.4, -0.2; NFCI added to the market model 3.1, 2.7, 1.6. Equal-weight combination beats the market alone (MSE gain 10%, DM t 1.9, 2.4 at h=6, 12) but not the NFCI alone (5%, -1%; t 0.9, -0.2). Encompassing weight on the market forecast: 0.41 (t 2.3) at h=6, 0.20 (t 0.8) at h=12. Payrolls and GDP: nothing beats own lags (ratios 0.99 to 1.09). Recession Brier ratios to the base rate: market 0.92, NFCI 0.67, ANFCI 0.60; joint 0.72, no better than the NFCI (DM t -1.3).
+
+**(c) What the NFCI is** [verified, `out/nfci_on_variables.csv`]. NFCI on 10-year, CAPE and real dollar: R2 0.36 in levels (ANFCI 0.25), 0.20 in 12-month changes. Adding Baa-10y: 0.51 (ANFCI 0.54) in both; the spread is significant (t 3.7 to 6.8) and takes out CAPE. Correlation with the market level 0.61. The three variables explain 0.63 of the market flow. The contributions file is not in the repository [skipped].
+
+**Verdict: complement.** At 6 to 12 months for unemployment, neither absorbs the other; beyond that and for recessions the NFCI dominates; out of sample the market flow adds little once the NFCI is in. This **buttresses** Note B's use of the index as a policy-channel measure, and does not support calling it a predictor of activity better than the NFCI [inference].
+
+**Recommendation.** One paragraph in the NFCI comparison of Section 5: the NFCI is a credit-and-risk conditions level (about half its variation ties to the three variables plus the spread, which matters); the market index is a policy-channel flow in funds-rate units; they carry different information, the NFCI the long horizon and recession risk. Do not call the market index a stress or recession monitor.
+
+**Limits.** Two OOS recessions; NFCI current vintage; flow is the 12-month change of the r* index, not the FCI-G-form forward impetus; combination tests descriptive.

@@ -1,0 +1,21 @@
+# Does the market index measure stance beyond the funds-rate gap? (Note A, no surprises used)
+
+**Question.** Does the r*-gap market index add to the funds-rate gap (FFG = FEDFUNDS - 1-year expected inflation - r*, Laubach-Williams) in explaining the economy 12 months ahead?
+
+**Design (fixed before estimation; `common.py`).** Outcomes: 12-month change of the unemployment gap, payroll growth, core PCE inflation. Models: own lags, +FFG, +index, +both; forms level, flow (12-month changes), mixed (FFG level, index flow). Indexes: Market, GS, FRB/US at nominal, real, r* steps. Origins 1976-03 to 2025-09 (n=556), 2020-21 windows dropped, 5 NBER recessions. In sample HAC 18 lags (12 in sub-periods). Recursive out of sample from 1995-01 (n=330, 2 recessions); Diebold-Mariano and Clark-West, HAC 12. Periods: full, 2009-15 (n=84), 2022-26 (n=42, about three independent years). Primary family: Market, r*, 3 outcomes x 3 forms, Clark-West for index-given-FFG (9 tests, Holm). All else is descriptive (shared data; read patterns). Positive t = larger model better.
+
+**Results (Market, r*) [verified, `out/`]**
+- *Unemployment.* FFG alone: adjusted-R2 gain 0.03-0.04, t 1.5-1.7. Index flow alone: 0.136, t 5.7. Index added to FFG: gain 0.105 (flow) and 0.119 (mixed); t 5.5 and 6.2; over 500 weight draws t 4.6-6.4. FFG added to the index: gain 0.00-0.02. Out of sample, index given FFG: RMSE ratio 0.95 (flow), 0.92 (mixed); CW 1.95 and 2.31; Holm-adjusted p 0.18 and 0.095. Levels add nothing (ratio 1.08, CW -0.7).
+- *Payrolls.* Index given FFG: gain 0.02 (flow), 0.07 (level); t -2.5 to 3.0; out of sample ratios 0.97-0.99, CW 1.6-2.0, Holm p 0.18-0.29.
+- *Core inflation.* Nothing: gain 0.00, CW -0.8 to 0.1, ratios 1.00-1.03.
+- *Primary family:* 5 of 9 raw p < 0.10, 1 after Holm (unemployment, mixed).
+- *GS, FRB/US, nominal and real steps:* unemployment CW 1.8-2.4, ratios 0.89-0.97; in-sample t rises with the step (4.1, 5.1, 6.2 for Market).
+- *Which part:* equities carry it (unemployment gain 0.134, CW 2.6); the 10-year gap alone 0.065 (CW 2.0); the dollar nothing. So it is not only a rates summary [supplement, added after the main results].
+- *Periods.* Correlation of FFG with the index (levels / changes): 0.54 / 0.31 full; 0.44 / 0.46 in 2009-15; 0.66 / 0.59 in 2022-26; -0.01 / -0.03 in 2004-06. 2009-15: FFG itself forecasts worse than own lags (ratio 1.25); the index adds in sample (unemployment mixed t 3.0) but not significantly out of sample (CW 1.3). 2022-26: unemployment CW 1.6-2.0, ratios 0.93-0.96; no payroll or inflation result.
+- *Episodes (index minus FFG, both demeaned, weight bootstrap 5-95).* 2004-06: -1.29 [-1.86, -0.65] (Kiley r*: -1.23 [-1.77, -0.62]); excludes zero in 100 percent of draws. 2022-03 to 2024-12: -1.40 [-2.22, -0.39] (Kiley -1.58 [-2.49, -0.40]); to 2023-12: -0.73 [-1.53, 0.29]. GS -1.2, -1.5; FRB/US -0.7, -0.04. Both are ordinary in size: 28th and 26th percentile of equal-length rolling differences (monthly sd 2.5). Units (2-year-yield vs funds-rate points) differ; standardised differences agree.
+
+**Verdict: buttresses.** The index explains unemployment 12 months ahead beyond the funds-rate gap in sample (t above 4.5 at every step and index), and the FFG adds nothing to it. Out of sample the gain is modest (RMSE down 5-8 percent; one of nine primary tests survives Holm). It works as a flow (or a flow with the FFG level), not as a level, and it says nothing about core inflation. Payrolls are weaker. At the ZLB it is not distinguishable out of sample; 2022-26 is too short to say.
+
+**Recommendation.** One short subsection (5.2 or 5.3, next to level versus flow) with one table (rows: FFG, index, both; unemployment and payrolls; adjusted R2, t, RMSE ratio), and one sentence on the episodes, reported as descriptive differences that are distinguishable from zero but ordinary in size. Claim: adds beyond the policy rate for activity, not for inflation, in the flow form.
+
+**Limits.** FFG uses survey expectations; the ZLB funds rate is not a shadow rate; the index is estimated on 1996-2026 policy news but applied back to 1976 [inference]; overlapping outcomes and few recessions; episode intervals cover only weight and r* uncertainty.
