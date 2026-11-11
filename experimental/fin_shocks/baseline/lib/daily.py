@@ -38,6 +38,16 @@ EV["k"] = [int((MONTH.iloc[:int(p) + 1] == MONTH.iloc[int(p)]).sum()) - 1 if pd.
 EV["idx_win"] = W["y10"] * EV.UST10Y + W["equities"] * EV.SP500 + W["dollar"] * EV.DXY                                    # index change in the window
 GOOD = (EV.p.notna() & (EV.p >= 1) & (EV.p + WINDOW_DAYS < len(CAL)) & (EV.d >= "1996-01-01")).values
 
+# ---------------------------------------------------------------- alternative surprises (robustness): the model reads the surprise from EV.ns
+EV["ns_orig"] = EV.ns.copy()
+_bs = pd.read_csv(DATA / "bauer_swanson_mps.csv", parse_dates=["Date"]).groupby("Date").MPS_ORTH.sum()
+SURPRISES = {"ns": EV.ns_orig, "bs": pd.Series(EV.d.map(_bs).values, index=EV.index),            # Bauer-Swanson (2023) orthogonalized surprise (FOMC announcements 1988-2019; later events dropped)
+             "jk": EV.ns_orig.where(np.sign(EV.UST2Y) * np.sign(EV.SP500) < 0)}                    # Jarocinski-Karadi (2020) sign restriction: keep NS when the 2-year and the S&P 500 move in opposite directions
+CURRENT = ["ns"]
+def use_surprise(name):
+    """Switch the surprise used everywhere (events used, window impact, bootstrap positions)."""
+    EV["ns"] = SURPRISES[name].values; CURRENT[0] = name
+
 def event_index():
     """Announcements used: inside the daily calendar with a full window, from January 1996 (the first announcement with all window variables), with a policy-news value (252)."""
     return np.where(GOOD & ~EV.ns.isna().values)[0]

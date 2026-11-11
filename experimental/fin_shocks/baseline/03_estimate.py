@@ -17,6 +17,7 @@ print(f"{len(CS.unique_cases(a.panel))} cases, {len(jobs)} to run", flush=True)
 
 def work(c):
     t0 = time.time(); i = CS.case_id(c); sp = CS.spec(c); rows, paths = [], []
+    from lib import daily as DD; DD.use_surprise(c.get("shock", "ns"))
     for est in M.estimate(c["form"], c["fci"], c["macro"], c["start"], c["end"], c["t2020"], c["trend"], a.draws):
         rows += M.summary_rows(sp, est); paths.append(M.path_rows(sp, est))
         np.savez_compressed(OUT / "draws" / f"{i}_L{est['lags']}.npz", s0=est["s0"], sd=est["sd"], f0=est["f0"], fd=est["fd"], names=est["names"])
