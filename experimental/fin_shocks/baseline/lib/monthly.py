@@ -15,7 +15,7 @@ Moving-average matrices Theta_h (h = 0..36) map an impact vector into responses;
      (Anderson-Rubin sets for proxy VARs: Montiel Olea, Stock and Watson 2021; Lunsford 2015.)
  WE  Window impact: the impact vector is not estimated from monthly residuals but taken from the daily model: s = (0, 0, e_i, e_F), the model's response of the end-of-month 2-year yield and FCI to a +1 pp
      window surprise (e_i = 0.95-0.99, e_F the FCI's corresponding response), macro entries zero. Assumption: the shock reaches unemployment and inflation only through the 2-year yield and the FCI,
-     the same restriction as the main model. Unit: +1 pp in the window (= +1 pp end-of-month yield up to 5%). Inference: 200 draws that resample announcements and monthly residuals.
+     the same restriction as the main model. Unit: +1 pp in the window (= +1 pp end-of-month yield up to 5%). Inference: 500 draws that resample announcements and monthly residuals.
 Relation to the main model: Plagborg-Moller and Wolf (2021) show that VARs and local projections estimate the same responses; a monthly VAR still observes a surprise concentrated on one day
 only through one end-of-month value per month (see also the temporal-aggregation argument of Jacobson, Matthes and Walker 2026)."""
 import zlib
