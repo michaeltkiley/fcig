@@ -48,7 +48,7 @@
 \maketitle
 
 \begin{abstract}
-Does the estimated effect of a monetary policy surprise depend on how its financial consequences are measured? It does. Standard methods applied to surprises around Federal Reserve announcements give unemployment that falls after a tightening and prices that barely respond. These methods trace the surprise through one interest rate. A surprise also moves long yields, stock prices and the dollar, and by much more than an ordinary change in the two-year yield does. I measure these moves in the half hour around each announcement and carry them forward in a daily and a monthly model, with rates and financial conditions measured relative to the neutral rate. A tightening then raises unemployment and lowers the price level. Most of the change comes from the size of the initial financial movement, not from the dynamics. In the baseline model, a 1 percent lower core price level after two years comes with about 0.9 percentage-point years of additional unemployment. The unemployment result holds across specifications. The price result is clearest when the long yield and the dollar enter in proportion to their weights in the index.
+Does the estimated effect of a monetary policy surprise depend on how its financial consequences are measured? It does. Standard methods applied to surprises around Federal Reserve announcements give unemployment that falls after a tightening and prices that barely respond. These methods trace the surprise through one interest rate. A surprise also moves long yields, stock prices and the dollar, and by much more than an ordinary change in the two-year yield does. I measure these moves in a short window around each announcement and carry them forward in a daily and a monthly model, with rates and financial conditions measured relative to the neutral rate. A tightening then raises unemployment and lowers the price level. Using nonannouncement days as the benchmark, most of the difference comes from the larger initial movement in financial conditions. In the baseline model, a 1 percent lower core price level after two years comes with about 0.9 percentage-point years of additional unemployment. In the sample beginning in 1996, adding financial conditions shifts the two-year unemployment response upward by about 0.6 percentage point whether the yield is measured in nominal terms, in real terms, or relative to the neutral rate. In that sample the estimated price decline largely disappears when the dollar and the long yield enter separately. In the longer sample the decline persists.
 \end{abstract}
 
 \noindent\textbf{JEL Classification:} E43, E44, E52, C32
@@ -63,11 +63,11 @@ Does the estimated effect of a monetary policy surprise depend on how its financ
 % ============================================================
 \section{Introduction}
 \label{sec:intro}
-Monetary policy is the main tool for stabilizing the economy, and its use rests on estimates of how policy moves unemployment and inflation. Those estimates are unreliable. In samples that start after the early 1980s, standard methods often give a tightening small effects on unemployment, or effects of the wrong sign \citep{ramey2016}. Two concerns follow. Policy may have become less powerful \citep{boivin2006,boivin2010}. Or inflation may respond so little to slack that lowering it requires a large and lasting rise in unemployment \citep{hazell2022,delnegro2020}. The cost of lowering inflation in unemployment is an old question \citep{okun1978,tobin1980}. The joint responses of unemployment and prices to a monetary surprise measure that cost at a stated horizon, along the path policy takes to lower prices.
+Monetary policy is the main tool for stabilizing the economy, and its use rests on estimates of how policy moves unemployment and inflation. In samples that start after the early 1980s, standard methods often give a tightening small effects on unemployment, or effects of the wrong sign \citep{ramey2016}. Two concerns follow. Policy may have become less powerful \citep{boivin2006,boivin2010}. Or inflation may respond so little to slack that lowering it requires a large and lasting rise in unemployment \citep{hazell2022,delnegro2020}. The cost of lowering inflation in unemployment is an old question \citep{okun1978,tobin1980}. The joint responses of unemployment and prices to a monetary surprise measure that cost at a stated horizon, along the path policy takes to lower prices.
 
-I ask whether these responses depend on how the financial consequences of a surprise are measured. Policymakers think they do. In November 2023 the Chair noted that ``Financial conditions have tightened significantly in recent months, driven by higher longer-term bond yields, among other factors'' \citep{powell2023}. A surprise that raises the two-year yield also raises longer yields and the dollar and lowers stock prices, and it does so by much more than an ordinary rise in the two-year yield does. A model that traces the surprise through the two-year yield alone misses most of this movement.
+I ask whether these responses depend on how the financial consequences of a surprise are measured. In November 2023 the Chair noted that ``Financial conditions have tightened significantly in recent months, driven by higher longer-term bond yields, among other factors'' \citep{powell2023}. A surprise that raises the two-year yield also raises longer yields and the dollar and lowers stock prices, and it does so by much more than an ordinary rise in the two-year yield does. A model that traces the surprise through the two-year yield alone misses most of this movement.
 
-The answer is that the measurement matters. I use the policy-news surprise of \citet{nakamura2018} around 252 FOMC announcements from 1996 to 2026 and change only how its effects are carried through the economy. Carried through the nominal two-year yield alone, the surprises give the result of the standard methods: unemployment falls and prices do not respond. Carried through the yield and a broad financial conditions index, with both measured relative to the neutral rate $\rs$, a tightening raises unemployment and lowers the price level (Figure~\ref{fig:intro}). After two years the unemployment response rises from \bl{rstar:no:u:24} to \bl{rstar:yes:u:24} percentage point and the fall in the price level deepens from \blabs{rstar:no:P:24} to \blabs{rstar:yes:P:24} percent. Adding the index shifts the unemployment response by a similar amount when the yield is nominal or real. Most of the shift comes from the size of the initial financial movement, not from the dynamics that carry it forward (Section~\ref{sec:decomp}). In the baseline model, a 1 percent lower core price level after two years comes with about \bl{tr:rstar:yes:24:sac} percentage-point years of additional unemployment, one point of unemployment for one year.
+The answer is that the measurement matters. I use the policy-news surprise of \citet{nakamura2018} around 252 FOMC announcements from 1996 to 2026 and change only how its effects are carried through the economy. Carried through the nominal two-year yield alone, the surprises give the result of the standard methods: unemployment falls and prices do not respond. Carried through the yield and a broad financial conditions index, a tightening raises unemployment and lowers the price level (Figure~\ref{fig:intro}). With the yield measured relative to the neutral rate $\rs$ in both models, adding the index raises the two-year unemployment response from \bl{rstar:no:u:24} to \bl{rstar:yes:u:24} percentage point and deepens the decline in the core price level from \blabs{rstar:no:P:24} to \blabs{rstar:yes:P:24} percent. The unemployment response shifts by a similar amount when the yield is nominal or real. Using nonannouncement days as the benchmark, most of the shift comes from the larger initial movement in financial conditions, not from the dynamics that carry it forward (Section~\ref{sec:decomp}). In the baseline model, a 1 percent lower core price level after two years comes with about \bl{tr:rstar:yes:24:sac} percentage-point years of additional unemployment, one point of unemployment for one year.
 
 \begin{figure}[tp]
 \centering
@@ -314,7 +314,7 @@ An announcement can reveal the Fed's view of the economy as well as a change in 
 \section{Conclusion}\label{sec:policy}
 Interest-rate surprises around Federal Reserve announcements measure policy shocks well, at least the part of policy news that moves interest rates. The hard part has been tracing their effects. I kept the surprise as it is and changed how its effects are traced: through broad financial conditions rather than one interest rate, and relative to the neutral rate. Traced this way, unemployment and prices respond with the standard signs, where the nominal two-year yield alone and the standard methods give the wrong ones. Most of the difference comes from the size of the financial movement that a policy surprise brings, more than three times the movement that accompanies an ordinary rise in the yield, and little from re-estimating the dynamics.
 
-The most durable finding is about unemployment. Once policy news is traced through financial conditions, a tightening does not lower unemployment at any horizon in the baseline or in any variation. The policy interpretation is the cost of price restraint: about \bl{tr:rstar:yes:24:sac} percentage-point years of unemployment for each 1 percent lower core price level after two years. The results support judging the stance of policy by financial conditions relative to $\rs$, as the FOMC did in 2023 \citep{powell2023}, and they explain why the same policy rate can be more or less restrictive at different times. The estimates are effects of surprises, not a decomposition of any episode.
+The most durable finding is the matched comparison. In the sample beginning in 1996, adding financial conditions shifts the two-year unemployment response upward by about 0.6 percentage point whether the yield is measured in nominal terms, in real terms, or relative to the neutral rate. The price decline is more sensitive. In the same sample it largely disappears when the dollar and the long yield enter separately, and in the longer sample it persists. The policy interpretation is the cost of price restraint: about \bl{tr:rstar:yes:24:sac} percentage-point years of unemployment for each 1 percent lower core price level after two years. The results support judging the stance of policy by financial conditions relative to $\rs$, as the FOMC did in 2023 \citep{powell2023}, and they explain why the same policy rate can be more or less restrictive at different times. The estimates are effects of surprises, not a decomposition of any episode.
 
 \FloatBarrier
 \bibliographystyle{aea}
@@ -451,6 +451,7 @@ The direct projection allows all transmission channels to operate, including the
 \end{figure}
 
 \input{../baseline/report/tab_main_B}
+\FloatBarrier
 
 \begin{figure}[tp]
 \centering
@@ -461,30 +462,55 @@ The direct projection allows all transmission channels to operate, including the
 \end{figure}
 
 \input{../baseline/report/tab_main_R1}
+\FloatBarrier
 \input{../baseline/report/tab_main_R2}
+\FloatBarrier
 \input{../baseline/report/tab_main_R3}
+\FloatBarrier
 \input{../baseline/report/tab_main_R4}
+\FloatBarrier
 \input{../baseline/report/tab_main_R5}
+\FloatBarrier
 \input{../baseline/report/tab_app_B}
+\FloatBarrier
 \input{../baseline/report/tab_app_R1a}
+\FloatBarrier
 \input{../baseline/report/tab_app_R1b}
+\FloatBarrier
 \input{../baseline/report/tab_app_R1c}
+\FloatBarrier
 \input{../baseline/report/tab_app_R1d}
+\FloatBarrier
 \input{../baseline/report/tab_app_R1e}
+\FloatBarrier
 \input{../baseline/report/tab_app_R2a}
+\FloatBarrier
 \input{../baseline/report/tab_app_R2b}
+\FloatBarrier
 \input{../baseline/report/tab_app_R2c}
+\FloatBarrier
 \input{../baseline/report/tab_app_R2d}
+\FloatBarrier
 \input{../baseline/report/tab_app_R3a}
+\FloatBarrier
 \input{../baseline/report/tab_app_R3b}
+\FloatBarrier
 \input{../baseline/report/tab_app_R4}
+\FloatBarrier
 \input{../baseline/report/tab_app_R4c}
+\FloatBarrier
 \input{../baseline/report/tab_wt_full}
+\FloatBarrier
 \input{../baseline/report/tab_standard_com}
+\FloatBarrier
 \input{../baseline/report/tab_monthly_F}
+\FloatBarrier
 \input{../baseline/report/tab_main_monthly}
+\FloatBarrier
 \input{../baseline/report/tab_app_monthly}
+\FloatBarrier
 \input{../baseline/report/tab_proxy_sim}
+\FloatBarrier
 \FloatBarrier
 % ============================================================
 \section{Construction and Estimation Details}\label{app:details}

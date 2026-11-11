@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 16:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 16:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -693,54 +693,65 @@ Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 44
 7.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
 
-(../baseline/report/tab_main_B.tex)
-<../baseline/report/fig_steps.pdf, id=1198, 520.34402pt x 281.85298pt>
+(../baseline/report/tab_main_B.tex) [38] [39 <../baseline/report/fig_size.pdf>]
+<../baseline/report/fig_steps.pdf, id=1273, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 4
-57.
+58.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
- (../baseline/report/tab_main_R1.tex)
-(../baseline/report/tab_main_R2.tex) (../baseline/report/tab_main_R3.tex)
-(../baseline/report/tab_main_R4.tex) (../baseline/report/tab_main_R5.tex)
-(../baseline/report/tab_app_B.tex [38]) (../baseline/report/tab_app_R1a.tex)
-(../baseline/report/tab_app_R1b.tex [39]) (../baseline/report/tab_app_R1c.tex)
-(../baseline/report/tab_app_R1d.tex [40]) (../baseline/report/tab_app_R1e.tex)
-(../baseline/report/tab_app_R2a.tex [41] [42 <../baseline/report/fig_size.pdf>]
-[43] [44 <../baseline/report/fig_steps.pdf>] [45])
-(../baseline/report/tab_app_R2b.tex) (../baseline/report/tab_app_R2c.tex
-[46]) (../baseline/report/tab_app_R2d.tex) (../baseline/report/tab_app_R3a.tex
-[47]) (../baseline/report/tab_app_R3b.tex) (../baseline/report/tab_app_R4.tex
-[48]) (../baseline/report/tab_app_R4c.tex [49] [50])
-(../baseline/report/tab_wt_full.tex) (../baseline/report/tab_standard_com.tex)
-(../baseline/report/tab_monthly_F.tex) (../baseline/report/tab_main_monthly.tex
-) (../baseline/report/tab_app_monthly.tex [51] [52])
-(../baseline/report/tab_proxy_sim.tex) [53] [54] [55] [56] [57]
-Underfull \hbox (badness 10000) in paragraph at lines 546--546
+(../baseline/report/tab_main_R1.tex) [40 <../baseline/report/fig_steps.pdf>]
+[41] (../baseline/report/tab_main_R2.tex) [42]
+(../baseline/report/tab_main_R3.tex) [43] (../baseline/report/tab_main_R4.tex)
+[44] (../baseline/report/tab_main_R5.tex) [45]
+(../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex [46
+
+
+
+
+
+])
+(../baseline/report/tab_app_R1b.tex) (../baseline/report/tab_app_R1c.tex
+[47]) (../baseline/report/tab_app_R1d.tex) (../baseline/report/tab_app_R1e.tex
+[48]) (../baseline/report/tab_app_R2a.tex) (../baseline/report/tab_app_R2b.tex
+[49]) (../baseline/report/tab_app_R2c.tex) (../baseline/report/tab_app_R2d.tex)
+(../baseline/report/tab_app_R3a.tex [50]) (../baseline/report/tab_app_R3b.tex)
+(../baseline/report/tab_app_R4.tex [51]) (../baseline/report/tab_app_R4c.tex
+[52] [53]) (../baseline/report/tab_wt_full.tex) [54]
+(../baseline/report/tab_standard_com.tex) [55]
+(../baseline/report/tab_monthly_F.tex) [56]
+(../baseline/report/tab_main_monthly.tex) [57]
+(../baseline/report/tab_app_monthly.tex [58
+
+
+
+])
+(../baseline/report/tab_proxy_sim.tex) [59] [60] [61]
+Underfull \hbox (badness 10000) in paragraph at lines 572--572
 []|\OT1/cmr/m/n/10 (+20) Daily,
  []
 
 
-Underfull \hbox (badness 5985) in paragraph at lines 547--548
+Underfull \hbox (badness 5985) in paragraph at lines 573--574
 []|\OT1/cmr/m/n/10 (+20) Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1052) in paragraph at lines 547--548
+Underfull \hbox (badness 1052) in paragraph at lines 573--574
 \OT1/cmr/m/n/10 (+20) PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 553--554
+Underfull \hbox (badness 10000) in paragraph at lines 579--580
 []|\OT1/cmr/m/n/10 (+20) FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 555--555
+Underfull \hbox (badness 10000) in paragraph at lines 581--581
 []|\OT1/cmr/m/n/10 (+20) Daily;
  []
 
-[58] [59] (./mp_transmission.aux)
+[62] [63] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -749,13 +760,13 @@ Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
 (rerunfilecheck)             Checksum: 233989201FA3FCB41BA546F1CBC00D80;6017.
  ) 
 Here is how much of TeX's memory you used:
- 19269 strings out of 476182
- 319376 string characters out of 5795594
- 2032975 words of memory out of 5000000
+ 19271 strings out of 476182
+ 319388 string characters out of 5795594
+ 1999975 words of memory out of 5000000
  40367 multiletter control sequences out of 15000+600000
- 582514 words of font info for 254 fonts, out of 8000000 for 9000
+ 582463 words of font info for 253 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,2033b,834s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,2033b,830s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk> </
 root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0600.600pk> </root/
 .texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0800.600pk></usr/share/t
@@ -780,10 +791,10 @@ s/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on mp_transmission.pdf (60 pages, 708777 bytes).
+Output written on mp_transmission.pdf (64 pages, 710229 bytes).
 PDF statistics:
- 1633 PDF objects out of 1728 (max. 8388607)
- 1100 compressed objects within 11 object streams
- 250 named destinations out of 1000 (max. 500000)
+ 1653 PDF objects out of 1728 (max. 8388607)
+ 1115 compressed objects within 12 object streams
+ 254 named destinations out of 1000 (max. 500000)
  43809 words of extra memory for PDF output out of 51595 (max. 10000000)
 
