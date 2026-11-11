@@ -45,7 +45,16 @@ FCI = {k: _daily_fci(v) for k, v in IDXM.items()}
 # The three weighted components of the index (weight x demeaned input), monthly and daily, in each step (used only when the FCI is replaced by its components).
 CMPKEYS = ["y10", "equities", "dollar"]; CMPNAMES = ["y10", "eq", "usd"]
 # The three weighted components replace the FCI ("cmp"); the daily block is then restricted (see har_block) to keep the number of parameters reasonable.
-CMPGROUPS = {"cmp": [["y10"], ["equities"], ["dollar"]]}
+CMPGROUPS = {k: [["y10"], ["equities"], ["dollar"]] for k in ("cmp", "cmpE", "cmpR")}      # the daily block always has the three components
+# Monthly equations: "cmp" = three components separately, "cmpE" = equities separately and the 10-year yield and dollar as one variable (their sum), "cmpR" = one variable, the sum of the three (the FCI built from the components).
+# The three share the daily block, so their responses differ only in the monthly equations (indices into the three daily components).
+MGROUPS = {"cmp": [[0], [1], [2]], "cmpE": [[0, 2], [1]], "cmpR": [[0, 1, 2]]}
+def agg_matrix(fci):
+    """Maps the daily variables (2-year yield and the three components) to the monthly regressors; None when the monthly equations use the daily variables as they are."""
+    if fci not in MGROUPS: return None
+    A = np.zeros((1 + len(MGROUPS[fci]), 4)); A[0, 0] = 1
+    for i, g in enumerate(MGROUPS[fci]): A[1 + i, [1 + j for j in g]] = 1
+    return A
 _short = {"y10": "y10", "equities": "eq", "dollar": "usd"}
 def cmp_cols(fci, frame): return {"+".join(_short[k] for k in g): frame[g].sum(axis=1) for g in CMPGROUPS[fci]}
 _cases = {"nom": ("nominal", "rstar LW"), "real": ("real", "rstar LW"), "rstar": ("rstar", "rstar LW"), "kiley": ("rstar", "rstar Kiley")}
@@ -78,6 +87,8 @@ def fin_monthly(form, fci):
     FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean()
     ext = pd.DataFrame({"pol": RATEM[form], **(cmp_cols(fci, CMPM[form]) if fci in CMPGROUPS else {"idx": IDXM[fci]} if fci else {})})
     FB = FB.combine_first(ext)
+    A = agg_matrix(fci)
+    if A is not None: FB = pd.DataFrame(FB.values @ A.T, index=FB.index, columns=["pol"] + [f"g{i}" for i in range(A.shape[0] - 1)])
     return FB[FB.index >= pd.Period("1973-01", "M")]
 
 def fin_eom(form, fci):
@@ -104,13 +115,14 @@ def trend_cols(periods, start, end):
     K = len(kn); d = lambda k: (np.maximum(t - kn[k], 0) ** 3 - np.maximum(t - kn[-1], 0) ** 3) / (kn[-1] - kn[k])
     return np.c_[t, *[d(k) - d(K - 2) for k in range(K - 2)]]
 
-def har_rows(form, fci, mvars, end, t2020, months=False):
+def har_rows(form, fci, mvars, end, t2020, months=False, dates=False):
     """Regressors and outcomes (rows of the daily block's estimation sample): constant, the 1/5/22/66-day averages of the daily variables, the monthly macro variables (this month and last)."""
     D = daily_frame(form, fci).loc["1990-01-02":(f"{end}-12-31" if end else None)].dropna(); mo = D.index.to_period("M"); MMv = MAC[mvars]
     X = np.column_stack([np.ones(len(D))] + [D.rolling(h).mean().shift(1).values for h in HAR] + [MMv.reindex(mo - 1).values, MMv.reindex(mo).values]); Y = D.values
     ok = ~np.isnan(X).any(axis=1) & ~np.isnan(Y).any(axis=1) & (D.index >= DAILY_START)
     if t2020 == "out": ok &= ~((D.index >= "2020-03-01") & (D.index <= "2020-12-31"))
-    return (X[ok], Y[ok], mo[ok]) if months else (X[ok], Y[ok])
+    out = (X[ok], Y[ok], mo[ok]) if months else (X[ok], Y[ok])
+    return out + (D.index[ok],) if dates else out
 
 def har_fit(X, Y, fci):
     """OLS of each daily variable on the regressors. With the FCI replaced by its components (fci in CMPGROUPS) each component's equation keeps only its own averages and those of the 2-year yield
@@ -141,25 +153,35 @@ def macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=False):
     if trend == "spline": X = np.c_[X, trend_cols(P, start, end)]
     return (X, np.array(Y), pd.PeriodIndex(P, freq="M")) if periods else (X, np.array(Y))
 
-def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21):
+def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21, A=None):
     """Macro first in each month (from lags), then the days of the month (event day = b_day). Returns monthly macro, monthly-average financial paths and end-of-month financial values."""
     lens = [n0] + [nother] * (months - 1); start = np.concatenate([[0], np.cumsum(lens)]); off = 70
     f = np.zeros((start[-1] + off, nd)); macro = np.zeros((months, K)); fb = np.zeros((months, nd)); fe = np.zeros((months, nd))
-    A = C[1:1 + K * L].T.reshape(K, L, K); G = C[1 + K * L:1 + K * L + nd * L].T.reshape(K, L, nd)
+    nm = nd if A is None else A.shape[0]; Am = np.eye(nd) if A is None else A
+    A = C[1:1 + K * L].T.reshape(K, L, K); G = C[1 + K * L:1 + K * L + nm * L].T.reshape(K, L, nm)
     for t in range(months):
-        macro[t] = sum(A[:, l - 1] @ macro[t - l] for l in range(1, L + 1) if t - l >= 0) + sum(G[:, l - 1] @ fb[t - l] for l in range(1, L + 1) if t - l >= 0) if t else 0.0
+        macro[t] = sum(A[:, l - 1] @ macro[t - l] for l in range(1, L + 1) if t - l >= 0) + sum(G[:, l - 1] @ (Am @ fb[t - l]) for l in range(1, L + 1) if t - l >= 0) if t else 0.0
         for tau in range(start[t], start[t + 1]):
             if tau < k0: continue
             if tau == k0: f[off + tau] = b_day; continue
             x = np.concatenate([[0.0]] + [f[off + tau - h:off + tau].mean(axis=0) for h in HAR] + [macro[t - 1] if t >= 1 else np.zeros(K), macro[t]])
             f[off + tau] = x @ Bd
         fb[t] = f[off + start[t]:off + start[t + 1]].mean(axis=0); fe[t] = f[off + start[t + 1] - 1]
-    return macro, fb, fe
+    return macro, fb, fe, f[off + k0:off + k0 + 67].copy()          # last: the daily financial path from the event day (day 0) for 67 days
 
 def irf(Bd, C, K, nd, L, idx, pos, fci):
     """Event-position-weighted monthly macro, monthly-average and end-of-month financial responses to a unit shock, h = 0..H."""
-    b = impact(fci, idx); out = [(w, simulate(Bd, C, K, nd, L, b, k0, n0)) for k0, n0, w in pos]
+    b = impact(fci, idx); Am = agg_matrix(fci); out = [(w, simulate(Bd, C, K, nd, L, b, k0, n0, A=Am)) for k0, n0, w in pos]
+    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out), sum(w * m[2] for w, m in out), sum(w * m[3] for w, m in out)
+
+def irf_b(Bd, C, K, nd, L, b, pos):
+    """As irf, with the window impact vector b given (used for the counterfactual with the ordinary FCI movement)."""
+    out = [(w, simulate(Bd, C, K, nd, L, b, k0, n0)) for k0, n0, w in pos]
     return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out), sum(w * m[2] for w, m in out)
+
+def ordinary_loading(Xd, Yd, Bd, isev):
+    """Ordinary co-movement of the FCI (column 1) with the 2-year yield (column 0): covariance of the daily-block innovations divided by the variance of the yield innovation, on days without an announcement."""
+    r = (Yd - Xd @ Bd)[~isev]; return float(np.cov(r[:, 1], r[:, 0])[0, 1] / np.var(r[:, 0], ddof=1))
 
 _EV = {}
 def events(B):
@@ -209,18 +231,21 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
     months of their own. Months without a monthly row (2020 dropped, sample ends in 2019) contribute their daily rows and announcements but no residual. boot="iid": announcements, monthly residuals
     (fixed design) and daily rows (moving blocks of 66 days) resampled independently (the earlier default). Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd), e0."""
     boot = boot or BOOT; mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
-    idx0, pos0, bidx, bpos = events(B); Xd, Yd, dmon = har_rows(form, fci, mvars, end, t2020, months=True); Bd0 = har_fit(Xd, Yd, fci)
+    idx0, pos0, bidx, bpos = events(B); Xd, Yd, dmon, ddate = har_rows(form, fci, mvars, end, t2020, months=True, dates=True); Bd0 = har_fit(Xd, Yd, fci)
+    two = fci not in (0,) and fci not in CMPGROUPS                                      # yield plus FCI: also compute path B (same model, ordinary FCI movement)
+    if two: isev = np.isin(ddate, _daily.EV.d.values); ord0 = ordinary_loading(Xd, Yd, Bd0, isev)
     if boot == "j12r":
         evm = _daily.EV.d.iloc[idx0].dt.to_period("M").values; cal = pd.period_range("1996-01", "2026-09", freq="M")
         drows = {m: np.where(dmon == m)[0] for m in cal}; erows = {m: idx0[evm == m] for m in cal}
     for L in lags:
         X, Y, P = macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=True); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
-        tag = f"{form}|{fci}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)
+        tag = f"{form}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)
         rng = np.random.default_rng(zlib.crc32(tag.encode())); rng_d = np.random.default_rng(zlib.crc32(("block|" + tag).encode()))
-        m0, f0, e0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci)
+        m0, f0, e0, fday0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci)
+        if two: mB0 = irf_b(Bd0, C0, K, nd, L, np.r_[1.0, ord0], pos0)[0]
         if boot == "j12r":
             LI = _lag_index(P, L); post = np.where(P >= pd.Period("1996-01", "M"))[0]; pre = np.where(P < pd.Period("1996-01", "M"))[0]; prow = {p: i for i, p in enumerate(P)}
-        draws = []
+        draws = []; drawsB = []
         for b in range(B):
             if boot == "j12r":
                 mo = []; e_post = []
@@ -233,7 +258,9 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
                 r = block_rows(len(Xd), rng_d, 66); Bd = har_fit(Xd[r], Yd[r], fci); ib, pb = bidx[b], bpos[b]
                 Cb = np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0]
             draws.append(irf(Bd, Cb, K, nd, L, ib, pb, fci))
-        yield dict(lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
+            if two: ordd = ordinary_loading(Xd[dr] if boot == "j12r" else Xd[r], Yd[dr] if boot == "j12r" else Yd[r], Bd, isev[dr] if boot == "j12r" else isev[r]); drawsB.append((ordd, irf_b(Bd, Cb, K, nd, L, np.r_[1.0, ordd], pb)[0]))
+        extra = dict(fday0=fday0, fdayd=np.array([d[3] for d in draws]), ord0=ord0, ordd=np.array([d[0] for d in drawsB]), s0B=to_level(mB0), sdB=np.array([to_level(d[1]) for d in drawsB])) if two else {}
+        yield dict(**extra, lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
                    f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
 
 # ---------------------------------------------------------------- summaries

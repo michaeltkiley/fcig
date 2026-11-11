@@ -73,3 +73,8 @@ Related but not cited: Lee and Sekhposyan (temporal aggregation and shock propag
 - Not matched by the automatic check and left as written (checked from memory only, [secondhand]): fleming1962 (IMF Staff Papers 9(3), 369-380), jorgenson1963 (AER 53(2), 247-259), ando1963, friedman1957 (book), brave2011, powell2023 (transcript), fcinote (own note), sims1992 (Crossref returned a different item; bib pages 975-1000).
 - Working papers with no journal record, so only title and series number could be compared: bauer2026 (FRBSF WP 2026-20), chudik2026 (Dallas Fed WP 2603), boehm2026, lewis2026, kiley2020ml (FEDS 2020-095), holston2023 (NY Fed SR 1063), acosta2025 (FRBSF WP 2025-30). caballero2026: NBER WP 33952 exists (posted 2025-06); the bibliography cites the version of January 12, 2026, which could not be checked.
 - Characterisations added from memory, not from the texts: bauer2020 (decline in interest rates traced to r*, cited with the r* literature), fernandez2007 (missing variables in VARs), romer2004 (the Romer-Romer shock).
+
+## Added 11 Nov 2026 (revision)
+- Tobin (1980), "Stabilization Policy Ten Years After," BPEA 1980(1), 19-71: [verified] Crossref (DOI 10.2307/2534285).
+- Okun (1978), "Efficient Disinflationary Policies," AER 68(2), 348-352: [verified bibliographically] FRASER/EconBiz record and later citations; not in Crossref; characterization of its content ([secondhand]: a survey of Phillips-curve evidence on the cost of disinflation; later work reports sacrifice ratios from 0 to 8) not checked against the text.
+- Boehm, Kim and Kroner (2026), NBER WP 36004: [secondhand] abstract only: a combination of two yield-curve surprises and the non-yield shock chosen for its macroeconomic content.

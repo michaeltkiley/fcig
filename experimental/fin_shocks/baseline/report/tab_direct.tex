@@ -1,0 +1,17 @@
+\begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{A Direct Projection on the Policy Surprise}\label{tab:direct}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccc}\toprule
+Outcome & Months & Direct projection & Direct projection, financial lags & Main model & Proxy VAR\\ \midrule
+Unemployment gap (pp) & 12 & $-$2.86 & 0.75 & 0.34 & 0.95$^{*}$\\
+ & & {\scriptsize [$-$4.84, 0.70]} & {\scriptsize [$-$1.46, 4.08]} & {\scriptsize [$-$0.05, 0.76]} & {\scriptsize [0.01, 5.87]}\\
+ & 24 & $-$3.27 & 0.26 & 0.50$^{*}$ & 0.73\\
+ & & {\scriptsize [$-$6.32, 0.75]} & {\scriptsize [$-$2.64, 3.01]} & {\scriptsize [0.01, 0.95]} & {\scriptsize [$-$0.04, 4.55]}\\
+Price level (\%) & 12 & 0.67 & 0.28 & $-$0.42$^{**}$ & $-$0.84$^{*}$\\
+ & & {\scriptsize [$-$0.88, 1.46]} & {\scriptsize [$-$1.36, 1.08]} & {\scriptsize [$-$0.60, $-$0.20]} & {\scriptsize [$-$3.17, $-$0.15]}\\
+ & 24 & 2.18 & 0.73 & $-$0.81$^{**}$ & $-$1.24$^{*}$\\
+ & & {\scriptsize [$-$0.52, 4.21]} & {\scriptsize [$-$1.64, 3.01]} & {\scriptsize [$-$1.23, $-$0.33]} & {\scriptsize [$-$4.39, $-$0.24]}\\
+\bottomrule\end{tabular}
+}
+\begin{flushleft}\footnotesize\textit{Notes:} Direct projection: the outcome in month $t+h$ (unemployment gap, or the cumulated core PCE inflation of months $t$ to $t+h$ divided by 12, as in the main model) regressed on the sum of the policy-news surprises of announcement month $t$, with a constant and 12 lags of the unemployment gap and inflation (and, in the second column, 12 lags of the monthly averages of the $r^*$-gap yield and FCI); all controls are dated before month $t$ and the contemporaneous FCI is not included. January 1996 to September 2026, nothing dropped. The coefficient is divided by the window slope of the yield on the surprise (1.01), so the unit is +1 pp on the two-year yield in the window and there is no first stage. Brackets: 90\% intervals from moving blocks of 12 (12 months) or 24 (24 months) calendar months with the scaling re-estimated. Main model and proxy VAR: Tables~\ref{tab:matched} and~\ref{tab:monthlycompact}. $^{*}$: the 90\% interval excludes zero.\end{flushleft}
+\end{table}

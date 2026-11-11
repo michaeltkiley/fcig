@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 14:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 16:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -432,7 +432,7 @@ Package: placeins 2005/04/18  v 2.2
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 33.
 
-(../baseline/report/numbers.tex)
+(../baseline/report/numbers_ext.tex) (../baseline/report/numbers.tex)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count305
@@ -441,24 +441,24 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 (./mp_transmission.aux)
 \openout1 = `mp_transmission.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -516,25 +516,25 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 44.
+Package hyperref Info: Link coloring ON on input line 45.
 
 (./mp_transmission.out) (./mp_transmission.out)
 \@outlinefile=\write3
 \openout3 = `mp_transmission.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 44.
-Package microtype Info: Applying patch `item' on input line 44.
-Package microtype Info: Applying patch `toc' on input line 44.
-Package microtype Info: Applying patch `eqnum' on input line 44.
-Package microtype Info: Applying patch `footnote' on input line 44.
-Package microtype Info: Applying patch `verbatim' on input line 44.
+LaTeX Info: Redefining \microtypecontext on input line 45.
+Package microtype Info: Applying patch `item' on input line 45.
+Package microtype Info: Applying patch `toc' on input line 45.
+Package microtype Info: Applying patch `eqnum' on input line 45.
+Package microtype Info: Applying patch `footnote' on input line 45.
+Package microtype Info: Applying patch `verbatim' on input line 45.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 44.
+LaTeX Info: Redefining \showhyphens on input line 45.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -547,7 +547,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 47.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 48.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -556,7 +556,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 47.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 48.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -567,92 +567,123 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<../baseline/report/fig_intro.pdf, id=166, 505.89pt x 238.49101pt>
+<../baseline/report/fig_intro.pdf, id=183, 505.89pt x 238.49101pt>
 File: ../baseline/report/fig_intro.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_intro.pdf>
 Package pdftex.def Info: ../baseline/report/fig_intro.pdf  used on input line 7
-2.
+3.
 (pdftex.def)             Requested size: 469.75502pt x 221.45953pt.
- [1] [2 <../baseline/report/fig_intro.pdf>] [3]
+ [1] [2 <../baseline/report/fig_intro.pdf>] [3] [4]
+<../baseline/report/fig_fcis.pdf, id=482, 505.89pt x 332.44202pt>
+File: ../baseline/report/fig_fcis.pdf Graphic file (type pdf)
+<use ../baseline/report/fig_fcis.pdf>
+Package pdftex.def Info: ../baseline/report/fig_fcis.pdf  used on input line 11
+7.
+(pdftex.def)             Requested size: 422.77664pt x 277.82904pt.
+
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 111.
+(hyperref)                removing `math shift' on input line 123.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 111.
+(hyperref)                removing `superscript' on input line 123.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 111.
+(hyperref)                removing `math shift' on input line 123.
 
-[4] [5] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 150--150
+[5] [6 <../baseline/report/fig_fcis.pdf>] [7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 161--161
 []|\OT1/cmr/m/n/10 (+20) Window
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 152--152
+Underfull \hbox (badness 1092) in paragraph at lines 163--163
 []|\OT1/cmr/m/n/10 (+20) Unemployment and in-fla-tion,
  []
 
-[7] [8] [9] [10]
-<../baseline/report/fig_standard.pdf, id=680, 520.34402pt x 245.718pt>
+[9] [10] [11] [12]
+<../baseline/report/fig_standard.pdf, id=774, 520.34402pt x 245.718pt>
 File: ../baseline/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline/report/fig_standard.pdf  used on input lin
-e 209.
+e 225.
 (pdftex.def)             Requested size: 469.75502pt x 221.84152pt.
  (../baseline/report/tab_standard.tex
 Overfull \hbox (37.22029pt too wide) in paragraph at lines 3--15
  [][] 
  []
 
-) [11 <../baseline/report/fig_standard.pdf>] (../baseline/report/tab_main_B.tex
-)
-<../baseline/report/fig_steps.pdf, id=776, 520.34402pt x 281.85298pt>
-File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
-<use ../baseline/report/fig_steps.pdf>
-Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
-30.
-(pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
- [12] [13 <../baseline/report/fig_steps.pdf>]
-(../baseline/report/tab_tradeoff.tex) [14] [15]
+) [13] [14 <../baseline/report/fig_standard.pdf>]
+(../baseline/report/tab_matched.tex) [15]
+(../baseline/report/tab_monthly_compact.tex) [16]
+<../baseline/report/fig_decomp.pdf, id=904, 520.34402pt x 390.25798pt>
+File: ../baseline/report/fig_decomp.pdf Graphic file (type pdf)
+<use ../baseline/report/fig_decomp.pdf>
+Package pdftex.def Info: ../baseline/report/fig_decomp.pdf  used on input line 
+264.
+(pdftex.def)             Requested size: 469.75502pt x 352.33653pt.
+
+(../baseline/report/tab_decomp.tex) [17] [18 <../baseline/report/fig_decomp.pdf
+>] [19] (../baseline/report/tab_tradeoff.tex) [20] [21]
+(../baseline/report/tab_components.tex) [22]
+(../baseline/report/tab_weights_test.tex) [23]
 (../baseline/report/tab_weights.tex)
-<../baseline/report/fig_financial.pdf, id=876, 317.98799pt x 202.356pt>
+<../baseline/report/fig_financial.pdf, id=1037, 317.98799pt x 202.356pt>
 File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
-ne 262.
+ne 315.
 (pdftex.def)             Requested size: 291.2458pt x 185.34843pt.
-
-(../baseline/report/tab_monthly_compact.tex) [16] [17 <../baseline/report/fig_f
-inancial.pdf>] (../baseline/report/tab_rob_summary.tex
+ [24 <../baseline/report/fig_financial.pdf>] (../baseline/report/tab_rob_summar
+y.tex
 Overfull \hbox (30.52368pt too wide) in paragraph at lines 3--26
  [][] 
  []
 
-)
+) [25]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 290.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 290.
+(hyperref)                removing `math shift' on input line 338.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 290.
+(hyperref)                removing `superscript' on input line 338.
 
-[18] [19] [20] (../baseline/report/tab_weights_test.tex) [21]
-(./mp_transmission.bbl [22] [23] [24] [25] [26] [27]) [28] [29] [30] [31]
-(../baseline/report/tab_lags.tex) [32] [33]
-<../baseline/report/fig_size.pdf, id=1099, 520.34402pt x 281.85298pt>
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 338.
+
+[26] [27] (./mp_transmission.bbl [28] [29] [30] [31] [32] [33] [34]) [35]
+[36] [37] [38] (../baseline/report/tab_lags.tex) [39] [40] [41]
+<../baseline/report/fig_persist.pdf, id=1252, 520.34402pt x 224.037pt>
+File: ../baseline/report/fig_persist.pdf Graphic file (type pdf)
+<use ../baseline/report/fig_persist.pdf>
+Package pdftex.def Info: ../baseline/report/fig_persist.pdf  used on input line
+ 466.
+(pdftex.def)             Requested size: 469.75502pt x 202.26726pt.
+
+(../baseline/report/tab_persist.tex) [42 <../baseline/report/fig_persist.pdf>]
+[43]
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ (../baseline/report/tab_direct.tex) [44]
+<../baseline/report/fig_size.pdf, id=1333, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
-Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 41
-3.
+Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 49
+0.
+(pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
+
+(../baseline/report/tab_main_B.tex)
+<../baseline/report/fig_steps.pdf, id=1335, 520.34402pt x 281.85298pt>
+File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
+<use ../baseline/report/fig_steps.pdf>
+Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 5
+00.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
  (../baseline/report/tab_main_R1.tex
 Overfull \hbox (36.0337pt too wide) in paragraph at lines 3--31
@@ -679,16 +710,6 @@ Overfull \hbox (41.18642pt too wide) in paragraph at lines 3--16
  [][] 
  []
 
-! Misplaced alignment tab character &.
-l.16 ...rise kept when the 2-year yield and the S&
-                                                  P 500 move in opposite dir...
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
 ) (../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex)
 (../baseline/report/tab_app_R1b.tex) (../baseline/report/tab_app_R1c.tex)
 (../baseline/report/tab_app_R1d.tex) (../baseline/report/tab_app_R1e.tex)
@@ -698,13 +719,22 @@ Overfull \hbox (30.49704pt too wide) in paragraph at lines 3--19
  []
 
 ) (../baseline/report/tab_app_R2b.tex
-Overfull \hbox (23.88583pt too wide) in paragraph at lines 3--19
+Overfull \hbox (30.49704pt too wide) in paragraph at lines 3--19
  [][] 
  []
 
 ) (../baseline/report/tab_app_R2c.tex) (../baseline/report/tab_app_R2d.tex)
 (../baseline/report/tab_app_R3a.tex) (../baseline/report/tab_app_R3b.tex)
-(../baseline/report/tab_app_R4.tex) (../baseline/report/tab_standard_com.tex
+(../baseline/report/tab_app_R4.tex) (../baseline/report/tab_app_R4c.tex
+Overfull \hbox (29.9943pt too wide) in paragraph at lines 3--81
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 286.5987pt on input line 82.
+
+) (../baseline/report/tab_wt_full.tex) (../baseline/report/tab_standard_com.tex
+
 Overfull \hbox (115.98976pt too wide) in paragraph at lines 3--11
  [][] 
  []
@@ -723,76 +753,79 @@ Overfull \hbox (9.03238pt too wide) in paragraph at lines 3--81
 
 LaTeX Warning: Float too large for page by 195.84756pt on input line 82.
 
-) (../baseline/report/tab_proxy_sim.tex) [34] [35 <../baseline/report/fig_size.
-pdf>] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49]
-[50]
-Underfull \hbox (badness 10000) in paragraph at lines 500--500
+) (../baseline/report/tab_proxy_sim.tex) [45] [46 <../baseline/report/fig_size.
+pdf>] [47] [48 <../baseline/report/fig_steps.pdf>] [49] [50] [51] [52] [53]
+[54] [55] [56] [57] [58] [59] [60] [61] [62] [63
+
+] [64]
+Underfull \hbox (badness 10000) in paragraph at lines 589--589
 []|\OT1/cmr/m/n/10 (+20) Daily,
  []
 
 
-Underfull \hbox (badness 5985) in paragraph at lines 501--502
+Underfull \hbox (badness 5985) in paragraph at lines 590--591
 []|\OT1/cmr/m/n/10 (+20) Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1052) in paragraph at lines 501--502
+Underfull \hbox (badness 1052) in paragraph at lines 590--591
 \OT1/cmr/m/n/10 (+20) PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 507--508
+Underfull \hbox (badness 10000) in paragraph at lines 596--597
 []|\OT1/cmr/m/n/10 (+20) FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 509--509
+Underfull \hbox (badness 10000) in paragraph at lines 598--598
 []|\OT1/cmr/m/n/10 (+20) Daily;
  []
 
-[51] [52] (./mp_transmission.aux)
+[65] [66] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
-(rerunfilecheck)             Checksum: 4514DBB530E5746AAFC7C5E8425223A2;6112.
+(rerunfilecheck)             Checksum: BC6AA17240E1FC25EB63979910D45F46;7108.
  ) 
 Here is how much of TeX's memory you used:
- 18108 strings out of 476182
- 297523 string characters out of 5795594
- 2174975 words of memory out of 5000000
- 39264 multiletter control sequences out of 15000+600000
- 582683 words of font info for 247 fonts, out of 8000000 for 9000
+ 19181 strings out of 476182
+ 318190 string characters out of 5795594
+ 2230975 words of memory out of 5000000
+ 40258 multiletter control sequences out of 15000+600000
+ 583985 words of font info for 261 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,2033b,730s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0600.600pk> </
-root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0800.600pk></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
-i8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-
-Output written on mp_transmission.pdf (53 pages, 590611 bytes).
+ 75i,13n,79p,2033b,781s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk> </
+root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0600.600pk> </root/
+.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0800.600pk></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+ti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on mp_transmission.pdf (67 pages, 734395 bytes).
 PDF statistics:
- 1442 PDF objects out of 1728 (max. 8388607)
- 1069 compressed objects within 11 object streams
- 243 named destinations out of 1000 (max. 500000)
- 41242 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 1771 PDF objects out of 2073 (max. 8388607)
+ 1229 compressed objects within 13 object streams
+ 272 named destinations out of 1000 (max. 500000)
+ 43841 words of extra memory for PDF output out of 51595 (max. 10000000)
 

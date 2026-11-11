@@ -20,7 +20,7 @@ def work(c):
     from lib import daily as DD; DD.use_surprise(c.get("shock", "ns"))
     for est in M.estimate(c["form"], c["fci"], c["macro"], c["start"], c["end"], c["t2020"], c["trend"], a.draws):
         rows += M.summary_rows(sp, est); paths.append(M.path_rows(sp, est))
-        np.savez_compressed(OUT / "draws" / f"{i}_L{est['lags']}.npz", s0=est["s0"], sd=est["sd"], f0=est["f0"], fd=est["fd"], names=est["names"])
+        np.savez_compressed(OUT / "draws" / f"{i}_L{est['lags']}.npz", s0=est["s0"], sd=est["sd"], f0=est["f0"], fd=est["fd"], names=est["names"], **{k: est[k] for k in ("ord0", "ordd", "s0B", "sdB", "fday0", "fdayd") if k in est})
     pd.DataFrame(rows).to_csv(RESULTS / f"{i}.csv", index=False, float_format="%.4f")
     pd.concat(paths).to_csv(RESULTS / f"{i}_paths.csv", index=False, float_format="%.4f")
     return f"{i} done in {time.time() - t0:.0f}s"

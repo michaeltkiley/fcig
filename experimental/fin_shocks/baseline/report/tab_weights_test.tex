@@ -1,13 +1,17 @@
-\begin{table}[tp]\centering\small
-\caption{Test of the Proportional-Weights Restriction (12 Lags)}\label{tab:weightstest}
-\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap equation} & \multicolumn{2}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Version & Wald & Bootstrap $p$ & Wald & Bootstrap $p$\\ \midrule
-Nominal & 8.9 & 0.984 & 41.9 & 0.053\\
-Real & 7.0 & 0.996 & 42.9 & 0.041\\
-r*-gap & 21.7 & 0.399 & 53.9 & 0.013\\
-Nominal, start 1973 & 24.5 & 0.930 & 26.0 & 0.539\\
-Real, start 1973 & 22.2 & 0.886 & 32.4 & 0.232\\
-r*-gap, start 1973 & 33.4 & 0.408 & 27.9 & 0.374\\
+\begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{Tests of the Proportional-Weights Restriction}\label{tab:weightstest}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}\toprule
+ & \multicolumn{2}{c}{Three components equal} & \multicolumn{2}{c}{Yield and dollar equal, equities free} & \multicolumn{2}{c}{Equities equal to yield and dollar}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Version & Unemployment & Inflation & Unemployment & Inflation & Unemployment & Inflation\\ \midrule
+Nominal & 0.984 & 0.053 & 0.821 & 0.024 & 0.978 & 0.142\\
+Real & 0.996 & 0.041 & 0.966 & 0.073 & 0.960 & 0.143\\
+r*-gap & 0.399 & 0.013 & 0.425 & 0.057 & 0.216 & 0.055\\
+\addlinespace
+Nominal, start 1973 & 0.930 & 0.539 & 0.671 & 0.242 & 0.667 & 0.740\\
+Real, start 1973 & 0.886 & 0.232 & 0.546 & 0.212 & 0.718 & 0.404\\
+r*-gap, start 1973 & 0.408 & 0.374 & 0.134 & 0.561 & 0.358 & 0.371\\
 \bottomrule\end{tabular}
-\begin{flushleft}\footnotesize\textit{Notes:} Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 block-bootstrap draws under the restriction); monthly equations from 1996 (first three rows) and from 1973 (last three), no trend, 2020 in. The unrestricted equation is the one used in Section 4.4.\end{flushleft}
+}
+\begin{flushleft}\footnotesize\textit{Notes:} Bootstrap $p$-values of Wald statistics (heteroskedasticity-robust) for the restriction that the coefficients on the weighted components are equal at each lag of the monthly equation, 12 lags: the three components (24 restrictions); the 10-year yield and the dollar with equities free (12); equities and the yield-dollar variable, the yield and dollar being equal (12). Residuals are resampled in moving blocks of 12 months under the restricted equation, 999 draws. Wald statistics and 3 and 6 lags are in Appendix Table~\ref{tab:wtfull}.\end{flushleft}
 \end{table}
