@@ -1,0 +1,8 @@
+item,first,last,n
+monthly sample (payroll/unemployment projections),1976-03,2025-10,557
+origins with a recession month in t+1..t+12,,,111
+recession episodes starting in the sample window,,,"1980-02,1981-08,1990-08,2001-04,2008-01"
+OOS origins 1995-01 on,1995-01,2025-10,331
+OOS origins with a recession in next 12m,,,48
+"OOS recession episodes (2001, 2007-09; 2020 dropped with covid window)",,,"2001-04,2008-01"
+quarterly sample (GDP),1976Q1,2025Q3,186

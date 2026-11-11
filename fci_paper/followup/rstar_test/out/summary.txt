@@ -1,0 +1,290 @@
+
+=== rstar vs nominal: 91 tests (positive = rstar better)
+OOS DM: |t|>1.645 in 20 (r* better 18, worse 2); expected by chance at 10%: 9.1; Holm-5% survivors: 0; min p 0.001
+OOS ratio A/B (RMSE; Brier for recession) <1 in 69 of 91; mean DM t 0.69
+IS diff: interval excludes 0 in 12 (positive 9, negative 3); point diff >0 in 59; expected by chance 9.1
+  corepce: n=21  DM t mean 0.35  share t>0 0.62  IS diff mean 0.0013 share>0 0.86  ratio mean 0.994
+  gdp: n=21  DM t mean 0.83  share t>0 0.90  IS diff mean 0.0142 share>0 0.67  ratio mean 0.981
+  payroll: n=21  DM t mean 1.56  share t>0 0.90  IS diff mean 0.0145 share>0 0.67  ratio mean 0.954
+  recession: n=7  DM t mean -0.50  share t>0 0.29  IS diff mean -3.9213 share>0 0.14  ratio mean 1.027
+  ugap: n=21  DM t mean 0.42  share t>0 0.76  IS diff mean 0.0051 share>0 0.57  ratio mean 0.978
+
+=== rstar vs real: 91 tests (positive = rstar better)
+OOS DM: |t|>1.645 in 15 (r* better 13, worse 2); expected by chance at 10%: 9.1; Holm-5% survivors: 0; min p 0.014
+OOS ratio A/B (RMSE; Brier for recession) <1 in 80 of 91; mean DM t 0.85
+IS diff: interval excludes 0 in 5 (positive 4, negative 1); point diff >0 in 53; expected by chance 9.1
+  corepce: n=21  DM t mean 0.82  share t>0 1.00  IS diff mean -0.0017 share>0 0.43  ratio mean 0.976
+  gdp: n=21  DM t mean 0.79  share t>0 1.00  IS diff mean 0.0096 share>0 0.62  ratio mean 0.990
+  payroll: n=21  DM t mean 1.30  share t>0 1.00  IS diff mean 0.0101 share>0 0.76  ratio mean 0.981
+  recession: n=7  DM t mean -0.76  share t>0 0.14  IS diff mean -2.4327 share>0 0.00  ratio mean 1.012
+  ugap: n=21  DM t mean 1.01  share t>0 0.76  IS diff mean 0.0050 share>0 0.71  ratio mean 0.975
+
+=== real vs nominal: 91 tests (positive = real better)
+OOS DM: |t|>1.645 in 14 (r* better 11, worse 3); expected by chance at 10%: 9.1; Holm-5% survivors: 0; min p 0.014
+OOS ratio A/B (RMSE; Brier for recession) <1 in 53 of 91; mean DM t 0.35
+IS diff: interval excludes 0 in 14 (positive 9, negative 5); point diff >0 in 54; expected by chance 9.1
+  corepce: n=21  DM t mean -0.49  share t>0 0.24  IS diff mean 0.0029 share>0 0.86  ratio mean 1.019
+  gdp: n=21  DM t mean 0.74  share t>0 0.81  IS diff mean 0.0046 share>0 0.52  ratio mean 0.991
+  payroll: n=21  DM t mean 1.23  share t>0 0.86  IS diff mean 0.0045 share>0 0.57  ratio mean 0.973
+  recession: n=7  DM t mean -0.09  share t>0 0.43  IS diff mean -1.4886 share>0 0.43  ratio mean 1.014
+  ugap: n=21  DM t mean 0.06  share t>0 0.48  IS diff mean 0.0001 share>0 0.48  ratio mean 1.002
+
+--- by family, rstar vs nominal: mean DM t over 13 combos; share of combos with r* better (OOS, IS)
+                        dm_t  oos_better  is_better  nsig_is
+family                                                      
+FCI-G 1yr               0.71        0.69       0.92        3
+FCI-G 3yr               0.96        0.77       0.62        0
+FRB/US growth impetus   0.30        0.69       0.54        3
+FRB/US level            0.88        0.92       0.69        0
+GS level                0.32        0.62       0.31        2
+Market forward impetus  0.89        0.92       0.69        4
+Market level            0.78        0.69       0.77        0
+
+--- by family, rstar vs real: mean DM t over 13 combos; share of combos with r* better (OOS, IS)
+                        dm_t  oos_better  is_better  nsig_is
+family                                                      
+FCI-G 1yr               1.14        0.92       0.46        1
+FCI-G 3yr               1.01        0.92       0.46        0
+FRB/US growth impetus   0.97        0.92       0.54        2
+FRB/US level            0.75        0.85       0.77        0
+GS level                0.52        0.77       0.62        0
+Market forward impetus  0.92        1.00       0.46        2
+Market level            0.62        0.77       0.77        0
+
+--- full table, rstar vs nominal and rstar vs real, one row per test
+  outcome  h                 family     A       B  n_is  n_oos  is_diff  is_lo90  is_hi90  oos_ratio_AoverB   dm_t
+     ugap  6           Market level rstar nominal   580    354    0.002   -0.003    0.008             0.983  1.066
+     ugap  6           Market level rstar    real   580    354    0.002   -0.003    0.008             1.001 -0.097
+     ugap  6 Market forward impetus rstar nominal   580    354    0.023    0.006    0.041             0.908  1.615
+     ugap  6 Market forward impetus rstar    real   580    354    0.013    0.003    0.024             0.931  1.635
+     ugap  6               GS level rstar nominal   580    354   -0.012   -0.033   -0.002             1.057 -2.129
+     ugap  6               GS level rstar    real   580    354    0.003   -0.005    0.009             1.000 -0.030
+     ugap  6           FRB/US level rstar nominal   580    354    0.001   -0.008    0.006             0.977  0.977
+     ugap  6           FRB/US level rstar    real   580    354    0.001   -0.006    0.006             1.000  0.010
+     ugap  6  FRB/US growth impetus rstar nominal   580    354    0.020    0.006    0.037             0.935  1.344
+     ugap  6  FRB/US growth impetus rstar    real   580    354    0.012    0.003    0.021             0.936  1.928
+     ugap  6              FCI-G 1yr rstar nominal   580    354    0.022    0.006    0.044             0.941  0.913
+     ugap  6              FCI-G 1yr rstar    real   580    354    0.009    0.002    0.019             0.950  1.539
+     ugap  6              FCI-G 3yr rstar nominal   580    354    0.008   -0.006    0.026             0.991  0.149
+     ugap  6              FCI-G 3yr rstar    real   580    354    0.006   -0.004    0.017             0.964  0.863
+     ugap 12           Market level rstar nominal   568    342   -0.001   -0.025    0.007             0.976  0.856
+     ugap 12           Market level rstar    real   568    342    0.002   -0.018    0.017             1.001 -0.079
+     ugap 12 Market forward impetus rstar nominal   568    342    0.047    0.006    0.082             0.939  1.445
+     ugap 12 Market forward impetus rstar    real   568    342    0.025   -0.001    0.049             0.945  1.987
+     ugap 12               GS level rstar nominal   568    342   -0.032   -0.073   -0.004             1.026 -0.968
+     ugap 12               GS level rstar    real   568    342    0.003   -0.017    0.017             1.004 -0.183
+     ugap 12           FRB/US level rstar nominal   568    342   -0.004   -0.039    0.005             0.966  0.883
+     ugap 12           FRB/US level rstar    real   568    342    0.001   -0.018    0.009             1.001 -0.068
+     ugap 12  FRB/US growth impetus rstar nominal   568    342    0.033    0.005    0.063             0.972  0.699
+     ugap 12  FRB/US growth impetus rstar    real   568    342    0.020   -0.002    0.039             0.951  2.462
+     ugap 12              FCI-G 1yr rstar nominal   568    342    0.046    0.011    0.088             0.969  0.589
+     ugap 12              FCI-G 1yr rstar    real   568    342    0.012   -0.008    0.031             0.963  1.822
+     ugap 12              FCI-G 3yr rstar nominal   568    342    0.011   -0.026    0.060             1.004 -0.078
+     ugap 12              FCI-G 3yr rstar    real   568    342    0.005   -0.022    0.032             0.970  1.005
+     ugap 24           Market level rstar nominal   553    327   -0.014   -0.110    0.002             0.949  1.039
+     ugap 24           Market level rstar    real   553    327   -0.002   -0.043    0.012             0.985  0.843
+     ugap 24 Market forward impetus rstar nominal   553    327   -0.005   -0.080    0.040             0.993  0.316
+     ugap 24 Market forward impetus rstar    real   553    327   -0.001   -0.052    0.032             0.979  1.623
+     ugap 24               GS level rstar nominal   553    327   -0.030   -0.075    0.014             1.016 -0.907
+     ugap 24               GS level rstar    real   553    327   -0.001   -0.037    0.017             0.987  0.664
+     ugap 24           FRB/US level rstar nominal   553    327   -0.014   -0.141    0.009             0.929  1.032
+     ugap 24           FRB/US level rstar    real   553    327   -0.002   -0.041    0.006             0.986  0.965
+     ugap 24  FRB/US growth impetus rstar nominal   553    327   -0.012   -0.075    0.033             0.996  0.154
+     ugap 24  FRB/US growth impetus rstar    real   553    327    0.006   -0.026    0.031             0.972  2.315
+     ugap 24              FCI-G 1yr rstar nominal   553    327    0.020   -0.031    0.083             0.998  0.056
+     ugap 24              FCI-G 1yr rstar    real   553    327   -0.007   -0.048    0.027             0.983  1.118
+     ugap 24              FCI-G 3yr rstar nominal   553    327    0.000   -0.074    0.089             1.008 -0.190
+     ugap 24              FCI-G 3yr rstar    real   553    327   -0.003   -0.046    0.037             0.973  0.984
+  payroll  6           Market level rstar nominal   569    343    0.001   -0.009    0.022             0.977  2.487
+  payroll  6           Market level rstar    real   569    343    0.000   -0.009    0.019             0.996  1.221
+  payroll  6 Market forward impetus rstar nominal   569    343    0.059    0.002    0.119             0.901  1.652
+  payroll  6 Market forward impetus rstar    real   569    343    0.042   -0.002    0.099             0.938  1.364
+  payroll  6               GS level rstar nominal   569    343   -0.008   -0.054    0.046             0.976  1.260
+  payroll  6               GS level rstar    real   569    343   -0.000   -0.011    0.019             0.997  1.049
+  payroll  6           FRB/US level rstar nominal   569    343   -0.000   -0.012    0.020             0.979  2.184
+  payroll  6           FRB/US level rstar    real   569    343    0.000   -0.009    0.015             0.996  1.474
+  payroll  6  FRB/US growth impetus rstar nominal   569    343    0.019   -0.014    0.064             0.965  1.093
+  payroll  6  FRB/US growth impetus rstar    real   569    343    0.021   -0.010    0.074             0.976  1.085
+  payroll  6              FCI-G 1yr rstar nominal   569    343    0.062    0.009    0.131             0.891  1.732
+  payroll  6              FCI-G 1yr rstar    real   569    343    0.028   -0.011    0.090             0.955  2.159
+  payroll  6              FCI-G 3yr rstar nominal   569    343    0.012   -0.027    0.062             0.920  2.330
+  payroll  6              FCI-G 3yr rstar    real   569    343    0.012   -0.025    0.060             0.971  1.552
+  payroll 12           Market level rstar nominal   557    331    0.011   -0.023    0.052             0.958  2.455
+  payroll 12           Market level rstar    real   557    331    0.005   -0.016    0.036             0.985  1.842
+  payroll 12 Market forward impetus rstar nominal   557    331    0.030   -0.029    0.091             0.953  1.338
+  payroll 12 Market forward impetus rstar    real   557    331    0.024   -0.026    0.089             0.972  0.981
+  payroll 12               GS level rstar nominal   557    331    0.011   -0.057    0.063             0.946  2.026
+  payroll 12               GS level rstar    real   557    331    0.003   -0.014    0.025             0.989  1.586
+  payroll 12           FRB/US level rstar nominal   557    331    0.006   -0.024    0.041             0.969  1.914
+  payroll 12           FRB/US level rstar    real   557    331    0.003   -0.014    0.030             0.990  1.592
+  payroll 12  FRB/US growth impetus rstar nominal   557    331   -0.010   -0.048    0.032             0.991  0.350
+  payroll 12  FRB/US growth impetus rstar    real   557    331    0.007   -0.028    0.061             0.990  0.632
+  payroll 12              FCI-G 1yr rstar nominal   557    331    0.050   -0.001    0.107             0.921  1.875
+  payroll 12              FCI-G 1yr rstar    real   557    331    0.014   -0.030    0.068             0.972  1.949
+  payroll 12              FCI-G 3yr rstar nominal   557    331   -0.001   -0.052    0.049             0.936  2.507
+  payroll 12              FCI-G 3yr rstar    real   557    331    0.000   -0.041    0.045             0.984  1.222
+  payroll 24           Market level rstar nominal   533    307    0.051   -0.023    0.112             0.928  1.724
+  payroll 24           Market level rstar    real   533    307    0.027   -0.009    0.094             0.963  1.975
+  payroll 24 Market forward impetus rstar nominal   533    307   -0.041   -0.114    0.016             1.010 -0.334
+  payroll 24 Market forward impetus rstar    real   533    307   -0.007   -0.060    0.041             0.998  0.118
+  payroll 24               GS level rstar nominal   533    307    0.068   -0.029    0.147             0.925  1.682
+  payroll 24               GS level rstar    real   533    307    0.022   -0.012    0.080             0.969  1.866
+  payroll 24           FRB/US level rstar nominal   533    307    0.041   -0.038    0.113             0.949  1.474
+  payroll 24           FRB/US level rstar    real   533    307    0.024   -0.012    0.081             0.971  1.781
+  payroll 24  FRB/US growth impetus rstar nominal   533    307   -0.057   -0.111    0.001             1.013 -0.496
+  payroll 24  FRB/US growth impetus rstar    real   533    307   -0.008   -0.043    0.026             0.998  0.175
+  payroll 24              FCI-G 1yr rstar nominal   533    307    0.014   -0.047    0.077             0.963  1.733
+  payroll 24              FCI-G 1yr rstar    real   533    307   -0.000   -0.046    0.043             0.988  0.984
+  payroll 24              FCI-G 3yr rstar nominal   533    307   -0.012   -0.083    0.049             0.966  1.805
+  payroll 24              FCI-G 3yr rstar    real   533    307   -0.005   -0.046    0.030             0.995  0.594
+      gdp  6           Market level rstar nominal   190    114    0.000   -0.011    0.028             0.988  0.955
+      gdp  6           Market level rstar    real   190    114   -0.001   -0.012    0.028             0.999  0.381
+      gdp  6 Market forward impetus rstar nominal   190    114    0.078    0.003    0.143             0.952  1.467
+      gdp  6 Market forward impetus rstar    real   190    114    0.061    0.000    0.110             0.963  1.218
+      gdp  6               GS level rstar nominal   190    114   -0.003   -0.043    0.039             0.991  0.862
+      gdp  6               GS level rstar    real   190    114   -0.001   -0.012    0.027             0.999  0.555
+      gdp  6           FRB/US level rstar nominal   190    114    0.001   -0.013    0.042             0.988  0.838
+      gdp  6           FRB/US level rstar    real   190    114   -0.001   -0.010    0.033             0.999  0.424
+      gdp  6  FRB/US growth impetus rstar nominal   190    114    0.021   -0.023    0.066             0.981  1.121
+      gdp  6  FRB/US growth impetus rstar    real   190    114    0.023   -0.012    0.060             0.990  0.795
+      gdp  6              FCI-G 1yr rstar nominal   190    114    0.063   -0.009    0.119             0.951  1.476
+      gdp  6              FCI-G 1yr rstar    real   190    114    0.024   -0.021    0.075             0.982  1.277
+      gdp  6              FCI-G 3yr rstar nominal   190    114    0.012   -0.040    0.063             0.944  1.926
+      gdp  6              FCI-G 3yr rstar    real   190    114    0.018   -0.018    0.047             0.984  1.040
+      gdp 12           Market level rstar nominal   186    110    0.011   -0.022    0.045             0.989  0.322
+      gdp 12           Market level rstar    real   186    110    0.001   -0.016    0.030             0.996  0.405
+      gdp 12 Market forward impetus rstar nominal   186    110    0.027   -0.039    0.088             0.966  1.301
+      gdp 12 Market forward impetus rstar    real   186    110    0.028   -0.026    0.083             0.977  1.077
+      gdp 12               GS level rstar nominal   186    110    0.014   -0.035    0.076             0.998  0.070
+      gdp 12               GS level rstar    real   186    110   -0.000   -0.019    0.033             0.997  0.368
+      gdp 12           FRB/US level rstar nominal   186    110    0.016   -0.027    0.058             0.990  0.336
+      gdp 12           FRB/US level rstar    real   186    110    0.002   -0.013    0.035             0.998  0.262
+      gdp 12  FRB/US growth impetus rstar nominal   186    110   -0.013   -0.061    0.020             0.984  0.883
+      gdp 12  FRB/US growth impetus rstar    real   186    110    0.006   -0.027    0.044             0.994  0.652
+      gdp 12              FCI-G 1yr rstar nominal   186    110    0.037   -0.015    0.082             0.958  1.532
+      gdp 12              FCI-G 1yr rstar    real   186    110    0.008   -0.044    0.053             0.988  1.129
+      gdp 12              FCI-G 3yr rstar nominal   186    110   -0.007   -0.053    0.044             0.948  1.937
+      gdp 12              FCI-G 3yr rstar    real   186    110    0.003   -0.040    0.027             0.989  0.995
+      gdp 24           Market level rstar nominal   178    102    0.046   -0.033    0.091             1.000 -0.007
+      gdp 24           Market level rstar    real   178    102    0.013   -0.030    0.050             0.981  1.245
+      gdp 24 Market forward impetus rstar nominal   178    102   -0.044   -0.104    0.006             0.992  0.359
+      gdp 24 Market forward impetus rstar    real   178    102   -0.002   -0.033    0.034             0.993  0.608
+      gdp 24               GS level rstar nominal   178    102    0.033   -0.031    0.100             1.044 -0.809
+      gdp 24               GS level rstar    real   178    102    0.010   -0.023    0.047             0.981  1.235
+      gdp 24           FRB/US level rstar nominal   178    102    0.064   -0.041    0.142             0.994  0.110
+      gdp 24           FRB/US level rstar    real   178    102    0.019   -0.015    0.068             0.987  1.029
+      gdp 24  FRB/US growth impetus rstar nominal   178    102   -0.044   -0.104   -0.002             0.989  0.587
+      gdp 24  FRB/US growth impetus rstar    real   178    102   -0.003   -0.028    0.017             0.996  0.718
+      gdp 24              FCI-G 1yr rstar nominal   178    102   -0.004   -0.041    0.035             0.980  1.219
+      gdp 24              FCI-G 1yr rstar    real   178    102   -0.002   -0.028    0.027             0.995  0.643
+      gdp 24              FCI-G 3yr rstar nominal   178    102   -0.007   -0.046    0.025             0.981  1.002
+      gdp 24              FCI-G 3yr rstar    real   178    102   -0.000   -0.029    0.011             0.998  0.440
+  corepce  6           Market level rstar nominal   568    342    0.001   -0.012    0.005             1.009 -0.492
+  corepce  6           Market level rstar    real   568    342    0.001   -0.006    0.003             0.992  0.416
+  corepce  6 Market forward impetus rstar nominal   568    342    0.001   -0.003    0.004             0.988  0.822
+  corepce  6 Market forward impetus rstar    real   568    342   -0.002   -0.004    0.001             0.999  0.102
+  corepce  6               GS level rstar nominal   568    342   -0.006   -0.009    0.003             0.990  0.730
+  corepce  6               GS level rstar    real   568    342    0.001   -0.007    0.002             0.994  0.281
+  corepce  6           FRB/US level rstar nominal   568    342    0.004   -0.011    0.009             0.991  0.471
+  corepce  6           FRB/US level rstar    real   568    342    0.001   -0.006    0.004             0.989  0.630
+  corepce  6  FRB/US growth impetus rstar nominal   568    342    0.002   -0.002    0.006             1.017 -0.587
+  corepce  6  FRB/US growth impetus rstar    real   568    342   -0.002   -0.005    0.001             0.995  0.541
+  corepce  6              FCI-G 1yr rstar nominal   568    342    0.001   -0.001    0.005             1.003 -0.262
+  corepce  6              FCI-G 1yr rstar    real   568    342   -0.002   -0.005    0.001             0.990  0.608
+  corepce  6              FCI-G 3yr rstar nominal   568    342    0.001   -0.001    0.005             0.998  0.144
+  corepce  6              FCI-G 3yr rstar    real   568    342   -0.003   -0.006    0.001             0.983  1.238
+  corepce 12           Market level rstar nominal   556    330    0.002   -0.022    0.008             1.006 -0.214
+  corepce 12           Market level rstar    real   556    330    0.001   -0.017    0.005             0.980  0.698
+  corepce 12 Market forward impetus rstar nominal   556    330    0.002   -0.003    0.005             0.984  0.574
+  corepce 12 Market forward impetus rstar    real   556    330   -0.003   -0.006    0.001             0.995  0.256
+  corepce 12               GS level rstar nominal   556    330   -0.010   -0.016    0.004             0.963  1.702
+  corepce 12               GS level rstar    real   556    330    0.001   -0.013    0.004             0.983  0.560
+  corepce 12           FRB/US level rstar nominal   556    330    0.006   -0.019    0.014             0.979  0.654
+  corepce 12           FRB/US level rstar    real   556    330    0.003   -0.016    0.007             0.976  0.905
+  corepce 12  FRB/US growth impetus rstar nominal   556    330    0.004   -0.002    0.011             1.046 -0.801
+  corepce 12  FRB/US growth impetus rstar    real   556    330   -0.004   -0.008    0.001             0.991  0.488
+  corepce 12              FCI-G 1yr rstar nominal   556    330    0.003   -0.001    0.009             1.011 -0.375
+  corepce 12              FCI-G 1yr rstar    real   556    330   -0.004   -0.007    0.000             0.981  0.734
+  corepce 12              FCI-G 3yr rstar nominal   556    330    0.002   -0.002    0.009             0.994  0.257
+  corepce 12              FCI-G 3yr rstar    real   556    330   -0.005   -0.009    0.001             0.964  1.705
+  corepce 24           Market level rstar nominal   532    306    0.002   -0.033    0.011             0.983  0.496
+  corepce 24           Market level rstar    real   532    306    0.002   -0.028    0.007             0.955  0.980
+  corepce 24 Market forward impetus rstar nominal   532    306    0.006   -0.003    0.013             0.998  0.085
+  corepce 24 Market forward impetus rstar    real   532    306   -0.006   -0.011    0.001             0.987  0.358
+  corepce 24               GS level rstar nominal   532    306   -0.022   -0.039    0.005             0.900  3.352
+  corepce 24               GS level rstar    real   532    306    0.002   -0.024    0.006             0.956  0.878
+  corepce 24           FRB/US level rstar nominal   532    306    0.009   -0.024    0.021             0.951  1.251
+  corepce 24           FRB/US level rstar    real   532    306    0.005   -0.020    0.012             0.945  1.387
+  corepce 24  FRB/US growth impetus rstar nominal   532    306    0.009   -0.003    0.021             1.096 -1.142
+  corepce 24  FRB/US growth impetus rstar    real   532    306   -0.007   -0.013   -0.000             0.967  0.860
+  corepce 24              FCI-G 1yr rstar nominal   532    306    0.006   -0.001    0.016             1.008 -0.206
+  corepce 24              FCI-G 1yr rstar    real   532    306   -0.007   -0.013    0.001             0.947  1.541
+  corepce 24              FCI-G 3yr rstar nominal   532    306    0.002   -0.005    0.015             0.966  0.908
+  corepce 24              FCI-G 3yr rstar    real   532    306   -0.008   -0.014    0.005             0.929  2.142
+recession 12           Market level rstar nominal   569    343   -9.579  -37.017   13.774             1.033 -0.523
+recession 12           Market level rstar    real   569    343   -3.050  -17.537   12.031             1.018 -1.741
+recession 12 Market forward impetus rstar nominal   569    343   -2.142  -20.412    4.996             0.941  0.991
+recession 12 Market forward impetus rstar    real   569    343   -1.312  -11.628    3.070             0.972  0.604
+recession 12               GS level rstar nominal   569    343   -3.048  -14.765   12.390             1.033 -2.756
+recession 12               GS level rstar    real   569    343   -3.368  -16.927   11.767             1.021 -2.116
+recession 12           FRB/US level rstar nominal   569    343   -8.728  -38.869   12.837             1.050 -0.692
+recession 12           FRB/US level rstar    real   569    343   -1.348  -15.898   11.590             1.006 -0.597
+recession 12  FRB/US growth impetus rstar nominal   569    343   -5.030  -23.732    1.693             0.949  0.728
+recession 12  FRB/US growth impetus rstar    real   569    343   -1.491   -8.807    1.737             1.003 -0.095
+recession 12              FCI-G 1yr rstar nominal   569    343    4.947   -1.629   20.950             1.165 -1.041
+recession 12              FCI-G 1yr rstar    real   569    343   -1.562   -9.885    4.594             1.029 -0.693
+recession 12              FCI-G 3yr rstar nominal   569    343   -3.869  -17.129    8.409             1.019 -0.180
+recession 12              FCI-G 3yr rstar    real   569    343   -4.898  -13.005    2.996             1.036 -0.703
+
+--- vs baseline (own lags only): Clark-West t (one-sided 1.28 at 10%), count significant by step
+                   cw_sig   n  is_gain  oos_ratio
+outcome   step                                   
+corepce   nominal       1  21    0.005      1.098
+          real          3  21    0.008      1.117
+          ref           0   6    0.003      1.084
+          rstar         2  21    0.007      1.089
+gdp       nominal       7  21    0.049      1.019
+          real          7  21    0.053      1.010
+          ref           0   6    0.088      0.988
+          rstar         7  21    0.063      1.000
+payroll   nominal      11  21    0.073      0.985
+          real         12  21    0.077      0.958
+          ref           1   6    0.109      0.986
+          rstar        14  21    0.087      0.940
+recession nominal       0   7   10.164      1.106
+          real          0   7    8.675      1.118
+          ref           2   2   46.718      0.913
+          rstar         0   7    6.243      1.133
+ugap      nominal      12  21    0.055      0.989
+          real          9  21    0.055      0.990
+          ref           6   6    0.152      0.836
+          rstar        10  21    0.060      0.967
+
+--- subperiods: mean over families and horizons of RMSE ratio r*/nominal and r*/real, by outcome
+                       mean                             count                        
+sub               1995-2007 2008-16 2017-19 2021-26 1995-2007 2008-16 2017-19 2021-26
+B       outcome                                                                      
+nominal corepce       1.000   1.025   1.020   0.957        21      21      21      21
+        gdp           1.000   0.970   0.978   0.936        21      21      14      21
+        payroll       0.962   0.949   0.986   0.941        21      21      21      21
+        recession     0.974   1.190   1.434   1.565         7       7       7       7
+        ugap          1.013   0.952   1.113   1.074        21      21      21      21
+real    corepce       0.938   1.000   1.072   1.015        21      21      21      21
+        gdp           1.000   0.994   0.968   0.964        21      21      14      21
+        payroll       0.997   0.970   0.908   0.979        21      21      21      21
+        recession     1.000   1.067   1.143   1.122         7       7       7       7
+        ugap          1.008   0.957   1.056   0.996        21      21      21      21
+
+--- subperiods, share of the loss differential (sum of d in subperiod / total MSE_B), mean over families/h
+sub                1995-2007  2008-16  2017-19  2021-26
+B       outcome                                        
+nominal corepce        0.002   -0.019    0.001    0.025
+        gdp           -0.002    0.029    0.001    0.009
+        payroll        0.030    0.052    0.000    0.006
+        recession      0.020   -0.023   -0.003   -0.020
+        ugap          -0.005    0.059   -0.003   -0.007
+real    corepce        0.043    0.007   -0.001   -0.003
+        gdp            0.004    0.009    0.002    0.006
+        payroll        0.003    0.030    0.000    0.005
+        recession      0.000   -0.010   -0.002   -0.000
+        ugap          -0.002    0.049   -0.001    0.003
