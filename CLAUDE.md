@@ -20,6 +20,7 @@ Two things live here. Do not confuse them.
 
 ## Working preferences (from the user)
 - Go slowly, one decision at a time. Propose, then ask; no consequential choices without the user's guidance. Record answers in the relevant `*_QA.md`.
+- Writing (Note B and drafts): write forward and for the big picture: the question, the approach, the core results, then 'generally robust'. Do not mention future or earlier results to set up the next point; no hand-wringing about sensitivity, no 'in some cases but not others' in the abstract, introduction or conclusion; robustness checks that broadly confirm the core are reported in the robustness section only, plainly and briefly. Nothing is robust to everything; do not add complications where none are needed.
 - Compare like for like at each step (our nominal vs existing nominal, real vs real, r* vs r*-adjusted). Treat information effects as acknowledged and set aside in the note, examined in `mp_var_fci/`.
 - Tag claims [verified] / [secondhand] / [inference]; flag unverified citations; say plainly what could not be checked.
 
