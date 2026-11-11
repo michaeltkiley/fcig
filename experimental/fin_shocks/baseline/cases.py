@@ -2,7 +2,7 @@
 Every case is run without the FCI and with the FCI in the matching form. No deterministic trend except Section 4.2c-d (natural cubic spline).
 A case is (form, fci, macro, start, end, t2020, trend); see lib/model.py."""
 FORMS = {"nom": "Nominal", "real": "Real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)"}
-FCI_LABEL = {0: "none", "cmp": "components", "cmpE": "equities free", "cmpR": "index (components)", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)"}
+FCI_LABEL = {0: "none", "cmp": "components", "cmpE": "equities free", "cmpR": "index", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)"}
 
 def pair(form, with_fci, **kw):
     """The same rate without and with the FCI."""

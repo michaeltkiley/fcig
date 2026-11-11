@@ -30,17 +30,26 @@ HEAD = (r"\begin{tabular}{llcrrrrrrr}\toprule" "\n" r" & & & & \multicolumn{3}{c
         r"Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule")
 NOTE = r"Per +1 pp on the 2-year yield. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero); 90\% intervals in brackets. Obs = monthly observations in the equations."
 
+FIT = r"\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%"
+def longtab(title, label, spec, head_rows, body, note):
+    """Tall appendix table: longtable with the header repeated on every page, notes below."""
+    return "\n".join([r"\begingroup\scriptsize\setlength{\tabcolsep}{0.9pt}", rf"\begin{{longtable}}{{{spec}}}", rf"\caption{{{title}}}\label{{{label}}}\\", r"\toprule", head_rows, r"\midrule\endfirsthead",
+                       r"\toprule", head_rows, r"\midrule\endhead", r"\bottomrule\endfoot", *body, r"\end{longtable}", rf"\begin{{flushleft}}\footnotesize\textit{{Notes:}} {note}\end{{flushleft}}", r"\endgroup"])
+
 def table(title, label, groups, lags, note, place="H"):
     """groups: list of (row label, [cases]); one block per label; lags: tuple of lag lengths shown for each case."""
-    out = [rf"\begin{{table}}[{place}]\centering\footnotesize\setlength{{\tabcolsep}}{{2.2pt}}", rf"\caption{{{title}}}\label{{{label}}}", HEAD]
+    body = []
     for gi, (lab, cs) in enumerate(groups):
-        if gi: out.append(r"\addlinespace")
+        if gi: body.append(r"\addlinespace")
         for ci, c in enumerate(cs):
             for li, L in enumerate(lags):
                 n, pts, ivs = two_lines(c, L)
                 a = (lab if ci == 0 and li == 0 else ""); f = CS.FCI_LABEL[c["fci"]] if li == 0 else ""
-                out += [f"{a} & {f} & {L} & {n} & " + " & ".join(pts) + r"\\", r" & & & & " + " & ".join(rf"{{\scriptsize {x}}}" for x in ivs) + r"\\"]
-    out += [r"\bottomrule\end{tabular}", rf"\par\smallskip\parbox{{0.96\linewidth}}{{\scriptsize {note} {NOTE}}}", r"\end{table}"]
+                body += [f"{a} & {f} & {L} & {n} & " + " & ".join(pts) + r"\\", r" & & & & " + " & ".join(rf"{{\scriptsize {x}}}" for x in ivs) + r"\\"]
+    if place == "p":
+        head_rows = HEAD.split("\\toprule\n", 1)[1].replace(r"\midrule", "")
+        return longtab(title, label, "llcrrrrrrr", head_rows.rstrip(), body, f"{note} {NOTE}")
+    out = [r"\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{2.2pt}", rf"\caption{{{title}}}\label{{{label}}}", FIT, HEAD, *body, r"\bottomrule\end{tabular}}", rf"\par\smallskip\parbox{{0.96\linewidth}}{{\scriptsize {note} {NOTE}}}", r"\end{table}"]
     return "\n".join(out)
 
 for g, pids in CS.GROUPS.items():                                                  # main text: 12 lags
@@ -69,19 +78,21 @@ def mcells(d, L, ident):
             else: pts.append(num(r.r) + ("$^{*}$" if r.lo * r.hi > 0 else "")); ivs.append(f"[{num(r.lo)}, {num(r.hi)}]")
     return int(g.nobs.iloc[0]), pts, ivs
 def monthly_table(title, label, lags, note, start, place="H"):
-    out = [rf"\begin{{table}}[{place}]\centering\scriptsize\setlength{{\tabcolsep}}{{2pt}}", rf"\caption{{{title}}}\label{{{label}}}",
-           r"\begin{tabular}{lllcrrrrrrr}\toprule" "\n" r" & & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){6-8}\cmidrule(lr){9-11}" "\n"
-           r"2-year & FCI & Identification & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule"]
+    spec = "lllcrrrrrrr"
+    head = (r" & & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){6-8}\cmidrule(lr){9-11}" "\n"
+            r"2-year & FCI & Identification & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\")
+    body = []
     for si, step in enumerate(("nom", "real", "rstar")):
-        if si: out.append(r"\addlinespace")
+        if si: body.append(r"\addlinespace")
         for fci in (0, step):
             d = MON[CS.monthly_id(dict(step=step, fci=fci, start=start))]
             for ident in ("P1", "WE"):
                 for L in lags:
                     n, pts, ivs = mcells(d, L, ident)
                     a = CS.FORMS[step] if (fci == 0 and ident == "P1" and L == lags[0]) else ""; f = CS.FCI_LABEL[fci] if (ident == "P1" and L == lags[0]) else ""
-                    out += [f"{a} & {f} & {IDENT[ident] if L == lags[0] else ''} & {L} & {n} & " + " & ".join(pts) + r"\\", r" & & & & & " + " & ".join(rf"{{\tiny {x}}}" for x in ivs) + r"\\"]
-    out += [r"\bottomrule\end{tabular}", rf"\par\smallskip\parbox{{0.96\linewidth}}{{\scriptsize {note}}}", r"\end{table}"]
+                    body += [f"{a} & {f} & {IDENT[ident] if L == lags[0] else ''} & {L} & {n} & " + " & ".join(pts) + r"\\", r" & & & & & " + " & ".join(rf"{{\tiny {x}}}" for x in ivs) + r"\\"]
+    if place == "p": return longtab(title, label, spec, head, body, note)
+    out = [r"\begin{table}[H]\centering\scriptsize\setlength{\tabcolsep}{2pt}", rf"\caption{{{title}}}\label{{{label}}}", FIT, rf"\begin{{tabular}}{{{spec}}}\toprule", head, r"\midrule", *body, r"\bottomrule\end{tabular}}", rf"\par\smallskip\parbox{{0.96\linewidth}}{{\scriptsize {note}}}", r"\end{table}"]
     return "\n".join(out)
 MNOTE = (r"Monthly VAR in the unemployment gap, core PCE inflation, the end-of-month 2-year yield and, when included, the end-of-month FCI (same version), 1996 to September 2026, no trend, nothing dropped. "
          r"Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects. "

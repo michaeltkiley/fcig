@@ -32,6 +32,8 @@ def restyle(text):
     m = re.search(r"\\caption\{", text)
     if m:
         a = m.end() - 1; b = match_brace(text, a); text = text[:a + 1] + title_case(text[a + 1:b]) + text[b:]
+    if "\\resizebox" not in text and "\\begin{tabular}" in text:                      # shrink a tabular that is wider than the text, leave others alone
+        text = text.replace("\\begin{tabular}", "\\resizebox{\\ifdim\\width>\\textwidth\\textwidth\\else\\width\\fi}{!}{%\n\\begin{tabular}", 1).replace("\\end{tabular}", "\\end{tabular}}", 1)
     pat = r"\par\smallskip\parbox{"
     while pat in text:
         i = text.index(pat); j = text.index("{", i + len(pat) - 1)               # the width brace was opened inside pat; find the body brace after it

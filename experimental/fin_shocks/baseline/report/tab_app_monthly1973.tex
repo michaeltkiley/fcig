@@ -1,5 +1,6 @@
 \begin{table}[tp]\centering\scriptsize\setlength{\tabcolsep}{2pt}
 \caption{Monthly VAR Benchmark, 1973 Sample (3, 6 and 12 Lags)}\label{tab:appmonthly1973}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{lllcrrrrrrr}\toprule
  & & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){6-8}\cmidrule(lr){9-11}
 2-year & FCI & Identification & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule
@@ -77,6 +78,6 @@ r*-gap & none & Proxy VAR & 3 & 642 & $-$0.28 & $-$0.12 & $-$0.04 & $-$0.33 & $-
  & & & & & {\tiny [0.08, 0.27]} & {\tiny [0.04, 0.23]} & {\tiny [0.00, 0.17]} & {\tiny [$-$0.19, 0.03]} & {\tiny [$-$0.41, 0.04]} & {\tiny [$-$0.64, 0.07]}\\
  &  &  & 12 & 633 & 0.26$^{*}$ & 0.16$^{*}$ & 0.06 & $-$0.14$^{*}$ & $-$0.30$^{*}$ & $-$0.41$^{*}$\\
  & & & & & {\tiny [0.14, 0.39]} & {\tiny [0.06, 0.32]} & {\tiny [$-$0.04, 0.21]} & {\tiny [$-$0.24, $-$0.03]} & {\tiny [$-$0.52, $-$0.08]} & {\tiny [$-$0.76, $-$0.07]}\\
-\bottomrule\end{tabular}
+\bottomrule\end{tabular}}
 \begin{flushleft}\footnotesize\textit{Notes:} Monthly VAR in the unemployment gap, core PCE inflation, the 2-year yield and, when included, the FCI (same step), sample as in the title, to September 2026, no trend, nothing dropped. Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects; unit +1 pp on the monthly-average 2-year yield. Window impact: impact vector measured in the announcement window and scaled by the share of the month after the announcement; 90\% bootstrap intervals; unit +1 pp 2-year in the window. The two units differ. $^{*}$ = 90\% interval excludes zero.\end{flushleft}
 \end{table}

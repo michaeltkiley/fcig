@@ -1,8 +1,15 @@
-\begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{2.2pt}
-\caption{Section 4.2 (C): Real 2-Year and Real FCI with a Cubic Spline Trend, Start 1996}\label{tab:appR2c}
-\begin{tabular}{llcrrrrrrr}\toprule
+\begingroup\scriptsize\setlength{\tabcolsep}{0.9pt}
+\begin{longtable}{llcrrrrrrr}
+\caption{Section 4.2 (C): Real 2-Year and Real FCI with a Cubic Spline Trend, Start 1996}\label{tab:appR2c}\\
+\toprule
  & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}
-Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule
+Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\
+\midrule\endfirsthead
+\toprule
+ & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}
+Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\
+\midrule\endhead
+\bottomrule\endfoot
 Real & none & 3 & 369 & $-$0.44$^{**}$ & $-$0.40$^{**}$ & $-$0.34$^{**}$ & $-$0.07 & $-$0.14 & $-$0.21\\
  & & & & {\scriptsize [$-$0.71, $-$0.17]} & {\scriptsize [$-$0.69, $-$0.10]} & {\scriptsize [$-$0.69, $-$0.06]} & {\scriptsize [$-$0.24, 0.08]} & {\scriptsize [$-$0.45, 0.12]} & {\scriptsize [$-$0.62, 0.19]}\\
  &  & 6 & 369 & $-$0.44$^{**}$ & $-$0.34$^{**}$ & $-$0.24 & $-$0.03 & $-$0.21 & $-$0.41\\
@@ -15,6 +22,6 @@ Real & none & 3 & 369 & $-$0.44$^{**}$ & $-$0.40$^{**}$ & $-$0.34$^{**}$ & $-$0.
  & & & & {\scriptsize [$-$0.33, 0.42]} & {\scriptsize [$-$0.25, 0.46]} & {\scriptsize [$-$0.23, 0.38]} & {\scriptsize [$-$0.38, 0.00]} & {\scriptsize [$-$0.78, $-$0.10]} & {\scriptsize [$-$1.05, $-$0.15]}\\
  &  & 12 & 369 & 0.19 & 0.28 & 0.17 & $-$0.14 & $-$0.25 & $-$0.27\\
  & & & & {\scriptsize [$-$0.24, 0.55]} & {\scriptsize [$-$0.20, 0.66]} & {\scriptsize [$-$0.25, 0.52]} & {\scriptsize [$-$0.30, 0.07]} & {\scriptsize [$-$0.66, 0.15]} & {\scriptsize [$-$0.91, 0.26]}\\
-\bottomrule\end{tabular}
+\end{longtable}
 \begin{flushleft}\footnotesize\textit{Notes:} No r* measure: the trend is a natural cubic spline in time (knots at the sample ends and at the NBER business-cycle peaks inside the sample), estimated in every monthly equation. Per +1 pp on the 2-year yield. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero); 90\% intervals in brackets. Obs = monthly observations in the equations.\end{flushleft}
-\end{table}
+\endgroup

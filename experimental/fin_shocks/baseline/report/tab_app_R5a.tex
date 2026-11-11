@@ -1,8 +1,15 @@
-\begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{2.2pt}
-\caption{Section 4.4 (a): Bauer-Swanson Orthogonalized Surprise}\label{tab:appR5a}
-\begin{tabular}{llcrrrrrrr}\toprule
+\begingroup\scriptsize\setlength{\tabcolsep}{0.9pt}
+\begin{longtable}{llcrrrrrrr}
+\caption{Section 4.4 (a): Bauer-Swanson Orthogonalized Surprise}\label{tab:appR5a}\\
+\toprule
  & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}
-Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule
+Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\
+\midrule\endfirsthead
+\toprule
+ & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}
+Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\
+\midrule\endhead
+\bottomrule\endfoot
 r*-gap & none & 3 & 369 & $-$0.17 & $-$0.16 & $-$0.14 & $-$0.12 & $-$0.15 & $-$0.17\\
  & & & & {\scriptsize [$-$0.44, 0.14]} & {\scriptsize [$-$0.45, 0.16]} & {\scriptsize [$-$0.42, 0.15]} & {\scriptsize [$-$0.27, 0.06]} & {\scriptsize [$-$0.43, 0.14]} & {\scriptsize [$-$0.54, 0.25]}\\
  &  & 6 & 369 & $-$0.09 & $-$0.06 & $-$0.01 & $-$0.16 & $-$0.35$^{*}$ & $-$0.53$^{*}$\\
@@ -15,6 +22,6 @@ r*-gap & none & 3 & 369 & $-$0.17 & $-$0.16 & $-$0.14 & $-$0.12 & $-$0.15 & $-$0
  & & & & {\scriptsize [0.00, 0.74]} & {\scriptsize [$-$0.10, 0.80]} & {\scriptsize [$-$0.20, 0.71]} & {\scriptsize [$-$0.55, $-$0.12]} & {\scriptsize [$-$1.07, $-$0.16]} & {\scriptsize [$-$1.43, $-$0.19]}\\
  &  & 12 & 369 & 0.40 & 0.54$^{*}$ & 0.47 & $-$0.44$^{**}$ & $-$0.84$^{**}$ & $-$1.15$^{**}$\\
  & & & & {\scriptsize [$-$0.05, 0.88]} & {\scriptsize [0.06, 1.05]} & {\scriptsize [$-$0.04, 1.08]} & {\scriptsize [$-$0.64, $-$0.22]} & {\scriptsize [$-$1.29, $-$0.34]} & {\scriptsize [$-$2.00, $-$0.36]}\\
-\bottomrule\end{tabular}
+\end{longtable}
 \begin{flushleft}\footnotesize\textit{Notes:} r*-gap. The surprise is the Bauer-Swanson (2023) orthogonalized measure, available for FOMC announcements through 2019; later announcements are dropped from the window impact. Monthly equations and daily block as in the baseline. Per +1 pp on the 2-year yield. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero); 90\% intervals in brackets. Obs = monthly observations in the equations.\end{flushleft}
-\end{table}
+\endgroup

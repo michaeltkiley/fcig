@@ -1,5 +1,6 @@
 \begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{2.2pt}
 \caption{Section 4.3: Excess Bond Premium (r*-gap) (12 Lags)}\label{tab:mainR3}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{llcrrrrrrr}\toprule
  & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}
 Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule
@@ -12,6 +13,6 @@ EBP added, start 1973 & none & 12 & 633 & $-$0.03 & $-$0.01 & 0.01 & $-$0.22$^{*
  & & & & {\scriptsize [$-$0.17, 0.09]} & {\scriptsize [$-$0.17, 0.12]} & {\scriptsize [$-$0.15, 0.15]} & {\scriptsize [$-$0.31, $-$0.07]} & {\scriptsize [$-$0.67, $-$0.16]} & {\scriptsize [$-$1.10, $-$0.24]}\\
  & r*-gap & 12 & 633 & 0.06 & 0.03 & 0.04 & $-$0.24$^{**}$ & $-$0.57$^{**}$ & $-$0.89$^{**}$\\
  & & & & {\scriptsize [$-$0.14, 0.23]} & {\scriptsize [$-$0.18, 0.24]} & {\scriptsize [$-$0.15, 0.23]} & {\scriptsize [$-$0.35, $-$0.06]} & {\scriptsize [$-$0.77, $-$0.16]} & {\scriptsize [$-$1.22, $-$0.22]}\\
-\bottomrule\end{tabular}
+\bottomrule\end{tabular}}
 \begin{flushleft}\footnotesize\textit{Notes:} The excess bond premium is a third monthly variable, treated like unemployment and inflation (u, inflation, EBP system); responses shown for u and the price level. Per +1 pp on the 2-year yield. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero); 90\% intervals in brackets. Obs = monthly observations in the equations.\end{flushleft}
 \end{table}
