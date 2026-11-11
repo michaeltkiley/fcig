@@ -31,3 +31,24 @@ Reproduce: `pip install -r requirements.txt`; `python3 01_data.py && python3 02_
 The path files `results/<case>_paths.csv` include the 2-year yield at the end of each month (`kind = fin_eom`), used to relate the window unit to the end-of-month unit of the monthly VARs. Step 8 (`08_literature_style.py`, run before step 7) estimates the standard methods of Note B Section 3.1 (recursive VARs, monthly proxy VAR without the FCI) on the same data and units; code in `lib/litstyle.py`.
 
 * Revision of 11 Nov 2026 (instructions in `paper/`): the bootstrap's month, announcement and daily-row draws no longer depend on whether the FCI is in the model (the seed tag drops the FCI), so every pair of cases with and without the FCI, and the three component specifications, use common draws and contrasts are paired. `lib/model.estimate` also returns path B (the fitted FCI model started from the ordinary FCI movement, `ordinary_loading`), the daily paths after the announcement day (`fday`), and supports the component versions `cmpR` (the index built from the components), `cmpE` (equities separate, 10-year yield and dollar as one variable) and `cmp` (all three separate) on one common three-component daily block (`MGROUPS`).
+
+## Exhibits of the paper and the scripts that produce them (state of 11 Nov 2026)
+
+`paper/mp_transmission.tex` contains no typed result: every number is a macro `\bl{...}` (from `report/numbers.tex` written by `07_report.py` and `report/numbers_ext.tex` written by `07b_report_extensions.py`) and every table and figure is read from `report/`. The qualitative statements of the text are asserted in the two report scripts (`check_claims`, `lag_summary`, `boot_summary`, `rob_summary` in 07; `claims()` and the `chk(...)` calls in 07b), which stop with an error when a claim stops being true. To rebuild the paper from raw inputs, run the steps of the table above in order (about 60 minutes with 4 cores; `03_estimate.py --force` is the long step), then `cd ../paper && pdflatex mp_transmission && bibtex mp_transmission && pdflatex mp_transmission && pdflatex mp_transmission`.
+
+| Exhibit in the paper | File in `report/` | Script |
+|---|---|---|
+| Fig. 1 (introduction), baseline paths with and without the FCI | `fig_intro.pdf` | 07 |
+| Fig. 2 index against the rebuilt Goldman Sachs index; Fig. 4 the three versions | `fig_gs.pdf`, `fig_fcis.pdf` | 07b (Goldman rebuild from Note A: `data/gs_noteA_monthly.csv`) |
+| Fig. 3 and Table 2, standard methods | `fig_standard.pdf`, `tab_standard.tex` (two rows; four rows in `tab_standard_all.tex`, appendix) | 07 (estimates: 08) |
+| Table 3 matched comparison; Fig. 5 paths for three versions | `tab_matched.tex`, `fig_steps.pdf` | 07b, 07 |
+| Table 4 proxy and window-impact VARs; simulation table | `tab_monthly_compact.tex`, `tab_proxy_sim.tex` | 07 (estimates: 04, 06) |
+| Fig. 6 and Table 5, decomposition (paths A, B, C) | `fig_decomp.pdf`, `tab_decomp.tex` | 07b (draws from 03: `s0B`, `sdB`) |
+| Table 6, Phillips multiplier (compact; all cases in the appendix) | `tab_tradeoff.tex`, `tab_tradeoff_full.tex` | 07b, 07 (sets: 05; 68 percent sets in `results/tradeoff.csv`) |
+| Tables 7 and 8, components and weights tests | `tab_components.tex`, `tab_weights_test.tex`, `tab_wt_full.tex` | 07b (estimates: 03 panel R4c; tests: 09) |
+| Tables 9-10, weights and persistence; Figs. 7-8 | `tab_weights.tex`, `fig_financial.pdf`, `fig_persist.pdf`, `tab_persist.tex` | 07, 07b (persistence: 11) |
+| Table 11, robustness summary; appendix tables by panel | `tab_rob_summary.tex`, `tab_main_*.tex`, `tab_app_*.tex` | 07 (03) |
+| Direct projection (appendix) | `tab_direct.tex` | 07b (12) |
+| Lag length, bootstrap, simulation (appendix) | `tab_lags.tex`, text macros `bl:bs:*` | 07 (03, 10) |
+
+Conventions: responses are per +1 pp on the two-year yield in the window; `**` and `*` mark the 5 and 10 percent levels; intervals are 90 percent (68 percent in the bands of the baseline figures); every pair of cases with and without the FCI, the component versions and path B share bootstrap draws (the seed tag omits the FCI). The tables written by 07 and 07b are put in the house LaTeX style by `lib/latex_style.py` (floats `[tp]`, Title Case captions, notes under the table, wide tables shrunk to the page, tall appendix tables as `longtable`).
