@@ -144,7 +144,7 @@ rows = [r"\multicolumn{4}{l}{\textit{Correlation of levels}} \\",
         r"\multicolumn{4}{l}{\textit{Average range of the four level indexes (pp)}} \\", crow("1974--2026", "range_long"), crow("1990--2026, zero at the 1990--2026 mean", "range_ninety"),
         r"\multicolumn{4}{l}{\textit{Latest reading, September 2026}} \\", crow("Market index", "latest_market", sign=True), crow("GS", "latest_gs", sign=True), crow("FRB/US index", "latest_frbus", sign=True),
         crow("Forward impetus", "latest_fi", sign=True), crow("FCI-G (1-year)", "latest_fcig", sign=True)]
-table("compare", "The Market Index and the Other Indexes at Each Step, 1974--2026", "tab:compare", ["", "Nominal", "Real", "Relative to $r^*$"], rows,
+table("compare", "The Market Index and the Other Indexes at Each Step", "tab:compare", ["", "Nominal", "Real", "Relative to $r^*$"], rows,
       "Monthly. Level indexes (market, GS, FRB/US, FRB/US with house prices) in two-year-yield points (market, GS) or funds-rate points (FRB/US), tighter above zero, relative to the 1973--2026 mean of each variable. FCI-G and the growth impetus of FRB/US in percentage points of GDP growth; forward impetus in index units. Range: highest minus lowest of the four level indexes in a month, averaged. ANFCI converted to two-year-yield points by its response to policy news. Real and $r^*$ versions of GS and FCI-G are my replications with real rates or gaps to $r^*$.")
 
 # Table: episodes
@@ -312,10 +312,14 @@ mac("boot:reps", float(len(BT)), 0); M["abs:boot:reps"] = M["boot:reps"]
 M["frbus:yardstick"] = f(SC["frbus_yardstick"], 4)
 M["usd:nom:1973"] = f(SC["usd_nom_1973"], 0); M["usd:nom:latest"] = f(SC["usd_nom_latest"], 0)
 M["rstar:share:range:gt1:ninety"] = f(SC["rstar_share_range_gt1_ninety"] * 100, 0)
+mac("rb:spread:weights", RB.loc[5:7, "latest_market"].max() - RB.loc[1:1, "latest_market"].min() * 0 - RB.loc[5:7, "latest_market"].min())
+mac("gap:frbus:lo", pct(BT["rstar_latest_gap_frbus"], 5)); mac("gap:frbus:hi", pct(BT["rstar_latest_gap_frbus"], 95))
 mac("rstar:lw:mean", float(D["rstar LW"].loc["1973-01":"2026-09"].mean()))
 mac("act:rstar:best:dm", float(ACT[(ACT.case == "rstar") & ACT["index"].isin(["Market index forward impetus", "FCI-G, 1-year lookback", "FRB/US growth impetus", "FCI-G, 3-year lookback"])].dm_t.min()))
 for k_ in ("mkt", "gs", "frbus"):
     mac(f"shift:{k_}:gfc", SC[f"rstar_{k_}_gfc"] - SC[f"nominal_{k_}_gfc"])
+sh_ = [SC[f"rstar_{k_}_gfc"] - SC[f"nominal_{k_}_gfc"] for k_ in ("mkt", "gs", "frbus")]
+mac("shift:min", min(sh_)); mac("shift:max", max(sh_))
 mac("rb:min:mkt:gs", RB.mkt_gs.min()); mac("rb:min:mkt:frbus", RB.mkt_frbus.min()); mac("rb:min:fi:fcig", RB.fi_fcig.min())
 
 # ------------------------------------------------------------------ claims asserted in the text
@@ -323,6 +327,7 @@ c = lambda st, k: CMP.loc[k, st]
 chk(c("rstar", "mkt_gs") >= 0.98 and c("real", "mkt_gs") >= 0.98 and c("nominal", "mkt_gs") <= 0.80, "market-GS: high in real and r* terms, low in nominal")
 chk(all(c(s, "mkt_frbus") >= 0.90 for s in ("nominal", "real", "rstar")), "market-FRB/US at least 0.90 at every step")
 chk(c("nominal", "range_long") > c("real", "range_long") > c("rstar", "range_long") and c("nominal", "range_ninety") > c("real", "range_ninety") > c("rstar", "range_ninety"), "range falls at each step")
+chk(c("nominal", "range_long") - c("rstar", "range_long") > 3 * (c("nominal", "range_ninety") - c("rstar", "range_ninety")), "range reduction much larger over 1974-2026 than since 1990")
 chk(c("rstar", "range_long") > 0.9 and c("rstar", "range_ninety") > 0.8, "range stays near a point")
 chk(all(c(s, "fi_fcig") >= 0.79 for s in ("nominal", "real", "rstar")), "flow-FCI-G at least 0.79 at every step")
 chk(all(c(s, "fcig_level") < 0.4 for s in ("nominal", "real", "rstar")), "FCI-G level correlation with market index below 0.4")
@@ -335,6 +340,7 @@ chk(V.loc["rstar_p12_from1990", "sig_to"] < V.loc["rstar_p12", "sig_to"], "respo
 chk(V.loc["rstar_p4", "corr_fi_fcig"] < V.loc["rstar_p12", "corr_fi_fcig"], "4-lag flow correlates less with FCI-G")
 chk(SC["rstar_mkt_gfc"] > 0 > SC["real_mkt_gfc"] and SC["rstar_mkt_gfc"] > 0 > SC["nominal_mkt_gfc"], "2009-16: tight relative to r*, easy in real and nominal terms")
 chk(all(SC[f"rstar_{k_}_gfc"] > SC[f"nominal_{k_}_gfc"] for k_ in ("mkt", "gs", "frbus")) and all(SC[f"rstar_{k_}_gfc"] > 0 for k_ in ("mkt", "gs", "frbus")), "2009-16: all three indexes tighter at the r* step and above the 1990-2026 mean")
+chk(CMP.loc["latest_frbus", "rstar"] > pct(BT["rstar_latest"], 95) and pct(BT["rstar_latest_gap_frbus"], 95) < 0, "FRB/US reading above the market interval; gap interval excludes zero")
 chk(abs(SC["rstar_latest90_market"] - SC["rstar_latest_market"]) > 1, "1990 base moves the market reading by more than a point")
 chk(SC["rstar_mkt_frbus_ninety"] < 0.85 and SC["rstar_mkt_gs_ninety"] > 0.9, "since 1990: market-FRB/US below 0.85, market-GS above 0.9")
 chk(SC["cape_7780"] < 0.5 * SC["cape_mean"], "CAPE in 1977-80 below half its mean")
