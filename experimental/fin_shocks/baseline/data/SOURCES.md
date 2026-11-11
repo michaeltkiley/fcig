@@ -24,5 +24,4 @@ source named (in a separate scratch directory; the comparison script reads both 
 
 Not used in the baseline package: the literature impulse responses of earlier drafts (Bauer and Swanson 2023 etc.); Ramey (2016), Caldara and Herbst (2019) and Barnichon and Mesters (2021) are cited from the papers themselves (see `paper/REFERENCE_CHECK.md`).
 
-| `gs_replication_daily.csv` | daily replication of the Goldman Sachs FCI with its published weights (column `fci`), 1990 on | repository `fcig_gs.py` [derived]; not a Goldman series |
-| `gs_published_digitized.csv` | Goldman's monthly FCI, January 1990 to July 2022, read from the vector chart on slide 18 of the New York Fed's July 2022 Investor Advisory Committee presentation (about 0.01 resolution) | repository `history/gs_nyfed_digitized.csv`, `tools/digitize_nyfed.py` [secondhand: digitized from a chart, not checked against the original file] |
+| `gs_noteA_monthly.csv` | monthly replication of the Goldman Sachs FCI with its published weights in each step (nominal, real, r*-gap; columns `gs_*`), 1973 on | Note A package output `fci_note/replication/output/indexes_*.csv` (column `gs`) [derived; Note A reports that the rebuild's monthly changes correlate 0.99 with Goldman's published series, read from a chart, 1990-2022: secondhand, not re-checked here] |

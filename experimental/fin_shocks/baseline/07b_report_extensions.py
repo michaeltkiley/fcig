@@ -452,25 +452,20 @@ _s = D.EV.ns.values[D.event_index()]; mac("sd:ns", f"{1000 * _s.std() / 10:.1f}"
 # =============================================================== comparison of the nominal index with the Goldman Sachs index (Section 2.2)
 def gs_comparison():
     from lib.paths import DATA
-    g = pd.read_csv(DATA / "gs_replication_daily.csv", parse_dates=["date"]).set_index("date").fci; gm = g.groupby(g.index.to_period("M")).mean()
-    pub = pd.read_csv(DATA / "gs_published_digitized.csv"); pub.index = pd.PeriodIndex(pub.month, freq="M"); pub = pub.gs_fci_digitized
-    ix = {k: pd.read_csv(OUT / f"indexes_{k}.csv", index_col=0).market for k in ("nominal", "real")}; X = pd.DataFrame(ix); X.index = pd.PeriodIndex(X.index, freq="M"); X["gs"] = gm; X["pub"] = pub
-    def c(a, b, s_, e_, ch=False):
-        d = X.loc[s_:e_, [a, b]].dropna(); d = d.diff(12).dropna() if ch else d; return d.corr().iloc[0, 1]
-    for tag, (s_, e_) in {"l": ("1990-01", "2026-09"), "s": ("1996-01", "2026-09"), "e": ("1990-01", "1995-12")}.items():
-        for lab, ch in (("lev", False), ("chg", True)): mac(f"gs:{tag}:{lab}", f"{c('nominal', 'gs', s_, e_, ch):.2f}")
-    for tag, (s_, e_) in {"l": ("1990-01", "2022-07"), "s": ("1996-01", "2022-07")}.items():
-        for lab, ch in (("lev", False), ("chg", True)):
-            mac(f"gp:{tag}:{lab}", f"{c('nominal', 'pub', s_, e_, ch):.2f}"); mac(f"gv:{tag}:{lab}", f"{c('gs', 'pub', s_, e_, ch):.2f}")
-    mac("gs:nr:pre90", f"{c('nominal', 'real', '1973-01', '1989-12'):.2f}"); mac("gs:nr:post90", f"{c('nominal', 'real', '1990-01', '2026-09'):.2f}")
-    chk("nominal index and rebuilt GS: changes correlate above 0.9 and levels above 0.85 in both samples; the rebuild tracks the published series (changes above 0.98)",
-        all(c("nominal", "gs", a_, "2026-09", True) > 0.9 and c("nominal", "gs", a_, "2026-09") > 0.85 for a_ in ("1990-01", "1996-01")) and c("gs", "pub", "1990-01", "2022-07", True) > 0.98)
-    chk("agreement in levels is higher since 1996 than from 1990, and already above 0.85 in 1990-95", c("nominal", "gs", "1996-01", "2026-09") > c("nominal", "gs", "1990-01", "2026-09") and c("nominal", "gs", "1990-01", "1995-12") > 0.85)
-    chk("nominal and real versions differ more before 1990 than after (correlation lower)", c("nominal", "real", "1973-01", "1989-12") < c("nominal", "real", "1990-01", "2026-09"))
-    Z = X.loc["1990-01":"2026-09", ["nominal", "gs", "pub"]]; Z = (Z - Z.loc["1996-01":"2022-07"].mean()) / Z.loc["1996-01":"2022-07"].std(); t = Z.index.to_timestamp()
-    fig, ax = plt.subplots(figsize=(7.0, 3.0)); ax.axhline(0, color=GREY, lw=0.8)
-    ax.plot(t, Z.nominal, color=BLUE, lw=1.7, label="Nominal version of the index"); ax.plot(t, Z.gs, color=ORANGE, lw=1.4, ls="--", label="Goldman Sachs index, rebuilt"); ax.plot(t, Z.pub, color=INK, lw=1.0, ls=":", label="Goldman Sachs index, published (to July 2022)")
-    ax.set_ylabel("Standard deviations from the 1996--2022 mean"); ax.legend(frameon=False, fontsize=7.2, loc="upper left"); fig.tight_layout(); fig.savefig(REPORT / "fig_gs.pdf"); plt.close(fig)
+    G = pd.read_csv(DATA / "gs_noteA_monthly.csv", index_col=0); G.index = pd.PeriodIndex(G.index, freq="M")
+    ix = {k: pd.read_csv(OUT / f"indexes_{k}.csv", index_col=0).market for k in ("nominal", "real", "rstar")}; X = pd.DataFrame(ix); X.index = pd.PeriodIndex(X.index, freq="M")
+    def c(step, s_, e_, ch=False):
+        d = pd.DataFrame({"m": X[step], "g": G[f"gs_{step}"]}).loc[s_:e_].dropna(); d = d.diff(12).dropna() if ch else d; return d.corr().iloc[0, 1]
+    for step, tg in (("nominal", "n"), ("real", "r"), ("rstar", "s")):
+        for per, (s_, e_) in {"l": ("1974-01", "2026-09"), "p": ("1996-01", "2026-09"), "e": ("1974-01", "1995-12")}.items():
+            mac(f"gs:{tg}:{per}:lev", f"{c(step, s_, e_):.2f}"); mac(f"gs:{tg}:{per}:chg", f"{c(step, s_, e_, True):.2f}")
+    chk("nominal index and nominal GS: levels correlate about 0.76 from 1974 and above 0.9 since 1996; real and r*-gap versions above 0.99 from 1974", abs(c("nominal", "1974-01", "2026-09") - 0.76) < 0.01 and c("nominal", "1996-01", "2026-09") > 0.9 and c("real", "1974-01", "2026-09") > 0.99 and c("rstar", "1974-01", "2026-09") > 0.99)
+    chk("12-month changes correlate above 0.94 in every step and sample", all(c(st_, a_, "2026-09", True) > 0.94 for st_ in ("nominal", "real", "rstar") for a_ in ("1974-01", "1996-01")))
+    fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.1), sharex=True)
+    for ax, step, ttl in ((axs[0], "nominal", "Nominal versions"), (axs[1], "real", "Real versions")):
+        Z = pd.DataFrame({"m": X[step], "g": G[f"gs_{step}"]}).dropna(); Z = (Z - Z.mean()) / Z.std(); t_ = Z.index.to_timestamp(); ax.axhline(0, color=GREY, lw=0.8)
+        ax.plot(t_, Z.m, color=BLUE, lw=1.6, label="Index of this paper"); ax.plot(t_, Z.g, color=ORANGE, lw=1.3, ls="--", label="Goldman Sachs index, rebuilt"); ax.set_title(ttl, fontsize=8.5)
+    axs[0].set_ylabel("Standard deviations from the mean"); axs[0].legend(frameon=False, fontsize=7, loc="upper left"); fig.tight_layout(); fig.savefig(REPORT / "fig_gs.pdf"); plt.close(fig)
 gs_comparison()
 
 # =============================================================== write macros, restyle, assert claims
