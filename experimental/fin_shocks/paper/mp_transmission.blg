@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: mp_transmission.aux
 The style file: aea.bst
 Database file #1: references.bib
-You've used 87 entries,
+You've used 85 entries,
             2695 wiz_defined-function locations,
-            1051 strings with 15716 characters,
-and the built_in function-call counts, 460408 in all, are:
-= -- 76116
-> -- 5802
+            1044 strings with 15449 characters,
+and the built_in function-call counts, 450655 in all, are:
+= -- 74511
+> -- 5674
 < -- 3
-+ -- 36662
-- -- 1818
-* -- 41319
-:= -- 90641
-add.period$ -- 612
-call.type$ -- 87
-change.case$ -- 1131
-chr.to.int$ -- 85
-cite$ -- 87
-duplicate$ -- 1308
-empty$ -- 3406
-format.name$ -- 1842
-if$ -- 82557
-int.to.chr$ -- 7
++ -- 35889
+- -- 1778
+* -- 40444
+:= -- 88711
+add.period$ -- 598
+call.type$ -- 85
+change.case$ -- 1105
+chr.to.int$ -- 84
+cite$ -- 85
+duplicate$ -- 1279
+empty$ -- 3336
+format.name$ -- 1802
+if$ -- 80814
+int.to.chr$ -- 6
 int.to.str$ -- 0
 missing$ -- 0
-newline$ -- 268
-num.names$ -- 960
+newline$ -- 262
+num.names$ -- 938
 pop$ -- 83
 preamble$ -- 1
-purify$ -- 1305
+purify$ -- 1275
 quote$ -- 0
-skip$ -- 1019
+skip$ -- 998
 stack$ -- 0
-substring$ -- 108527
-swap$ -- 548
-text.length$ -- 1221
+substring$ -- 106242
+swap$ -- 534
+text.length$ -- 1193
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 346
+type$ -- 338
 warning$ -- 0
-while$ -- 2206
+while$ -- 2156
 width$ -- 0
-write$ -- 441
+write$ -- 431

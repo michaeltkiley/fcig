@@ -11,11 +11,6 @@
   Event-Study Database.'' {\em Federal Reserve Bank of San Francisco Working
   Paper 2025-30}.
 
-\harvarditem[Adrian, Boyarchenko \harvardand\ Giannone]{T. Adrian, N.
-  Boyarchenko \harvardand\ D. Giannone}{2019}{adrian2019}
-{\bf Adrian, T., N. Boyarchenko, and D. Giannone.} 2019. ``Vulnerable Growth.''
-  {\em American Economic Review}, 109(4):~1263--1289.
-
 \harvarditem[Ajello et~al.]{A. Ajello, M. Cavallo, G. Favara, W. Peterman, J.
   Schindler \harvardand\ N. Sinha}{2023}{ajello2023}
 {\bf Ajello, A., M. Cavallo, G. Favara, W. Peterman, J. Schindler, and N.
@@ -338,15 +333,10 @@
 {\bf Kaplan, G., B. Moll, and G.~L. Violante.} 2018. ``Monetary Policy
   According to HANK.'' {\em American Economic Review}, 108(3):~697--743.
 
-\harvarditem[Kiley]{M.~T. Kiley}{2020{\em a}}{kiley2020ml}
-{\bf Kiley, M.~T.} 2020{\em a}. ``Financial Conditions and Economic Activity:
-  Insights from Machine Learning.'' {\em Finance and Economics Discussion
-  Series 2020-095, Board of Governors of the Federal Reserve System}.
-
-\harvarditem[Kiley]{M.~T. Kiley}{2020{\em b}}{kiley2020}
-{\bf Kiley, M.~T.} 2020{\em b}. ``What Can the Data Tell Us about the
-  Equilibrium Real Interest Rate?'' {\em International Journal of Central
-  Banking}, 16(3):~181--209.
+\harvarditem[Kiley]{M.~T. Kiley}{2020}{kiley2020}
+{\bf Kiley, M.~T.} 2020. ``What Can the Data Tell Us about the Equilibrium Real
+  Interest Rate?'' {\em International Journal of Central Banking},
+  16(3):~181--209.
 
 \harvarditem[Kroencke, Schmeling \harvardand\ Schrimpf]{T.~A. Kroencke, M.
   Schmeling \harvardand\ A. Schrimpf}{2021}{kroencke2021}
