@@ -300,8 +300,8 @@ for start, lab in (("1996-01", ""), ("1973-01", ", start 1973")):
             r = WTT[(WTT.step == step) & (WTT.lags == MAIN_LAGS) & (WTT["eq"] == eq) & (WTT.start == start)].iloc[0]; cells.append(f"{r.wald:.1f} & {r.p_boot:.3f}")
         wrows.append(f"{CS.FORMS[step]}{lab} & " + " & ".join(cells) + r"\\")
 (REPORT / "tab_weights_test.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Test of the proportional-weights restriction (12 lags)}\label{tab:weightstest}",
-    r"\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap equation} & \multicolumn{2}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Step & Wald & Bootstrap $p$ & Wald & Bootstrap $p$\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
-    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 residual draws under the restriction); monthly equations from 1996 (first three rows) and from 1973 (last three), no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
+    r"\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap equation} & \multicolumn{2}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Version & Wald & Bootstrap $p$ & Wald & Bootstrap $p$\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
+    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 block-bootstrap draws under the restriction); monthly equations from 1996 (first three rows) and from 1973 (last three), no trend, 2020 in. The unrestricted equation is the one used in Robustness 4.}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- weights table (window responses)
 w = pd.read_csv(OUT / "market_weights.csv", index_col=0)
@@ -328,6 +328,9 @@ try:
         lines += [trow(CS.FORMS[f] if c["fci"] == 0 else "", c) for c in CS.PANELS[0]["cases"] if c["form"] == f]
     lines.append(r"\addlinespace")
     for pid in ("R1a", "R1b", "R1c", "R1d", "R1e"):
+        lines.append(trow(CS.SHORT[pid], CS.panel_by_id(pid)["cases"][1]))
+    lines.append(r"\addlinespace")
+    for pid in ("R2a", "R2b", "R2c", "R2d"):
         lines.append(trow(CS.SHORT[pid], CS.panel_by_id(pid)["cases"][1]))
     d = D[D.lags == MAIN_LAGS].set_index("H")
     lines += [r"\addlinespace", "r*-gap minus nominal, with FCI & & " + " & ".join(f"[{num(d.lo[h])}, {num(d.hi[h])}]" for h in (24, 36)) + r"\\"]
@@ -482,6 +485,10 @@ def rob_summary():
     chk("alternative surprises: unemployment and price level at 24 m both significant at 5%", all(sig5(k, q) for k in ("R5a", "R5b") for q in ("u24", "P24")))
     chk("Kiley and spline from 1973: price level significant at 5% at 24 m", all(sig5(k, "P24") for k in ("R2b", "R2d")))
     chk("components from 1996: price level at 24 m not significant, not negative (positive point estimate)", not sig10("R4", "P24") and res["R4"]["P24"][0] > 0 and res["R4"]["P24"][2]["lo24"] < 0 < res["R4"]["P24"][2]["hi24"])
+    TT_ = pd.read_csv(RESULTS / "tradeoff.csv"); k_ = lambda form, fci, st, tr, H_: TT_[(TT_.form == form) & (TT_.fci == str(fci)) & (TT_.macro == "u,pi") & (TT_.start == st) & (TT_.end.isna()) & (TT_.t2020 == "in") & (TT_.trend == tr) & (TT_.lags == 12) & (TT_.H == H_) & (TT_["shock"] == "ns")].iloc[0]
+    chk("multiplier set at 24 m: Kiley from 1996 bounded and includes zero; Kiley from 1973 and spline (both starts) unbounded", (lambda r_: np.isfinite(r_.k_lo) and np.isfinite(r_.k_hi) and r_.k_lo < 0 < r_.k_hi)(k_("kiley", "kiley", "1996-01", "none", 24)) and not any(np.isfinite(k_(f_, f_, st_, tr_, 24).k_lo) for f_, st_, tr_ in (("kiley", "1973-01", "none"), ("real", "1996-01", "spline"), ("real", "1973-01", "spline"))))
+    DF_ = pd.read_csv(RESULTS / "tradeoff_diff.csv"); DF_ = DF_[DF_.lags == 12]
+    chk("paired difference of the multipliers (r*-gap minus nominal) has an interval that includes zero at 24 and 36 m", all((DF_[DF_.H == h_].lo.iloc[0] < 0 < DF_[DF_.H == h_].hi.iloc[0]) for h_ in (24, 36)))
     assert not bad, "claims on the robustness section no longer hold: " + "; ".join(bad)
 rob_summary()
 
