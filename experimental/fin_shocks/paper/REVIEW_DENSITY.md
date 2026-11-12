@@ -1,6 +1,8 @@
 # Note B: review for density and ease of reading (12 Nov 2026)
 
-Read: `mp_transmission.pdf` main text (Sections 1-6, about 12,500 words; appendices not reviewed). Compared with Kiley, "Financial Conditions and Economic Activity: Insights from Machine Learning" (FEDS 2020-095) and "Monetary Policy, Employment Shortfalls, and the Natural Rate Hypothesis" (FEDS 2024-032). The published JMCB version (doi 10.1111/jmcb.70067) is behind Wiley's paywall and could not be fetched, so the comparison is with the working paper [not checked against the published text]. No change was made to the paper.
+Read: `mp_transmission.pdf` main text (Sections 1-6, about 12,500 words; appendices not reviewed). Compared with Kiley, "Financial Conditions and Economic Activity: Insights from Machine Learning" (FEDS 2020-095) and "Monetary Policy, Employment Shortfalls, and the Natural Rate Hypothesis" (FEDS 2024-032). The published JMCB version (doi 10.1111/jmcb.70067) is behind Wiley's paywall and could not be fetched, so the comparison is with the working paper [not checked against the published text]. No change was made to the paper by the review itself.
+
+**Status (12 Nov 2026): the author answered yes to all four questions and asked for all issues to be addressed; applied in FS-A68 (see `../FS_QA.md`).**
 
 ## Verdict
 

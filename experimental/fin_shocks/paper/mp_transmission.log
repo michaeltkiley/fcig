@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.10)  11 NOV 2026 17:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.12)  12 NOV 2026 20:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -591,116 +591,116 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<../baseline/report/fig_intro.pdf, id=173, 505.89pt x 238.49101pt>
+<../baseline/report/fig_intro.pdf, id=164, 505.89pt x 238.49101pt>
 File: ../baseline/report/fig_intro.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_intro.pdf>
 Package pdftex.def Info: ../baseline/report/fig_intro.pdf  used on input line 7
 4.
 (pdftex.def)             Requested size: 469.75502pt x 221.45953pt.
- [1] [2 <../baseline/report/fig_intro.pdf>] [3] [4] [5]
-<../baseline/report/fig_gs.pdf, id=530, 520.34402pt x 216.81pt>
+ [1] [2 <../baseline/report/fig_intro.pdf>] [3] [4] (../baseline/report/tab_wei
+ghts.tex) [5]
+<../baseline/report/fig_gs.pdf, id=474, 520.34402pt x 216.81pt>
 File: ../baseline/report/fig_gs.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_gs.pdf>
-Package pdftex.def Info: ../baseline/report/fig_gs.pdf  used on input line 143.
+Package pdftex.def Info: ../baseline/report/fig_gs.pdf  used on input line 141.
 
 (pdftex.def)             Requested size: 469.75502pt x 195.74252pt.
  [6] [7 <../baseline/report/fig_gs.pdf>]
-<../baseline/report/fig_fcis.pdf, id=596, 505.89pt x 332.44202pt>
+<../baseline/report/fig_fcis.pdf, id=543, 505.89pt x 332.44202pt>
 File: ../baseline/report/fig_fcis.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_fcis.pdf>
 Package pdftex.def Info: ../baseline/report/fig_fcis.pdf  used on input line 17
-5.
+1.
 (pdftex.def)             Requested size: 422.77664pt x 277.82904pt.
- [8] [9 <../baseline/report/fig_fcis.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 193--193
+ [8 <../baseline/report/fig_fcis.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 189--189
 []|\OT1/cmr/m/n/10 (+20) Window
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 195--195
+Underfull \hbox (badness 1092) in paragraph at lines 191--191
 []|\OT1/cmr/m/n/10 (+20) Unemployment and in-fla-tion,
  []
 
-[10] [11] [12] [13]
-<../baseline/report/fig_standard.pdf, id=781, 520.34402pt x 245.718pt>
+[9] [10] [11] [12] [13]
+<../baseline/report/fig_standard.pdf, id=746, 520.34402pt x 245.718pt>
 File: ../baseline/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline/report/fig_standard.pdf  used on input lin
-e 263.
+e 253.
 (pdftex.def)             Requested size: 469.75502pt x 221.84152pt.
- (../baseline/report/tab_standard.tex) [14] [15 <../baseline/report/fig_standar
-d.pdf>] (../baseline/report/tab_matched.tex)
-<../baseline/report/fig_steps.pdf, id=884, 520.34402pt x 281.85298pt>
+ (../baseline/report/tab_standard.tex)
+(../baseline/report/tab_matched.tex) [14 <../baseline/report/fig_standard.pdf>]
+[15]
+<../baseline/report/fig_steps.pdf, id=842, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 2
-84.
+74.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
- [16]
-(../baseline/report/tab_monthly_compact.tex)
-(../baseline/report/tab_proxy_sim.tex) [17 <../baseline/report/fig_steps.pdf>]
-[18]
-<../baseline/report/fig_decomp.pdf, id=971, 520.34402pt x 390.25798pt>
+ [16 <../baseline/report/fig_steps.pdf>] [17]
+<../baseline/report/fig_decomp.pdf, id=924, 520.34402pt x 390.25798pt>
 File: ../baseline/report/fig_decomp.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_decomp.pdf>
 Package pdftex.def Info: ../baseline/report/fig_decomp.pdf  used on input line 
-319.
+295.
 (pdftex.def)             Requested size: 469.75502pt x 352.33653pt.
- (../baseline/report/tab_decomp.tex) [19] [20 <../baseline/report/fig_decomp.pd
-f>] [21] (../baseline/report/tab_tradeoff.tex) [22]
-(../baseline/report/tab_components.tex) [23]
+
+(../baseline/report/tab_decomp.tex) [18 <../baseline/report/fig_decomp.pdf>]
+[19] (../baseline/report/tab_tradeoff.tex) [20]
+(../baseline/report/tab_components.tex) [21]
 (../baseline/report/tab_weights_test.tex)
-<../baseline/report/fig_financial.pdf, id=1091, 317.98799pt x 202.356pt>
+<../baseline/report/fig_financial.pdf, id=1055, 317.98799pt x 202.356pt>
 File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
-ne 360.
+ne 339.
 (pdftex.def)             Requested size: 291.2458pt x 185.34843pt.
- (../baseline/report/tab_weights.tex)
-<../baseline/report/fig_persist.pdf, id=1092, 520.34402pt x 224.037pt>
+<../baseline/report/fig_persist.pdf, id=1056, 520.34402pt x 224.037pt>
 File: ../baseline/report/fig_persist.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_persist.pdf>
 Package pdftex.def Info: ../baseline/report/fig_persist.pdf  used on input line
- 370.
+ 347.
 (pdftex.def)             Requested size: 469.75502pt x 202.26726pt.
-
-[24] [25 <../baseline/report/fig_financial.pdf>]
-(../baseline/report/tab_rob_summary.tex) [26 <../baseline/report/fig_persist.pd
-f>] [27]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 396.
-
+ [22] [23 <../baseline/report/fig_financial.pdf> <../baseline/report/fig_persis
+t.pdf>]
+(../baseline/report/tab_monthly_compact.tex) [24]
+(../baseline/report/tab_rob_summary.tex) [25]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 396.
+(hyperref)                removing `math shift' on input line 376.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 396.
+(hyperref)                removing `superscript' on input line 376.
 
-[28] [29] (./mp_transmission.bbl [30] [31] [32] [33] [34] [35]) [36] [37]
-[38] (../baseline/report/tab_lags.tex) [39] [40]
-(../baseline/report/tab_persist.tex)
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 376.
+
+[26] (./mp_transmission.bbl [27] [28] [29] [30] [31] [32]) [33] [34]
+(../baseline/report/tab_proxy_sim.tex) [35] (../baseline/report/tab_lags.tex)
+[36] [37] [38] (../baseline/report/tab_persist.tex)
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [41] (../baseline/report/tab_direct.tex)
-[42]
-<../baseline/report/fig_size.pdf, id=1361, 520.34402pt x 281.85298pt>
+ [39]
+(../baseline/report/tab_direct.tex) [40]
+<../baseline/report/fig_size.pdf, id=1328, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
-Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 51
-4.
+Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 48
+9.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
- (../baseline/report/tab_main_B.tex) [43] [44 <../baseline/report/fig_size.pdf>
-] (../baseline/report/tab_tradeoff_full.tex) [45]
-(../baseline/report/tab_main_R1.tex) [46] (../baseline/report/tab_main_R2.tex)
-[47] (../baseline/report/tab_main_R3.tex) [48]
-(../baseline/report/tab_main_R4.tex) [49] (../baseline/report/tab_main_R5.tex)
-[50] (../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex
-[51
+ (../baseline/report/tab_main_B.tex)
+[41] [42 <../baseline/report/fig_size.pdf>]
+(../baseline/report/tab_tradeoff_full.tex) [43]
+(../baseline/report/tab_main_R1.tex) [44] (../baseline/report/tab_main_R2.tex)
+[45] (../baseline/report/tab_main_R3.tex) [46]
+(../baseline/report/tab_main_R4.tex) [47] (../baseline/report/tab_main_R5.tex)
+[48] (../baseline/report/tab_app_B.tex) (../baseline/report/tab_app_R1a.tex
+[49
 
 
 
@@ -708,62 +708,62 @@ Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 51
 
 
 ]) (../baseline/report/tab_app_R1b.tex) (../baseline/report/tab_app_R1c.tex
-[52]) (../baseline/report/tab_app_R1d.tex) (../baseline/report/tab_app_R1e.tex
-[53]) (../baseline/report/tab_app_R2a.tex) (../baseline/report/tab_app_R2b.tex
-[54]) (../baseline/report/tab_app_R2c.tex) (../baseline/report/tab_app_R2d.tex)
-(../baseline/report/tab_app_R3a.tex [55]) (../baseline/report/tab_app_R3b.tex)
-(../baseline/report/tab_app_R4.tex [56]) (../baseline/report/tab_app_R4c.tex
-[57] [58]) (../baseline/report/tab_wt_full.tex) [59]
-(../baseline/report/tab_standard_all.tex) [60]
-(../baseline/report/tab_standard_com.tex) [61]
-(../baseline/report/tab_monthly_F.tex) [62]
-(../baseline/report/tab_main_monthly.tex) [63]
-(../baseline/report/tab_app_monthly.tex [64
+[50]) (../baseline/report/tab_app_R1d.tex) (../baseline/report/tab_app_R1e.tex
+[51]) (../baseline/report/tab_app_R2a.tex) (../baseline/report/tab_app_R2b.tex
+[52]) (../baseline/report/tab_app_R2c.tex) (../baseline/report/tab_app_R2d.tex)
+(../baseline/report/tab_app_R3a.tex [53]) (../baseline/report/tab_app_R3b.tex)
+(../baseline/report/tab_app_R4.tex [54]) (../baseline/report/tab_app_R4c.tex
+[55] [56]) (../baseline/report/tab_wt_full.tex) [57]
+(../baseline/report/tab_standard_all.tex) [58]
+(../baseline/report/tab_standard_com.tex) [59]
+(../baseline/report/tab_monthly_F.tex) [60]
+(../baseline/report/tab_main_monthly.tex) [61]
+(../baseline/report/tab_app_monthly.tex [62
 
 
 
 
-]) [65] [66]
-Underfull \hbox (badness 10000) in paragraph at lines 635--635
+]) [63] [64]
+Underfull \hbox (badness 10000) in paragraph at lines 610--610
 []|\OT1/cmr/m/n/10 (+20) Daily,
  []
 
 
-Underfull \hbox (badness 5985) in paragraph at lines 636--637
+Underfull \hbox (badness 5985) in paragraph at lines 611--612
 []|\OT1/cmr/m/n/10 (+20) Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1052) in paragraph at lines 636--637
+Underfull \hbox (badness 1052) in paragraph at lines 611--612
 \OT1/cmr/m/n/10 (+20) PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 642--643
+Underfull \hbox (badness 10000) in paragraph at lines 617--618
 []|\OT1/cmr/m/n/10 (+20) FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--644
+Underfull \hbox (badness 10000) in paragraph at lines 619--619
 []|\OT1/cmr/m/n/10 (+20) Daily;
  []
 
-[67] [68] (./mp_transmission.aux)
+[65] [66] (./mp_transmission.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `mp_transmission.out' has not changed.
-(rerunfilecheck)             Checksum: 81A87827AE9BF05B4F249026637FFF0F;6733.
+(rerunfilecheck)             Checksum: 9F62C48AD15AEDC623C42B8C6F0A3D95;6399.
  ) 
 Here is how much of TeX's memory you used:
- 19346 strings out of 476182
- 320944 string characters out of 5795594
+ 19328 strings out of 476182
+ 320630 string characters out of 5795594
  1999975 words of memory out of 5000000
- 40418 multiletter control sequences out of 15000+600000
- 582905 words of font info for 257 fonts, out of 8000000 for 9000
+ 40404 multiletter control sequences out of 15000+600000
+ 582896 words of font info for 257 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,2033b,838s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,2042b,842s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk> </
 root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0600.600pk> </root/
 .texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0800.600pk></usr/share/t
@@ -789,10 +789,10 @@ sy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on mp_transmission.pdf (69 pages, 782675 bytes).
+Output written on mp_transmission.pdf (67 pages, 778959 bytes).
 PDF statistics:
- 1762 PDF objects out of 2073 (max. 8388607)
- 1177 compressed objects within 12 object streams
- 265 named destinations out of 1000 (max. 500000)
- 45886 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 1728 PDF objects out of 1728 (max. 8388607)
+ 1145 compressed objects within 12 object streams
+ 261 named destinations out of 1000 (max. 500000)
+ 45878 words of extra memory for PDF output out of 51595 (max. 10000000)
 
