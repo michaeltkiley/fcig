@@ -1,0 +1,176 @@
+% ============================================================
+\section{Introduction}
+\label{sec:intro}
+Suppose the Federal Reserve leaves the policy rate unchanged, but the dollar appreciates and stock prices fall. Both movements tend to restrain spending. How much tightening has occurred? One way to answer is to ask how large a monetary policy surprise would ordinarily produce a comparable movement in financial markets. Another is to ask how large a change in the policy rate would have a comparable effect on spending. A policymaker might reasonably expect the two answers to be close.
+
+Whether they are close depends on which asset prices have moved. Around a typical monetary policy announcement, long yields, stock prices and the dollar move together in fairly predictable proportions. The two methods give similar readings for that combination. But suppose the tightening comes mainly through the dollar. In the Federal Reserve's model, an appreciation of the dollar has a larger effect on spending than its usual response to policy news would suggest. An equity-led tightening is the converse case. The distinction matters whenever policymakers use the familiar effects of their own announcements to interpret financial developments between meetings.
+
+Figure~\ref{fig:two} gives an example. In one case equity valuations fall by 5 log points. In the other the dollar appreciates by 3.9 log points. By the first method, which weights asset prices by how they respond to policy news, each is worth about a quarter of a point of policy tightening (\bl{ag:ex:eq:mkt} and \bl{ag:ex:usd:mkt} points of the two-year yield). By the second, which weights them by their effects on GDP in the FRB/US model, the dollar movement is worth \bl{ag:h4:fr} times the equity movement.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.78\textwidth]{../replication/report/fig_two.pdf}
+\caption{Two Tightenings That Look Alike in Markets}
+\label{fig:two}
+\begin{flushleft}\footnotesize\textit{Notes:} Market index: points of the two-year yield, with weights from announcement-window responses to policy news. FRB/US index: funds-rate points, the effect on GDP after four quarters of a persistent shift in the variable divided by the effect of a persistent one percentage point rise in the funds rate. The 10-year yield is unchanged in both cases. Table~\ref{tab:example} gives intervals.\end{flushleft}
+\end{figure}
+
+Policymakers read the stance of policy from financial conditions. In November 2023 the Chair noted that ``Financial conditions have tightened significantly in recent months, driven by higher longer-term bond yields, among other factors'' \citep{powell2023}, and in March 2024 that ``there are many different financial conditions indicators, and you can kind of, you know, see different answers to that question'' \citep{powell2024}. A reading of financial conditions is a reading of policy only to the extent that a point of the index means a point of policy. This paper asks when two calibrations of that meaning agree, how large the disagreement is, whether it would have changed the reading of history, and whether later activity favors either one.
+
+I find that the two calibrations agree on the movement that policy itself produces and part ways on the combinations that it does not. On the typical response of long yields, equities and the dollar to a policy surprise, the model prices the response at \bl{ag:h4:bpsi} funds-rate points (interval \bl{ag:h4:bpsi:lo} to \bl{ag:h4:bpsi:hi}), against one by construction for the event study. Rescaling the model's weights by that number puts the two readings on one scale. The disagreement lies in composition. The model gives the dollar about \bl{ag:h4:rr} times the relative weight, against equities, that the event study does, and decay assumptions that are common to both assets do not change that. In the data the difference between the two readings is a quarter to a third of the average market move, at horizons from a day to a year. Whether it matters depends on what moved. In 1998--2001 the two readings of the same asset movements had opposite signs, both small, mostly because of the dollar's appreciation. In 2022--24 they were the same, and both overpredicted the rise in unemployment. Realized unemployment and GDP growth do not separate the two readings in the main sample.
+
+The paper has five parts. First, I define what a policy equivalent is under each method and show why their weights differ (Section~\ref{sec:indexes}). Second, I estimate the weights and show where the two readings agree, and how the assumed persistence of asset prices changes the comparison (Section~\ref{sec:agree}). Third, I measure the disagreement on announcements and at horizons from a day to a year (Section~\ref{sec:size}). Fourth, I examine three historical episodes (Section~\ref{sec:history}). Finally, I ask whether subsequent activity favors either reading (Section~\ref{sec:outlook}). The appendices give the derivations, the construction of the series and the sensitivity of the results.
+
+\subsection{Connection to the Literature}
+\textbf{Weights and their meaning.} Indexes of financial conditions differ mainly in the source of their weights \citep{hatzius2010}: effects on output from a model \citep{dudley2000,hatzius2018,ajello2023}, principal components \citep{brave2011}, or event-study regressions \citep{kuttner2001,gurkaynak2005,bernanke2005,nakamura2018,bauer2023}. The older literature on monetary conditions indexes recognized that the weights on asset prices depend on the shock and the dynamics, so that their policy meaning is not invariant \citep{eika1996}. I quantify that difficulty with two observed sets of U.S.\ weights and ask where it matters.
+
+\textbf{The closest comparisons.} \citet{arnaut2024} estimate how an existing index responds to policy surprises, \citet{sack2023} relate FCI-G to policy-induced changes in the two-year yield, and \citet{ajello2023} translate movements into a growth impulse with model multipliers. \citet{bletzinger2026} build a U.S.\ macro-finance index in units comparable to a policy rate and compare it with the Goldman Sachs index and FCI-G, finding divergences driven by equities and the strongest tightening in 2022--24. I ask how a policy-news weighting and a macro weighting read the same movements. \citet{boehm2025} show that announcements also move equities and exchange rates along a dimension orthogonal to yield changes, so a movement that departs from the conventional pattern can come from the announcement itself.
+
+\textbf{Information about activity.} \citet{hatzius2010} build an index conditional on past activity and inflation, \citet{aramonte2013} show that comparisons among indexes depend on the crisis in the sample, and \citet{lombardi2025} separate safe yields from priced risk and find that risk predicts activity more strongly. \citet{adrian2019} show that conditions shift the lower quantiles of growth, and \citet{brave2011} build an index of risk, credit and leverage. \citet{caballero2026} define FCI$^*$, the level of financial conditions consistent with output at potential. The neutral rate matters for the level of every index \citep{laubach2003,holston2017,holston2023,hamilton2016,bauer2020,kiley2020}; I measure the inputs relative to $\rs$ and do not estimate a neutral level for the index (Appendix~\ref{app:steps}).
+\FloatBarrier
+
+% ============================================================
+\section{Two Ways to Read a Financial Movement}\label{sec:indexes}
+\subsection{Two Meanings of a Policy Equivalent}\label{sec:meanings}
+Take a movement in three asset prices: the 10-year Treasury yield, equity valuation and the real broad dollar. Each is measured relative to $r^*$ and to its 1973--2026 average (Appendix~\ref{app:steps}). I call a reading of the movement a policy equivalent if it says how much tightening of the policy rate the movement amounts to. There are two natural ways to compute one.
+
+The market index starts from policy. At each Federal Open Market Committee announcement I measure the policy surprise with the factor of \citet{nakamura2018}, scaled so that one unit raises the two-year yield by one percentage point, and I measure how the three asset prices respond in a narrow window around the announcement. The weights are chosen to recover the size of the surprise from the three asset prices together. A movement is then worth the size of the surprise that would, on average, produce it, in points of the two-year yield. A policy surprise of one unit reads one.
+
+The FRB/US index starts from spending. Each asset price is weighted by its effect on GDP four quarters later in the Federal Reserve's FRB/US model \citep{brayton2014}, in the experiment in which the asset price shifts persistently, divided by the effect of a persistent one percentage point rise in the federal funds rate. A movement is then worth the funds-rate change with the same effect on GDP, in funds-rate points.
+
+The first calculation reads a movement through what policy does to markets. The second reads it through what markets do to spending. Both are legitimate. They need not agree.
+
+\subsection{Why the Weights Differ}\label{sec:why}
+Consider the dollar. It can be a reliable indicator of a policy surprise because it responds consistently when the expected path of U.S.\ interest rates changes. How useful it is as an indicator depends on how much it also moves for other reasons, and on what yields and equities already reveal. Its weight in a spending index depends on different things: how an appreciation affects net exports, and how long the appreciation lasts. An asset can be an excellent indicator of a policy surprise and have a modest effect on spending. It can also be a noisy indicator and have a large effect on spending. The same is true of equities, whose effect on spending runs through wealth and the cost of capital. A fall in equity prices that reflects a higher discount rate is policy-like, and a fall that reflects weaker earnings prospects is not policy at all. The event study averages over announcements, where the first kind dominates. The model prices an equity movement by its estimated effect on spending, whatever its source. Neither calculation is wrong about its own question.
+
+Two equations make the argument precise. Let $x$ be the movement in the three asset prices around an announcement, $s$ the policy surprise, and $\psi$ the vector of responses of the asset prices to a unit of surprise:
+\begin{equation}\label{eq:decomp}
+x=\psi s+u .
+\end{equation}
+The vector $u$ collects the ways in which a particular movement departs from the usual response to conventional rate news. It has covariance $\Sigma$. Even an announcement can produce such a departure. The market weights $w_M$ recover $s$ from $x$ by generalized least squares, $w_M\propto\Sigma^{-1}\psi$, normalized so that $w_M'\psi=1$. The FRB/US weights $b_h$ are the effects of the three asset prices on GDP at horizon $h$ in funds-rate points. The model prices the usual response $\psi$ at $b_h'\psi$, which I report in its own units, and dividing by it gives the normalized weights $w_{B,h}=b_h/(b_h'\psi)$, so that both indexes read one on a conventional policy surprise. The difference between the two readings of a movement $x$ is then
+\begin{equation}\label{eq:D}
+D_h(x)=(w_{B,h}-w_M)'x=(w_{B,h}-w_M)'u ,
+\end{equation}
+because the policy part $\psi s$ cancels. In words, the two methods disagree only to the extent that asset prices move in unusual proportions and the methods value those departures differently. An unusual movement is not enough by itself: if the weights are the same, there is nothing to value differently. A difference in weights is not enough either: if the asset prices keep moving together as they do around policy news, the difference has nothing to act on. That is why two indexes can track each other closely for decades and still give different readings during an equity boom or a dollar surge. Throughout, $D$ is the difference computed on the movements of the three asset prices over the horizon in question, and in Section~\ref{sec:outlook} it is computed on 12-month changes. Appendix~\ref{app:ma} derives the weights.
+
+\subsection{Putting Numbers on It}\label{sec:requires}
+Table~\ref{tab:example} applies both sets of weights to the two movements of Figure~\ref{fig:two}. The market index reads the two alike, as the weights imply that a 5 log point fall in equity valuation and a 3.9 log point appreciation of the dollar are each about a quarter of a policy move. The FRB/US index gives the dollar movement \bl{ag:h4:fr} times the effect of the equity movement. The ratio of ratios, the model's dollar-to-equity ratio over the market's, is \bl{ag:h4:rr} (interval \bl{ag:h4:rr:lo} to \bl{ag:h4:rr:hi}). Neither movement is a policy surprise, so nothing in the construction requires the readings to agree. Whether the difference is large in practice depends on how often asset prices move in such proportions, which is the question of Section~\ref{sec:size}.
+
+\input{../replication/report/tab_example}
+\FloatBarrier
+
+% ============================================================
+\section{Why the Two Answers Agree on a Policy Move}\label{sec:agree}
+\subsection{The Estimated Weights}\label{sec:market}
+Table~\ref{tab:weights} gives the market weights. A policy move that raises the two-year yield by one point raises the 10-year yield by \bl{psi:ten} points, lowers equity valuation by \bl{abs:psi:eq} percent and raises the real dollar by \bl{psi:usd} percent. The data are the San Francisco Fed's U.S.\ Monetary Policy Event-Study Database \citep{acosta2025}: \bl{n:events} announcements from \bl{event:first} to \bl{event:last}. Each variable carries a substantial part of the policy move, with shares of \bl{share:ten} for the 10-year yield, \bl{share:eq} for equity valuation and \bl{share:usd} for the dollar. The weights are imprecise, the weight on the 10-year yield most of all (Appendix~\ref{sec:precision}).
+
+\input{../replication/report/tab_weights}
+
+The weights say what the variables do when policy moves, not what causes their movements at other times. A rise in stock prices that comes from news about earnings has little to do with policy, and the index treats it as if it did. An announcement can also reveal the Fed's view of the economy, and then the responses mix policy and information \citep{nakamura2018}. I measure the responses as markets receive them and set the information effect aside. The index measures policy-equivalent tightening. It is not a forecast of activity.
+
+Table~\ref{tab:frbus} compares the market weights with the FRB/US weights. The two sets agree on the 10-year yield, where the FRB/US weight is \bl{ratio:ten} times the market weight. The model puts less weight on equity valuation (\bl{ratio:eq} times) and more on the dollar (\bl{ratio:usd} times). On a policy move the difference does not matter, because the policy part cancels in equation~(\ref{eq:D}). On a departure from the usual response, the model gives a fall in equity prices its estimated effect on output, and the market index treats it as policy-equivalent.
+
+\input{../replication/report/tab_frbus}
+
+\subsection{The FRB/US Reading of a Policy Move}\label{sec:onannounce}
+The model prices the usual response of the three variables to a unit of policy news at \bl{ag:h2:bpsi}, \bl{ag:h4:bpsi} and \bl{ag:h8:bpsi} funds-rate points at two, four and eight quarters (Table~\ref{tab:agree}). At four quarters the 90 percent interval is \bl{ag:h4:bpsi:lo} to \bl{ag:h4:bpsi:hi}. The market index prices the same response at exactly one. A value near one is informative because nothing in the construction of the FRB/US weights refers to policy announcements. They are the effects on GDP of persistent shifts in each variable. Had the usual response to a policy surprise been mostly a dollar movement, or mostly an equity movement, the model could have priced it far above or below one. That it prices it near one means that the event study and the model describe the same policy move with about the same strength. This is the empirical content of agreement: two calibrations built for different purposes, one from announcement windows and one from a macroeconomic model, assign nearly the same number of funds-rate points to the same movement in asset prices. The two do not differ significantly at any horizon.
+
+Dividing the model's weights by \bl{ag:h4:bpsi} puts both indexes on one scale and makes them agree exactly on a policy move. That is a normalization and not a finding. The finding is the number before it was divided out.
+
+\input{../replication/report/tab_agree}
+
+\subsection{Composition or Persistence?}\label{sec:persist}
+The comparison confounds two things. A persistent dollar appreciation in FRB/US and the dollar's response to policy news are different experiments, so a difference in weights could reflect the initial composition of the movement or the path that follows it. Figure~\ref{fig:persist} separates them with the same set of calculations under common decaying paths for the three variables, with half-lives of 8, 4 and 2 quarters.
+
+Persistence changes how much tightening a policy move represents. The model's reading of the usual response falls from \bl{ag:h4:bpsi} with persistent paths to \bl{ag:bp:hl4} (interval \bl{ag:bp:hl4:lo} to \bl{ag:bp:hl4:hi}) with a half-life of four quarters and \bl{ag:bp:hl2} with a half-life of two. Persistence does not change which movement counts more. With the same decay for the dollar and for equities, the model's dollar-to-equity ratio is \bl{ag:mp:hl8}, \bl{ag:mp:hl4} and \bl{ag:mp:hl2} at half-lives of 8, 4 and 2 quarters, against \bl{ag:mkt:ratio} for the market weights (interval \bl{ag:mkt:ratio:lo} to \bl{ag:mkt:ratio:hi}). Different half-lives for the two assets give a wider range, \bl{ag:mp:min} to \bl{ag:mp:max}, and none near one. The contrast between the two weightings is a contrast in the effect on GDP per unit of each asset price.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{../replication/report/fig_persist.pdf}
+\caption{Persistence Changes the Scale, Not the Contrast}
+\label{fig:persist}
+\begin{flushleft}\footnotesize\textit{Notes:} Left: the FRB/US weights at four quarters applied to the responses of the three variables to a unit of policy news, with the variables assumed to persist or to decay with the half-life shown; the bars are 90 percent intervals from bootstrap samples of the announcements. Right: the model's dollar effect over its equity effect, with the same decay for both; the line is the market index's ratio. The persistence of the variables' levels is a different object from the persistence of their responses to policy news; the half-lives of the levels since 1996 are 20 to 26 quarters, and the equity response to policy news does not decay within 20 trading days.\end{flushleft}
+\end{figure}
+
+
+% ============================================================
+\section{How Much Do the Two Readings Disagree in Practice?}\label{sec:size}
+The disagreement depends on how often asset prices move in proportions other than the usual response. I measure it as the mean absolute value of $D$ divided by the mean absolute value of the market move, over the same windows. A ratio of 0.3 means that the typical difference between the two readings is a third of the typical move.
+
+On the 253 announcements, with the weights re-estimated without the event being evaluated, the ratio in intraday windows is \bl{dz:ev:ratio} (interval \bl{dz:ev:ratio:lo} to \bl{dz:ev:ratio:hi}), and the 90th percentile of the difference is \bl{dz:ev:p90} against a mean absolute market move of \bl{dz:ev:move}. These are the windows in which the weights are estimated, with each event held out.
+
+The ratio is larger in daily data and at longer horizons. On daily changes of the same three assets, 1996--2026, it is \bl{dl:k1:ann} on announcement days and \bl{dl:k1:oth} on other days; at one week it is \bl{dl:k5:ann} and \bl{dl:k5:oth}, and at 22 trading days \bl{dl:k22:ann} and \bl{dl:k22:oth} (Table~\ref{tab:daily}). No difference between announcement and other windows is distinguishable from zero. Announcement days contain a great deal of financial news besides the announcement. The central economic point is that the usual response is special: whole announcement days look like other days.
+
+\input{../replication/report/tab_daily}
+
+For windows that end on any day, the ratio is \bl{dl:lad1}, \bl{dl:lad5}, \bl{dl:lad22}, \bl{dl:lad66} and \bl{dl:lad252} at 1, 5, 22, 66 and 252 trading days. A window of 22 or more days contains announcements in any case; removing the moves on announcement days gives \bl{dl:ex1}, \bl{dl:ex5}, \bl{dl:ex22}, \bl{dl:ex66} and \bl{dl:ex252}, within 0.02 of those. In 12-month changes of the monthly series, the ratio is \bl{dz:12m:ratio} (interval \bl{dz:12m:ratio:lo} to \bl{dz:12m:ratio:hi}), and the difference exceeds 0.25 in \bl{dz:12m:sh25} percent of months (Figure~\ref{fig:D}). The months overlap, so runs in this series are not independent evidence of persistence. The statistic is a sample summary with wide intervals. A quarter to a third is a fair description across horizons from a day to a year.
+
+The intraday and daily figures do not isolate a source for the gap between 0.19 and 0.3. The intraday windows are narrow and the weights exclude the event evaluated. The daily comparison uses nominal assets and weights fitted on the same announcements (Appendix~\ref{app:robust}). The comparison across horizons is the cleaner result: the disagreement does not shrink as the window lengthens.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.93\textwidth]{../replication/report/fig_D.pdf}
+\caption{Two Readings of the Same Financial Movements}
+\label{fig:D}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly, 12-month changes of the equity valuation, the 10-year yield and the dollar relative to $r^*$: the 10-year yield less ten-year expected inflation less $r^*$, the earnings-yield gap to $r^*$ converted to CAPE log points, and the real dollar (Appendix~\ref{app:steps}). Top: the change in the market index and the FRB/US reading of the same changes, normalized so that a conventional policy surprise reads one. Bottom: the difference $D$, FRB/US less market, with dotted lines at $\pm0.25$. Shaded: 1998--2001, 2004--06 and 2022--24.\end{flushleft}
+\end{figure}
+
+
+% ============================================================
+\section{Would a Policymaker Have Read History Differently?}\label{sec:history}
+Three episodes show when the choice of weights matters. For each I report two comparisons that are easily confused. The first is the difference between the full FRB/US index and the market index in average level, which includes variables the market index does not have and the effect of centering each variable on its average. The second applies the two weightings to the same three assets in 12-month changes, which isolates the weights. A gap in levels can coexist with agreement in changes. Table~\ref{tab:epmain} gives both, and Figure~\ref{fig:episodes} shows the matched readings.
+
+\input{../replication/report/tab_epmain}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.78\textwidth]{../replication/report/fig_episodes.pdf}
+\caption{Two Readings of Two Episodes}
+\label{fig:episodes}
+\begin{flushleft}\footnotesize\textit{Notes:} Average 12-month change over the months of the episode, in points of the two-year yield (market) and of the funds rate (FRB/US, normalized so that a conventional policy surprise reads one), computed on the same three assets relative to $r^*$. These are retrospective estimates.\end{flushleft}
+\end{figure}
+
+\textbf{1998--2001.} The market index read the 12-month changes of these years as slightly easing, at \bl{ce:1998:dm} points on average. The FRB/US reading of the same asset movements was slightly tightening, at \bl{ce:1998:fr}. The difference of \bl{ce:1998:D} is mostly the dollar. The dollar appreciated by \bl{ce:1998:xusd} log points a year on average, which adds \bl{ce:1998:cusd} to $D$ because the model gives the dollar more weight; equity valuations rose by \bl{ce:1998:xeq} log points a year, which adds \bl{ce:1998:ceq}. Someone following the market index would have concluded that financial conditions were easing modestly, and someone following the FRB/US reading that they were tightening modestly. Both are small compared with 2022--24. Unemployment rose by \bl{ce:1998:real} points over the following year, against forecasts of \bl{ce:1998:fcm} from the market reading and \bl{ce:1998:fcf} from the FRB/US reading.
+
+The full indexes differ much more in levels. The FRB/US index read \bl{br:ep1998:gap} points tighter than the market index on average (interval \bl{br:ep1998:lo} to \bl{br:ep1998:hi}), and \bl{br:ep1998:eq} of that difference comes from the equity weights. Valuations were far above their average, and the market index, which gives each point of valuation more weight, read conditions as easier. The level and the change are different objects. The level difference is the weights applied to a persistent departure of valuations from their average; the difference in annual changes is the weights applied to what moved that year.
+
+\textbf{2022--24.} The two readings were the same. The market reading of the 12-month change averaged \bl{ce:2022:dm} points and the FRB/US reading \bl{ce:2022:fr}. The difference was \bl{ce:2022:D}, because two offsetting movements cancelled: equity valuations fell by \bl{abs:ce:2022:xeq} log points a year, which contributes \bl{ce:2022:ceq} to $D$, and the dollar appreciated by \bl{ce:2022:xusd}, which contributes \bl{ce:2022:cusd}. The tightening was part equity-led and part dollar-led, and the model's heavier weight on the dollar and lighter weight on equities offset each other. The full indexes differ in average level by \bl{br:ep2022:gap} points (interval \bl{br:ep2022:lo} to \bl{br:ep2022:hi}), with the equity weights (\bl{br:ep2022:eq}) and the dollar (\bl{br:ep2022:usd}) both contributing, and that difference does not affect the readings of the year's tightening. Unemployment rose by \bl{ce:2022:real} points over the following year, against forecasts of \bl{ce:2022:fcm} from the market reading and \bl{ce:2022:fcf} from the FRB/US reading. Both weightings overpredicted the rise, so the weights do not explain the miss.
+
+\textbf{2004--06.} The matched readings are close (the difference is \bl{ce:2004:D}), and the gap in levels is \bl{br:ep2004:gap} (interval \bl{br:ep2004:lo} to \bl{br:ep2004:hi}). The equity weights add \bl{br:ep2004:eq} and house prices subtract \bl{abs:br:ep2004:house}, so the full FRB/US index contains a variable that the market index does not have, and equities do not explain the gap.
+
+These episodes give a concrete answer to when the choice of weights matters. The model gives less weight than the event study to equities and more to the dollar, so the two readings part when valuations and the dollar rise together, as in 1998--2001, and they offset when valuations fall as the dollar rises, as in 2022--24.
+
+
+% ============================================================
+\section{Can Subsequent Activity Tell the Weightings Apart?}\label{sec:outlook}
+\subsection{The Test}\label{sec:onetest}
+Consider two years in which the market index tightened by the same amount. If the dollar accounted for more of the tightening in one year, did activity subsequently weaken more? If the market reading is a sufficient summary of the asset prices, the answer is no. If the FRB/US reading is, the answer is yes, by the amount that the model's weights imply. I regress the 12-month-ahead change in the unemployment gap on own lags and
+\begin{equation}\label{eq:test}
+y_{t+12}-y_t=\cdots+\beta M_t+\gamma D_t ,
+\end{equation}
+where $M$ is the 12-month change in the market index (relative to $r^*$) and $D$ the 12-month change of the normalized FRB/US-minus-market difference on the same changes. If the market reading is sufficient, $\gamma=0$. If the FRB/US reading $M+D$ is sufficient, $\gamma=\beta$. I read the two restrictions as tests of whether each index summarizes the predictive information in the assets for the outcome specified. That wording matters for unemployment, since the FRB/US weights are constructed from effects on GDP; four-quarter GDP growth is the model-facing check. This is the only primary test, and Table~\ref{tab:comp} reports both restrictions with the joint covariance of the estimates.
+
+\subsection{The Answer}\label{sec:answer}
+On 1976--2026 the coefficient on the index change is \bl{rs:du:main:beta} and on composition \bl{rs:du:main:gamma} (\bl{rs:du:main:gamma:lo} to \bl{rs:du:main:gamma:hi}); the difference $\gamma-\beta$ is \bl{rs:du:main:gmb} (\bl{rs:du:main:gmb:lo} to \bl{rs:du:main:gmb:hi}). Neither restriction is rejected. Moving $D$ from its 5th to its 95th percentile at the same index change shifts the year-ahead outlook by \bl{cm:du:main:eff} percentage point, with an interval from \bl{cm:du:main:efflo} to \bl{cm:du:main:effhi}, so the sample cannot establish an outlook difference of either sign. On 1996--2026 the coefficient on composition is \bl{rs:du:1996p:gamma} (\bl{rs:du:1996p:gamma:lo} to \bl{rs:du:1996p:gamma:hi}) and the model's restriction is rejected ($\gamma-\beta=$ \bl{rs:du:1996p:gmb}, \bl{rs:du:1996p:gmb:lo} to \bl{rs:du:1996p:gmb:hi}); excluding 2008--15 the coefficients are \bl{rs:du:ex200815:gamma} and \bl{rs:du:ex200815:gmb}, close to the model's restriction. The sign changes across samples. The market restriction is not rejected in any of \bl{rs:ntests} blocks, and the model's restriction is rejected in \bl{rs:nrej:gmb} of them, without correction for the number of tests. For GDP growth neither restriction is rejected, and adding $D$ does not significantly improve out-of-sample forecasts (Clark--West \bl{cm:addD:cw}).
+
+\input{../replication/report/tab_comp}
+
+\subsection{Equities Alone}\label{sec:eqalone}
+Equity valuation alone raises the adjusted $R^2$ of the change in unemployment by \bl{cm:eq:gain}, the market index by \bl{cm:mkt:gain}, the FRB/US weights by \bl{cm:frbus:gain}, the 10-year yield by \bl{cm:y10:gain}, the dollar by \bl{cm:usd:gain} and the three variables entered freely by \bl{cm:free:gain}. Both indexes draw heavily on equity valuation, which helps explain why unemployment data have difficulty distinguishing between them: the movements that distinguish the weightings are the ones in which the dollar and equity valuation move in different proportions, and there are few of them. Entered freely, the coefficients are not significantly different from proportional to the market weights ($p=$ \bl{cm:prop:wm}) or to the FRB/US weights ($p=$ \bl{cm:prop:wb}); the power is low.
+
+\subsection{What Forecasters Expected and What Happened}\label{sec:spf}
+Forecasters' errors combine the outcome with what they had already anticipated. Table~\ref{tab:spf} regresses the Survey of Professional Forecasters' unemployment forecast, the realized change and the error (realized less forecast), over the same \bl{cm:spf:n} surveys (1990Q3--2025Q3), on the index change and $D$. The coefficients on the forecast and the error add to the coefficient on the realization. When FRB/US reads the same asset movements as tighter than the market index does, the forecast does not respond (\bl{sd:u:all:forecast}, interval \bl{sd:u:all:forecast:lo} to \bl{sd:u:all:forecast:hi}), unemployment tends to come in lower (\bl{sd:u:all:realized}, \bl{sd:u:all:realized:lo} to \bl{sd:u:all:realized:hi}), and so the error is negative (\bl{sd:u:all:error}, \bl{sd:u:all:error:lo} to \bl{sd:u:all:error:hi}). Composition predicts what subsequently happened, not what forecasters expected, and with a sign opposite to the one the FRB/US reading would imply if forecasters had not priced composition. The result depends on the sample. Excluding 2008--15 the coefficients are \bl{sd:u:ex200815:forecast} for the forecast and \bl{sd:u:ex200815:realized} for the realization; the error keeps its sign (\bl{sd:u:ex200815:error}, interval \bl{sd:u:ex200815:error:lo} to \bl{sd:u:ex200815:error:hi}) and its interval now includes zero. The outcomes overlap, the coefficients are not adjusted for their number, and 2001 and 2008--09 probably dominate.
+
+What can a policymaker take from this? The two readings can be used interchangeably when markets move as they do around policy news, and the data cannot say which to prefer when they do not. A reading from either index should be accompanied by the question of what moved: the dollar, valuations, or yields. The answer indicates whether the two readings are likely to part.
+
+\input{../replication/report/tab_spf}
+\FloatBarrier
+
+% ============================================================
+\section{Conclusion}\label{sec:discussion}
+The paper asks when a movement in financial conditions can be read as a movement in monetary policy under two calibrations. For the usual response to a policy surprise, the two readings agree: the model prices it at \bl{ag:h4:bpsi} funds-rate points with persistent paths and \bl{ag:bp:hl4} with a half-life of four quarters, and after rescaling they agree exactly along that direction. For other combinations of asset prices the readings differ, because the model gives the dollar about \bl{ag:h4:rr} times the relative weight that the event study does and common assumptions about decay do not alter the ratio. The difference is a quarter to a third of the average market move at horizons from a day to a year.
+
+Realized activity does not separate the two. Conditional on the market index, composition does not predict unemployment or GDP with a sign or size that the sample can pin down, and equity valuation alone carries most of the content. These are statements about measurement. The causal effect of a movement on spending and its source remain separate questions; a movement that departs from the policy-news mix can come from the announcement itself \citep{boehm2025}.
+
+The limits are those of the design. The FRB/US weights come from one model and one experiment and are held fixed in the intervals; the market weights are imprecise; the horizons are compared on overlapping data; the daily comparison uses nominal assets; and there are five recessions in the sample. The most durable finding is the one the episodes show. The choice of weights moves the reading when valuations and the dollar rise together: in 1998--2001 the two readings of the same asset movements had opposite signs. It does little when they offset, as in 2022--24, when the two readings of the year's tightening were the same and both overpredicted the rise in unemployment. A reader who wants to use either index can now say when to expect them to differ.
+\FloatBarrier

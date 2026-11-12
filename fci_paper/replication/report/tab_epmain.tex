@@ -1,14 +1,25 @@
-\begin{table}[tp]\centering\small
-\caption{When the Weights Would Have Changed the Reading}\label{tab:epmain}
+\begin{table}[tbp]\centering
+\caption{Two Readings of Three Episodes}\label{tab:epmain}
 \resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
-\begin{tabular}{lrrrrrrr}
+\begin{tabular}{lccc}
 \toprule
-Episode & Full indexes: FRB/US less market, average level [90\%] & of which equity weights & Matched assets: market index, 12-month change & Matched assets: $D$, 12-month change & Unemployment change, realized & Forecast from market index & Forecast from FRB/US weights \\
+ & 1998--2001 & 2004--06 & 2022--24 \\
 \midrule
-1998--2001 & 1.73 [0.27, 3.03] & 1.29 & $-$0.12 & 0.29 & 0.35 & 0.67 & 0.78 \\
-2004--06 & $-$0.17 [$-$0.81, 0.41] & 0.65 & 0.04 & $-$0.09 & $-$0.41 & 0.13 & 0.10 \\
-2022--24 & 0.96 [$-$0.05, 1.79] & 0.53 & 1.02 & $-$0.01 & 0.27 & 0.65 & 0.66 \\
+\midrule
+\multicolumn{4}{l}{\textit{Full indexes, average level (points)}} \\
+FRB/US index less market index [90\% interval] & 1.73 [0.27, 3.03] & $-$0.17 [$-$0.81, 0.41] & 0.96 [$-$0.05, 1.79] \\
+\quad of which: equity weights & 1.29 & 0.65 & 0.53 \\
+\midrule
+\multicolumn{4}{l}{\textit{Same three assets, 12-month change (points)}} \\
+Market reading & $-$0.06 & 0.04 & 1.02 \\
+FRB/US reading & 0.16 & $-$0.05 & 1.01 \\
+Difference $D$ & 0.22 & $-$0.09 & $-$0.01 \\
+\midrule
+\multicolumn{4}{l}{\textit{Change in the unemployment gap over the next 12 months (points)}} \\
+Realized & 0.35 & $-$0.41 & 0.27 \\
+Forecast from the market reading & 0.67 & 0.13 & 0.65 \\
+Forecast from the FRB/US reading & 0.78 & 0.10 & 0.66 \\
 \bottomrule
 \end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} Left block: difference in the average levels of the full FRB/US index (with house prices) and the market index relative to $r^*$, in points (Table~\ref{tab:bridge}); the equity weights' share of it. Middle block: the 12-month change of the market index and the difference $D$ between the normalized FRB/US reading and the market reading, computed on the same three assets, averaged over the episode. Right block: change in the unemployment gap over the following 12 months, averaged over the episode's origins, and recursive out-of-sample forecasts of it from the market index change and from the FRB/US reading (own lags included). The levels and the changes are different objects: a gap in levels can coexist with agreement in changes.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Top block: difference in the average levels of the full FRB/US index (with house prices) and the market index relative to $r^*$, in points, and the part that comes from the equity weights (Table~\ref{tab:bridge}). Middle block: 12-month changes of the market index and of the normalized FRB/US reading, computed on the same three assets and averaged over the episode; $D$ is their difference. Bottom block: change in the unemployment gap over the following 12 months, averaged over the episode's origins, and recursive out-of-sample forecasts of it from the market reading and from the FRB/US reading (own lags included). A gap in levels can coexist with agreement in changes.\end{flushleft}
 \end{table}

@@ -40,7 +40,7 @@ def table(name, caption, label, header, rows, notes, align=None, small=True, siz
     L += [r"\bottomrule", r"\end{tabular}"]
     body = "\n".join(L)
     body = "\\resizebox{\\ifdim\\width>\\textwidth\\textwidth\\else\\width\\fi}{!}{%\n" + body + "}"
-    txt = ("\\begin{table}[tp]\\centering" + ("\\small" if small else "") + "\n\\caption{" + title_case(caption) + "}\\label{" + label + "}\n" + body +
+    txt = ("\\begin{table}[tbp]\\centering" + ("\\small" if small else "") + "\n\\caption{" + title_case(caption) + "}\\label{" + label + "}\n" + body +
            "\n\\begin{flushleft}\\footnotesize\\textit{Notes:} " + notes + "\\end{flushleft}\n\\end{table}\n")
     (REP / f"tab_{name}.tex").write_text(txt)
 
@@ -642,6 +642,7 @@ for ch_ in ("1m", "12m"):
     mac(f"dz:{ch_}:ratio", dm(ch_, "1996-2026", "ratio_mean_abs").point); mac(f"dz:{ch_}:ratio:lo", dm(ch_, "1996-2026", "ratio_mean_abs").lo); mac(f"dz:{ch_}:ratio:hi", dm(ch_, "1996-2026", "ratio_mean_abs").hi)
     mac(f"dz:{ch_}:sh25", dm(ch_, "1996-2026", "share_gt_0p25").point * 100, 0); mac(f"dz:{ch_}:sh25:lo", dm(ch_, "1996-2026", "share_gt_0p25").lo * 100, 0); mac(f"dz:{ch_}:sh25:hi", dm(ch_, "1996-2026", "share_gt_0p25").hi * 100, 0)
     mac(f"dz:{ch_}:mean", dm(ch_, "1996-2026", "mean_abs").point, 2)
+mac("dz:12m:nom", dm("12m", "1996-2026", "ratio_mean_abs", case="nominal").point); mac("dz:12m:nom:lo", dm("12m", "1996-2026", "ratio_mean_abs", case="nominal").lo); mac("dz:12m:nom:hi", dm("12m", "1996-2026", "ratio_mean_abs", case="nominal").hi)
 mac("dz:12m:sh50", dm("12m", "1996-2026", "share_gt_0p5").point * 100, 0); mac("dz:12m:run", dm("12m", "1996-2026", "mean_run_0p25").point, 1); mac("dz:12m:maxrun", dm("12m", "1996-2026", "max_run_0p25").point, 0)
 mac("dz:12m:corr", dm("12m", "1996-2026", "corr_D_m").point)
 STG = [("w_eq", "Equity weights"), ("w_usd", "Dollar weights"), ("w_y10", "10-year weight"), ("scale", "Normalization of the weights"), ("policy", "Policy rate"), ("spread_bbb", "BBB spread"), ("spread_mortgage", "Mortgage spread"), ("house", "House prices")]
@@ -690,7 +691,7 @@ r_ = SPF19[(SPF19.target == "unemployment") & (SPF19.spec == "market_only") & (S
 table("spf", "Does the Financial Movement Predict the Forecasters' Error?", "tab:spf", ["", "$n$", "Coefficient [90\\%]", "$t$"], rows,
       "Regression of the realized change in the unemployment rate (real GDP growth) four quarters ahead less the median forecast of the Survey of Professional Forecasters on the 12-month changes of the market index and of $D$, with the financial data up to the month before each survey's deadline, 1990Q3--2025Q3; HAC standard errors, overlapping outcomes. A coefficient of zero means that the movement is already in the forecast. Incremental information only: the test says nothing about causation.")
 # episodes
-for _, r in EP19.iterrows():
+for _, r in EP19[~EP19.episode.str.contains("minus")].iterrows():  # the contrast row would overwrite the 1998 macros
     k_ = r.episode[:4]
     mac(f"ce:{k_}:dm", r.mean_dM); mac(f"ce:{k_}:D", r.mean_D); mac(f"ce:{k_}:contrib", r.contrib_D, 2); mac(f"ce:{k_}:contrib:lo", r.contrib_D_lo90, 2); mac(f"ce:{k_}:contrib:hi", r.contrib_D_hi90, 2)
 EF19 = pd.read_csv(RES / "19_episode_fit.csv")
@@ -778,12 +779,83 @@ table("daily", "The Difference between the Readings on Announcement Days and Oth
       "Mean absolute difference $D$ between the normalized FRB/US reading and the market reading, as a ratio to the mean absolute market move, on the same three assets, 1996--2026 (daily 10-year yield, nominal broad dollar and CAPE; the nominal dollar and no adjustment for $r^*$ stand in for the real dollar and the $r^*$ transformation). Announcement windows end on a scheduled FOMC announcement date; other windows are non-overlapping and contain none. Intervals from joint bootstrap samples of the windows and of the announcements that set the weights.")
 for k_ in (1, 5, 22, 66, 252):
     r = LD20[(LD20.series == "total") & (LD20.k == k_) & (LD20.stat == "ratio")].iloc[0]; mac(f"dl:lad{k_}", r.point)
-# main exhibit: the three episodes
-rows = []
-for k_, lab in (("1998", "1998--2001"), ("2004", "2004--06"), ("2022", "2022--24")):
-    rows.append([lab, f"{f(num(f'br:ep{k_}:gap'))} [{f(num(f'br:ep{k_}:lo'))}, {f(num(f'br:ep{k_}:hi'))}]", f(num(f"br:ep{k_}:eq")), f(num(f"ce:{k_}:dm")), f(num(f"ce:{k_}:D")), f(num(f"ce:{k_}:real")), f(num(f"ce:{k_}:fcm")), f(num(f"ce:{k_}:fcf"))])
-table("epmain", "When the Weights Would Have Changed the Reading", "tab:epmain", ["Episode", "Full indexes: FRB/US less market, average level [90\\%]", "of which equity weights", "Matched assets: market index, 12-month change", "Matched assets: $D$, 12-month change", "Unemployment change, realized", "Forecast from market index", "Forecast from FRB/US weights"], rows,
-      "Left block: difference in the average levels of the full FRB/US index (with house prices) and the market index relative to $r^*$, in points (Table~\\ref{tab:bridge}); the equity weights' share of it. Middle block: the 12-month change of the market index and the difference $D$ between the normalized FRB/US reading and the market reading, computed on the same three assets, averaged over the episode. Right block: change in the unemployment gap over the following 12 months, averaged over the episode's origins, and recursive out-of-sample forecasts of it from the market index change and from the FRB/US reading (own lags included). The levels and the changes are different objects: a gap in levels can coexist with agreement in changes.")
+# main exhibit: the three episodes (episodes in columns)
+EPS = (("1998", "1998--2001"), ("2004", "2004--06"), ("2022", "2022--24"))
+for k_, lab in EPS:
+    mac(f"ce:{k_}:fr", num(f"ce:{k_}:dm") + num(f"ce:{k_}:D"))
+def ep_row(label, fn):
+    return [label] + [fn(k_) for k_, _ in EPS]
+g_ = lambda t: r"\midrule" + "\n" + r"\multicolumn{4}{l}{\textit{" + t + r"}} \\"
+rows = [g_("Full indexes, average level (points)"),
+        ep_row("FRB/US index less market index [90\\% interval]", lambda k: f"{f(num(f'br:ep{k}:gap'))} [{f(num(f'br:ep{k}:lo'))}, {f(num(f'br:ep{k}:hi'))}]"),
+        ep_row("\\quad of which: equity weights", lambda k: f(num(f"br:ep{k}:eq"))),
+        g_("Same three assets, 12-month change (points)"),
+        ep_row("Market reading", lambda k: f(num(f"ce:{k}:dm"))),
+        ep_row("FRB/US reading", lambda k: f(num(f"ce:{k}:fr"))),
+        ep_row("Difference $D$", lambda k: f(num(f"ce:{k}:D"))),
+        g_("Change in the unemployment gap over the next 12 months (points)"),
+        ep_row("Realized", lambda k: f(num(f"ce:{k}:real"))),
+        ep_row("Forecast from the market reading", lambda k: f(num(f"ce:{k}:fcm"))),
+        ep_row("Forecast from the FRB/US reading", lambda k: f(num(f"ce:{k}:fcf")))]
+table("epmain", "Two Readings of Three Episodes", "tab:epmain", ["", "1998--2001", "2004--06", "2022--24"], rows,
+      "Top block: difference in the average levels of the full FRB/US index (with house prices) and the market index relative to $r^*$, in points, and the part that comes from the equity weights (Table~\\ref{tab:bridge}). Middle block: 12-month changes of the market index and of the normalized FRB/US reading, computed on the same three assets and averaged over the episode; $D$ is their difference. Bottom block: change in the unemployment gap over the following 12 months, averaged over the episode's origins, and recursive out-of-sample forecasts of it from the market reading and from the FRB/US reading (own lags included). A gap in levels can coexist with agreement in changes.", align="lccc", small=False)
+# ladder on days with the announcement-day moves removed
+for k_ in (1, 5, 22, 66, 252):
+    r = LD20[(LD20.series == "exann") & (LD20.k == k_) & (LD20.stat == "ratio")].iloc[0]; mac(f"dl:ex{k_}", r.point)
+
+# new figures: the two tightenings, persistence, the matched episode readings
+fig, ax = plt.subplots(figsize=(6.2, 3.4))
+xx_ = np.arange(2); wd_ = 0.34
+mk_ = [num("ag:ex:eq:mkt"), num("ag:ex:usd:mkt")]; fr_ = [num("ag:ex:eq:fr"), num("ag:ex:usd:fr")]
+b1 = ax.bar(xx_ - wd_ / 2, mk_, wd_, color=COLORS["market"], label="Market index (policy-news weights)")
+b2 = ax.bar(xx_ + wd_ / 2, fr_, wd_, color=COLORS["frbus"], label="FRB/US index (spending weights)")
+for bars_ in (b1, b2):
+    for r_ in bars_:
+        ax.text(r_.get_x() + r_.get_width() / 2, r_.get_height() + 0.005, f"{r_.get_height():.2f}", ha="center", va="bottom", fontsize=8)
+ax.set_xticks(xx_); ax.set_xticklabels(["Equity valuation\nfalls 5 log points", "Dollar appreciates\n3.9 log points"])
+ax.set_ylabel("Tightening, points of policy rate"); ax.set_ylim(0, max(mk_ + fr_) * 1.2); ax.legend(frameon=False, fontsize=8, loc="upper left")
+for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
+figure("fig_two", fig)
+
+fig, ax = plt.subplots(1, 2, figsize=(7.5, 3.3))
+labs_ = ["Persistent", "Half-life\n8 qtrs", "Half-life\n4 qtrs", "Half-life\n2 qtrs"]
+pts_ = []; los_ = []; his_ = []
+for nm_, hl_ in (("persistent", np.inf), ("hl8", 8.0), ("hl4", 4.0), ("hl2", 2.0)):
+    r = MP18[(MP18.h == 4) & (MP18.path == nm_) & (MP18.quantity == "bpsi")].iloc[0]; pts_.append(r.point); los_.append(r.point - r.lo); his_.append(r.hi - r.point)
+ax[0].errorbar(range(4), pts_, yerr=[los_, his_], fmt="o", color=COLORS["frbus"], capsize=3)
+ax[0].axhline(1.0, color=COLORS["market"], lw=1.2); ax[0].text(3.4, 1.01, "market = 1 by construction", ha="right", va="bottom", fontsize=7.5, color=COLORS["market"])
+ax[0].set_xticks(range(4)); ax[0].set_xticklabels(labs_, fontsize=8); ax[0].set_ylim(0.5, 1.2)
+ax[0].set_title("FRB/US reading of the typical\npolicy move (funds-rate points)", loc="left", fontsize=9)
+rr_ = [num("ag:mp:hlinf"), num("ag:mp:hl8"), num("ag:mp:hl4"), num("ag:mp:hl2")]
+ax[1].plot(range(4), rr_, "o", color=COLORS["frbus"]); ax[1].axhline(num("ag:mkt:ratio"), color=COLORS["market"], lw=1.2)
+ax[1].text(3.4, num("ag:mkt:ratio") + 0.05, "market", ha="right", va="bottom", fontsize=7.5, color=COLORS["market"])
+ax[1].set_xticks(range(4)); ax[1].set_xticklabels(labs_, fontsize=8); ax[1].set_ylim(0, 3.2)
+ax[1].set_title("Dollar effect relative to equity effect,\nsame decay for both", loc="left", fontsize=9)
+for a_ in ax:
+    for sp_ in ("top", "right"): a_.spines[sp_].set_visible(False)
+fig.tight_layout(); figure("fig_persist", fig)
+
+fig, ax = plt.subplots(figsize=(6.2, 3.4))
+ks_ = [("1998", "1998--2001"), ("2022", "2022--24")]
+xx_ = np.arange(len(ks_)); wd_ = 0.34
+m_ = [num(f"ce:{k}:dm") for k, _ in ks_]; r_ = [num(f"ce:{k}:fr") for k, _ in ks_]
+b1 = ax.bar(xx_ - wd_ / 2, m_, wd_, color=COLORS["market"], label="Market reading"); b2 = ax.bar(xx_ + wd_ / 2, r_, wd_, color=COLORS["frbus"], label="FRB/US reading")
+for bars_ in (b1, b2):
+    for r0 in bars_:
+        h0 = r0.get_height(); ax.text(r0.get_x() + r0.get_width() / 2, h0 + (0.03 if h0 >= 0 else -0.03), f"{h0:+.2f}", ha="center", va="bottom" if h0 >= 0 else "top", fontsize=8)
+ax.axhline(0, color="#444444", lw=0.8); ax.set_xticks(xx_); ax.set_xticklabels([l for _, l in ks_])
+ax.set_ylabel("Average 12-month change, points"); ax.set_ylim(-0.4, 1.3); ax.legend(frameon=False, fontsize=8, loc="upper left")
+for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
+figure("fig_episodes", fig)
+# what the assets did in each episode (mean 12-month change) and each asset's part of D
+dwt_ = wB_ - w_M_
+for k_, a0, b0 in (("1998", "1998-01", "2001-12"), ("2004", "2004-06", "2006-06"), ("2022", "2022-03", "2024-12")):
+    sel_ = (Xd_.index >= pd.Period(a0, "M")) & (Xd_.index <= pd.Period(b0, "M")); mdx_ = np.nanmean(dX_.values[sel_], axis=0)
+    for j_, nm_ in enumerate(("y10", "eq", "usd")):
+        mac(f"ce:{k_}:x{nm_}", mdx_[j_]); mac(f"ce:{k_}:c{nm_}", dwt_[j_] * mdx_[j_])
+    chk(abs(float((dwt_ * mdx_).sum()) - num(f"ce:{k_}:D")) < 0.01, f"episode {k_}: asset parts add to D")
+chk(num("ce:1998:dm") < 0 < num("ce:1998:fr") and abs(num("ce:2022:dm") - num("ce:2022:fr")) < 0.05, "episodes: 1998-2001 readings have opposite signs; 2022-24 readings within 0.05")
+chk(all(0.2 < num(f"dl:lad{k_}") < 0.4 and 0.2 < num(f"dl:ex{k_}") < 0.4 for k_ in (1, 5, 22, 66, 252)), "ladder: all-days and ex-announcement ratios between 0.2 and 0.4")
 
 # ------------------------------------------------------------------ claims of the agreement paper
 bp4 = w18(4, "bpsi"); chk(num("ag:bp:hl4:hi") < 1 and num("ag:bp:hl4") < 0.9, "decaying paths (half-life 4 quarters): typical response below one, interval excludes one")

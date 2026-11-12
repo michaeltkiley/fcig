@@ -1,0 +1,90 @@
+\begin{appendices}
+\renewcommand{\thetable}{\Alph{section}\arabic{table}}
+\renewcommand{\thefigure}{\Alph{section}\arabic{figure}}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+\FloatBarrier
+
+\section{The Weights: a Derivation}\label{app:ma}
+Let the movements in the three asset prices be $x=\psi s+u$, where $s$ is policy news, $\psi$ the responses and $u$ everything else, with covariance $\Sigma$. Let $g_h$ be the effects of a persistent unit shift in each asset price on spending at horizon $h$. The FRB/US weights are proportional to $g_h$. The market weights solve the problem of recovering $s$ from $x$: the generalized least squares estimator is $\hat s=w_M'x$ with $w_M=\Sigma^{-1}\psi/(\psi'\Sigma^{-1}\psi)$, which satisfies $w_M'\psi=1$ and, by the Gauss--Markov theorem, minimizes the variance of the estimate among linear unbiased estimators of $s$ when $u$ has mean zero and covariance $\Sigma$ and is uncorrelated with $s$. For any $x$ the difference between the normalized readings is $D_h(x)=(w_{B,h}-w_M)'x=(w_{B,h}-w_M)'u$, because the policy part cancels. The readings coincide for every movement if and only if $w_{B,h}=w_M$, that is, if $g_h\propto\Sigma^{-1}\psi$: the criterion that recovers policy news precisely and the criterion that measures spending effects select the same weights only in that case. The variance of the difference is $(w_{B,h}-w_M)'\Sigma(w_{B,h}-w_M)$.
+
+Observed movements need not be of the form $\psi s+u$ with a single policy factor, and the model's effects need not be those of a movement of the same shape. If all observed movements lay along the single direction $\psi$, every weight vector normalized to price $\psi$ at one would give the same reading on them. The data would then identify the reading along that direction and leave the weights themselves undetermined. In the announcement windows $u$ is not zero, and it is the variation in $u$ that identifies $\Sigma$ and hence the weights. What distinguishes the two weightings in practice is the exposure of the difference in weights to the movements that occur, which Table~\ref{tab:dsize} measures as a ratio to the market move.
+
+\input{../replication/report/tab_dsize}
+
+\section{Construction of the Series}\label{app:steps}
+The three asset prices enter in three forms, each answering a problem of the one before. The headline results use the third.
+
+\textbf{Nominal.} Rates as published. A nominal index treats a 10-year yield of 8 percent alike in 1981 and in 2000. That is reasonable only if inflation expectations and the neutral real rate are stable, and neither was. Expected inflation over the next year averaged \bl{einf:1981} percent in 1981 and is \bl{einf:latest} percent today, and the Laubach--Williams estimate of $\rs$ averaged \bl{rstar:lw:pre} percent over 1990--2007 and \bl{rstar:lw:post} percent over 2009--2016 (Figure~\ref{fig:infl}).
+
+\textbf{Real.} Each rate less expected inflation at a matched horizon: ten-year expected inflation for the 10-year yield. The dollar is the real broad index.
+
+\textbf{Relative to $\rs$.} The real 10-year yield less $\rs$. Equity valuation enters through the earnings yield $E/P=100/\text{CAPE}$, which is also an implicit real rate, as the gap $E/P-\rs$, converted to CAPE log points at the sample-average earnings yield so that its weight on CAPE is unchanged. The baseline uses the one-sided, full-sample Laubach--Williams estimate. Each variable is measured relative to its 1973--2026 average, so $\rs$ matters through its movements over time.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{../replication/report/fig_inflation_rstar.pdf}
+\caption{Expected Inflation and $r^*$}
+\label{fig:infl}
+\begin{flushleft}\footnotesize\textit{Notes:} Left: expected inflation, Livingston Survey before 1982 and Cleveland Fed model estimates after, shifted to the Cleveland level over 1982--84 and blended over 1982; shaded: the blending year. Right: one-sided, full-sample estimates of $\rs$ from the Laubach--Williams model (baseline) and Kiley's model (check). Percent.\end{flushleft}
+\end{figure}
+
+The transformation matters for levels and not for the difference between the two readings. The ratio of the mean absolute difference to the mean absolute market move in 12-month changes, 1996--2026, is \bl{dz:12m:nom} (interval \bl{dz:12m:nom:lo} to \bl{dz:12m:nom:hi}) with nominal assets and \bl{dz:12m:ratio} relative to $\rs$.
+
+\textbf{Data.} All series are monthly averages from January 1973 to September 2026, from the public sources in Table~\ref{tab:data}. The BBB spread is Moody's Baa yield less the 10-year yield. Months in which the CPI and unemployment releases are missing (October 2025) are interpolated. The unemployment gap is the unemployment rate less the Congressional Budget Office's natural rate, placed in the middle month of each quarter and interpolated. Expected inflation is the Cleveland Fed's estimate at one and ten years from 1982 and the Livingston Survey's 12-month CPI expectation before, shifted to the Cleveland level by the mean difference over 1982--84 and blended over 1982. CAPE is Shiller's series spliced over 1990--92 in logs to the monthly average of a daily series. The real broad dollar is spliced in 2006 in logs, as are the nominal dollar and the S\&P 500.
+
+\textbf{Market index.} Policy news is the first principal component of MP1, MP2, ED2, ED3 and ED4 in the monetary-event windows, scaled by its regression on the two-year yield change so that one unit moves the two-year yield by one percentage point. Unscheduled events with no change in MP1 and March--April 2020 are dropped. Each of the 10-year yield change, the S\&P 500 return and the dollar (DXY) return in the window is regressed on the factor. The residual covariance $\Sigma$ of the three regressions gives $w=\Sigma^{-1}\psi/(\psi'\Sigma^{-1}\psi)$. The S\&P 500 and DXY weights apply to 100 times the log of CAPE and of the real broad dollar, as percent changes in the window and in the index levels agree to first order. The weights bootstrap resamples announcements with replacement and recomputes the policy-news factor and the weights each time; draws use the seed in \texttt{lib/config.py}.
+
+\textbf{FRB/US index.} The weights are the cumulative GDP responses at four quarters to a persistent unit shift in each variable, simulated in FRB/US with VAR-based expectations, divided by the response to a persistent one percentage point rise in the funds rate. The weight on the policy rate is its direct effect with expectations of future rates held fixed. House prices enter as 100 times the log of the price-to-rent ratio relative to its trailing 15-year average. For the decay experiments of Section~\ref{sec:persist}, each variable's shock decays geometrically with the half-life stated, and the response is computed in the model by linearity from the temporary-shock responses.
+
+\textbf{Forecasting and survey data.} The regressions use local projections of the 12-month-ahead change in the unemployment gap (four-quarter-ahead GDP growth) with HAC standard errors of 18 lags. The Survey of Professional Forecasters data are the median forecasts, 1990Q3--2025Q3, matched to the financial data up to the month before each survey's deadline.
+
+\begin{table}[tbp]\centering\small
+\caption{Data Sources}\label{tab:data}
+\begin{tabular}{p{0.38\textwidth}p{0.13\textwidth}p{0.42\textwidth}}\toprule
+Series & Frequency & Source \\\midrule
+Federal funds rate; 10-year yield; Baa yield; 30-year mortgage rate & Monthly & FRED FEDFUNDS, GS10, BAA, MORTGAGE30US \\
+Real broad dollar; nominal broad dollar & Monthly & FRED RTWEXBGS, TWEXBPA; DTWEXBGS, TWEXBMTH (spliced in 2006) \\
+CPI; CPI rent; Case--Shiller home prices; S\&P 500 & Monthly & FRED CPIAUCSL, CUUR0000SEHA, CSUSHPISA, SP500; Shiller's data before the FRED start \\
+Unemployment rate; natural rate of unemployment; real GDP & Monthly; quarterly & FRED UNRATE; CBO, FRED NROU; GDPC1 \\
+Expected inflation, 1 and 10 years & Monthly & Cleveland Fed, FRED EXPINF1YR, EXPINF10YR; before 1982, Livingston Survey (Philadelphia Fed) \\
+$\rs$, Laubach--Williams & Quarterly & New York Fed, one-sided estimates \\
+$\rs$, Kiley & Quarterly & One-sided estimates of the author \\
+CAPE & Monthly & Shiller, spliced to the monthly average of a daily CAPE constructed by the repository's daily workflow \\
+Survey of Professional Forecasters & Quarterly & Federal Reserve Bank of Philadelphia \\
+FRB/US simulations & Quarterly & Run for this paper's companion work with the public FRB/US package \\
+Futures, yields, S\&P 500 and DXY in the window & Event & U.S.\ Monetary Policy Event-Study Database, ``monetary events'' \citep{acosta2025} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Inference and the Decomposition of the Levels}\label{app:differ}
+\subsection{How Precisely Are the Weights Estimated?}\label{sec:precision}
+The weights come from regressions on \bl{n:events} announcements. The weight on the 10-year yield has a 90 percent interval from \bl{wb:ten:lo} to \bl{wb:ten:hi} around \bl{w:ten}. The interval for equity valuation runs from \bl{wb:eq:lo} to \bl{wb:eq:hi}, and for the dollar from \bl{wb:usd:lo} to \bl{wb:usd:hi}. The FRB/US weights on all three lie inside these intervals, the equity weight near the edge: it is lower in absolute value than \bl{frw:eq:pct} percent of the bootstrap draws, about 14 percent in a two-sided test. The data do not reject that the model weights equal the market weights. This is a statement about power, not a finding that they are equal, and it treats the FRB/US weights as fixed. The intervals in the text come from the bootstrap of the announcements; the contrast in composition in Section~\ref{sec:persist} is the ratio of ratios, whose interval includes one at two quarters.
+
+\subsection{From the Market Index to the FRB/US Index}\label{sec:bridgeapp}
+Table~\ref{tab:bridge} accounts for the difference in average levels between the full FRB/US index and the market index, in stages on the same inputs and centering: the variables the market index does not have (the policy rate, spreads and house prices), the equity weights, the dollar weights and the 10-year weights.
+
+\input{../replication/report/tab_bridge}
+
+\section{Sensitivity}\label{app:robust}
+\subsection{Weights That Move}\label{sec:drift}
+The weights define the unit, so I hold them fixed and show how they would drift. Re-estimating on an expanding window of announcements from 2006 keeps the 10-year and dollar weights inside the 90 percent band of the full-sample estimate at every date after 2010; the equity weight is outside at \bl{exp:post2010:n:out:eq} dates in 2011--14, by at most \bl{exp:post2010:min:eq} against a band edge of \bl{base:lo:eq} (Figure~\ref{fig:weightpath}). A 20-year rolling window fails after 2021, because it drops the announcements of 1996--2005. The 10-year weight is imprecise throughout. Apart from the equity weight in 2011--14, the weights stay within their sampling error.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{../replication/report/fig_weight_path.pdf}
+\caption{The Weights on an Expanding and a Rolling Window}
+\label{fig:weightpath}
+\begin{flushleft}\footnotesize\textit{Notes:} Weights of the market index re-estimated on announcements to each date (expanding window, from the 80th announcement) and on the latest 20 years (rolling). Shaded: 90 percent bootstrap interval of the full-sample weights; the horizontal line is the full-sample weight.\end{flushleft}
+\end{figure}
+
+\subsection{Other Policy-News Series and Event Samples}\label{sec:robother}
+Table~\ref{tab:wvar} re-estimates the weights with the two-year yield as the policy news, with announcements through 2019, and without the lower-bound years. The equity weight is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} against \bl{w:eq} in the baseline, and the conclusions about composition rest on the model's ratio of dollar to equity effects, not on any one set of market weights.
+
+\input{../replication/report/tab_wvar}
+
+\subsection{Limits of the Design}\label{sec:limits}
+The weights come from announcements since 1996 and are applied from 1973; they assume that the responses reflect policy rather than information effects \citep{nakamura2018}, and if policy came to target financial conditions the responses could change, the Lucas-critique concern that \citet{hatzius2010} raise for all indexes. The FRB/US weights come from one model, at one horizon and in one experiment, and are held fixed in the intervals. The daily comparison of Section~\ref{sec:size} uses nominal assets, with the nominal broad dollar for the real dollar, no adjustment for $\rs$ and weights fitted on the same announcements; the intraday comparison holds each event out. The sample has five recessions, two of them out of sample, and the 12-month outcomes overlap, so the counts of tests are descriptive and not adjusted for their number. The neutral rate is not neutral to outcomes, because the Laubach--Williams model uses output, inflation and unemployment.
+
+\end{appendices}
