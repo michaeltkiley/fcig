@@ -1,17 +1,20 @@
-\begin{table}[tbp]\centering\small
-\caption{Can Realized Activity Tell the Two Weightings Apart?}\label{tab:comp}
+\begin{table}[tbp]\centering
+\caption{Does the Composition of a Tightening Help Predict Activity?}\label{tab:comp}
 \resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrccc}
 \toprule
- & $n$ & Market index $\beta$ [90\%] & Composition $\gamma$ [90\%] & $\gamma-\beta$ [90\%] \\
+ & $n$ & Market reading, $\beta$ & Market reading sufficient: $\gamma=0$ & FRB/US reading sufficient: $\gamma-\beta=0$ \\
 \midrule
-Unemployment gap, 12 months: 1976--2026 & 556 & 0.19 [0.05, 0.33] & $-$0.26 [$-$0.94, 0.43] & $-$0.45 [$-$1.01, 0.11] \\
-Unemployment gap, 12 months: 1996--2026 & 318 & 0.01 [$-$0.21, 0.22] & $-$1.19 [$-$2.50, 0.13] & $-$1.19 [$-$2.31, $-$0.07] \\
-Unemployment gap, 12 months: Excluding 2008--15 & 436 & 0.29 [0.15, 0.43] & 0.32 [$-$0.13, 0.77] & 0.03 [$-$0.30, 0.37] \\
-Real GDP growth, four quarters: 1976--2026 & 186 & $-$0.16 [$-$0.47, 0.16] & 0.87 [$-$0.78, 2.51] & 1.03 [$-$0.39, 2.44] \\
-Real GDP growth, four quarters: 1996--2026 & 106 & 0.31 [$-$0.13, 0.75] & 1.81 [$-$0.76, 4.38] & 1.50 [$-$0.70, 3.71] \\
-Real GDP growth, four quarters: Excluding 2008--15 & 146 & $-$0.33 [$-$0.61, $-$0.04] & 0.26 [$-$1.21, 1.72] & 0.58 [$-$0.69, 1.86] \\
+\multicolumn{5}{l}{\textit{Real GDP growth over the next four quarters}} \\
+1976--2026 & 186 & $-$0.16 [$-$0.47, 0.16] & 0.87 [$-$0.78, 2.51] & 1.03 [$-$0.39, 2.44] \\
+1996--2026 & 106 & 0.31 [$-$0.13, 0.75] & 1.81 [$-$0.76, 4.38] & 1.50 [$-$0.70, 3.71] \\
+Excluding 2008--15 & 146 & $-$0.33 [$-$0.61, $-$0.04] & 0.26 [$-$1.21, 1.72] & 0.58 [$-$0.69, 1.86] \\
+\midrule
+\multicolumn{5}{l}{\textit{Change in the unemployment gap over the next 12 months}} \\
+1976--2026 & 556 & 0.19 [0.05, 0.33] & $-$0.26 [$-$0.94, 0.43] & $-$0.45 [$-$1.01, 0.11] \\
+1996--2026 & 318 & 0.01 [$-$0.21, 0.22] & $-$1.19 [$-$2.50, 0.13] & $-$1.19 [$-$2.31, $-$0.07]* \\
+Excluding 2008--15 & 436 & 0.29 [0.15, 0.43] & 0.32 [$-$0.13, 0.77] & 0.03 [$-$0.30, 0.37] \\
 \bottomrule
 \end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} Local projections of the 12-month-ahead change in the unemployment gap (four-quarter-ahead GDP growth) on own lags and $y=\cdots+\beta M+\gamma D$, where $M$ is the 12-month change of the market index relative to $r^*$ and $D$ the 12-month change of the normalized FRB/US reading less the market reading, computed on the same changes (HAC standard errors, 18 lags, joint covariance of the coefficients). If the market reading is right, $\gamma=0$. If the normalized FRB/US reading $M+D$ is right, $\gamma=\beta$. A failure to reject is not evidence for either.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Local projections of four-quarter-ahead real GDP growth (quarterly) and of the 12-month-ahead change in the unemployment gap (monthly) on own lags and $\beta M+\gamma D$, where $M$ is the 12-month change of the futures-factor market reading and $D$ the FRB/US reading of the same asset changes less $M$, both on the common scale. Brackets are 90 percent intervals (HAC, joint covariance of the coefficients); * marks a restriction rejected at the 10 percent level. If the market reading is a sufficient summary, $\gamma=0$; if the FRB/US reading $M+D$ is, $\gamma=\beta$. The market weights are treated as known. A failure to reject is not evidence for either reading.\end{flushleft}
 \end{table}

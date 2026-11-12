@@ -116,5 +116,28 @@ for ep, (a, e) in EP.items():
     S.add(f"ep_{ep}_n", int(msk.sum())); S.add(f"ep_{ep}_range_mean", float((M0[msk].max(1) - M0[msk].min(1)).mean()))
     S.add(f"ep_{ep}_opp25", int((((M0[msk] >= 0.25).any(1)) & ((M0[msk] <= -0.25).any(1))).sum()))
 pd.DataFrame(erow).to_csv(RES / "26_episodes.csv", index=False, float_format="%.6g")
+# (5) accounting for a month and for the episodes: asset changes and each portfolio's contributions (weight x change), so that I_j - I_k = sum_a (w_ja - w_ka) x_a can be read off
+AN = ["y10", "eq", "usd"]; wrow = []
+def account(label, xv):
+    for j, a in enumerate(AN): S.add(f"acc_{label}_x_{a}", float(xv[j]))
+    for k in NAMES:
+        for j, a in enumerate(AN):
+            S.add(f"acc_{label}_{k}_{a}", float(P0[k][j] * xv[j])); wrow.append(dict(case=label, portfolio=k, asset=a, change=float(xv[j]), weight=float(P0[k][j]), contribution=float(P0[k][j] * xv[j])))
+        S.add(f"acc_{label}_{k}_total", float(P0[k] @ xv))
+i98 = list(idx.astype(str)).index("1998-01"); account("jan1998", Zv[i98])
+for ep, (a, e) in EP.items():
+    msk = np.array([(p_ >= pd.Period(a, "M")) and (p_ <= pd.Period(e, "M")) for p_ in idx]); account("ep" + ep.replace("-", ""), Zv[msk].mean(0))
+pd.DataFrame(wrow).to_csv(RES / "26_accounting.csv", index=False, float_format="%.6g")
+# (6) co-movement and peaks: correlations of the four readings; the peak reading and the range of B - F within each episode
+Cm = np.corrcoef(M0.T); off = Cm[np.triu_indices(4, 1)]
+S.add("corr_min", float(off.min())); S.add("corr_max", float(off.max())); S.add("corr_FB", float(Cm[0, 2])); S.add("corr_FG", float(Cm[0, 3]))
+for j, k in enumerate(NAMES): S.add(f"sd_{k}", float(M0[:, j].std(ddof=1)))
+for ep, (a, e) in EP.items():
+    msk = np.array([(p_ >= pd.Period(a, "M")) and (p_ <= pd.Period(e, "M")) for p_ in idx]); sub = M0[msk]; mi = idx[msk]
+    tag = "ep" + ep.replace("-", "")
+    for j, k in enumerate(NAMES): S.add(f"peak_{tag}_{k}", float(sub[:, j].max()))
+    S.add(f"peak_{tag}_month", mi[int(sub[:, 0].argmax())].strftime("%B %Y"))
+    dBF = sub[:, 2] - sub[:, 0]; S.add(f"dBF_{tag}_min", float(dBF.min())); S.add(f"dBF_{tag}_max", float(dBF.max())); S.add(f"dFB_{tag}_n25", int((np.abs(dBF) >= 0.25).sum()))
+    S.add(f"range_{tag}_max", float((sub.max(1) - sub.min(1)).max()))
 S.add("n_months", T); S.save()
 print(pd.DataFrame(rows).round(3).to_string()); print(yr.head(8).round(3))

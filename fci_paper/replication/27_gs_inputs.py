@@ -44,6 +44,7 @@ for sname, X in SETS.items():
         for t in (0.10, 0.25):
             out[f"any_opp_t{int(t*100)}"] = float((((M >= t).any(1)) & ((M <= -t).any(1))).mean())
             out[f"FB_opp_t{int(t*100)}"] = float(((np.sign(Rd["F"]) != np.sign(Rd["B"])) & (np.minimum(np.abs(Rd["F"]), np.abs(Rd["B"])) >= t)).mean())
+        out["range_ge_t25"] = float((M.max(1) - M.min(1) >= 0.25).mean())
         others = [out[f"mad_{a}{c}"] for a, c in PAIRS if (a, c) != ("F", "G")]
         out["FG_minus_nearest"] = out["mad_FG"] - min(others)
         return out, M

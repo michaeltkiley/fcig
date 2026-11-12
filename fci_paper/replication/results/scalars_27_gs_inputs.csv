@@ -35,6 +35,9 @@ rstar_any_opp_t25_hi,0.08130081300813008
 rstar_FB_opp_t25,0.02168021680216802
 rstar_FB_opp_t25_lo,0.0
 rstar_FB_opp_t25_hi,0.05420054200542006
+rstar_range_ge_t25,0.7046070460704607
+rstar_range_ge_t25_lo,0.5853658536585366
+rstar_range_ge_t25_hi,0.8888888888888888
 rstar_FG_minus_nearest,-0.16321043437513721
 rstar_FG_minus_nearest_lo,-0.16208003157757725
 rstar_FG_minus_nearest_hi,0.28158367694404013
@@ -87,6 +90,9 @@ real_cape_any_opp_t25_hi,0.16273712737127422
 real_cape_FB_opp_t25,0.016260162601626018
 real_cape_FB_opp_t25_lo,0.0
 real_cape_FB_opp_t25_hi,0.06233062330623306
+real_cape_range_ge_t25,0.7506775067750677
+real_cape_range_ge_t25_lo,0.6449864498644986
+real_cape_range_ge_t25_hi,0.8997289972899729
 real_cape_FG_minus_nearest,-0.16255168626418298
 real_cape_FG_minus_nearest_lo,-0.1703683857097117
 real_cape_FG_minus_nearest_hi,0.30932798103853654
@@ -139,6 +145,9 @@ gs_inputs_any_opp_t25_hi,0.2140921409214092
 gs_inputs_FB_opp_t25,0.018970189701897018
 gs_inputs_FB_opp_t25_lo,0.0
 gs_inputs_FB_opp_t25_hi,0.0921409214092141
+gs_inputs_range_ge_t25,0.7831978319783198
+gs_inputs_range_ge_t25_lo,0.6747967479674797
+gs_inputs_range_ge_t25_hi,0.924119241192412
 gs_inputs_FG_minus_nearest,-0.16128228781532516
 gs_inputs_FG_minus_nearest_lo,-0.1894340107697947
 gs_inputs_FG_minus_nearest_hi,0.3666532588919712

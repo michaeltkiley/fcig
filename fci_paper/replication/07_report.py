@@ -757,15 +757,17 @@ RS19 = pd.read_csv(RES / "19_restrictions.csv"); SD19 = pd.read_csv(RES / "19_sp
 def rs(o, smp, term, ff="noff"):
     return RS19[(RS19.outcome == o) & (RS19["sample"] == smp) & (RS19.ff == ff) & (RS19.term == term)].iloc[0]
 rows = []
-for o_, lab in (("du", "Unemployment gap, 12 months"), ("gdp", "Real GDP growth, four quarters")):
+for o_, lab in (("gdp", "Real GDP growth over the next four quarters"), ("du", "Change in the unemployment gap over the next 12 months")):
+    rows.append((r"\midrule" + "\n" if rows else "") + r"\multicolumn{5}{l}{\textit{" + lab + r"}} \\")
     for smp, sl in (("main", "1976--2026"), ("1996+", "1996--2026"), ("ex2008-15", "Excluding 2008--15")):
         b_, g_, d_ = rs(o_, smp, "beta"), rs(o_, smp, "gamma"), rs(o_, smp, "gamma_minus_beta")
-        rows.append([f"{lab}: {sl}", f"{int(b_.n)}", f"{f(b_.coef)} [{f(b_.lo90)}, {f(b_.hi90)}]", f"{f(g_.coef)} [{f(g_.lo90)}, {f(g_.hi90)}]", f"{f(d_.coef)} [{f(d_.lo90)}, {f(d_.hi90)}]"])
+        star = lambda r_: "*" if (r_.lo90 > 0 or r_.hi90 < 0) else ""
+        rows.append([sl, f"{int(b_.n)}", f"{f(b_.coef)} [{f(b_.lo90)}, {f(b_.hi90)}]", f"{f(g_.coef)} [{f(g_.lo90)}, {f(g_.hi90)}]{star(g_)}", f"{f(d_.coef)} [{f(d_.lo90)}, {f(d_.hi90)}]{star(d_)}"])
         k_ = o_ + ":" + smp.replace("+", "p").replace("-", "")
         for nm_, r_ in (("beta", b_), ("gamma", g_), ("gmb", d_)):
             mac(f"rs:{k_}:{nm_}", r_.coef); mac(f"rs:{k_}:{nm_}:lo", r_.lo90); mac(f"rs:{k_}:{nm_}:hi", r_.hi90)
-table("comp", "Can Realized Activity Tell the Two Weightings Apart?", "tab:comp", ["", "$n$", "Market index $\\beta$ [90\\%]", "Composition $\\gamma$ [90\\%]", "$\\gamma-\\beta$ [90\\%]"], rows,
-      "Local projections of the 12-month-ahead change in the unemployment gap (four-quarter-ahead GDP growth) on own lags and $y=\\cdots+\\beta M+\\gamma D$, where $M$ is the 12-month change of the market index relative to $r^*$ and $D$ the 12-month change of the normalized FRB/US reading less the market reading, computed on the same changes (HAC standard errors, 18 lags, joint covariance of the coefficients). If the market reading is right, $\\gamma=0$. If the normalized FRB/US reading $M+D$ is right, $\\gamma=\\beta$. A failure to reject is not evidence for either.")
+table("comp", "Does the Composition of a Tightening Help Predict Activity?", "tab:comp", ["", "$n$", "Market reading, $\\beta$", "Market reading sufficient: $\\gamma=0$", "FRB/US reading sufficient: $\\gamma-\\beta=0$"], rows,
+      "Local projections of four-quarter-ahead real GDP growth (quarterly) and of the 12-month-ahead change in the unemployment gap (monthly) on own lags and $\\beta M+\\gamma D$, where $M$ is the 12-month change of the futures-factor market reading and $D$ the FRB/US reading of the same asset changes less $M$, both on the common scale. Brackets are 90 percent intervals (HAC, joint covariance of the coefficients); * marks a restriction rejected at the 10 percent level. If the market reading is a sufficient summary, $\\gamma=0$; if the FRB/US reading $M+D$ is, $\\gamma=\\beta$. The market weights are treated as known. A failure to reject is not evidence for either reading.", align="lrccc", small=False)
 mac("rs:nrej:gamma", float(RS19[(RS19.term == "gamma")].reject_hac90.sum()), 0); mac("rs:nrej:gmb", float(RS19[(RS19.term == "gamma_minus_beta")].reject_hac90.sum()), 0); mac("rs:ntests", float(len(RS19[RS19.term == "gamma"])), 0)
 def sdc(tgt, smp, comp, term="D"):
     return SD19[(SD19.target == tgt) & (SD19["sample"] == smp) & (SD19.component == comp) & (SD19.term == term)].iloc[0]
@@ -1109,7 +1111,7 @@ xx_ = np.arange(4); wd_ = 0.38
 eqv = [F26.loc[k].eq_reading for k in PORD]; usv = [F26.loc[k].usd_reading for k in PORD]
 b1 = ax.bar(xx_ - wd_ / 2, eqv, wd_, color="#9db7d5", label="Equity valuation falls 5 log points")
 b2 = ax.bar(xx_ + wd_ / 2, usv, wd_, color="#1f4e9c", label="Dollar appreciates 3.9 log points")
-for bb_ in list(b1) + list(b2): ax.text(bb_.get_x() + bb_.get_width() / 2, bb_.get_height() + 0.005, f"{bb_.get_height():.2f}", ha="center", va="bottom", fontsize=7.5)
+for bb_ in list(b1) + list(b2): ax.text(bb_.get_x() + bb_.get_width() / 2, bb_.get_height() + 0.005, f"{bb_.get_height():.3f}", ha="center", va="bottom", fontsize=7)
 for j_, k in enumerate(PORD): ax.text(j_, 0.47, f"ratio {F26.loc[k].dollar_over_equity:.2f}", ha="center", fontsize=8)
 ax.set_xticks(xx_); ax.set_xticklabels(["Market,\nfutures factor", "Published GS\nweights", "Market,\ntwo-year yield", "FRB/US"], fontsize=8)
 ax.set_ylabel("Points on the common two-year-yield scale", fontsize=8); ax.set_ylim(0, 0.52); ax.legend(frameon=False, fontsize=7.5, loc="upper left", ncol=2)
@@ -1167,6 +1169,24 @@ for ep_ in ("1998-2001", "2022-24", "2004-06", "2008-09"):
     mac(f"fw:ep:{ep_.replace('-', '')}:range", c26(f"ep_{ep_}_range_mean")); mac(f"fw:ep:{ep_.replace('-', '')}:opp", c26(f"ep_{ep_}_opp25"), 0)
 for i_ in range(1, 4): mac(f"fw:topyear:{i_}", c26(f"top_year_{i_}"), 0); mac(f"fw:topyear:{i_}:range", c26(f"top_year_{i_}_range"))
 chk(min(float(E26[(E26.episode == "2022-24") & (E26.portfolio == k)]["mean"].iloc[0]) for k in PORD) > 0.9, "four-way: every calibration shows about one point or more of tightening in 2022-24")
+for k_, v_ in SC26.items():
+    if str(k_).startswith("acc_"): mac("ac:" + str(k_)[4:].replace("_", ":"), float(v_), 2)
+for k_ in ("corr_min", "corr_max", "corr_FB", "corr_FG", "sd_F", "sd_Y", "sd_B", "sd_G"): mac("fw:" + k_.replace("_", ":"), c26(k_))
+for k_, v_ in SC26.items():
+    if str(k_).startswith(("peak_", "dBF_", "dFB_", "range_ep")):
+        if str(k_).endswith("_month"): M["fw:" + str(k_).replace("_", ":")] = str(v_)
+        else: mac("fw:" + str(k_).replace("_", ":"), float(v_), 0 if str(k_).endswith("_n25") else 2)
+DI19 = pd.read_csv(RES / "19_dist.csv")
+for o_ in ("du", "gdp"):
+    r_ = DI19[(DI19.outcome == o_) & (DI19["sample"] == "main")].iloc[0]
+    mac(f"pw:{o_}:sdM", r_.sd_dM); mac(f"pw:{o_}:sdD", r_.sd_D); mac(f"pw:{o_}:sdDperp", r_.sd_Dperp); mac(f"pw:{o_}:corr", r_.corr_dM_D)
+chk(c26("corr_min") > 0.9, "four-way: the four readings are highly correlated (above 0.9) although their sizes differ")
+chk(all(abs(sum(c26(f"acc_jan1998_{k}_{a}") for a in ("y10", "eq", "usd")) - c26(f"acc_jan1998_{k}_total")) < 1e-9 for k in PORD) and c26("acc_jan1998_B_total") > 0.25 and max(c26(f"acc_jan1998_{k}_total") for k in ("F", "Y", "G")) < -0.25, "January 1998: contributions add to the readings; FRB/US tightening, the other three easing, each beyond 25 bp")
+chk(c26("acc_jan1998_x_usd") > 10 and c26("acc_jan1998_x_eq") > 10 and c26("acc_jan1998_x_y10") < 0, "January 1998: dollar and valuations up more than 10, yield relative to r* down")
+chk(c26("acc_ep200809_x_eq") < -30 and abs(c26("acc_ep200809_x_usd")) < 1 and c26("acc_ep200809_x_y10") > 0 and c26("acc_ep200809_F_eq") - c26("acc_ep200809_B_eq") > 0.5, "2008-09: equities dominate; the equity term alone separates the futures-factor and FRB/US readings by more than half a point")
+chk(abs(c26("acc_ep202224_B_total") - c26("acc_ep202224_F_total")) < 0.02 and c26("acc_ep202224_B_eq") < c26("acc_ep202224_F_eq") and c26("acc_ep202224_B_usd") > c26("acc_ep202224_F_usd") and min(c26(f"acc_ep202224_{k}_{a}") for k in PORD for a in ("y10", "eq", "usd")) > 0, "2022-24: all three assets tighten under every calibration; equity and dollar differences offset between the futures-factor and FRB/US readings")
+chk(c26("peak_ep202224_month") == "October 2022" and c26("peak_ep200809_month") == "March 2009", "peak months of the 12-month change")
+chk(abs(float(DI19[(DI19.outcome == "gdp") & (DI19["sample"] == "main")].sd_Dperp.iloc[0]) / float(DI19[(DI19.outcome == "gdp") & (DI19["sample"] == "main")].sd_dM.iloc[0]) - 0.2) < 0.03, "outcome test: composition orthogonal to the market reading has about a fifth of the reading's standard deviation")
 # F-B pair opposing months versus any pair
 MO26 = pd.read_csv(RES / "26_monthly.csv")
 def _opp(a_, b_, t_): return ((np.sign(MO26[a_]) != np.sign(MO26[b_])) & (np.minimum(MO26[a_].abs(), MO26[b_].abs()) >= t_))
@@ -1174,14 +1194,15 @@ fb25, fb10 = int(_opp("F", "B", 0.25).sum()), int(_opp("F", "B", 0.10).sum())
 mac("fw:fb25:n", fb25, 0); mac("fw:fb10:n", fb10, 0)
 chk(fb25 == int(c26("opp25_n")) and set(MO26.month[_opp("F", "B", 0.25)]) == set(o25.month), "four-way: at 25 bp the four calibrations add no opposing month to the futures-factor/FRB/US pair")
 chk(2 * fb10 == int(c26("opp10_n")), "four-way: at 10 bp the four calibrations double the opposing months of the pair")
-# four normalized weight vectors and the Figure 1 readings
+# four normalized weight vectors (Table 1): three rows, with intervals for the estimated market weights
+D21b = pd.read_csv(RES / "21_defs.csv")
+def wint_(d_, q_):
+    r_ = D21b[(D21b.definition == d_) & (D21b.quantity == q_)].iloc[0]; return f" [{f(r_.lo, 3)}, {f(r_.hi, 3)}]"
 rows = []
-for lab_, col_, d_ in (("Weight, 10-year yield (per point)", "w_ten", 3), ("Weight, equity valuation (per log point)", "w_eq", 3), ("Weight, dollar (per log point)", "w_usd", 3),
-                       ("Equity valuation falls 5 log points", "eq_reading", 2), ("Dollar appreciates 3.9 log points", "usd_reading", 2)):
-    rows.append([lab_] + [f(F26.loc[k][col_], d_) for k in PORD])
-rows.append(["Dollar reading over equity reading [90\\%]"] + [f"{f(F26.loc[k].dollar_over_equity)}" + (f" [{f(F26.loc[k].lo)}, {f(F26.loc[k].hi)}]" if k in ("F", "Y") else "") for k in PORD])
+for lab_, col_, q_ in (("10-year yield (per percentage point)", "w_ten", "wM_ten"), ("Equity valuation (per log point)", "w_eq", "wM_eq"), ("Dollar (per log point)", "w_usd", "wM_usd")):
+    rows.append([lab_, f(F26.loc["F"][col_], 3) + wint_("baseline", q_), f(F26.loc["G"][col_], 3), f(F26.loc["Y"][col_], 3) + wint_("two_year", q_), f(F26.loc["B"][col_], 3)])
 table("fourw", "Four Sets of Weights on One Scale", "tab:fourw", [""] + [PN[k] for k in PORD], rows,
-      "Weights on the three assets relative to $r^*$, each set normalized to read one on the response of the three assets to one unit of futures-factor policy news; readings of the movements of Figure~\\ref{fig:four} in points on that common scale. Market weights: one-factor generalized least squares on 253 announcement windows, with policy news measured by the futures factor or by the change in the two-year yield. FRB/US: effects on GDP after four quarters of persistent shifts, divided by the effect of a persistent one-point rise in the funds rate, then normalized. Published GS weights: the U.S.\ weights on the 10-year yield, equities and the dollar, with the GS policy-rate and spread terms held fixed, then normalized. Intervals over 5,000 bootstrap draws of the announcements, for the estimated weights.", align="lcccc", small=False)
+      "Weights on the three assets relative to $r^*$, each set normalized to read one on the response of the three assets to one unit of futures-factor policy news (the common two-year-yield scale). Market weights: generalized least squares on 253 announcement windows, with policy news measured by the futures factor or by the change in the two-year yield; brackets are 90 percent intervals over 5,000 bootstrap draws of the announcements (for the two-year-yield weights, of the weights on their own signal, which differ from the entries by a factor of \\bl{fw:wYpsiF}). FRB/US: effects on GDP after four quarters of persistent shifts. Published GS weights: the U.S.\\ weights on the 10-year yield, equities and the dollar, with the GS policy-rate and spread terms held fixed. The FRB/US and GS weights are not estimated here.", align="lcccc", small=False)
 # four-column episode table
 EPW = (("2008-09", "January 2008 to December 2009"), ("1998-2001", "January 1998 to December 2001"), ("2022-24", "March 2022 to December 2024"))
 rows = []
@@ -1208,20 +1229,22 @@ fig.tight_layout(rect=[0, 0, 1, 0.88]); fig.savefig(REP / "fig_ep4.pdf"); plt.cl
 # GS-input check (step 27)
 SC27 = pd.read_csv(RES / "scalars_27_gs_inputs.csv", index_col=0)["value"].astype(float); c27 = lambda k: float(SC27[k])
 SETL = (("rstar", "Relative to $r^*$ (paper)"), ("real_cape", "Real, 100 ln CAPE"), ("gs_inputs", "Nominal, 100 ln CAPE, nominal dollar"))
-rows = [r"\multicolumn{4}{l}{\textit{Mean absolute distance (basis points)}} \\"]
+rows = [r"\multicolumn{4}{l}{\textit{Mean absolute distance between two readings (basis points)}} \\"]
 for a_, b_ in (("F", "G"), ("F", "B"), ("Y", "B"), ("F", "Y"), ("B", "G"), ("Y", "G")):
     rows.append([f"{PN[a_]} vs {PN[b_]}"] + [f(100 * c27(f"{sn}_mad_{a_}{b_}"), 0) for sn, _ in SETL])
     for sn, _ in SETL: mac(f"gi:{sn}:{a_}{b_}", 100 * c27(f"{sn}_mad_{a_}{b_}"), 0)
-rows.append(r"\midrule" + "\n" + r"\multicolumn{4}{l}{\textit{Judgments, 369 months}} \\")
-for k_, l_, sc_ in (("all_same_sign", "All four the same sign (percent)", 100), ("any_opp_t25", "Materially opposing months, 25 bp", 369), ("any_opp_t10", "Materially opposing months, 10 bp", 369)):
+rows.append(r"\midrule" + "\n" + r"\multicolumn{4}{l}{\textit{Judgments across the four readings, 369 months}} \\")
+for k_, l_, sc_ in (("all_same_sign", "All four the same sign (percent of months)", 100), ("any_opp_t25", "Months with materially opposing readings, 25 basis points", 369), ("any_opp_t10", "Months with materially opposing readings, 10 basis points", 369),
+                    ("range_ge_t25", "Four-reading range at least 25 basis points (percent of months)", 100)):
     rows.append([l_] + [f(sc_ * c27(f"{sn}_{k_}"), 1 if sc_ == 100 else 0) for sn, _ in SETL])
     for sn, _ in SETL: mac(f"gi:{sn}:{k_.replace('_', ':')}", sc_ * c27(f"{sn}_{k_}"), 1 if sc_ == 100 else 0)
-rows.append(r"\midrule" + "\n" + r"\multicolumn{4}{l}{\textit{2008--09, average reading (points)}} \\")
+rows.append(r"\midrule" + "\n" + r"\multicolumn{4}{l}{\textit{Average reading, January 2008 to December 2009 (points)}} \\")
 for k in PORD:
     rows.append([PN[k]] + [f(c27(f"{sn}_ep_2008-09_{k}")) for sn, _ in SETL])
     for sn, _ in SETL: mac(f"gi:{sn}:ep0809:{k}", c27(f"{sn}_ep_2008-09_{k}"))
-table("gsin", "The Four Calibrations on Other Input Series", "tab:gsin", [""] + [l for _, l in SETL], rows,
-      "Each column applies all four sets of weights, unchanged and normalized to the futures-factor response, to the same series: the paper's series relative to $r^*$; the real 10-year yield, equity valuation as 100 times the log of the cyclically adjusted price-earnings ratio (prices over a 10-year average of earnings, the documented GS equity concept) and the real dollar; and the nominal 10-year yield, the same equity valuation and the nominal broad dollar, the nearest publicly reproducible GS inputs. Twelve-month changes, January 1996 to September 2026.", align="lccc", small=False)
+table("gsin", "Four Readings of History", "tab:gsin", [""] + [l for _, l in SETL], rows,
+      "Twelve-month changes in the 10-year yield, equity valuation and the dollar, monthly, January 1996 to September 2026 (369 overlapping months), read with the four sets of weights of Table~\\ref{tab:fourw}. Each column applies all four sets, unchanged, to the same series: the paper's series relative to $r^*$; the real 10-year yield, 100 times the log of the cyclically adjusted price-earnings ratio (prices over a 10-year average of earnings, the documented GS equity concept) and the real dollar; and the nominal 10-year yield, the same equity measure and the nominal broad dollar, the nearest publicly reproducible GS inputs. Distances are mean absolute differences between two readings in basis points of the two-year yield; the mean absolute futures-factor reading is \\bl{gi:rstar:meanF} basis points in the first column. Materially opposing: at least one reading at least the threshold above zero and one at least the threshold below. Range: the largest less the smallest reading. Corporate spreads are held fixed. Intervals for the first column are in the text.", align="lccc", small=False)
+mac("gi:rstar:meanF", 100 * c27("rstar_mean_abs_F"), 0)
 for sn, _ in SETL:
     mac(f"gi:{sn}:fgnear", 100 * c27(f"{sn}_FG_minus_nearest"), 0); mac(f"gi:{sn}:fgnear:lo", 100 * c27(f"{sn}_FG_minus_nearest_lo"), 0); mac(f"gi:{sn}:fgnear:hi", 100 * c27(f"{sn}_FG_minus_nearest_hi"), 0)
 chk(all(c27(f"{sn}_mad_FG") < min(c27(f"{sn}_mad_{p_}") for p_ in ("FY", "FB", "YB", "YG", "BG")) for sn, _ in SETL), "GS inputs: F-G is the closest pair under all three input sets")
