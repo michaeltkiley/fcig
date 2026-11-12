@@ -812,18 +812,6 @@ for k_ in (1, 5, 22, 66, 252):
     r = LD20[(LD20.series == "exann") & (LD20.k == k_) & (LD20.stat == "ratio")].iloc[0]; mac(f"dl:ex{k_}", r.point)
 
 # new figures: the two tightenings, persistence, the matched episode readings
-fig, ax = plt.subplots(figsize=(6.2, 3.4))
-xx_ = np.arange(2); wd_ = 0.34
-mk_ = [num("ag:ex:eq:mkt"), num("ag:ex:usd:mkt")]; fr_ = [num("ag:ex:eq:fr"), num("ag:ex:usd:fr")]
-b1 = ax.bar(xx_ - wd_ / 2, mk_, wd_, color=COLORS["market"], label="Market-implied (policy-news weights)")
-b2 = ax.bar(xx_ + wd_ / 2, fr_, wd_, color=COLORS["frbus"], label="Spending-equivalent (FRB/US weights)")
-for bars_ in (b1, b2):
-    for r_ in bars_:
-        ax.text(r_.get_x() + r_.get_width() / 2, r_.get_height() + 0.005, f"{r_.get_height():.2f}", ha="center", va="bottom", fontsize=8)
-ax.set_xticks(xx_); ax.set_xticklabels(["Equity valuation\nfalls 5 log points", "Dollar appreciates\n3.9 log points"])
-ax.set_ylabel("Tightening: market-implied in two-year-yield points,\nspending-equivalent in funds-rate points", fontsize=8); ax.set_ylim(0, max(mk_ + fr_) * 1.2); ax.legend(frameon=False, fontsize=8, loc="upper left")
-for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
-figure("fig_two", fig)
 
 fig, ax = plt.subplots(1, 2, figsize=(7.5, 3.3))
 labs_ = ["Persistent", "Half-life\n8 qtrs", "Half-life\n4 qtrs", "Half-life\n2 qtrs"]
@@ -856,11 +844,11 @@ def ep_boot(a0, b0):
     sel = (Xd_.index >= pd.Period(a0, "M")) & (Xd_.index <= pd.Period(b0, "M")); X_e = dX_.values[sel]; out = []
     for _, r in WBd.iterrows():
         wm = r[["w_ten", "w_eq", "w_usd"]].values.astype(float); ps = r[["psi_ten", "psi_eq", "psi_usd"]].values.astype(float); wb = b4_ / (b4_ @ ps)
-        out.append([np.nanmean(X_e @ wm), np.nanmean(X_e @ wb), np.nanmean(X_e @ (wb - wm))])
+        out.append([np.nanmean(X_e @ wm), np.nanmean(X_e @ wb), np.nanmean(X_e @ (wb - wm))] + list(np.nanmean(X_e * (wb - wm), axis=0)))
     return np.percentile(np.array(out), [5, 95], axis=0)
 for k_, a0, b0 in (("1998", "1998-01", "2001-12"), ("2004", "2004-06", "2006-06"), ("2022", "2022-03", "2024-12")):
     q_ = ep_boot(a0, b0)
-    for j_, nm_ in enumerate(("dm", "fr", "D")):
+    for j_, nm_ in enumerate(("dm", "fr", "D", "cy10", "ceq", "cusd")):
         mac(f"ce:{k_}:{nm_}:lo", q_[0, j_]); mac(f"ce:{k_}:{nm_}:hi", q_[1, j_])
     sel_ = (Xd_.index >= pd.Period(a0, "M")) & (Xd_.index <= pd.Period(b0, "M")); mk_e = mkt_[sel_]; fr_e = (dX_.values @ wB_)[sel_]; D_e = Dd_[sel_]
     mac(f"ce:{k_}:opp", float(np.sum(np.sign(mk_e) != np.sign(fr_e))), 0); mac(f"ce:{k_}:nmo", float(sel_.sum()), 0); mac(f"ce:{k_}:big", float(np.sum(np.abs(D_e) > 0.25)), 0)
@@ -910,6 +898,8 @@ mac("ch:eq:dom", 100 * g22("equity:persistent:domestic_share_q4"), 0); mac("ch:e
 mac("ch:usd:exp", 100 * g22("dollar:persistent:Exports:share_q4"), 0); mac("ch:usd:imp", 100 * g22("dollar:persistent:Imports:share_q4"), 0)
 mac("ch:usd:nx", 100 * g22("dollar:persistent:netexports_share_q4"), 0); mac("ch:usd:dom", 100 * g22("dollar:persistent:domestic_share_q4"), 1)
 mac("ch:eq:cons4", 100 * g22("equity:halflife4:Consumption:share_q4"), 0); mac("ch:usd:nx4", 100 * g22("dollar:halflife4:netexports_share_q4"), 0)
+mac("ch:eq:inv", 100 * g22("equity:persistent:Inventories:share_q4"), 0); mac("ch:eq:gov", 100 * g22("equity:persistent:Government:share_q4"), 0)
+mac("ch:usd:inv", 100 * g22("dollar:persistent:Inventories:share_q4"), 0); mac("ch:usd:gov", 100 * g22("dollar:persistent:Government:share_q4"), 0)
 mac("ch:replay:ffr", g22("replay:ffr_points_q4"), 3)
 for k_, nm_ in (("10-year yield", "ten"), ("Equity valuation", "eq"), ("Dollar", "usd")):
     mac(f"ch:replay:{nm_}", 100 * g22(f"replay:{k_}:share"), 0); mac(f"ch:hike:{nm_}", 100 * g22(f"hike_spill:{k_}:share_of_hike_gdp"), 0)
@@ -988,9 +978,81 @@ for smp, sl in (("main", "1976--2026"), ("1996+", "1996--2026")):
     r = x23(smp, "dom_minus_net", "D"); rows.append([f"Consumption and investment less net exports, {sl}: $\\gamma$", f"{int(r.n)}", f(r.coef), f"[{f(r.boot_lo90)}, {f(r.boot_hi90)}]", f(r.effect)])
     k_ = f"dmn:{smp.replace('+', 'p')}"; mac(f"ex:{k_}", r.coef); mac(f"ex:{k_}:blo", r.boot_lo90); mac(f"ex:{k_}:bhi", r.boot_hi90)
 table("expend", "Composition and the Expenditure Components of Growth", "tab:expend", ["", "$n$", "Coefficient [90\\% HAC]", "Bootstrap 90\\%", "Effect, 5th to 95th percentile"], rows,
-      "Local projections of the mean contribution to real GDP growth (percentage points, annualized) of net exports and of consumption plus private investment over the next four quarters on own lags, the 12-month change of the market index and the 12-month change of $D$ (Section~\\ref{sec:onetest}); quarterly origins, HAC standard errors with 6 lags, 8-quarter block bootstrap with common draws for the two outcomes. Specified before estimation: the coefficient on $D$ is negative for net exports (P1) and larger for domestic demand than for net exports (P2). Effect: coefficient times the 5th-to-95th percentile range of $D$ at a given index change.")
+      "Local projections of the mean contribution to real GDP growth (percentage points, annualized) of net exports and of consumption plus private investment over the next four quarters on own lags, the 12-month change of the market index and the 12-month change of $D$ (Section~\\ref{sec:onetest}); quarterly origins, HAC standard errors with 6 lags, 8-quarter block bootstrap with common draws for the two outcomes. Predictions stated from the channel logic before the components were estimated: the coefficient on $D$ is negative for net exports (P1) and larger for domestic demand than for net exports (P2). Effect: coefficient times the 5th-to-95th percentile range of $D$ at a given index change.")
 chk(x23("main", "net_exports", "D").boot_hi90 < 0 and x23("main", "net_exports", "D").hi90 < 0, "expenditure: net-export coefficient on D negative with intervals below zero in the main sample")
 chk(x23("1996+", "net_exports", "D").coef < 0 and x23("1996+", "net_exports", "D").hi90 > 0, "expenditure: 1996+ net-export coefficient negative, HAC interval includes zero")
+for d_, k_, _ in DEF21:
+    mac(f"sg:{k_}:eqm", c21(f"{d_}_eq_mkt"), 3); mac(f"sg:{k_}:usdm", c21(f"{d_}_usd_mkt"), 3)
+fig, ax = plt.subplots(figsize=(6.6, 3.5))
+xx_ = np.arange(2); wd_ = 0.26
+series_ = (("Market-implied, futures factor", COLORS["market"], [num("ag:ex:eq:mkt"), num("ag:ex:usd:mkt")]), ("Market-implied, two-year yield", "#7fa6d9", [c21("two_year_eq_mkt"), c21("two_year_usd_mkt")]),
+           ("Spending-equivalent (FRB/US)", COLORS["frbus"], [num("ag:ex:eq:fr"), num("ag:ex:usd:fr")]))
+for j_, (lab_, col_, v_) in enumerate(series_):
+    bars_ = ax.bar(xx_ + (j_ - 1) * wd_, v_, wd_, color=col_, label=lab_)
+    for r_ in bars_: ax.text(r_.get_x() + r_.get_width() / 2, r_.get_height() + 0.005, f"{r_.get_height():.2f}", ha="center", va="bottom", fontsize=8)
+ax.set_xticks(xx_); ax.set_xticklabels(["Equity valuation\nfalls 5 log points", "Dollar appreciates\n3.9 log points"])
+ax.set_ylabel("Points (market: two-year yield; model: funds rate)", fontsize=8); ax.set_ylim(0, 0.5); ax.legend(frameon=False, fontsize=8, loc="upper left")
+for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
+figure("fig_two", fig)
+# policy-rate experiment in FRB/US (step 22_policy_shock)
+SC22p = pd.read_csv(RES / "scalars_22_policy_shock.csv", index_col=0)["value"]; p22 = lambda k: float(SC22p[k])
+for k_ in ("ten", "eq", "usd"):
+    mac(f"ps:q1:{k_}", p22(f"move_over_psi_q1:{k_}")); mac(f"ps:pr:{k_}", 100 * p22(f"priced_share:{k_}"), 0)
+mac("ps:rem", 100 * p22("remainder_share"), 0); mac("ps:gdp", p22("gdp_q4")); mac("ps:ffr", p22("ffr_equivalent_q4")); mac("ps:replay", p22("replay_ffr_points")); mac("ps:hl", p22("rff_halflife_quarters"), 1)
+mac("ps:size", p22("shock_size_rffintay_aerr"), 2); mac("ps:lin", 100 * p22("linearity_gdp_q4_rel"), 1)
+PT = pd.read_csv(RES / "scalars_22_policy_shock.csv", index_col=0)["value"]
+# the sensitivity band: episode readings over four definitions of policy news and four persistence assumptions
+WP = pd.read_csv(RES / "22_weights_by_persistence.csv"); WP = WP[WP.h == 4].set_index("path")
+PATHS_ = (("persistent", "Persistent"), ("hl8", "Half-life 8"), ("hl4", "Half-life 4"), ("hl2", "Half-life 2"))
+psi21 = lambda d_: np.array([dq(d_, "psi_ten"), dq(d_, "psi_eq"), dq(d_, "psi_usd")]); wm21 = lambda d_: np.array([dq(d_, "wM_ten"), dq(d_, "wM_eq"), dq(d_, "wM_usd")])
+BAND = {}
+for k_, a0, b0 in (("1998", "1998-01", "2001-12"), ("2004", "2004-06", "2006-06"), ("2022", "2022-03", "2024-12")):
+    sel_ = (Xd_.index >= pd.Period(a0, "M")) & (Xd_.index <= pd.Period(b0, "M")); mdx_ = np.nanmean(dX_.values[sel_], axis=0)
+    mk_ = {d_: float(wm21(d_) @ mdx_) for d_, _, _ in DEF21}
+    sp_ = {(d_, pa_): float((WP.loc[pa_, ["b_ten", "b_eq", "b_usd"]].values.astype(float) @ mdx_) / (WP.loc[pa_, ["b_ten", "b_eq", "b_usd"]].values.astype(float) @ psi21(d_))) for d_, _, _ in DEF21 for pa_, _ in PATHS_}
+    BAND[k_] = (mk_, sp_)
+    mac(f"bd:{k_}:mlo", min(mk_.values())); mac(f"bd:{k_}:mhi", max(mk_.values())); mac(f"bd:{k_}:flo", min(sp_.values())); mac(f"bd:{k_}:fhi", max(sp_.values()))
+    mac(f"bd:{k_}:fsig:lo", min(sp_[(d_, "persistent")] for d_, _, _ in DEF21)); mac(f"bd:{k_}:fsig:hi", max(sp_[(d_, "persistent")] for d_, _, _ in DEF21))
+    mac(f"bd:{k_}:fper:lo", min(sp_[("baseline", pa_)] for pa_, _ in PATHS_)); mac(f"bd:{k_}:fper:hi", max(sp_[("baseline", pa_)] for pa_, _ in PATHS_))
+chk(abs(BAND["1998"][1][("baseline", "persistent")] - num("ce:1998:fr")) < 0.005 and abs(BAND["2022"][0]["baseline"] - num("ce:2022:dm")) < 0.005, "band: baseline cell reproduces the episode readings")
+fig, ax = plt.subplots(figsize=(7.0, 3.6))
+for e_, (k_, lab_) in enumerate((("1998", "1998--2001"), ("2022", "2022--24"))):
+    mk_, sp_ = BAND[k_]
+    ax.scatter([e_ * 1.0 - 0.18 + 0.02 * i for i in range(len(mk_))], list(mk_.values()), color=COLORS["market"], s=26, alpha=0.55, zorder=3, label="Market-implied (four definitions of policy news)" if e_ == 0 else None)
+    ax.scatter([e_ * 1.0 - 0.18 + 0.02 * 0], [mk_["baseline"]], color=COLORS["market"], s=60, zorder=4, edgecolor="black", label="Baseline" if e_ == 0 else None)
+    xs_ = [e_ * 1.0 + 0.14 + 0.02 * i for i in range(len(sp_))]
+    ax.scatter(xs_, list(sp_.values()), color=COLORS["frbus"], s=26, alpha=0.55, zorder=3, label="Spending-equivalent (four definitions $\\times$ four persistence assumptions)" if e_ == 0 else None)
+    ax.scatter([xs_[0]], [sp_[("baseline", "persistent")]], color=COLORS["frbus"], s=60, zorder=4, edgecolor="black")
+for e_, k_ in enumerate(("1998", "2022")):
+    for nm_, xo_ in (("dm", e_ - 0.18), ("fr", e_ + 0.14)):
+        v_ = num(f"ce:{k_}:{nm_}"); ax.plot([xo_, xo_], [num(f"ce:{k_}:{nm_}:lo"), num(f"ce:{k_}:{nm_}:hi")], color="#222222", lw=1.1, zorder=2)
+ax.axhline(0, color="#444444", lw=0.8); ax.set_xticks([-0.02, 0.98]); ax.set_xticklabels(["1998--2001", "2022--24"]); ax.set_xlim(-0.5, 1.5)
+ax.set_ylabel("Average 12-month change, points"); ax.legend(frameon=False, fontsize=7.5, loc="upper left")
+for sp__ in ("top", "right"): ax.spines[sp__].set_visible(False)
+figure("fig_band", fig)
+# step 24: null benchmark, outcomes under each definition, split of D
+SC24 = pd.read_csv(RES / "scalars_24_signal_outcomes.csv", index_col=0)["value"]; c24 = lambda k: float(SC24[k]); O24 = pd.read_csv(RES / "24_signal_outcomes.csv")
+mac("nb:med", c24("nb_within_market_median")); mac("nb:lo", c24("nb_within_market_lo")); mac("nb:hi", c24("nb_within_market_hi"))
+mac("nb:two", c24("nb_market_two_year_vs_baseline")); mac("nb:t19", c24("nb_market_to_2019_vs_baseline")); mac("nb:nlb", c24("nb_market_no_lower_bound_vs_baseline")); mac("nb:fr", c24("nb_frbus_vs_market_baseline"))
+def o24(d_, o_, t_): return O24[(O24.definition == d_) & (O24.outcome == o_) & (O24.term == t_)].iloc[0]
+rows = []
+for d_, k_, lab_ in DEF21:
+    row = [lab_]
+    for o_ in ("unemployment", "gdp", "net_exports"):
+        r = o24(d_, o_, "D"); g_ = o24(d_, o_, "gamma_minus_beta"); row.append(f"{f(r.coef)} [{f(r.lo90)}, {f(r.hi90)}]"); row.append(f"{f(g_.coef)} [{f(g_.lo90)}, {f(g_.hi90)}]" if o_ != "net_exports" else "")
+        mac(f"so:{k_}:{o_[:3]}:g", r.coef); mac(f"so:{k_}:{o_[:3]}:glo", r.lo90); mac(f"so:{k_}:{o_[:3]}:ghi", r.hi90); mac(f"so:{k_}:{o_[:3]}:gb", g_.coef); mac(f"so:{k_}:{o_[:3]}:gblo", g_.lo90); mac(f"so:{k_}:{o_[:3]}:gbhi", g_.hi90)
+    rows.append(row[:1] + [row[1], row[2], row[3], row[4], row[5]])
+table("sigout", "Composition and Outcomes under Each Definition of Policy News", "tab:sigout", ["", "Unemployment, $\\gamma$", "$\\gamma-\\beta$", "GDP growth, $\\gamma$", "$\\gamma-\\beta$", "Net exports, $\\gamma$"], rows,
+      "Coefficient on the composition term $D$ (and its difference from the coefficient on the market index change) in the regressions of Sections~\\ref{sec:onetest} and~\\ref{sec:expend}, 1976--2026, with $D$ and the market index change computed with the market weights of each definition of policy news and the model weights normalized by that definition's $b_4'\\psi$; HAC 90 percent intervals.", align="lccccc", small=True)
+for t_, nm_ in (("D_ten", "ten"), ("D_eq", "eq"), ("D_usd", "usd")):
+    r = o24("baseline_split", "net_exports", t_); mac(f"so:split:{nm_}", r.coef); mac(f"so:split:{nm_}:lo", r.lo90); mac(f"so:split:{nm_}:hi", r.hi90)
+for t_ in ("deq", "dusd", "dy10"):
+    r = o24("baseline_free", "net_exports", t_); mac(f"so:free:{t_}", r.coef, 3); mac(f"so:free:{t_}:lo", r.lo90, 3); mac(f"so:free:{t_}:hi", r.hi90, 3)
+s76_ = np.asarray(Xd_.index >= pd.Period("1976-03", "M")) & np.isfinite(dX_.values).all(axis=1)
+mac("so:corr:eq", float(np.corrcoef(Dd_[s76_], dX_.values[s76_, 1])[0, 1])); mac("so:corr:usd", float(np.corrcoef(Dd_[s76_], dX_.values[s76_, 2])[0, 1]))
+WPall = pd.read_csv(RES / "22_weights_by_persistence.csv"); mac("bp:min", float(WPall.bpsi.min())); mac("bp:max", float(WPall.bpsi.max()))
+mac("bd:2022:fper:spread", BAND["2022"][1][("baseline", "persistent")] - min(BAND["2022"][1][("baseline", pa_)] for pa_, _ in PATHS_), 3); mac("bd:1998:fper:spread", max(BAND["1998"][1][("baseline", pa_)] for pa_, _ in PATHS_) - min(BAND["1998"][1][("baseline", pa_)] for pa_, _ in PATHS_), 3)
+chk(c24("nb_within_market_median") > 0.2 and c24("nb_frbus_vs_market_baseline") < 0.4, "null benchmark: within-market weight noise (median 0.2+) comparable to the FRB/US-vs-market ratio")
 chk(all(c21(f"{d_}_ror") > 1 for d_, _, _ in DEF21) and c21("two_year_ror") < c21("baseline_ror") < c21("to_2019_ror"), "signal: direction of the contrast the same in all four definitions; size varies (1.2 to 3.6)")
 chk(all(abs(c21(f"{d_}_contrast_fr") - 0.25) < 0.03 for d_, _, _ in DEF21), "signal: model contrast 0.24 to 0.26 points under every definition")
 chk(all(e21(d_, "1998-2001", "market").point < 0 < e21(d_, "1998-2001", "frbus").point for d_, _, _ in DEF21), "signal: 1998-2001 opposite signs under every definition")

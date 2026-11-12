@@ -1,0 +1,30 @@
+# FRB/US made reproducible; policy-rate experiment; weights by persistence (steps 00, 22)
+
+Vintage [verified]: Board package downloaded to `raw/frbus/` (gitignored); LONGBASE dated 2026-10-06, sha256 c023c739...a9e (`results/00_frbus_vintage.csv`). `python3 run_all.py` now starts with `00_frbus` (40 s; builds `raw/frbus_venv`, Python 3.11, on first use) and includes `22_channels` (12 s), `22_policy_shock` (5 s), `22_weights_persist`; the sync check includes them (185 result files, in sync). One vintage is used everywhere; the old files are kept as `data/frbus_paths_oldvintage.csv`, `data/frbus_hike_paths_oldvintage.csv`.
+
+## New vintage against old [verified]
+- GDP per unit, persistent, zfree: relative difference at quarter 4 max 4.6 percent (rshort), mean 1.4; at quarter 8 max 6.9, mean 1.8. req 1.5 percent, rg10 0.8, fpxr 0.06, rme 0.2 at quarter 4. Hike -0.4616 against -0.4525.
+- b4'psi 0.954 [0.85, 1.07] (was 0.975 [0.87, 1.09]); h=2 0.901, h=8 0.917 (was 0.925, 0.930). Half-life 4: 0.815 (was 0.83); half-life 2: 0.71 (was 0.72).
+- Ratio of ratios at four quarters 2.53 [1.04, 6.91] (was 2.49 [1.02, 6.81]); dollar-over-equity ratio of effects 2.51 (was 2.48); with common half-lives 8, 4, 2: 2.53, 2.55, 2.59; asset-specific range 1.91 to 3.41 (was 1.88 to 3.36).
+- Figure 1 FRB/US effects: 0.153 (equity, -5 log points) and 0.384 (dollar, +3.9) funds-rate points (were 0.158, 0.392); the same numbers come from step 22 (0.152707, 0.383787) and from the weights of step 02 (0.152710, 0.383790).
+- Signal table ratios of ratios: 2.53, 1.22 (two-year), 3.70 (through 2019), 2.16 (no lower bound). Episodes unchanged to two digits (1998-2001: -0.06, 0.16, D 0.22; 2022-24: 1.02, 1.01, D -0.01); level gaps 1.79 (was 1.73), equity part 1.32 (1.29). Net-export coefficient on D -0.74 (unchanged), difference 2.44 (was 2.48).
+- Nothing downstream broke: every asserted claim in 07_report.py holds with no threshold change; macros resolve. Text that quotes 0.975 or 0.83 through macros updates itself; any hard-coded 0.975/0.83/2.49/0.158/0.392 in the .tex files should be checked.
+
+## Policy-rate experiment (`22_policy_shock.py`; `results/22_policy_shock_paths.csv`, `scalars_22_policy_shock.csv`)
+Definition [verified in the code]. Shock: an add factor on the inertial-Taylor-rule equation (`rffintay_aerr`, as in the Board's demo example1) in the first quarter only; nothing exogenized, the rule is active afterwards, VAR expectations, 2040Q1 steady-state baseline. The funds rate decays with a half-life of about 2.7 quarters. Unit [inference]: FRB/US has no two-year yield, so the proxy is the average of the simulated funds rate over quarters 1-8 (deviation from baseline); the shock (size 2.14) is scaled so the proxy rises 1.00 pp (re-run at the calibrated size gives 1.005; linearity of GDP at q4 within 1.6 percent). The proxy is the path the model generates, not the market's expected path under VAR expectations.
+Per unit (proxy +1 pp), against the announcement responses psi (10-year 0.53 pp, equity -7.8 percent, dollar +4.2 percent):
+
+| | impact (q1) | ratio to psi at q1 | quarter 4 |
+|---|---|---|---|
+| funds rate / 3-month bill / 5-year | 2.14 / 1.65 / 1.08 pp | | 1.08 / 0.84 / 0.52 |
+| 10-year yield | +0.71 pp | 1.33 | +0.42 pp |
+| stock wealth | -31.2 percent | 4.0 | -15.1 percent |
+| real dollar | +2.34 percent | 0.55 | +1.92 percent |
+
+GDP at quarter 4 -0.815 percent; funds-rate equivalent 1.77 (GDP over the persistent-hike GDP, -0.4616) against 0.954 for the three-asset replay of the usual response (GDP -0.440). The model's own policy shock moves equities about four times and the dollar about half as much as the announcement response, per unit of the proxy. Pricing the spillovers along their paths with the temporary-shock responses (data/frbus_paths.csv): 10-year 20 percent, equity 43 percent, dollar 13 percent of the GDP effect (the replay of psi: 32, 25, 44 percent), remainder 23 percent (policy-rate direct effect, mortgage and BBB spreads, house prices) [inference: the priced sum assumes the partial-experiment multipliers apply along the policy-shock paths]. Residual in those terms: 0.81 funds-rate points between the policy shock (1.77) and the replay (0.95), carried by the equity channel being larger and the dollar channel smaller than in the announcement response, plus the 23 percent remainder. Caveats: the quarter-1 equity fall is very large because FRB/US stock wealth responds to expected funds rates one for one through the required return (VAR expectations) [inference]; the experiment is the model's own policy shock, not a reproduction of an announcement; a different proxy (e.g. rtb or rg5, which move 1.65 and 1.08 on impact) changes the unit.
+
+## Weights by persistence (`22_weights_persist.py`; `results/22_weights_by_persistence.csv`, `scalars_22_weights_persist.csv`)
+b = (10-year, equity, dollar) in funds-rate points per unit, GDP at four quarters, with b'psi, normalized weights, dollar-over-equity ratio of effects and ratio of ratios, for persistent paths and common half-lives 8, 4, 2, at h = 2, 4, 8. Four quarters: persistent b = (0.563, -0.0305, 0.0984), b'psi 0.954, ratio of ratios 2.53; hl8 (0.516, -0.0281, 0.0913), 0.880, 2.55; hl4 (0.475, -0.0260, 0.0850), 0.815, 2.57; hl2 (0.409, -0.0225, 0.0748), 0.710, 2.60. Decaying paths agree with step 18's matched paths to 5e-6 [verified]; the persistent row is the direct run (step 18 prices it by cumulating temporary responses; 5e-4 apart).
+
+## Macro keys
+`scalars_00_frbus.csv` (hike_gdp_q4, hike_gdp_q8); `scalars_22_policy_shock.csv` (e.g. `d_rg10:q1`, `stock_wealth_pct:q1`, `dollar_pct:q1`, `move_over_psi_q1:ten|eq|usd`, `gdp_q4`, `ffr_equivalent_q4`, `replay_ffr_points`, `priced_share:ten|eq|usd`, `replay_share:*`, `remainder_share`, `rff_halflife_quarters`, `shock_size_rffintay_aerr`, `proxy_at_calibrated`); `scalars_22_weights_persist.csv` (keys `h4_hl4_bpsi`, `h4_hl2_ratio_of_ratios`, ...); `scalars_22_channels.csv` as before (`fig1:equity_ffr_points`, `fig1:dollar_ffr_points`).

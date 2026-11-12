@@ -1,6 +1,6 @@
 """Step 23. Do the two readings predict different expenditure components? (colleague report p.5, a ReStat-style implication; FRB/US channels from step 22.)
 
-PRE-SPECIFIED (written before any estimate was looked at)
+PREDICTIONS (written from the channel logic of step 22 before the components were estimated; the aggregate nulls of step 19 were already known, so this is a check on a prediction and not a clean pre-registration)
  y_net = mean over the next four quarters (t+1..t+4) of the contribution of net exports to real GDP growth (percentage points, annualised; FRED A019RY2Q224SBEA).
  y_dom = same for private domestic demand: contributions of consumption and gross private domestic investment (DPCERY2Q224SBEA + A006RY2Q224SBEA).
  Regressors as in step 19's quarterly GDP check: own lags (previous four-quarter mean and previous quarter of the same contribution), dM and D (12-month changes at the quarter's last month, the same series as step 19),

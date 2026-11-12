@@ -110,8 +110,8 @@ max_abs_residual,0.000000
 max_abs_residual_over_gdp,0.000000
 fig1:equity_ffr_points,0.152707
 fig1:dollar_ffr_points,0.383787
-fig1:equity_ffr_points_stored,0.158148
-fig1:dollar_ffr_points_stored,0.391681
+fig1:equity_ffr_points_stored,0.152710
+fig1:dollar_ffr_points_stored,0.383790
 perunit_q4:rg10,-0.259829
 perunit_q4:rbbbp,-0.058218
 perunit_q4:equity_pct_rise,-0.014097

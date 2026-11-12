@@ -14,3 +14,9 @@ Limits [inference]:
 - The half-life-4 path is priced by linearity from temporary shocks (same method as step 18), not by a direct simulation.
 - The "replay" of the usual announcement response uses per-unit persistent effects times psi (equity and dollar mapped as above); the comparison with the hike's own spillovers prices the quarter-4 spillovers only, so within-year paths and the policy-rate channel are in the remainder. No new policy experiment was run: delivering a given two-year-yield change in FRB/US needs the policy rule's expectations path, which the model does not identify without further assumptions.
 - Component contributions are of the fixed-weight aggregation and follow the model's own definitions; "domestic" = consumption + residential + business fixed investment.
+
+## Update (reproducible set, same vintage as the weights)
+Step 22 now runs through `lib/frbus_env.ensure_runtime()` (self re-run in `raw/frbus_venv`), reads the regenerated `data/frbus_paths.csv` from step 00 (same LONGBASE of 2026-10-06) and the weights from the results directory, and is part of `run_all.py` and the sync check (runtime 12 s). The comparison with the stored package responses now agrees to 1e-6 at every checked quarter (`22_verify.csv`), and the funds-rate points of Figure 1 equal the weights of step 02: 0.152707 and 0.383787 from the channels run against 0.152710 and 0.383790 from `frbus_weights.csv` [verified]. The earlier statement that the stored paths come from an older vintage no longer applies: the stored paths were regenerated.
+
+## Policy-rate experiment (`22_policy_shock.py`, 5 s) and weights by persistence (`22_weights_persist.py`)
+Defined and reported in `fci_paper/followup4/frbus_RESULT.md`.

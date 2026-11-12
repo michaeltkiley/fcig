@@ -18,8 +18,7 @@ Persistent shocks are run directly; a common decaying path (half-life 4 quarters
 exactly as in step 18 (response(q) = sum_s x_s Tmp(q-s+1), per unit of the persistent experiment's impact unit).
 Units: equity, per 1 percent fall in stock wealth at impact in the persistent experiment (scaled to 5, the stylized fall of 5 log points of equity valuation); dollar, per 1 percent
 rise in the real exchange rate (scaled to 3.9).
-Run with the Python environment that has pyfrbus's pinned libraries (pandas<3, sympy==1.3, symengine, scipy, networkx, multiprocess, lxml); the package is downloaded to raw/frbus
-(gitignored) by experimental/ms_fci/frbus_sensitivities.get_package(). Usage: <venv>/bin/python 22_channels.py
+The package is downloaded to raw/frbus (gitignored) and the script re-runs itself in raw/frbus_venv when the default interpreter cannot import pyfrbus (lib/frbus_env.py). Usage: python3 22_channels.py
 Writes results/22_*.csv and scalars_22_channels.csv."""
 import os, sys, re, time
 import numpy as np, pandas as pd
@@ -27,11 +26,11 @@ import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 RAW = os.path.join(ROOT, "raw", "frbus")
-sys.path.insert(0, os.path.join(ROOT, "experimental", "ms_fci"))
+sys.path.insert(0, HERE)
 RES = os.environ.get("FCI_RESULTS", os.path.join(HERE, "results"))
 os.makedirs(RES, exist_ok=True)
-import frbus_sensitivities as F
-F.get_package()
+from lib.frbus_env import ensure_runtime
+ensure_runtime()
 from pyfrbus.frbus import Frbus
 from pyfrbus.load_data import load_data
 
@@ -158,7 +157,7 @@ S("yardstick:coef_y1", YG[1]); S("max_abs_residual", PATHS.Residual.abs().max())
 
 # verification against the stored package responses (data/frbus_paths.csv, zfree, persistent) and the stored weights
 st = pd.read_csv(os.path.join(HERE, "data", "frbus_paths.csv")); st = st[(st["design"] == "zfree") & (st["shape"] == "persistent")]
-fw = pd.read_csv(os.path.join(HERE, "results", "frbus_weights.csv"), index_col=0)
+fw = pd.read_csv(os.path.join(RES, "frbus_weights.csv"), index_col=0)
 chk = []
 for name, key, sign in (("equity", "req", -1.0), ("dollar", "fpxr", 1.0)):
     R = RESP[(name, "persistent")]
@@ -187,7 +186,7 @@ PER["equity_pct_rise"] = -RESP[("equity", "persistent")]["gdp"][3] / UNIT["equit
 PER["equity_pct_fall"] = RESP[("equity", "persistent")]["gdp"][3] / UNIT["equity"]
 PER["dollar_pct_rise"] = RESP[("dollar", "persistent")]["gdp"][3] / UNIT["dollar"]
 for k, v in PER.items(): S(f"perunit_q4:{k}", v)
-mw = pd.read_csv(os.path.join(HERE, "results", "market_weights.csv"), index_col=0)
+mw = pd.read_csv(os.path.join(RES, "market_weights.csv"), index_col=0)
 psi = fw["market_response"]
 S("psi_ten", psi["y10"]); S("psi_eq", psi["equities"]); S("psi_usd", psi["dollar"])
 # (ii) replay of the usual announcement response (persistent): GDP at q4 per unit of policy news = psi_j x per-unit effect; equity psi is in CAPE log points, mapped one-to-one to percent of stock wealth as in Figure 1

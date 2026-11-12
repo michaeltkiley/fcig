@@ -1,0 +1,16 @@
+# Isolated environment for the Board's FRB/US Python package (pyfrbus pins old libraries). Python 3.11; these versions ran in this repository (Nov 2026).
+numpy==2.4.6
+pandas==2.3.3
+scipy==1.17.1
+sympy==1.3
+symengine==0.15.0
+networkx==3.6.1
+multiprocess==0.70.19
+dill==0.4.1
+lxml==6.1.3
+typing-extensions==4.16.0
+python-dateutil==4.0.0
+pytz==2026.6
+tzdata==2026.6
+mpmath==1.4.1
+packaging==26.3

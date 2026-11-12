@@ -75,3 +75,5 @@ Step `20_daily` (daily announcement and other-day comparison at the same horizon
 The paper (`paper/fci_paper.tex`, 7 sections, 3 appendices) is the second rewrite of the question; `paper/fci_paper_v4_when.*` is the previous 41-page version with the VAR, funds-rate-gap, NFCI and robustness appendices. Figures 1-3 (`fig_two`, `fig_persist`, `fig_episodes`) are built by `07_report.py`.
 
 Steps added after the colleague report: `21_signal` (four definitions of policy news), `22_channels` (FRB/US expenditure channels; needs the Board's FRB/US package, run once with Python 3.11 and the package downloaded to gitignored `raw/frbus/`; results `results/22_*.csv` are stored and 22 is not in `run_all.py` or the sync check; see `22_channels_CHECK.md`), `23_expenditure` (net exports vs domestic demand, pre-specified). New exhibits: `fig_channels`, `fig_paths`, `tab_signal`, `tab_expend`.
+
+Steps 00_frbus (FRB/US package, vintage), 22_channels, 22_policy_shock, 22_weights_persist (FRB/US runs; need Python 3.11 venv, built automatically), 24_signal_outcomes (null benchmark, outcomes by definition of policy news, split of D). New exhibits: fig_band, tab_sigout.
