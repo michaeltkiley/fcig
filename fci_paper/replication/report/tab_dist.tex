@@ -1,0 +1,15 @@
+\begin{table}[tbp]\centering
+\caption{How Far Apart Are the Four Readings?}\label{tab:dist}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+ & Market, futures factor & Published GS weights & Market, two-year yield & FRB/US \\
+\midrule
+Market, futures factor & -- & 7 (0.09) & 28 (0.37) & 26 (0.33) \\
+Published GS weights & 7 (0.09) & -- & 34 (0.45) & 28 (0.36) \\
+Market, two-year yield & 28 (0.37) & 34 (0.45) & -- & 23 (0.30) \\
+FRB/US & 26 (0.33) & 28 (0.36) & 23 (0.30) & -- \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Mean absolute difference between two readings of the same 12-month changes in the three assets relative to $r^*$, monthly, January 1996 to September 2026 (369 months), in basis points of the two-year yield; in parentheses, the same divided by the mean absolute reading of the market index with the futures factor (the common denominator). Every portfolio is normalized to read one on the futures-factor response to policy news, so that the distances reflect relative weights. Published GS weights: the U.S. weights on the 10-year yield, equities and the dollar, applied to the same series, with the GS policy-rate and spread terms held fixed. Intervals over 5,000 bootstrap draws of the announcements are in the text.\end{flushleft}
+\end{table}

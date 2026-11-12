@@ -62,11 +62,25 @@ Futures, yields, S\&P 500 and DXY in the window & Event & U.S.\ Monetary Policy 
 
 \section{Sensitivity}\label{app:robust}
 \subsection{Other Policy-News Series and Event Samples}\label{sec:robother}
-Table~\ref{tab:signalsens} gives the weights, the readings of the two movements of Figure~\ref{fig:two} and the contrasts under the two measures of policy news and the two sample checks, and Table~\ref{tab:wvar} re-estimates the weights with the two-year yield as the policy news, with announcements through 2019, and without the lower-bound years. The equity weight is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} against \bl{w:eq} in the baseline, and the conclusions about composition rest on the model's ratio of dollar to equity effects, not on any one set of market weights.
+Table~\ref{tab:signalsens} gives the weights, the readings of the two movements of Figure~\ref{fig:four} and the contrasts under the two measures of policy news and the two sample checks, and Table~\ref{tab:wvar} re-estimates the weights with the two-year yield as the policy news, with announcements through 2019, and without the lower-bound years. The equity weight is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} against \bl{w:eq} in the baseline, and the conclusions about composition rest on the model's ratio of dollar to equity effects, not on any one set of market weights.
 
 \input{../replication/report/tab_wvar}
 
 \input{../replication/report/tab_signalsens}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../replication/report/fig_band.pdf}
+\caption{Two Readings of Two Episodes under Every Measurement Choice}
+\label{fig:band}
+\begin{flushleft}\footnotesize\textit{Notes:} Average 12-month change over the months of the episode on the same three assets relative to $r^*$. Market-implied: the four definitions of policy news of Table~\ref{tab:signalsens}, in points of the two-year yield. Spending-equivalent: the same four definitions, which enter through the normalization, crossed with persistent paths and common half-lives of 8, 4 and 2 quarters, in funds-rate points. Large markers are the baseline. These are retrospective estimates. The 90 percent intervals of the baseline readings are in the text.\end{flushleft}
+\end{figure}
+
+
+The episode readings of the futures-factor market index and FRB/US under each definition of policy news are in Table~\ref{tab:epdef}.
+
+\input{../replication/report/tab_epdef}
+
 
 The disagreement is similar under every definition: the ratio of the mean absolute difference to the mean absolute market move in 12-month changes is \bl{sg:base:d12}, \bl{sg:two:d12}, \bl{sg:t19:d12} and \bl{sg:nlb:d12}. The contrast in points excludes zero through 2019 and without the lower-bound years and includes it under the two-year yield, so that of the four definitions the interval excludes zero for three.
 

@@ -1,7 +1,7 @@
 """Environment for the FRB/US steps (00_frbus, 22_*): download the Board's pyfrbus package and the LONGBASE data to raw/frbus (gitignored), and make sure the
 running interpreter can import pyfrbus (it pins old libraries: pandas<3, sympy==1.3). If not, create raw/frbus_venv (Python 3.11, requirements_frbus.txt) and re-run the
 calling script inside it. Usage at the top of a script:   from lib.frbus_env import ensure_runtime; ensure_runtime()   (then import pyfrbus)."""
-import os, sys, io, shutil, hashlib, zipfile, subprocess, urllib.request
+import os, sys, io, time, shutil, hashlib, zipfile, subprocess, urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parents[1]                  # fci_paper/replication
@@ -18,7 +18,9 @@ def ensure_package():
     for z, marker in (("pyfrbus.zip", "pyfrbus"), ("data_only_package.zip", "data_only_package")):
         if not (RAW / marker).exists():
             req = urllib.request.Request(BASE_URL + z, headers={"User-Agent": "Mozilla/5.0"})
-            zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(req, timeout=180).read())).extractall(RAW)
+            zf = zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(req, timeout=180).read())); zf.extractall(RAW)
+            for zi in zf.infolist():                      # keep the archive's file dates, so that the recorded LONGBASE date is the vintage date, not the download date
+                ts = time.mktime(zi.date_time + (0, 0, -1)); os.utime(RAW / zi.filename, (ts, ts))
     sys.path.insert(0, str(RAW / "pyfrbus"))
 
 

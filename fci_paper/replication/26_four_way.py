@@ -60,7 +60,7 @@ for k in NAMES:
     S.add(f"fig1_{k}", v0); S.add(f"fig1_{k}_lo", l); S.add(f"fig1_{k}_hi", u)
     S.add(f"eqread_{k}", P0[k][1] * EQ); S.add(f"usdread_{k}", P0[k][2] * USD)
 pd.DataFrame(rows).to_csv(RES / "26_fig1.csv", index=False, float_format="%.6g")
-S.add("gs_ratio_raw", (g[2] * USD) / (abs(g[1]) * abs(EQ)))      # the published-weight arithmetic (0.06 x 3.9)/(0.049 x 5)
+S.add("wY_on_psiF", float(wY0 @ pF0)); S.add("gs_ratio_raw", (g[2] * USD) / (abs(g[1]) * abs(EQ)))      # the published-weight arithmetic (0.06 x 3.9)/(0.049 x 5)
 
 # (2) historical distances, (3) judgments
 Xr = cases.inputs(data.load(), "rstar")[MV]
@@ -95,5 +95,26 @@ mon.to_csv(RES / "26_monthly.csv", index=False, float_format="%.6g")
 yr = mon.assign(year=mon.month.str[:4]).groupby("year")["range"].mean().sort_values(ascending=False)
 yr.rename("mean_range").to_csv(RES / "26_years.csv", float_format="%.6g")
 for i, (y, v) in enumerate(yr.head(5).items()): S.add(f"top_year_{i+1}", int(y)); S.add(f"top_year_{i+1}_range", v)
+# (4) the months of material opposition (any pair, t = 0.25 and 0.10), which portfolios oppose, and episode averages of the four readings
+opp_rows = []
+for t in (0.25, 0.10):
+    for i in range(T):
+        r = M0[i]
+        if (r >= t).any() and (r <= -t).any():
+            opp_rows.append(dict(threshold=t, month=str(idx[i]), **{k: r[j] for j, k in enumerate(NAMES)}, d_y10=Zv[i, 0], d_eq=Zv[i, 1], d_usd=Zv[i, 2],
+                                 tight=",".join(k for j, k in enumerate(NAMES) if r[j] >= t), easy=",".join(k for j, k in enumerate(NAMES) if r[j] <= -t)))
+OPP = pd.DataFrame(opp_rows); OPP.to_csv(RES / "26_opposing_months.csv", index=False, float_format="%.6g")
+o25 = OPP[OPP.threshold == 0.25]
+S.add("opp25_n", len(o25)); S.add("opp10_n", int((OPP.threshold == 0.10).sum()))
+S.add("opp25_first", o25.month.min() if len(o25) else ""); S.add("opp25_last", o25.month.max() if len(o25) else "")
+EP = {"1998-2001": ("1998-01", "2001-12"), "2022-24": ("2022-03", "2024-12"), "2004-06": ("2004-06", "2006-06"), "2008-09": ("2008-01", "2009-12")}
+erow = []
+for ep, (a, e) in EP.items():
+    msk = np.array([(p_ >= pd.Period(a, "M")) and (p_ <= pd.Period(e, "M")) for p_ in idx])
+    for j, k in enumerate(NAMES):
+        v = float(M0[msk, j].mean()); erow.append(dict(episode=ep, portfolio=k, mean=v)); S.add(f"ep_{ep}_{k}", v)
+    S.add(f"ep_{ep}_n", int(msk.sum())); S.add(f"ep_{ep}_range_mean", float((M0[msk].max(1) - M0[msk].min(1)).mean()))
+    S.add(f"ep_{ep}_opp25", int((((M0[msk] >= 0.25).any(1)) & ((M0[msk] <= -0.25).any(1))).sum()))
+pd.DataFrame(erow).to_csv(RES / "26_episodes.csv", index=False, float_format="%.6g")
 S.add("n_months", T); S.save()
 print(pd.DataFrame(rows).round(3).to_string()); print(yr.head(8).round(3))

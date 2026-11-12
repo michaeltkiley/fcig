@@ -956,33 +956,33 @@ for d_, k_, lab_ in DEF21:
                  f(e21(d_, "1998-2001", "market").point), f(e21(d_, "1998-2001", "frbus").point), f(e21(d_, "1998-2001", "D").point),
                  f(e21(d_, "2022-24", "market").point), f(e21(d_, "2022-24", "frbus").point), f(e21(d_, "2022-24", "D").point)]
 labs_ = ["Announcements", "Market weight, 10-year yield", "Market weight, equity valuation", "Market weight, dollar", "Model reading of the usual response, $b_4'\\psi$ [90\\%]", "Market dollar-over-equity ratio [90\\%]", "Ratio of ratios [90\\%]",
-         "Dollar-minus-equity effect, market (points)", "Dollar-minus-equity effect, model (points)", "Model less market [90\\%]", "Mean $|D|$ over mean $|$market move$|$, 12-month changes"]
+         "Dollar-minus-equity effect, market (points)", "Dollar-minus-equity effect, FRB/US (points, common scale)", "Model less market [90\\%]", "Mean $|D|$ over mean $|$market move$|$, 12-month changes"]
 # main text: the two signals on the same announcements (market weights; readings of the two movements of Figure 1)
 for d_, k_, _ in DEF21[:2]:
     mac(f"sg:{k_}:eqf", c21(f"{d_}_eq_fr"), 3); mac(f"sg:{k_}:usdf", c21(f"{d_}_usd_fr"), 3)
 rows = []
 for i_ in (0, 1, 2, 3, 5):
     rows.append([labs_[i_]] + [cols_[d_][i_] for d_, _, _ in DEF21[:2]])
-rows.append(r"\midrule" + "\n" + r"\multicolumn{3}{l}{\textit{Readings of the two movements of Figure~\ref{fig:two}}} \\")
+rows.append(r"\midrule" + "\n" + r"\multicolumn{3}{l}{\textit{Readings of the two movements of Figure~\ref{fig:four}}} \\")
 rows.append(["Equity valuation falls 5 log points, market (points)"] + [f(c21(f"{d_}_eq_mkt"), 3) for d_, _, _ in DEF21[:2]])
 rows.append(["Dollar appreciates 3.9 log points, market (points)"] + [f(c21(f"{d_}_usd_mkt"), 3) for d_, _, _ in DEF21[:2]])
-rows.append(["Equity valuation falls, model (funds-rate points)"] + [f(c21(f"{d_}_eq_fr"), 3) for d_, _, _ in DEF21[:2]])
-rows.append(["Dollar appreciates, model (funds-rate points)"] + [f(c21(f"{d_}_usd_fr"), 3) for d_, _, _ in DEF21[:2]])
+rows.append(["Equity valuation falls, FRB/US (points, common scale)"] + [f(c21(f"{d_}_eq_fr"), 3) for d_, _, _ in DEF21[:2]])
+rows.append(["Dollar appreciates, FRB/US (points, common scale)"] + [f(c21(f"{d_}_usd_fr"), 3) for d_, _, _ in DEF21[:2]])
 for i_ in (7, 8, 9, 6, 4):
     rows.append([labs_[i_]] + [cols_[d_][i_] for d_, _, _ in DEF21[:2]])
 table("signal", "Two Measures of Policy News on the Same Announcements", "tab:signal", [""] + [l for _, _, l in DEF21[:2]], rows,
-      "The market weights are estimated on the same 253 announcement windows with two measures of policy news: the first principal component of the futures-based factor of \\citet{nakamura2018} (baseline) and the change in the two-year yield. The model weights are those of Table~\\ref{tab:frbus} in both columns, normalized by $b_4'\\psi$ for each measure. Effects are for the movements of Figure~\\ref{fig:two}, market in points of the two-year yield and model in funds-rate points. Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws. Table~\\ref{tab:signalsens} adds the two sample checks.", align="lcc", small=False)
+      "The market weights are estimated on the same 253 announcement windows with two measures of policy news: the first principal component of the futures-based factor of \\citet{nakamura2018} (baseline) and the change in the two-year yield. The model weights are those of Table~\\ref{tab:frbus} in both columns, normalized by $b_4'\\psi$ for each measure. Effects are for the movements of Figure~\\ref{fig:four}, in points of the two-year yield; the FRB/US effects are divided by $b_4'\\psi$, which puts them on the common two-year-yield scale (Table~\\ref{tab:example} gives them in funds-rate points). Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws. Table~\\ref{tab:signalsens} adds the two sample checks.", align="lcc", small=False)
 # appendix: all four definitions, no episodes
 rows = [[l_] + [cols_[d_][i_] for d_, _, _ in DEF21] for i_, l_ in enumerate(labs_)]
 table("signalsens", "Policy-News Definitions and Event Samples", "tab:signalsens", [""] + [l for _, _, l in DEF21], rows,
-      "The market weights are re-estimated for each definition of policy news: the first principal component of the futures-based factor of \\citet{nakamura2018} (baseline), the change in the two-year yield in the same 253 announcement windows, the factor through 2019, and the factor outside the lower-bound years. The model weights are those of Table~\\ref{tab:frbus} in every column, normalized by $b_4'\\psi$ for each definition. Effects are for the movements of Figure~\\ref{fig:two} (equity valuation down 5 log points, dollar up 3.9 log points), market in points of the two-year yield and model in funds-rate points. Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws.", align="lcccc", small=False)
+      "The market weights are re-estimated for each definition of policy news: the first principal component of the futures-based factor of \\citet{nakamura2018} (baseline), the change in the two-year yield in the same 253 announcement windows, the factor through 2019, and the factor outside the lower-bound years. The model weights are those of Table~\\ref{tab:frbus} in every column, normalized by $b_4'\\psi$ for each definition. Effects are for the movements of Figure~\\ref{fig:four} (equity valuation down 5 log points, dollar up 3.9 log points), in points of the two-year yield; the FRB/US effects are divided by $b_4'\\psi$ and so are on the common two-year-yield scale. Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws.", align="lcccc", small=False)
 # history: episode readings under each definition (one home for the episode readings)
 rows = [r"\multicolumn{5}{l}{\textit{1998--2001, average 12-month change}} \\"]
 for i_, l_ in ((11, "Market-implied reading"), (12, "Spending-equivalent reading"), (13, "Difference $D$")): rows.append([l_] + [cols_[d_][i_] for d_, _, _ in DEF21])
 rows.append(r"\midrule" + "\n" + r"\multicolumn{5}{l}{\textit{2022--24, average 12-month change}} \\")
 for i_, l_ in ((14, "Market-implied reading"), (15, "Spending-equivalent reading"), (16, "Difference $D$")): rows.append([l_] + [cols_[d_][i_] for d_, _, _ in DEF21])
 table("epdef", "Episode Readings under Each Definition of Policy News", "tab:epdef", [""] + [l for _, _, l in DEF21], rows,
-      "Averages of the 12-month changes in the three assets relative to $r^*$ over the months of each episode, read with the market weights of each definition (points of the two-year yield) and with the FRB/US weights normalized for the same definition (funds-rate points); $D$ is the difference. Baseline intervals are in the text and in Table~\\ref{tab:epmain}.", align="lcccc", small=False)
+      "Averages of the 12-month changes in the three assets relative to $r^*$ over the months of each episode, read with the market weights of each definition (points of the two-year yield) and with the FRB/US weights normalized for the same definition (points on the common two-year-yield scale); $D$ is the difference. Baseline intervals are in the text and in Table~\\ref{tab:epmain}.", align="lcccc", small=False)
 mac("pr:two:contrast:bp", 100 * abs(float(pd.read_csv(RES / "25_proportionality.csv").pipe(lambda PR_: PR_[(PR_.definition == "two_year") & (PR_.quantity == "contrast_diff")]).diff_vs_baseline.iloc[0])), 0)
 # what variation each signal captures
 sc_ = lambda a_, r_: SB21[(SB21.asset == a_)]
@@ -1089,6 +1089,84 @@ chk(MP25.iloc[0].lo < 0 < MP25.iloc[0].hi and MP25.iloc[0].share_positive > 0.9 
 chk(0.15 < c25("split_resid_var_share") < 0.25 and SP25[(SP25.asset == "eq") & (SP25.component == "two_year_residual")].iloc[0].lo < 0 < SP25[(SP25.asset == "eq") & (SP25.component == "two_year_residual")].iloc[0].hi, "signal: remainder is about one-fifth of the variance of the two-year change and its equity response includes zero")
 chk(0.8 < float(G21[(G21.definition == "baseline") & (G21["sample"] == "12m_changes_1996_2026") & (G21.stat == "ratio")].point.iloc[0]) / float(pd.read_csv(RES / "scalars_24_signal_outcomes.csv", index_col=0)["value"]["nb_market_two_year_vs_baseline"]) < 1.25, "the measure of policy news moves the reading about as much as the choice of weights (0.33 against 0.37)")
 chk(c25("mo_1998-2001_t25_near_zero_n") + c25("mo_1998-2001_t25_opposing_n") == 7 and c25("mo_1998-2001_t25_big_gap_n") == 21 and 0.7 < c25("mo_1998-2001_max_abs_gap") < 0.8, "months: 1998-2001 signs differ in 7 of 48 months, gap of 0.25 in 21; largest gap 0.76 (Jan 1998)")
+# step 26: four calibrations on common assets and units
+SC26 = pd.read_csv(RES / "scalars_26_four_way.csv", index_col=0)["value"]
+def c26(k):
+    v = SC26[k]
+    try: return float(v)
+    except ValueError: return v
+F26 = pd.read_csv(RES / "26_fig1.csv").set_index("portfolio"); H26 = pd.read_csv(RES / "26_history.csv").set_index("stat")
+E26 = pd.read_csv(RES / "26_episodes.csv"); O26 = pd.read_csv(RES / "26_opposing_months.csv")
+PN = {"F": "Market, futures factor", "G": "Published GS weights", "Y": "Market, two-year yield", "B": "FRB/US"}
+PORD = ["F", "G", "Y", "B"]
+for k in PORD:
+    r = F26.loc[k]; mac(f"fw:fig:{k}", r.dollar_over_equity); mac(f"fw:eq:{k}", r.eq_reading, 2); mac(f"fw:usd:{k}", r.usd_reading, 2)
+    for nm_, v_ in (("ten", r.w_ten), ("weq", r.w_eq), ("wusd", r.w_usd)): mac(f"fw:{nm_}:{k}", v_, 3)
+    if k in ("F", "Y"): mac(f"fw:fig:{k}:lo", r.lo); mac(f"fw:fig:{k}:hi", r.hi)
+mac("fw:gsraw", c26("gs_ratio_raw")); mac("fw:wYpsiF", c26("wY_on_psiF"), 3)
+fig, ax = plt.subplots(figsize=(7.0, 3.4))
+xx_ = np.arange(4); wd_ = 0.38
+eqv = [F26.loc[k].eq_reading for k in PORD]; usv = [F26.loc[k].usd_reading for k in PORD]
+b1 = ax.bar(xx_ - wd_ / 2, eqv, wd_, color="#9db7d5", label="Equity valuation falls 5 log points")
+b2 = ax.bar(xx_ + wd_ / 2, usv, wd_, color="#1f4e9c", label="Dollar appreciates 3.9 log points")
+for bb_ in list(b1) + list(b2): ax.text(bb_.get_x() + bb_.get_width() / 2, bb_.get_height() + 0.005, f"{bb_.get_height():.2f}", ha="center", va="bottom", fontsize=7.5)
+for j_, k in enumerate(PORD): ax.text(j_, 0.47, f"ratio {F26.loc[k].dollar_over_equity:.2f}", ha="center", fontsize=8)
+ax.set_xticks(xx_); ax.set_xticklabels(["Market,\nfutures factor", "Published GS\nweights", "Market,\ntwo-year yield", "FRB/US"], fontsize=8)
+ax.set_ylabel("Points on the common two-year-yield scale", fontsize=8); ax.set_ylim(0, 0.52); ax.legend(frameon=False, fontsize=7.5, loc="upper left", ncol=2)
+for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
+figure("fig_four", fig)
+chk(abs(c26("fig1_F") - 1) < 0.05 and abs(c26("fig1_G") - 1) < 0.1 and c26("fig1_Y") > 1.8 and c26("fig1_B") > 2.2, "four-way: futures factor and GS near one, two-year yield and FRB/US above two (Figure 1)")
+# distance matrix
+for a_ in PORD:
+    for b_ in PORD:
+        if a_ >= b_: continue
+k_pair = lambda a_, b_: next(f"{x}{y}" for x, y in ((a_, b_), (b_, a_)) if f"mad_{x}{y}" in H26.index)
+rows = []
+for a_ in PORD:
+    row_ = [PN[a_]]
+    for b_ in PORD:
+        if a_ == b_: row_.append("--"); continue
+        kk_ = k_pair(a_, b_); d_ = H26.loc[f"mad_{kk_}"]; r_ = H26.loc[f"ratio_{kk_}"]
+        row_.append(f"{f(100 * d_.point, 0)} ({f(r_.point)})")
+        mac(f"fw:mad:{kk_}", 100 * d_.point, 0); mac(f"fw:ratio:{kk_}", r_.point); mac(f"fw:ratio:{kk_}:lo", r_.lo); mac(f"fw:ratio:{kk_}:hi", r_.hi)
+        mac(f"fw:mad:{kk_}:lo", 100 * d_.lo, 0); mac(f"fw:mad:{kk_}:hi", 100 * d_.hi, 0)
+    rows.append(row_)
+table("dist", "How Far Apart Are the Four Readings?", "tab:dist", [""] + [PN[k] for k in PORD], rows,
+      "Mean absolute difference between two readings of the same 12-month changes in the three assets relative to $r^*$, monthly, January 1996 to September 2026 (369 months), in basis points of the two-year yield; in parentheses, the same divided by the mean absolute reading of the market index with the futures factor (the common denominator). Every portfolio is normalized to read one on the futures-factor response to policy news, so that the distances reflect relative weights. Published GS weights: the U.S. weights on the 10-year yield, equities and the dollar, applied to the same series, with the GS policy-rate and spread terms held fixed. Intervals over 5,000 bootstrap draws of the announcements are in the text.", align="lcccc", small=False)
+for nm_ in ("madFB_minus_madFY", "madBG_minus_madFB"):
+    r_ = H26.loc[nm_]; mac(f"fw:{nm_.replace('_', '')}", 100 * r_.point, 0); mac(f"fw:{nm_.replace('_', '')}:lo", 100 * r_.lo, 0); mac(f"fw:{nm_.replace('_', '')}:hi", 100 * r_.hi, 0)
+chk(H26.loc["mad_FG"].point < min(H26.loc[f"mad_{k}"].point for k in ("FY", "FB", "YB", "YG", "BG")), "four-way: the closest pair is F-G (cross-method)")
+chk(H26.loc["madFB_minus_madFY"].lo < 0 < H26.loc["madFB_minus_madFY"].hi, "four-way: |B-F| vs |Y-F| ranking not distinguishable")
+# judgments
+J_ = [("all_same_sign", "All four readings have the same sign"), ("any_opposing_t10", "At least two materially opposing readings, $t$ = 10 bp"), ("any_opposing_t25", "At least two materially opposing readings, $t$ = 25 bp"),
+      ("range_ge_t10", "Four-reading range at least 10 bp"), ("range_ge_t25", "Four-reading range at least 25 bp"), ("opp_FB_t25", "Market (futures factor) and FRB/US materially opposing, $t$ = 25 bp")]
+rows = []
+for k_, l_ in J_:
+    r_ = H26.loc[k_]; rows.append([l_, f"{f(100 * r_.point, 1)}", f"[{f(100 * r_.lo, 1)}, {f(100 * r_.hi, 1)}]", f"{int(round(r_.point * c26('n_months')))}"])
+    mac(f"fw:{k_.replace('_', ':')}", 100 * r_.point, 1); mac(f"fw:{k_.replace('_', ':')}:lo", 100 * r_.lo, 1); mac(f"fw:{k_.replace('_', ':')}:hi", 100 * r_.hi, 1); mac(f"fw:{k_.replace('_', ':')}:n", r_.point * c26("n_months"), 0)
+table("four", "How Often the Four Readings Give Different Judgments", "tab:four", ["", "Percent of months", "90\\% interval", "Months"], rows,
+      "Monthly 12-month changes in the three assets relative to $r^*$, January 1996 to September 2026 (369 months, overlapping), read with the four portfolios on the common two-year-yield scale. Materially opposing: at least one reading at least $t$ above zero and at least one at least $t$ below zero. Four-reading range: the largest less the smallest of the four readings. Intervals: 5th and 95th percentiles over 5,000 bootstrap draws of the announcements (market weights and the common response vector redrawn; FRB/US and GS weights fixed), conditional on the observed history.", align="lrrr", small=False)
+mac("fw:nmonths", c26("n_months"), 0); mac("fw:opp25:n", c26("opp25_n"), 0); mac("fw:opp10:n", c26("opp10_n"), 0)
+chk(int(c26("opp25_n")) == int(round(H26.loc["any_opposing_t25"].point * c26("n_months"))), "four-way: listed opposing months equal the computed share")
+# the opposing months at 25 bp
+o25 = O26[np.isclose(O26.threshold, 0.25)]
+rows = []
+for _, r_ in o25.iterrows():
+    rows.append([pd.Period(r_.month, "M").strftime("%b %Y")] + [f(r_[k]) for k in PORD] + [", ".join(PN[x] for x in r_.tight.split(",")), ", ".join(PN[x] for x in r_.easy.split(","))])
+table("opp", "The Months of Materially Opposing Readings", "tab:opp", ["Month"] + [PN[k] for k in PORD] + ["Tighter (at least 25 bp)", "Easier (at least 25 bp)"], rows,
+      "Twelve-month change in financial conditions under each portfolio, on the common two-year-yield scale (points), in the months in which at least one reading is at least 0.25 above zero and at least one at least 0.25 below zero.", align="lrrrrll", small=True)
+nB_alone = int(sum((r_.tight == "B") for _, r_ in o25.iterrows())); nsplit = int(sum((set(r_.tight.split(",")) == {"F", "G"}) for _, r_ in o25.iterrows()))
+mac("fw:opp25:Balone", nB_alone, 0); mac("fw:opp25:FGtight", nsplit, 0)
+chk(nB_alone + nsplit == len(o25), "four-way: the opposing months are FRB/US alone tighter, or F and G tighter")
+_ba = o25[o25.tight == "B"]; _fg = o25[o25.tight.apply(lambda x: set(x.split(",")) == {"F", "G"})]
+chk((_ba.d_usd > 10).all() and (_ba.d_eq > 10).all() and (_ba.d_y10 < 0).all(), "four-way: FRB/US-alone months have the dollar up more than 10 percent, valuations up more than 10 percent and the 10-year yield down")
+chk((_fg.d_eq < -20).all() and (_fg.d_usd < 0).all(), "four-way: F-and-G-tight months have valuations down more than 20 percent and the dollar down")
+# episodes, four readings
+for ep_ in ("1998-2001", "2022-24", "2004-06", "2008-09"):
+    for k in PORD: mac(f"fw:ep:{ep_.replace('-', '')}:{k}", float(E26[(E26.episode == ep_) & (E26.portfolio == k)]["mean"].iloc[0]))
+    mac(f"fw:ep:{ep_.replace('-', '')}:range", c26(f"ep_{ep_}_range_mean")); mac(f"fw:ep:{ep_.replace('-', '')}:opp", c26(f"ep_{ep_}_opp25"), 0)
+for i_ in range(1, 4): mac(f"fw:topyear:{i_}", c26(f"top_year_{i_}"), 0); mac(f"fw:topyear:{i_}:range", c26(f"top_year_{i_}_range"))
+chk(min(float(E26[(E26.episode == "2022-24") & (E26.portfolio == k)]["mean"].iloc[0]) for k in PORD) > 0.9, "four-way: every calibration shows about one point or more of tightening in 2022-24")
 # policy-rate experiment in FRB/US (step 22_policy_shock)
 SC22p = pd.read_csv(RES / "scalars_22_policy_shock.csv", index_col=0)["value"]; p22 = lambda k: float(SC22p[k])
 for k_ in ("ten", "eq", "usd"):
