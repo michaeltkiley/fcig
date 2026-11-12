@@ -1,0 +1,24 @@
+\begin{table}[tbp]\centering\small
+\caption{How Often the Two Readings Differ}\label{tab:months}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+ & 1996--2026 & 1998--2001 & 2022--24 \\
+\midrule
+Months & 369 & 48 & 34 \\
+\midrule
+\multicolumn{4}{l}{\textit{Threshold $t$ = 0.10 point}} \\
+Same sign & 323 (87.5\%) [78, 94] & 41 (85.4\%) [75, 94] & 33 (97.1\%) [76, 100] \\
+Opposite signs, at least one reading within $t$ of zero & 27 (7.3\%) [5, 10] & 3 (6.2\%) [4, 12] & 1 (2.9\%) [0, 12] \\
+Opposite signs, both readings at least $t$ & 19 (5.1\%) [0, 13] & 4 (8.3\%) [0, 17] & 0 (0.0\%) [0, 15] \\
+Readings differ by at least $t$ & 269 (72.9\%) [48, 88] & 41 (85.4\%) [54, 96] & 23 (67.6\%) [35, 91] \\
+\midrule
+\multicolumn{4}{l}{\textit{Threshold $t$ = 0.25 point}} \\
+Same sign & 323 (87.5\%) [78, 94] & 41 (85.4\%) [75, 94] & 33 (97.1\%) [76, 100] \\
+Opposite signs, at least one reading within $t$ of zero & 38 (10.3\%) [6, 17] & 4 (8.3\%) [6, 19] & 1 (2.9\%) [0, 21] \\
+Opposite signs, both readings at least $t$ & 8 (2.2\%) [0, 5] & 3 (6.2\%) [0, 6] & 0 (0.0\%) [0, 3] \\
+Readings differ by at least $t$ & 135 (36.6\%) [10, 70] & 21 (43.8\%) [15, 81] & 6 (17.6\%) [0, 74] \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly 12-month changes in the three market variables (relative to $r^*$), read with the baseline market weights and with the FRB/US weights on the market's scale (points of the two-year yield). Each cell gives the number of months, the share of months, and the 5th to 95th percentile of the share over announcement-bootstrap draws of the market weights (the 12-month changes are held fixed; months overlap). 1996--2026 is 369 months, 1998--2001 is 48 and 2022--24 is 34.\end{flushleft}
+\end{table}

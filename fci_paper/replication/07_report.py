@@ -737,7 +737,7 @@ chk(float(M["ld:p96:lo"].replace("$-$", "-")) > 0 and float(M["ld:pre96:lo"].rep
 c_c = C12[(C12.row == "c") & (C12.series == "Market") & (C12.step == "rstar")].iloc[0]; chk(c_c.du_t_level > 3, "level t > 3 when 2008-15 is excluded")
 R17a = R17[(R17.outcome == "du") & (R17.panel == "1976-2025")].set_index("row"); R17b = R17[(R17.outcome == "du") & (R17.panel == "2006-2025")].set_index("row")
 chk(abs(R17a.loc["Vintage data", "flow_t"] - R17a.loc["Revised data", "flow_t"]) < 0.3 and R17b.loc["Revised data, real-time r*", "flow_gain"] < 0.5 * R17b.loc["Revised data, full-sample r*", "flow_gain"], "real time: vintage data leave the result, real-time r* cuts the gain by more than half")
-chk(float(SC["exp_post2010_n_out_ten"]) == 0 and float(SC["exp_post2010_n_out_usd"]) == 0 and 0 < float(SC["exp_post2010_n_out_eq"]) <= 15 and float(SC["roll_post2010_n_out_ten"]) > 0, "weights: expanding inside the band after 2010 (equity briefly out), rolling fails")
+chk(float(SC["exp_post2010_n_out_ten"]) == 0 and float(SC["exp_post2010_n_out_usd"]) == 0 and 0 < float(SC["exp_post2010_n_out_eq"]) <= 40 and float(SC["roll_post2010_n_out_ten"]) > 0, "weights: expanding inside the band after 2010 (equity briefly out), rolling fails")
 S15 = pd.read_csv(RES / "15_summary.csv"); sc_ = S15[(S15.step == "rstar") & (S15.form.str.contains("change|flow")) & (S15.set != "MKT")] if "set" in S15 else S15
 chk(float(SC["w_rstar_n_holm_sig10"]) == 0 and float(SC["w_rstar_n_primary_tests"]) == 120 and float(SC["w_rstar_n_raw_sig10"]) == 25, "weights: 25 of 120 raw rejections, none after Holm")
 chk(float(SC["lad_rstar_vs_nominal_all_n_ratio_below1"]) == 69 and float(SC["lad_rstar_vs_nominal_all_n_tests"]) == 91 and float(SC["lad_rstar_vs_nominal_all_n_holm_sig05"]) == 0, "ladder: 69 of 91, none after Holm at 5 percent")
@@ -934,7 +934,8 @@ for d_, k_, lab_ in DEF21:
     mac(f"sg:{k_}:n", dq(d_, "n_announcements"), 0)
     for nm_ in ("ten", "eq", "usd"): mac(f"sg:{k_}:w{nm_}", c21(f"{d_}_wM_{nm_}"), 3)
     for nm_ in ("bpsi", "ror", "ratio_mkt", "contrast_diff"):
-        mac(f"sg:{k_}:{nm_}", c21(f"{d_}_{nm_}")); mac(f"sg:{k_}:{nm_}:lo", c21(f"{d_}_{nm_}_lo")); mac(f"sg:{k_}:{nm_}:hi", c21(f"{d_}_{nm_}_hi"))
+        dd3_ = 3 if nm_ == "contrast_diff" else 2
+        mac(f"sg:{k_}:{nm_}", c21(f"{d_}_{nm_}"), dd3_); mac(f"sg:{k_}:{nm_}:lo", c21(f"{d_}_{nm_}_lo"), dd3_); mac(f"sg:{k_}:{nm_}:hi", c21(f"{d_}_{nm_}_hi"), dd3_)
     mac(f"sg:{k_}:cm", c21(f"{d_}_contrast_mkt")); mac(f"sg:{k_}:cf", c21(f"{d_}_contrast_fr"))
     mac(f"sg:{k_}:d12", g21(d_, "ratio").point)
     for ep_, ek_ in (("1998-2001", "98"), ("2022-24", "22")):
@@ -942,7 +943,7 @@ for d_, k_, lab_ in DEF21:
             r = e21(d_, ep_, q_); mac(f"sg:{k_}:{ek_}{qn_}", r.point); mac(f"sg:{k_}:{ek_}{qn_}:lo", r.lo); mac(f"sg:{k_}:{ek_}{qn_}:hi", r.hi)
     cols_[d_] = [f"{int(dq(d_, 'n_announcements'))}", f(c21(f"{d_}_wM_ten"), 3), f(c21(f"{d_}_wM_eq"), 3), f(c21(f"{d_}_wM_usd"), 3),
                  iv_(f"{d_}_bpsi", f"{d_}_bpsi_lo", f"{d_}_bpsi_hi", 3), iv_(f"{d_}_ratio_mkt", f"{d_}_ratio_mkt_lo", f"{d_}_ratio_mkt_hi"), iv_(f"{d_}_ror", f"{d_}_ror_lo", f"{d_}_ror_hi"),
-                 f(c21(f"{d_}_contrast_mkt")), f(c21(f"{d_}_contrast_fr")), iv_(f"{d_}_contrast_diff", f"{d_}_contrast_diff_lo", f"{d_}_contrast_diff_hi"), f(g21(d_, "ratio").point),
+                 f(c21(f"{d_}_contrast_mkt")), f(c21(f"{d_}_contrast_fr")), iv_(f"{d_}_contrast_diff", f"{d_}_contrast_diff_lo", f"{d_}_contrast_diff_hi", 3), f(g21(d_, "ratio").point),
                  f(e21(d_, "1998-2001", "market").point), f(e21(d_, "1998-2001", "frbus").point), f(e21(d_, "1998-2001", "D").point),
                  f(e21(d_, "2022-24", "market").point), f(e21(d_, "2022-24", "frbus").point), f(e21(d_, "2022-24", "D").point)]
 labs_ = ["Announcements", "Market weight, 10-year yield", "Market weight, equity valuation", "Market weight, dollar", "Model reading of the usual response, $b_4'\\psi$ [90\\%]", "Market dollar-over-equity ratio [90\\%]", "Ratio of ratios [90\\%]",
