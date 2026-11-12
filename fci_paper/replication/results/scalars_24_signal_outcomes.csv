@@ -1,7 +1,7 @@
 name,value
-nb_within_market_median,0.2549107780216864
-nb_within_market_lo,0.08185665787610016
-nb_within_market_hi,0.5354491992420837
+nb_within_market_median,0.2482305146398684
+nb_within_market_lo,0.0819562978238982
+nb_within_market_hi,0.5060000052500373
 nb_market_two_year_vs_baseline,0.36609909998105583
 nb_market_to_2019_vs_baseline,0.15014701972035005
 nb_market_no_lower_bound_vs_baseline,0.2823800585142251
