@@ -4,13 +4,14 @@ INPUT SETS (all four portfolios on the SAME series in each set; weights unchange
   rstar      the paper's series: 10-year yield less expected inflation less r*; equities = earnings-yield gap to r* converted to CAPE log points; real broad dollar (100 ln)
   real_cape  10-year yield less expected inflation; equities = 100 ln CAPE (prices over a 10-year average of earnings, the documented GS equity concept); real broad dollar
   gs_inputs  the nearest publicly reproducible GS inputs: nominal 10-year yield; 100 ln CAPE; nominal broad dollar (100 ln)
+  rstar_fixed  the paper's series with r* held at its 1973-2026 mean (isolates the role of movements in r*; added for FP-A51)
 QUESTIONS (fixed before any number was read): for each set, the six pairwise mean absolute distances of the 12-month-change readings (1996-01..data end, bp), the share of months with the same sign
 under all four, materially opposing months (any pair; and F-B only) at 10 and 25 bp, the episode averages (2008-09, 1998-2001, 2022-24); paired draws for F-G less the nearest other pair.
 Announcement bootstrap as in step 26 (REPS_W draws; F, Y, psi_F redrawn; B, G fixed). Writes results/27_*.csv and scalars_27_gs_inputs.csv."""
 import numpy as np, pandas as pd
 from lib import data, cases, indexes as I
 from lib.agree_core import load_frbus, b_persist, ns_arr
-from lib.config import RES, SEED, END, REPS_W
+from lib.config import RES, SEED, START, END, REPS_W
 from lib.report import Scalars
 
 S = Scalars("27_gs_inputs")
@@ -32,7 +33,9 @@ ci = lambda a: (float(np.nanpercentile(a, 5)), float(np.nanpercentile(a, 95)))
 D0 = data.load()
 SETS = {"rstar": cases.inputs(D0, "rstar")[["y10", "equities", "dollar"]],
         "real_cape": cases.inputs(D0, "real")[["y10", "equities", "dollar"]],
-        "gs_inputs": cases.inputs(D0, "nominal")[["y10", "equities", "dollar_gs"]]}
+        "gs_inputs": cases.inputs(D0, "nominal")[["y10", "equities", "dollar_gs"]],
+        "rstar_fixed": cases.inputs(D0.assign(**{"rstar fixed": float(D0["rstar LW"].loc[START:END].mean())}), "rstar", rstar="rstar fixed")[["y10", "equities", "dollar"]]}
+# rstar_fixed: the paper's transformations with r* held at its 1973-2026 mean, which isolates the contribution of movements in r*
 EP = {"2008-09": ("2008-01", "2009-12"), "1998-2001": ("1998-01", "2001-12"), "2022-24": ("2022-03", "2024-12")}
 rows, erows = [], []
 for sname, X in SETS.items():

@@ -41,3 +41,17 @@ gs_inputs,any_opp_t25,0.0704607,0.0433604,0.214092
 gs_inputs,FB_opp_t25,0.0189702,0,0.0921409
 gs_inputs,range_ge_t25,0.783198,0.674797,0.924119
 gs_inputs,FG_minus_nearest,-0.161282,-0.189434,0.366653
+rstar_fixed,mad_FY,0.26839,0.125005,0.41345
+rstar_fixed,mad_FB,0.192826,0.100683,0.450758
+rstar_fixed,mad_FG,0.0686667,0.0492691,0.432506
+rstar_fixed,mad_YB,0.2368,0.0724512,0.52204
+rstar_fixed,mad_YG,0.332761,0.146261,0.600115
+rstar_fixed,mad_BG,0.222776,0.196983,0.251472
+rstar_fixed,mean_abs_F,0.560468,0.499912,0.723046
+rstar_fixed,all_same_sign,0.737127,0.596206,0.780488
+rstar_fixed,any_opp_t10,0.105691,0.0838753,0.268293
+rstar_fixed,FB_opp_t10,0.0271003,0.00542005,0.146341
+rstar_fixed,any_opp_t25,0.0189702,0.00813008,0.130081
+rstar_fixed,FB_opp_t25,0.00271003,0,0.0542005
+rstar_fixed,range_ge_t25,0.658537,0.517615,0.869919
+rstar_fixed,FG_minus_nearest,-0.124159,-0.136083,0.269174

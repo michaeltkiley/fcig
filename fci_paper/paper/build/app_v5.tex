@@ -12,7 +12,6 @@ Let the movements in the three asset prices be $x=\psi s+u$, where $s$ is policy
 
 Observed movements need not be of the form $\psi s+u$ with a single policy factor, and the model's effects need not be those of a movement of the same shape. If all observed movements lay along the single direction $\psi$, every weight vector normalized to price $\psi$ at one would give the same reading on them. The data would then identify the reading along that direction and leave the weights themselves undetermined. In the announcement windows $u$ is not zero, and it is the variation in $u$ that identifies $\Sigma$ and hence the weights. What distinguishes the two weightings in practice is the exposure of the difference in weights to the movements that occur, which Table~\ref{tab:dsize} measures as a ratio to the market move.
 
-\input{../replication/report/tab_dsize}
 
 \section{Construction of the Series}\label{app:steps}
 The three asset prices enter in three forms, each answering a problem of the one before. The headline results use the third.
@@ -31,7 +30,7 @@ The three asset prices enter in three forms, each answering a problem of the one
 \begin{flushleft}\footnotesize\textit{Notes:} Left: expected inflation, Livingston Survey before 1982 and Cleveland Fed model estimates after, shifted to the Cleveland level over 1982--84 and blended over 1982; shaded: the blending year. Right: one-sided, full-sample estimates of $\rs$ from the Laubach--Williams model (baseline) and Kiley's model (check). Percent.\end{flushleft}
 \end{figure}
 
-The transformation matters for levels and not for the difference between the two readings. The ratio of the mean absolute difference to the mean absolute market move in 12-month changes, 1996--2026, is \bl{dz:12m:nom} (interval \bl{dz:12m:nom:lo} to \bl{dz:12m:nom:hi}) with nominal assets and \bl{dz:12m:ratio} relative to $\rs$.
+For the futures-factor and FRB/US pair, the transformation changes the level of the readings more than the relative size of their difference. The ratio of the mean absolute difference to the mean absolute market move in 12-month changes, 1996--2026, is \bl{dz:12m:nom} (interval \bl{dz:12m:nom:lo} to \bl{dz:12m:nom:hi}) with nominal assets and \bl{dz:12m:ratio} relative to $\rs$. Other distances and the frequency of opposing readings do change with the series (Table~\ref{tab:gsin}).
 
 \textbf{Data.} All series are monthly averages from January 1973 to September 2026, from the public sources in Table~\ref{tab:data}. The BBB spread is Moody's Baa yield less the 10-year yield. Months in which the CPI and unemployment releases are missing (October 2025) are interpolated. The unemployment gap is the unemployment rate less the Congressional Budget Office's natural rate, placed in the middle month of each quarter and interpolated. Expected inflation is the Cleveland Fed's estimate at one and ten years from 1982 and the Livingston Survey's 12-month CPI expectation before, shifted to the Cleveland level by the mean difference over 1982--84 and blended over 1982. CAPE is Shiller's series spliced over 1990--92 in logs to the monthly average of a daily series. The real broad dollar is spliced in 2006 in logs, as are the nominal dollar and the S\&P 500.
 
@@ -78,6 +77,11 @@ The weights come from regressions on \bl{n:events} announcements. The weight on 
 \textbf{Proportionality.} Whether the model's dollar-to-equity weight ratio equals the market's is a question about relative weights and not about size. The cross-product $c=w_{B,\$}w_{M,E}-w_{B,E}w_{M,\$}$ is zero if and only if they are equal. Its 90 percent interval excludes zero for the futures factor (\bl{pr:base:cross}, \bl{pr:base:cross:lo} to \bl{pr:base:cross:hi}) and includes it for the two-year yield (\bl{pr:two:cross}, \bl{pr:two:cross:lo} to \bl{pr:two:cross:hi}). The ratio of the model's ratio to the market's, which is \bl{sg:base:ror} for the baseline and \bl{sg:two:ror} for the two-year yield (interval \bl{sg:two:ror:lo} to \bl{sg:two:ror:hi}), tests the same hypothesis on a scale-free ratio, but its denominator, the market's equity effect, is small and imprecise. The two sample checks, announcements through 2019 and outside the lower-bound years, give contrasts of \bl{sg:t19:contrast:diff} (\bl{sg:t19:contrast:diff:lo} to \bl{sg:t19:contrast:diff:hi}) and \bl{sg:nlb:contrast:diff} (\bl{sg:nlb:contrast:diff:lo} to \bl{sg:nlb:contrast:diff:hi}); Appendix~\ref{sec:robother} reports them. The intervals are not adjusted for the number of definitions.
 
 
+\input{../replication/report/tab_signal}
+
+\input{../replication/report/tab_example}
+\FloatBarrier
+
 \subsection{The Spending Weights}\label{sec:spendapp}
 Table~\ref{tab:frbus} compares the market weights with the FRB/US weights. The two sets agree on the 10-year yield, where the FRB/US weight is \bl{ratio:ten} times the market weight. The model puts less weight on equity valuation (\bl{ratio:eq} times) and more on the dollar (\bl{ratio:usd} times). On a policy move the difference does not matter, because the policy part cancels in equation~(\ref{eq:D}). On a departure from the usual response, the model gives a fall in equity prices its estimated effect on output, and the market index treats it as policy-equivalent.
 
@@ -91,6 +95,11 @@ The experiments need two mappings from the market series to the model. The equit
 
 \textbf{A check on the spending side.} The multipliers of the Board's FCI-G offer a check, with the caveat that they share a lineage with FRB/US, so agreement measures robustness within a family. Per 1 percent change in each variable, the FCI-G dollar multiplier is \bl{fg:fcig} times its equity multiplier, against \bl{fg:frbus} in FRB/US (these ratios use the multipliers per 1 percent, not the sizes of the movements of Figure~\ref{fig:four}, for which the FRB/US ratio is \bl{ag:h4:fr}). The ratio of ratios against the market is \bl{fg:base} under the baseline signal and \bl{fg:two} under the two-year yield. FCI-G corroborates the direction under the futures-factor definitions and not under the two-year yield. A genuinely independent check would use another model with documented asset-specific multipliers.
 
+
+\input{../replication/report/tab_frbus}
+
+\input{../replication/report/tab_agree}
+\FloatBarrier
 
 \subsection{Distances, Episodes and Months}\label{sec:fourdetail}
 Table~\ref{tab:dist} gives the six pairwise distances behind Table~\ref{tab:gsin}, Table~\ref{tab:ep4} the average readings in three episodes, Table~\ref{tab:four} the judgments across the four readings with their intervals, and Table~\ref{tab:opp} the months of materially opposing readings. These are rankings of point estimates. Over 5,000 bootstrap draws of the announcements, the futures-factor to GS distance has a 90 percent interval of \bl{fw:ratio:FG:lo} to \bl{fw:ratio:FG:hi} of the typical move. A distance cannot be negative, so when two sets of weights nearly coincide, sampling error in one of them tends to raise the distance; the point estimate sits near the bottom of its interval for that reason. The interval for the FRB/US to GS distance, \bl{fw:ratio:BG:lo} to \bl{fw:ratio:BG:hi}, is narrow because neither set of weights is estimated here; only the common normalization varies. The paired difference between the futures-factor to FRB/US distance and the distance between the two market calibrations is \bl{fw:madFBminusmadFY} basis points (\bl{fw:madFBminusmadFY:lo} to \bl{fw:madFBminusmadFY:hi}): the two are comparable in this sample, and the data cannot rank them.
@@ -109,23 +118,7 @@ Table~\ref{tab:dist} gives the six pairwise distances behind Table~\ref{tab:gsin
 
 On common draws, the futures-factor to GS distance less the nearest other distance has an interval that includes zero under each of the three sets of series of Table~\ref{tab:gsin} (\bl{gi:rstar:fgnear:lo} to \bl{gi:rstar:fgnear:hi} basis points on the paper's series), so the identity of the closest pair is a point-estimate ranking.
 
-\subsection{The Futures-Factor and FRB/US Pair in Two Episodes}\label{sec:pairep}
-Figure~\ref{fig:paths} follows the pair month by month in 1998--2001 and 2022--24, with the contribution of each asset to the difference $D$ between the FRB/US reading and the market reading. \textbf{1998--2001.} For the pair of the futures-factor market index and FRB/US, averaged over the episode, the market reading of the 12-month changes was slightly easing, at \bl{ce:1998:dm} points (interval \bl{ce:1998:dm:lo} to \bl{ce:1998:dm:hi}), and the FRB/US reading was slightly tightening, at \bl{ce:1998:fr} (\bl{ce:1998:fr:lo} to \bl{ce:1998:fr:hi}). The difference of \bl{ce:1998:D} (\bl{ce:1998:D:lo} to \bl{ce:1998:D:hi}) is a point estimate; its interval includes zero, and so do the intervals for the separate contributions of the dollar (\bl{ce:1998:cusd:lo} to \bl{ce:1998:cusd:hi}) and of equities (\bl{ce:1998:ceq:lo} to \bl{ce:1998:ceq:hi}). The signs differ in the averages and in \bl{ce:1998:opp} of the \bl{ce:1998:nmo} months, and the monthly paths show what the average conceals (Figure~\ref{fig:paths}). The difference was largest in the 12-month changes ending in the first half of 1998, at \bl{mo:19982001:maxgap} points in January 1998, because those changes include the dollar's appreciation and the rise in valuations of 1997, and the model gives the dollar more weight and equities less. It shrank through 1999 and 2000 and turned negative in the second half of 2001 as valuations fell. The disagreement was therefore mostly about size and not direction: the signs differ in only \bl{ce:1998:opp} of \bl{ce:1998:nmo} months, but the readings differ by at least a quarter point in \bl{ce:1998:big}. The dollar appreciated by \bl{ce:1998:xusd} log points a year on average, which adds \bl{ce:1998:cusd} to $D$; equity valuations rose by \bl{ce:1998:xeq} log points a year, which adds \bl{ce:1998:ceq}. Unemployment rose by \bl{ce:1998:real} points over the following year, against forecasts of \bl{ce:1998:fcm} from the market reading and \bl{ce:1998:fcf} from the FRB/US reading.
-
-
-
-\textbf{2022--24.} For the futures-factor pair, the two readings of the 12-month change averaged \bl{ce:2022:dm} points (interval \bl{ce:2022:dm:lo} to \bl{ce:2022:dm:hi}) and \bl{ce:2022:fr} (\bl{ce:2022:fr:lo} to \bl{ce:2022:fr:hi}). Both movements tightened conditions. Equity valuations fell by \bl{abs:ce:2022:xeq} log points a year, and the dollar appreciated by \bl{ce:2022:xusd}. Because the model gives equities less weight than the event study, the fall in equities makes the FRB/US reading less tight than the market one, and contributes \bl{ce:2022:ceq} to $D$. Because the model gives the dollar more weight, the appreciation makes the FRB/US reading tighter, and contributes \bl{ce:2022:cusd}. The two contributions to the disagreement cancel, so that $D$ averages \bl{ce:2022:D} (\bl{ce:2022:D:lo} to \bl{ce:2022:D:hi}), although each asset tightened conditions. The monthly paths show that the cancellation is not exact at every date: $D$ ranged from about $-0.3$ to $+0.5$ within the episode, and it exceeded 0.25 in absolute value in \bl{ce:2022:big} of \bl{ce:2022:nmo} months. The baseline cancellation is specific to that definition of policy news: with the two-year yield as the signal, $D$ is \bl{sg:two:22D} and the market reading is higher, and without the lower-bound years $D$ is \bl{sg:nlb:22D} (Appendix~\ref{sec:robother}). A policymaker would have described a sizable tightening under every one of them. The full indexes differ in average level by \bl{br:ep2022:gap} points (interval \bl{br:ep2022:lo} to \bl{br:ep2022:hi}), with the equity weights (\bl{br:ep2022:eq}) and the dollar (\bl{br:ep2022:usd}) both contributing, and that difference does not affect the readings of the year's tightening. Unemployment rose by \bl{ce:2022:real} points over the following year, against forecasts of \bl{ce:2022:fcm} from the market reading and \bl{ce:2022:fcf} from the FRB/US reading. Both weightings overpredicted the rise, so the weights do not explain the miss.
-
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\textwidth]{../replication/report/fig_paths.pdf}
-\caption{Month by Month: Readings and the Sources of Their Difference}
-\label{fig:paths}
-\begin{flushleft}\footnotesize\textit{Notes:} Top: 12-month change of the market and FRB/US readings on the same three assets relative to $r^*$. Bottom: each asset's contribution to $D$, the weight difference times its 12-month change, and $D$ itself (dashed). The shaded area is the episode.\end{flushleft}
-\end{figure}
 \FloatBarrier
-
 \section{The Market and FRB/US Pair}\label{app:pair}
 \subsection{Across Horizons}\label{sec:horizons}
 The pair that the comparison usually features, the futures-factor market index and FRB/US, can be followed at horizons from an announcement window to a year. On the 253 announcements, with the weights re-estimated without the event being evaluated, the ratio in intraday windows is \bl{dz:ev:ratio} (interval \bl{dz:ev:ratio:lo} to \bl{dz:ev:ratio:hi}), and the 90th percentile of the difference is \bl{dz:ev:p90} against a mean absolute market move of \bl{dz:ev:move}. These are the windows in which the weights are estimated, with each event held out.
@@ -133,6 +126,8 @@ The pair that the comparison usually features, the futures-factor market index a
 The ratio is larger in daily data than in the intraday windows and does not shrink at longer horizons. On daily changes of the same three assets, 1996--2026, it is \bl{dl:k1:ann} on announcement days and \bl{dl:k1:oth} on other days; at one week it is \bl{dl:k5:ann} and \bl{dl:k5:oth}, and at 22 trading days \bl{dl:k22:ann} and \bl{dl:k22:oth} (Table~\ref{tab:daily}). No difference between announcement and other windows is distinguishable from zero. Announcement days contain a great deal of financial news besides the announcement. The fitted response to policy news is a particular combination of asset prices, and the difference over a whole announcement day looks like the difference on other days.
 
 \input{../replication/report/tab_daily}
+
+\input{../replication/report/tab_dsize}
 
 For windows that end on any day, the ratio is \bl{dl:lad1}, \bl{dl:lad5}, \bl{dl:lad22}, \bl{dl:lad66} and \bl{dl:lad252} at 1, 5, 22, 66 and 252 trading days. A window of 22 or more days contains announcements in any case; removing the moves on announcement days gives \bl{dl:ex1}, \bl{dl:ex5}, \bl{dl:ex22}, \bl{dl:ex66} and \bl{dl:ex252}, within 0.02 of those. In 12-month changes of the monthly series, the ratio is \bl{dz:12m:ratio} (interval \bl{dz:12m:ratio:lo} to \bl{dz:12m:ratio:hi}), and the difference exceeds 0.25 in \bl{dz:12m:sh25} percent of months (Figure~\ref{fig:D}). The months overlap, so runs in this series are not independent evidence of persistence. The statistic is a sample summary with wide intervals. Roughly 0.25 to 0.33 describes the baseline across horizons from a day to a year, and the ratio is 0.36 to 0.42 under the other definitions of policy news (Table~\ref{tab:epdef}).
 
@@ -150,7 +145,7 @@ The intraday and daily figures do not isolate a source for the gap between 0.19 
 
 
 
-\subsection{Months, Episodes and Levels}\label{sec:pairmonths}
+\subsection{Months, Episodes and Levels}\label{sec:pairmonths}\label{sec:pairep}
 Table~\ref{tab:months} counts the months in which the two readings of the pair agree or differ, Table~\ref{tab:epmain} gives their readings of three episodes in 12-month changes and in levels, and Table~\ref{tab:bridge} accounts for the difference in average levels between the full FRB/US index and the market index, which also differ in coverage (the policy rate, spreads and house prices) and centering.
 
 \input{../replication/report/tab_months}
@@ -158,6 +153,24 @@ Table~\ref{tab:months} counts the months in which the two readings of the pair a
 \input{../replication/report/tab_epmain}
 
 \input{../replication/report/tab_bridge}
+
+Figure~\ref{fig:paths} follows the pair month by month in 1998--2001 and 2022--24, with the contribution of each asset to the difference $D$ between the FRB/US reading and the market reading. \textbf{1998--2001.} For the pair of the futures-factor market index and FRB/US, averaged over the episode, the market reading of the 12-month changes was slightly easing, at \bl{ce:1998:dm} points (interval \bl{ce:1998:dm:lo} to \bl{ce:1998:dm:hi}), and the FRB/US reading was slightly tightening, at \bl{ce:1998:fr} (\bl{ce:1998:fr:lo} to \bl{ce:1998:fr:hi}). The difference of \bl{ce:1998:D} (\bl{ce:1998:D:lo} to \bl{ce:1998:D:hi}) is a point estimate; its interval includes zero, and so do the intervals for the separate contributions of the dollar (\bl{ce:1998:cusd:lo} to \bl{ce:1998:cusd:hi}) and of equities (\bl{ce:1998:ceq:lo} to \bl{ce:1998:ceq:hi}). The signs differ in the averages and in \bl{ce:1998:opp} of the \bl{ce:1998:nmo} months, and the monthly paths show what the average conceals (Figure~\ref{fig:paths}). The difference was largest in the 12-month changes ending in the first half of 1998, at \bl{mo:19982001:maxgap} points in January 1998, because those changes include the dollar's appreciation and the rise in valuations of 1997, and the model gives the dollar more weight and equities less. It shrank through 1999 and 2000 and turned negative in the second half of 2001 as valuations fell. The disagreement was therefore mostly about size and not direction: the signs differ in only \bl{ce:1998:opp} of \bl{ce:1998:nmo} months, but the readings differ by at least a quarter point in \bl{ce:1998:big}. The dollar appreciated by \bl{ce:1998:xusd} log points a year on average, which adds \bl{ce:1998:cusd} to $D$; equity valuations rose by \bl{ce:1998:xeq} log points a year, which adds \bl{ce:1998:ceq}. Unemployment rose by \bl{ce:1998:real} points over the following year, against forecasts of \bl{ce:1998:fcm} from the market reading and \bl{ce:1998:fcf} from the FRB/US reading.
+
+
+
+\textbf{2022--24.} For the futures-factor pair, the two readings of the 12-month change averaged \bl{ce:2022:dm} points (interval \bl{ce:2022:dm:lo} to \bl{ce:2022:dm:hi}) and \bl{ce:2022:fr} (\bl{ce:2022:fr:lo} to \bl{ce:2022:fr:hi}). Both movements tightened conditions. Equity valuations fell by \bl{abs:ce:2022:xeq} log points a year, and the dollar appreciated by \bl{ce:2022:xusd}. Because the model gives equities less weight than the event study, the fall in equities makes the FRB/US reading less tight than the market one, and contributes \bl{ce:2022:ceq} to $D$. Because the model gives the dollar more weight, the appreciation makes the FRB/US reading tighter, and contributes \bl{ce:2022:cusd}. The two contributions to the disagreement cancel, so that $D$ averages \bl{ce:2022:D} (\bl{ce:2022:D:lo} to \bl{ce:2022:D:hi}), although each asset tightened conditions. The monthly paths show that the cancellation is not exact at every date: $D$ ranged from about $-0.3$ to $+0.5$ within the episode, and it exceeded 0.25 in absolute value in \bl{ce:2022:big} of \bl{ce:2022:nmo} months. The baseline cancellation is specific to that definition of policy news: with the two-year yield as the signal, $D$ is \bl{sg:two:22D} and the market reading is higher, and without the lower-bound years $D$ is \bl{sg:nlb:22D} (Appendix~\ref{sec:robother}). A policymaker would have described a sizable tightening under every one of them. The full indexes differ in average level by \bl{br:ep2022:gap} points (interval \bl{br:ep2022:lo} to \bl{br:ep2022:hi}), with the equity weights (\bl{br:ep2022:eq}) and the dollar (\bl{br:ep2022:usd}) both contributing, and that difference does not affect the readings of the year's tightening. Unemployment rose by \bl{ce:2022:real} points over the following year, against forecasts of \bl{ce:2022:fcm} from the market reading and \bl{ce:2022:fcf} from the FRB/US reading. Both weightings overpredicted the rise, so the weights do not explain the miss.
+
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{../replication/report/fig_paths.pdf}
+\caption{Month by Month: Readings and the Sources of Their Difference}
+\label{fig:paths}
+\begin{flushleft}\footnotesize\textit{Notes:} Top: 12-month change of the market and FRB/US readings on the same three assets relative to $r^*$. Bottom: each asset's contribution to $D$, the weight difference times its 12-month change, and $D$ itself (dashed). The shaded area is the episode.\end{flushleft}
+\end{figure}
+
+
+
 
 \subsection{Trade-Sensitive and Domestic Expenditure}\label{sec:expend}
 Section~\ref{sec:channels} traced the model's weights to channels: consumption and investment for equities, net exports for the dollar. If the weights describe those channels, composition might predict the components separately even where it does not predict the aggregates. I wrote two predictions from the channel logic before estimating the components: the coefficient on $D$ is negative for the contribution of net exports to growth over the next four quarters (P1), and it is larger for consumption and private investment than for net exports (P2). The aggregate nulls of the preceding subsections were already known, so the exercise is a check on a prediction and not a clean pre-registered test. Table~\ref{tab:expend} reports both.
@@ -187,16 +200,6 @@ Persistence changes how much tightening a policy move represents. The model's re
 
 
 \FloatBarrier
-\subsection{Tables of the Weights}\label{sec:wtables}
-\input{../replication/report/tab_signal}
-
-\input{../replication/report/tab_example}
-
-\input{../replication/report/tab_frbus}
-
-\input{../replication/report/tab_agree}
-\FloatBarrier
-
 \section{Sensitivity}\label{app:robust}
 \subsection{Other Policy-News Series and Event Samples}\label{sec:robother}
 Table~\ref{tab:signalsens} gives the weights, the readings of the two movements of Figure~\ref{fig:four} and the contrasts under the two measures of policy news and the two sample checks, and Table~\ref{tab:wvar} re-estimates the weights with the two-year yield as the policy news, with announcements through 2019, and without the lower-bound years. The equity weight is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} against \bl{w:eq} in the baseline, and the conclusions about composition rest on the model's ratio of dollar to equity effects, not on any one set of market weights.

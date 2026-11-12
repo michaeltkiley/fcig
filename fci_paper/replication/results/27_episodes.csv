@@ -35,3 +35,15 @@ gs_inputs,2022-24,F,0.861816
 gs_inputs,2022-24,Y,1.11988
 gs_inputs,2022-24,B,0.907273
 gs_inputs,2022-24,G,0.792886
+rstar_fixed,2008-09,F,0.838773
+rstar_fixed,2008-09,Y,0.221175
+rstar_fixed,2008-09,B,0.477488
+rstar_fixed,2008-09,G,0.972821
+rstar_fixed,1998-2001,F,0.131266
+rstar_fixed,1998-2001,Y,0.1024
+rstar_fixed,1998-2001,B,0.301748
+rstar_fixed,1998-2001,G,0.16047
+rstar_fixed,2022-24,F,0.683343
+rstar_fixed,2022-24,Y,0.901343
+rstar_fixed,2022-24,B,0.756372
+rstar_fixed,2022-24,G,0.629355
