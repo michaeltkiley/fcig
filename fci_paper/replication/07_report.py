@@ -484,6 +484,11 @@ Q9 = pd.read_csv(RES / "09_quantile.csv"); q = Q9[(Q9.tau == 0.1) & (Q9.series =
 mac("lf:q10:b", q.b_flw); mac("lf:q10:lo", q.lo_flw); mac("lf:q10:hi", q.hi_flw)
 q = Q9[(Q9.tau == 0.1) & (Q9.series == "NFCI|given")].iloc[0]; mac("lf:q10:nfci:b", q.b_lvl); mac("lf:q10:nfci:lo", q.lo_lvl); mac("lf:q10:nfci:hi", q.hi_lvl)
 
+S15 = pd.read_csv(RES / "15_summary.csv"); S15r = S15[(S15.step == "rstar") & S15.set.isin(["FRBUS3", "PC1", "EQ", "ACT"])]
+for fm_ in ("level", "change"):
+    v_ = (S15r[S15r.form == fm_].geo_mse_ratio_to_mkt - 1) * 100
+    mac(f"wt:{fm_}:min", float(v_.min()), 0); mac(f"wt:{fm_}:max", float(v_.max()), 0)
+mac("lf:q50:b", float(Q9[(Q9.tau == 0.5) & (Q9.series == "Market|rstar")].iloc[0].b_flw))
 # NFCI complement
 J = pd.read_csv(RES / "10_joint_lp.csv")
 rows = []
