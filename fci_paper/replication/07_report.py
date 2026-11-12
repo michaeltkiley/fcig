@@ -70,7 +70,8 @@ for k, v in SC.items():
     if isinstance(v, str):
         M[key] = v
     else:
-        M[key] = f(v, 3 if abs(v) < 0.1 and v != 0 else 2); M["abs:" + key] = f(abs(v), 3 if abs(v) < 0.1 and v != 0 else 2)
+        d_ = 0 if (float(v).is_integer() and abs(v) >= 2) else (3 if abs(v) < 0.1 and v != 0 else 2)
+        M[key] = f(v, d_); M["abs:" + key] = f(abs(v), d_)
 M["n:events"] = f"{int(SC['n_events'])}"
 for key, r in V.iterrows():
     k = key.replace("_", ":")
@@ -378,6 +379,234 @@ order = sorted(WV.index, key=lambda k: abs(WV.loc[k, "w_eq"]))
 chk(all(wvl[order[i]] > wvl[order[i + 1]] for i in range(3)), "readings fall as the equity weight rises (four weight sets)")
 chk(SC["rstar_lw_latest"] < D["rstar LW"].loc["1973-01":"2026-09"].mean(), "r* now below its 1973-2026 mean")
 chk(SC["einf_1981"] > 8 and SC["einf_latest"] < 3 and SC["rstar_lw_pre"] > 2.5 > 1 > SC["rstar_lw_post"] - 0.2, "inflation expectations and r* movements quoted in Section 3.1")
+
+# ------------------------------------------------------------------ exhibits of the stance restructuring (steps 08-17)
+I8 = pd.read_csv(RES / "08_insample.csv"); O8 = pd.read_csv(RES / "08_oos.csv")
+def pick(df, **kw):
+    m = pd.Series(True, index=df.index)
+    for k, v in kw.items():
+        m &= df[k] == v
+    return df[m].iloc[0]
+OUT_LAB = {"du": "Unemployment gap", "pay": "Payroll growth", "pi": "Core inflation"}
+rows = []
+for outcome, index, form, per, lab in (("du", "market", "level", "full", "Market index, level"), ("du", "market", "flow", "full", "Market index, flow"), ("du", "market", "mixed", "full", "Market index, flow, with the gap in levels"),
+                                        ("du", "gs", "flow", "full", "GS, flow"), ("du", "frbus", "flow", "full", "FRB/US index, flow"),
+                                        ("du", "market", "flow", "zlb", "Market index, flow, 2009--15"), ("du", "market", "flow", "post", "Market index, flow, 2022--26"),
+                                        ("pay", "market", "flow", "full", "Market index, flow"), ("pay", "market", "mixed", "full", "Market index, flow, with the gap in levels"),
+                                        ("pi", "market", "flow", "full", "Market index, flow")):
+    a = pick(I8, outcome=outcome, step="rstar", index=index, form=form, period=per); b = pick(O8, outcome=outcome, step="rstar", index=index, form=form, period=per)
+    if not rows or rows[-1][0] != OUT_LAB[outcome] and (outcome != "du" or not any(r[0] == OUT_LAB["du"] for r in rows if isinstance(r, list))):
+        pass
+    rows.append([f"{OUT_LAB[outcome]}: {lab}", f(a.gain_idx_given_ff), f(a.t_idx_both, 1), f(a.gain_ff_given_idx), f(b.rmse_idx_given_ff), f(b.cw_idx_given_ff, 1) if per == "full" else "--"])
+table("stance", "Does the Index Add to the Funds-Rate Gap?", "tab:stance", ["", "Gain of index", "$t$ of index", "Gain of gap", "RMSE ratio", "Clark--West"], rows,
+      "Local projections of the 12-month change in the unemployment gap, 12-month payroll growth and 12-month core inflation on own lags, the funds-rate gap (effective funds rate less one-year expected inflation less $r^*$) and the index relative to $r^*$, 1976--2026 (2020 to March 2021 excluded; HAC standard errors, 18 lags). Gain of index (of gap): increase in adjusted $R^2$ from adding the index (the gap) to a model that has the other. Level: both in levels; flow: both as 12-month changes; mixed: gap in levels, index as 12-month change. RMSE ratio and Clark--West: recursive out-of-sample forecasts from 1995 of the model with both variables relative to the model with the gap alone (below 1: the index helps; Clark--West above 1.3 is significant at 10 percent); the 2009--15 and 2022--26 rows are in sample.")
+E8 = pd.read_csv(RES / "08_episodes.csv"); T8 = pd.read_csv(RES / "08_today.csv")
+rows = []
+for ep, lab in (("conundrum 2004-06..2006-06", "June 2004 to June 2006"), ("tightening 2022-03..2024-12", "March 2022 to December 2024"), ("2022-03..2023-12", "March 2022 to December 2023")):
+    def g(rs, ser):
+        r = E8[(E8.rstar == rs) & (E8.episode == ep) & (E8.series == ser)]
+        return r.iloc[0] if len(r) else None
+    m, mk, gs_, fr = g("LW", "market"), g("Kiley", "market"), g("LW", "gs"), g("LW", "frbus")
+    rows.append([lab, f(m.ffg), f(m.index_point), f"{f(m.diff_point)} [{f(m.diff_lo)}, {f(m.diff_hi)}]", f"{f(mk.diff_point)} [{f(mk.diff_lo)}, {f(mk.diff_hi)}]", f(gs_.diff_point), f(fr.diff_point)])
+tl = {k: T8[(T8.rstar == k) & (T8.series == s)].iloc[0] for k, s in (("mk", "market"),) for k in ("LW", "Kiley")} if False else None
+tm, tmk = T8[(T8.rstar == "LW") & (T8.series == "market")].iloc[0], T8[(T8.rstar == "Kiley") & (T8.series == "market")].iloc[0]
+tg, tf = T8[(T8.rstar == "LW") & (T8.series == "gs")].iloc[0], T8[(T8.rstar == "LW") & (T8.series == "frbus")].iloc[0]
+rows.append(["September 2026", f(tm.ffg), f(tm["index"]), f"{f(tm['diff'])} [{f(tm.diff_lo)}, {f(tm.diff_hi)}]", f"{f(tmk['diff'])} [{f(tmk.diff_lo)}, {f(tmk.diff_hi)}]", f(tg["diff"]), f(tf["diff"])])
+table("episodes_stance", "The Index Relative to the Funds-Rate Gap in Three Episodes and Today", "tab:stancepisodes", ["", "Funds-rate gap", "Index", "Index less gap [90\\%]", "Kiley $r^*$ [90\\%]", "GS less gap", "FRB/US less gap"], rows,
+      "Averages over the window of the funds-rate gap and the market index relative to $r^*$ (Laubach--Williams), each less its 1973--2026 mean; index less gap is in points (the index in two-year-yield points, the gap in funds-rate points). The 90 percent interval takes the 5th and 95th percentiles over " + f"{REPS}" + " bootstrap samples of the announcements (the weights); the Kiley column replaces $r^*$ in the index and in the gap. GS and FRB/US: point estimates only (their weights are held fixed).")
+mac("st:today:wedge", tm["diff"]); mac("st:today:lo", tm.diff_lo); mac("st:today:hi", tm.diff_hi); mac("st:today:ffg", tm.ffg); mac("st:today:index", tm["index"]); mac("st:today:share", float(tm.share_draws_diff_neg) * 100, 0)
+for i_, e_ in enumerate(("conundrum 2004-06..2006-06", "tightening 2022-03..2024-12", "2022-03..2023-12")):
+    r = E8[(E8.rstar == "LW") & (E8.episode == e_) & (E8.series == "market")].iloc[0]; rk = E8[(E8.rstar == "Kiley") & (E8.episode == e_) & (E8.series == "market")].iloc[0]
+    for c_ in ("diff_point", "diff_lo", "diff_hi", "ffg", "index_point"):
+        mac(f"st:ep{i_}:{c_}", float(r[c_]))
+    mac(f"st:ep{i_}:kiley", float(rk.diff_point)); mac(f"st:ep{i_}:share", float(r.share_draws_diff_neg) * 100, 0)
+    mac(f"st:ep{i_}:months", float(r.n_months), 0)
+for k_, v_ in (("level", "level"), ("flow", "flow"), ("mixed", "mixed")):
+    a = pick(I8, outcome="du", step="rstar", index="market", form=k_, period="full"); b = pick(O8, outcome="du", step="rstar", index="market", form=k_, period="full")
+    for c_, n_ in (("gain_idx_given_ff", "gain"), ("gain_ff_given_idx", "gainff"), ("t_idx_both", "t"), ("t_ff_alone", "tff"), ("t_idx_alone", "tidx"), ("r2a_ff", "r2ff"), ("r2a_idx", "r2idx")):
+        mac(f"st:du:{k_}:{n_}", float(a[c_]))
+    mac(f"st:du:{k_}:cw", float(b.cw_idx_given_ff)); mac(f"st:du:{k_}:rmse", float(b.rmse_idx_given_ff)); mac(f"st:du:{k_}:noos", float(b.n_oos), 0)
+for per_ in ("zlb", "post"):
+    a = pick(I8, outcome="du", step="rstar", index="market", form="flow", period=per_); mac(f"st:du:{per_}:t", float(a.t_idx_both)); mac(f"st:du:{per_}:n", float(a.n), 0)
+    b = pick(O8, outcome="du", step="rstar", index="market", form="flow", period=per_); mac(f"st:du:{per_}:cw", float(b.cw_idx_given_ff)); mac(f"st:du:{per_}:rmseff", float(b.rmse_ff_vs_own))
+    bm = pick(O8, outcome="du", step="rstar", index="market", form="mixed", period=per_); mac(f"st:du:{per_}:cwm", float(bm.cw_idx_given_ff))
+for o_, k_ in (("pay", "flow"), ("pay", "mixed"), ("pi", "flow")):
+    a = pick(I8, outcome=o_, step="rstar", index="market", form=k_, period="full"); b = pick(O8, outcome=o_, step="rstar", index="market", form=k_, period="full")
+    mac(f"st:{o_}:{k_}:gain", float(a.gain_idx_given_ff)); mac(f"st:{o_}:{k_}:t", float(a.t_idx_both)); mac(f"st:{o_}:{k_}:cw", float(b.cw_idx_given_ff))
+for ix_ in ("gs", "frbus"):
+    a = pick(I8, outcome="du", step="rstar", index=ix_, form="flow", period="full"); b = pick(O8, outcome="du", step="rstar", index=ix_, form="flow", period="full")
+    mac(f"st:du:{ix_}:gain", float(a.gain_idx_given_ff)); mac(f"st:du:{ix_}:cw", float(b.cw_idx_given_ff)); mac(f"st:du:{ix_}:t", float(a.t_idx_both))
+P8 = pd.read_csv(RES / "08_primary.csv"); P8 = P8[P8.outcome == "du"].set_index("form")
+for k_ in ("flow", "mixed"):
+    mac(f"st:prim:{k_}:holm", float(P8.loc[k_, "p_holm"]), 2); mac(f"st:prim:{k_}:p", float(P8.loc[k_, "p"]), 3)
+for step_ in ("nominal", "real"):
+    a = pick(I8, outcome="du", step=step_, index="market", form="flow", period="full"); mac(f"st:du:{step_}:t", float(a.t_idx_both)); mac(f"st:du:{step_}:gain", float(a.gain_idx_given_ff))
+
+# figure: the wedge
+DS = pd.read_csv(RES / "08_diff_series.csv", index_col=0); DS.index = pd.PeriodIndex(DS.index, freq="M"); tt = DS.index.to_timestamp()
+fig, ax = plt.subplots(2, 1, figsize=(7.5, 5.6), sharex=True)
+ax[0].plot(tt, DS.ffg, color=COLORS["fcig"], lw=1.2, label="Funds-rate gap (real funds rate less $r^*$)"); ax[0].plot(tt, DS.market, color=COLORS["market"], lw=1.4, label="Market index relative to $r^*$")
+ax[0].set_title("Both measures of the stance, each less its 1973--2026 mean", loc="left"); axes(ax[0], "percentage points")
+ax[1].fill_between(tt, DS.diff_lo, DS.diff_hi, color=COLORS["market"], alpha=0.18, lw=0, label="90% interval (weights)"); ax[1].plot(tt, DS["diff"], color=COLORS["market"], lw=1.4, label="Index less funds-rate gap")
+for a_, b_ in (("2004-06-01", "2006-06-30"), ("2022-03-01", "2024-12-31")):
+    for x_ in ax:
+        x_.axvspan(pd.Timestamp(a_), pd.Timestamp(b_), color="#eeeeee", lw=0, zorder=0)
+ax[1].set_title("The wedge", loc="left"); axes(ax[1], "percentage points")
+figure("fig_wedge", fig)
+
+# level versus flow
+M9 = pd.read_csv(RES / "09_mean.csv"); G9 = pd.read_csv(RES / "09_granger.csv").set_index("series")
+G9i = G9
+SER = [("Market|nominal", "Market index, nominal"), ("Market|real", "Market index, real"), ("Market|rstar", "Market index, relative to $r^*$"), ("GS|rstar", "GS, relative to $r^*$"),
+       ("FRB/US|rstar", "FRB/US index, relative to $r^*$"), ("FCI-G|rstar", "FCI-G, relative to $r^*$"), ("NFCI|given", "NFCI"), ("ANFCI|given", "ANFCI")]
+rows = []
+for k_, lab in SER:
+    a = M9[(M9.outcome == "du") & (M9.series == k_)].iloc[0]; b = M9[(M9.outcome == "pay") & (M9.series == k_)].iloc[0]
+    rows.append([lab, f(a.t_lvl_both, 1), f(a.t_flw_both, 1), f(a.gain_lvl), f(a.gain_flw), f(b.t_lvl_both, 1), f(b.t_flw_both, 1)])
+table("levelflow", "Level or Flow? Unemployment and Payrolls a Year Ahead", "tab:levelflow", ["", "$t$ level", "$t$ flow", "Gain level", "Gain flow", "$t$ level", "$t$ flow"], rows,
+      "Local projections of the 12-month change in the unemployment gap (first four columns) and of 12-month payroll growth (last two) on own lags, the level of the index and its 12-month change entered together, 1976--2026 (HAC standard errors, 18 lags); gain: increase in adjusted $R^2$ of the index alone over own lags. FCI-G is a flow by construction: its reading is entered as the level and its change as the flow.")
+rows = []
+for k_, lab in [s for s in SER if s[0] in ("Market|nominal", "Market|rstar", "GS|rstar", "FRB/US|rstar", "FCI-G|rstar", "NFCI|given", "ANFCI|given")]:
+    r = G9.loc[k_]
+    rows.append([lab, f"{r.p_all12:.1e}".replace("e-0", "e$-$0").replace("e-", "e$-$") if r.p_all12 < 1e-3 else f"{r.p_all12:.3f}", f(r.p_sum, 2), f"{r.p_diff11:.1e}".replace("e-0", "e$-$0").replace("e-", "e$-$") if r.p_diff11 < 1e-3 else f"{r.p_diff11:.3f}"])
+table("granger", "What the Granger Test on the Level Picks Up", "tab:granger", ["", "All 12 lags", "Current level (sum of lags)", "11 changes"], rows,
+      "$p$-values of tests in the unemployment equation of the two-variable VAR (12 lags, 1973--2026): the 12 lags of the index jointly (the Granger test); their sum, which is the coefficient on the current level once the lags are rewritten as the level and 11 one-month changes; and the 11 changes jointly.")
+def sci(x):
+    e = int(np.floor(np.log10(x))); m_ = x / 10 ** e
+    return f"${m_:.0f}\\times10^{{{e}}}$"
+M["lf:mkt:p:all"] = sci(float(G9i.loc["Market|rstar", "p_all12"])); M["lf:mkt:p:diff"] = sci(float(G9i.loc["Market|rstar", "p_diff11"])); mac("lf:mkt:p_sum", float(G9i.loc["Market|rstar", "p_sum"]), 2)
+M9s = M9.set_index(["outcome", "series"])
+for k_, nm in (("Market|rstar", "mkt"), ("GS|rstar", "gs"), ("FRB/US|rstar", "frbus"), ("Market|nominal", "mktn"), ("Market|real", "mktr"), ("FCI-G|rstar", "fcig"), ("NFCI|given", "nfci"), ("ANFCI|given", "anfci")):
+    for c_ in ("t_lvl_both", "t_flw_both", "gain_lvl", "gain_flw"):
+        mac(f"lf:du:{nm}:{c_}", float(M9s.loc[("du", k_), c_]), 1 if c_.startswith("t_") else 2)
+    mac(f"lf:pay:{nm}:t_flw", float(M9s.loc[("pay", k_), "t_flw_both"]), 1)
+Q9 = pd.read_csv(RES / "09_quantile.csv"); q = Q9[(Q9.tau == 0.1) & (Q9.series == "Market|rstar")].iloc[0]
+mac("lf:q10:b", q.b_flw); mac("lf:q10:lo", q.lo_flw); mac("lf:q10:hi", q.hi_flw)
+q = Q9[(Q9.tau == 0.1) & (Q9.series == "NFCI|given")].iloc[0]; mac("lf:q10:nfci:b", q.b_lvl); mac("lf:q10:nfci:lo", q.lo_lvl); mac("lf:q10:nfci:hi", q.hi_lvl)
+
+# NFCI complement
+J = pd.read_csv(RES / "10_joint_lp.csv")
+rows = []
+for o_, h_, lab in (("du", 6, "Unemployment gap, 6 months"), ("du", 12, "Unemployment gap, 12 months"), ("du", 24, "Unemployment gap, 24 months"), ("pay", 12, "Payroll growth, 12 months"), ("rec12", 12, "Recession within 12 months (logit)")):
+    a = J[(J.spec == "joint_nfci") & (J.outcome == o_) & (J.h == h_) & (J["var"] == "mkt_flw")]; b = J[(J.spec == "joint_nfci") & (J.outcome == o_) & (J.h == h_) & (J["var"] == "nfci")]
+    if len(a) and len(b):
+        a, b = a.iloc[0], b.iloc[0]
+        rows.append([lab, f(a.b), f(a.t_hac, 1), f(b.b), f(b.t_hac, 1)])
+        mac(f"nf:{o_}{h_}:mkt_t", a.t_hac, 1); mac(f"nf:{o_}{h_}:nfci_t", b.t_hac, 1); mac(f"nf:{o_}{h_}:mkt_b", a.b); mac(f"nf:{o_}{h_}:nfci_b", b.b)
+table("nfci", "The Market Index and the NFCI Together", "tab:nfci", ["", "Market flow", "$t$", "NFCI level", "$t$"], rows,
+      "Coefficients on the 12-month change of the market index relative to $r^*$ and on the level of the NFCI, entered together with own lags (unemployment gap in points per standard deviation of the regressor; HAC standard errors, 12 lags; logit coefficients in the last row).")
+
+# purge
+V11 = pd.read_csv(RES / "11_var.csv")
+rows = []
+for kind, lab in (("market", "Market index"), ("gs", "GS")):
+    cells = []
+    for ver in ("unpurged", "full", "recursive"):
+        r = V11[(V11.kind == kind) & (V11.step == "rstar") & (V11.version == ver) & (V11.start == "1983-01")].iloc[0]
+        cells.append(f"{f(r.phi12)} [{f(r.phi12_lo90)}, {f(r.phi12_hi90)}]"); mac(f"pg:{kind}:{ver}", r.phi12); mac(f"pg:{kind}:{ver}:lo", r.phi12_lo90); mac(f"pg:{kind}:{ver}:hi", r.phi12_hi90)
+    rows.append([lab] + cells)
+table("purge", "Does the Flow Survive Removing Activity?", "tab:purge", ["Relative to $r^*$", "Unpurged", "Purged, full sample", "Purged, recursive"], rows,
+      "$\\Phi(12)$ with 90 percent block-bootstrap interval from the two-variable VAR (12 lags, January 1983 to September 2026). Purged: each input variable (10-year yield, equity valuation, dollar; GS inputs for GS) is regressed on current and 12 lags of the unemployment gap and 12-month core PCE inflation, on the full sample or recursively (expanding window), and the index is rebuilt from the residuals with unchanged weights.")
+for kind in ("market",):
+    for k_, c_ in (("full", "corr_fi_unpurged"), ("recursive", "corr_fi_unpurged")):
+        r = V11[(V11.kind == kind) & (V11.step == "rstar") & (V11.version == k_) & (V11.start == "1983-01")].iloc[0]; mac(f"pg:{kind}:{k_}:corrfi", r[c_])
+mac("pg:fall:full", (1 - float(V11[(V11.kind == "market") & (V11.step == "rstar") & (V11.version == "full") & (V11.start == "1983-01")].phi12.iloc[0]) / float(V11[(V11.kind == "market") & (V11.step == "rstar") & (V11.version == "unpurged") & (V11.start == "1983-01")].phi12.iloc[0])) * 100, 0)
+mac("pg:fall:rec", (1 - float(V11[(V11.kind == "market") & (V11.step == "rstar") & (V11.version == "recursive") & (V11.start == "1983-01")].phi12.iloc[0]) / float(V11[(V11.kind == "market") & (V11.step == "rstar") & (V11.version == "unpurged") & (V11.start == "1983-01")].phi12.iloc[0])) * 100, 0)
+
+# checks table: 1973+ against 1996+
+C12 = pd.read_csv(RES / "12_checks.csv")
+rows = []
+for row_, lags, lab in (("a", 12, "(a) 1973--2026, 12 lags (main)"), ("b", 12, "(b) 1996--2026, 12 lags"), ("b", 4, "(b) 1996--2026, 4 lags"), ("c", 12, "(c) excluding 2008--15"), ("d", 12, "(d) weights through 2019"), ("e", 12, "(e) origins from 1974")):
+    r = C12[(C12.row == row_) & (C12.lags == lags) & (C12.series == "Market") & (C12.step == "rstar")]
+    if not len(r):
+        continue
+    r = r.iloc[0]
+    rows.append([lab, f"{f(r.phi12)} [{f(r.phi12_lo90)}, {f(r.phi12_hi90)}]", f(r.du_t_flow, 1), f(r.du_t_level, 1), f(r.du_gain_flow), f(r.st_du_flow_gain), f(r.cw_du_flow, 1), f(r.pay_t_flow, 1)])
+    mac(f"ck:{row_}{lags}:phi", r.phi12); mac(f"ck:{row_}{lags}:lo", r.phi12_lo90); mac(f"ck:{row_}{lags}:hi", r.phi12_hi90); mac(f"ck:{row_}{lags}:tflow", r.du_t_flow, 1); mac(f"ck:{row_}{lags}:tlevel", r.du_t_level, 1)
+    mac(f"ck:{row_}{lags}:gain", r.du_gain_flow); mac(f"ck:{row_}{lags}:stgain", r.st_du_flow_gain); mac(f"ck:{row_}{lags}:cw", r.cw_du_flow, 1); mac(f"ck:{row_}{lags}:payt", r.pay_t_flow, 1)
+    mac(f"ck:{row_}{lags}:oosn", r.oos_n, 0); mac(f"ck:{row_}{lags}:oosrec", r.oos_rec, 0)
+table("checks96", "The Foundation on 1973--2026 and on 1996--2026", "tab:checks96", ["Relative to $r^*$", "$\\Phi(12)$ [90\\%]", "$t$ flow", "$t$ level", "Gain flow", "Gain of index given gap", "Clark--West", "$t$ payroll flow"], rows,
+      "Market index relative to $r^*$. $\\Phi(12)$: VAR response of the unemployment gap after 12 months (2020 dummied; bootstrap interval). $t$ and gain: local projections of the 12-month change of the unemployment gap on the index level and 12-month change together (HAC, 18 lags); gain is the gain in adjusted $R^2$ of the flow over own lags. Gain of index given gap and Clark--West: as Table~\\ref{tab:stance}, flow form. Row (b) uses only origins from 1996 (out-of-sample evaluation from December 2004, one recession); (c) drops 2008--15 (dummies in the VAR, origins touching the window in the regressions); (d) weights from announcements through 2019; (e) regression origins from 1974. Payroll flow: unemployment is the claim, payrolls are not.")
+L12 = pd.read_csv(RES / "12_ladder.csv")
+for smp, nm in (("a", "full"), ("a_pre96", "pre96"), ("b", "p96")):
+    r = L12[(L12["sample"] == smp) & (L12.series == "market") & (L12.later == "rstar") & (L12.earlier == "nominal")]
+    if len(r):
+        r = r.iloc[0]; mac(f"ld:{nm}:dr2", r.dr2, 3); mac(f"ld:{nm}:lo", r.dr2_lo90, 3); mac(f"ld:{nm}:hi", r.dr2_hi90, 3); mac(f"ld:{nm}:dm", r.dm_t, 1)
+VS = pd.read_csv(RES / "12_var_subperiods.csv"); VS12 = VS[VS.lags == 12].set_index("period")
+for per_ in VS12.index:
+    k_ = per_.replace("-", "").replace(" ", "")
+    mac(f"vs:{k_}", VS12.loc[per_, "phi12"]); mac(f"vs:{k_}:lo", VS12.loc[per_, "lo90"]); mac(f"vs:{k_}:hi", VS12.loc[per_, "hi90"])
+print("subperiod keys:", list(VS12.index))
+
+# neutrality
+N13 = pd.read_csv(RES / "13_neutrality_diffs.csv")
+rows = []
+for ser, lab in (("Market|nominal", "Market index, nominal"), ("Market|real", "Market index, real"), ("Market|rstar", "Market index, $r^*$ (Laubach--Williams)"), ("Market|rstar_kiley", "Market index, $r^*$ (Kiley)"), ("GS|rstar", "GS, $r^*$"), ("FRBUS|rstar", "FRB/US index, $r^*$")):
+    r = N13[(N13.series == ser) & (N13["from"] == "P2_1990-2007") & (N13.to == "P3_2009-19")].iloc[0]
+    rows.append([lab, f"{f(r['diff'])} [{f(r.lo90)}, {f(r.hi90)}]", f(r.diff_in_sd)]); k_ = ser.split("|")[1] + ser.split("|")[0][:2].lower()
+    mac(f"nu:{k_}", r["diff"]); mac(f"nu:{k_}:lo", r.lo90); mac(f"nu:{k_}:hi", r.hi90)
+table("neutrality", "The Level of the Index at a Zero Unemployment Gap, 2009--19 against 1990--2007", "tab:neutrality", ["", "Change in level [90\\%]", "In standard deviations of the index"], rows,
+      "Intercept of a regression of the index level on the unemployment gap, by period, 2009--19 minus 1990--2007, with a 90 percent block-bootstrap interval (24-month blocks). A level that means the same thing across regimes would show a change near zero.")
+
+# real time
+R17 = pd.read_csv(RES / "17_realtime_table.csv")
+rows = []
+for _, r in R17[R17.outcome == "du"].iterrows():
+    rows.append([f"{r.panel}: {r.row}", f"{int(r.n)}", f(r.flow_t, 1), f(r.flow_gain), f(r.flow_cw, 1) if r.flow_cw == r.flow_cw else "--", f(r.mixed_t, 1), f(r.mixed_gain)])
+table("realtime", "The Unemployment Results with Vintage Data and Real-Time $r^*$", "tab:realtime", ["Unemployment gap", "$n$", "$t$ flow", "Gain flow", "Clark--West", "$t$ mixed", "Gain mixed"], rows,
+      "Market index relative to $r^*$, index given funds-rate gap (flow and mixed forms of Table~\\ref{tab:stance}), same designs on revised data and on data as known at the time: vintage unemployment rates (ALFRED) with the vintage CBO natural rate (from 2011) and the New York Fed's real-time Laubach--Williams $r^*$ (from 2005; published estimates have a gap from August 2020 to May 2023). The weights, the Kiley $r^*$, the earnings in CAPE and expected inflation are not real time. Clark--West only for the long sample.")
+for _, r in R17[R17.outcome == "du"].iterrows():
+    k_ = {"Revised data": "rev", "Vintage data": "vin", "Vintage data and NROU": "vinn", "Revised data, full-sample r*": "revf", "Revised data, real-time r*": "revr", "Vintage data, real-time r*": "vinr"}[r.row] + r.panel[:4]
+    mac(f"rt:{k_}:t", r.flow_t, 1); mac(f"rt:{k_}:gain", r.flow_gain, 3); mac(f"rt:{k_}:mt", r.mixed_t, 1); mac(f"rt:{k_}:mg", r.mixed_gain, 3)
+    if r.flow_cw == r.flow_cw:
+        mac(f"rt:{k_}:cw", r.flow_cw, 2)
+
+C8 = pd.read_csv(RES / "08_components.csv")
+for _, r in C8.iterrows():
+    nm = r.component.replace("+", "_")
+    mac(f"cp:{r.outcome}:{nm}:gain", r.gain); mac(f"cp:{r.outcome}:{nm}:t", r.t, 1); mac(f"cp:{r.outcome}:{nm}:cw", r.cw, 1)
+# weight path figure
+W16 = pd.read_csv(RES / "16_weight_path.csv")
+fig, ax = plt.subplots(1, 3, figsize=(8.5, 3.0))
+for a_, (ser, nm) in zip(ax, (("ten", "10-year yield"), ("eq", "Equity valuation"), ("usd", "Real dollar"))):
+    bl = W16[(W16.kind == "baseline") & (W16.series == ser)].iloc[0]
+    a_.axhspan(bl.lo, bl.hi, color=COLORS["market"], alpha=0.12, lw=0); a_.axhline(bl.value, color=COLORS["grey"], lw=0.8)
+    for win, col, lab in (("expanding", COLORS["market"], "Expanding window"), ("rolling20", COLORS["frbus"], "20-year rolling window")):
+        p_ = W16[(W16.kind == "path") & (W16.series == ser) & (W16.window == win)]
+        a_.plot(pd.to_datetime(p_.date), p_.value, color=col, lw=1.2, label=lab)
+    a_.set_title(nm, loc="left"); a_.grid(alpha=0.25)
+    for sp in ("top", "right"):
+        a_.spines[sp].set_visible(False)
+ax[0].legend(frameon=False, fontsize=7)
+figure("fig_weight_path", fig)
+
+# ------------------------------------------------------------------ claims of the stance paper
+P8all = pd.read_csv(RES / "08_primary.csv")
+chk(len(P8all) == 9 and int((P8all.p < 0.10).sum()) == 5 and int((P8all.p_holm < 0.10).sum()) == 1, "stance: nine primary tests, five raw p < 0.10, one Holm p < 0.10")
+a_ = pick(I8, outcome="du", step="rstar", index="market", form="flow", period="full"); l_ = pick(I8, outcome="du", step="rstar", index="market", form="level", period="full")
+chk(a_.gain_idx_given_ff > 0.08 and a_.gain_ff_given_idx < 0.02 and l_.gain_idx_given_ff < 0.02, "stance: index adds to the gap in flow form, gap adds nothing, level adds nothing")
+chk(abs(float(pick(I8, outcome="pi", step="rstar", index="market", form="flow", period="full").gain_idx_given_ff)) < 0.01, "stance: nothing for core inflation")
+e0 = E8[(E8.rstar == "LW") & (E8.series == "market")]
+chk((e0[e0.episode.str.startswith(("conundrum", "tightening"))].diff_hi < 0).all() and (e0[e0.episode == "2022-03..2023-12"].diff_hi > 0).all(), "stance: 2004-06 and 2022-24 intervals exclude zero, 2022-23 includes it")
+chk(tm.diff_hi < 0, "stance: September 2026 interval excludes zero")
+chk(all(float(M9s.loc[("du", k_), "t_flw_both"]) > 4.5 and abs(float(M9s.loc[("du", k_), "t_lvl_both"])) < 1 for k_ in ("Market|rstar", "GS|rstar", "FRB/US|rstar")), "levelflow: market, GS, FRB/US flows t > 4.5, levels < 1")
+chk(all(float(M9s.loc[("du", k_), "t_lvl_both"]) > 2.5 and float(M9s.loc[("du", k_), "t_flw_both"]) < 1.7 for k_ in ("NFCI|given", "ANFCI|given")), "levelflow: NFCI and ANFCI levels carry it")
+gm = G9i.loc["Market|rstar"]; chk(gm.p_all12 < 1e-6 and gm.p_sum > 0.1 and gm.p_diff11 < 1e-4, "granger: all lags and changes significant, the sum is not")
+jj = lambda o, h, v: J[(J.spec == "joint_nfci") & (J.outcome == o) & (J.h == h) & (J["var"] == v)].iloc[0]
+chk(jj("du", 6, "mkt_flw").t_hac > 2.5 and jj("du", 12, "mkt_flw").t_hac > 2.5 and jj("du", 6, "nfci").t_hac > 2.5 and jj("du", 12, "nfci").t_hac > 2.5 and jj("du", 24, "nfci").t_hac > 4 and abs(jj("du", 24, "mkt_flw").t_hac) < 1 and jj("rec12", 12, "nfci").t_hac > 4 and jj("rec12", 12, "mkt_flw").t_hac < 2, "nfci: both keep 6 and 12 months, only NFCI at 24 months and for recessions")
+chk(all(V11[(V11.step == "rstar") & (V11.start == "1983-01")].phi12_lo90 > 0), "purge: every r* interval above zero")
+chk(30 <= float(M["pg:fall:full"]) <= 70 and 30 <= float(M["pg:fall:rec"]) <= 70, "purge: response falls 30 to 70 percent")
+chk(float(N13[(N13.series == "Market|nominal") & (N13.to == "P3_2009-19") & (N13["from"] == "P2_1990-2007")]["diff"].iloc[0]) < -1 and float(N13[(N13.series == "Market|real") & (N13.to == "P3_2009-19") & (N13["from"] == "P2_1990-2007")]["diff"].iloc[0]) < -1 and float(N13[(N13.series == "Market|rstar") & (N13.to == "P3_2009-19") & (N13["from"] == "P2_1990-2007")]["diff"].iloc[0]) > 0 and abs(float(N13[(N13.series == "Market|rstar_kiley") & (N13.to == "P3_2009-19") & (N13["from"] == "P2_1990-2007")]["diff"].iloc[0])) < 0.5, "neutrality: nominal and real shift down, LW up, Kiley near zero")
+c_a, c_b = C12[(C12.row == "a") & (C12.series == "Market") & (C12.step == "rstar")].iloc[0], C12[(C12.row == "b") & (C12.lags == 12) & (C12.series == "Market") & (C12.step == "rstar")].iloc[0]
+chk(1.4 < (c_b.phi12_hi90 - c_b.phi12_lo90) / (c_a.phi12_hi90 - c_a.phi12_lo90) < 1.8 and c_b.phi12_lo90 > 0 and abs(c_b.pay_t_flow) < 2 and c_b.du_t_flow > 3.5, "1996+: interval about 1.6 times as wide, unemployment holds, payrolls do not")
+chk(float(M["ld:p96:lo"].replace("$-$", "-")) > 0 and float(M["ld:pre96:lo"].replace("$-$", "-")) < 0 < float(M["ld:pre96:hi"]), "ladder: r* step helps on 1996+ and not before")
+c_c = C12[(C12.row == "c") & (C12.series == "Market") & (C12.step == "rstar")].iloc[0]; chk(c_c.du_t_level > 3, "level t > 3 when 2008-15 is excluded")
+R17a = R17[(R17.outcome == "du") & (R17.panel == "1976-2025")].set_index("row"); R17b = R17[(R17.outcome == "du") & (R17.panel == "2006-2025")].set_index("row")
+chk(abs(R17a.loc["Vintage data", "flow_t"] - R17a.loc["Revised data", "flow_t"]) < 0.3 and R17b.loc["Revised data, real-time r*", "flow_gain"] < 0.5 * R17b.loc["Revised data, full-sample r*", "flow_gain"], "real time: vintage data leave the result, real-time r* cuts the gain by more than half")
+chk(float(SC["exp_post2010_n_out_ten"]) == 0 and float(SC["exp_post2010_n_out_usd"]) == 0 and 0 < float(SC["exp_post2010_n_out_eq"]) <= 15 and float(SC["roll_post2010_n_out_ten"]) > 0, "weights: expanding inside the band after 2010 (equity briefly out), rolling fails")
+S15 = pd.read_csv(RES / "15_summary.csv"); sc_ = S15[(S15.step == "rstar") & (S15.form.str.contains("change|flow")) & (S15.set != "MKT")] if "set" in S15 else S15
+chk(float(SC["w_rstar_n_holm_sig10"]) == 0 and float(SC["w_rstar_n_primary_tests"]) == 120 and float(SC["w_rstar_n_raw_sig10"]) == 25, "weights: 25 of 120 raw rejections, none after Holm")
+chk(float(SC["lad_rstar_vs_nominal_all_n_ratio_below1"]) == 69 and float(SC["lad_rstar_vs_nominal_all_n_tests"]) == 91 and float(SC["lad_rstar_vs_nominal_all_n_holm_sig05"]) == 0, "ladder: 69 of 91, none after Holm at 5 percent")
 
 # ------------------------------------------------------------------ write numbers.tex and check the paper's macros
 def norm(k):

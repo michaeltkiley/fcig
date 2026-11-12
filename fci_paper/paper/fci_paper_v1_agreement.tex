@@ -1,0 +1,379 @@
+\documentclass[11pt]{article}
+
+% --- Packages (house style of the author's FOMC papers) ---
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{makecell}
+\usepackage{longtable}
+\usepackage[title]{appendix}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage{chngcntr}
+
+\floatplacement{table}{tp}
+\floatplacement{figure}{tp}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=blue!60!black,
+  urlcolor=blue!60!black,
+}
+
+\input{../replication/report/numbers} % every number quoted in the text (replication/07_report.py)
+\newcommand{\rs}{r^{*}}
+
+% ============================================================
+\title{Financial Conditions Indexes on a Common Basis}
+\author{Michael Kiley\thanks{Division of Monetary Affairs, Federal Reserve Board. Email: \href{mailto:michael.t.kiley@frb.gov}{michael.t.kiley@frb.gov}. The views expressed in this analysis are those of the author and do not reflect the views of the Federal Reserve Board or its staff. The author used Claude Code and related AI tools in this project. Responsibility for the analysis and results lies with the author.}}
+
+\date{\today}
+
+\begin{document}
+\pagenumbering{roman}
+\maketitle
+
+\begin{abstract}
+How tight are financial conditions? Published indexes answer in different units, from different variables and with different weights, and they often give different answers. I ask how much of the disagreement comes from how the indexes are measured and how much from how they are weighted. I put the Goldman Sachs index, the Federal Reserve Board's FCI-G, an index weighted with FRB/US and a new market index on a common basis: nominal rates, real rates, and rates relative to the neutral rate $\rs$. The market index takes its weights on the 10-year yield, equity valuation and the dollar from their responses to monetary policy news in announcement windows, and its dynamics from a VAR with unemployment. The common basis removes much of the disagreement over 1974--2026 but little since 1990: the average distance between the level indexes falls from \bl{nominal:range:long} to \bl{rstar:range:long} points over 1974--2026 and from \bl{nominal:range:ninety} to \bl{rstar:range:ninety} points over 1990--2026. The indexes agree on direction: 12-month changes of the market index correlate \bl{rstar:mkt:gs:chg} with the Goldman Sachs index and \bl{rstar:mkt:frbus:chg} with the FRB/US index, and its measure of the change in conditions still to come correlates \bl{rstar:fi:fcig} with FCI-G. They disagree on level, mostly because of the weights on equity valuation and the dollar, and the sampling error of the market index's weights is of the same order. The neutral rate matters most: it raises each index's reading for 2009--2016 by \bl{shift:min} to \bl{shift:max} points. A reading of the stance of policy from financial conditions should come with a range of about a percentage point.
+\end{abstract}
+
+\noindent\textbf{JEL Classification:} E43, E44, E52, C32
+
+\noindent\textbf{Keywords:} financial conditions index, neutral interest rate, monetary policy news, FCI-G, FRB/US
+
+\pagestyle{plain}
+
+\newpage
+\pagenumbering{arabic}
+
+% ============================================================
+\section{Introduction}
+\label{sec:intro}
+Monetary policy works through financial conditions, and policymakers describe it that way. In November 2023 the Chair noted that ``Financial conditions have tightened significantly in recent months, driven by higher longer-term bond yields, among other factors'' \citep{powell2023}. Several indexes summarize financial conditions, and the stance of policy is often read from them. The indexes do not always agree. In March 2024 the Chair said that ``there are many different financial conditions indicators, and you can kind of, you know, see different answers to that question'' \citep{powell2024}.
+
+The disagreement has two sources. Indexes differ in how they are measured: in their units, in whether rates are nominal or real, and in whether rates are measured against the neutral rate. They also differ in the weights they give to the same variables. The first source is a matter of definition, although the neutral rate it involves has to be estimated. The second is substance. I ask how much disagreement is left once the indexes are measured in the same way.
+
+The indexes agree on direction and less on level. Their 12-month changes correlate \bl{rstar:mkt:gs:chg} (a new market index I build and the Goldman Sachs index) and \bl{rstar:mkt:frbus:chg} (the market index and an index weighted with FRB/US) when all are measured relative to the neutral rate $\rs$, and the market index's forward-looking measure of the change in conditions, built as the Board's FCI-G is, correlates \bl{rstar:fi:fcig} with FCI-G. In levels over 1974--2026 the correlations are \bl{rstar:mkt:gs} and \bl{rstar:mkt:frbus}, and the second falls to \bl{rstar:mkt:frbus:ninety} since 1990 (Figure~\ref{fig:levels}). In nominal terms the Goldman Sachs index drifts away from the others before 1990, and its level correlation with the market index is \bl{nominal:mkt:gs}.
+
+The levels differ by more than the correlations suggest. On average the four level indexes (the market index, the Goldman Sachs index and the FRB/US index with and without house prices) are about one point apart, and by more than two points in the widest episodes. The gap between the market index and the FRB/US index comes mostly from the weights on equity valuation and the dollar. These are also the weights I can say least about. Re-estimating the market index's weights on bootstrap samples of the announcements gives a 90 percent interval for its reading for September 2026 that covers the Goldman Sachs reading and reaches nearly to the FRB/US reading. The neutral rate changes the readings themselves. Relative to its 1973--2026 average, the market index reads \bl{nominal:latest:market} points in nominal terms, \bl{real:latest:market} in real terms and \bl{rstar:latest:market} relative to $\rs$, and the step to $\rs$ raises each index's reading for 2009--2016 by \bl{shift:min} to \bl{shift:max} points.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.93\textwidth]{../replication/report/fig_levels.pdf}
+\caption{The Level Indexes at Each Step of the Construction}
+\label{fig:levels}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly, January 1973 to September 2026, relative to the 1973--2026 mean of each variable, tighter above zero. Market index and Goldman Sachs index in two-year-yield points (a policy move that raises the two-year yield 1 percentage point raises each by one point in the announcement window); FRB/US index in funds-rate points. The Goldman Sachs index is my replication with its published weights.\end{flushleft}
+\end{figure}
+
+The approach has three features. First, I add a market index whose weights come from data. It is a weighted sum of the 10-year yield, equity valuation and the real dollar. The weights are the responses of these variables to monetary policy news in narrow windows around FOMC announcements, combined so as to recover the policy news as precisely as possible. A one-point move in the index is the change in conditions that a policy move raising the two-year yield by one percentage point brings. A two-variable VAR with the unemployment gap gives the index a flow, as FCI-G has one. Second, I put every index on a common basis in three steps: nominal rates, real rates with matched-horizon expected inflation, and gaps to $\rs$. At each step I compare like with like. My nominal index is compared with nominal versions of the others, my real index with real versions, and my $\rs$ index with $\rs$ versions. Finally, I measure how precisely the market index is estimated, and I vary the neutral rate, the VAR, the policy-news series and the sample.
+
+\subsection{Connection to the Literature}
+\textbf{Indexes and their weights.} Financial conditions indexes are weighted sums of financial variables, and they differ mainly in the source of the weights \citep{hatzius2010}. The best known in markets is the Goldman Sachs index, whose weights come from a macroeconomic model \citep{dudley2000,hatzius2018,hatzius2019}. The Board's FCI-G takes its weights from FRB/US and other Board models \citep{ajello2023}. The Chicago Fed's NFCI and ANFCI summarize many indicators by principal components \citep{brave2011}. My market index takes its weights from event-study regressions, which have long measured how asset prices respond to policy \citep{kuttner2001,gurkaynak2005,bernanke2005,nakamura2018,bauer2023}.
+
+\textbf{Comparisons of indexes.} \citet{aramonte2013} compare twelve indexes by correlations of standardized series. \citet{arnaut2024} plot four indexes in their own units and, for the Goldman Sachs index only, estimate its response to monetary policy surprises. \citet{sack2023} relate FCI-G to policy-induced changes in the two-year yield. I put the Goldman Sachs index, FCI-G and a model-weighted index in common units and on a common nominal, real and neutral-rate basis, and I give the market index a precision. I use responses to policy news as \citet{arnaut2024} do, to convert the Goldman Sachs index to the market index's units and to weight the market index itself.
+
+\textbf{The neutral rate.} What matters for activity is the rate relative to the neutral rate, and the neutral rate fell from the 1990s to the 2010s \citep{laubach2003,holston2017,holston2023,hamilton2016,bauer2020,kiley2020}. \citet{dudley2010} argued that faster productivity growth or higher stock prices raise the equilibrium rate and so call for a higher policy rate to offset them. \citet{caballero2026} define FCI$^*$, the level of FCI-G consistent with output at potential. My $\rs$ step moves the level of each index toward that idea, but I do not estimate a neutral level for the index itself.
+\FloatBarrier
+
+% ============================================================
+\section{The Indexes Compared}\label{sec:indexes}
+Section~\ref{sec:existing} describes the existing indexes. Section~\ref{sec:market} builds the market index, and Section~\ref{sec:frbus} the index I weight with FRB/US. Appendix~\ref{app:details} gives the construction of every series.
+
+\subsection{The Existing Indexes}\label{sec:existing}
+Table~\ref{tab:existing} sets the indexes side by side. They differ in three ways that matter for a comparison.
+
+\begin{table}[tp]\centering\small
+\caption{The Indexes}\label{tab:existing}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{0.12\textwidth}p{0.27\textwidth}p{0.22\textwidth}p{0.18\textwidth}p{0.17\textwidth}}\toprule
+Index & Variables & Weights from & Unit & Reading \\\midrule
+Market index & 10-year yield, equity valuation (CAPE), real broad dollar & Responses to monetary policy news in announcement windows & Points of the two-year yield per unit of policy news & Level, and a flow from a VAR \\
+GS \citep{dudley2000,hatzius2018} & Federal funds rate, 10-year yield, BBB spread, equity valuation, nominal broad dollar & Published weights 4.4, 45.1, 39.6, 4.9 and 6.0 percent, from FRB/US and Goldman Sachs modeling & Index points & Level; zero is a base period \\
+FCI-G \citep{ajello2023} & Federal funds rate, 10-year yield, mortgage rate, BBB yield, stock prices, house prices, dollar & FRB/US and other Board models & Percentage points of GDP growth over the next year & Flow, built from past changes; zero is neutral for growth \\
+FRB/US index (mine) & Policy rate, 10-year yield, mortgage and BBB spreads, equity valuation, dollar; with and without house prices & FRB/US effect on GDP after four quarters & Funds-rate points & Level \\
+NFCI, ANFCI \citep{brave2011} & 105 indicators, mostly spreads, volatilities and credit quantities & Principal components (ANFCI: purged of activity and inflation) & Standard deviations & Level; zero is the sample average \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} GS is a replication with the published weights; the series itself is proprietary. The FRB/US index is my own construction. The market index is described in Section~\ref{sec:market}.\end{flushleft}
+\end{table}
+
+The first difference is the source of the weights. The Goldman Sachs index and FCI-G take them from models of how each variable affects activity, the NFCI from the data's principal components, and my market index from how each variable responds to policy. The second is the reading. A level index says where conditions stand relative to a base period, as the Goldman Sachs index and the NFCI do. A growth index says what conditions imply for activity: FCI-G measures the contribution of financial conditions to GDP growth over the next year, and zero means that the effect of current and past changes adds nothing to growth and takes nothing from it. Zero in FCI-G is therefore neutral for growth, which is a different idea from a neutral level of conditions. FCI-G is built from changes and has no level. The third is the treatment of rates. The Goldman Sachs index uses nominal rates and the nominal dollar, so it trends over long spans \citep{hatzius2010}. FCI-G uses nominal rates as well.
+
+Units differ too. I convert the Goldman Sachs index and the NFCI and ANFCI to the market index's units by their own responses to the same policy news: the Goldman Sachs index rises by \bl{resp:gs} points per unit of policy news, the NFCI by \bl{resp:nfci} standard deviations and the ANFCI by \bl{resp:anfci}. FCI-G stays in percentage points of GDP growth and is compared through correlations and through its own scale.
+
+\subsection{The Market Index: Weights from Policy News}\label{sec:market}
+\textbf{Policy news.} At each FOMC announcement I measure policy news with the factor of \citet{nakamura2018}. It is the first principal component of the moves in five short-term interest-rate futures in a narrow window around the announcement, scaled so that one unit moves the two-year Treasury yield by one percentage point. The data are the San Francisco Fed's U.S.\ Monetary Policy Event-Study Database \citep{acosta2025}, ``monetary events'' windows: \bl{n:events} announcements from \bl{event:first} to \bl{event:last}.
+
+\textbf{Responses and weights.} In each window the 10-year yield, the equity valuation and the real dollar move by a response times the policy news plus a part that has nothing to do with it. The windows reveal the response $\psi_j$ of each variable $j$. I choose the weights that recover the policy news most precisely from the three variables together: $w\propto\Sigma^{-1}\psi$, where $\Sigma$ is the covariance of the parts that are not policy news, normalized so that $w'\psi=1$ (one-factor generalized least squares). A policy move that raises the two-year yield by one percentage point therefore raises the index by exactly one unit, and the index is measured in points of the two-year yield.
+
+Table~\ref{tab:weights} gives the results. A policy move that raises the two-year yield one point raises the 10-year yield by \bl{psi:ten} points, lowers equity valuation by \bl{abs:psi:eq} percent and raises the real dollar by \bl{psi:usd} percent. Each variable carries a substantial part of the policy move: the shares are \bl{share:ten} for the 10-year yield, \bl{share:eq} for equity valuation and \bl{share:usd} for the dollar. Applied to the demeaned levels of the 10-year yield, the equity valuation multiple (100 times the log of the cyclically adjusted price-earnings ratio, CAPE) and the real broad dollar, the weights give the index.
+
+\input{../replication/report/tab_weights}
+
+\textbf{What the weights assume.} Consider a rise in stock prices. If it comes from news about earnings, it has little to do with policy, and the index treats it as if it did, because it enters with the same weight as a rise that policy caused. If every movement in the three variables came from policy, the index would equal the cumulated policy-induced change in the two-year yield. The weights say what the variables do when policy moves, not what causes their movements at other times. An announcement can also reveal the Fed's view of the economy, and then the responses mix policy and information \citep{nakamura2018}. I measure the responses to the news as the markets receive it, and I set the information effect aside. The index is a measure of the policy-equivalent tightening in financial conditions. It is not a forecast of activity, and Section~\ref{sec:var} gives it dynamics separately.
+
+\subsection{The Index Weighted with FRB/US}\label{sec:frbus}
+The main alternative to market weights is to weight each variable by its effect on activity in a macroeconomic model, as FCI-G does. For a comparison of levels I build such an index from FRB/US \citep{brayton2014}. Each variable's weight is its effect on GDP after four quarters of a persistent unit shift, divided by the effect of a persistent one percentage point rise in the federal funds rate (\bl{frbus:yardstick} percent of GDP), so the index is in funds-rate points. It covers the policy rate, the 10-year yield, the mortgage and BBB spreads, equity valuation and the dollar, and in one version house prices. I also give it a flow in the form of FCI-G.
+
+Table~\ref{tab:frbus} compares the two sets of weights on the three common variables. They agree on the 10-year yield, where the FRB/US weight is \bl{ratio:ten} times the market weight. The model puts less weight on equity valuation (\bl{ratio:eq} times) and more on the dollar (\bl{ratio:usd} times). The two indexes are close on a pure policy move. The FRB/US weights price the response of the three variables to a unit of policy news at \bl{spsi:market} funds-rate points, against exactly one point for the market index. They differ on movements that policy did not cause. The model gives a fall in equity prices its estimated causal effect on output, and the market index treats it as policy-equivalent. Because the two weight vectors are not proportional, the gap between the indexes is a weighted sum of non-policy movements in equity valuation and the dollar.
+
+\input{../replication/report/tab_frbus}
+\FloatBarrier
+
+% ============================================================
+\section{A Common Basis}\label{sec:steps}
+The comparison runs in three steps, and each step answers a problem of the one before.
+
+\subsection{Nominal Rates}\label{sec:nominal}
+The first step uses rates as published. Every index is then a function of nominal yields, and the Goldman Sachs index and FCI-G also use the nominal broad dollar. A nominal index treats a 10-year yield of 8 percent alike in 1981 and in 2000. That is reasonable only if inflation expectations and the neutral real rate are stable, and neither was. Expected inflation over the next year averaged \bl{einf:1981} percent in 1981 and is \bl{einf:latest} percent today, and the Laubach--Williams estimate of $\rs$ averaged \bl{rstar:lw:pre} percent over 1990--2007 and \bl{rstar:lw:post} percent over 2009--2016 (Figure~\ref{fig:infl}). The nominal dollar poses a further problem for the Goldman Sachs index. Its broad index rises from \bl{usd:nom:1973} in 1973 to \bl{usd:nom:latest} today, mostly from inflation differentials, and this drags the Goldman Sachs index away from the others before 1990 (Figure~\ref{fig:levels}, top panel).
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=\textwidth]{../replication/report/fig_inflation_rstar.pdf}
+\caption{Expected Inflation and $r^*$}
+\label{fig:infl}
+\begin{flushleft}\footnotesize\textit{Notes:} Left: expected inflation, Livingston Survey before 1982 and Cleveland Fed model estimates after, shifted to the Cleveland level over 1982--84 and blended over 1982; shaded: the blending year. Right: one-sided, full-sample estimates of $\rs$ from the Laubach--Williams model (baseline) and Kiley's model (check). Percent.\end{flushleft}
+\end{figure}
+
+\subsection{Real Rates}\label{sec:real}
+The second step measures each rate less expected inflation at a matched horizon: the policy rate less one-year expected inflation, and longer rates less ten-year expected inflation. The dollar is the real broad index in every index, and in FCI-G stock and house prices are deflated by the CPI. This step removes the inflation trend. The nominal and real market indexes are almost the same over 1990--2026, with a correlation of \bl{step:nom:real:ninety}, because inflation expectations were stable then. The real step matters before 1990. Nominal FCI-G shows a tightening in mid-1974 (\bl{nominal:fcig:seventyfour}) that the real version does not (about zero), because nominal rates rose with expected inflation.
+
+\subsection{Gaps to the Neutral Rate}\label{sec:rstarstep}
+The third step measures each real rate relative to $\rs$: the policy rate, the 10-year yield, and in FCI-G the BBB and mortgage yields. Equity valuation enters through the earnings yield $E/P=100/\text{CAPE}$, which is also an implicit real rate, as the gap $E/P-\rs$. I convert each index's equity weight at the sample-average earnings yield, so that every index keeps its weight on CAPE. Spreads over the 10-year yield are unchanged, because $\rs$ cancels. The baseline uses the one-sided, full-sample Laubach--Williams estimate, and Kiley's estimate is a check. Each variable is measured relative to its 1973--2026 average, so $\rs$ matters through its movements over time.
+
+\subsection{What Each Step Changes}\label{sec:whatsteps}
+Figure~\ref{fig:marketsteps} shows the market index at each step. The real step changes little after 1990, and the $\rs$ step changes a lot: the correlation of the real and $\rs$ versions over 1990--2026 is only \bl{step:real:rstar:ninety}. With $\rs$ low after 2008, the step to $\rs$ raises the 2009--2016 average of each index: by \bl{shift:mkt:gfc} points for the market index, \bl{shift:gs:gfc} for the Goldman Sachs index and \bl{shift:frbus:gfc} for the FRB/US index. Relative to the 1990--2026 average, the market index averages \bl{rstar:mkt:gfc} at the $\rs$ step against \bl{real:mkt:gfc} in the real version and \bl{nominal:mkt:gfc} in the nominal one, so conditions in 2009--2016 look tighter than average rather than easier. The four level indexes (the market index, the Goldman Sachs index and the FRB/US index with and without house prices) are closer at each step: their average range over 1990--2026 falls from \bl{nominal:range:ninety} points (nominal) to \bl{real:range:ninety} (real) and \bl{rstar:range:ninety} (relative to $\rs$).
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=\textwidth]{../replication/report/fig_market_steps.pdf}
+\caption{The Market Index at Each Step}
+\label{fig:marketsteps}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly, relative to the 1973--2026 mean, in two-year-yield points; tighter above zero. Shaded: 2009--2016.\end{flushleft}
+\end{figure}
+\FloatBarrier
+
+% ============================================================
+\section{Level and Flow}\label{sec:var}
+FCI-G measures a flow, and the other indexes measure a level. I give the market index both. The level is the index of Section~\ref{sec:market}. The flow comes from the relationship between the index and unemployment.
+
+\subsection{The Response of Unemployment}\label{sec:varresp}
+I estimate a monthly VAR in the unemployment gap (the unemployment rate less the Congressional Budget Office's natural rate) and the market index, from January 1973 to September 2026, with 12 lags and monthly dummies for 2020. Unemployment is ordered first, so it responds to the index only with a lag. I repeat the estimation for each step of the construction. Table~\ref{tab:var} and Figure~\ref{fig:var} give the results.
+
+The index helps predict unemployment at every step (in the $\rs$ baseline the Granger statistic is \bl{var:rstar:p12:granger:F}, $p$ \bl{var:rstar:p12:granger:p}). A one-unit tightening raises the unemployment gap gradually. In the baseline the response reaches \bl{var:rstar:p12:phi12} percentage point after 12 months, with a 90 percent interval from \bl{var:rstar:p12:phi12:lo90} to \bl{var:rstar:p12:phi12:hi90}. With an Okun coefficient of two this is about \bl{okun:phi12} percent of output. I call the 12-month response the yardstick of the index, $\Phi(12)$. With four lags the response is smaller (\bl{var:rstar:p4:phi12}) and levels off earlier. The baseline has 12 lags; Section~\ref{sec:rob} reports four.
+
+\input{../replication/report/tab_var}
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.78\textwidth]{../replication/report/fig_var.pdf}
+\caption{Unemployment Response to a One-Unit Tightening of the Market Index}
+\label{fig:var}
+\begin{flushleft}\footnotesize\textit{Notes:} Response of the unemployment gap after a shock that raises the index by one unit, in the monthly VAR with unemployment first (January 1973 to September 2026, 2020 months with dummies). Bands: 68 and 90 percent, from a block bootstrap (12-month blocks of residuals, recursive simulation).\end{flushleft}
+\end{figure}
+
+\subsection{The Forward Impetus}\label{sec:fi}
+With the response profile $\Phi(m)$ I compute what the changes in the index over the past year imply for the next 12 months, in the way FCI-G does with FRB/US multipliers:
+\[
+\text{FI}(t)=\sum_{m=0}^{11}\frac{\Phi(m+12)-\Phi(m)}{\Phi(12)}\,\Delta M(t-m).
+\]
+Here $M$ is the market index. A value of 1 means that the past year's changes raise unemployment over the next year by as much as a permanent one-unit tightening does in its first year. I call this the forward impetus. Figure~\ref{fig:levelflow} shows the level and the flow in the baseline. The flow correlates \bl{rstar:fi:fcig} with the $\rs$ version of FCI-G, and the level only \bl{rstar:fcig:level}, because the two answer different questions.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.93\textwidth]{../replication/report/fig_level_flow.pdf}
+\caption{The Market Index: Level and Flow}
+\label{fig:levelflow}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly, relative to $\rs$. Top: level in two-year-yield points, tighter above zero. Bottom: forward impetus of the 12-lag VAR (index units) and FCI-G with a one-year lookback in its $\rs$ version (percentage points of GDP growth), on the same scale.\end{flushleft}
+\end{figure}
+\FloatBarrier
+
+% ============================================================
+\section{Do the Indexes Agree?}\label{sec:results}
+Table~\ref{tab:compare} compares the market index with the others at each step.
+
+\input{../replication/report/tab_compare}
+
+\subsection{Levels}\label{sec:levels}
+\textbf{The market index and the Goldman Sachs index agree once both are real.} With real rates or gaps to $\rs$ the two correlate \bl{rstar:mkt:gs} in levels and \bl{rstar:mkt:gs:chg} in 12-month changes. In nominal terms the level correlation is \bl{nominal:mkt:gs}, against \bl{nominal:mkt:frbus} with the FRB/US index, and the Goldman Sachs index is the one that uses the nominal dollar at that step.
+
+\textbf{The market index and the FRB/US index agree at every step, a little less at each.} The correlation over 1974--2026 is \bl{nominal:mkt:frbus} in nominal terms, \bl{real:mkt:frbus} in real terms and \bl{rstar:mkt:frbus} relative to $\rs$. The 1970s and early 1980s, when all indexes swung widely, dominate these figures; since 1990 the correlations are \bl{nominal:mkt:frbus:ninety}, \bl{real:mkt:frbus:ninety} and \bl{rstar:mkt:frbus:ninety}, and with the Goldman Sachs index \bl{rstar:mkt:gs:ninety} at the $\rs$ step. Correlations of persistent levels overstate agreement, and the 12-month changes (\bl{rstar:mkt:gs:chg} and \bl{rstar:mkt:frbus:chg}) are the better guide to whether the indexes move together. Adding house prices to the FRB/US index does not change this (\bl{rstar:mkt:frbus:hp}). Both indexes use the real dollar at every step, so the common basis moves the Goldman Sachs index and leaves them where they were; the level correlation with the FRB/US index falls slightly with each step.
+
+\textbf{The ANFCI is a different object.} Its correlation with the market index is \bl{rstar:mkt:anfci} from 1990. The ANFCI measures stress, mostly spreads and volatility, rather than the price of credit and risk.
+
+\textbf{The distance between the indexes falls with each step, and stays near a point since 1990.} The average range of the four level indexes, each in its own units (two-year-yield points or funds-rate points), is \bl{nominal:range:long} points over 1974--2026 in nominal terms, \bl{real:range:long} in real terms and \bl{rstar:range:long} relative to $\rs$. Over 1990--2026 it is \bl{nominal:range:ninety}, \bl{real:range:ninety} and \bl{rstar:range:ninety}. In \bl{rstar:share:range:gt1:ninety} percent of the months since 1990 the indexes differ by more than one point. Correlations measure whether the indexes move together. The range measures whether they say the same thing about the level of conditions, and it is the more demanding test. It depends on the units: the market index's standard deviation is \bl{rstar:mkt:frbus:sd} times that of the FRB/US index, so part of the range is a difference of scale, and the Goldman Sachs conversion is itself estimated (Appendix~\ref{app:details}). All indexes share the same base period, so the range measures dispersion around each index's own average and not a difference in average level.
+
+\subsection{Flows}\label{sec:flows}
+The market index's forward impetus correlates \bl{nominal:fi:fcig} with FCI-G at the nominal step, \bl{real:fi:fcig} at the real step and \bl{rstar:fi:fcig} at the $\rs$ step. Against the published FCI-G the correlation is \bl{nominal:fi:pub} over 1990--2026, and my replication of FCI-G tracks the published series at \bl{nominal:fcig:pub}. The flow built from FRB/US multipliers agrees with FCI-G more closely (\bl{rstar:fcig:frbus:gi} at the $\rs$ step). The market index's flow comes from a small VAR, not from a structural model, and it agrees with both: its correlation with the FRB/US growth impetus is \bl{rstar:fi:frbus:gi}.
+
+\subsection{Where the Indexes Differ}\label{sec:where}
+Table~\ref{tab:episodes} lists the widest and the closest six-month windows at the $\rs$ step, with the gap between the market index and the FRB/US index split by group of variables.
+
+\input{../replication/report/tab_episodes}
+
+Equity valuation accounts for most of the gaps between the market index and the FRB/US index. The widest windows overall fall in 1977--1980, when the market index was about two points tighter than the FRB/US index, with the equity group accounting for about 1.6 points. Equity valuations were then low (CAPE averaged \bl{cape:7780} over 1977--80 against \bl{cape:mean} over 1973--2026), and the market index gives each point of valuation more weight (Table~\ref{tab:frbus}). Since 1990 the widest windows are in 1998--2001, at the height of the equity boom, when valuations were far above average and the market index was about 1.6 points looser than the FRB/US index, again almost entirely because of equities. In the closest windows, in the late 1980s, the equity and dollar gaps are small. A gap opens when equity valuation or the dollar is far from its average, because the indexes then disagree about how much a given deviation matters.
+
+Today the market index reads \bl{rstar:latest:market} and the Goldman Sachs index \bl{rstar:latest:gs}, while the FRB/US index reads \bl{rstar:latest:frbus} (\bl{rstar:latest:frbus:hp} with house prices), all relative to the 1973--2026 average. The group contributions against the FRB/US index with house prices show why (Figure~\ref{fig:today} and Appendix Table~\ref{tab:latestgroups}). High equity valuations lower the market index by \bl{abs:lg:market:equities} points and the FRB/US index by \bl{abs:lg:frbus:hp:equities}, and a strong dollar raises them by \bl{lg:market:dollar} and \bl{lg:frbus:hp:dollar}. The market index is \bl{abs:lg:gap:eq} points lower from equities and \bl{abs:lg:gap:usd} lower from the dollar, out of a total gap of \bl{abs:lg:gap:total}.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.85\textwidth]{../replication/report/fig_today.pdf}
+\caption{The Reading for September 2026}
+\label{fig:today}
+\begin{flushleft}\footnotesize\textit{Notes:} Level of each index in September 2026 relative to the 1973--2026 mean, at each step. The bar shows the 5th to 95th percentile of the market index over bootstrap samples of the announcements (Section~\ref{sec:precision}).\end{flushleft}
+\end{figure}
+
+\subsection{How Precisely Is the Market Index Estimated?}\label{sec:precision}
+The market index's weights come from regressions on \bl{n:events} announcements, and they are estimated with error. I resample the announcements with replacement \bl{boot:reps} times, recompute the policy-news factor and the weights each time, and recompute the index and its comparisons (Table~\ref{tab:boot}).
+
+\input{../replication/report/tab_boot}
+
+The weights are imprecise. The weight on the 10-year yield has a 90 percent interval from \bl{wb:ten:lo} to \bl{wb:ten:hi} around \bl{w:ten}. The interval for equity valuation runs from \bl{wb:eq:lo} to \bl{wb:eq:hi}, and for the dollar from \bl{wb:usd:lo} to \bl{wb:usd:hi}. The FRB/US weights on all three lie inside these intervals, the equity weight near the edge: it is lower in absolute value than \bl{frw:eq:pct} percent of the bootstrap draws, about 14 percent in a two-sided test. The data do not reject that the model weights equal the market weights. This is a statement about power, not a finding that they are equal, and it treats the FRB/US weights and the VAR as fixed.
+
+The index is better determined than its weights, and its correlations with the others are stable. The correlation with the Goldman Sachs index is \bl{rstar:mkt:gs}, with a 5th to 95th percentile range from \bl{bt:rstar:corr:gs:lo} to \bl{bt:rstar:corr:gs:hi}, and with the FRB/US index \bl{rstar:mkt:frbus}, from \bl{bt:rstar:corr:frbus:lo} to \bl{bt:rstar:corr:frbus:hi}. The level of the reading is not stable. The September 2026 reading relative to $\rs$ is \bl{rstar:latest:market}, with a 90 percent interval from \bl{bt:rstar:latest:lo} to \bl{bt:rstar:latest:hi}. The Goldman Sachs reading (\bl{rstar:latest:gs}) lies inside that interval. The FRB/US reading (\bl{rstar:latest:frbus}) lies just above it, and the 90 percent interval for the market index minus the FRB/US index runs from \bl{gap:frbus:lo} to \bl{gap:frbus:hi}. The sampling error of the weights is therefore of the same size as the differences between the readings, and the Goldman Sachs and FRB/US readings lie on opposite sides of the 1973--2026 average.
+
+\subsection{What the Indexes Say about Unemployment}\label{sec:activity}
+Policy news identifies how financial variables respond to policy. It does not identify how activity responds. The question I can ask is more modest: what do the indexes say about unemployment a year ahead? I regress the unemployment gap 12 months ahead on its current value and the current reading of each index, 1976--2026, and make recursive out-of-sample forecasts from 1995 (Table~\ref{tab:activity}).
+
+\input{../replication/report/tab_activity}
+
+\textbf{Flows carry information, levels do not.} The three flows (the forward impetus, FCI-G and the FRB/US growth impetus) raise the adjusted $R^2$ by \bl{act:rstar:fi:gain} (forward impetus), \bl{act:rstar:fcig1:gain} (FCI-G) and \bl{act:rstar:gi:gain} (FRB/US growth impetus). The levels of the market, Goldman Sachs and FRB/US indexes add \bl{act:rstar:level:gain}, \bl{act:rstar:gs:gain} and \bl{act:rstar:frbus:gain}. Unemployment a year ahead is associated with what financial conditions have recently done, not with where they stand. The VAR of Section~\ref{sec:var} is consistent with this: its Granger test uses all 12 lags of the level, while this regression uses the current reading alone. At the nominal step the Goldman Sachs level is the exception (Appendix Table~\ref{tab:activitynominal}).
+
+\textbf{The market index's scale is consistent with its yardstick; FCI-G's is not always.} The coefficient on the forward impetus is \bl{act:rstar:fi:coef} (standard error \bl{act:rstar:fi:se}), inside the 90 percent interval of its VAR yardstick, \bl{var:rstar:p12:phi12:lo90} to \bl{var:rstar:p12:phi12:hi90}. FCI-G is in units of GDP growth. With an Okun coefficient of two, a reading of $+1$ should raise unemployment by about 0.5 point after a year. Over 1974--2026 its estimated effect after 12 months, in a projection with four lags of the unemployment gap and of the index (Figure~\ref{fig:fcigscale}), is \bl{fcig:scale:rstar} (standard error \bl{fcig:scale:se:rstar}) for the $\rs$ version; the coefficient of \bl{act:rstar:fcig1:coef} in Table~\ref{tab:activity} is the effect of the current reading alone. For the published FCI-G over 1990--2026 it is only \bl{fcig:scale:published} (standard error \bl{fcig:scale:se:published}), which rejects the claimed 0.5.
+
+\textbf{The forecasting gains are modest.} Out of sample the flows cut the root mean squared error by about 10 percent (ratio \bl{act:rstar:fi:oos:ratio} for the forward impetus and \bl{act:rstar:fcig1:oos:ratio} for FCI-G). No gain is significant at conventional levels (the best Diebold--Mariano $t$ is \bl{act:rstar:best:dm}). The gains come from before 2020, and they reverse in 2021--25, when the tightening of 2022--23 was not followed by higher unemployment. The in-sample result is descriptive: the flows are changes, and the level indexes are not tested in changes. Appendix Tables~\ref{tab:activityreal} and~\ref{tab:activitynominal} show that the $\rs$ versions of the flows have the larger gain than the real versions, which is the only evidence I have that the $\rs$ step improves the indexes' content.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.8\textwidth]{../replication/report/fig_fcig_scale.pdf}
+\caption{Unemployment Response to FCI-G by Horizon}
+\label{fig:fcigscale}
+\begin{flushleft}\footnotesize\textit{Notes:} Local projection of the unemployment gap $h$ months ahead on four lags of the unemployment gap and of FCI-G; sum of the coefficients on FCI-G, 90 percent bands. FCI-G's own claim is a response of 0.5 by month 12.\end{flushleft}
+\end{figure}
+\FloatBarrier
+
+% ============================================================
+\section{Robustness}\label{sec:rob}
+The results rest on one estimate of $\rs$, one VAR, one set of policy-news windows and one sample. I vary each in turn and keep the rest. Table~\ref{tab:robust} reports one row for each variation. In every row the market index's correlation is at least \bl{rb:min:mkt:gs} with the Goldman Sachs index and at least \bl{rb:min:mkt:frbus} with the FRB/US index, the flow's correlation with FCI-G is at least \bl{rb:min:fi:fcig}, and the 90 percent interval of the yardstick lies above zero. The intervals are wide in two places: with the VAR estimated from 1990, the 5th to 95th percentile of the flow's correlation with FCI-G runs from \bl{rb:3:fi:fcig:lo} to \bl{rb:3:fi:fcig:hi}, and with four lags the yardstick of \bl{rb:2:phi12} sits at the bottom of the baseline interval.
+
+\input{../replication/report/tab_robust}
+
+\subsection{The Neutral Rate}\label{sec:robrstar}
+The neutral rate is not observed, and the $\rs$ step could add noise. If the results came from the Laubach--Williams estimate they would vanish with another one. I replace it with the estimate of \citet{kiley2020} in every index. The market index correlates \bl{chk:kiley:mkt} with its baseline, the correlations with the Goldman Sachs and FRB/US indexes are \bl{rb:1:mkt:gs} and \bl{rb:1:mkt:frbus}, and the yardstick is \bl{rb:1:phi12}. The estimate of \citet{kiley2020} is higher after 2008 than the Laubach--Williams estimate (\bl{rstar:ki:post} against \bl{rstar:lw:post} percent over 2009--2016), so conditions read looser: the market index reads \bl{rb:1:latest:market} in September 2026 and the Goldman Sachs index \bl{rb:1:latest:gs}. The choice of $\rs$ moves each reading by less than half a point and leaves the comparison between indexes unchanged.
+
+\subsection{The Dynamics}\label{sec:robvar}
+The yardstick and the flow depend on the VAR. With four lags the yardstick is \bl{rb:2:phi12} and the correlation of the flow with the baseline flow is \bl{chk:p4:fi}; the correlation with FCI-G falls to \bl{rb:2:fi:fcig}. Estimating from 1990 leaves the yardstick at \bl{rb:3:phi12}, with a wider interval (\bl{rb:3:phi12:lo} to \bl{rb:3:phi12:hi}), and the response fades earlier: it is significant from month \bl{var:rstar:p12:from1990:sig:from} to month \bl{var:rstar:p12:from1990:sig:to}, against month \bl{var:rstar:p12:sig:from} to month \bl{var:rstar:p12:sig:to} in the baseline. Ending in 2019 gives \bl{rb:4:phi12}. The response is positive and significant at 12 months in every sample.
+
+\subsection{The Weights}\label{sec:robweights}
+The weights could depend on the policy-news series or on the period. Three variations re-estimate them (Appendix Table~\ref{tab:wvar}). One uses the window change of the two-year yield itself as the policy news. One uses announcements through 2019. One drops announcements from December 2008 to November 2015, when the policy rate was at its lower bound and the news was mostly about the path. The market index stays close to the Goldman Sachs and FRB/US indexes (correlations \bl{rb:5:mkt:gs}, \bl{rb:6:mkt:gs} and \bl{rb:7:mkt:gs} with the Goldman Sachs index). Its level for September 2026 moves from \bl{rb:6:latest:market} to \bl{rb:5:latest:market}, a spread of \bl{rb:spread:weights} points, as wide as the bootstrap interval of Section~\ref{sec:precision} and around the baseline of \bl{rb:0:latest:market}. The readings follow the equity weight, which is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} in the three variations against \bl{w:eq} in the baseline: the smaller the weight, the higher the reading, because equity valuation is high relative to its average today. The yardstick moves between \bl{rb:5:phi12} and \bl{rb:6:phi12}.
+
+\subsection{The Zero Point and House Prices}\label{sec:robzero}
+Each index is measured relative to the mean of its variables over 1973--2026. Taking 1990--2026 as the base instead changes the distances shown in Table~\ref{tab:compare} (the average range since 1990 is already measured that way) and the readings: the market index reads \bl{rstar:latest90:market}, the Goldman Sachs index \bl{rstar:latest90:gs} and the FRB/US index \bl{rstar:latest90:frbus}, shifts of about a point. The FRB/US index with house prices, detrended against a 15-year average, reads \bl{rstar:latest:frbus:hp} against \bl{rstar:latest:frbus} without them.
+\subsection{Limits of the Design}\label{sec:limits}
+The $\rs$ step is the largest effect in the paper, and no outcome validates it; the activity regressions of Appendix~\ref{app:activity} are the only evidence that it improves the content of the flows. The $\rs$ uncertainty is not carried into the intervals. The weights come from announcements since 1996 and are applied to data from 1973, so the earlier episodes extrapolate them, and they assume that the responses reflect policy rather than information effects \citep{nakamura2018}; the weights are estimated in a period when policy did not target financial conditions, and if it came to do so the responses could change, a version of the Lucas-critique concern that \citet{hatzius2010} raise for all indexes. The bootstrap treats the FRB/US and Goldman Sachs weights, the Goldman Sachs conversion and the VAR as fixed. The FRB/US index is my construction with one horizon of four quarters. The VAR is linear and describes the mean of unemployment; \citet{kiley2020ml} finds that tight conditions are associated with sharp deteriorations in activity and loose conditions with modest improvements, and \citet{adrian2019} find that tighter conditions mainly lower the left tail of GDP growth, which I model neither. The Goldman Sachs index and FCI-G are my replications. The readings for September 2026 use $\rs$ estimates through 2026Q2 and interpolate October 2025 for the CPI and unemployment.
+\FloatBarrier
+
+% ============================================================
+\section{Discussion}\label{sec:discussion}
+Three points follow for reading the stance of policy from financial conditions.
+
+\textbf{Direction is robust, level is not.} The indexes agree on how conditions have moved and disagree on where they stand. Whether conditions are tightening or loosening is the same question for every index on a common basis: correlations of 12-month changes are \bl{rstar:mkt:gs:chg} with the Goldman Sachs index and \bl{rstar:mkt:frbus:chg} with the FRB/US index, and the flows agree. Where conditions stand is not settled. The indexes differ by about \bl{rstar:range:long} point on average and by about two in some episodes, and the sampling error of the market index's weights alone is of the same order. A reading of the stance from any one index should come with a range of about a point.
+
+\textbf{The neutral rate changes the answer.} In nominal terms the market index reads \bl{nominal:latest:market} points for September 2026, the Goldman Sachs index \bl{nominal:latest:gs} and the FRB/US index \bl{nominal:latest:frbus}: conditions look easy. Relative to $\rs$ the readings are \bl{rstar:latest:market}, \bl{rstar:latest:gs} and \bl{rstar:latest:frbus}. Rates that look low against the past look much closer to neutral against $\rs$, which at \bl{rstar:lw:latest} percent is below its 1973--2026 average of \bl{rstar:lw:mean}. The same adjustment reverses the picture after 2008, when conditions that looked easy relative to the 1990--2026 average look tight relative to $\rs$.
+
+\textbf{What the results do not show.} There is no ground truth for financial conditions, so I compare indexes with each other and with what they say about unemployment. Zero is the 1973--2026 average of each variable, not a neutral level of conditions. The market index measures the policy-equivalent tightening, and it treats movements that policy did not cause as if it had.
+\FloatBarrier
+
+% ============================================================
+\section{Conclusion}\label{sec:conclusion}
+Financial conditions indexes are built in different ways and often disagree. I put them on a common basis, in common units and in nominal, real and neutral-rate form, and added a market index whose weights come from the responses of the 10-year yield, equity valuation and the dollar to monetary policy news. On a common basis the indexes move together. The market index correlates \bl{rstar:mkt:gs} in levels with the index that practitioners follow once both are real, and its flow tracks the Board's FCI-G. The levels differ by about a point, mostly because of the weights on equity valuation and the dollar, and the market index's own sampling error is of the same size.
+
+The most durable finding is that agreement is greater in direction than in level, and that the market index is one estimate among several, not a standard. Measuring rates relative to the neutral rate changes what conditions are today and reverses their reading after 2008. A statement about the stance of policy from financial conditions should give a range, and it should say relative to what.
+
+\FloatBarrier
+\bibliographystyle{aea}
+\bibliography{references}
+
+\FloatBarrier
+\newpage
+\begin{appendices}
+\renewcommand{\thetable}{\Alph{section}\arabic{table}}
+\renewcommand{\thefigure}{\Alph{section}\arabic{figure}}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+\FloatBarrier
+
+% ============================================================
+\section{Construction and Estimation Details}\label{app:details}
+\textbf{Data.} All series are monthly averages from January 1973 to September 2026, from the public sources in Table~\ref{tab:data}. The BBB spread is Moody's Baa yield less the 10-year yield. Months in which the CPI and unemployment releases are missing (October 2025) are interpolated. The unemployment gap is the unemployment rate less the Congressional Budget Office's natural rate, placed in the middle month of each quarter and interpolated. Expected inflation is the Cleveland Fed's estimate at one and ten years from 1982 and the Livingston Survey's 12-month CPI expectation before, shifted to the Cleveland level by the mean difference over 1982--84 and blended over 1982. CAPE is Shiller's series spliced over 1990--92 in logs to the monthly average of a daily series. The real broad dollar is spliced in 2006 in logs, as are the nominal dollar and the S\&P 500. Case--Shiller home prices before 1987 are Shiller's series.
+
+\textbf{Market index.} Policy news is the first principal component of MP1, MP2, ED2, ED3 and ED4 in the monetary-event windows, scaled by its regression on the two-year yield change so that one unit moves the two-year yield by one percentage point. Unscheduled events with no change in MP1 and March--April 2020 are dropped. Each of the 10-year yield change, the S\&P 500 return and the dollar (DXY) return in the window is regressed on the factor. The residual covariance $\Sigma$ of the three regressions gives $w=\Sigma^{-1}\psi/(\psi'\Sigma^{-1}\psi)$. The S\&P 500 and DXY weights apply to 100 times the log of CAPE and of the real broad dollar, as percent changes in the window and in the index levels agree to first order.
+
+\textbf{Goldman Sachs index.} The weights are the published ones: policy rate 4.4, 10-year yield 45.1, BBB spread 39.6, equity valuation $-4.9$ and dollar 6.0 percent, applied to the demeaned inputs. The conversion to the market index's units is the inverse of the response of a daily replication of the index to policy news, measured from the day before to the day after each announcement because its dollar input is a noon series (\bl{resp:gs} points per unit of news, standard error \bl{se:resp:gs}).
+
+\textbf{FCI-G.} I use the published multipliers of the Board's release. Each of the seven variables enters as the change over three months of its three-month average (rates, in points), 100 times the three-month log change (stock and house prices) or 100 times the log change of the three-month average (the dollar), with the multipliers of the first four quarters for the one-year lookback and the first twelve for the three-year lookback. This replication tracks the published series at \bl{nominal:fcig:pub} in monthly levels from 1990. At the $\rs$ step the stock term is the change in the earnings-yield gap.
+
+\textbf{FRB/US index.} The weights are the cumulative GDP responses at four quarters to a persistent unit shift in each variable, simulated in FRB/US with VAR-based expectations, divided by the response to a persistent one percentage point rise in the funds rate. The weight on the policy rate is its direct effect with expectations of future rates held fixed. House prices enter as 100 times the log of the price-to-rent ratio relative to its trailing 15-year average. The growth impetus applies the differences of the quarterly responses at horizons $m/3+4$ and $m/3$ to the changes of the last 12 months, the form of FCI-G.
+
+\textbf{NFCI and ANFCI.} The weekly index at the last observation of each month; the conversion is the response of the weekly change to the sum of policy news in the week (Friday-dated weeks; heteroskedasticity- and autocorrelation-robust standard errors with four lags).
+
+\textbf{Gaps to $\rs$.} For the policy rate, the 10-year yield and the Baa and mortgage yields, the input is the real rate less $\rs$. Equity valuation becomes $-(100/\overline{E/P})(E/P-\rs)$, where $E/P=100/\text{CAPE}$ and $\overline{E/P}$ is its 1973--2026 mean, so that a one-point rise of CAPE (in logs) has the same weight as before when $E/P$ is at its mean. $\rs$ is the one-sided, full-sample estimate (New York Fed's Laubach--Williams estimate, data through 2026Q2) placed in the middle month of each quarter.
+
+\textbf{VAR and bootstrap.} The VAR has a constant, the 12 monthly dummies for 2020 and $p$ lags of the unemployment gap and the index. Because unemployment is first, the response of unemployment to an innovation that raises the index by one unit on impact is the moving-average coefficient $\Phi(h)$ and does not depend on the residual covariance. The bootstrap resamples blocks of 12 consecutive residual pairs, simulates the VAR recursively from the actual initial values with the dummies fixed, and re-estimates; bands are percentiles of the \bl{boot:reps} draws. The same draws give the intervals of the flow's correlation with FCI-G. The weights bootstrap resamples announcements with replacement and recomputes the policy-news factor and the weights each time. Draws use the seed in \texttt{lib/config.py}.
+
+\begin{table}[tp]\centering\small
+\caption{Data Sources}\label{tab:data}
+\begin{tabular}{p{0.38\textwidth}p{0.13\textwidth}p{0.42\textwidth}}\toprule
+Series & Frequency & Source \\\midrule
+Federal funds rate; 10-year yield; Baa yield; 30-year mortgage rate & Monthly & FRED FEDFUNDS, GS10, BAA, MORTGAGE30US \\
+Real broad dollar; nominal broad dollar & Monthly & FRED RTWEXBGS, TWEXBPA; DTWEXBGS, TWEXBMTH (spliced in 2006) \\
+CPI; CPI rent; Case--Shiller home prices; S\&P 500 & Monthly & FRED CPIAUCSL, CUUR0000SEHA, CSUSHPISA, SP500; Shiller's data before the FRED start \\
+Unemployment rate; natural rate of unemployment & Monthly; quarterly & FRED UNRATE; CBO, FRED NROU \\
+Expected inflation, 1 and 10 years & Monthly & Cleveland Fed, FRED EXPINF1YR, EXPINF10YR; before 1982, Livingston Survey (Philadelphia Fed) \\
+$\rs$, Laubach--Williams & Quarterly & New York Fed, one-sided estimates \\
+$\rs$, Kiley & Quarterly & One-sided estimates of the author \\
+CAPE & Monthly & Shiller, spliced to the monthly average of a daily CAPE constructed by the repository's daily workflow \\
+NFCI, ANFCI & Weekly & Chicago Fed, FRED \\
+FCI-G and its multipliers & Monthly & Federal Reserve Board, FEDS Notes data release \\
+FRB/US simulations & Quarterly & Run for this paper's companion work with the public FRB/US package \\
+Futures, yields, S\&P 500 and DXY in the window & Event & U.S.\ Monetary Policy Event-Study Database, ``monetary events'' \citep{acosta2025} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\input{../replication/report/tab_latestgroups}
+\input{../replication/report/tab_wvar}
+\input{../replication/report/tab_var_all}
+\input{../replication/report/tab_checks}
+
+\section{Other Versions of the Activity Regressions}\label{app:activity}
+Tables~\ref{tab:activityreal} and~\ref{tab:activitynominal} repeat Table~\ref{tab:activity} for the real and nominal versions. The flows carry the information at every step, and in each of the three flows the gain in adjusted $R^2$ is at least as large for the $\rs$ version as for the real version.
+
+\input{../replication/report/tab_activity_real}
+\input{../replication/report/tab_activity_nominal}
+
+\section{Current Pressure}\label{app:cp}
+The level of the market index is the eventual effect of current conditions. The part already passed through to unemployment, which I call current pressure, weights past levels by the VAR's response profile and lags the level by several months (Figure~\ref{fig:cp}). It correlates \bl{chk:cp} with the level and adds nothing to the year-ahead regressions (Tables~\ref{tab:activity} to~\ref{tab:activitynominal}).
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.93\textwidth]{../replication/report/fig_current_pressure.pdf}
+\caption{Market Index: Level, Current Pressure and Forward Impetus}
+\label{fig:cp}
+\begin{flushleft}\footnotesize\textit{Notes:} Relative to $\rs$, 12-lag VAR, in two-year-yield points.\end{flushleft}
+\end{figure}
+
+\end{appendices}
+\end{document}

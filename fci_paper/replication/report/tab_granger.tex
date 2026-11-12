@@ -1,0 +1,18 @@
+\begin{table}[tp]\centering\small
+\caption{What the Granger Test on the Level Picks Up}\label{tab:granger}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+ & All 12 lags & Current level (sum of lags) & 11 changes \\
+\midrule
+Market index, nominal & 1.9e$-$05 & 0.27 & 4.6e$-$05 \\
+Market index, relative to $r^*$ & 6.0e$-$09 & 0.17 & 1.5e$-$07 \\
+GS, relative to $r^*$ & 3.0e$-$11 & 0.15 & 3.7e$-$09 \\
+FRB/US index, relative to $r^*$ & 4.2e$-$08 & 0.35 & 4.6e$-$07 \\
+FCI-G, relative to $r^*$ & 6.3e$-$11 & 0.00 & 0.121 \\
+NFCI & 2.1e$-$13 & 0.00 & 1.6e$-$04 \\
+ANFCI & 1.4e$-$14 & 0.00 & 6.6e$-$04 \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} $p$-values of tests in the unemployment equation of the two-variable VAR (12 lags, 1973--2026): the 12 lags of the index jointly (the Granger test); their sum, which is the coefficient on the current level once the lags are rewritten as the level and 11 one-month changes; and the 11 changes jointly.\end{flushleft}
+\end{table}
