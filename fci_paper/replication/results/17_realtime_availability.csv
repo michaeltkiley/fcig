@@ -1,0 +1,9 @@
+input,real_time_version_obtainable,earliest_vintage,vintages_used,treatment,source
+Unemployment rate (UNRATE),yes,1962 (ALFRED),1977-01 vintages; origins from 1976-10,vintage 2 months after the origin; outcomes from vintage 14 months after,ALFRED
+Payroll employment (PAYEMS),yes,1956 (ALFRED),1977-01 vintages; origins from 1976-10,as unemployment,ALFRED
+Core PCE price index (PCEPILFE),"yes, from 2001",2000-10 (ALFRED),2001-06 vintages; origins from 2001-03,"as unemployment; no pre-2001 origins, so no 1995 out-of-sample test",ALFRED
+CBO natural rate of unemployment (NROU),partly,2011-03 (ALFRED),origins from 2010-12,earlier origins use the ex-post series,ALFRED
+Laubach-Williams r*,partly,2005Q1 (NY Fed real-time file),origins from 2005-07,"final point of each vintage, step function; none Sep 2020-Apr 2023; three mistyped release dates corrected",NY Fed
+Cleveland Fed expected inflation,no,none (current file only),,revised series kept,
+Market-index weights,no,none,,unchanged (estimated on the full sample),
+Kiley r*; Shiller CAPE earnings; FRB/US,no,none,,unchanged,

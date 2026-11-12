@@ -1,0 +1,39 @@
+# Policy-signal sensitivity (step 21): result
+
+Question (colleague report, p. 2): how much of the dollar-over-equity contrast, the disagreement, and the historical readings depends on what is called policy news? Four definitions, all with the same FRB/US weights b (4 quarters, persistent): the futures factor (baseline), the two-year yield change in the window (same 253 announcements), the futures factor through 2019 (201), and the futures factor outside the lower-bound years (197). Intervals: 5th-95th percentiles over announcement-bootstrap draws; contrasts on common draws.
+
+## Headline
+| | baseline | two-year yield | to 2019 | no lower bound |
+|---|---|---|---|---|
+| market weights: 10-year, equity, dollar | 0.609, -0.051, 0.065 | 0.925, -0.027, 0.070 | 0.613, -0.061, 0.053 | 0.986, -0.039, 0.058 |
+| b4'psi (FRB/US reading of the usual response) | 0.975 [0.87, 1.09] | 0.949 [0.85, 1.08] | 0.939 [0.82, 1.10] | 0.895 [0.80, 1.00] |
+| market dollar/equity ratio of effects | 0.995 [0.34, 2.30] | 2.06 [0.82, 4.81] | 0.68 [0.10, 2.12] | 1.16 [0.45, 2.82] |
+| ratio of ratios (FRB/US over market) | 2.49 [1.02, 6.81] | 1.20 [0.52, 3.01] | 3.64 [0.89, 18.5] | 2.13 [0.81, 5.43] |
+| contrast, dollar minus equity effect, FRB/US, points | 0.24 | 0.25 | 0.25 | 0.26 |
+| contrast, market, points | -0.00 | 0.14 | -0.10 | 0.03 |
+| FRB/US minus market contrast, points | 0.24 [-0.01, 0.44] | 0.11 [-0.08, 0.28] | 0.35 [0.03, 0.57] | 0.23 [0.01, 0.40] |
+
+- The FRB/US side is the same under all four (dollar movement worth about 0.41 points, equity movement about 0.17 points after normalization). All of the variation is on the market side: the market's dollar-to-equity ratio runs from 0.7 to 2.1 (the market weight on equity falls from -0.051 to -0.027 under the two-year signal).
+- Direction is the same in every definition (FRB/US ratio above the market's), the size is not: 1.2 to 3.6. "More than twice" is specific to the futures factor; with the two-year yield on the same announcements the ratio of ratios is 1.20 [0.52, 3.01], paired difference -1.29 [-5.18, 0.13] (the share of draws with a smaller ratio under the two-year signal is 94 percent).
+- Contrast in points: the FRB/US reading of the dollar-led minus the equity-led tightening is 0.24-0.26 points in all definitions; the market's is -0.10 to +0.14; the difference is 0.11 (two-year) to 0.35 (to 2019). Baseline 0.24 [-0.01, 0.44]: the interval includes zero at 5 percent on the lower side.
+
+## Why the equity weight falls under the two-year yield (part C, D)
+- The two signals correlate 0.90 in the windows (R2 0.80); 45 percent of the two-year change's standard deviation is not in the factor.
+- That residual moves the 10-year yield (correlation 0.52 with the residual of the 10-year regression) and the dollar (0.37), not equities (0.02). Regressing each asset on both signals: equity loads on the futures factor (t = -2.2) and not on the two-year yield (t = 0.2); the 10-year and the dollar load on the two-year yield (t = 8.5, 4.9) and, for the dollar, not on the factor (t = -0.1). The equity response per unit of the signal falls from -7.8 to -6.1 and the equity residual variance rises [verified]. [inference: equities respond to the longer-horizon content of the futures factor (ED3-ED4); the two-year yield carries near-term and maturity-specific variation that moves yields and the dollar].
+- Switching the response vector and the residual covariance from the baseline to the two-year signal: equity weight -0.051 to -0.027 (change +0.025 [0.009, 0.035]); response vector first +0.012, covariance then +0.013; covariance first +0.014, response vector then +0.011: each accounts for about half and the order matters by 0.001 [-0.002, 0.003]. The ratio of ratios falls by 0.7 (response first) and 0.6 (covariance second), 0.74 and 0.54 in the other order: the interaction is small. Response vector: the equity response (psi_eq) alone moves the ratio of ratios from 2.49 to 1.57; covariance: the 10-year residual sd alone to 3.19, the dollar sd to 1.83, the correlation structure to 2.34.
+
+## Carried through
+- Mean absolute difference on 12-month changes 1996-2026: 0.25 points (25 basis points) [0.12, 0.54], ratio to mean |market move| 0.33 [0.18, 0.64]; two-year 0.24 pts, 0.36; to 2019 0.36 pts, 0.42; no lower bound 0.30 pts, 0.39. Differences from baseline: ratio +0.03 [-0.26, 0.38] (two-year); +0.09 [-0.02, 0.17]; +0.06 [-0.17, 0.28]. "A quarter to a third" becomes "a quarter to 0.4".
+- Held-out announcements: ratio 0.185 [0.10, 0.36] baseline; 0.18 (two-year); 0.30 [0.17, 0.51] (to 2019; difference from baseline +0.11 [0.03, 0.18]); 0.20 (no lower bound).
+- Episodes (market reading, FRB/US reading, D, 12-month changes): 
+  - 1998-2001: baseline -0.06, +0.16, +0.22; two-year -0.07, +0.16, +0.23; to 2019 -0.14, +0.16, +0.30; no lower bound -0.18, +0.17, +0.35. Opposite small signs, D positive, dollar contribution above the equity contribution, in all four. Differences across definitions are within [-0.12, +0.13] with intervals including zero (except the no-lower-bound FRB/US +0.014 [0.006, 0.025]).
+  - 2022-24: baseline 1.02, 1.01, -0.01; two-year 1.21 vs 1.04 (D -0.17 [-0.37, 0.07]); to 2019 1.04, 1.05, +0.01; no lower bound 1.30, 1.10, -0.20. All four: both readings above 1 (tightening); exact agreement (|D| < 0.05) only in baseline and to 2019. Under the two-year and no-lower-bound signals the market reading is higher by 0.19 [0.03, 0.35] and 0.28 [0.02, 0.54]; the difference comes from the 10-year yield (contribution -0.31 and -0.33; market weight 0.93-0.99 against 0.58 for FRB/US), not from the equity-dollar offset (contributions +0.03 and +0.10 under the two-year signal). The equity-dollar offset appears in baseline, to 2019 and no lower bound, not under the two-year signal.
+  - Survival: the 1998-2001 conclusion (opposite small signs, D positive, dollar-led) holds in all four definitions; the 2022-24 conclusion "both tighten by about one point" holds in all four; "agree exactly because equity and dollar contributions offset" holds in the futures-factor definitions only; the 10-year weight (imprecise: 0.13 to 1.13) is what drives the disagreement under the other definitions.
+- FCI-G (part F): per 1 percent, the dollar multiplier is 2.25 times the equity multiplier in FCI-G and 3.18 times in FRB/US; ratio of ratios against the market: baseline 1.76 [0.72, 4.83] (FRB/US 2.49); two-year 0.85 [0.37, 2.13]; to 2019 2.58; no lower bound 1.51. FCI-G puts the dollar about twice the weight of equities, so it corroborates the direction under the futures factors but not under the two-year signal. FCI-G on the FRB/US yardstick reads the usual response at 1.16 [1.03, 1.29] [inference: yardstick mismatch].
+
+## Reading for the paper
+- Keep the ratio of ratios, but report it with the definitions: 2.49 (futures factor) and 1.20 (two-year yield on the same announcements); the contrast in points (FRB/US dollar-led minus equity-led about 0.24 points; the market's -0.00 to +0.14 across definitions).
+- The robust statement is about direction and about what moves the number: FRB/US's dollar-over-equity ratio is above the market's under every definition, the market's ratio depends on the signal because the equity response is tied to the futures factor, and persistence of asset paths (step 18) matters much less than the definition of policy news.
+- The 1998-2001 reading is robust; the 2022-24 offset story is baseline-specific, and what survives is that both readings are about one point.
+
+Scalars: `scalars_21_signal.csv` (prefix by definition: `baseline_`, `two_year_`, `to_2019_`, `no_lower_bound_`). Tables: `21_defs`, `21_paired`, `21_counterfactual`, `21_counterfactual_steps`, `21_signal_content(_both)`, `21_sigma`, `21_disagreement`, `21_episodes`, `21_survival`, `21_fcig(_weights)`.

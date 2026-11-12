@@ -1,0 +1,15 @@
+definition,quantity,point,lo,hi
+baseline,ror_fcig,1.76448,0.723409,4.82976
+baseline,ror_frbus,2.52502,1.03522,6.9115
+baseline,bpsi_fcig_on_frbus_yardstick,1.13282,1.0131,1.26814
+two_year,ror_fcig,0.852353,0.36526,2.13151
+two_year,ror_frbus,1.21974,0.522695,3.05024
+two_year,bpsi_fcig_on_frbus_yardstick,1.08555,0.970594,1.22892
+to_2019,ror_fcig,2.58383,0.634083,13.1208
+to_2019,ror_frbus,3.69752,0.907388,18.7761
+to_2019,bpsi_fcig_on_frbus_yardstick,1.09233,0.952063,1.2786
+no_lower_bound,ror_fcig,1.50854,0.572594,3.85182
+no_lower_bound,ror_frbus,2.15875,0.819395,5.51204
+no_lower_bound,bpsi_fcig_on_frbus_yardstick,1.04925,0.942843,1.17043
+all,m_usd_over_m_eq_fcig,2.25156,,
+all,m_usd_over_m_eq_frbus,3.22203,,

@@ -1,0 +1,17 @@
+\begin{table}[tbp]\centering\small
+\caption{Can Realized Activity Tell the Two Weightings Apart?}\label{tab:comp}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+ & $n$ & Market index $\beta$ [90\%] & Composition $\gamma$ [90\%] & $\gamma-\beta$ [90\%] \\
+\midrule
+Unemployment gap, 12 months: 1976--2026 & 556 & 0.19 [0.05, 0.33] & $-$0.26 [$-$0.94, 0.43] & $-$0.45 [$-$1.01, 0.11] \\
+Unemployment gap, 12 months: 1996--2026 & 318 & 0.01 [$-$0.21, 0.22] & $-$1.19 [$-$2.50, 0.13] & $-$1.19 [$-$2.31, $-$0.07] \\
+Unemployment gap, 12 months: Excluding 2008--15 & 436 & 0.29 [0.15, 0.43] & 0.32 [$-$0.13, 0.77] & 0.03 [$-$0.30, 0.37] \\
+Real GDP growth, four quarters: 1976--2026 & 186 & $-$0.16 [$-$0.47, 0.16] & 0.87 [$-$0.78, 2.51] & 1.03 [$-$0.39, 2.44] \\
+Real GDP growth, four quarters: 1996--2026 & 106 & 0.31 [$-$0.13, 0.75] & 1.81 [$-$0.76, 4.38] & 1.50 [$-$0.70, 3.71] \\
+Real GDP growth, four quarters: Excluding 2008--15 & 146 & $-$0.33 [$-$0.61, $-$0.04] & 0.26 [$-$1.21, 1.72] & 0.58 [$-$0.69, 1.86] \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Local projections of the 12-month-ahead change in the unemployment gap (four-quarter-ahead GDP growth) on own lags and $y=\cdots+\beta M+\gamma D$, where $M$ is the 12-month change of the market index relative to $r^*$ and $D$ the 12-month change of the normalized FRB/US reading less the market reading, computed on the same changes (HAC standard errors, 18 lags, joint covariance of the coefficients). If the market reading is right, $\gamma=0$. If the normalized FRB/US reading $M+D$ is right, $\gamma=\beta$. A failure to reject is not evidence for either.\end{flushleft}
+\end{table}

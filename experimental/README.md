@@ -2,6 +2,8 @@
 
 Entry point: `PROJECT_MEMORY.md` (section 9 = where we are). Glossary of index names: root `CLAUDE.md`. Two notes use the market index: Note A, the FCI note and replication package, `../fci_note/`; Note B, the transmission note, `fin_shocks/paper/`.
 
+Note A as a paper (clean package, separate from this folder): `../fci_paper/` (`README.md`, decisions in `FP_QA.md`).
+
 | Item | What it is | Status |
 |---|---|---|
 | `PROJECT_MEMORY.md` | Decisions, results, where things are, next steps | current |

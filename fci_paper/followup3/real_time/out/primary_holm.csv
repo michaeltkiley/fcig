@@ -1,0 +1,9 @@
+version,outcome,form,n_oos,rmse_idx_given_ff,cw_idx_given_ff,p,p_holm
+rev,du,flow,329,0.952,1.96,0.025,0.125
+rev,du,mixed,329,0.921,2.377,0.009,0.052
+rev,pay,flow,330,0.986,1.835,0.033,0.133
+rev,pay,mixed,330,0.975,1.52,0.064,0.193
+rt1,du,flow,329,0.947,1.971,0.024,0.073
+rt1,du,mixed,329,0.916,2.39,0.008,0.042
+rt1,pay,flow,330,0.946,2.731,0.003,0.019
+rt1,pay,mixed,330,0.938,2.316,0.01,0.042

@@ -1,0 +1,13 @@
+\begin{table}[tbp]\centering\small
+\caption{Does the Flow Survive Removing Activity?}\label{tab:purge}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Relative to $r^*$ & Unpurged & Purged, full sample & Purged, recursive \\
+\midrule
+Market index & 0.57 [0.22, 0.84] & 0.32 [0.10, 0.51] & 0.19 [0.11, 0.33] \\
+GS & 0.71 [0.31, 0.96] & 0.43 [0.17, 0.63] & 0.25 [0.15, 0.43] \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} $\Phi(12)$ with 90 percent block-bootstrap interval from the two-variable VAR (12 lags, January 1983 to September 2026). Purged: each input variable (10-year yield, equity valuation, dollar; GS inputs for GS) is regressed on current and 12 lags of the unemployment gap and 12-month core PCE inflation, on the full sample or recursively (expanding window), and the index is rebuilt from the residuals with unchanged weights.\end{flushleft}
+\end{table}

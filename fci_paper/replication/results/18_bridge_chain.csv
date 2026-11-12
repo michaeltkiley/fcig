@@ -1,0 +1,15 @@
+form,stage,share,lo,hi
+level,weights_3assets_nominal,0.983952,0.177228,1.5554
+level,policy_nominal,-0.0182885,-0.0366106,-0.00302153
+level,spreads_nominal,0.0342333,-0.0298969,0.195317
+level,housing_nominal,0.0722503,-0.0226413,0.339371
+level,real_transformation,-0.0493727,-0.485087,0.444724
+level,rstar_equity_transformation,-0.0134485,-0.0682007,0.069593
+level,rstar_other_transformation,-0.00932569,-0.175668,0.0982366
+chg12,weights_3assets_nominal,0.519538,0.093727,0.83275
+chg12,policy_nominal,-0.00236108,-0.01078,0.00856352
+chg12,spreads_nominal,0.177572,-0.0399742,0.581884
+chg12,housing_nominal,0.0834544,0.000372693,0.232405
+chg12,real_transformation,-0.0174914,-0.114578,0.212849
+chg12,rstar_equity_transformation,0.216087,-0.0165729,0.337567
+chg12,rstar_other_transformation,0.023201,-0.0544863,0.088943

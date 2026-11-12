@@ -1,0 +1,1072 @@
+outcome,h,family,A,B,sub,n,ratio_AoverB
+ugap,6,Market level,rstar,nominal,1995-2007,156,0.9768236008222485
+ugap,6,Market level,rstar,nominal,2008-16,108,0.9817728391327056
+ugap,6,Market level,rstar,nominal,2017-19,30,1.2588308838323303
+ugap,6,Market level,rstar,nominal,2021-26,60,0.9741495759615917
+ugap,6,Market level,rstar,real,1995-2007,156,1.03073674150837
+ugap,6,Market level,rstar,real,2008-16,108,0.9948120119939263
+ugap,6,Market level,rstar,real,2017-19,30,1.2060263697066576
+ugap,6,Market level,rstar,real,2021-26,60,0.9764382182138971
+ugap,6,Market level,real,nominal,1995-2007,156,0.9476945581592199
+ugap,6,Market level,real,nominal,2008-16,108,0.9868928272839348
+ugap,6,Market level,real,nominal,2017-19,30,1.043783880230178
+ugap,6,Market level,real,nominal,2021-26,60,0.9976561320423408
+ugap,6,Market forward impetus,rstar,nominal,1995-2007,156,0.9435249404879258
+ugap,6,Market forward impetus,rstar,nominal,2008-16,108,0.8788212430642851
+ugap,6,Market forward impetus,rstar,nominal,2017-19,30,0.9715357371889217
+ugap,6,Market forward impetus,rstar,nominal,2021-26,60,0.9490370053165422
+ugap,6,Market forward impetus,rstar,real,1995-2007,156,0.9893714409435427
+ugap,6,Market forward impetus,rstar,real,2008-16,108,0.9063574958875394
+ugap,6,Market forward impetus,rstar,real,2017-19,30,0.9113560039098186
+ugap,6,Market forward impetus,rstar,real,2021-26,60,0.9574327619421724
+ugap,6,Market forward impetus,real,nominal,1995-2007,156,0.9536609825609137
+ugap,6,Market forward impetus,real,nominal,2008-16,108,0.9696187730027104
+ugap,6,Market forward impetus,real,nominal,2017-19,30,1.066033178056572
+ugap,6,Market forward impetus,real,nominal,2021-26,60,0.9912309699862376
+ugap,6,GS level,rstar,nominal,1995-2007,156,1.1392288793209855
+ugap,6,GS level,rstar,nominal,2008-16,108,1.0212455104589397
+ugap,6,GS level,rstar,nominal,2017-19,30,1.534889086716397
+ugap,6,GS level,rstar,nominal,2021-26,60,1.1611105883719421
+ugap,6,GS level,rstar,real,1995-2007,156,1.0205346163754165
+ugap,6,GS level,rstar,real,2008-16,108,0.99560642957793
+ugap,6,GS level,rstar,real,2017-19,30,1.2962769601386699
+ugap,6,GS level,rstar,real,2021-26,60,0.9721248545230984
+ugap,6,GS level,real,nominal,1995-2007,156,1.1163059645807307
+ugap,6,GS level,real,nominal,2008-16,108,1.0257522250954918
+ugap,6,GS level,real,nominal,2017-19,30,1.1840749576789527
+ugap,6,GS level,real,nominal,2021-26,60,1.194404795813554
+ugap,6,FRB/US level,rstar,nominal,1995-2007,156,0.9580360177933861
+ugap,6,FRB/US level,rstar,nominal,2008-16,108,0.9696942067491556
+ugap,6,FRB/US level,rstar,nominal,2017-19,30,1.3031065185200625
+ugap,6,FRB/US level,rstar,nominal,2021-26,60,1.0029949412454675
+ugap,6,FRB/US level,rstar,real,1995-2007,156,1.0036652958512957
+ugap,6,FRB/US level,rstar,real,2008-16,108,0.994934142553388
+ugap,6,FRB/US level,rstar,real,2017-19,30,1.212068489007654
+ugap,6,FRB/US level,rstar,real,2021-26,60,0.9978005985892939
+ugap,6,FRB/US level,real,nominal,1995-2007,156,0.9545373559825961
+ugap,6,FRB/US level,real,nominal,2008-16,108,0.9746315512507623
+ugap,6,FRB/US level,real,nominal,2017-19,30,1.0751096413594112
+ugap,6,FRB/US level,real,nominal,2021-26,60,1.0052057922830648
+ugap,6,FRB/US growth impetus,rstar,nominal,1995-2007,156,0.9648315745971197
+ugap,6,FRB/US growth impetus,rstar,nominal,2008-16,108,0.9215297598906224
+ugap,6,FRB/US growth impetus,rstar,nominal,2017-19,30,1.0432807100126995
+ugap,6,FRB/US growth impetus,rstar,nominal,2021-26,60,0.9286541447653087
+ugap,6,FRB/US growth impetus,rstar,real,1995-2007,156,0.946081012177025
+ugap,6,FRB/US growth impetus,rstar,real,2008-16,108,0.9172492797796709
+ugap,6,FRB/US growth impetus,rstar,real,2017-19,30,0.9840588555360192
+ugap,6,FRB/US growth impetus,rstar,real,2021-26,60,0.9773432512284354
+ugap,6,FRB/US growth impetus,real,nominal,1995-2007,156,1.01981919326015
+ugap,6,FRB/US growth impetus,real,nominal,2008-16,108,1.0046666486475515
+ugap,6,FRB/US growth impetus,real,nominal,2017-19,30,1.060181211869103
+ugap,6,FRB/US growth impetus,real,nominal,2021-26,60,0.9501821837906707
+ugap,6,FCI-G 1yr,rstar,nominal,1995-2007,156,0.9412385698313939
+ugap,6,FCI-G 1yr,rstar,nominal,2008-16,108,0.8970700436248967
+ugap,6,FCI-G 1yr,rstar,nominal,2017-19,30,1.089115408476082
+ugap,6,FCI-G 1yr,rstar,nominal,2021-26,60,1.0512565353213963
+ugap,6,FCI-G 1yr,rstar,real,1995-2007,156,0.9828790741416936
+ugap,6,FCI-G 1yr,rstar,real,2008-16,108,0.9335287885085708
+ugap,6,FCI-G 1yr,rstar,real,2017-19,30,1.0063853299061933
+ugap,6,FCI-G 1yr,rstar,real,2021-26,60,0.9546550403992863
+ugap,6,FCI-G 1yr,real,nominal,1995-2007,156,0.9576341531671507
+ugap,6,FCI-G 1yr,real,nominal,2008-16,108,0.960945237755419
+ugap,6,FCI-G 1yr,real,nominal,2017-19,30,1.082205171430311
+ugap,6,FCI-G 1yr,real,nominal,2021-26,60,1.10118994907491
+ugap,6,FCI-G 3yr,rstar,nominal,1995-2007,156,1.1537967614129994
+ugap,6,FCI-G 3yr,rstar,nominal,2008-16,108,0.89063412296866
+ugap,6,FCI-G 3yr,rstar,nominal,2017-19,30,1.0146875674734668
+ugap,6,FCI-G 3yr,rstar,nominal,2021-26,60,1.2330198461737603
+ugap,6,FCI-G 3yr,rstar,real,1995-2007,156,1.1091585493864726
+ugap,6,FCI-G 3yr,rstar,real,2008-16,108,0.8969677747754657
+ugap,6,FCI-G 3yr,rstar,real,2017-19,30,0.9525691507903628
+ugap,6,FCI-G 3yr,rstar,real,2021-26,60,1.0624774562524215
+ugap,6,FCI-G 3yr,real,nominal,1995-2007,156,1.0402451137857776
+ugap,6,FCI-G 3yr,real,nominal,2008-16,108,0.9929388190022866
+ugap,6,FCI-G 3yr,real,nominal,2017-19,30,1.0652114511913
+ugap,6,FCI-G 3yr,real,nominal,2021-26,60,1.1605138903585561
+ugap,12,Market level,rstar,nominal,1995-2007,156,0.9736385140551148
+ugap,12,Market level,rstar,nominal,2008-16,108,0.9681429818876142
+ugap,12,Market level,rstar,nominal,2017-19,24,1.2241736923665139
+ugap,12,Market level,rstar,nominal,2021-26,54,1.0147353333560951
+ugap,12,Market level,rstar,real,1995-2007,156,1.0253187437404592
+ugap,12,Market level,rstar,real,2008-16,108,0.9926623662190054
+ugap,12,Market level,rstar,real,2017-19,24,1.1498826291845583
+ugap,12,Market level,rstar,real,2021-26,54,1.0004433420227943
+ugap,12,Market level,real,nominal,1995-2007,156,0.9495959378477662
+ugap,12,Market level,real,nominal,2008-16,108,0.9752993715025339
+ugap,12,Market level,real,nominal,2017-19,24,1.064607518451374
+ugap,12,Market level,real,nominal,2021-26,54,1.0142856579008301
+ugap,12,Market forward impetus,rstar,nominal,1995-2007,156,0.977293430163423
+ugap,12,Market forward impetus,rstar,nominal,2008-16,108,0.9300502404811265
+ugap,12,Market forward impetus,rstar,nominal,2017-19,24,0.9911655584487317
+ugap,12,Market forward impetus,rstar,nominal,2021-26,54,0.9131663605807295
+ugap,12,Market forward impetus,rstar,real,1995-2007,156,0.9913281805600284
+ugap,12,Market forward impetus,rstar,real,2008-16,108,0.931441783314269
+ugap,12,Market forward impetus,rstar,real,2017-19,24,0.9934009460100077
+ugap,12,Market forward impetus,rstar,real,2021-26,54,0.9255539857929503
+ugap,12,Market forward impetus,real,nominal,1995-2007,156,0.9858424781300207
+ugap,12,Market forward impetus,real,nominal,2008-16,108,0.9985060334869336
+ugap,12,Market forward impetus,real,nominal,2017-19,24,0.9977497630032924
+ugap,12,Market forward impetus,real,nominal,2021-26,54,0.9866159884756934
+ugap,12,GS level,rstar,nominal,1995-2007,156,1.064082813599632
+ugap,12,GS level,rstar,nominal,2008-16,108,0.9981830539611757
+ugap,12,GS level,rstar,nominal,2017-19,24,1.5076956691189798
+ugap,12,GS level,rstar,nominal,2021-26,54,1.2862941672725474
+ugap,12,GS level,rstar,real,1995-2007,156,1.0185917339494779
+ugap,12,GS level,rstar,real,2008-16,108,0.9958390230332835
+ugap,12,GS level,rstar,real,2017-19,24,1.2229328309683567
+ugap,12,GS level,rstar,real,2021-26,54,1.00233714339022
+ugap,12,GS level,real,nominal,1995-2007,156,1.0446607587063048
+ugap,12,GS level,real,nominal,2008-16,108,1.0023538251400839
+ugap,12,GS level,real,nominal,2017-19,24,1.2328523946201846
+ugap,12,GS level,real,nominal,2021-26,54,1.2832949230254955
+ugap,12,FRB/US level,rstar,nominal,1995-2007,156,0.9944103792188342
+ugap,12,FRB/US level,rstar,nominal,2008-16,108,0.947493800202652
+ugap,12,FRB/US level,rstar,nominal,2017-19,24,1.2289620723835113
+ugap,12,FRB/US level,rstar,nominal,2021-26,54,1.0538882326935912
+ugap,12,FRB/US level,rstar,real,1995-2007,156,1.0087078460066463
+ugap,12,FRB/US level,rstar,real,2008-16,108,0.994390273802418
+ugap,12,FRB/US level,rstar,real,2017-19,24,1.1293716946742969
+ugap,12,FRB/US level,rstar,real,2021-26,54,1.020689765378712
+ugap,12,FRB/US level,real,nominal,1995-2007,156,0.9858259585821465
+ugap,12,FRB/US level,real,nominal,2008-16,108,0.9528389659118044
+ugap,12,FRB/US level,real,nominal,2017-19,24,1.0881821088476418
+ugap,12,FRB/US level,real,nominal,2021-26,54,1.0325255218979896
+ugap,12,FRB/US growth impetus,rstar,nominal,1995-2007,156,0.9959410019878916
+ugap,12,FRB/US growth impetus,rstar,nominal,2008-16,108,0.9739682779490457
+ugap,12,FRB/US growth impetus,rstar,nominal,2017-19,24,0.9898382508087136
+ugap,12,FRB/US growth impetus,rstar,nominal,2021-26,54,0.9127627324384915
+ugap,12,FRB/US growth impetus,rstar,real,1995-2007,156,0.9529967073368285
+ugap,12,FRB/US growth impetus,rstar,real,2008-16,108,0.9460965346242601
+ugap,12,FRB/US growth impetus,rstar,real,2017-19,24,1.0019742494597628
+ugap,12,FRB/US growth impetus,rstar,real,2021-26,54,0.9686028571450993
+ugap,12,FRB/US growth impetus,real,nominal,1995-2007,156,1.0450623746340866
+ugap,12,FRB/US growth impetus,real,nominal,2008-16,108,1.0294597245680164
+ugap,12,FRB/US growth impetus,real,nominal,2017-19,24,0.9878879136289254
+ugap,12,FRB/US growth impetus,real,nominal,2021-26,54,0.9423498244975311
+ugap,12,FCI-G 1yr,rstar,nominal,1995-2007,156,0.9824053322034081
+ugap,12,FCI-G 1yr,rstar,nominal,2008-16,108,0.9424239205435817
+ugap,12,FCI-G 1yr,rstar,nominal,2017-19,24,1.0357226769179746
+ugap,12,FCI-G 1yr,rstar,nominal,2021-26,54,1.0866634930150458
+ugap,12,FCI-G 1yr,rstar,real,1995-2007,156,0.9986727208189776
+ugap,12,FCI-G 1yr,rstar,real,2008-16,108,0.9556392830309047
+ugap,12,FCI-G 1yr,rstar,real,2017-19,24,1.0042829070176071
+ugap,12,FCI-G 1yr,rstar,real,2021-26,54,0.9332447255906343
+ugap,12,FCI-G 1yr,real,nominal,1995-2007,156,0.9837109913223331
+ugap,12,FCI-G 1yr,real,nominal,2008-16,108,0.9861711811956816
+ugap,12,FCI-G 1yr,real,nominal,2017-19,24,1.0313056905386686
+ugap,12,FCI-G 1yr,real,nominal,2021-26,54,1.164392857754771
+ugap,12,FCI-G 3yr,rstar,nominal,1995-2007,156,1.1562541359696115
+ugap,12,FCI-G 3yr,rstar,nominal,2008-16,108,0.9236165950266302
+ugap,12,FCI-G 3yr,rstar,nominal,2017-19,24,0.9699047908057644
+ugap,12,FCI-G 3yr,rstar,nominal,2021-26,54,1.31647901086112
+ugap,12,FCI-G 3yr,rstar,real,1995-2007,156,1.0972292155050074
+ugap,12,FCI-G 3yr,rstar,real,2008-16,108,0.916277496892196
+ugap,12,FCI-G 3yr,rstar,real,2017-19,24,0.9319611959744434
+ugap,12,FCI-G 3yr,rstar,real,2021-26,54,1.0781039250781443
+ugap,12,FCI-G 3yr,real,nominal,1995-2007,156,1.0537945213548086
+ugap,12,FCI-G 3yr,real,nominal,2008-16,108,1.0080096893783015
+ugap,12,FCI-G 3yr,real,nominal,2017-19,24,1.040713706745749
+ugap,12,FCI-G 3yr,real,nominal,2021-26,54,1.2211058509648756
+ugap,24,Market level,rstar,nominal,1995-2007,156,0.9913596727864997
+ugap,24,Market level,rstar,nominal,2008-16,108,0.9184400353562705
+ugap,24,Market level,rstar,nominal,2017-19,21,1.0419650882877722
+ugap,24,Market level,rstar,nominal,2021-26,42,1.1563145973085331
+ugap,24,Market level,rstar,real,1995-2007,156,0.9902498486425957
+ugap,24,Market level,rstar,real,2008-16,108,0.9776586542140177
+ugap,24,Market level,rstar,real,2017-19,21,1.0105229933136703
+ugap,24,Market level,rstar,real,2021-26,42,1.0571941021305777
+ugap,24,Market level,real,nominal,1995-2007,156,1.0011207516420482
+ugap,24,Market level,real,nominal,2008-16,108,0.9394281239137032
+ugap,24,Market level,real,nominal,2017-19,21,1.0311146754523597
+ugap,24,Market level,real,nominal,2021-26,42,1.0937580856516287
+ugap,24,Market forward impetus,rstar,nominal,1995-2007,156,1.0068484432479783
+ugap,24,Market forward impetus,rstar,nominal,2008-16,108,0.990322540479391
+ugap,24,Market forward impetus,rstar,nominal,2017-19,21,1.0460232990503822
+ugap,24,Market forward impetus,rstar,nominal,2021-26,42,0.8759724863615285
+ugap,24,Market forward impetus,rstar,real,1995-2007,156,1.0000232682670271
+ugap,24,Market forward impetus,rstar,real,2008-16,108,0.956460711437872
+ugap,24,Market forward impetus,rstar,real,2017-19,21,1.087177938410433
+ugap,24,Market forward impetus,rstar,real,2021-26,42,0.9347288164443539
+ugap,24,Market forward impetus,real,nominal,1995-2007,156,1.0068250161746521
+ugap,24,Market forward impetus,real,nominal,2008-16,108,1.035403261876396
+ugap,24,Market forward impetus,real,nominal,2017-19,21,0.9621454428883801
+ugap,24,Market forward impetus,real,nominal,2021-26,42,0.9371407738275037
+ugap,24,GS level,rstar,nominal,1995-2007,156,0.9854658791127769
+ugap,24,GS level,rstar,nominal,2008-16,108,1.0228169290704798
+ugap,24,GS level,rstar,nominal,2017-19,21,1.0852374870194603
+ugap,24,GS level,rstar,nominal,2021-26,42,1.275836846840268
+ugap,24,GS level,rstar,real,1995-2007,156,0.990411892704328
+ugap,24,GS level,rstar,real,2008-16,108,0.9809474771774653
+ugap,24,GS level,rstar,real,2017-19,21,1.028605705693197
+ugap,24,GS level,rstar,real,2021-26,42,1.0837293495675935
+ugap,24,GS level,real,nominal,1995-2007,156,0.9950061044016284
+ugap,24,GS level,real,nominal,2008-16,108,1.0426826643292746
+ugap,24,GS level,real,nominal,2017-19,21,1.0550568415213077
+ugap,24,GS level,real,nominal,2021-26,42,1.1772651975784594
+ugap,24,FRB/US level,rstar,nominal,1995-2007,156,1.0220219628017895
+ugap,24,FRB/US level,rstar,nominal,2008-16,108,0.8708303937452654
+ugap,24,FRB/US level,rstar,nominal,2017-19,21,1.03606358775834
+ugap,24,FRB/US level,rstar,nominal,2021-26,42,1.1263124364841492
+ugap,24,FRB/US level,rstar,real,1995-2007,156,0.9895266896174126
+ugap,24,FRB/US level,rstar,real,2008-16,108,0.9811052774324387
+ugap,24,FRB/US level,rstar,real,2017-19,21,0.9969307479318416
+ugap,24,FRB/US level,rstar,real,2021-26,42,1.0257854375243285
+ugap,24,FRB/US level,real,nominal,1995-2007,156,1.032839208406739
+ugap,24,FRB/US level,real,nominal,2008-16,108,0.8876013754856527
+ugap,24,FRB/US level,real,nominal,2017-19,21,1.039253318154426
+ugap,24,FRB/US level,real,nominal,2021-26,42,1.0980000254267956
+ugap,24,FRB/US growth impetus,rstar,nominal,1995-2007,156,1.0045020401831042
+ugap,24,FRB/US growth impetus,rstar,nominal,2008-16,108,1.0000995935563552
+ugap,24,FRB/US growth impetus,rstar,nominal,2017-19,21,1.0399503263055547
+ugap,24,FRB/US growth impetus,rstar,nominal,2021-26,42,0.8895662419495726
+ugap,24,FRB/US growth impetus,rstar,real,1995-2007,156,0.9840141850396702
+ugap,24,FRB/US growth impetus,rstar,real,2008-16,108,0.9554884792885927
+ugap,24,FRB/US growth impetus,rstar,real,2017-19,21,1.0519603029447595
+ugap,24,FRB/US growth impetus,rstar,real,2021-26,42,0.9894375157561923
+ugap,24,FRB/US growth impetus,real,nominal,1995-2007,156,1.020820690854785
+ugap,24,FRB/US growth impetus,real,nominal,2008-16,108,1.0466893272234716
+ugap,24,FRB/US growth impetus,real,nominal,2017-19,21,0.9885832415866025
+ugap,24,FRB/US growth impetus,real,nominal,2021-26,42,0.8990625762453613
+ugap,24,FCI-G 1yr,rstar,nominal,1995-2007,156,1.0013481734197986
+ugap,24,FCI-G 1yr,rstar,nominal,2008-16,108,0.9824607600402117
+ugap,24,FCI-G 1yr,rstar,nominal,2017-19,21,1.0158269814181093
+ugap,24,FCI-G 1yr,rstar,nominal,2021-26,42,1.1105827606597467
+ugap,24,FCI-G 1yr,rstar,real,1995-2007,156,1.0065215195230572
+ugap,24,FCI-G 1yr,rstar,real,2008-16,108,0.9618617195135738
+ugap,24,FCI-G 1yr,rstar,real,2017-19,21,1.0425062485571674
+ugap,24,FCI-G 1yr,rstar,real,2021-26,42,0.9507524709835379
+ugap,24,FCI-G 1yr,real,nominal,1995-2007,156,0.9948601733764121
+ugap,24,FCI-G 1yr,real,nominal,2008-16,108,1.0214158024056255
+ugap,24,FCI-G 1yr,real,nominal,2017-19,21,0.974408530235687
+ugap,24,FCI-G 1yr,real,nominal,2021-26,42,1.1681092550944063
+ugap,24,FCI-G 3yr,rstar,nominal,1995-2007,156,1.0311621166348173
+ugap,24,FCI-G 3yr,rstar,nominal,2008-16,108,0.9655366402482669
+ugap,24,FCI-G 3yr,rstar,nominal,2017-19,21,0.9466982690593518
+ugap,24,FCI-G 3yr,rstar,nominal,2021-26,42,1.2392919153979365
+ugap,24,FCI-G 3yr,rstar,real,1995-2007,156,1.0267833369409334
+ugap,24,FCI-G 3yr,rstar,real,2008-16,108,0.9201824148938008
+ugap,24,FCI-G 3yr,rstar,real,2017-19,21,0.9542480106109115
+ugap,24,FCI-G 3yr,rstar,real,2021-26,42,1.0564528057968652
+ugap,24,FCI-G 3yr,real,nominal,1995-2007,156,1.004264560532244
+ugap,24,FCI-G 3yr,real,nominal,2008-16,108,1.049288298298659
+ugap,24,FCI-G 3yr,real,nominal,2017-19,21,0.9920882815917779
+ugap,24,FCI-G 3yr,real,nominal,2021-26,42,1.1730688854228173
+payroll,6,Market level,rstar,nominal,1995-2007,156,0.9327709813011281
+payroll,6,Market level,rstar,nominal,2008-16,108,0.9951703722739002
+payroll,6,Market level,rstar,nominal,2017-19,30,0.9921301505923331
+payroll,6,Market level,rstar,nominal,2021-26,49,1.0008560694048712
+payroll,6,Market level,rstar,real,1995-2007,156,0.9888847178095223
+payroll,6,Market level,rstar,real,2008-16,108,0.9964196380861771
+payroll,6,Market level,rstar,real,2017-19,30,1.0053397580919627
+payroll,6,Market level,rstar,real,2021-26,49,1.0330672005770853
+payroll,6,Market level,real,nominal,1995-2007,156,0.943255532725097
+payroll,6,Market level,real,nominal,2008-16,108,0.9987462452921178
+payroll,6,Market level,real,nominal,2017-19,30,0.9868605539636669
+payroll,6,Market level,real,nominal,2021-26,49,0.9688199072100823
+payroll,6,Market forward impetus,rstar,nominal,1995-2007,156,0.9825037517649127
+payroll,6,Market forward impetus,rstar,nominal,2008-16,108,0.8590742089754018
+payroll,6,Market forward impetus,rstar,nominal,2017-19,30,0.9188968744046172
+payroll,6,Market forward impetus,rstar,nominal,2021-26,49,0.9396326232228
+payroll,6,Market forward impetus,rstar,real,1995-2007,156,1.024737118137543
+payroll,6,Market forward impetus,rstar,real,2008-16,108,0.9090632071443872
+payroll,6,Market forward impetus,rstar,real,2017-19,30,0.8101373330760068
+payroll,6,Market forward impetus,rstar,real,2021-26,49,0.8729226081221638
+payroll,6,Market forward impetus,real,nominal,1995-2007,156,0.9587861456122625
+payroll,6,Market forward impetus,real,nominal,2008-16,108,0.9450104263640652
+payroll,6,Market forward impetus,real,nominal,2017-19,30,1.1342482772836326
+payroll,6,Market forward impetus,real,nominal,2021-26,49,1.0764214541815376
+payroll,6,GS level,rstar,nominal,1995-2007,156,0.9204566045995332
+payroll,6,GS level,rstar,nominal,2008-16,108,1.01065194606408
+payroll,6,GS level,rstar,nominal,2017-19,30,0.7324182592098798
+payroll,6,GS level,rstar,nominal,2021-26,49,0.8827094383737192
+payroll,6,GS level,rstar,real,1995-2007,156,0.9909850114425016
+payroll,6,GS level,rstar,real,2008-16,108,0.9985576405272066
+payroll,6,GS level,rstar,real,2017-19,30,0.9989469189946515
+payroll,6,GS level,rstar,real,2021-26,49,1.0148241734867463
+payroll,6,GS level,real,nominal,1995-2007,156,0.9288299963888399
+payroll,6,GS level,real,nominal,2008-16,108,1.0121117750703783
+payroll,6,GS level,real,nominal,2017-19,30,0.733190368059788
+payroll,6,GS level,real,nominal,2021-26,49,0.8698151477224813
+payroll,6,FRB/US level,rstar,nominal,1995-2007,156,0.9399413325648609
+payroll,6,FRB/US level,rstar,nominal,2008-16,108,0.994615241939667
+payroll,6,FRB/US level,rstar,nominal,2017-19,30,0.9699725602650294
+payroll,6,FRB/US level,rstar,nominal,2021-26,49,0.9953954052277749
+payroll,6,FRB/US level,rstar,real,1995-2007,156,0.9940267253143998
+payroll,6,FRB/US level,rstar,real,2008-16,108,0.9959808913659228
+payroll,6,FRB/US level,rstar,real,2017-19,30,0.9963325579793586
+payroll,6,FRB/US level,rstar,real,2021-26,49,1.0073922339652084
+payroll,6,FRB/US level,real,nominal,1995-2007,156,0.9455895989794114
+payroll,6,FRB/US level,real,nominal,2008-16,108,0.998628839731671
+payroll,6,FRB/US level,real,nominal,2017-19,30,0.9735429726719066
+payroll,6,FRB/US level,real,nominal,2021-26,49,0.9880912038698051
+payroll,6,FRB/US growth impetus,rstar,nominal,1995-2007,156,1.0380974304783601
+payroll,6,FRB/US growth impetus,rstar,nominal,2008-16,108,0.936454080395008
+payroll,6,FRB/US growth impetus,rstar,nominal,2017-19,30,1.018279389637048
+payroll,6,FRB/US growth impetus,rstar,nominal,2021-26,49,0.9549615580491353
+payroll,6,FRB/US growth impetus,rstar,real,1995-2007,156,1.0166461543628535
+payroll,6,FRB/US growth impetus,rstar,real,2008-16,108,0.9618241805940814
+payroll,6,FRB/US growth impetus,rstar,real,2017-19,30,0.951234373599343
+payroll,6,FRB/US growth impetus,rstar,real,2021-26,49,0.9615914793867194
+payroll,6,FRB/US growth impetus,real,nominal,1995-2007,156,1.0211000415665272
+payroll,6,FRB/US growth impetus,real,nominal,2008-16,108,0.9736229336806616
+payroll,6,FRB/US growth impetus,real,nominal,2017-19,30,1.0704821208090025
+payroll,6,FRB/US growth impetus,real,nominal,2021-26,49,0.9931052619748539
+payroll,6,FCI-G 1yr,rstar,nominal,1995-2007,156,0.9251482543111836
+payroll,6,FCI-G 1yr,rstar,nominal,2008-16,108,0.8633859386976988
+payroll,6,FCI-G 1yr,rstar,nominal,2017-19,30,1.0859629955180607
+payroll,6,FCI-G 1yr,rstar,nominal,2021-26,49,0.9720747106854802
+payroll,6,FCI-G 1yr,rstar,real,1995-2007,156,0.9796056895924128
+payroll,6,FCI-G 1yr,rstar,real,2008-16,108,0.9537796448963693
+payroll,6,FCI-G 1yr,rstar,real,2017-19,30,1.0239048631818874
+payroll,6,FCI-G 1yr,rstar,real,2021-26,49,0.8892780699568441
+payroll,6,FCI-G 1yr,real,nominal,1995-2007,156,0.9444088209574534
+payroll,6,FCI-G 1yr,real,nominal,2008-16,108,0.9052257964590006
+payroll,6,FCI-G 1yr,real,nominal,2017-19,30,1.0606092758885053
+payroll,6,FCI-G 1yr,real,nominal,2021-26,49,1.093105456578564
+payroll,6,FCI-G 3yr,rstar,nominal,1995-2007,156,0.9291527222888909
+payroll,6,FCI-G 3yr,rstar,nominal,2008-16,108,0.9186436236323474
+payroll,6,FCI-G 3yr,rstar,nominal,2017-19,30,1.1022870991189593
+payroll,6,FCI-G 3yr,rstar,nominal,2021-26,49,0.8603557042298982
+payroll,6,FCI-G 3yr,rstar,real,1995-2007,156,0.9951317403375769
+payroll,6,FCI-G 3yr,rstar,real,2008-16,108,0.9643268558845995
+payroll,6,FCI-G 3yr,rstar,real,2017-19,30,1.188242971639153
+payroll,6,FCI-G 3yr,rstar,real,2021-26,49,0.8895580230768501
+payroll,6,FCI-G 3yr,real,nominal,1995-2007,156,0.9336982076098748
+payroll,6,FCI-G 3yr,real,nominal,2008-16,108,0.9526268173768262
+payroll,6,FCI-G 3yr,real,nominal,2017-19,30,0.9276613667643921
+payroll,6,FCI-G 3yr,real,nominal,2021-26,49,0.9671721033486433
+payroll,12,Market level,rstar,nominal,1995-2007,156,0.915160444477706
+payroll,12,Market level,rstar,nominal,2008-16,108,0.9803038684325042
+payroll,12,Market level,rstar,nominal,2017-19,24,1.041398496039792
+payroll,12,Market level,rstar,nominal,2021-26,43,1.0536325998879161
+payroll,12,Market level,rstar,real,1995-2007,156,0.9797682909314085
+payroll,12,Market level,rstar,real,2008-16,108,0.9830408130723346
+payroll,12,Market level,rstar,real,2017-19,24,0.8530761865091964
+payroll,12,Market level,rstar,real,2021-26,43,1.113319514496123
+payroll,12,Market level,real,nominal,1995-2007,156,0.9340580348928381
+payroll,12,Market level,real,nominal,2008-16,108,0.9972158382404526
+payroll,12,Market level,real,nominal,2017-19,24,1.220756730182815
+payroll,12,Market level,real,nominal,2021-26,43,0.9463883334199701
+payroll,12,Market forward impetus,rstar,nominal,1995-2007,156,1.036328600376429
+payroll,12,Market forward impetus,rstar,nominal,2008-16,108,0.9157487926394172
+payroll,12,Market forward impetus,rstar,nominal,2017-19,24,0.9973424694066584
+payroll,12,Market forward impetus,rstar,nominal,2021-26,43,0.8595375208762647
+payroll,12,Market forward impetus,rstar,real,1995-2007,156,1.037279530408876
+payroll,12,Market forward impetus,rstar,real,2008-16,108,0.9505390592493952
+payroll,12,Market forward impetus,rstar,real,2017-19,24,0.9033038719744335
+payroll,12,Market forward impetus,rstar,real,2021-26,43,0.8272328351218308
+payroll,12,Market forward impetus,real,nominal,1995-2007,156,0.9990832461216388
+payroll,12,Market forward impetus,real,nominal,2008-16,108,0.963399435013801
+payroll,12,Market forward impetus,real,nominal,2017-19,24,1.104105163666216
+payroll,12,Market forward impetus,real,nominal,2021-26,43,1.0390515032562462
+payroll,12,GS level,rstar,nominal,1995-2007,156,0.8864591582952733
+payroll,12,GS level,rstar,nominal,2008-16,108,0.9895767041388128
+payroll,12,GS level,rstar,nominal,2017-19,24,0.7205648567605268
+payroll,12,GS level,rstar,nominal,2021-26,43,0.8803145792176971
+payroll,12,GS level,rstar,real,1995-2007,156,0.9829886900175693
+payroll,12,GS level,rstar,real,2008-16,108,0.9879207293535949
+payroll,12,GS level,rstar,real,2017-19,24,0.8855703862274893
+payroll,12,GS level,rstar,real,2021-26,43,1.0928888428633012
+payroll,12,GS level,real,nominal,1995-2007,156,0.9017999569043152
+payroll,12,GS level,real,nominal,2008-16,108,1.0016762223283862
+payroll,12,GS level,real,nominal,2017-19,24,0.8136731624801926
+payroll,12,GS level,real,nominal,2021-26,43,0.8054932438612212
+payroll,12,FRB/US level,rstar,nominal,1995-2007,156,0.9307530387236518
+payroll,12,FRB/US level,rstar,nominal,2008-16,108,0.9821774522741007
+payroll,12,FRB/US level,rstar,nominal,2017-19,24,1.0608609072496906
+payroll,12,FRB/US level,rstar,nominal,2021-26,43,1.1143736569295388
+payroll,12,FRB/US level,rstar,real,1995-2007,156,0.9863322964438755
+payroll,12,FRB/US level,rstar,real,2008-16,108,0.984168487623634
+payroll,12,FRB/US level,rstar,real,2017-19,24,0.9904119383178106
+payroll,12,FRB/US level,rstar,real,2021-26,43,1.1050836982285275
+payroll,12,FRB/US level,real,nominal,1995-2007,156,0.9436505750439185
+payroll,12,FRB/US level,real,nominal,2008-16,108,0.997976936495558
+payroll,12,FRB/US level,real,nominal,2017-19,24,1.0711309771280986
+payroll,12,FRB/US level,real,nominal,2021-26,43,1.0084065656890093
+payroll,12,FRB/US growth impetus,rstar,nominal,1995-2007,156,1.072917007920738
+payroll,12,FRB/US growth impetus,rstar,nominal,2008-16,108,0.9603060812237286
+payroll,12,FRB/US growth impetus,rstar,nominal,2017-19,24,1.0195969007065884
+payroll,12,FRB/US growth impetus,rstar,nominal,2021-26,43,0.859140433202015
+payroll,12,FRB/US growth impetus,rstar,real,1995-2007,156,1.0215787862695989
+payroll,12,FRB/US growth impetus,rstar,real,2008-16,108,0.9805389602405857
+payroll,12,FRB/US growth impetus,rstar,real,2017-19,24,1.0069793461428957
+payroll,12,FRB/US growth impetus,rstar,real,2021-26,43,0.8942404091566686
+payroll,12,FRB/US growth impetus,real,nominal,1995-2007,156,1.0502538055225343
+payroll,12,FRB/US growth impetus,real,nominal,2008-16,108,0.9793655531934266
+payroll,12,FRB/US growth impetus,real,nominal,2017-19,24,1.012530102640161
+payroll,12,FRB/US growth impetus,real,nominal,2021-26,43,0.9607488371189183
+payroll,12,FCI-G 1yr,rstar,nominal,1995-2007,156,0.959484870199345
+payroll,12,FCI-G 1yr,rstar,nominal,2008-16,108,0.8973401021780399
+payroll,12,FCI-G 1yr,rstar,nominal,2017-19,24,1.1025620534801817
+payroll,12,FCI-G 1yr,rstar,nominal,2021-26,43,0.9089093489874945
+payroll,12,FCI-G 1yr,rstar,real,1995-2007,156,0.9914997593978614
+payroll,12,FCI-G 1yr,rstar,real,2008-16,108,0.9760362406827768
+payroll,12,FCI-G 1yr,rstar,real,2017-19,24,1.02585879747109
+payroll,12,FCI-G 1yr,rstar,real,2021-26,43,0.8438515642724788
+payroll,12,FCI-G 1yr,real,nominal,1995-2007,156,0.9677106435023655
+payroll,12,FCI-G 1yr,real,nominal,2008-16,108,0.919371704425969
+payroll,12,FCI-G 1yr,real,nominal,2017-19,24,1.0747697989218181
+payroll,12,FCI-G 1yr,real,nominal,2021-26,43,1.0770962423599995
+payroll,12,FCI-G 3yr,rstar,nominal,1995-2007,156,0.943455277048932
+payroll,12,FCI-G 3yr,rstar,nominal,2008-16,108,0.9374094046498289
+payroll,12,FCI-G 3yr,rstar,nominal,2017-19,24,1.0725524021905377
+payroll,12,FCI-G 3yr,rstar,nominal,2021-26,43,0.8030632450255075
+payroll,12,FCI-G 3yr,rstar,real,1995-2007,156,0.9999108951321457
+payroll,12,FCI-G 3yr,rstar,real,2008-16,108,0.9814565526947026
+payroll,12,FCI-G 3yr,rstar,real,2017-19,24,1.1508954314996673
+payroll,12,FCI-G 3yr,rstar,real,2021-26,43,0.8301348985242107
+payroll,12,FCI-G 3yr,real,nominal,1995-2007,156,0.9435393509981179
+payroll,12,FCI-G 3yr,real,nominal,2008-16,108,0.9551206337927673
+payroll,12,FCI-G 3yr,real,nominal,2017-19,24,0.9319286295132433
+payroll,12,FCI-G 3yr,real,nominal,2021-26,43,0.9673888502376777
+payroll,24,Market level,rstar,nominal,1995-2007,156,0.9201855544899108
+payroll,24,Market level,rstar,nominal,2008-16,108,0.9294086818636885
+payroll,24,Market level,rstar,nominal,2017-19,12,0.7897546308698753
+payroll,24,Market level,rstar,nominal,2021-26,31,1.158085385967079
+payroll,24,Market level,rstar,real,1995-2007,156,0.9754358795723972
+payroll,24,Market level,rstar,real,2008-16,108,0.9259525189062474
+payroll,24,Market level,rstar,real,2017-19,12,0.5887267475584392
+payroll,24,Market level,rstar,real,2021-26,31,1.2454115520079603
+payroll,24,Market level,real,nominal,1995-2007,156,0.9433583219158326
+payroll,24,Market level,real,nominal,2008-16,108,1.003732548793672
+payroll,24,Market level,real,nominal,2017-19,12,1.3414621199820402
+payroll,24,Market level,real,nominal,2021-26,31,0.9298816797547073
+payroll,24,Market forward impetus,rstar,nominal,1995-2007,156,1.0437893263237783
+payroll,24,Market forward impetus,rstar,nominal,2008-16,108,0.9630127826964443
+payroll,24,Market forward impetus,rstar,nominal,2017-19,12,0.8168529310616529
+payroll,24,Market forward impetus,rstar,nominal,2021-26,31,0.7899441807726839
+payroll,24,Market forward impetus,rstar,real,1995-2007,156,1.0163459942817854
+payroll,24,Market forward impetus,rstar,real,2008-16,108,0.9749344817858512
+payroll,24,Market forward impetus,rstar,real,2017-19,12,0.7983031537072496
+payroll,24,Market forward impetus,rstar,real,2021-26,31,0.8326703419478063
+payroll,24,Market forward impetus,real,nominal,1995-2007,156,1.0270019581878576
+payroll,24,Market forward impetus,real,nominal,2008-16,108,0.9877717946055523
+payroll,24,Market forward impetus,real,nominal,2017-19,12,1.0232365076703753
+payroll,24,Market forward impetus,real,nominal,2021-26,31,0.9486877831205371
+payroll,24,GS level,rstar,nominal,1995-2007,156,0.9047039638721031
+payroll,24,GS level,rstar,nominal,2008-16,108,0.9665257766936318
+payroll,24,GS level,rstar,nominal,2017-19,12,2.021682081960738
+payroll,24,GS level,rstar,nominal,2021-26,31,0.9221932208056686
+payroll,24,GS level,rstar,real,1995-2007,156,0.9781222598169794
+payroll,24,GS level,rstar,real,2008-16,108,0.9411215160250559
+payroll,24,GS level,rstar,real,2017-19,12,0.5845083462327499
+payroll,24,GS level,rstar,real,2021-26,31,1.2318614720806575
+payroll,24,GS level,real,nominal,1995-2007,156,0.924939551055086
+payroll,24,GS level,real,nominal,2008-16,108,1.0269936030958828
+payroll,24,GS level,real,nominal,2017-19,12,3.458773677041232
+payroll,24,GS level,real,nominal,2021-26,31,0.748617634130607
+payroll,24,FRB/US level,rstar,nominal,1995-2007,156,0.938300310924339
+payroll,24,FRB/US level,rstar,nominal,2008-16,108,0.9358232817335481
+payroll,24,FRB/US level,rstar,nominal,2017-19,12,0.7763731055824343
+payroll,24,FRB/US level,rstar,nominal,2021-26,31,1.296800620124132
+payroll,24,FRB/US level,rstar,real,1995-2007,156,0.979571900324206
+payroll,24,FRB/US level,rstar,real,2008-16,108,0.9312085257375271
+payroll,24,FRB/US level,rstar,real,2017-19,12,0.6072710908075516
+payroll,24,FRB/US level,rstar,real,2021-26,31,1.2338957286890513
+payroll,24,FRB/US level,real,nominal,1995-2007,156,0.9578677283554096
+payroll,24,FRB/US level,real,nominal,2008-16,108,1.004955663386314
+payroll,24,FRB/US level,real,nominal,2017-19,12,1.2784621519690824
+payroll,24,FRB/US level,real,nominal,2021-26,31,1.0509807190125486
+payroll,24,FRB/US growth impetus,rstar,nominal,1995-2007,156,1.0438466285527626
+payroll,24,FRB/US growth impetus,rstar,nominal,2008-16,108,0.97351076516074
+payroll,24,FRB/US growth impetus,rstar,nominal,2017-19,12,0.732814514328698
+payroll,24,FRB/US growth impetus,rstar,nominal,2021-26,31,0.7833125278574202
+payroll,24,FRB/US growth impetus,rstar,real,1995-2007,156,1.008425654697631
+payroll,24,FRB/US growth impetus,rstar,real,2008-16,108,0.9851752982300831
+payroll,24,FRB/US growth impetus,rstar,real,2017-19,12,0.8179189190797868
+payroll,24,FRB/US growth impetus,rstar,real,2021-26,31,0.8776634968541229
+payroll,24,FRB/US growth impetus,real,nominal,1995-2007,156,1.0351250225439301
+payroll,24,FRB/US growth impetus,real,nominal,2008-16,108,0.9881599415958774
+payroll,24,FRB/US growth impetus,real,nominal,2017-19,12,0.895950071864291
+payroll,24,FRB/US growth impetus,real,nominal,2021-26,31,0.8924975581929838
+payroll,24,FCI-G 1yr,rstar,nominal,1995-2007,156,0.9796352275131263
+payroll,24,FCI-G 1yr,rstar,nominal,2008-16,108,0.938127745624366
+payroll,24,FCI-G 1yr,rstar,nominal,2017-19,12,0.9305466838222293
+payroll,24,FCI-G 1yr,rstar,nominal,2021-26,31,0.8172591398118905
+payroll,24,FCI-G 1yr,rstar,real,1995-2007,156,0.9942657206630718
+payroll,24,FCI-G 1yr,rstar,real,2008-16,108,0.9935943934901582
+payroll,24,FCI-G 1yr,rstar,real,2017-19,12,0.8538030521950457
+payroll,24,FCI-G 1yr,rstar,real,2021-26,31,0.8221715064796004
+payroll,24,FCI-G 1yr,real,nominal,1995-2007,156,0.9852851276616591
+payroll,24,FCI-G 1yr,real,nominal,2008-16,108,0.9441757640449673
+payroll,24,FCI-G 1yr,real,nominal,2017-19,12,1.0898844662476705
+payroll,24,FCI-G 1yr,real,nominal,2021-26,31,0.9940251314610212
+payroll,24,FCI-G 3yr,rstar,nominal,1995-2007,156,0.9610810158353803
+payroll,24,FCI-G 3yr,rstar,nominal,2008-16,108,0.9813171266438582
+payroll,24,FCI-G 3yr,rstar,nominal,2017-19,12,0.8302059894889103
+payroll,24,FCI-G 3yr,rstar,nominal,2021-26,31,0.9146936875014516
+payroll,24,FCI-G 3yr,rstar,real,1995-2007,156,0.9941038215621105
+payroll,24,FCI-G 3yr,rstar,real,2008-16,108,0.9996204735581247
+payroll,24,FCI-G 3yr,rstar,real,2017-19,12,1.0455263918463327
+payroll,24,FCI-G 3yr,rstar,real,2021-26,31,0.9423207680998809
+payroll,24,FCI-G 3yr,real,nominal,1995-2007,156,0.9667813310738118
+payroll,24,FCI-G 3yr,real,nominal,2008-16,108,0.9816897038441837
+payroll,24,FCI-G 3yr,real,nominal,2017-19,12,0.7940555073151426
+payroll,24,FCI-G 3yr,real,nominal,2021-26,31,0.9706818723160084
+gdp,6,Market level,rstar,nominal,1995-2007,52,0.9840655391299509
+gdp,6,Market level,rstar,nominal,2008-16,36,0.9889733448318438
+gdp,6,Market level,rstar,nominal,2017-19,10,0.9899037440608297
+gdp,6,Market level,rstar,nominal,2021-26,16,1.0008019044425847
+gdp,6,Market level,rstar,real,1995-2007,52,0.9989641998821336
+gdp,6,Market level,rstar,real,2008-16,36,0.9996942462551691
+gdp,6,Market level,rstar,real,2017-19,10,0.9787580991693986
+gdp,6,Market level,rstar,real,2021-26,16,1.0074113291645352
+gdp,6,Market level,real,nominal,1995-2007,52,0.9850858912121769
+gdp,6,Market level,real,nominal,2008-16,36,0.9892758196183628
+gdp,6,Market level,real,nominal,2017-19,10,1.0113875378409534
+gdp,6,Market level,real,nominal,2021-26,16,0.993439199529916
+gdp,6,Market forward impetus,rstar,nominal,1995-2007,52,1.0208694265139793
+gdp,6,Market forward impetus,rstar,nominal,2008-16,36,0.9331690554121197
+gdp,6,Market forward impetus,rstar,nominal,2017-19,10,0.9405633519186066
+gdp,6,Market forward impetus,rstar,nominal,2021-26,16,0.8726646003648167
+gdp,6,Market forward impetus,rstar,real,1995-2007,52,1.0320451681228102
+gdp,6,Market forward impetus,rstar,real,2008-16,36,0.9475158403924112
+gdp,6,Market forward impetus,rstar,real,2017-19,10,0.8910818417416277
+gdp,6,Market forward impetus,rstar,real,2021-26,16,0.8829225539154694
+gdp,6,Market forward impetus,real,nominal,1995-2007,52,0.9891712669619309
+gdp,6,Market forward impetus,real,nominal,2008-16,36,0.9848585275636661
+gdp,6,Market forward impetus,real,nominal,2017-19,10,1.055529703175487
+gdp,6,Market forward impetus,real,nominal,2021-26,16,0.9883818195546575
+gdp,6,GS level,rstar,nominal,1995-2007,52,0.9982321198974318
+gdp,6,GS level,rstar,nominal,2008-16,36,0.9868765603871793
+gdp,6,GS level,rstar,nominal,2017-19,10,1.0153231602575659
+gdp,6,GS level,rstar,nominal,2021-26,16,0.9646989585593639
+gdp,6,GS level,rstar,real,1995-2007,52,0.9989708276215717
+gdp,6,GS level,rstar,real,2008-16,36,0.9992170215857633
+gdp,6,GS level,rstar,real,2017-19,10,0.9835737817120742
+gdp,6,GS level,rstar,real,2021-26,16,1.006187917051576
+gdp,6,GS level,real,nominal,1995-2007,52,0.9992605312350324
+gdp,6,GS level,real,nominal,2008-16,36,0.9876498689153638
+gdp,6,GS level,real,nominal,2017-19,10,1.0322796104733765
+gdp,6,GS level,real,nominal,2021-26,16,0.9587661928859306
+gdp,6,FRB/US level,rstar,nominal,1995-2007,52,0.9914941974192718
+gdp,6,FRB/US level,rstar,nominal,2008-16,36,0.9855866933427048
+gdp,6,FRB/US level,rstar,nominal,2017-19,10,0.9913476668350277
+gdp,6,FRB/US level,rstar,nominal,2021-26,16,1.0017385853581324
+gdp,6,FRB/US level,rstar,real,1995-2007,52,0.9998411076929332
+gdp,6,FRB/US level,rstar,real,2008-16,36,0.9987325252806918
+gdp,6,FRB/US level,rstar,real,2017-19,10,0.9842842513769109
+gdp,6,FRB/US level,rstar,real,2021-26,16,1.0116836709122718
+gdp,6,FRB/US level,real,nominal,1995-2007,52,0.9916517632557423
+gdp,6,FRB/US level,real,nominal,2008-16,36,0.9868374849068898
+gdp,6,FRB/US level,real,nominal,2017-19,10,1.0071761947305728
+gdp,6,FRB/US level,real,nominal,2021-26,16,0.9901697676456798
+gdp,6,FRB/US growth impetus,rstar,nominal,1995-2007,52,1.0226227446866794
+gdp,6,FRB/US growth impetus,rstar,nominal,2008-16,36,0.9779063615212233
+gdp,6,FRB/US growth impetus,rstar,nominal,2017-19,10,0.9951397802185649
+gdp,6,FRB/US growth impetus,rstar,nominal,2021-26,16,0.887439809622786
+gdp,6,FRB/US growth impetus,rstar,real,1995-2007,52,1.0101895625278494
+gdp,6,FRB/US growth impetus,rstar,real,2008-16,36,0.987512473016754
+gdp,6,FRB/US growth impetus,rstar,real,2017-19,10,0.9722108574108027
+gdp,6,FRB/US growth impetus,rstar,real,2021-26,16,0.9519506188560181
+gdp,6,FRB/US growth impetus,real,nominal,1995-2007,52,1.0123077713530495
+gdp,6,FRB/US growth impetus,real,nominal,2008-16,36,0.9902724150246073
+gdp,6,FRB/US growth impetus,real,nominal,2017-19,10,1.0235843105772617
+gdp,6,FRB/US growth impetus,real,nominal,2021-26,16,0.9322330297859818
+gdp,6,FCI-G 1yr,rstar,nominal,1995-2007,52,0.9595719105083075
+gdp,6,FCI-G 1yr,rstar,nominal,2008-16,36,0.9328194395880833
+gdp,6,FCI-G 1yr,rstar,nominal,2017-19,10,1.0236451374385802
+gdp,6,FCI-G 1yr,rstar,nominal,2021-26,16,0.9945405337687732
+gdp,6,FCI-G 1yr,rstar,real,1995-2007,52,1.0041100780743164
+gdp,6,FCI-G 1yr,rstar,real,2008-16,36,0.9841118786190531
+gdp,6,FCI-G 1yr,rstar,real,2017-19,10,0.9993216457646839
+gdp,6,FCI-G 1yr,rstar,real,2021-26,16,0.9184857003005917
+gdp,6,FCI-G 1yr,real,nominal,1995-2007,52,0.9556441384878593
+gdp,6,FCI-G 1yr,real,nominal,2008-16,36,0.9478794635596255
+gdp,6,FCI-G 1yr,real,nominal,2017-19,10,1.0243400028178955
+gdp,6,FCI-G 1yr,real,nominal,2021-26,16,1.082804591778937
+gdp,6,FCI-G 3yr,rstar,nominal,1995-2007,52,0.9497321992086858
+gdp,6,FCI-G 3yr,rstar,nominal,2008-16,36,0.9335979518618843
+gdp,6,FCI-G 3yr,rstar,nominal,2017-19,10,0.9800313196858578
+gdp,6,FCI-G 3yr,rstar,nominal,2021-26,16,0.9862108879201292
+gdp,6,FCI-G 3yr,rstar,real,1995-2007,52,1.013607664286052
+gdp,6,FCI-G 3yr,rstar,real,2008-16,36,0.9689467121651338
+gdp,6,FCI-G 3yr,rstar,real,2017-19,10,0.994094692908112
+gdp,6,FCI-G 3yr,rstar,real,2021-26,16,0.9811990659509037
+gdp,6,FCI-G 3yr,real,nominal,1995-2007,52,0.9369820618687232
+gdp,6,FCI-G 3yr,real,nominal,2008-16,36,0.9635183649839092
+gdp,6,FCI-G 3yr,real,nominal,2017-19,10,0.9858530848996755
+gdp,6,FCI-G 3yr,real,nominal,2021-26,16,1.0051078544029886
+gdp,12,Market level,rstar,nominal,1995-2007,52,0.9966293953674074
+gdp,12,Market level,rstar,nominal,2008-16,36,0.9827009356514881
+gdp,12,Market level,rstar,nominal,2017-19,8,0.9640721715495787
+gdp,12,Market level,rstar,nominal,2021-26,14,1.0260774854832675
+gdp,12,Market level,rstar,real,1995-2007,52,0.9897981347625718
+gdp,12,Market level,rstar,real,2008-16,36,1.0030025561676943
+gdp,12,Market level,rstar,real,2017-19,8,0.9252116233999625
+gdp,12,Market level,rstar,real,2021-26,14,1.0350976892996275
+gdp,12,Market level,real,nominal,1995-2007,52,1.0069016705173668
+gdp,12,Market level,real,nominal,2008-16,36,0.9797591537615066
+gdp,12,Market level,real,nominal,2017-19,8,1.042001794148253
+gdp,12,Market level,real,nominal,2021-26,14,0.9912856497414623
+gdp,12,Market forward impetus,rstar,nominal,1995-2007,52,1.0328449727038131
+gdp,12,Market forward impetus,rstar,nominal,2008-16,36,0.9428859788836286
+gdp,12,Market forward impetus,rstar,nominal,2017-19,8,0.9704828696963594
+gdp,12,Market forward impetus,rstar,nominal,2021-26,14,0.777063064908314
+gdp,12,Market forward impetus,rstar,real,1995-2007,52,1.0221076977881633
+gdp,12,Market forward impetus,rstar,real,2008-16,36,0.9627662218154184
+gdp,12,Market forward impetus,rstar,real,2017-19,8,0.9836629669927337
+gdp,12,Market forward impetus,rstar,real,2021-26,14,0.828176744731198
+gdp,12,Market forward impetus,real,nominal,1995-2007,52,1.0105050328247065
+gdp,12,Market forward impetus,real,nominal,2008-16,36,0.9793509135641433
+gdp,12,Market forward impetus,real,nominal,2017-19,8,0.9866010028448375
+gdp,12,Market forward impetus,real,nominal,2021-26,14,0.9382816770115008
+gdp,12,GS level,rstar,nominal,1995-2007,52,1.0151529749914274
+gdp,12,GS level,rstar,nominal,2008-16,36,0.9835556375590998
+gdp,12,GS level,rstar,nominal,2017-19,8,0.9993060359474794
+gdp,12,GS level,rstar,nominal,2021-26,14,1.0320679687770602
+gdp,12,GS level,rstar,real,1995-2007,52,0.9890750129793813
+gdp,12,GS level,rstar,real,2008-16,36,1.00494021543887
+gdp,12,GS level,rstar,real,2017-19,8,0.9349855384134533
+gdp,12,GS level,rstar,real,2021-26,14,1.0288653113295423
+gdp,12,GS level,real,nominal,1995-2007,52,1.0263660103327168
+gdp,12,GS level,real,nominal,2008-16,36,0.9787205472014757
+gdp,12,GS level,real,nominal,2017-19,8,1.068793039989869
+gdp,12,GS level,real,nominal,2021-26,14,1.0031128053519263
+gdp,12,FRB/US level,rstar,nominal,1995-2007,52,1.0018927609139612
+gdp,12,FRB/US level,rstar,nominal,2008-16,36,0.9774402867828712
+gdp,12,FRB/US level,rstar,nominal,2017-19,8,0.9453380216026747
+gdp,12,FRB/US level,rstar,nominal,2021-26,14,1.0937092662757852
+gdp,12,FRB/US level,rstar,real,1995-2007,52,0.9936357202980997
+gdp,12,FRB/US level,rstar,real,2008-16,36,1.000950001213962
+gdp,12,FRB/US level,rstar,real,2017-19,8,0.9272489309389293
+gdp,12,FRB/US level,rstar,real,2021-26,14,1.133852577562652
+gdp,12,FRB/US level,real,nominal,1995-2007,52,1.0083099273176135
+gdp,12,FRB/US level,real,nominal,2008-16,36,0.9765125986287246
+gdp,12,FRB/US level,real,nominal,2017-19,8,1.0195083435096857
+gdp,12,FRB/US level,real,nominal,2021-26,14,0.9645956519557776
+gdp,12,FRB/US growth impetus,rstar,nominal,1995-2007,52,1.0342589122127777
+gdp,12,FRB/US growth impetus,rstar,nominal,2008-16,36,0.9772082249949954
+gdp,12,FRB/US growth impetus,rstar,nominal,2017-19,8,0.9376052909879262
+gdp,12,FRB/US growth impetus,rstar,nominal,2021-26,14,0.778308753289425
+gdp,12,FRB/US growth impetus,rstar,real,1995-2007,52,1.0083513075419055
+gdp,12,FRB/US growth impetus,rstar,real,2008-16,36,0.9940079089376045
+gdp,12,FRB/US growth impetus,rstar,real,2017-19,8,0.9878237748557226
+gdp,12,FRB/US growth impetus,rstar,real,2021-26,14,0.901492401038957
+gdp,12,FRB/US growth impetus,real,nominal,1995-2007,52,1.025693034240247
+gdp,12,FRB/US growth impetus,real,nominal,2008-16,36,0.983099043989937
+gdp,12,FRB/US growth impetus,real,nominal,2017-19,8,0.9491625073762463
+gdp,12,FRB/US growth impetus,real,nominal,2021-26,14,0.8633558667742904
+gdp,12,FCI-G 1yr,rstar,nominal,1995-2007,52,0.9750182935853288
+gdp,12,FCI-G 1yr,rstar,nominal,2008-16,36,0.9418898399044872
+gdp,12,FCI-G 1yr,rstar,nominal,2017-19,8,1.000514175085419
+gdp,12,FCI-G 1yr,rstar,nominal,2021-26,14,0.9713437207158713
+gdp,12,FCI-G 1yr,rstar,real,1995-2007,52,1.0040896586533374
+gdp,12,FCI-G 1yr,rstar,real,2008-16,36,0.990849509352121
+gdp,12,FCI-G 1yr,rstar,real,2017-19,8,0.988226942490631
+gdp,12,FCI-G 1yr,rstar,real,2021-26,14,0.880076198591973
+gdp,12,FCI-G 1yr,real,nominal,1995-2007,52,0.9710470426445796
+gdp,12,FCI-G 1yr,real,nominal,2008-16,36,0.9505881882308781
+gdp,12,FCI-G 1yr,real,nominal,2017-19,8,1.0124336142504071
+gdp,12,FCI-G 1yr,real,nominal,2021-26,14,1.1037041136550638
+gdp,12,FCI-G 3yr,rstar,nominal,1995-2007,52,0.95867581938348
+gdp,12,FCI-G 3yr,rstar,nominal,2008-16,36,0.9417329917858779
+gdp,12,FCI-G 3yr,rstar,nominal,2017-19,8,0.9439154958466796
+gdp,12,FCI-G 3yr,rstar,nominal,2021-26,14,0.9198967132080401
+gdp,12,FCI-G 3yr,rstar,real,1995-2007,52,1.0056858696265187
+gdp,12,FCI-G 3yr,rstar,real,2008-16,36,0.979474512188046
+gdp,12,FCI-G 3yr,rstar,real,2017-19,8,1.0028645828401894
+gdp,12,FCI-G 3yr,rstar,real,2021-26,14,0.9294945394521772
+gdp,12,FCI-G 3yr,real,nominal,1995-2007,52,0.953255731573024
+gdp,12,FCI-G 3yr,real,nominal,2008-16,36,0.9614675829411247
+gdp,12,FCI-G 3yr,real,nominal,2017-19,8,0.9412192952047806
+gdp,12,FCI-G 3yr,real,nominal,2021-26,14,0.9896741445627063
+gdp,24,Market level,rstar,nominal,1995-2007,52,1.0027831310515536
+gdp,24,Market level,rstar,nominal,2008-16,36,0.9930905406325565
+gdp,24,Market level,rstar,nominal,2021-26,10,1.0421986495258353
+gdp,24,Market level,rstar,real,1995-2007,52,0.9705705859307566
+gdp,24,Market level,rstar,real,2008-16,36,1.0331856200891716
+gdp,24,Market level,rstar,real,2021-26,10,0.9892802458609418
+gdp,24,Market level,real,nominal,1995-2007,52,1.0331892863721044
+gdp,24,Market level,real,nominal,2008-16,36,0.9611927627746556
+gdp,24,Market level,real,nominal,2021-26,10,1.0534918228543422
+gdp,24,Market forward impetus,rstar,nominal,1995-2007,52,1.0234504429583389
+gdp,24,Market forward impetus,rstar,nominal,2008-16,36,0.9638500421666513
+gdp,24,Market forward impetus,rstar,nominal,2021-26,10,0.5702957829014544
+gdp,24,Market forward impetus,rstar,real,1995-2007,52,1.0069714189663734
+gdp,24,Market forward impetus,rstar,real,2008-16,36,0.971420656284377
+gdp,24,Market forward impetus,rstar,real,2021-26,10,0.7691457992828482
+gdp,24,Market forward impetus,real,nominal,1995-2007,52,1.0163649371586738
+gdp,24,Market forward impetus,real,nominal,2008-16,36,0.9922066572614557
+gdp,24,Market forward impetus,real,nominal,2021-26,10,0.7414664208440044
+gdp,24,GS level,rstar,nominal,1995-2007,52,1.0550641011888606
+gdp,24,GS level,rstar,nominal,2008-16,36,1.0087860899946248
+gdp,24,GS level,rstar,nominal,2021-26,10,1.158581482820982
+gdp,24,GS level,rstar,real,1995-2007,52,0.9690095310527596
+gdp,24,GS level,rstar,real,2008-16,36,1.0415414801712009
+gdp,24,GS level,rstar,real,2021-26,10,0.9725932457326385
+gdp,24,GS level,real,nominal,1995-2007,52,1.088806732419452
+gdp,24,GS level,real,nominal,2008-16,36,0.9685510459255142
+gdp,24,GS level,real,nominal,2021-26,10,1.1912292090289416
+gdp,24,FRB/US level,rstar,nominal,1995-2007,52,0.9959228834489908
+gdp,24,FRB/US level,rstar,nominal,2008-16,36,0.9761190627951638
+gdp,24,FRB/US level,rstar,nominal,2021-26,10,1.333379409690751
+gdp,24,FRB/US level,rstar,real,1995-2007,52,0.9800148745024673
+gdp,24,FRB/US level,rstar,real,2008-16,36,1.0162961073324928
+gdp,24,FRB/US level,rstar,real,2021-26,10,1.388163746670189
+gdp,24,FRB/US level,real,nominal,1995-2007,52,1.0162324158136882
+gdp,24,FRB/US level,real,nominal,2008-16,36,0.9604671864356708
+gdp,24,FRB/US level,real,nominal,2021-26,10,0.960534672432665
+gdp,24,FRB/US growth impetus,rstar,nominal,1995-2007,52,1.0139253956078762
+gdp,24,FRB/US growth impetus,rstar,nominal,2008-16,36,0.9676723913449977
+gdp,24,FRB/US growth impetus,rstar,nominal,2021-26,10,0.5443669497503272
+gdp,24,FRB/US growth impetus,rstar,real,1995-2007,52,1.0014607475662094
+gdp,24,FRB/US growth impetus,rstar,real,2008-16,36,0.989740224606058
+gdp,24,FRB/US growth impetus,rstar,real,2021-26,10,0.8494252172466352
+gdp,24,FRB/US growth impetus,real,nominal,1995-2007,52,1.0124464668954414
+gdp,24,FRB/US growth impetus,real,nominal,2008-16,36,0.97770340872036
+gdp,24,FRB/US growth impetus,real,nominal,2021-26,10,0.6408650681632252
+gdp,24,FCI-G 1yr,rstar,nominal,1995-2007,52,0.9848878322813215
+gdp,24,FCI-G 1yr,rstar,nominal,2008-16,36,0.980438809497255
+gdp,24,FCI-G 1yr,rstar,nominal,2021-26,10,0.8156281133970589
+gdp,24,FCI-G 1yr,rstar,real,1995-2007,52,0.9988853924766208
+gdp,24,FCI-G 1yr,rstar,real,2008-16,36,0.9964262720844567
+gdp,24,FCI-G 1yr,rstar,real,2021-26,10,0.8334590843488427
+gdp,24,FCI-G 1yr,real,nominal,1995-2007,52,0.9859868206095256
+gdp,24,FCI-G 1yr,real,nominal,2008-16,36,0.9839551976547579
+gdp,24,FCI-G 1yr,real,nominal,2021-26,10,0.9786060632289891
+gdp,24,FCI-G 3yr,rstar,nominal,1995-2007,52,0.9766128023090335
+gdp,24,FCI-G 3yr,rstar,nominal,2008-16,36,0.9966990345102831
+gdp,24,FCI-G 3yr,rstar,nominal,2021-26,10,0.892176231998861
+gdp,24,FCI-G 3yr,rstar,real,1995-2007,52,0.9975001973116767
+gdp,24,FCI-G 3yr,rstar,real,2008-16,36,1.0006511465867738
+gdp,24,FCI-G 3yr,rstar,real,2021-26,10,0.9599117066214196
+gdp,24,FCI-G 3yr,real,nominal,1995-2007,52,0.979060259778458
+gdp,24,FCI-G 3yr,real,nominal,2008-16,36,0.9960504596532254
+gdp,24,FCI-G 3yr,real,nominal,2021-26,10,0.9294357239782338
+corepce,6,Market level,rstar,nominal,1995-2007,156,0.9983099037278644
+corepce,6,Market level,rstar,nominal,2008-16,108,1.0293188090279948
+corepce,6,Market level,rstar,nominal,2017-19,30,0.983672792213988
+corepce,6,Market level,rstar,nominal,2021-26,48,0.9907419559830039
+corepce,6,Market level,rstar,real,1995-2007,156,0.9684961909234098
+corepce,6,Market level,rstar,real,2008-16,108,1.0223306710273636
+corepce,6,Market level,rstar,real,2017-19,30,0.9775163238577025
+corepce,6,Market level,rstar,real,2021-26,48,0.9698626629334133
+corepce,6,Market level,real,nominal,1995-2007,156,1.0307835106465713
+corepce,6,Market level,real,nominal,2008-16,108,1.0068354967709308
+corepce,6,Market level,real,nominal,2017-19,30,1.006298072171306
+corepce,6,Market level,real,nominal,2021-26,48,1.021528092427478
+corepce,6,Market forward impetus,rstar,nominal,1995-2007,156,0.9998446348337705
+corepce,6,Market forward impetus,rstar,nominal,2008-16,108,0.9979870907689686
+corepce,6,Market forward impetus,rstar,nominal,2017-19,30,0.9379025063933407
+corepce,6,Market forward impetus,rstar,nominal,2021-26,48,0.967575384116583
+corepce,6,Market forward impetus,rstar,real,1995-2007,156,0.9861692011918566
+corepce,6,Market forward impetus,rstar,real,2008-16,108,0.993136543130154
+corepce,6,Market forward impetus,rstar,real,2017-19,30,1.040940582882583
+corepce,6,Market forward impetus,rstar,real,2021-26,48,1.019739224990771
+corepce,6,Market forward impetus,real,nominal,1995-2007,156,1.013867228489174
+corepce,6,Market forward impetus,real,nominal,2008-16,108,1.0048840692373746
+corepce,6,Market forward impetus,real,nominal,2017-19,30,0.9010144496394709
+corepce,6,Market forward impetus,real,nominal,2021-26,48,0.9488459013875237
+corepce,6,GS level,rstar,nominal,1995-2007,156,0.9905059384937924
+corepce,6,GS level,rstar,nominal,2008-16,108,0.9908283422836881
+corepce,6,GS level,rstar,nominal,2017-19,30,0.9753684097326302
+corepce,6,GS level,rstar,nominal,2021-26,48,0.9893882774257744
+corepce,6,GS level,rstar,real,1995-2007,156,0.9666204143425755
+corepce,6,GS level,rstar,real,2008-16,108,1.0298856915549341
+corepce,6,GS level,rstar,real,2017-19,30,0.9773174348105463
+corepce,6,GS level,rstar,real,2021-26,48,0.9669783533161166
+corepce,6,GS level,real,nominal,1995-2007,156,1.0247103452366688
+corepce,6,GS level,real,nominal,2008-16,108,0.9620760346594613
+corepce,6,GS level,real,nominal,2017-19,30,0.9980057399893884
+corepce,6,GS level,real,nominal,2021-26,48,1.0231752076277676
+corepce,6,FRB/US level,rstar,nominal,1995-2007,156,0.9961759167493859
+corepce,6,FRB/US level,rstar,nominal,2008-16,108,1.0103818906871627
+corepce,6,FRB/US level,rstar,nominal,2017-19,30,0.9736710926224813
+corepce,6,FRB/US level,rstar,nominal,2021-26,48,0.9503102149335392
+corepce,6,FRB/US level,rstar,real,1995-2007,156,0.9765006207253135
+corepce,6,FRB/US level,rstar,real,2008-16,108,1.007078077513378
+corepce,6,FRB/US level,rstar,real,2017-19,30,0.9808562910737731
+corepce,6,FRB/US level,rstar,real,2021-26,48,0.9703239544964698
+corepce,6,FRB/US level,real,nominal,1995-2007,156,1.0201487798435378
+corepce,6,FRB/US level,real,nominal,2008-16,108,1.0032805928830684
+corepce,6,FRB/US level,real,nominal,2017-19,30,0.9926745655641094
+corepce,6,FRB/US level,real,nominal,2021-26,48,0.979374167286928
+corepce,6,FRB/US growth impetus,rstar,nominal,1995-2007,156,1.009114223481403
+corepce,6,FRB/US growth impetus,rstar,nominal,2008-16,108,1.0601852098007118
+corepce,6,FRB/US growth impetus,rstar,nominal,2017-19,30,0.9610649386197392
+corepce,6,FRB/US growth impetus,rstar,nominal,2021-26,48,0.9548523981399297
+corepce,6,FRB/US growth impetus,rstar,real,1995-2007,156,0.9793870859432466
+corepce,6,FRB/US growth impetus,rstar,real,2008-16,108,0.9860110341713759
+corepce,6,FRB/US growth impetus,rstar,real,2017-19,30,1.040019879443657
+corepce,6,FRB/US growth impetus,rstar,real,2021-26,48,1.0312277472264209
+corepce,6,FRB/US growth impetus,real,nominal,1995-2007,156,1.030352797136922
+corepce,6,FRB/US growth impetus,real,nominal,2008-16,108,1.0752265168022896
+corepce,6,FRB/US growth impetus,real,nominal,2017-19,30,0.9240832388067873
+corepce,6,FRB/US growth impetus,real,nominal,2021-26,48,0.9259374572766206
+corepce,6,FCI-G 1yr,rstar,nominal,1995-2007,156,1.0085178205039114
+corepce,6,FCI-G 1yr,rstar,nominal,2008-16,108,1.0162638377359052
+corepce,6,FCI-G 1yr,rstar,nominal,2017-19,30,0.9893224917764868
+corepce,6,FCI-G 1yr,rstar,nominal,2021-26,48,0.9716780985034055
+corepce,6,FCI-G 1yr,rstar,real,1995-2007,156,0.9927752403349992
+corepce,6,FCI-G 1yr,rstar,real,2008-16,108,0.965884060449015
+corepce,6,FCI-G 1yr,rstar,real,2017-19,30,1.027259264640807
+corepce,6,FCI-G 1yr,rstar,real,2021-26,48,1.0406845760196177
+corepce,6,FCI-G 1yr,real,nominal,1995-2007,156,1.0158571442249105
+corepce,6,FCI-G 1yr,real,nominal,2008-16,108,1.0521592387221608
+corepce,6,FCI-G 1yr,real,nominal,2017-19,30,0.9630699141198934
+corepce,6,FCI-G 1yr,real,nominal,2021-26,48,0.9336912652437434
+corepce,6,FCI-G 3yr,rstar,nominal,1995-2007,156,1.02903931765265
+corepce,6,FCI-G 3yr,rstar,nominal,2008-16,108,0.9816577603010569
+corepce,6,FCI-G 3yr,rstar,nominal,2017-19,30,1.0121334604766825
+corepce,6,FCI-G 3yr,rstar,nominal,2021-26,48,0.9954836690986737
+corepce,6,FCI-G 3yr,rstar,real,1995-2007,156,0.9618621716771069
+corepce,6,FCI-G 3yr,rstar,real,2008-16,108,0.9695361556061379
+corepce,6,FCI-G 3yr,rstar,real,2017-19,30,1.020049889389438
+corepce,6,FCI-G 3yr,rstar,real,2021-26,48,1.0548007188815132
+corepce,6,FCI-G 3yr,real,nominal,1995-2007,156,1.0698407193396666
+corepce,6,FCI-G 3yr,real,nominal,2008-16,108,1.0125024782467662
+corepce,6,FCI-G 3yr,real,nominal,2017-19,30,0.9922391747745846
+corepce,6,FCI-G 3yr,real,nominal,2021-26,48,0.943764685858635
+corepce,12,Market level,rstar,nominal,1995-2007,156,0.996992564913821
+corepce,12,Market level,rstar,nominal,2008-16,108,1.0501057110605865
+corepce,12,Market level,rstar,nominal,2017-19,24,1.0030984814855715
+corepce,12,Market level,rstar,nominal,2021-26,42,0.9660606499900086
+corepce,12,Market level,rstar,real,1995-2007,156,0.9296803650978384
+corepce,12,Market level,rstar,real,2008-16,108,1.0443336898115494
+corepce,12,Market level,rstar,real,2017-19,24,0.9882134655429147
+corepce,12,Market level,rstar,real,2021-26,42,0.9563100356922827
+corepce,12,Market level,real,nominal,1995-2007,156,1.0724035941201133
+corepce,12,Market level,real,nominal,2008-16,108,1.0055269894147327
+corepce,12,Market level,real,nominal,2017-19,24,1.0150625512216425
+corepce,12,Market level,real,nominal,2021-26,42,1.0101960806995687
+corepce,12,Market forward impetus,rstar,nominal,1995-2007,156,0.9966341696205215
+corepce,12,Market forward impetus,rstar,nominal,2008-16,108,1.0277035416897597
+corepce,12,Market forward impetus,rstar,nominal,2017-19,24,0.9000120450014109
+corepce,12,Market forward impetus,rstar,nominal,2021-26,42,0.9374413815403815
+corepce,12,Market forward impetus,rstar,real,1995-2007,156,0.9703233049269006
+corepce,12,Market forward impetus,rstar,real,2008-16,108,0.9733214885525366
+corepce,12,Market forward impetus,rstar,real,2017-19,24,1.0828507366360747
+corepce,12,Market forward impetus,rstar,real,2021-26,42,1.0404376008962486
+corepce,12,Market forward impetus,real,nominal,1995-2007,156,1.0271155650493247
+corepce,12,Market forward impetus,real,nominal,2008-16,108,1.055872652332064
+corepce,12,Market forward impetus,real,nominal,2017-19,24,0.8311506051123346
+corepce,12,Market forward impetus,real,nominal,2021-26,42,0.9010068270628199
+corepce,12,GS level,rstar,nominal,1995-2007,156,0.9546327873432087
+corepce,12,GS level,rstar,nominal,2008-16,108,0.9613570974758964
+corepce,12,GS level,rstar,nominal,2017-19,24,0.9350889628898457
+corepce,12,GS level,rstar,nominal,2021-26,42,0.9759688076030466
+corepce,12,GS level,rstar,real,1995-2007,156,0.9229145176916035
+corepce,12,GS level,rstar,real,2008-16,108,1.0599691930280504
+corepce,12,GS level,rstar,real,2017-19,24,0.9826521686218174
+corepce,12,GS level,rstar,real,2021-26,42,0.9513307413908897
+corepce,12,GS level,real,nominal,1995-2007,156,1.034367505379522
+corepce,12,GS level,real,nominal,2008-16,108,0.9069670173427914
+corepce,12,GS level,real,nominal,2017-19,24,0.9515971090780986
+corepce,12,GS level,real,nominal,2021-26,42,1.025898528387861
+corepce,12,FRB/US level,rstar,nominal,1995-2007,156,0.9974923614364506
+corepce,12,FRB/US level,rstar,nominal,2008-16,108,1.014447128898557
+corepce,12,FRB/US level,rstar,nominal,2017-19,24,0.9964304414997778
+corepce,12,FRB/US level,rstar,nominal,2021-26,42,0.9187535146130307
+corepce,12,FRB/US level,rstar,real,1995-2007,156,0.945889251973363
+corepce,12,FRB/US level,rstar,real,2008-16,108,1.0147988855866064
+corepce,12,FRB/US level,rstar,real,2017-19,24,0.9988174781388058
+corepce,12,FRB/US level,rstar,real,2021-26,42,0.9552259494245717
+corepce,12,FRB/US level,real,nominal,1995-2007,156,1.0545551282620356
+corepce,12,FRB/US level,real,nominal,2008-16,108,0.9996533730051882
+corepce,12,FRB/US level,real,nominal,2017-19,24,0.9976101372960793
+corepce,12,FRB/US level,real,nominal,2021-26,42,0.961818002501385
+corepce,12,FRB/US growth impetus,rstar,nominal,1995-2007,156,1.0259054706021642
+corepce,12,FRB/US growth impetus,rstar,nominal,2008-16,108,1.149929400747178
+corepce,12,FRB/US growth impetus,rstar,nominal,2017-19,24,0.9662462209863414
+corepce,12,FRB/US growth impetus,rstar,nominal,2021-26,42,0.9283494411973079
+corepce,12,FRB/US growth impetus,rstar,real,1995-2007,156,0.945718464118703
+corepce,12,FRB/US growth impetus,rstar,real,2008-16,108,0.9836122708594115
+corepce,12,FRB/US growth impetus,rstar,real,2017-19,24,1.0770543212962913
+corepce,12,FRB/US growth impetus,rstar,real,2021-26,42,1.0534037539274677
+corepce,12,FRB/US growth impetus,real,nominal,1995-2007,156,1.0847895113882395
+corepce,12,FRB/US growth impetus,real,nominal,2008-16,108,1.1690880998693218
+corepce,12,FRB/US growth impetus,real,nominal,2017-19,24,0.8971193020454283
+corepce,12,FRB/US growth impetus,real,nominal,2021-26,42,0.8812854878635924
+corepce,12,FCI-G 1yr,rstar,nominal,1995-2007,156,1.0259473471306724
+corepce,12,FCI-G 1yr,rstar,nominal,2008-16,108,1.035869156279392
+corepce,12,FCI-G 1yr,rstar,nominal,2017-19,24,1.005702419356695
+corepce,12,FCI-G 1yr,rstar,nominal,2021-26,42,0.955394113591743
+corepce,12,FCI-G 1yr,rstar,real,1995-2007,156,0.9719125217296467
+corepce,12,FCI-G 1yr,rstar,real,2008-16,108,0.9472010729119611
+corepce,12,FCI-G 1yr,rstar,real,2017-19,24,1.045526504560558
+corepce,12,FCI-G 1yr,rstar,real,2021-26,42,1.0602838468472038
+corepce,12,FCI-G 1yr,real,nominal,1995-2007,156,1.0555963877333978
+corepce,12,FCI-G 1yr,real,nominal,2008-16,108,1.0936106238719097
+corepce,12,FCI-G 1yr,real,nominal,2017-19,24,0.9619100185120592
+corepce,12,FCI-G 1yr,real,nominal,2021-26,42,0.901073911889392
+corepce,12,FCI-G 3yr,rstar,nominal,1995-2007,156,1.0729710488319018
+corepce,12,FCI-G 3yr,rstar,nominal,2008-16,108,0.961202963865536
+corepce,12,FCI-G 3yr,rstar,nominal,2017-19,24,0.9987544354778927
+corepce,12,FCI-G 3yr,rstar,nominal,2021-26,42,0.9865641270382605
+corepce,12,FCI-G 3yr,rstar,real,1995-2007,156,0.9190688543880089
+corepce,12,FCI-G 3yr,rstar,real,2008-16,108,0.9529603337985788
+corepce,12,FCI-G 3yr,rstar,real,2017-19,24,0.9826682642741313
+corepce,12,FCI-G 3yr,rstar,real,2021-26,42,1.0672647637985506
+corepce,12,FCI-G 3yr,real,nominal,1995-2007,156,1.1674544771146373
+corepce,12,FCI-G 3yr,real,nominal,2008-16,108,1.008649499642972
+corepce,12,FCI-G 3yr,real,nominal,2017-19,24,1.016369889807771
+corepce,12,FCI-G 3yr,real,nominal,2021-26,42,0.9243855512730835
+corepce,24,Market level,rstar,nominal,1995-2007,156,0.9612472146557002
+corepce,24,Market level,rstar,nominal,2008-16,108,1.0794399286651661
+corepce,24,Market level,rstar,nominal,2017-19,12,1.307272144380325
+corepce,24,Market level,rstar,nominal,2021-26,30,0.9495269005470303
+corepce,24,Market level,rstar,real,1995-2007,156,0.887529800215059
+corepce,24,Market level,rstar,real,2008-16,108,1.0905572655721045
+corepce,24,Market level,rstar,real,2017-19,12,1.3899232378467805
+corepce,24,Market level,rstar,real,2021-26,30,0.9586976911748053
+corepce,24,Market level,real,nominal,1995-2007,156,1.0830590864923955
+corepce,24,Market level,real,nominal,2008-16,108,0.9898058201454406
+corepce,24,Market level,real,nominal,2017-19,12,0.9405354977772041
+corepce,24,Market level,real,nominal,2021-26,30,0.9904341162890077
+corepce,24,Market forward impetus,rstar,nominal,1995-2007,156,1.0147255842646967
+corepce,24,Market forward impetus,rstar,nominal,2008-16,108,1.0559622517707554
+corepce,24,Market forward impetus,rstar,nominal,2017-19,12,0.8898664411391961
+corepce,24,Market forward impetus,rstar,nominal,2021-26,30,0.9455430224727122
+corepce,24,Market forward impetus,rstar,real,1995-2007,156,0.9366427323284684
+corepce,24,Market forward impetus,rstar,real,2008-16,108,0.9572357619079737
+corepce,24,Market forward impetus,rstar,real,2017-19,12,1.1424849225265021
+corepce,24,Market forward impetus,rstar,real,2021-26,30,1.0810942507103956
+corepce,24,Market forward impetus,real,nominal,1995-2007,156,1.0833646055653647
+corepce,24,Market forward impetus,real,nominal,2008-16,108,1.103137067994617
+corepce,24,Market forward impetus,real,nominal,2017-19,12,0.7788868138157455
+corepce,24,Market forward impetus,real,nominal,2021-26,30,0.8746166412885725
+corepce,24,GS level,rstar,nominal,1995-2007,156,0.8696700281687351
+corepce,24,GS level,rstar,nominal,2008-16,108,0.8978801532200542
+corepce,24,GS level,rstar,nominal,2017-19,12,1.2726884054822138
+corepce,24,GS level,rstar,nominal,2021-26,30,0.9358879989024024
+corepce,24,GS level,rstar,real,1995-2007,156,0.8781866064413545
+corepce,24,GS level,rstar,real,2008-16,108,1.1257093759833314
+corepce,24,GS level,rstar,real,2017-19,12,1.3945731017673166
+corepce,24,GS level,rstar,real,2021-26,30,0.9509566399307302
+corepce,24,GS level,real,nominal,1995-2007,156,0.9903020859004775
+corepce,24,GS level,real,nominal,2008-16,108,0.7976127519020941
+corepce,24,GS level,real,nominal,2017-19,12,0.9126007119091565
+corepce,24,GS level,real,nominal,2021-26,30,0.9841542291250783
+corepce,24,FRB/US level,rstar,nominal,1995-2007,156,0.9717173754788793
+corepce,24,FRB/US level,rstar,nominal,2008-16,108,0.9956557672575391
+corepce,24,FRB/US level,rstar,nominal,2017-19,12,1.4237530698127001
+corepce,24,FRB/US level,rstar,nominal,2021-26,30,0.8879712410113617
+corepce,24,FRB/US level,rstar,real,1995-2007,156,0.9096217584885785
+corepce,24,FRB/US level,rstar,real,2008-16,108,1.017927290594492
+corepce,24,FRB/US level,rstar,real,2017-19,12,1.496947089960871
+corepce,24,FRB/US level,rstar,real,2021-26,30,0.9425084267116122
+corepce,24,FRB/US level,real,nominal,1995-2007,156,1.0682653162271298
+corepce,24,FRB/US level,real,nominal,2008-16,108,0.9781207129991123
+corepce,24,FRB/US level,real,nominal,2017-19,12,0.9511044707999105
+corepce,24,FRB/US level,real,nominal,2021-26,30,0.9421361293388864
+corepce,24,FRB/US growth impetus,rstar,nominal,1995-2007,156,1.0383357489493334
+corepce,24,FRB/US growth impetus,rstar,nominal,2008-16,108,1.2650996746724006
+corepce,24,FRB/US growth impetus,rstar,nominal,2017-19,12,0.9896763756407883
+corepce,24,FRB/US growth impetus,rstar,nominal,2021-26,30,0.9534891648533802
+corepce,24,FRB/US growth impetus,rstar,real,1995-2007,156,0.8812319034421794
+corepce,24,FRB/US growth impetus,rstar,real,2008-16,108,0.9925530630513449
+corepce,24,FRB/US growth impetus,rstar,real,2017-19,12,1.0755116316652202
+corepce,24,FRB/US growth impetus,rstar,real,2021-26,30,1.0985512709007708
+corepce,24,FRB/US growth impetus,real,nominal,1995-2007,156,1.178277528189221
+corepce,24,FRB/US growth impetus,real,nominal,2008-16,108,1.2745914770371898
+corepce,24,FRB/US growth impetus,real,nominal,2017-19,12,0.9201912341091719
+corepce,24,FRB/US growth impetus,real,nominal,2021-26,30,0.8679514467008489
+corepce,24,FCI-G 1yr,rstar,nominal,1995-2007,156,1.0105739761080705
+corepce,24,FCI-G 1yr,rstar,nominal,2008-16,108,1.032644051839433
+corepce,24,FCI-G 1yr,rstar,nominal,2017-19,12,1.0873241912130562
+corepce,24,FCI-G 1yr,rstar,nominal,2021-26,30,0.9583544822764799
+corepce,24,FCI-G 1yr,rstar,real,1995-2007,156,0.9016831033193361
+corepce,24,FCI-G 1yr,rstar,real,2008-16,108,0.9211798391609942
+corepce,24,FCI-G 1yr,rstar,real,2017-19,12,1.0308405592325878
+corepce,24,FCI-G 1yr,rstar,real,2021-26,30,1.093234361315312
+corepce,24,FCI-G 1yr,real,nominal,1995-2007,156,1.1207640160804588
+corepce,24,FCI-G 1yr,real,nominal,2008-16,108,1.1210015763913808
+corepce,24,FCI-G 1yr,real,nominal,2017-19,12,1.0547937617263698
+corepce,24,FCI-G 1yr,real,nominal,2021-26,30,0.8766230885054209
+corepce,24,FCI-G 3yr,rstar,nominal,1995-2007,156,1.0338679861053464
+corepce,24,FCI-G 3yr,rstar,nominal,2008-16,108,0.9236809955496739
+corepce,24,FCI-G 3yr,rstar,nominal,2017-19,12,0.8055517892453251
+corepce,24,FCI-G 3yr,rstar,nominal,2021-26,30,0.9700146186435169
+corepce,24,FCI-G 3yr,rstar,real,1995-2007,156,0.8645419428387533
+corepce,24,FCI-G 3yr,rstar,real,2008-16,108,0.9433519638950119
+corepce,24,FCI-G 3yr,rstar,real,2017-19,12,0.7540853193738648
+corepce,24,FCI-G 3yr,rstar,real,2021-26,30,1.05437663782752
+corepce,24,FCI-G 3yr,real,nominal,1995-2007,156,1.1958563661013426
+corepce,24,FCI-G 3yr,real,nominal,2008-16,108,0.9791477952045401
+corepce,24,FCI-G 3yr,real,nominal,2017-19,12,1.0682501947050158
+corepce,24,FCI-G 3yr,real,nominal,2021-26,30,0.919988724941947
+recession,12,Market level,rstar,nominal,1995-2007,156,0.9717110900508029
+recession,12,Market level,rstar,nominal,2008-16,108,1.3063882034601408
+recession,12,Market level,rstar,nominal,2017-19,24,2.5215455169074152
+recession,12,Market level,rstar,nominal,2021-26,55,2.3179256065599967
+recession,12,Market level,rstar,real,1995-2007,156,0.9956039592128622
+recession,12,Market level,rstar,real,2008-16,108,1.050759174949133
+recession,12,Market level,rstar,real,2017-19,24,1.4485997060253581
+recession,12,Market level,rstar,real,2021-26,55,1.4684392022505375
+recession,12,Market level,real,nominal,1995-2007,156,0.976001633037951
+recession,12,Market level,real,nominal,2008-16,108,1.24328032017744
+recession,12,Market level,real,nominal,2017-19,24,1.7406779156582783
+recession,12,Market level,real,nominal,2021-26,55,1.5784961359023457
+recession,12,Market forward impetus,rstar,nominal,1995-2007,156,0.9946229657726416
+recession,12,Market forward impetus,rstar,nominal,2008-16,108,1.0192206290376398
+recession,12,Market forward impetus,rstar,nominal,2017-19,24,0.9271700705902106
+recession,12,Market forward impetus,rstar,nominal,2021-26,55,0.6070045352897363
+recession,12,Market forward impetus,rstar,real,1995-2007,156,1.0114435156193684
+recession,12,Market forward impetus,rstar,real,2008-16,108,0.969536072526286
+recession,12,Market forward impetus,rstar,real,2017-19,24,0.9650222990422679
+recession,12,Market forward impetus,rstar,real,2021-26,55,0.7343920187681936
+recession,12,Market forward impetus,real,nominal,1995-2007,156,0.9833697585807086
+recession,12,Market forward impetus,real,nominal,2008-16,108,1.0512457018560355
+recession,12,Market forward impetus,real,nominal,2017-19,24,0.9607757991814039
+recession,12,Market forward impetus,real,nominal,2021-26,55,0.8265402125527914
+recession,12,GS level,rstar,nominal,1995-2007,156,1.0126572383271157
+recession,12,GS level,rstar,nominal,2008-16,108,1.0784639324477898
+recession,12,GS level,rstar,nominal,2017-19,24,1.4406740625653878
+recession,12,GS level,rstar,nominal,2021-26,55,1.3354488243639941
+recession,12,GS level,rstar,real,1995-2007,156,0.9954560839204322
+recession,12,GS level,rstar,real,2008-16,108,1.075703158160416
+recession,12,GS level,rstar,real,2017-19,24,1.4745351017696813
+recession,12,GS level,rstar,real,2021-26,55,1.513805175823609
+recession,12,GS level,real,nominal,1995-2007,156,1.0172796717851578
+recession,12,GS level,real,nominal,2008-16,108,1.0025664833894279
+recession,12,GS level,real,nominal,2017-19,24,0.9770361253769716
+recession,12,GS level,real,nominal,2021-26,55,0.8821801151772536
+recession,12,FRB/US level,rstar,nominal,1995-2007,156,0.991938825192638
+recession,12,FRB/US level,rstar,nominal,2008-16,108,1.3537307022554737
+recession,12,FRB/US level,rstar,nominal,2017-19,24,2.357555328056199
+recession,12,FRB/US level,rstar,nominal,2021-26,55,1.598202246295056
+recession,12,FRB/US level,rstar,real,1995-2007,156,0.9958801885274088
+recession,12,FRB/US level,rstar,real,2008-16,108,1.0174897600309585
+recession,12,FRB/US level,rstar,real,2017-19,24,1.296197086235969
+recession,12,FRB/US level,rstar,real,2021-26,55,1.0938145496648395
+recession,12,FRB/US level,real,nominal,1995-2007,156,0.9960423318184501
+recession,12,FRB/US level,real,nominal,2008-16,108,1.3304612541892162
+recession,12,FRB/US level,real,nominal,2017-19,24,1.8188247397641601
+recession,12,FRB/US level,real,nominal,2021-26,55,1.4611272512189277
+recession,12,FRB/US growth impetus,rstar,nominal,1995-2007,156,1.0006337309837805
+recession,12,FRB/US growth impetus,rstar,nominal,2008-16,108,1.0661613420256588
+recession,12,FRB/US growth impetus,rstar,nominal,2017-19,24,0.8389142592849178
+recession,12,FRB/US growth impetus,rstar,nominal,2021-26,55,0.7050764288250568
+recession,12,FRB/US growth impetus,rstar,real,1995-2007,156,1.008335760597882
+recession,12,FRB/US growth impetus,rstar,real,2008-16,108,1.0141972146619094
+recession,12,FRB/US growth impetus,rstar,real,2017-19,24,0.9553332005079704
+recession,12,FRB/US growth impetus,rstar,real,2021-26,55,0.9812765464145733
+recession,12,FRB/US growth impetus,real,nominal,1995-2007,156,0.9923616419102953
+recession,12,FRB/US growth impetus,real,nominal,2008-16,108,1.0512367088102013
+recession,12,FRB/US growth impetus,real,nominal,2017-19,24,0.8781378673313665
+recession,12,FRB/US growth impetus,real,nominal,2021-26,55,0.7185297879596662
+recession,12,FCI-G 1yr,rstar,nominal,1995-2007,156,0.9136928147153541
+recession,12,FCI-G 1yr,rstar,nominal,2008-16,108,1.3957598645360936
+recession,12,FCI-G 1yr,rstar,nominal,2017-19,24,1.1485786732425345
+recession,12,FCI-G 1yr,rstar,nominal,2021-26,55,2.7562232301788434
+recession,12,FCI-G 1yr,rstar,real,1995-2007,156,0.9904316154906893
+recession,12,FCI-G 1yr,rstar,real,2008-16,108,1.0860605853446592
+recession,12,FCI-G 1yr,rstar,real,2017-19,24,1.0488650058953264
+recession,12,FCI-G 1yr,rstar,real,2021-26,55,1.0947661417563856
+recession,12,FCI-G 1yr,real,nominal,1995-2007,156,0.9225198392548117
+recession,12,FCI-G 1yr,real,nominal,2008-16,108,1.285158381926872
+recession,12,FCI-G 1yr,real,nominal,2017-19,24,1.0950681610948505
+recession,12,FCI-G 1yr,real,nominal,2021-26,55,2.517636529895693
+recession,12,FCI-G 3yr,rstar,nominal,1995-2007,156,0.9305790142607725
+recession,12,FCI-G 3yr,rstar,nominal,2008-16,108,1.1196315168355802
+recession,12,FCI-G 3yr,rstar,nominal,2017-19,24,0.8213138264464827
+recession,12,FCI-G 3yr,rstar,nominal,2021-26,55,1.6404878908863993
+recession,12,FCI-G 3yr,rstar,real,1995-2007,156,1.0014311957342172
+recession,12,FCI-G 3yr,rstar,real,2008-16,108,1.2601215699806838
+recession,12,FCI-G 3yr,rstar,real,2017-19,24,0.8133270281488038
+recession,12,FCI-G 3yr,rstar,real,2021-26,55,0.967518082402063
+recession,12,FCI-G 3yr,real,nominal,1995-2007,156,0.9292490769458223
+recession,12,FCI-G 3yr,real,nominal,2008-16,108,0.8885107147659911
+recession,12,FCI-G 3yr,real,nominal,2017-19,24,1.00981991009921
+recession,12,FCI-G 3yr,real,nominal,2021-26,55,1.6955630294924824
