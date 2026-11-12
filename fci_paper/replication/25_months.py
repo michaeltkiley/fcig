@@ -21,7 +21,8 @@ from lib.config import RES, SEED, END
 from lib.report import Scalars
 
 T0 = time.time(); S = Scalars("25_months")
-REPS25 = int(os.environ.get("FCI_REPS_25", 5000))
+from lib.config import REPS_W
+REPS25 = REPS_W
 EQ, USD = -5.0, 3.9
 raw = I.events_raw(); n = len(raw)
 X5 = raw[["MP1", "MP2", "ED2", "ED3", "ED4"]].values; u2 = raw.UST2Y.values; Y3 = raw[["UST10Y", "SP500", "DXY"]].values; dates = raw.Date
@@ -99,4 +100,31 @@ for d in DEFS:
             dd = a - np.array([x[k] for x in QB["baseline"]]); dl, du = ci(dd); row.update(diff_vs_baseline=Q0[d][k] - Q0["baseline"][k], diff_lo=dl, diff_hi=du, share_diff_positive=float((dd > 0).mean()))
         prow.append(row); S.add(f"pr_{d}_{k}", Q0[d][k]); S.add(f"pr_{d}_{k}_lo", l); S.add(f"pr_{d}_{k}_hi", u)
 pd.DataFrame(prow).to_csv(RES / "25_proportionality.csv", index=False, float_format="%.6g")
+# ---- (2b) direct test: does switching the signal change the MARKET weights' own dollar/equity proportion?  T = wF_usd*wY_eq - wY_usd*wF_eq on paired draws (F = futures factor, Y = two-year yield)
+trow = []
+for other in ("two_year", "to_2019", "no_lower_bound"):
+    a, c = ("baseline", "two_year") if other == "two_year" else ("baseline", other)
+    T = BW[a][:, 2] * BW[c][:, 1] - BW[c][:, 2] * BW[a][:, 1]
+    Tpt = POINT[a][0][2] * POINT[c][0][1] - POINT[c][0][2] * POINT[a][0][1]
+    # dimensionless version: ratio of the two market dollar/equity weight ratios
+    rr = (BW[c][:, 2] / BW[c][:, 1]) / (BW[a][:, 2] / BW[a][:, 1]); rr0 = (POINT[c][0][2] / POINT[c][0][1]) / (POINT[a][0][2] / POINT[a][0][1])
+    l, u = ci(T); l2, u2_ = ci(rr)
+    trow.append(dict(signal_a=a, signal_b=c, T=Tpt, lo=l, hi=u, share_positive=float((T > 0).mean()), ratio_b_over_a=rr0, ratio_lo=l2, ratio_hi=u2_, share_ratio_gt1=float((rr > 1).mean())))
+    S.add(f"T_{c}_vs_baseline", Tpt); S.add(f"T_{c}_vs_baseline_lo", l); S.add(f"T_{c}_vs_baseline_hi", u); S.add(f"T_{c}_vs_baseline_share_pos", float((T > 0).mean()))
+pd.DataFrame(trow).to_csv(RES / "25_market_proportion.csv", index=False, float_format="%.6g")
+# ---- (3) what the two signals capture: asset responses to the common futures-factor component F and to the part of the two-year change outside it (R)
+#      u2 = g*F + R with R orthogonal to F (F is the NS factor scaled to the two-year change, so g is about 1); asset move = a + bF*F + bR*R; per 1 pp of F and per 1 pp of R. Announcement bootstrap, same draws.
+def split(rows):
+    F = ns_arr(X5[rows], u2[rows]); u = u2[rows]; Fc = F - F.mean(); g = (Fc @ (u - u.mean())) / (Fc @ Fc); Rr = u - u.mean() - g * Fc
+    Z = np.column_stack([np.ones(len(rows)), Fc, Rr]); beta = np.linalg.lstsq(Z, Y3[rows], rcond=None)[0]     # 3 x 3 (const, F, R) x assets
+    return beta[1], beta[2], 1 - (g * g * (Fc @ Fc)) / ((u - u.mean()) @ (u - u.mean())), g
+rows_all = np.where(MASK["baseline"])[0]; bF0, bR0, rshare0, g0 = split(rows_all)
+SB = [split(IX[r]) for r in range(R)]
+sprow = []
+for k, a in enumerate(("ten", "eq", "usd")):
+    for nm, pt, dr in (("futures_factor", bF0[k], [x[0][k] for x in SB]), ("two_year_residual", bR0[k], [x[1][k] for x in SB])):
+        l, u = ci(dr); sprow.append(dict(asset=a, component=nm, response=pt, lo=l, hi=u)); S.add(f"split_{a}_{nm}", pt); S.add(f"split_{a}_{nm}_lo", l); S.add(f"split_{a}_{nm}_hi", u)
+l, u = ci([x[2] for x in SB]); S.add("split_resid_var_share", rshare0); S.add("split_resid_var_share_lo", l); S.add("split_resid_var_share_hi", u); S.add("split_g", g0)
+S.add("split_resid_sd_share", float(np.sqrt(rshare0)))
+pd.DataFrame(sprow).to_csv(RES / "25_signal_split.csv", index=False, float_format="%.6g")
 S.save(); print(f"done, {R} draws, {time.time() - T0:.0f}s")

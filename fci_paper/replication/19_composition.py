@@ -22,7 +22,7 @@ Writes results/19_*.csv and scalars_19_composition.csv."""
 import numpy as np, pandas as pd, statsmodels.api as sm
 from scipy import stats
 from lib import data, cases
-from lib.config import RES, REPS
+from lib.config import RES, REPS, REPS_W
 from lib.report import Scalars
 from lib import comp_core as C, comp_spf as SP
 from lib.stance_core import own, mean_t, oos, n_recessions, LAST_ORIGIN, ffg, M, Y, CTL, keep
@@ -104,7 +104,7 @@ SPEC, COEF, PROP, PRIM, DIST = (pd.DataFrame(r) for r in (rows_spec, rows_coef, 
 
 # ---- weights-draw interval for the primary test (main sample, unemployment, without and with the funds-rate gap)
 WB = pd.read_csv(RES / "weights_boot.csv")
-Wd_ = WB[["w_ten", "w_eq", "w_usd"]].values[:REPS]; Psid = WB[["psi_ten", "psi_eq", "psi_usd"]].values[:REPS]
+Wd_ = WB[["w_ten", "w_eq", "w_usd"]].values[:REPS_W]; Psid = WB[["psi_ten", "psi_eq", "psi_usd"]].values[:REPS_W]
 Dd = block_frame("du", "main"); ix = Dd.index; Xs = X12.reindex(ix); wd = {}
 for ff in (False, True):
     cs, as_ = [], []

@@ -1,0 +1,7 @@
+asset,component,response,lo,hi
+ten,futures_factor,0.534628,0.466728,0.60868
+ten,two_year_residual,0.800534,0.654857,0.986096
+eq,futures_factor,-7.77898,-9.76101,-6.14041
+eq,two_year_residual,0.545558,-5.14143,5.2252
+usd,futures_factor,4.22421,3.52123,5.09801
+usd,two_year_residual,4.29652,2.96949,6.02804

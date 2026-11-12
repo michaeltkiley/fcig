@@ -994,6 +994,63 @@ ax.set_xticks(xx_); ax.set_xticklabels(["Equity valuation\nfalls 5 log points", 
 ax.set_ylabel("Points (market: two-year yield; model: funds rate)", fontsize=8); ax.set_ylim(0, 0.5); ax.legend(frameon=False, fontsize=8, loc="upper left")
 for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
 figure("fig_two", fig)
+# step 25: what the two signals capture, monthly agreement, direct test of the market weights' relative proportion
+SC25 = pd.read_csv(RES / "scalars_25_months.csv", index_col=0)["value"]; c25 = lambda k: float(SC25[k])
+SP25 = pd.read_csv(RES / "25_signal_split.csv"); MC25 = pd.read_csv(RES / "25_monthly_classes.csv"); PR25 = pd.read_csv(RES / "25_proportionality.csv"); MP25 = pd.read_csv(RES / "25_market_proportion.csv")
+mac("sp:resvar", 100 * c25("split_resid_var_share"), 0); mac("sp:resvar:lo", 100 * c25("split_resid_var_share_lo"), 0); mac("sp:resvar:hi", 100 * c25("split_resid_var_share_hi"), 0); mac("sp:ressd", 100 * c25("split_resid_sd_share"), 0)
+for _, r in SP25.iterrows():
+    kk_ = f"sp:{r.asset}:{'F' if r.component == 'futures_factor' else 'R'}"; mac(kk_, r.response, 2); mac(kk_ + ":lo", r.lo, 2); mac(kk_ + ":hi", r.hi, 2)
+fig, axs = plt.subplots(2, 3, figsize=(7.2, 5.0))
+tt_ = {"ten": "10-year yield\n(points per point)", "eq": "S&P 500\n(percent per point)", "usd": "Dollar (DXY)\n(percent per point)"}
+for a_, ax_ in zip(("ten", "eq", "usd"), axs[0]):
+    for j_, (cmp_, lab_, col_) in enumerate((("futures_factor", "Futures\nfactor", COLORS["market"]), ("two_year_residual", "Two-year change\noutside the factor", "#7fa6d9"))):
+        r = SP25[(SP25.asset == a_) & (SP25.component == cmp_)].iloc[0]
+        ax_.errorbar([j_], [r.response], yerr=[[r.response - r.lo], [r.hi - r.response]], fmt="o", color=col_, capsize=3)
+    ax_.axhline(0, color="#444444", lw=0.7); ax_.set_xlim(-0.6, 1.6); ax_.set_xticks([0, 1]); ax_.set_xticklabels(["Futures\nfactor", "Residual"], fontsize=8); ax_.set_title(tt_[a_], loc="left", fontsize=8.5)
+    for sp_ in ("top", "right"): ax_.spines[sp_].set_visible(False)
+def d21row(d_, q_): return D21[(D21.definition == d_) & (D21.quantity == q_)].iloc[0]
+for ax_, q_, ttl_ in ((axs[1][0], "wM_eq", "Market weight, equity valuation"), (axs[1][1], "wM_usd", "Market weight, dollar"), (axs[1][2], "ratio_mkt", "Dollar effect over equity effect,\nmarket weights")):
+    for j_, (d_, col_) in enumerate((("baseline", COLORS["market"]), ("two_year", "#7fa6d9"))):
+        r = d21row(d_, q_); ax_.errorbar([j_], [r.point], yerr=[[r.point - r.lo], [r.hi - r.point]], fmt="o", color=col_, capsize=3)
+    ax_.axhline(0, color="#444444", lw=0.7); ax_.set_xlim(-0.6, 1.6); ax_.set_xticks([0, 1]); ax_.set_xticklabels(["Futures\nfactor", "Two-year\nyield"], fontsize=8); ax_.set_title(ttl_, loc="left", fontsize=8.5)
+    for sp_ in ("top", "right"): ax_.spines[sp_].set_visible(False)
+axs[1][2].set_ylim(-5, 12)
+fig.tight_layout(); figure("fig_signal", fig)
+for _, r in MP25.iterrows():
+    k_ = {"two_year": "two", "to_2019": "t19", "no_lower_bound": "nlb"}[r.signal_b]
+    mac(f"tp:{k_}", r["T"], 4); mac(f"tp:{k_}:lo", r.lo, 4); mac(f"tp:{k_}:hi", r.hi, 4); mac(f"tp:{k_}:pos", 100 * r.share_positive, 0)
+    mac(f"tp:{k_}:rr", r.ratio_b_over_a, 2); mac(f"tp:{k_}:rr:lo", r.ratio_lo, 2); mac(f"tp:{k_}:rr:hi", r.ratio_hi, 2); mac(f"tp:{k_}:rr:pos", 100 * r.share_ratio_gt1, 0)
+for d_, k_, _ in DEF21:
+    for q_ in ("cross", "contrast_diff"):
+        r = PR25[(PR25.definition == d_) & (PR25.quantity == q_)].iloc[0]; dd_ = 4 if q_ == "cross" else 2
+        mac(f"pr:{k_}:{q_}", r.point, dd_); mac(f"pr:{k_}:{q_}:lo", r.lo, dd_); mac(f"pr:{k_}:{q_}:hi", r.hi, dd_)
+        if d_ != "baseline": mac(f"pr:{k_}:{q_}:d", r.diff_vs_baseline, dd_); mac(f"pr:{k_}:{q_}:dlo", r.diff_lo, dd_); mac(f"pr:{k_}:{q_}:dhi", r.diff_hi, dd_); mac(f"pr:{k_}:{q_}:dpos", 100 * r.share_diff_positive, 0)
+MCb = MC25[MC25.definition == "baseline"]
+def mc_(per_, t_, cat_): return MCb[(MCb.period == per_) & (np.isclose(MCb.threshold, t_)) & (MCb.category == cat_)].iloc[0]
+rows = []
+CATL = {"agree": "Same sign", "near_zero": "Opposite signs, at least one reading within $t$ of zero", "opposing": "Opposite signs, both readings at least $t$", "big_gap": "Readings differ by at least $t$"}
+for t_ in (0.10, 0.25):
+    rows.append(r"\midrule" + "\n" + r"\multicolumn{4}{l}{\textit{Threshold $t$ = %s point}} \\" % f"{t_:.2f}")
+    for cat_ in ("agree", "near_zero", "opposing", "big_gap"):
+        row_ = [CATL[cat_]]
+        for per_ in ("all", "1998-2001", "2022-24"):
+            r = mc_(per_, t_, cat_); tk_ = int(round(t_ * 100)); pk_ = per_.replace("-", "")
+            mac(f"mo:{pk_}:{tk_}:{cat_}", 100 * r.share, 1); mac(f"mo:{pk_}:{tk_}:{cat_}:lo", 100 * r.lo, 0); mac(f"mo:{pk_}:{tk_}:{cat_}:hi", 100 * r.hi, 0); mac(f"mo:{pk_}:{tk_}:{cat_}:n", r.n_count, 0)
+            row_.append(f"{int(r.n_count)} ({f(100 * r.share, 1)}\\%) [{f(100 * r.lo, 0)}, {f(100 * r.hi, 0)}]")
+        rows.append(row_)
+rows.insert(0, ["Months", "369", "48", "34"])
+for per_, pk_ in (("all", "all"), ("1998-2001", "19982001"), ("2022-24", "202224")):
+    mac(f"mo:{pk_}:n", float(MCb[MCb.period == per_].n_months.iloc[0]), 0); mac(f"mo:{pk_}:maxgap", c25(f"mo_{per_}_max_abs_gap"), 2); mac(f"mo:{pk_}:meangap", c25(f"mo_{per_}_mean_abs_gap"), 2)
+mac("mo:mat:n", c25("mo_all_material_n"), 0); mac("mo:mat:same", 100 * c25("mo_all_material_same_sign"), 1); mac("mo:mat:gaplt", 100 * c25("mo_all_material_gap_lt_025"), 0)
+for d_, k_, _ in DEF21:
+    for t_, tk_ in ((0.10, 10), (0.25, 25)):
+        for cat_ in ("opposing", "big_gap", "agree"):
+            r = MC25[(MC25.definition == d_) & (MC25.period == "all") & np.isclose(MC25.threshold, t_) & (MC25.category == cat_)].iloc[0]
+            mac(f"mo:{k_}:{tk_}:{cat_}", 100 * r.share, 1); mac(f"mo:{k_}:{tk_}:{cat_}:n", r.n_count, 0); mac(f"mo:{k_}:{tk_}:{cat_}:lo", 100 * r.lo, 0); mac(f"mo:{k_}:{tk_}:{cat_}:hi", 100 * r.hi, 0)
+table("months", "How Often the Two Readings Differ", "tab:months", ["", "1996--2026", "1998--2001", "2022--24"], rows,
+      "Monthly 12-month changes in the three market variables (relative to $r^*$), read with the baseline market weights and with the FRB/US weights on the market's scale (points of the two-year yield). Each cell gives the number of months, the share of months, and the 5th to 95th percentile of the share over announcement-bootstrap draws of the market weights (the 12-month changes are held fixed; months overlap). 1996--2026 is 369 months, 1998--2001 is 48 and 2022--24 is 34.", align="lrrr")
+chk(c25("mo_all_t25_opposing") < c25("mo_all_t25_big_gap") and c25("mo_all_t25_agree") > 0.8, "months: opposing readings rare, large gaps common (baseline weights)")
+chk(c25("mo_2022-24_t25_opposing") == 0 and c25("mo_2022-24_t10_opposing") == 0, "months: no materially opposing readings in 2022-24")
 # policy-rate experiment in FRB/US (step 22_policy_shock)
 SC22p = pd.read_csv(RES / "scalars_22_policy_shock.csv", index_col=0)["value"]; p22 = lambda k: float(SC22p[k])
 for k_ in ("ten", "eq", "usd"):

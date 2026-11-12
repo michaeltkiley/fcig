@@ -20,7 +20,7 @@ Writes results/08_<table>.csv and scalars_08_stance.csv."""
 import numpy as np, pandas as pd
 from scipy import stats
 from lib import data, cases, indexes as I
-from lib.config import RES, REPS
+from lib.config import RES, REPS, REPS_W
 from lib.report import Scalars
 from lib.stance_core import *
 
@@ -117,7 +117,7 @@ for pn in ("zlb", "post", "pre2009"):
                 i = i.iloc[0]; S.add(f"stance_{pn}_{yn}_{form}_gain", i.gain_idx_given_ff); S.add(f"stance_{pn}_{yn}_{form}_t", i.t_idx_both); S.add(f"stance_{pn}_{yn}_{form}_n", int(i.n))
 
 # ---- episodes: index minus funds-rate gap, intervals over the weight draws and Kiley r*
-D0 = data.load(); W = pd.read_csv(RES / "weights_boot.csv")[["w_ten", "w_eq", "w_usd"]].values[:REPS]
+D0 = data.load(); W = pd.read_csv(RES / "weights_boot.csv")[["w_ten", "w_eq", "w_usd"]].values[:REPS_W]
 w0 = pd.read_csv(RES / "market_weights.csv", index_col=0).weight.values
 EP = {"conundrum 2004-06..2006-06": ("2004-06", "2006-06", "e0406"), "tightening 2022-03..2024-12": ("2022-03", "2024-12", "e2224"), "2022-03..2023-12": ("2022-03", "2023-12", "e2223")}
 rows = []

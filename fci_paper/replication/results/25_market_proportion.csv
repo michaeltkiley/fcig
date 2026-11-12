@@ -1,0 +1,4 @@
+signal_a,signal_b,T,lo,hi,share_positive,ratio_b_over_a,ratio_lo,ratio_hi,share_ratio_gt1
+baseline,two_year,0.00186309,-4.71279e-06,0.00369657,0.949,2.07013,0.981338,5.47082,0.943
+baseline,to_2019,-0.00126009,-0.00250473,0.00011327,0.069,0.682894,0.248802,1.05886,0.0728
+baseline,no_lower_bound,0.000432686,-0.000706275,0.00179646,0.7522,1.16966,0.685976,2.07773,0.749

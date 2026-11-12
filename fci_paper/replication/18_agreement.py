@@ -22,7 +22,7 @@ import statsmodels.api as sm
 from lib import data, cases, indexes as I
 from lib.agree_core import *
 from lib.agree_bridge import *
-from lib.config import RES, REPS, SEED, START, END, BLOCK
+from lib.config import RES, REPS, REPS_W, SEED, START, END, BLOCK
 from lib.report import Scalars
 
 S = Scalars("18_agreement")
@@ -36,7 +36,7 @@ HS = (2, 4, 8)
 
 mw = pd.read_csv(RES / "market_weights.csv", index_col=0)
 wM, psi = mw.weight.values, mw.response.values
-Bd = pd.read_csv(RES / "weights_boot.csv").iloc[:REPS]
+Bd = pd.read_csv(RES / "weights_boot.csv").iloc[:REPS_W]
 WB, PB = Bd[["w_ten", "w_eq", "w_usd"]].values, Bd[["psi_ten", "psi_eq", "psi_usd"]].values
 R = len(Bd)
 R_, G = load_frbus()

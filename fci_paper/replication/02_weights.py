@@ -4,7 +4,7 @@ Writes results/market_weights.csv, conversions.csv, frbus_weights.csv, weights_v
 import numpy as np, pandas as pd
 import statsmodels.api as sm
 from lib import data, indexes as I
-from lib.config import RES, REPS, SEED
+from lib.config import RES, REPS_W, SEED
 from lib.report import Scalars
 
 S = Scalars("weights")
@@ -77,7 +77,7 @@ print(pd.DataFrame(rows).round(3).to_string())
 # Bootstrap: resample announcements with replacement, recompute the policy-news factor and the weights
 rng = np.random.default_rng(SEED)
 B = []
-for _ in range(REPS):
+for _ in range(REPS_W):
     df = raw.iloc[rng.integers(0, len(raw), len(raw))].reset_index(drop=True)
     wb, pb, _ = variant(df, "ns")
     B.append(np.r_[wb, pb])

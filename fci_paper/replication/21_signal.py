@@ -21,7 +21,7 @@ import time
 import numpy as np, pandas as pd
 from lib import data, cases, indexes as I
 from lib.agree_core import MV, load_frbus, b_persist, ns_arr, mbb
-from lib.config import RES, DATA, REPS, SEED, START, END
+from lib.config import RES, DATA, REPS_W as REPS, SEED, START, END
 from lib.report import Scalars
 
 T0 = time.time()

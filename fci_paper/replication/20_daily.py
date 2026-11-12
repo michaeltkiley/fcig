@@ -25,12 +25,12 @@ import numpy as np, pandas as pd
 from lib import indexes as I
 from lib.agree_core import MV, load_frbus, b_persist
 from lib.daily_core import load_daily, day_flags, stats, mbb, ci
-from lib.config import RES, REPS, SEED
+from lib.config import RES, REPS, REPS_W, SEED
 from lib.report import Scalars
 
 S = Scalars("20_daily"); rng = np.random.default_rng(SEED + 20)
 mw = pd.read_csv(RES / "market_weights.csv", index_col=0); wM, psi = mw.weight.values, mw.response.values
-Bd = pd.read_csv(RES / "weights_boot.csv").iloc[:REPS]; WB, PB = Bd[["w_ten", "w_eq", "w_usd"]].values, Bd[["psi_ten", "psi_eq", "psi_usd"]].values; R = len(Bd)
+Bd = pd.read_csv(RES / "weights_boot.csv").iloc[:REPS_W]; WB, PB = Bd[["w_ten", "w_eq", "w_usd"]].values, Bd[["psi_ten", "psi_eq", "psi_usd"]].values; R = len(Bd)
 R_, G = load_frbus(); b4 = b_persist(R_, G, 4); wB = b4 / (b4 @ psi)
 S.add("bpsi_h4", b4 @ psi)
 WBd = b4[None, :] / (PB @ b4)[:, None]                                            # R x 3 FRB/US weights per draw
