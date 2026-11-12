@@ -1,30 +1,30 @@
 \begin{table}[tbp]\centering
 \caption{Four Readings of History}\label{tab:gsin}
 \resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
- & Relative to $r^*$ (paper) & Real, 100 ln CAPE & Nominal, 100 ln CAPE, nominal dollar \\
+ & Relative to $r^*$ & 90\% interval & Real, no $r^*$ adjustment & Nominal \\
 \midrule
-\multicolumn{4}{l}{\textit{Mean absolute distance between two readings (basis points)}} \\
-Market, futures factor vs Published GS weights & 7 & 8 & 10 \\
-Market, futures factor vs FRB/US & 26 & 25 & 26 \\
-Market, two-year yield vs FRB/US & 23 & 25 & 32 \\
-Market, futures factor vs Market, two-year yield & 28 & 35 & 39 \\
-FRB/US vs Published GS weights & 28 & 31 & 32 \\
-Market, two-year yield vs Published GS weights & 34 & 43 & 49 \\
+\multicolumn{5}{l}{\textit{Mean absolute distance between two readings (points)}} \\
+Market, futures factor vs Published GS weights & 0.07 & [0.06, 0.44] & 0.08 & 0.10 \\
+Market, futures factor vs FRB/US & 0.26 & [0.12, 0.50] & 0.25 & 0.26 \\
+Market, two-year yield vs FRB/US & 0.23 & [0.08, 0.51] & 0.25 & 0.32 \\
+Market, futures factor vs Market, two-year yield & 0.28 & [0.13, 0.42] & 0.35 & 0.39 \\
+FRB/US vs Published GS weights & 0.28 & [0.24, 0.32] & 0.31 & 0.32 \\
+Market, two-year yield vs Published GS weights & 0.34 & [0.16, 0.60] & 0.43 & 0.49 \\
 \midrule
-\multicolumn{4}{l}{\textit{Judgments across the four readings, 369 months}} \\
-All four the same sign (percent of months) & 81.6 & 72.6 & 73.4 \\
-Months with materially opposing readings, 25 basis points & 8 & 16 & 26 \\
-Months with materially opposing readings, 10 basis points & 38 & 63 & 62 \\
-Four-reading range at least 25 basis points (percent of months) & 70.5 & 75.1 & 78.3 \\
+\multicolumn{5}{l}{\textit{Judgments across the four readings, percent of 369 months}} \\
+All four the same sign & 81.6 & [70.2, 82.9] & 72.6 & 73.4 \\
+Materially opposing readings, threshold 0.25 & 2.2 & [1.6, 8.1] & 4.3 & 7.0 \\
+Materially opposing readings, threshold 0.10 & 10.3 & [8.4, 19.8] & 17.1 & 16.8 \\
+Largest less smallest reading at least 0.25 & 70.5 & [58.5, 88.9] & 75.1 & 78.3 \\
 \midrule
-\multicolumn{4}{l}{\textit{Average reading, January 2008 to December 2009 (points)}} \\
-Market, futures factor & 2.05 & 1.00 & 0.88 \\
-Published GS weights & 2.17 & 1.15 & 1.06 \\
-Market, two-year yield & 1.33 & 0.31 & 0.10 \\
-FRB/US & 1.40 & 0.58 & 0.50 \\
+\multicolumn{5}{l}{\textit{Average reading, January 2008 to December 2009 (points)}} \\
+Market, futures factor & 2.05 &  & 1.00 & 0.88 \\
+Published GS weights & 2.17 &  & 1.15 & 1.06 \\
+Market, two-year yield & 1.33 &  & 0.31 & 0.10 \\
+FRB/US & 1.40 &  & 0.58 & 0.50 \\
 \bottomrule
 \end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} Twelve-month changes in the 10-year yield, equity valuation and the dollar, monthly, January 1996 to September 2026 (369 overlapping months), read with the four sets of weights of Table~\ref{tab:fourw}. Each column applies all four sets, unchanged, to the same series: the paper's series relative to $r^*$; the real 10-year yield, 100 times the log of the cyclically adjusted price-earnings ratio (prices over a 10-year average of earnings, the documented GS equity concept) and the real dollar; and the nominal 10-year yield, the same equity measure and the nominal broad dollar, the nearest publicly reproducible GS inputs. Distances are mean absolute differences between two readings in basis points of the two-year yield; the mean absolute futures-factor reading is \bl{gi:rstar:meanF} basis points in the first column. Materially opposing: at least one reading at least the threshold above zero and one at least the threshold below. Range: the largest less the smallest reading. Corporate spreads are held fixed. Intervals for the first column are in the text.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Twelve-month changes in the 10-year yield, equity valuation and the dollar, monthly, January 1996 to September 2026 (369 overlapping months), read with the four sets of weights of Table~\ref{tab:fourw}, in points on the common scale. Each column applies all four sets, unchanged, to the same series. Relative to $r^*$: the series of the paper. Real, no $r^*$ adjustment: the real 10-year yield, 100 times the log of the cyclically adjusted price-earnings ratio (the documented Goldman Sachs equity concept) and the real dollar. Nominal: the nominal 10-year yield, the same equity measure and the nominal broad dollar, the nearest publicly reproducible Goldman Sachs inputs. Materially opposing: at least one reading at least the threshold above zero and one at least the threshold below. Intervals: 5th and 95th percentiles over 5,000 bootstrap draws of the announcements, for the series of the paper; they reflect the estimation of the market weights, conditional on the observed history and on the FRB/US and Goldman Sachs weights. Corporate spreads are held fixed.\end{flushleft}
 \end{table}
