@@ -619,6 +619,11 @@ for hl_, nm_ in ((np.inf, "inf"), (8.0, "8"), (4.0, "4"), (2.0, "2")):
     r = mg[(mg.hl_eq == hl_) & (mg.hl_usd == hl_)]
     if len(r):
         mac(f"ag:mp:hl{nm_}", r.iloc[0].ratio_usd_eq)
+MP18 = pd.read_csv(RES / "18_matched_paths.csv")
+for hl_, nm_ in ((8.0, "8"), (4.0, "4"), (2.0, "2")):
+    r = MP18[(MP18.h == 4) & (MP18.hl_eq == hl_) & (MP18.hl_usd == hl_) & (MP18.hl_y10 == hl_) & (MP18.quantity == "bpsi")]
+    if len(r):
+        r = r.iloc[0]; mac(f"ag:bp:hl{nm_}", r.point); mac(f"ag:bp:hl{nm_}:lo", r.lo); mac(f"ag:bp:hl{nm_}:hi", r.hi)
 mac("ag:mp:min", float(mg.ratio_usd_eq.min())); mac("ag:mp:max", float(mg.ratio_usd_eq.max()))
 def dm(change, per, stat, case="rstar", h=4):
     r = D18m[(D18m.h == h) & (D18m.case == case) & (D18m.change == change) & (D18m.period == per) & (D18m.stat == stat)].iloc[0]
@@ -738,7 +743,8 @@ chk(float(SC["lad_rstar_vs_nominal_all_n_ratio_below1"]) == 69 and float(SC["lad
 
 num = lambda k: float(str(M[k]).replace("$-$", "-"))
 # ------------------------------------------------------------------ claims of the agreement paper
-bp4 = w18(4, "bpsi"); chk(bp4.lo < 1 < bp4.hi and 0.9 < bp4.point < 1.05, "agreement: FRB/US typical response near one, interval includes one at four quarters")
+bp4 = w18(4, "bpsi"); chk(num("ag:bp:hl4:hi") < 1 and num("ag:bp:hl4") < 0.9, "decaying paths (half-life 4 quarters): typical response below one, interval excludes one")
+chk(bp4.lo < 1 < bp4.hi and 0.9 < bp4.point < 1.05, "agreement: FRB/US typical response near one, interval includes one at four quarters")
 chk(all(w18(h_, "bpsi").lo < 1 < w18(h_, "bpsi").hi for h_ in (2, 4, 8)), "agreement on announcements not rejected at 2, 4, 8 quarters")
 chk(de("share_gt_0p25").point == 0 and de("ratio_mean_abs").point < 0.25, "held-out announcements: difference never above 0.25, ratio below 0.25")
 chk(0.25 < dm("12m", "1996-2026", "ratio_mean_abs").point < 0.4 and dm("12m", "1996-2026", "share_gt_0p25").point > 0.3, "12-month changes: ratio about a third, above 0.25 in more than 30 percent of months")
