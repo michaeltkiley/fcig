@@ -742,6 +742,49 @@ chk(float(SC["w_rstar_n_holm_sig10"]) == 0 and float(SC["w_rstar_n_primary_tests
 chk(float(SC["lad_rstar_vs_nominal_all_n_ratio_below1"]) == 69 and float(SC["lad_rstar_vs_nominal_all_n_tests"]) == 91 and float(SC["lad_rstar_vs_nominal_all_n_holm_sig05"]) == 0, "ladder: 69 of 91, none after Holm at 5 percent")
 
 num = lambda k: float(str(M[k]).replace("$-$", "-"))
+# restrictions, SPF decomposition, daily ladder
+RS19 = pd.read_csv(RES / "19_restrictions.csv"); SD19 = pd.read_csv(RES / "19_spf_decomp.csv"); AO20 = pd.read_csv(RES / "20_announce_vs_other.csv"); LD20 = pd.read_csv(RES / "20_ladder.csv")
+def rs(o, smp, term, ff="noff"):
+    return RS19[(RS19.outcome == o) & (RS19["sample"] == smp) & (RS19.ff == ff) & (RS19.term == term)].iloc[0]
+rows = []
+for o_, lab in (("du", "Unemployment gap, 12 months"), ("gdp", "Real GDP growth, four quarters")):
+    for smp, sl in (("main", "1976--2026"), ("1996+", "1996--2026"), ("ex2008-15", "Excluding 2008--15")):
+        b_, g_, d_ = rs(o_, smp, "beta"), rs(o_, smp, "gamma"), rs(o_, smp, "gamma_minus_beta")
+        rows.append([f"{lab}: {sl}", f"{int(b_.n)}", f"{f(b_.coef)} [{f(b_.lo90)}, {f(b_.hi90)}]", f"{f(g_.coef)} [{f(g_.lo90)}, {f(g_.hi90)}]", f"{f(d_.coef)} [{f(d_.lo90)}, {f(d_.hi90)}]"])
+        k_ = o_ + ":" + smp.replace("+", "p").replace("-", "")
+        for nm_, r_ in (("beta", b_), ("gamma", g_), ("gmb", d_)):
+            mac(f"rs:{k_}:{nm_}", r_.coef); mac(f"rs:{k_}:{nm_}:lo", r_.lo90); mac(f"rs:{k_}:{nm_}:hi", r_.hi90)
+table("comp", "Can Realized Activity Tell the Two Weightings Apart?", "tab:comp", ["", "$n$", "Market index $\\beta$ [90\\%]", "Composition $\\gamma$ [90\\%]", "$\\gamma-\\beta$ [90\\%]"], rows,
+      "Local projections of the 12-month-ahead change in the unemployment gap (four-quarter-ahead GDP growth) on own lags and $y=\\cdots+\\beta M+\\gamma D$, where $M$ is the 12-month change of the market index relative to $r^*$ and $D$ the 12-month change of the normalized FRB/US reading less the market reading, computed on the same changes (HAC standard errors, 18 lags, joint covariance of the coefficients). If the market reading is right, $\\gamma=0$. If the normalized FRB/US reading $M+D$ is right, $\\gamma=\\beta$. A failure to reject is not evidence for either.")
+mac("rs:nrej:gamma", float(RS19[(RS19.term == "gamma")].reject_hac90.sum()), 0); mac("rs:nrej:gmb", float(RS19[(RS19.term == "gamma_minus_beta")].reject_hac90.sum()), 0); mac("rs:ntests", float(len(RS19[RS19.term == "gamma"])), 0)
+def sdc(tgt, smp, comp, term="D"):
+    return SD19[(SD19.target == tgt) & (SD19["sample"] == smp) & (SD19.component == comp) & (SD19.term == term)].iloc[0]
+rows = []
+for tgt, smp, lab in (("unemployment", "all", "Unemployment, 1990--2025"), ("unemployment", "ex2008-15", "Unemployment, excluding 2008--15"), ("gdp", "all", "Real GDP growth, 1990--2025")):
+    for comp, cl in (("forecast", "Survey forecast"), ("realized", "Realized"), ("error", "Forecast error")):
+        r = sdc(tgt, smp, comp)
+        rows.append([f"{lab}: {cl}", f"{int(r.n)}", f"{f(r.coef)} [{f(r.lo90)}, {f(r.hi90)}]", f(r.effect_p5_p95)])
+        k_ = {"unemployment": "u", "gdp": "g"}[tgt] + ":" + smp.replace("-", "") + ":" + comp
+        mac(f"sd:{k_}", r.coef); mac(f"sd:{k_}:lo", r.lo90); mac(f"sd:{k_}:hi", r.hi90); mac(f"sd:{k_}:eff", r.effect_p5_p95)
+table("spf", "What the Composition Predicts: Forecasts, Outcomes and Errors", "tab:spf", ["", "$n$", "Coefficient on $D$ [90\\%]", "Effect, 5th to 95th percentile"], rows,
+      "Regressions of the Survey of Professional Forecasters' median forecast of the four-quarter-ahead change in the unemployment rate (real GDP growth), the realized change, and the forecast error (realized less forecast) on the 12-month changes of the market index and of $D$, financial data up to the month before each survey's deadline, 1990Q3--2025Q3; the coefficients on the forecast and the error add to the coefficient on the realization. HAC standard errors; effect in percentage points at the same index change. Incremental information only: the test says nothing about causation.")
+# daily ladder
+rows = []
+for k_, lab in ((1, "One day"), (5, "One week"), (22, "22 trading days")):
+    a = AO20[(AO20.k == k_) & (AO20.group == "ann") & (AO20.stat == "ratio")].iloc[0]; o = AO20[(AO20.k == k_) & (AO20.group == "other") & (AO20.stat == "ratio")].iloc[0]
+    rows.append([lab, f"{f(a.point)} [{f(a.lo)}, {f(a.hi)}]", f"{int(a.n)}", f"{f(o.point)} [{f(o.lo)}, {f(o.hi)}]", f"{int(o.n)}"])
+    mac(f"dl:k{k_}:ann", a.point); mac(f"dl:k{k_}:oth", o.point); mac(f"dl:k{k_}:ann:n", a.n, 0); mac(f"dl:k{k_}:oth:n", o.n, 0)
+table("daily", "The Difference between the Readings on Announcement Days and Other Days", "tab:daily", ["Horizon", "Announcement windows [90\\%]", "$n$", "Other windows [90\\%]", "$n$"], rows,
+      "Mean absolute difference $D$ between the normalized FRB/US reading and the market reading, as a ratio to the mean absolute market move, on the same three assets, 1996--2026 (daily 10-year yield, nominal broad dollar and CAPE; the nominal dollar and no adjustment for $r^*$ stand in for the real dollar and the $r^*$ transformation). Announcement windows end on a scheduled FOMC announcement date; other windows are non-overlapping and contain none. Intervals from joint bootstrap samples of the windows and of the announcements that set the weights.")
+for k_ in (1, 5, 22, 66, 252):
+    r = LD20[(LD20.series == "total") & (LD20.k == k_) & (LD20.stat == "ratio")].iloc[0]; mac(f"dl:lad{k_}", r.point)
+# main exhibit: the three episodes
+rows = []
+for k_, lab in (("1998", "1998--2001"), ("2004", "2004--06"), ("2022", "2022--24")):
+    rows.append([lab, f"{f(num(f'br:ep{k_}:gap'))} [{f(num(f'br:ep{k_}:lo'))}, {f(num(f'br:ep{k_}:hi'))}]", f(num(f"br:ep{k_}:eq")), f(num(f"ce:{k_}:dm")), f(num(f"ce:{k_}:D")), f(num(f"ce:{k_}:real")), f(num(f"ce:{k_}:fcm")), f(num(f"ce:{k_}:fcf"))])
+table("epmain", "When the Weights Would Have Changed the Reading", "tab:epmain", ["Episode", "Full indexes: FRB/US less market, average level [90\\%]", "of which equity weights", "Matched assets: market index, 12-month change", "Matched assets: $D$, 12-month change", "Unemployment change, realized", "Forecast from market index", "Forecast from FRB/US weights"], rows,
+      "Left block: difference in the average levels of the full FRB/US index (with house prices) and the market index relative to $r^*$, in points (Table~\\ref{tab:bridge}); the equity weights' share of it. Middle block: the 12-month change of the market index and the difference $D$ between the normalized FRB/US reading and the market reading, computed on the same three assets, averaged over the episode. Right block: change in the unemployment gap over the following 12 months, averaged over the episode's origins, and recursive out-of-sample forecasts of it from the market index change and from the FRB/US reading (own lags included). The levels and the changes are different objects: a gap in levels can coexist with agreement in changes.")
+
 # ------------------------------------------------------------------ claims of the agreement paper
 bp4 = w18(4, "bpsi"); chk(num("ag:bp:hl4:hi") < 1 and num("ag:bp:hl4") < 0.9, "decaying paths (half-life 4 quarters): typical response below one, interval excludes one")
 chk(bp4.lo < 1 < bp4.hi and 0.9 < bp4.point < 1.05, "agreement: FRB/US typical response near one, interval includes one at four quarters")
@@ -761,6 +804,17 @@ chk(all(OOS19[(OOS19.comparison == "add_D_to_market") & (OOS19.outcome == "du")]
 rs_ = SPF19[(SPF19.target == "unemployment") & (SPF19.spec == "both") & (SPF19.term == "D")].iloc[0]
 chk(rs_.hi90 < 0 and SPF19[(SPF19.target == "unemployment") & (SPF19.spec == "market_only") & (SPF19.term == "dM")].iloc[0].coef > 0, "SPF: D coefficient negative with interval below zero, index change positive")
 chk(abs(num("ce:2022:D")) < 0.05 and num("ce:2022:real") < num("ce:2022:fcm"), "2022-24: D near zero and unemployment rose less than forecast")
+
+# claims of the revised agreement paper
+for k_ in (1, 5, 22):
+    a_, o_ = AO20[(AO20.k == k_) & (AO20.group == "ann") & (AO20.stat == "ratio")].iloc[0], AO20[(AO20.k == k_) & (AO20.group == "other") & (AO20.stat == "ratio")].iloc[0]
+    chk(abs(a_.point - o_.point) < 0.05, f"daily: announcement and other ratios within 0.05 at k={k_}")
+CT20 = pd.read_csv(RES / "20_contrasts.csv")
+chk(all(0.2 < num(f"dl:lad{k_}") < 0.4 for k_ in (1, 5, 22, 66, 252)), "ladder: ratio between 0.2 and 0.4 at every horizon")
+chk(rs("du", "main", "gamma").lo90 < 0 < rs("du", "main", "gamma").hi90 and rs("du", "main", "gamma_minus_beta").lo90 < 0 < rs("du", "main", "gamma_minus_beta").hi90, "main sample: neither restriction rejected")
+chk(rs("du", "1996+", "gamma_minus_beta").hi90 < 0 and num("rs:nrej:gamma") == 0 and num("rs:nrej:gmb") == 2, "1996+: model restriction rejected; market restriction never; model rejected in 2 of 12")
+chk(sdc("unemployment", "all", "forecast").lo90 < 0 < sdc("unemployment", "all", "forecast").hi90 and sdc("unemployment", "all", "realized").hi90 < 0 and sdc("unemployment", "all", "error").hi90 < 0 and sdc("gdp", "all", "error").coef > 0, "SPF: D predicts realized and error, not the forecast; GDP error positive")
+chk(abs(num("ce:2022:D")) < 0.05 and num("br:ep2022:gap") > 0.5 and num("br:ep1998:gap") > 1, "episodes: 2022-24 D near zero with a gap in levels; 1998-2001 gap above one")
 
 # ------------------------------------------------------------------ write numbers.tex and check the paper's macros
 def norm(k):

@@ -231,6 +231,73 @@ for _, r in SPR.iterrows():
 S.add("comp_spf_first", Pu.survey.iloc[0]); S.add("comp_spf_last_unemp", Pu[Pu.u_err.notna()].survey.iloc[-1]); S.add("comp_spf_dD_p5_p95", dD90_spf)
 S.add("comp_spf_mean_err_unemp", float(Pu.u_err.mean())); S.add("comp_spf_sd_err_unemp", float(Pu.u_err.std()))
 
+# ---- EXTENSION 1: the two restrictions tested directly in the primary regression (added after review; every output above is unchanged, new outputs only)
+# y = ... + beta*dM + gamma*D, D = dB - dM computed once on the same 12-month changes, so dB = dM + D.
+#  Market reading right: the outlook depends on dM only, so gamma = 0.
+#  FRB/US reading right: the outlook depends on dB = dM + D, so y = k*(dM + D) and beta = gamma, i.e. gamma - beta = 0.
+# Intervals: HAC (18 lags; 6 quarterly for GDP) with the joint covariance of (beta, gamma); moving-block bootstrap with the SAME draws as Table comp (BOOT).
+# Two restrictions in each of 12 blocks (2 outcomes x 3 samples x without/with the funds-rate gap): descriptive, unadjusted; the single pre-specified primary test is unchanged.
+S2 = Scalars("19_composition_ext")
+rr = []
+RLAB = {"beta": "coefficient on dM (market-index change)", "gamma": "market reading sufficient: gamma = 0", "gamma_minus_beta": "FRB/US reading sufficient: gamma = beta (y depends on dM + D)"}
+for yn in ("du", "gdp"):
+    for sname in C.SAMPLES:
+        Dd = block_frame(yn, sname)
+        for ff in (False, True):
+            base = own_cols(yn) + (["ff"] if ff else []); fl = "ff" if ff else "noff"
+            r = C.hac(Dd, base + ["dM", "D"], lags_of(yn)); V = r.cov_params(); bc = BOOT[(yn, sname, fl, "comp")]
+            jb, jg = list(r.params.index).index("dM"), list(r.params.index).index("D")
+            bb, gg = bc[:, jb], bc[:, jg]
+            corr = float(V.loc["dM", "D"] / np.sqrt(V.loc["dM", "dM"] * V.loc["D", "D"]))
+            for term, est, se, bd in (("beta", r.params["dM"], r.bse["dM"], bb), ("gamma", r.params["D"], r.bse["D"], gg),
+                                      ("gamma_minus_beta", r.params["D"] - r.params["dM"], float(np.sqrt(V.loc["D", "D"] + V.loc["dM", "dM"] - 2 * V.loc["D", "dM"])), gg - bb)):
+                t = est / se; p = float(2 * (1 - stats.norm.cdf(abs(t)))); lo, hi = est - 1.645 * se, est + 1.645 * se
+                blo, bhi = C.pct(bd, 5), C.pct(bd, 95)
+                rr.append(dict(outcome=yn, sample=sname, ff=fl, n=len(Dd), term=term, tests=RLAB[term], coef=est, se=se, t=t, p=p, lo90=lo, hi90=hi, boot_lo90=blo, boot_hi90=bhi, boot_sd=float(bd.std()),
+                               p_boot=float(2 * min((bd > 0).mean(), (bd < 0).mean())), reject_hac90=int(lo > 0 or hi < 0), reject_boot90=int(blo > 0 or bhi < 0), corr_beta_gamma_hac=corr))
+RST = pd.DataFrame(rr)
+RST.to_csv(RES / "19_restrictions.csv", index=False)
+for _, r in RST.iterrows():
+    sfx = f"{r.term}_{r.outcome}_{r['sample'].replace('+', 'p').replace('-', '_')}_{r.ff}"
+    for k in ("coef", "se", "t", "p", "lo90", "hi90", "boot_lo90", "boot_hi90", "p_boot", "reject_hac90", "reject_boot90"): S2.add(f"comp_restr_{k}_{sfx}", r[k])
+S2.add("comp_restr_n_tests", len(RST[RST.term != "beta"]))
+for term in ("gamma", "gamma_minus_beta"):
+    m = RST[RST.term == term]
+    S2.add(f"comp_restr_n_reject_hac90_{term}", int(m.reject_hac90.sum())); S2.add(f"comp_restr_n_reject_boot90_{term}", int(m.reject_boot90.sum())); S2.add(f"comp_restr_n_blocks_{term}", len(m))
+
+# ---- EXTENSION 2: SPF decomposition. Same surveys and information dates as the SPF test above (Pu: COVID windows dropped, dM available, outcome available).
+# (a) forecast component = SPF median four quarters ahead minus the last observed value (unemployment: UNEMP1, the previous-quarter value known at the deadline; GDP: the forecast growth 100 ln(RGDP6/RGDP2)),
+# (b) realized = realized minus the same base, (c) error = realized minus forecast (the existing u_err / gdp_err). (b) = (a) + (c) is an identity, so the OLS coefficients add; checked below.
+# Regressors dM, D (as above); OLS, HAC 4 lags, 8-survey blocks with ONE set of draws per sample shared by (a), (b), (c), so bootstrap draws add too.
+Pu["u_real_chg"] = Pu.u_real - Pu.u_last; Pu["u_fc_chg"] = Pu.u_fc - Pu.u_last
+COMP = {"unemployment": (("forecast", "u_fc_chg"), ("realized", "u_real_chg"), ("error", "u_err")), "gdp": (("forecast", "gdp_fc"), ("realized", "gdp_real"), ("error", "gdp_err"))}
+sd_, idn = [], {}
+for tname, comps in COMP.items():
+    Q0 = Pu[Pu[comps[2][1]].notna() & Pu[comps[0][1]].notna() & Pu[comps[1][1]].notna()].reset_index(drop=True)
+    for si, (sname, Q_) in enumerate((("all", Q0), ("ex2008-15", Q0[~Q0.ex0815].reset_index(drop=True)))):
+        idx = C.block_idx(len(Q_), REPS, 100 + 10 * (tname == "gdp") + si, 8)
+        Dr = sm.OLS(Q_.D, sm.add_constant(Q_.dM)).fit().resid; rng_D = C.pct(Dr, 95) - C.pct(Dr, 5); rng_M = C.pct(Q_.dM, 95) - C.pct(Q_.dM, 5)
+        Z = sm.add_constant(Q_[["dM", "D"]]); Xb = Z.values; res = {}
+        for cn, col in comps: 
+            r = sm.OLS(Q_[col], Z).fit(cov_type="HAC", cov_kwds={"maxlags": 4}); res[cn] = (r, np.array([np.linalg.lstsq(Xb[i], Q_[col].values[i], rcond=None)[0] for i in idx]), Q_[col])
+        idn[(tname, sname)] = (max(float(np.abs(res["realized"][0].params - res["forecast"][0].params - res["error"][0].params).max()), 0.0),
+                               float(np.abs(res["realized"][1] - res["forecast"][1] - res["error"][1]).max()), len(Q_))
+        for cn, (r, bcs, yv) in res.items():
+            ci = r.conf_int(alpha=0.10)
+            for j, term in ((1, "dM"), (2, "D")):
+                e = r.params.iloc[j]; rg = rng_M if term == "dM" else rng_D
+                sd_.append(dict(target=tname, sample=sname, component=cn, term=term, n=len(Q_), first=Q_.survey.iloc[0], last=Q_.survey.iloc[-1], coef=e, se=r.bse.iloc[j], t=r.tvalues.iloc[j], p=r.pvalues.iloc[j],
+                                lo90=ci.iloc[j, 0], hi90=ci.iloc[j, 1], boot_lo90=C.pct(bcs[:, j], 5), boot_hi90=C.pct(bcs[:, j], 95), mean_y=float(yv.mean()), sd_y=float(yv.std()), adj_r2=r.rsquared_adj,
+                                range_p5_p95=rg, range_is="dM unconditional" if term == "dM" else "D orthogonal to dM", effect_p5_p95=e * rg, effect_lo90=ci.iloc[j, 0] * rg, effect_hi90=ci.iloc[j, 1] * rg,
+                                effect_boot_lo90=C.pct(bcs[:, j], 5) * rg, effect_boot_hi90=C.pct(bcs[:, j], 95) * rg, identity_max_abs_diff_coef=idn[(tname, sname)][0], identity_max_abs_diff_boot=idn[(tname, sname)][1]))
+SD = pd.DataFrame(sd_); SD.to_csv(RES / "19_spf_decomp.csv", index=False)
+for _, r in SD.iterrows():
+    sfx = f"{r.target}_{r['sample'].replace('-', '_')}_{r.component}_{r.term}"
+    for k in ("coef", "se", "t", "p", "lo90", "hi90", "boot_lo90", "boot_hi90", "n", "effect_p5_p95", "effect_lo90", "effect_hi90", "effect_boot_lo90", "effect_boot_hi90", "range_p5_p95"): S2.add(f"comp_spfd_{k}_{sfx}", r[k])
+for (tname, sname), (d1, d2, n_) in idn.items():
+    S2.add(f"comp_spfd_identity_max_diff_coef_{tname}_{sname.replace('-', '_')}", d1); S2.add(f"comp_spfd_identity_max_diff_boot_{tname}_{sname.replace('-', '_')}", d2)
+S2.save()
+
 # ---- tests counted
 S.add("comp_n_primary_tests", 1)
 S.add("comp_n_specs_insample", len(SPEC)); S.add("comp_n_coef_tests_insample", int((COEF.spec != "free_norm_psi").sum())); S.add("comp_n_prop_tests", len(PROP)); S.add("comp_n_oos_comparisons", len(OOS)); S.add("comp_n_spf_coefs", len(SPR))
@@ -242,3 +309,4 @@ pd.set_option("display.width", 250)
 print(PRIM[["outcome", "sample", "ff", "n", "a_dM", "c_D", "t_c", "lo90_c", "hi90_c", "boot_lo90_c", "boot_hi90_c", "effect_p5_p95", "effect_lo90", "effect_hi90", "wdraw_lo90_c", "wdraw_hi90_c"]].round(3).to_string())
 print(SPEC[(SPEC.ff == "noff")].round(3).to_string()); print(PROP.round(3).to_string()); print(OOS[OOS.comparison.isin(["add_D_to_market", "free_three_vs_market", "equities_vs_own"])].round(3).to_string())
 print(ER.round(3).T.to_string()); print(EF.round(3).T.to_string()); print(SPR.round(3).to_string()); print(DIST.round(3).to_string())
+print(RST.round(3).to_string()); print(SD.round(3).to_string()); print(idn)

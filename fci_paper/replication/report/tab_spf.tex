@@ -1,19 +1,20 @@
 \begin{table}[tp]\centering\small
-\caption{Does the Financial Movement Predict the Forecasters' Error?}\label{tab:spf}
+\caption{What the Composition Predicts: Forecasts, Outcomes and Errors}\label{tab:spf}
 \resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{lrrr}
 \toprule
- & $n$ & Coefficient [90\%] & $t$ \\
+ & $n$ & Coefficient on $D$ [90\%] & Effect, 5th to 95th percentile \\
 \midrule
-Unemployment, both: index change & 128 & $-$0.06 [$-$0.26, 0.13] & $-$0.5 \\
-Unemployment, both: composition $D$ & 128 & $-$1.29 [$-$2.38, $-$0.21] & $-$2.0 \\
-Unemployment, $D$ alone: composition $D$ & 128 & $-$1.17 [$-$1.90, $-$0.43] & $-$2.6 \\
-Unemployment, index change alone: index change & 128 & 0.17 [0.06, 0.28] & 2.5 \\
-Unemployment, both, excluding 2008--15: index change & 88 & 0.06 [$-$0.12, 0.25] & 0.6 \\
-Unemployment, both, excluding 2008--15: composition $D$ & 88 & $-$0.46 [$-$0.89, $-$0.04] & $-$1.8 \\
-GDP, both: index change & 128 & 0.48 [0.05, 0.92] & 1.8 \\
-GDP, both: composition $D$ & 128 & 2.52 [0.49, 4.54] & 2.0 \\
+Unemployment, 1990--2025: Survey forecast & 128 & $-$0.18 [$-$0.61, 0.25] & $-$0.16 \\
+Unemployment, 1990--2025: Realized & 128 & $-$1.47 [$-$2.84, $-$0.10] & $-$1.33 \\
+Unemployment, 1990--2025: Forecast error & 128 & $-$1.29 [$-$2.38, $-$0.21] & $-$1.16 \\
+Unemployment, excluding 2008--15: Survey forecast & 88 & 0.29 [$-$0.06, 0.65] & 0.25 \\
+Unemployment, excluding 2008--15: Realized & 88 & $-$0.17 [$-$0.84, 0.49] & $-$0.15 \\
+Unemployment, excluding 2008--15: Forecast error & 88 & $-$0.46 [$-$0.89, $-$0.04] & $-$0.39 \\
+Real GDP growth, 1990--2025: Survey forecast & 128 & $-$0.35 [$-$0.93, 0.23] & $-$0.31 \\
+Real GDP growth, 1990--2025: Realized & 128 & 2.17 [$-$0.05, 4.38] & 1.95 \\
+Real GDP growth, 1990--2025: Forecast error & 128 & 2.52 [0.49, 4.54] & 2.27 \\
 \bottomrule
 \end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} Regression of the realized change in the unemployment rate (real GDP growth) four quarters ahead less the median forecast of the Survey of Professional Forecasters on the 12-month changes of the market index and of $D$, with the financial data up to the month before each survey's deadline, 1990Q3--2025Q3; HAC standard errors, overlapping outcomes. A coefficient of zero means that the movement is already in the forecast. Incremental information only: the test says nothing about causation.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Regressions of the Survey of Professional Forecasters' median forecast of the four-quarter-ahead change in the unemployment rate (real GDP growth), the realized change, and the forecast error (realized less forecast) on the 12-month changes of the market index and of $D$, financial data up to the month before each survey's deadline, 1990Q3--2025Q3; the coefficients on the forecast and the error add to the coefficient on the realization. HAC standard errors; effect in percentage points at the same index change. Incremental information only: the test says nothing about causation.\end{flushleft}
 \end{table}
