@@ -408,7 +408,6 @@ for ep, lab in (("conundrum 2004-06..2006-06", "June 2004 to June 2006"), ("tigh
         return r.iloc[0] if len(r) else None
     m, mk, gs_, fr = g("LW", "market"), g("Kiley", "market"), g("LW", "gs"), g("LW", "frbus")
     rows.append([lab, f(m.ffg), f(m.index_point), f"{f(m.diff_point)} [{f(m.diff_lo)}, {f(m.diff_hi)}]", f"{f(mk.diff_point)} [{f(mk.diff_lo)}, {f(mk.diff_hi)}]", f(gs_.diff_point), f(fr.diff_point)])
-tl = {k: T8[(T8.rstar == k) & (T8.series == s)].iloc[0] for k, s in (("mk", "market"),) for k in ("LW", "Kiley")} if False else None
 tm, tmk = T8[(T8.rstar == "LW") & (T8.series == "market")].iloc[0], T8[(T8.rstar == "Kiley") & (T8.series == "market")].iloc[0]
 tg, tf = T8[(T8.rstar == "LW") & (T8.series == "gs")].iloc[0], T8[(T8.rstar == "LW") & (T8.series == "frbus")].iloc[0]
 rows.append(["September 2026", f(tm.ffg), f(tm["index"]), f"{f(tm['diff'])} [{f(tm.diff_lo)}, {f(tm.diff_hi)}]", f"{f(tmk['diff'])} [{f(tmk.diff_lo)}, {f(tmk.diff_hi)}]", f(tg["diff"]), f(tf["diff"])])
@@ -738,6 +737,16 @@ c_c = C12[(C12.row == "c") & (C12.series == "Market") & (C12.step == "rstar")].i
 R17a = R17[(R17.outcome == "du") & (R17.panel == "1976-2025")].set_index("row"); R17b = R17[(R17.outcome == "du") & (R17.panel == "2006-2025")].set_index("row")
 chk(abs(R17a.loc["Vintage data", "flow_t"] - R17a.loc["Revised data", "flow_t"]) < 0.3 and R17b.loc["Revised data, real-time r*", "flow_gain"] < 0.5 * R17b.loc["Revised data, full-sample r*", "flow_gain"], "real time: vintage data leave the result, real-time r* cuts the gain by more than half")
 chk(float(SC["exp_post2010_n_out_ten"]) == 0 and float(SC["exp_post2010_n_out_usd"]) == 0 and 0 < float(SC["exp_post2010_n_out_eq"]) <= 40 and float(SC["roll_post2010_n_out_ten"]) > 0, "weights: expanding inside the band after 2010 (equity briefly out), rolling fails")
+_wp = pd.read_csv(RES / "16_weight_path.csv"); _wb = pd.read_csv(RES / "weights_boot.csv")
+_lo, _hi = _wb.w_eq.quantile(0.05), _wb.w_eq.quantile(0.95)
+_e = _wp[(_wp.kind == "path") & (_wp.series == "eq") & (_wp.window == "expanding")].copy(); _e["date"] = pd.to_datetime(_e.date)
+_out = _e[(_e.date >= "2011-01-01") & ((_e.value < _lo) | (_e.value > _hi))]
+chk(len(_out) == int(round(float(SC["exp_post2010_n_out_eq"]))), "weights: the reported count of expanding-window equity weights outside the band equals the count computed from the stored path and draws")
+chk(abs(float(SC["base_lo_eq"]) - _lo) < 1e-9 if "base_lo_eq" in SC else True, "weights: band edge equals the 5th percentile of the stored draws")
+mac("exp:n", len(_out), 0)
+M["exp:first"] = _out.date.min().strftime("%B %Y"); M["exp:last"] = _out.date.max().strftime("%B %Y"); M["abs:exp:first"] = M["exp:first"]; M["abs:exp:last"] = M["exp:last"]
+M["abs:exp:n"] = M["exp:n"]
+chk(len(_out) > 0 and _out.date.min() >= pd.Timestamp("2011-01-01"), "weights: outside-band dates are after 2010")
 S15 = pd.read_csv(RES / "15_summary.csv"); sc_ = S15[(S15.step == "rstar") & (S15.form.str.contains("change|flow")) & (S15.set != "MKT")] if "set" in S15 else S15
 chk(float(SC["w_rstar_n_holm_sig10"]) == 0 and float(SC["w_rstar_n_primary_tests"]) == 120 and float(SC["w_rstar_n_raw_sig10"]) == 25, "weights: 25 of 120 raw rejections, none after Holm")
 chk(float(SC["lad_rstar_vs_nominal_all_n_ratio_below1"]) == 69 and float(SC["lad_rstar_vs_nominal_all_n_tests"]) == 91 and float(SC["lad_rstar_vs_nominal_all_n_holm_sig05"]) == 0, "ladder: 69 of 91, none after Holm at 5 percent")
@@ -948,13 +957,33 @@ for d_, k_, lab_ in DEF21:
                  f(e21(d_, "2022-24", "market").point), f(e21(d_, "2022-24", "frbus").point), f(e21(d_, "2022-24", "D").point)]
 labs_ = ["Announcements", "Market weight, 10-year yield", "Market weight, equity valuation", "Market weight, dollar", "Model reading of the usual response, $b_4'\\psi$ [90\\%]", "Market dollar-over-equity ratio [90\\%]", "Ratio of ratios [90\\%]",
          "Dollar-minus-equity effect, market (points)", "Dollar-minus-equity effect, model (points)", "Model less market [90\\%]", "Mean $|D|$ over mean $|$market move$|$, 12-month changes"]
+# main text: the two signals on the same announcements (market weights; readings of the two movements of Figure 1)
+for d_, k_, _ in DEF21[:2]:
+    mac(f"sg:{k_}:eqf", c21(f"{d_}_eq_fr"), 3); mac(f"sg:{k_}:usdf", c21(f"{d_}_usd_fr"), 3)
+rows = []
+for i_ in (0, 1, 2, 3, 5):
+    rows.append([labs_[i_]] + [cols_[d_][i_] for d_, _, _ in DEF21[:2]])
+rows.append(r"\midrule" + "\n" + r"\multicolumn{3}{l}{\textit{Readings of the two movements of Figure~\ref{fig:two}}} \\")
+rows.append(["Equity valuation falls 5 log points, market (points)"] + [f(c21(f"{d_}_eq_mkt"), 3) for d_, _, _ in DEF21[:2]])
+rows.append(["Dollar appreciates 3.9 log points, market (points)"] + [f(c21(f"{d_}_usd_mkt"), 3) for d_, _, _ in DEF21[:2]])
+rows.append(["Equity valuation falls, model (funds-rate points)"] + [f(c21(f"{d_}_eq_fr"), 3) for d_, _, _ in DEF21[:2]])
+rows.append(["Dollar appreciates, model (funds-rate points)"] + [f(c21(f"{d_}_usd_fr"), 3) for d_, _, _ in DEF21[:2]])
+for i_ in (7, 8, 9, 6, 4):
+    rows.append([labs_[i_]] + [cols_[d_][i_] for d_, _, _ in DEF21[:2]])
+table("signal", "Two Measures of Policy News on the Same Announcements", "tab:signal", [""] + [l for _, _, l in DEF21[:2]], rows,
+      "The market weights are estimated on the same 253 announcement windows with two measures of policy news: the first principal component of the futures-based factor of \\citet{nakamura2018} (baseline) and the change in the two-year yield. The model weights are those of Table~\\ref{tab:frbus} in both columns, normalized by $b_4'\\psi$ for each measure. Effects are for the movements of Figure~\\ref{fig:two}, market in points of the two-year yield and model in funds-rate points. Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws. Table~\\ref{tab:signalsens} adds the two sample checks.", align="lcc", small=False)
+# appendix: all four definitions, no episodes
 rows = [[l_] + [cols_[d_][i_] for d_, _, _ in DEF21] for i_, l_ in enumerate(labs_)]
-rows.append(r"\midrule" + "\n" + r"\multicolumn{5}{l}{\textit{1998--2001, average 12-month change}} \\")
+table("signalsens", "Policy-News Definitions and Event Samples", "tab:signalsens", [""] + [l for _, _, l in DEF21], rows,
+      "The market weights are re-estimated for each definition of policy news: the first principal component of the futures-based factor of \\citet{nakamura2018} (baseline), the change in the two-year yield in the same 253 announcement windows, the factor through 2019, and the factor outside the lower-bound years. The model weights are those of Table~\\ref{tab:frbus} in every column, normalized by $b_4'\\psi$ for each definition. Effects are for the movements of Figure~\\ref{fig:two} (equity valuation down 5 log points, dollar up 3.9 log points), market in points of the two-year yield and model in funds-rate points. Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws.", align="lcccc", small=False)
+# history: episode readings under each definition (one home for the episode readings)
+rows = [r"\multicolumn{5}{l}{\textit{1998--2001, average 12-month change}} \\"]
 for i_, l_ in ((11, "Market-implied reading"), (12, "Spending-equivalent reading"), (13, "Difference $D$")): rows.append([l_] + [cols_[d_][i_] for d_, _, _ in DEF21])
 rows.append(r"\midrule" + "\n" + r"\multicolumn{5}{l}{\textit{2022--24, average 12-month change}} \\")
 for i_, l_ in ((14, "Market-implied reading"), (15, "Spending-equivalent reading"), (16, "Difference $D$")): rows.append([l_] + [cols_[d_][i_] for d_, _, _ in DEF21])
-table("signal", "What Counts as Policy News", "tab:signal", [""] + [l for _, _, l in DEF21], rows,
-      "The market weights are re-estimated for each definition of policy news: the first principal component of the futures-based factor of \\citet{nakamura2018} (baseline), the change in the two-year yield in the same 253 announcement windows, the factor through 2019, and the factor outside the lower-bound years. The model weights are those of Table~\\ref{tab:frbus} in every column, normalized by $b_4'\\psi$ for each definition. Effects are for the movements of Figure~\\ref{fig:two} (equity valuation down 5 log points, dollar up 3.9 log points), market in points of the two-year yield and model in funds-rate points. Intervals are 5th and 95th percentiles over bootstrap samples of the announcements, on common draws. Episode readings are averages of 12-month changes with the weights of each column.", align="lcccc", small=False)
+table("epdef", "Episode Readings under Each Definition of Policy News", "tab:epdef", [""] + [l for _, _, l in DEF21], rows,
+      "Averages of the 12-month changes in the three assets relative to $r^*$ over the months of each episode, read with the market weights of each definition (points of the two-year yield) and with the FRB/US weights normalized for the same definition (funds-rate points); $D$ is the difference. Baseline intervals are in the text and in Table~\\ref{tab:epmain}.", align="lcccc", small=False)
+mac("pr:two:contrast:bp", 100 * abs(float(pd.read_csv(RES / "25_proportionality.csv").pipe(lambda PR_: PR_[(PR_.definition == "two_year") & (PR_.quantity == "contrast_diff")]).diff_vs_baseline.iloc[0])), 0)
 # what variation each signal captures
 sc_ = lambda a_, r_: SB21[(SB21.asset == a_)]
 for k_, v_ in (("sig:corr", c21("sig_corr_ns_2y")), ("sig:res", c21("sd_2y_residual_share") * 100)):

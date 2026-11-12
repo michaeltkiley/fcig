@@ -60,41 +60,17 @@ Futures, yields, S\&P 500 and DXY in the window & Event & U.S.\ Monetary Policy 
 \end{tabular}
 \end{table}
 
-\section{Inference and the Decomposition of the Levels}\label{app:differ}
-\subsection{How Precisely Are the Weights Estimated?}\label{sec:precision}
-The weights come from regressions on \bl{n:events} announcements. The weight on the 10-year yield has a 90 percent interval from \bl{wb:ten:lo} to \bl{wb:ten:hi} around \bl{w:ten}. The interval for equity valuation runs from \bl{wb:eq:lo} to \bl{wb:eq:hi}, and for the dollar from \bl{wb:usd:lo} to \bl{wb:usd:hi}. The FRB/US weights on all three lie inside these intervals, the equity weight near the edge: it is lower in absolute value than \bl{frw:eq:pct} percent of the bootstrap draws, about 14 percent in a two-sided test. The data do not reject that the model weights equal the market weights. This is a statement about power, not a finding that they are equal, and it treats the FRB/US weights as fixed. The intervals in the text come from the bootstrap of the announcements; the contrast in composition in Section~\ref{sec:persist} is the ratio of ratios, whose interval includes one at two quarters.
-
-\subsection{The Two Tightenings of Figure~\ref{fig:two}}\label{sec:exapp}
-Table~\ref{tab:example} gives the intervals behind Figure~\ref{fig:two}.
-
-\input{../replication/report/tab_example}
-
-\subsection{From the Market Index to the FRB/US Index}\label{sec:bridgeapp}
-Table~\ref{tab:bridge} accounts for the difference in average levels between the full FRB/US index and the market index, in stages on the same inputs and centering: the variables the market index does not have (the policy rate, spreads and house prices), the equity weights, the dollar weights and the 10-year weights.
-
-\input{../replication/report/tab_bridge}
-
 \section{Sensitivity}\label{app:robust}
-\subsection{Weights That Move}\label{sec:drift}
-The weights define the unit, so I hold them fixed and show how they would drift. Re-estimating on an expanding window of announcements from 2006 keeps the 10-year and dollar weights inside the 90 percent band of the full-sample estimate at every date after 2010; the equity weight is outside at \bl{exp:post2010:n:out:eq} dates between January 2011 and January 2015, by at most \bl{exp:post2010:min:eq} against a band edge of \bl{base:lo:eq} (Figure~\ref{fig:weightpath}). A 20-year rolling window fails after 2021, because it drops the announcements of 1996--2005. The 10-year weight is imprecise throughout. Apart from the equity weight in 2011--15, the weights stay within their sampling error.
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\textwidth]{../replication/report/fig_weight_path.pdf}
-\caption{The Weights on an Expanding and a Rolling Window}
-\label{fig:weightpath}
-\begin{flushleft}\footnotesize\textit{Notes:} Weights of the market index re-estimated on announcements to each date (expanding window, from the 80th announcement) and on the latest 20 years (rolling). Shaded: 90 percent bootstrap interval of the full-sample weights; the horizontal line is the full-sample weight.\end{flushleft}
-\end{figure}
-
 \subsection{Other Policy-News Series and Event Samples}\label{sec:robother}
-Table~\ref{tab:wvar} re-estimates the weights with the two-year yield as the policy news, with announcements through 2019, and without the lower-bound years. The equity weight is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} against \bl{w:eq} in the baseline, and the conclusions about composition rest on the model's ratio of dollar to equity effects, not on any one set of market weights.
+Table~\ref{tab:signalsens} gives the weights, the readings of the two movements of Figure~\ref{fig:two} and the contrasts under the two measures of policy news and the two sample checks, and Table~\ref{tab:wvar} re-estimates the weights with the two-year yield as the policy news, with announcements through 2019, and without the lower-bound years. The equity weight is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} against \bl{w:eq} in the baseline, and the conclusions about composition rest on the model's ratio of dollar to equity effects, not on any one set of market weights.
 
 \input{../replication/report/tab_wvar}
 
+\input{../replication/report/tab_signalsens}
+
+The disagreement is similar under every definition: the ratio of the mean absolute difference to the mean absolute market move in 12-month changes is \bl{sg:base:d12}, \bl{sg:two:d12}, \bl{sg:t19:d12} and \bl{sg:nlb:d12}. The contrast in points excludes zero through 2019 and without the lower-bound years and includes it under the two-year yield, so that of the four definitions the interval excludes zero for three.
+
 \subsection{The Policy-Rate Experiment in FRB/US}\label{app:policyrate}
 A policy shock in the model gives a comparison with the announcement response. I shock the equation of the inertial Taylor rule in the first quarter only, with the rule active afterwards and expectations from the model's VAR, and I scale the shock so that the average simulated funds rate over the next eight quarters rises by one point. FRB/US has no two-year yield, so that average is my proxy for the unit of policy news. Per unit of the proxy, the 10-year yield rises \bl{ps:q1:ten} times, equity wealth falls \bl{ps:q1:eq} times and the dollar rises \bl{ps:q1:usd} times as much as in the announcement response. GDP four quarters later falls by \bl{ps:gdp} percent, a funds-rate equivalent of \bl{ps:ffr}, against \bl{ps:replay} for the usual announcement response. Priced along their paths, the 10-year yield, equities and the dollar account for \bl{ps:pr:ten}, \bl{ps:pr:eq} and \bl{ps:pr:usd} percent of the GDP effect of the model's policy shock, against \bl{ch:replay:ten}, \bl{ch:replay:eq} and \bl{ch:replay:usd} percent for the announcement response, and \bl{ps:rem} percent is left in the policy rate, spreads and house prices. The model's own policy transmission is heavier in equities and lighter in the dollar than the announcement response, and the difference in the funds-rate equivalent, \bl{ps:ffr} against \bl{ps:replay}, is the residual between the two experiments. The comparison has limits. The funds-rate average is a proxy, and a different proxy changes the unit. The equity fall on impact is large because stock wealth in FRB/US follows expected funds rates through the required return. The exercise is the model's own policy shock, not a reproduction of an announcement. The reading of about one in Section~\ref{sec:onannounce} is therefore not the statement that announcements move asset prices as a policy shock does in the model; it is a statement about the combined effect on GDP of different mixes.
-
-\subsection{Limits of the Design}\label{sec:limits}
-The weights come from announcements since 1996 and are applied from 1973; they assume that the responses reflect policy rather than information effects \citep{nakamura2018}, and if policy came to target financial conditions the responses could change, the Lucas-critique concern that \citet{hatzius2010} raise for all indexes. The FRB/US weights come from one model, at one horizon and in one experiment, and are held fixed in the intervals. The daily comparison of Section~\ref{sec:size} uses nominal assets, with the nominal broad dollar for the real dollar, no adjustment for $\rs$ and weights fitted on the same announcements; the intraday comparison holds each event out. The sample has five recessions, two of them out of sample, and the 12-month outcomes overlap, so the counts of tests are descriptive and not adjusted for their number. The neutral rate is not neutral to outcomes, because the Laubach--Williams model uses output, inflation and unemployment.
 
 \end{appendices}

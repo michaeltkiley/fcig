@@ -1,0 +1,22 @@
+\begin{table}[tbp]\centering
+\caption{Policy-News Definitions and Event Samples}\label{tab:signalsens}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+ & Futures factor & Two-year yield & Factor, through 2019 & Factor, no lower bound \\
+\midrule
+Announcements & 253 & 253 & 201 & 197 \\
+Market weight, 10-year yield & 0.609 & 0.925 & 0.613 & 0.986 \\
+Market weight, equity valuation & $-$0.051 & $-$0.027 & $-$0.061 & $-$0.039 \\
+Market weight, dollar & 0.065 & 0.070 & 0.053 & 0.058 \\
+Model reading of the usual response, $b_4'\psi$ [90\%] & 0.954 [0.856, 1.078] & 0.930 [0.834, 1.048] & 0.919 [0.805, 1.091] & 0.876 [0.790, 0.983] \\
+Market dollar-over-equity ratio [90\%] & 1.00 [0.33, 2.25] & 2.06 [0.82, 5.19] & 0.68 [0.09, 2.11] & 1.16 [0.38, 2.89] \\
+Ratio of ratios [90\%] & 2.53 [1.08, 7.41] & 1.22 [0.48, 3.05] & 3.70 [0.84, 16.30] & 2.16 [0.85, 6.16] \\
+Dollar-minus-equity effect, market (points) & 0.00 & 0.14 & $-$0.10 & 0.03 \\
+Dollar-minus-equity effect, model (points) & 0.24 & 0.25 & 0.25 & 0.26 \\
+Model less market [90\%] & 0.243 [0.003, 0.448] & 0.107 [$-$0.079, 0.287] & 0.349 [0.036, 0.565] & 0.232 [0.021, 0.405] \\
+Mean $|D|$ over mean $|$market move$|$, 12-month changes & 0.33 & 0.36 & 0.42 & 0.39 \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} The market weights are re-estimated for each definition of policy news: the first principal component of the futures-based factor of \citet{nakamura2018} (baseline), the change in the two-year yield in the same 253 announcement windows, the factor through 2019, and the factor outside the lower-bound years. The model weights are those of Table~\ref{tab:frbus} in every column, normalized by $b_4'\psi$ for each definition. Effects are for the movements of Figure~\ref{fig:two} (equity valuation down 5 log points, dollar up 3.9 log points), market in points of the two-year yield and model in funds-rate points. Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws.\end{flushleft}
+\end{table}
