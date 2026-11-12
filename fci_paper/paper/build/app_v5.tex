@@ -39,7 +39,7 @@ The transformation matters for levels and not for the difference between the two
 
 \textbf{Policy-news definitions.} The two-year definition replaces the futures factor by the change in the two-year Treasury yield in the same window, with the same regressions and the same bootstrap of announcements; the draws for different definitions are paired by keeping, for each resample, the announcements that fall in each subsample, so the subsample size varies by draw. The announcement bootstrap uses 5,000 draws for every weights-based interval; the block bootstraps of the VAR and the outcome regressions use 500. The FRB/US weights are held fixed.
 
-\textbf{Forecasting and survey data.} The regressions use local projections of the 12-month-ahead change in the unemployment gap (four-quarter-ahead GDP growth) with HAC standard errors of 18 lags. The Survey of Professional Forecasters data are the median forecasts, 1990Q3--2025Q3, matched to the financial data up to the month before each survey's deadline.
+\textbf{Forecasting data.} The regressions use local projections of the 12-month-ahead change in the unemployment gap (four-quarter-ahead GDP growth) with HAC standard errors of 18 lags.
 
 \begin{table}[tbp]\centering\small
 \caption{Data Sources}\label{tab:data}
@@ -53,12 +53,82 @@ Expected inflation, 1 and 10 years & Monthly & Cleveland Fed, FRED EXPINF1YR, EX
 $\rs$, Laubach--Williams & Quarterly & New York Fed, one-sided estimates \\
 $\rs$, Kiley & Quarterly & One-sided estimates of the author \\
 CAPE & Monthly & Shiller, spliced to the monthly average of a daily CAPE constructed by the repository's daily workflow \\
-Survey of Professional Forecasters & Quarterly & Federal Reserve Bank of Philadelphia \\
 FRB/US simulations & Quarterly & Run for this paper's companion work with the public FRB/US package \\
 Futures, yields, S\&P 500 and DXY in the window & Event & U.S.\ Monetary Policy Event-Study Database, ``monetary events'' \citep{acosta2025} \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\section{The Market and FRB/US Pair}\label{app:pair}
+\subsection{Across Horizons}\label{sec:horizons}
+The pair that the comparison usually features, the futures-factor market index and FRB/US, can be followed at horizons from an announcement window to a year. On the 253 announcements, with the weights re-estimated without the event being evaluated, the ratio in intraday windows is \bl{dz:ev:ratio} (interval \bl{dz:ev:ratio:lo} to \bl{dz:ev:ratio:hi}), and the 90th percentile of the difference is \bl{dz:ev:p90} against a mean absolute market move of \bl{dz:ev:move}. These are the windows in which the weights are estimated, with each event held out.
+
+The ratio is larger in daily data than in the intraday windows and does not shrink at longer horizons. On daily changes of the same three assets, 1996--2026, it is \bl{dl:k1:ann} on announcement days and \bl{dl:k1:oth} on other days; at one week it is \bl{dl:k5:ann} and \bl{dl:k5:oth}, and at 22 trading days \bl{dl:k22:ann} and \bl{dl:k22:oth} (Table~\ref{tab:daily}). No difference between announcement and other windows is distinguishable from zero. Announcement days contain a great deal of financial news besides the announcement. The fitted response to policy news is a particular combination of asset prices, and the difference over a whole announcement day looks like the difference on other days.
+
+\input{../replication/report/tab_daily}
+
+For windows that end on any day, the ratio is \bl{dl:lad1}, \bl{dl:lad5}, \bl{dl:lad22}, \bl{dl:lad66} and \bl{dl:lad252} at 1, 5, 22, 66 and 252 trading days. A window of 22 or more days contains announcements in any case; removing the moves on announcement days gives \bl{dl:ex1}, \bl{dl:ex5}, \bl{dl:ex22}, \bl{dl:ex66} and \bl{dl:ex252}, within 0.02 of those. In 12-month changes of the monthly series, the ratio is \bl{dz:12m:ratio} (interval \bl{dz:12m:ratio:lo} to \bl{dz:12m:ratio:hi}), and the difference exceeds 0.25 in \bl{dz:12m:sh25} percent of months (Figure~\ref{fig:D}). The months overlap, so runs in this series are not independent evidence of persistence. The statistic is a sample summary with wide intervals. Roughly 0.25 to 0.33 describes the baseline across horizons from a day to a year, and the ratio is 0.36 to 0.42 under the other definitions of policy news (Table~\ref{tab:epdef}).
+
+\textbf{Sampling noise.} How large is that relative to measurement noise in the market weights themselves? The same statistic computed on bootstrap draws of the baseline market weights against their point estimates has a median of \bl{nb:med} (5th to 95th percentile \bl{nb:lo} to \bl{nb:hi}), and the baseline market weights against those of the two-year definition give \bl{nb:two} (\bl{nb:t19} through 2019 and \bl{nb:nlb} without the lower-bound years), against \bl{nb:fr} for the spending-equivalent weights against the baseline market weights. The disagreement between the model and the market is therefore about as large as the disagreement between two market calibrations that differ only in the measure of policy news (\bl{nb:two} against \bl{dz:12m:ratio}), and it is of the size of the sampling noise in the market weights. The sampling noise limits how finely the two calibrations can be told apart. It is a statement about precision and is separate from the differences across calibrations.
+
+The intraday and daily figures do not isolate a source for the gap between 0.19 and 0.3. The intraday windows are narrow and the weights exclude the event evaluated. The daily comparison uses nominal assets and weights fitted on the same announcements (Appendix~\ref{app:robust}). The comparison across horizons is the cleaner result: the disagreement does not shrink as the window lengthens.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.93\textwidth]{../replication/report/fig_D.pdf}
+\caption{Two Readings of the Same Financial Movements}
+\label{fig:D}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly, 12-month changes of the equity valuation, the 10-year yield and the dollar relative to $r^*$: the 10-year yield less ten-year expected inflation less $r^*$, the earnings-yield gap to $r^*$ converted to CAPE log points, and the real dollar (Appendix~\ref{app:steps}). Top: the change in the market index and the spending-equivalent reading of the same changes, normalized so that a conventional policy surprise reads one. Bottom: the difference $D$, FRB/US less market, with dotted lines at $\pm0.25$. Shaded: 1998--2001, 2004--06 and 2022--24.\end{flushleft}
+\end{figure}
+
+
+
+\subsection{Months, Episodes and Levels}\label{sec:pairmonths}
+Table~\ref{tab:months} counts the months in which the two readings of the pair agree or differ, Table~\ref{tab:epmain} gives their readings of three episodes in 12-month changes and in levels, and Table~\ref{tab:bridge} accounts for the difference in average levels between the full FRB/US index and the market index, which also differ in coverage (the policy rate, spreads and house prices) and centering.
+
+\input{../replication/report/tab_months}
+
+\input{../replication/report/tab_epmain}
+
+\input{../replication/report/tab_bridge}
+
+\subsection{Trade-Sensitive and Domestic Expenditure}\label{sec:expend}
+Section~\ref{sec:channels} traced the model's weights to channels: consumption and investment for equities, net exports for the dollar. If the weights describe those channels, composition might predict the components separately even where it does not predict the aggregates. I wrote two predictions from the channel logic before estimating the components: the coefficient on $D$ is negative for the contribution of net exports to growth over the next four quarters (P1), and it is larger for consumption and private investment than for net exports (P2). The aggregate nulls of the preceding subsections were already known, so the exercise is a check on a prediction and not a clean pre-registered test. Table~\ref{tab:expend} reports both.
+
+\input{../replication/report/tab_expend}
+
+In 1976--2026 the coefficient on $D$ for net exports is \bl{ex:net:main:D} (\bl{ex:net:main:D:lo} to \bl{ex:net:main:D:hi}; bootstrap interval \bl{ex:net:main:D:blo} to \bl{ex:net:main:D:bhi}), an effect of \bl{ex:net:main:D:eff} percentage points of growth between the 5th and 95th percentiles of $D$. For consumption and private investment it is \bl{ex:pri:main:D} (\bl{ex:pri:main:D:lo} to \bl{ex:pri:main:D:hi}), and the difference has a bootstrap interval of \bl{ex:dmn:main:blo} to \bl{ex:dmn:main:bhi}. Both predictions hold in the baseline main sample. They do not survive further scrutiny as evidence for the dollar channel. In this sample $D$ is dominated by equities: it correlates \bl{so:corr:eq} with the 12-month change in equity valuation and \bl{so:corr:usd} with the change in the dollar. Splitting $D$ into the parts due to each asset, the equity part has a coefficient of \bl{so:split:eq} (\bl{so:split:eq:lo} to \bl{so:split:eq:hi}) and the dollar part \bl{so:split:usd} (\bl{so:split:usd:lo} to \bl{so:split:usd:hi}). Rising equities strengthen domestic demand and imports, which lowers the net-export contribution mechanically. With the three asset changes entered freely, the dollar's own coefficient is negative, as the dollar channel implies (\bl{so:free:dusd}, \bl{so:free:dusd:lo} to \bl{so:free:dusd:hi}), and so is the equity coefficient (\bl{so:free:deq}). On 1996--2026 the signs are the same and the evidence is weaker: the net-export coefficient is \bl{ex:net:1996p:D} (\bl{ex:net:1996p:D:lo} to \bl{ex:net:1996p:D:hi}). The result also depends on the definition of policy news (Table~\ref{tab:sigout}): the coefficient on $D$ for net exports is \bl{so:base:net:g} for the baseline, \bl{so:t19:net:g} through 2019, \bl{so:nlb:net:g} without the lower-bound years and \bl{so:two:net:g} with the two-year yield, where it is indistinguishable from zero. Composition predicts net exports under the futures-factor definitions, mostly through equities. It does not provide clean evidence for the dollar channel of the model.
+
+\input{../replication/report/tab_sigout}
+
+Table~\ref{tab:sigout} also repeats the unemployment and GDP regressions under each definition. The coefficient on composition is not significantly different from zero in any of them, and the model's restriction $\gamma=\beta$ is rejected at the 10 percent level for unemployment only without the lower-bound years.
+
+
+\subsection{Composition or Persistence?}\label{sec:persist}
+The comparison confounds two things. A persistent dollar appreciation in FRB/US and the dollar's response to policy news are different experiments, so a difference in weights could reflect the initial composition of the movement or the path that follows it. Figure~\ref{fig:persist} separates them with the same set of calculations under common decaying paths for the three variables, with half-lives of 8, 4 and 2 quarters.
+
+Persistence changes how much tightening a policy move represents. The model's reading of the usual response falls from \bl{ag:h4:bpsi} with persistent paths to \bl{ag:bp:hl4} (interval \bl{ag:bp:hl4:lo} to \bl{ag:bp:hl4:hi}) with a half-life of four quarters and \bl{ag:bp:hl2} with a half-life of two. Persistence does not change which movement counts more. With the same decay for the dollar and for equities, the model's dollar-to-equity ratio is \bl{ag:mp:hl8}, \bl{ag:mp:hl4} and \bl{ag:mp:hl2} at half-lives of 8, 4 and 2 quarters, against \bl{ag:mkt:ratio} for the market weights (interval \bl{ag:mkt:ratio:lo} to \bl{ag:mkt:ratio:hi}). Different half-lives for the two assets give a wider range, \bl{ag:mp:min} to \bl{ag:mp:max}, and none near one. Across horizons of two to eight quarters and these paths the model's reading of the usual response runs from \bl{bp:min} to \bl{bp:max}. The persistent case is the closest to the data, since the half-lives of the levels of the three variables since 1996 are 20 to 26 quarters, so the range for decaying paths shows the sensitivity of the conversion and not a likely value. The contrast between the two weightings is a contrast in the effect on GDP per unit of each asset price. The definition of policy news (Section~\ref{sec:signal}) moves the contrast by an amount at least as large.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{../replication/report/fig_persist.pdf}
+\caption{Persistence Changes the Conversion, Not the Relative Weights}
+\label{fig:persist}
+\begin{flushleft}\footnotesize\textit{Notes:} Left: the FRB/US weights at four quarters applied to the responses of the three variables to a unit of policy news, with the variables assumed to persist or to decay with the half-life shown; the bars are 90 percent intervals from bootstrap samples of the announcements. Right: the model's dollar effect over its equity effect, with the same decay for both; the line is the market index's ratio. The persistence of the variables' levels is a different object from the persistence of their responses to policy news; the half-lives of the levels since 1996 are 20 to 26 quarters, and the equity response to policy news does not decay within 20 trading days.\end{flushleft}
+\end{figure}
+
+
+
+\FloatBarrier
+\subsection{Tables of the Weights}\label{sec:wtables}
+\input{../replication/report/tab_signal}
+
+\input{../replication/report/tab_example}
+
+\input{../replication/report/tab_frbus}
+
+\input{../replication/report/tab_agree}
+\FloatBarrier
 
 \section{Sensitivity}\label{app:robust}
 \subsection{Other Policy-News Series and Event Samples}\label{sec:robother}
@@ -73,7 +143,7 @@ Table~\ref{tab:signalsens} gives the weights, the readings of the two movements 
 \includegraphics[width=0.85\textwidth]{../replication/report/fig_band.pdf}
 \caption{Two Readings of Two Episodes under Every Measurement Choice}
 \label{fig:band}
-\begin{flushleft}\footnotesize\textit{Notes:} Average 12-month change over the months of the episode on the same three assets relative to $r^*$. Market-implied: the four definitions of policy news of Table~\ref{tab:signalsens}, in points of the two-year yield. Spending-equivalent: the same four definitions, which enter through the normalization, crossed with persistent paths and common half-lives of 8, 4 and 2 quarters, in funds-rate points. Large markers are the baseline. These are retrospective estimates. The 90 percent intervals of the baseline readings are in the text.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Average 12-month change over the months of the episode on the same three assets relative to $r^*$. Market-implied: the four definitions of policy news of Table~\ref{tab:signalsens}, in points of the two-year yield. Spending-equivalent: the same four definitions, which enter through the normalization, crossed with persistent paths and common half-lives of 8, 4 and 2 quarters; the FRB/US readings are divided by the model's reading of each definition's policy response and so are in points of the two-year yield, normalized for each definition. Large markers are the baseline. These are retrospective estimates.\end{flushleft}
 \end{figure}
 
 

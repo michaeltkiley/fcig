@@ -14,14 +14,14 @@ Market dollar-over-equity ratio [90\%] & 1.00 [0.33, 2.25] & 2.06 [0.82, 5.19] \
 \multicolumn{3}{l}{\textit{Readings of the two movements of Figure~\ref{fig:four}}} \\
 Equity valuation falls 5 log points, market (points) & 0.256 & 0.133 \\
 Dollar appreciates 3.9 log points, market (points) & 0.255 & 0.274 \\
-Equity valuation falls, FRB/US (points, common scale) & 0.160 & 0.164 \\
-Dollar appreciates, FRB/US (points, common scale) & 0.402 & 0.413 \\
+Equity valuation falls, FRB/US (points, normalized for each signal) & 0.160 & 0.164 \\
+Dollar appreciates, FRB/US (points, normalized for each signal) & 0.402 & 0.413 \\
 Dollar-minus-equity effect, market (points) & 0.00 & 0.14 \\
-Dollar-minus-equity effect, FRB/US (points, common scale) & 0.24 & 0.25 \\
+Dollar-minus-equity effect, FRB/US (points, normalized for each signal) & 0.24 & 0.25 \\
 Model less market [90\%] & 0.243 [0.003, 0.448] & 0.107 [$-$0.079, 0.287] \\
 Ratio of ratios [90\%] & 2.53 [1.08, 7.41] & 1.22 [0.48, 3.05] \\
 Model reading of the usual response, $b_4'\psi$ [90\%] & 0.954 [0.856, 1.078] & 0.930 [0.834, 1.048] \\
 \bottomrule
 \end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} The market weights are estimated on the same 253 announcement windows with two measures of policy news: the first principal component of the futures-based factor of \citet{nakamura2018} (baseline) and the change in the two-year yield. The model weights are those of Table~\ref{tab:frbus} in both columns, normalized by $b_4'\psi$ for each measure. Effects are for the movements of Figure~\ref{fig:four}, in points of the two-year yield; the FRB/US effects are divided by $b_4'\psi$, which puts them on the common two-year-yield scale (Table~\ref{tab:example} gives them in funds-rate points). Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws. Table~\ref{tab:signalsens} adds the two sample checks.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} The market weights are estimated on the same 253 announcement windows with two measures of policy news: the first principal component of the futures-based factor of \citet{nakamura2018} (baseline) and the change in the two-year yield. The model weights are those of Table~\ref{tab:frbus} in both columns, normalized by $b_4'\psi$ for each measure. Effects are for the movements of Figure~\ref{fig:four}, in points of the two-year yield; the FRB/US effects are divided by $b_4'\psi$ computed with each signal's response vector, so this table's normalization changes with the signal, unlike the common futures-factor normalization of Tables~\ref{tab:fourw} and~\ref{tab:dist} (Table~\ref{tab:example} gives the FRB/US effects in funds-rate points). Intervals are 5th and 95th percentiles over 5,000 bootstrap samples of the announcements, on common draws. Table~\ref{tab:signalsens} adds the two sample checks.\end{flushleft}
 \end{table}

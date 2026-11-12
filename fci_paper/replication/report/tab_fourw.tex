@@ -1,0 +1,17 @@
+\begin{table}[tbp]\centering
+\caption{Four Sets of Weights on One Scale}\label{tab:fourw}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+ & Market, futures factor & Published GS weights & Market, two-year yield & FRB/US \\
+\midrule
+Weight, 10-year yield (per point) & 0.609 & 0.515 & 0.926 & 0.590 \\
+Weight, equity valuation (per log point) & $-$0.051 & $-$0.056 & $-$0.027 & $-$0.032 \\
+Weight, dollar (per log point) & 0.065 & 0.069 & 0.070 & 0.103 \\
+Equity valuation falls 5 log points & 0.26 & 0.28 & 0.13 & 0.16 \\
+Dollar appreciates 3.9 log points & 0.25 & 0.27 & 0.27 & 0.40 \\
+Dollar reading over equity reading [90\%] & 1.00 [0.33, 2.25] & 0.96 & 2.06 [0.82, 5.19] & 2.51 \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Weights on the three assets relative to $r^*$, each set normalized to read one on the response of the three assets to one unit of futures-factor policy news; readings of the movements of Figure~\ref{fig:four} in points on that common scale. Market weights: one-factor generalized least squares on 253 announcement windows, with policy news measured by the futures factor or by the change in the two-year yield. FRB/US: effects on GDP after four quarters of persistent shifts, divided by the effect of a persistent one-point rise in the funds rate, then normalized. Published GS weights: the U.S.\ weights on the 10-year yield, equities and the dollar, with the GS policy-rate and spread terms held fixed, then normalized. Intervals over 5,000 bootstrap draws of the announcements, for the estimated weights.\end{flushleft}
+\end{table}
