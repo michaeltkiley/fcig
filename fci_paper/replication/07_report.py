@@ -704,9 +704,9 @@ w_M_ = W.weight.values; psi_ = W.response.values; b4_ = FW.frbus_weight.values; 
 dX_ = Xd_.diff(12); mkt_ = dX_.values @ w_M_; Dd_ = dX_.values @ (wB_ - w_M_)
 tt_ = Xd_.index.to_timestamp()
 fig, ax = plt.subplots(2, 1, figsize=(7.5, 5.0), sharex=True)
-ax[0].plot(tt_, mkt_, color=COLORS["market"], lw=1.2, label="Market index, 12-month change"); ax[0].plot(tt_, dX_.values @ wB_, color=COLORS["frbus"], lw=1.2, label="FRB/US reading of the same changes, normalized")
+ax[0].plot(tt_, mkt_, color=COLORS["market"], lw=1.2, label="Market-implied reading, 12-month change"); ax[0].plot(tt_, dX_.values @ wB_, color=COLORS["frbus"], lw=1.2, label="Spending-equivalent reading of the same changes, normalized")
 ax[0].set_title("The two readings of the same financial movements", loc="left"); axes(ax[0], "points")
-ax[1].plot(tt_, Dd_, color=COLORS["fcig"], lw=1.2, label="Difference $D$ (FRB/US less market)"); ax[1].axhline(0.25, color="#999999", ls=":", lw=0.8); ax[1].axhline(-0.25, color="#999999", ls=":", lw=0.8)
+ax[1].plot(tt_, Dd_, color=COLORS["fcig"], lw=1.2, label="Difference $D$ (spending-equivalent less market-implied)"); ax[1].axhline(0.25, color="#999999", ls=":", lw=0.8); ax[1].axhline(-0.25, color="#999999", ls=":", lw=0.8)
 for a_, b_ in (("1998-01-01", "2001-12-31"), ("2004-06-01", "2006-06-30"), ("2022-03-01", "2024-12-31")):
     for x_ in ax:
         x_.axvspan(pd.Timestamp(a_), pd.Timestamp(b_), color="#eeeeee", lw=0, zorder=0)
@@ -767,6 +767,14 @@ for tgt, smp, lab in (("unemployment", "all", "Unemployment, 1990--2025"), ("une
         rows.append([f"{lab}: {cl}", f"{int(r.n)}", f"{f(r.coef)} [{f(r.lo90)}, {f(r.hi90)}]", f(r.effect_p5_p95)])
         k_ = {"unemployment": "u", "gdp": "g"}[tgt] + ":" + smp.replace("-", "") + ":" + comp
         mac(f"sd:{k_}", r.coef); mac(f"sd:{k_}:lo", r.lo90); mac(f"sd:{k_}:hi", r.hi90); mac(f"sd:{k_}:eff", r.effect_p5_p95)
+for smp_, lab_ in (("ex2001", "Unemployment, excluding 2001"), ("ex2008-09", "Unemployment, excluding 2008--09"), ("ex2001-and-2008-09", "Unemployment, excluding 2001 and 2008--09")):
+    for comp, cl in (("realized", "Realized"), ("error", "Forecast error")):
+        r = sdc("unemployment", smp_, comp)
+        rows.append([f"{lab_}: {cl}", f"{int(r.n)}", f"{f(r.coef)} [{f(r.lo90)}, {f(r.hi90)}]", f(r.effect_p5_p95)])
+        k_ = "u:" + smp_.replace("-", "") + ":" + comp
+        mac(f"sd:{k_}", r.coef); mac(f"sd:{k_}:lo", r.lo90); mac(f"sd:{k_}:hi", r.hi90); mac(f"sd:{k_}:blo", r.boot_lo90); mac(f"sd:{k_}:bhi", r.boot_hi90)
+r = sdc("unemployment", "ex2008-15", "error"); mac("sd:u:ex200815:error:blo", r.boot_lo90); mac("sd:u:ex200815:error:bhi", r.boot_hi90)
+r = sdc("unemployment", "all", "error"); mac("sd:u:all:error:blo", r.boot_lo90); mac("sd:u:all:error:bhi", r.boot_hi90)
 table("spf", "What the Composition Predicts: Forecasts, Outcomes and Errors", "tab:spf", ["", "$n$", "Coefficient on $D$ [90\\%]", "Effect, 5th to 95th percentile"], rows,
       "Regressions of the Survey of Professional Forecasters' median forecast of the four-quarter-ahead change in the unemployment rate (real GDP growth), the realized change, and the forecast error (realized less forecast) on the 12-month changes of the market index and of $D$, financial data up to the month before each survey's deadline, 1990Q3--2025Q3; the coefficients on the forecast and the error add to the coefficient on the realization. HAC standard errors; effect in percentage points at the same index change. Incremental information only: the test says nothing about causation.")
 # daily ladder
@@ -790,13 +798,13 @@ rows = [g_("Full indexes, average level (points)"),
         ep_row("FRB/US index less market index [90\\% interval]", lambda k: f"{f(num(f'br:ep{k}:gap'))} [{f(num(f'br:ep{k}:lo'))}, {f(num(f'br:ep{k}:hi'))}]"),
         ep_row("\\quad of which: equity weights", lambda k: f(num(f"br:ep{k}:eq"))),
         g_("Same three assets, 12-month change (points)"),
-        ep_row("Market reading", lambda k: f(num(f"ce:{k}:dm"))),
-        ep_row("FRB/US reading", lambda k: f(num(f"ce:{k}:fr"))),
+        ep_row("Market-implied reading", lambda k: f(num(f"ce:{k}:dm"))),
+        ep_row("Spending-equivalent reading", lambda k: f(num(f"ce:{k}:fr"))),
         ep_row("Difference $D$", lambda k: f(num(f"ce:{k}:D"))),
         g_("Change in the unemployment gap over the next 12 months (points)"),
         ep_row("Realized", lambda k: f(num(f"ce:{k}:real"))),
-        ep_row("Forecast from the market reading", lambda k: f(num(f"ce:{k}:fcm"))),
-        ep_row("Forecast from the FRB/US reading", lambda k: f(num(f"ce:{k}:fcf")))]
+        ep_row("Forecast from the market-implied reading", lambda k: f(num(f"ce:{k}:fcm"))),
+        ep_row("Forecast from the spending-equivalent reading", lambda k: f(num(f"ce:{k}:fcf")))]
 table("epmain", "Two Readings of Three Episodes", "tab:epmain", ["", "1998--2001", "2004--06", "2022--24"], rows,
       "Top block: difference in the average levels of the full FRB/US index (with house prices) and the market index relative to $r^*$, in points, and the part that comes from the equity weights (Table~\\ref{tab:bridge}). Middle block: 12-month changes of the market index and of the normalized FRB/US reading, computed on the same three assets and averaged over the episode; $D$ is their difference. Bottom block: change in the unemployment gap over the following 12 months, averaged over the episode's origins, and recursive out-of-sample forecasts of it from the market reading and from the FRB/US reading (own lags included). A gap in levels can coexist with agreement in changes.", align="lccc", small=False)
 # ladder on days with the announcement-day moves removed
@@ -807,13 +815,13 @@ for k_ in (1, 5, 22, 66, 252):
 fig, ax = plt.subplots(figsize=(6.2, 3.4))
 xx_ = np.arange(2); wd_ = 0.34
 mk_ = [num("ag:ex:eq:mkt"), num("ag:ex:usd:mkt")]; fr_ = [num("ag:ex:eq:fr"), num("ag:ex:usd:fr")]
-b1 = ax.bar(xx_ - wd_ / 2, mk_, wd_, color=COLORS["market"], label="Market index (policy-news weights)")
-b2 = ax.bar(xx_ + wd_ / 2, fr_, wd_, color=COLORS["frbus"], label="FRB/US index (spending weights)")
+b1 = ax.bar(xx_ - wd_ / 2, mk_, wd_, color=COLORS["market"], label="Market-implied (policy-news weights)")
+b2 = ax.bar(xx_ + wd_ / 2, fr_, wd_, color=COLORS["frbus"], label="Spending-equivalent (FRB/US weights)")
 for bars_ in (b1, b2):
     for r_ in bars_:
         ax.text(r_.get_x() + r_.get_width() / 2, r_.get_height() + 0.005, f"{r_.get_height():.2f}", ha="center", va="bottom", fontsize=8)
 ax.set_xticks(xx_); ax.set_xticklabels(["Equity valuation\nfalls 5 log points", "Dollar appreciates\n3.9 log points"])
-ax.set_ylabel("Tightening, points of policy rate"); ax.set_ylim(0, max(mk_ + fr_) * 1.2); ax.legend(frameon=False, fontsize=8, loc="upper left")
+ax.set_ylabel("Tightening: market-implied in two-year-yield points,\nspending-equivalent in funds-rate points", fontsize=8); ax.set_ylim(0, max(mk_ + fr_) * 1.2); ax.legend(frameon=False, fontsize=8, loc="upper left")
 for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
 figure("fig_two", fig)
 
@@ -835,18 +843,6 @@ for a_ in ax:
     for sp_ in ("top", "right"): a_.spines[sp_].set_visible(False)
 fig.tight_layout(); figure("fig_persist", fig)
 
-fig, ax = plt.subplots(figsize=(6.2, 3.4))
-ks_ = [("1998", "1998--2001"), ("2022", "2022--24")]
-xx_ = np.arange(len(ks_)); wd_ = 0.34
-m_ = [num(f"ce:{k}:dm") for k, _ in ks_]; r_ = [num(f"ce:{k}:fr") for k, _ in ks_]
-b1 = ax.bar(xx_ - wd_ / 2, m_, wd_, color=COLORS["market"], label="Market reading"); b2 = ax.bar(xx_ + wd_ / 2, r_, wd_, color=COLORS["frbus"], label="FRB/US reading")
-for bars_ in (b1, b2):
-    for r0 in bars_:
-        h0 = r0.get_height(); ax.text(r0.get_x() + r0.get_width() / 2, h0 + (0.03 if h0 >= 0 else -0.03), f"{h0:+.2f}", ha="center", va="bottom" if h0 >= 0 else "top", fontsize=8)
-ax.axhline(0, color="#444444", lw=0.8); ax.set_xticks(xx_); ax.set_xticklabels([l for _, l in ks_])
-ax.set_ylabel("Average 12-month change, points"); ax.set_ylim(-0.4, 1.3); ax.legend(frameon=False, fontsize=8, loc="upper left")
-for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
-figure("fig_episodes", fig)
 # what the assets did in each episode (mean 12-month change) and each asset's part of D
 dwt_ = wB_ - w_M_
 for k_, a0, b0 in (("1998", "1998-01", "2001-12"), ("2004", "2004-06", "2006-06"), ("2022", "2022-03", "2024-12")):
@@ -854,6 +850,150 @@ for k_, a0, b0 in (("1998", "1998-01", "2001-12"), ("2004", "2004-06", "2006-06"
     for j_, nm_ in enumerate(("y10", "eq", "usd")):
         mac(f"ce:{k_}:x{nm_}", mdx_[j_]); mac(f"ce:{k_}:c{nm_}", dwt_[j_] * mdx_[j_])
     chk(abs(float((dwt_ * mdx_).sum()) - num(f"ce:{k_}:D")) < 0.01, f"episode {k_}: asset parts add to D")
+# within-episode paths, bootstrap bands for the episode averages, and how often the readings differ
+WBd = pd.read_csv(RES / "weights_boot.csv")
+def ep_boot(a0, b0):
+    sel = (Xd_.index >= pd.Period(a0, "M")) & (Xd_.index <= pd.Period(b0, "M")); X_e = dX_.values[sel]; out = []
+    for _, r in WBd.iterrows():
+        wm = r[["w_ten", "w_eq", "w_usd"]].values.astype(float); ps = r[["psi_ten", "psi_eq", "psi_usd"]].values.astype(float); wb = b4_ / (b4_ @ ps)
+        out.append([np.nanmean(X_e @ wm), np.nanmean(X_e @ wb), np.nanmean(X_e @ (wb - wm))])
+    return np.percentile(np.array(out), [5, 95], axis=0)
+for k_, a0, b0 in (("1998", "1998-01", "2001-12"), ("2004", "2004-06", "2006-06"), ("2022", "2022-03", "2024-12")):
+    q_ = ep_boot(a0, b0)
+    for j_, nm_ in enumerate(("dm", "fr", "D")):
+        mac(f"ce:{k_}:{nm_}:lo", q_[0, j_]); mac(f"ce:{k_}:{nm_}:hi", q_[1, j_])
+    sel_ = (Xd_.index >= pd.Period(a0, "M")) & (Xd_.index <= pd.Period(b0, "M")); mk_e = mkt_[sel_]; fr_e = (dX_.values @ wB_)[sel_]; D_e = Dd_[sel_]
+    mac(f"ce:{k_}:opp", float(np.sum(np.sign(mk_e) != np.sign(fr_e))), 0); mac(f"ce:{k_}:nmo", float(sel_.sum()), 0); mac(f"ce:{k_}:big", float(np.sum(np.abs(D_e) > 0.25)), 0)
+s96_ = np.asarray(Xd_.index >= pd.Period('1996-01', 'M')); DA_ = np.abs(Dd_[s96_]); MA_ = np.abs(mkt_[s96_])
+mac("dz:12m:med", float(np.nanmedian(DA_)), 2); mac("dz:12m:p75", float(np.nanpercentile(DA_, 75)), 2); mac("dz:12m:p90", float(np.nanpercentile(DA_, 90)), 2); mac("dz:12m:bp", float(np.nanmean(DA_)) * 100, 0)
+fig, ax = plt.subplots(2, 2, figsize=(7.6, 5.8), sharey="row")
+for c_, (k_, a0, b0, lab) in enumerate((("1998", "1997-07", "2002-06", "1998--2001"), ("2022", "2021-09", "2025-06", "2022--24"))):
+    sel_ = (Xd_.index >= pd.Period(a0, "M")) & (Xd_.index <= pd.Period(b0, "M")); t_ = tt_[sel_]
+    ax[0, c_].plot(t_, mkt_[sel_], color=COLORS["market"], lw=1.3, label="Market-implied reading"); ax[0, c_].plot(t_, (dX_.values @ wB_)[sel_], color=COLORS["frbus"], lw=1.3, label="Spending-equivalent reading")
+    ax[0, c_].axhline(0, color="#444444", lw=0.7); ax[0, c_].set_title(lab + ": 12-month change", loc="left", fontsize=9)
+    for j_, (nm_, col_, lb_) in enumerate((("y10", "#888888", "10-year yield"), ("eq", "#2a9d4b", "Equity valuation"), ("usd", "#7b4fa0", "Dollar"))):
+        ax[1, c_].plot(t_, (dX_.values * dwt_)[sel_][:, j_], color=col_, lw=1.2, label=lb_)
+    ax[1, c_].plot(t_, Dd_[sel_], color="#222222", lw=1.4, ls="--", label="Difference $D$")
+    ax[1, c_].axhline(0, color="#444444", lw=0.7); ax[1, c_].set_title("Contributions to the difference", loc="left", fontsize=9)
+    for r_ in (0, 1):
+        ax[r_, c_].axvspan(pd.Timestamp({"1998": "1998-01-01", "2022": "2022-03-01"}[k_]), pd.Timestamp({"1998": "2001-12-31", "2022": "2024-12-31"}[k_]), color="#eeeeee", lw=0, zorder=0)
+        for sp_ in ("top", "right"): ax[r_, c_].spines[sp_].set_visible(False)
+        ax[r_, c_].tick_params(labelsize=8)
+ax[0, 0].legend(frameon=False, fontsize=7.5, loc="upper left")
+import matplotlib.dates as mdates_
+for a__ in ax.ravel():
+    a__.xaxis.set_major_locator(mdates_.YearLocator()); a__.xaxis.set_major_formatter(mdates_.DateFormatter("%Y"))
+ax[1, 0].set_ylim(-0.95, 0.85); ax[1, 0].legend(frameon=False, fontsize=6.8, loc="lower left", ncol=2)
+ax[0, 0].set_ylabel("Points", fontsize=8); ax[1, 0].set_ylabel("Points", fontsize=8)
+figure("fig_paths", fig)
+fig, ax = plt.subplots(figsize=(6.2, 3.4))
+ks_ = [("1998", "1998--2001"), ("2022", "2022--24")]
+xx_ = np.arange(len(ks_)); wd_ = 0.34
+m_ = [num(f"ce:{k}:dm") for k, _ in ks_]; r_ = [num(f"ce:{k}:fr") for k, _ in ks_]
+b1 = ax.bar(xx_ - wd_ / 2, m_, wd_, color=COLORS["market"], label="Market-implied reading"); b2 = ax.bar(xx_ + wd_ / 2, r_, wd_, color=COLORS["frbus"], label="Spending-equivalent reading")
+for bars_ in (b1, b2):
+    for r0 in bars_:
+        h0 = r0.get_height(); ax.text(r0.get_x() + r0.get_width() / 2, h0 + (0.03 if h0 >= 0 else -0.03), f"{h0:+.2f}", ha="center", va="bottom" if h0 >= 0 else "top", fontsize=8)
+for j_, (nm_, off_) in enumerate((("dm", -wd_ / 2), ("fr", wd_ / 2))):
+    v_ = [num(f"ce:{k}:{nm_}") for k, _ in ks_]; lo_ = [num(f"ce:{k}:{nm_}:lo") for k, _ in ks_]; hi_ = [num(f"ce:{k}:{nm_}:hi") for k, _ in ks_]
+    ax.errorbar(xx_ + off_, v_, yerr=[np.array(v_) - np.array(lo_), np.array(hi_) - np.array(v_)], fmt="none", ecolor="#222222", capsize=3, lw=1)
+ax.axhline(0, color="#444444", lw=0.8); ax.set_xticks(xx_); ax.set_xticklabels([l for _, l in ks_])
+ax.set_ylabel("Average 12-month change, points"); ax.set_ylim(-0.6, 1.5); ax.legend(frameon=False, fontsize=8, loc="upper left")
+for sp_ in ("top", "right"): ax.spines[sp_].set_visible(False)
+figure("fig_episodes", fig)
+# FRB/US expenditure channels (step 22; results stored, the step needs the Board's FRB/US package and is not in run_all)
+SC22 = pd.read_csv(RES / "scalars_22_channels.csv", header=None, index_col=0)[1]
+g22 = lambda k: float(SC22[k])
+mac("ch:gdp:eq", g22("equity:persistent:gdp_q4"), 3); mac("ch:gdp:usd", g22("dollar:persistent:gdp_q4"), 3)
+mac("ch:eq:cons", 100 * g22("equity:persistent:Consumption:share_q4"), 0); mac("ch:eq:bfi", 100 * g22("equity:persistent:Business fixed investment:share_q4"), 0)
+mac("ch:eq:dom", 100 * g22("equity:persistent:domestic_share_q4"), 0); mac("ch:eq:nx", 100 * g22("equity:persistent:netexports_share_q4"), 0)
+mac("ch:usd:exp", 100 * g22("dollar:persistent:Exports:share_q4"), 0); mac("ch:usd:imp", 100 * g22("dollar:persistent:Imports:share_q4"), 0)
+mac("ch:usd:nx", 100 * g22("dollar:persistent:netexports_share_q4"), 0); mac("ch:usd:dom", 100 * g22("dollar:persistent:domestic_share_q4"), 1)
+mac("ch:eq:cons4", 100 * g22("equity:halflife4:Consumption:share_q4"), 0); mac("ch:usd:nx4", 100 * g22("dollar:halflife4:netexports_share_q4"), 0)
+mac("ch:replay:ffr", g22("replay:ffr_points_q4"), 3)
+for k_, nm_ in (("10-year yield", "ten"), ("Equity valuation", "eq"), ("Dollar", "usd")):
+    mac(f"ch:replay:{nm_}", 100 * g22(f"replay:{k_}:share"), 0); mac(f"ch:hike:{nm_}", 100 * g22(f"hike_spill:{k_}:share_of_hike_gdp"), 0)
+FP22 = pd.read_csv(RES / "22_figure_persistent.csv")
+fig, ax = plt.subplots(1, 2, figsize=(7.6, 3.5), sharey=True)
+grp_ = (("Consumption", ["Consumption"], "#2a9d4b"), ("Investment", ["Residential investment", "Business fixed investment"], "#1f4e9c"), ("Inventories", ["Inventories"], "#bbbbbb"),
+        ("Government", ["Government"], "#d9a441"), ("Net exports", ["Exports", "Imports"], "#d95f02"))
+for a_, (ex_, ttl_) in zip(ax, (("equity", "Equity valuation falls 5 log points"), ("dollar", "Dollar appreciates 3.9 log points"))):
+    d_ = FP22[(FP22.experiment == ex_) & (FP22.quarter <= 16)]; q_ = d_.quarter.values; pos_ = np.zeros(len(q_)); neg_ = np.zeros(len(q_))
+    for nm_, cols_, col_ in grp_:
+        v_ = d_[cols_].sum(axis=1).values; b_ = np.where(v_ >= 0, pos_, neg_)
+        a_.bar(q_, v_, bottom=b_, color=col_, width=0.8, label=nm_); pos_ = pos_ + np.where(v_ >= 0, v_, 0); neg_ = neg_ + np.where(v_ < 0, v_, 0)
+    a_.plot(q_, d_.gdp.values, color="#111111", lw=1.6, label="GDP"); a_.axhline(0, color="#444444", lw=0.7); a_.set_title(ttl_, loc="left", fontsize=9); a_.set_xlabel("Quarters", fontsize=8)
+    a_.tick_params(labelsize=8)
+    for sp_ in ("top", "right"): a_.spines[sp_].set_visible(False)
+ax[0].set_ylabel("Percent of GDP", fontsize=8); ax[0].legend(frameon=False, fontsize=7, loc="lower left", ncol=2)
+figure("fig_channels", fig)
+chk(num("ch:eq:cons") > 80 and num("ch:usd:nx") > 80 and abs(num("ch:usd:dom")) < 5, "channels: consumption carries the equity effect, net exports the dollar effect")
+# policy-signal sensitivity (step 21)
+SC21 = pd.read_csv(RES / "scalars_21_signal.csv", index_col=0)["value"]; D21 = pd.read_csv(RES / "21_defs.csv"); E21 = pd.read_csv(RES / "21_episodes.csv"); G21 = pd.read_csv(RES / "21_disagreement.csv"); S21 = pd.read_csv(RES / "21_signal_content.csv"); SB21 = pd.read_csv(RES / "21_signal_content_both.csv")
+DEF21 = (("baseline", "base", "Futures factor"), ("two_year", "two", "Two-year yield"), ("to_2019", "t19", "Factor, through 2019"), ("no_lower_bound", "nlb", "Factor, no lower bound"))
+c21 = lambda k: float(SC21[k])
+def dq(d_, q_): return float(D21[(D21.definition == d_) & (D21.quantity == q_)].point.iloc[0])
+def e21(d_, ep_, q_):
+    r = E21[(E21.definition == d_) & (E21.episode == ep_) & (E21.quantity == q_)].iloc[0]; return r
+def g21(d_, st_):
+    r = G21[(G21.definition == d_) & (G21["sample"] == "12m_changes_1996_2026") & (G21.stat == st_)].iloc[0]; return r
+fx_ = lambda x, d=2: f(x, d)
+iv_ = lambda a, lo, hi, d=2: f"{f(c21(a), d)} [{f(c21(lo), d)}, {f(c21(hi), d)}]"
+cols_ = {}
+for d_, k_, lab_ in DEF21:
+    mac(f"sg:{k_}:n", dq(d_, "n_announcements"), 0)
+    for nm_ in ("ten", "eq", "usd"): mac(f"sg:{k_}:w{nm_}", c21(f"{d_}_wM_{nm_}"), 3)
+    for nm_ in ("bpsi", "ror", "ratio_mkt", "contrast_diff"):
+        mac(f"sg:{k_}:{nm_}", c21(f"{d_}_{nm_}")); mac(f"sg:{k_}:{nm_}:lo", c21(f"{d_}_{nm_}_lo")); mac(f"sg:{k_}:{nm_}:hi", c21(f"{d_}_{nm_}_hi"))
+    mac(f"sg:{k_}:cm", c21(f"{d_}_contrast_mkt")); mac(f"sg:{k_}:cf", c21(f"{d_}_contrast_fr"))
+    mac(f"sg:{k_}:d12", g21(d_, "ratio").point)
+    for ep_, ek_ in (("1998-2001", "98"), ("2022-24", "22")):
+        for q_, qn_ in (("market", "m"), ("frbus", "f"), ("D", "D")):
+            r = e21(d_, ep_, q_); mac(f"sg:{k_}:{ek_}{qn_}", r.point); mac(f"sg:{k_}:{ek_}{qn_}:lo", r.lo); mac(f"sg:{k_}:{ek_}{qn_}:hi", r.hi)
+    cols_[d_] = [f"{int(dq(d_, 'n_announcements'))}", f(c21(f"{d_}_wM_ten"), 3), f(c21(f"{d_}_wM_eq"), 3), f(c21(f"{d_}_wM_usd"), 3),
+                 iv_(f"{d_}_bpsi", f"{d_}_bpsi_lo", f"{d_}_bpsi_hi", 3), iv_(f"{d_}_ratio_mkt", f"{d_}_ratio_mkt_lo", f"{d_}_ratio_mkt_hi"), iv_(f"{d_}_ror", f"{d_}_ror_lo", f"{d_}_ror_hi"),
+                 f(c21(f"{d_}_contrast_mkt")), f(c21(f"{d_}_contrast_fr")), iv_(f"{d_}_contrast_diff", f"{d_}_contrast_diff_lo", f"{d_}_contrast_diff_hi"), f(g21(d_, "ratio").point),
+                 f(e21(d_, "1998-2001", "market").point), f(e21(d_, "1998-2001", "frbus").point), f(e21(d_, "1998-2001", "D").point),
+                 f(e21(d_, "2022-24", "market").point), f(e21(d_, "2022-24", "frbus").point), f(e21(d_, "2022-24", "D").point)]
+labs_ = ["Announcements", "Market weight, 10-year yield", "Market weight, equity valuation", "Market weight, dollar", "Model reading of the usual response, $b_4'\\psi$ [90\\%]", "Market dollar-over-equity ratio [90\\%]", "Ratio of ratios [90\\%]",
+         "Dollar-minus-equity effect, market (points)", "Dollar-minus-equity effect, model (points)", "Model less market [90\\%]", "Mean $|D|$ over mean $|$market move$|$, 12-month changes"]
+rows = [[l_] + [cols_[d_][i_] for d_, _, _ in DEF21] for i_, l_ in enumerate(labs_)]
+rows.append(r"\midrule" + "\n" + r"\multicolumn{5}{l}{\textit{1998--2001, average 12-month change}} \\")
+for i_, l_ in ((11, "Market-implied reading"), (12, "Spending-equivalent reading"), (13, "Difference $D$")): rows.append([l_] + [cols_[d_][i_] for d_, _, _ in DEF21])
+rows.append(r"\midrule" + "\n" + r"\multicolumn{5}{l}{\textit{2022--24, average 12-month change}} \\")
+for i_, l_ in ((14, "Market-implied reading"), (15, "Spending-equivalent reading"), (16, "Difference $D$")): rows.append([l_] + [cols_[d_][i_] for d_, _, _ in DEF21])
+table("signal", "What Counts as Policy News", "tab:signal", [""] + [l for _, _, l in DEF21], rows,
+      "The market weights are re-estimated for each definition of policy news: the first principal component of the futures-based factor of \\citet{nakamura2018} (baseline), the change in the two-year yield in the same 253 announcement windows, the factor through 2019, and the factor outside the lower-bound years. The model weights are those of Table~\\ref{tab:frbus} in every column, normalized by $b_4'\\psi$ for each definition. Effects are for the movements of Figure~\\ref{fig:two} (equity valuation down 5 log points, dollar up 3.9 log points), market in points of the two-year yield and model in funds-rate points. Intervals are 5th and 95th percentiles over bootstrap samples of the announcements, on common draws. Episode readings are averages of 12-month changes with the weights of each column.", align="lcccc", small=False)
+# what variation each signal captures
+sc_ = lambda a_, r_: SB21[(SB21.asset == a_)]
+for k_, v_ in (("sig:corr", c21("sig_corr_ns_2y")), ("sig:res", c21("sd_2y_residual_share") * 100)):
+    mac(k_, v_, 2 if k_ == "sig:corr" else 0)
+for a_ in ("eq", "usd", "ten"):
+    for nm_, key_ in (("ns", f"both_{a_}_t_ns"), ("2y", f"both_{a_}_t_2y")):
+        mac(f"sig:t:{a_}:{nm_}", c21(key_), 1)
+mac("sig:cf:psi", c21("cfstep_w_eq_psi_shapley"), 3); mac("sig:cf:sig", c21("cfstep_w_eq_sigma_shapley"), 3)
+mac("sg:pair:two:ror", c21("pair_two_year_ror")); mac("sg:pair:two:ror:lo", c21("pair_two_year_ror_lo")); mac("sg:pair:two:ror:hi", c21("pair_two_year_ror_hi"))
+mac("fg:fcig", c21("fcig_ratio_usd_eq")); mac("fg:frbus", c21("frbus_ratio_usd_eq")); mac("fg:base", c21("fcig_baseline_ror")); mac("fg:two", c21("fcig_two_year_ror")); mac("fg:t19", c21("fcig_to_2019_ror")); mac("fg:nlb", c21("fcig_no_lower_bound_ror"))
+for k_ in ("base", "two"): pass
+# expenditure components (step 23)
+X23 = pd.read_csv(RES / "23_expenditure.csv")
+def x23(smp, o_, t_): return X23[(X23["sample"] == smp) & (X23.outcome == o_) & (X23.term == t_)].iloc[0]
+rows = []
+for smp, sl in (("main", "1976--2026"), ("1996+", "1996--2026")):
+    for o_, ol in (("net_exports", "Net exports"), ("private_domestic", "Consumption and private investment")):
+        for t_, tl in (("dM", "index change $\\beta$"), ("D", "composition $\\gamma$")):
+            r = x23(smp, o_, t_)
+            rows.append([f"{ol}, {sl}: {tl}", f"{int(r.n)}", f"{f(r.coef)} [{f(r.lo90)}, {f(r.hi90)}]", f"[{f(r.boot_lo90)}, {f(r.boot_hi90)}]", f(r.effect)])
+            k_ = f"{o_[:3]}:{smp.replace('+', 'p')}:{t_}"; mac(f"ex:{k_}", r.coef); mac(f"ex:{k_}:lo", r.lo90); mac(f"ex:{k_}:hi", r.hi90); mac(f"ex:{k_}:blo", r.boot_lo90); mac(f"ex:{k_}:bhi", r.boot_hi90); mac(f"ex:{k_}:eff", r.effect)
+    r = x23(smp, "dom_minus_net", "D"); rows.append([f"Consumption and investment less net exports, {sl}: $\\gamma$", f"{int(r.n)}", f(r.coef), f"[{f(r.boot_lo90)}, {f(r.boot_hi90)}]", f(r.effect)])
+    k_ = f"dmn:{smp.replace('+', 'p')}"; mac(f"ex:{k_}", r.coef); mac(f"ex:{k_}:blo", r.boot_lo90); mac(f"ex:{k_}:bhi", r.boot_hi90)
+table("expend", "Composition and the Expenditure Components of Growth", "tab:expend", ["", "$n$", "Coefficient [90\\% HAC]", "Bootstrap 90\\%", "Effect, 5th to 95th percentile"], rows,
+      "Local projections of the mean contribution to real GDP growth (percentage points, annualized) of net exports and of consumption plus private investment over the next four quarters on own lags, the 12-month change of the market index and the 12-month change of $D$ (Section~\\ref{sec:onetest}); quarterly origins, HAC standard errors with 6 lags, 8-quarter block bootstrap with common draws for the two outcomes. Specified before estimation: the coefficient on $D$ is negative for net exports (P1) and larger for domestic demand than for net exports (P2). Effect: coefficient times the 5th-to-95th percentile range of $D$ at a given index change.")
+chk(x23("main", "net_exports", "D").boot_hi90 < 0 and x23("main", "net_exports", "D").hi90 < 0, "expenditure: net-export coefficient on D negative with intervals below zero in the main sample")
+chk(x23("1996+", "net_exports", "D").coef < 0 and x23("1996+", "net_exports", "D").hi90 > 0, "expenditure: 1996+ net-export coefficient negative, HAC interval includes zero")
+chk(all(c21(f"{d_}_ror") > 1 for d_, _, _ in DEF21) and c21("two_year_ror") < c21("baseline_ror") < c21("to_2019_ror"), "signal: direction of the contrast the same in all four definitions; size varies (1.2 to 3.6)")
+chk(all(abs(c21(f"{d_}_contrast_fr") - 0.25) < 0.03 for d_, _, _ in DEF21), "signal: model contrast 0.24 to 0.26 points under every definition")
+chk(all(e21(d_, "1998-2001", "market").point < 0 < e21(d_, "1998-2001", "frbus").point for d_, _, _ in DEF21), "signal: 1998-2001 opposite signs under every definition")
 chk(num("ce:1998:dm") < 0 < num("ce:1998:fr") and abs(num("ce:2022:dm") - num("ce:2022:fr")) < 0.05, "episodes: 1998-2001 readings have opposite signs; 2022-24 readings within 0.05")
 chk(all(0.2 < num(f"dl:lad{k_}") < 0.4 and 0.2 < num(f"dl:ex{k_}") < 0.4 for k_ in (1, 5, 22, 66, 252)), "ladder: all-days and ex-announcement ratios between 0.2 and 0.4")
 

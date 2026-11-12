@@ -1,0 +1,143 @@
+key,value
+equity:persistent:gdp_q4,-0.070484
+equity:persistent:ffr_eq_q4,0.152707
+equity:persistent:residual_q4,0.000000
+equity:persistent:Consumption:q4,-0.065175
+equity:persistent:Consumption:share_q4,0.924677
+equity:persistent:Residential investment:q4,-0.000597
+equity:persistent:Residential investment:share_q4,0.008472
+equity:persistent:Business fixed investment:q4,-0.018944
+equity:persistent:Business fixed investment:share_q4,0.268777
+equity:persistent:Government:q4,0.000526
+equity:persistent:Government:share_q4,-0.007461
+equity:persistent:Exports:q4,-0.000606
+equity:persistent:Exports:share_q4,0.008602
+equity:persistent:Imports:q4,0.023742
+equity:persistent:Imports:share_q4,-0.336841
+equity:persistent:Inventories:q4,-0.009429
+equity:persistent:Inventories:share_q4,0.133775
+equity:persistent:domestic_q4,-0.084716
+equity:persistent:domestic_share_q4,1.201926
+equity:persistent:netexports_q4,0.023136
+equity:persistent:netexports_share_q4,-0.328239
+equity:halflife4:gdp_q4,-0.059941
+equity:halflife4:ffr_eq_q4,0.129865
+equity:halflife4:residual_q4,-0.000000
+equity:halflife4:Consumption:q4,-0.054473
+equity:halflife4:Consumption:share_q4,0.908771
+equity:halflife4:Residential investment:q4,-0.000518
+equity:halflife4:Residential investment:share_q4,0.008636
+equity:halflife4:Business fixed investment:q4,-0.016719
+equity:halflife4:Business fixed investment:share_q4,0.278921
+equity:halflife4:Government:q4,0.000406
+equity:halflife4:Government:share_q4,-0.006779
+equity:halflife4:Exports:q4,-0.000582
+equity:halflife4:Exports:share_q4,0.009708
+equity:halflife4:Imports:q4,0.020790
+equity:halflife4:Imports:share_q4,-0.346833
+equity:halflife4:Inventories:q4,-0.008846
+equity:halflife4:Inventories:share_q4,0.147576
+equity:halflife4:domestic_q4,-0.071709
+equity:halflife4:domestic_share_q4,1.196329
+equity:halflife4:netexports_q4,0.020208
+equity:halflife4:netexports_share_q4,-0.337125
+dollar:persistent:gdp_q4,-0.177141
+dollar:persistent:ffr_eq_q4,0.383787
+dollar:persistent:residual_q4,0.000000
+dollar:persistent:Consumption:q4,-0.004302
+dollar:persistent:Consumption:share_q4,0.024284
+dollar:persistent:Residential investment:q4,0.000364
+dollar:persistent:Residential investment:share_q4,-0.002054
+dollar:persistent:Business fixed investment:q4,0.002961
+dollar:persistent:Business fixed investment:share_q4,-0.016713
+dollar:persistent:Government:q4,0.012988
+dollar:persistent:Government:share_q4,-0.073323
+dollar:persistent:Exports:q4,-0.129546
+dollar:persistent:Exports:share_q4,0.731315
+dollar:persistent:Imports:q4,-0.037099
+dollar:persistent:Imports:share_q4,0.209429
+dollar:persistent:Inventories:q4,-0.022508
+dollar:persistent:Inventories:share_q4,0.127062
+dollar:persistent:domestic_q4,-0.000977
+dollar:persistent:domestic_share_q4,0.005517
+dollar:persistent:netexports_q4,-0.166645
+dollar:persistent:netexports_share_q4,0.940744
+dollar:halflife4:gdp_q4,-0.153089
+dollar:halflife4:ffr_eq_q4,0.331677
+dollar:halflife4:residual_q4,-0.000000
+dollar:halflife4:Consumption:q4,-0.005767
+dollar:halflife4:Consumption:share_q4,0.037669
+dollar:halflife4:Residential investment:q4,0.000319
+dollar:halflife4:Residential investment:share_q4,-0.002084
+dollar:halflife4:Business fixed investment:q4,0.002214
+dollar:halflife4:Business fixed investment:share_q4,-0.014459
+dollar:halflife4:Government:q4,0.011325
+dollar:halflife4:Government:share_q4,-0.073980
+dollar:halflife4:Exports:q4,-0.108509
+dollar:halflife4:Exports:share_q4,0.708796
+dollar:halflife4:Imports:q4,-0.031350
+dollar:halflife4:Imports:share_q4,0.204784
+dollar:halflife4:Inventories:q4,-0.021321
+dollar:halflife4:Inventories:share_q4,0.139274
+dollar:halflife4:domestic_q4,-0.003234
+dollar:halflife4:domestic_share_q4,0.021126
+dollar:halflife4:netexports_q4,-0.139859
+dollar:halflife4:netexports_share_q4,0.913580
+hike:gdp_q4,-0.461562
+hike:d_rff:q1,1.000000
+hike:d_rff:q4,1.000000
+hike:d_rg10:q1,0.331497
+hike:d_rg10:q4,0.369486
+hike:d_mortgage_spread:q1,-0.038387
+hike:d_mortgage_spread:q4,-0.013186
+hike:d_rbbbp:q1,0.036246
+hike:d_rbbbp:q4,0.050527
+hike:stock_wealth_pct:q1,-14.520920
+hike:stock_wealth_pct:q4,-13.866342
+hike:dollar_pct:q1,1.094498
+hike:dollar_pct:q4,1.559605
+hike:Consumption:q4,-0.307307
+hike:Residential investment:q4,-0.063625
+hike:Business fixed investment:q4,-0.108663
+hike:Government:q4,0.007367
+hike:Exports:q4,-0.048340
+hike:Imports:q4,0.118065
+hike:Inventories:q4,-0.059059
+unit:equity,24.986095
+unit:dollar,9.531018
+yardstick:coef_y1,0.998500
+max_abs_residual,0.000000
+max_abs_residual_over_gdp,0.000000
+fig1:equity_ffr_points,0.152707
+fig1:dollar_ffr_points,0.383787
+fig1:equity_ffr_points_stored,0.158148
+fig1:dollar_ffr_points_stored,0.391681
+perunit_q4:rg10,-0.259829
+perunit_q4:rbbbp,-0.058218
+perunit_q4:equity_pct_rise,-0.014097
+perunit_q4:equity_pct_fall,-0.014097
+perunit_q4:dollar_pct_rise,-0.045421
+psi_ten,0.534628
+psi_eq,-7.778983
+psi_usd,4.224207
+replay:gdp_q4,-0.440438
+replay:ffr_points_q4,0.954232
+replay:10-year yield:gdp_q4,-0.138912
+replay:10-year yield:share,0.315395
+replay:Equity valuation:gdp_q4,-0.109659
+replay:Equity valuation:share,0.248976
+replay:Dollar:gdp_q4,-0.191867
+replay:Dollar:share,0.435629
+hike_spill:10-year yield:gdp_q4,-0.096003
+hike_spill:10-year yield:share_of_hike_gdp,0.207996
+hike_spill:BBB spread:gdp_q4,-0.002942
+hike_spill:BBB spread:share_of_hike_gdp,0.006373
+hike_spill:Equity valuation:gdp_q4,-0.195471
+hike_spill:Equity valuation:share_of_hike_gdp,0.423498
+hike_spill:Dollar:gdp_q4,-0.070839
+hike_spill:Dollar:share_of_hike_gdp,0.153476
+hike_spill:sum_priced,-0.365254
+hike_spill:remainder_share,0.208657
+hike_vs_psi:ten_ratio,0.691108
+hike_vs_psi:equity_ratio,1.782539
+hike_vs_psi:dollar_ratio,0.369206

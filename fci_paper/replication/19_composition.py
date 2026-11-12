@@ -208,6 +208,8 @@ P["dM"] = dM.reindex(P.m).values; P["D"] = D.reindex(P.m).values; P["dB"] = dB.r
 cv = lambda p: p.year == 2020 or (p.year == 2021 and p.month <= 3)
 P["covid"] = [any(cv(m - 12 + k) for k in range(0, 27)) for m in P.m]         # 12-month change base through the target quarter
 P["ex0815"] = [any(pd.Period("2008-01", "M") <= m - 12 + k <= pd.Period("2015-12", "M") for k in range(0, 27)) for m in P.m]
+P["ex2001"] = [any(pd.Period("2001-01", "M") <= m - 12 + k <= pd.Period("2001-12", "M") for k in range(0, 27)) for m in P.m]
+P["ex0809"] = [any(pd.Period("2008-01", "M") <= m - 12 + k <= pd.Period("2009-12", "M") for k in range(0, 27)) for m in P.m]
 P["used"] = ~P.covid & P.u_err.notna() & P.dM.notna()
 P.drop(columns=["m"]).to_csv(RES / "19_spf_panel.csv", index=False)
 Pu = P[P.used].reset_index(drop=True); spr = []; Dres_all = sm.OLS(Pu.D, sm.add_constant(Pu.dM)).fit().resid; dD90_spf = C.pct(Dres_all, 95) - C.pct(Dres_all, 5)
@@ -274,7 +276,7 @@ COMP = {"unemployment": (("forecast", "u_fc_chg"), ("realized", "u_real_chg"), (
 sd_, idn = [], {}
 for tname, comps in COMP.items():
     Q0 = Pu[Pu[comps[2][1]].notna() & Pu[comps[0][1]].notna() & Pu[comps[1][1]].notna()].reset_index(drop=True)
-    for si, (sname, Q_) in enumerate((("all", Q0), ("ex2008-15", Q0[~Q0.ex0815].reset_index(drop=True)))):
+    for si, (sname, Q_) in enumerate((("all", Q0), ("ex2008-15", Q0[~Q0.ex0815].reset_index(drop=True)), ("ex2001", Q0[~Q0.ex2001].reset_index(drop=True)), ("ex2008-09", Q0[~Q0.ex0809].reset_index(drop=True)), ("ex2001-and-2008-09", Q0[~Q0.ex2001 & ~Q0.ex0809].reset_index(drop=True)))):
         idx = C.block_idx(len(Q_), REPS, 100 + 10 * (tname == "gdp") + si, 8)
         Dr = sm.OLS(Q_.D, sm.add_constant(Q_.dM)).fit().resid; rng_D = C.pct(Dr, 95) - C.pct(Dr, 5); rng_M = C.pct(Q_.dM, 95) - C.pct(Q_.dM, 5)
         Z = sm.add_constant(Q_[["dM", "D"]]); Xb = Z.values; res = {}

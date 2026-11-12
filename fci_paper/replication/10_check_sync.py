@@ -9,12 +9,14 @@ HERE = Path(__file__).resolve().parent
 stored = HERE / "results"
 tmp = Path(tempfile.mkdtemp(prefix="fci_sync_"))
 env = dict(os.environ, FCI_RESULTS=str(tmp / "results"), FCI_REPORT=str(tmp / "report"))
-for s in ("01_data", "02_weights", "03_indexes", "04_var", "05_compare", "06_activity", "08_stance", "09_levelflow", "10_nfci", "11_purge", "12_checks1996", "13_neutrality", "14_ladder_outcomes", "15_weights_outcomes", "16_weights_drift", "17_realtime", "18_agreement", "19_composition", "20_daily"):
+for s in ("01_data", "02_weights", "03_indexes", "04_var", "05_compare", "06_activity", "08_stance", "09_levelflow", "10_nfci", "11_purge", "12_checks1996", "13_neutrality", "14_ladder_outcomes", "15_weights_outcomes", "16_weights_drift", "17_realtime", "18_agreement", "19_composition", "20_daily", "21_signal", "23_expenditure"):
     r = subprocess.run([sys.executable, str(HERE / f"{s}.py")], cwd=HERE, env=env, capture_output=True, text=True)
     if r.returncode:
         raise SystemExit(f"{s} failed:\n{r.stderr[-2000:]}")
 bad, n = [], 0
 for f in sorted(stored.glob("*.csv")):
+    if f.name.startswith(("22_", "scalars_22")):   # step 22 needs the Board's FRB/US package; results are stored and not re-run
+        continue
     g = tmp / "results" / f.name
     if not g.exists():
         bad.append(f"{f.name}: not produced"); continue
