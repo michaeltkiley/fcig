@@ -1,0 +1,16 @@
+\begin{table}[tp]\centering\small
+\caption{How Large is the Difference Between the Two Readings?}\label{tab:dsize}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Movements & Mean $|D|$ & Ratio to market move [90\%] & Share above 0.25 (\%) & Mean run (months) \\
+\midrule
+Announcement windows, held out & 0.010 & 0.19 [0.09, 0.36] & 0 & -- \\
+Monthly changes, 1996--2026 & 0.042 & 0.24 [0.14, 0.53] & 0 & 1.0 \\
+Monthly changes, 1973--2026 & 0.062 & 0.26 [0.15, 0.52] & 2 & 1.1 \\
+12-month changes, 1996--2026 & 0.25 & 0.33 [0.16, 0.66] & 36 & 7.4 \\
+12-month changes, 1973--2026 & 0.32 & 0.31 [0.16, 0.53] & 44 & 7.0 \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} $D$ is the FRB/US reading (four quarters, normalized so that a conventional policy surprise reads one) less the market reading, applied to the changes of the equity valuation, the 10-year yield and the dollar at the $r^*$ step. Announcement windows: held-out events (weights re-estimated without each event). Ratio: mean $|D|$ over mean absolute market move; interval from bootstrap samples of the announcements and, for the monthly history, of 12- or 24-month blocks of months. A run is consecutive months with $|D|$ above 0.25.\end{flushleft}
+\end{table}

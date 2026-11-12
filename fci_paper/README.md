@@ -1,4 +1,4 @@
-# fci_paper: "Financial Conditions and the Stance of Policy" (Note A as a paper)
+# fci_paper: "When Do Financial Conditions Move Like Monetary Policy?" (Note A as a paper)
 
 State of 11 Nov 2026. This folder turns the companion note (`../fci_note/`, "Note A") into a paper, in the way `../experimental/fin_shocks/` turned Note B into a paper: a clean, self-contained package that rebuilds every result, a paper that contains no typed result, and decisions recorded in `FP_QA.md`. Nothing here changes `../fci_note/` or `../experimental/`. Read `../experimental/WRITING_GUIDE.md` before editing any paper text.
 
@@ -64,3 +64,8 @@ The data and the indexes are the same (`00_verify_note_a.py` compares the weight
 After the advisor rounds and the outside committee member (`reviews/`, `followup*/`), the paper was reorganized around: how much do financial conditions, in policy units and relative to neutral, add to the stance of policy beyond the policy rate, and does the wedge say anything about activity? The first draft ("do the indexes agree?") is kept as `paper/fci_paper_v1_agreement.tex`/`.pdf`.
 
 New package steps (each ported from a follow-up and checked against it; `replication/NN_*_CHECK.md`): `08_stance` (index vs funds-rate gap, episodes, today), `09_levelflow` (level vs flow, Granger sum vs differences, in-sample tail), `10_nfci` (market flow with NFCI/ANFCI), `11_purge` (exogeneity purge), `12_checks1996` (1973+ vs 1996+ checks table, r* ladder, subperiod VARs), `13_neutrality`, `14_ladder_outcomes` (r* vs real vs nominal on outcomes), `15_weights_outcomes` (weights vs outcomes), `16_weights_drift` (expanding and rolling weights, pseudo-real-time index), `17_realtime` (vintage data and real-time r*; inputs in `data/realtime/`). Outcome series (PAYEMS, GDPC1, PCEPILFE, USREC, USRECM) are in `data/`. `run_all.py` and `10_check_sync.py` run all steps (about 25 minutes). The follow-up folders `followup/`, `followup2/`, `followup3/` hold the original agent analyses and `RESULT.md` files; the package steps reproduce them.
+
+
+## New direction of 12 Nov 2026
+
+The author's assessment (`followup4/ASSESSMENT.md`) reorganized the paper around when a movement in financial conditions can be read as a movement in monetary policy: the event-study (market) weights against the FRB/US (spending) weights. New steps `18_agreement` (b_h'psi with intervals, the worked example, matched-persistence pricing, the difference D on announcements and ordinary movements, the bridge from the market index to the FRB/US index) and `19_composition` (the single primary composition test, equities alone, proportionality, the SPF forecast-error test, episodes; SPF data in `data/spf/`). Earlier versions: `paper/fci_paper_v1_agreement.tex`, `paper/fci_paper_v2_stance.tex`. Decisions: `FP_QA.md` FP-A23 to FP-A26.

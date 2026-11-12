@@ -585,6 +585,129 @@ for a_, (ser, nm) in zip(ax, (("ten", "10-year yield"), ("eq", "Equity valuation
 ax[0].legend(frameon=False, fontsize=7)
 figure("fig_weight_path", fig)
 
+# ------------------------------------------------------------------ exhibits of the agreement paper (steps 18-19)
+W18 = pd.read_csv(RES / "18_weights.csv"); E18 = pd.read_csv(RES / "18_example.csv"); D18e = pd.read_csv(RES / "18_D_events.csv"); D18m = pd.read_csv(RES / "18_D_monthly.csv")
+B18 = pd.read_csv(RES / "18_bridge_variance.csv"); MG = pd.read_csv(RES / "18_matched_grid.csv"); BE18 = pd.read_csv(RES / "18_bridge_episodes.csv")
+P19 = pd.read_csv(RES / "19_prim.csv"); S19 = pd.read_csv(RES / "19_spec.csv"); PR19 = pd.read_csv(RES / "19_prop.csv"); SPF19 = pd.read_csv(RES / "19_spf.csv"); EP19 = pd.read_csv(RES / "19_episodes.csv"); OOS19 = pd.read_csv(RES / "19_oos.csv")
+def w18(h, q):
+    return W18[(W18.h == h) & (W18.quantity == q)].iloc[0]
+def ex18(h, ix, q):
+    return E18[(E18.h == h) & (E18["index"] == ix) & (E18.quantity == q)].iloc[0]
+def ci(r, d=2):
+    return f"[{f(r.lo, d)}, {f(r.hi, d)}]" if r.lo == r.lo else ""
+rows = [["Equity valuation falls 5 log points", f(ex18(4, "market", "eq_effect").point, 3), ci(ex18(4, "market", "eq_effect"), 3), f(ex18(4, "frbus_b", "eq_effect").point, 3)],
+        ["Dollar appreciates 3.9 log points", f(ex18(4, "market", "usd_effect").point, 3), ci(ex18(4, "market", "usd_effect"), 3), f(ex18(4, "frbus_b", "usd_effect").point, 3)],
+        ["Dollar effect over equity effect", f(ex18(4, "market", "ratio_usd_eq").point), ci(ex18(4, "market", "ratio_usd_eq")), f(ex18(4, "frbus_b", "ratio_usd_eq").point)],
+        ["Typical joint response to a unit of policy news", "1.00", "", f(ex18(4, "frbus_b", "joint_response").point, 3) + " " + ci(ex18(4, "frbus_b", "joint_response"), 2)]]
+table("example", "Two Financial Movements That the Market Index Rates Alike", "tab:example", ["", "Market index", "90\\% interval", "FRB/US index"], rows,
+      "Weights applied to the stated movements, with no change in the 10-year yield. Market index: two-year-yield points per movement, weights from announcement-window responses (Table~\\ref{tab:weights}); the interval takes the 5th and 95th percentiles over bootstrap samples of the announcements. FRB/US index: funds-rate points; the effect on GDP after four quarters of a persistent shift in the variable, divided by the effect of a persistent one percentage point rise in the funds rate. Typical joint response: the index applied to the responses of the three variables to a unit of policy news (one by construction for the market index).")
+for h_ in (2, 4, 8):
+    bp = w18(h_, "bpsi"); mac(f"ag:h{h_}:bpsi", bp.point, 3); mac(f"ag:h{h_}:bpsi:lo", bp.lo, 2); mac(f"ag:h{h_}:bpsi:hi", bp.hi, 2)
+    rr = ex18(h_, "frbus_over_market", "ratio_of_ratios"); mac(f"ag:h{h_}:rr", rr.point); mac(f"ag:h{h_}:rr:lo", rr.lo); mac(f"ag:h{h_}:rr:hi", rr.hi)
+    mac(f"ag:h{h_}:fr", ex18(h_, "frbus_b", "ratio_usd_eq").point)
+    mac(f"ag:h{h_}:wbeq", w18(h_, "wB_eq").point, 3); mac(f"ag:h{h_}:wbusd", w18(h_, "wB_usd").point, 3)
+mac("ag:mkt:ratio", ex18(4, "market", "ratio_usd_eq").point); mac("ag:mkt:ratio:lo", ex18(4, "market", "ratio_usd_eq").lo); mac("ag:mkt:ratio:hi", ex18(4, "market", "ratio_usd_eq").hi)
+mac("ag:ex:eq:mkt", ex18(4, "market", "eq_effect").point, 3); mac("ag:ex:usd:mkt", ex18(4, "market", "usd_effect").point, 3); mac("ag:ex:eq:fr", ex18(4, "frbus_b", "eq_effect").point, 3); mac("ag:ex:usd:fr", ex18(4, "frbus_b", "usd_effect").point, 3)
+rows = []
+for h_ in (2, 4, 8):
+    bp, rr = w18(h_, "bpsi"), ex18(h_, "frbus_over_market", "ratio_of_ratios")
+    rows.append([f"{h_} quarters", f"{f(bp.point, 3)} [{f(bp.lo)}, {f(bp.hi)}]", f(w18(h_, "wB_eq").point, 3), f(w18(h_, "wB_usd").point, 3), f(ex18(h_, "frbus_b", "ratio_usd_eq").point), f"{f(rr.point)} [{f(rr.lo)}, {f(rr.hi)}]"])
+table("agree", "Agreement on Announcements and the Contrast in Composition", "tab:agree", ["FRB/US horizon", "Joint response to policy news [90\\%]", "Normalized equity weight", "Normalized dollar weight", "Dollar over equity, FRB/US", "Ratio of ratios [90\\%]"], rows,
+      "FRB/US weights for GDP at the horizon shown, persistent-shift experiment, in funds-rate points; the joint response is the FRB/US weights applied to the responses to a unit of policy news (market index: one). Normalized weights: FRB/US weights divided by that response, so that both indexes read one on a conventional surprise; market weights are 0.609 (10-year yield), $-0.051$ (equity valuation) and 0.065 (dollar). Ratio of ratios: the FRB/US dollar-over-equity ratio divided by the market's (\\bl{ag:mkt:ratio}); the interval comes from the bootstrap of the market weights, and the FRB/US weights are held fixed.")
+mg = MG[MG.h == 4]
+for hl_, nm_ in ((np.inf, "inf"), (8.0, "8"), (4.0, "4"), (2.0, "2")):
+    r = mg[(mg.hl_eq == hl_) & (mg.hl_usd == hl_)]
+    if len(r):
+        mac(f"ag:mp:hl{nm_}", r.iloc[0].ratio_usd_eq)
+mac("ag:mp:min", float(mg.ratio_usd_eq.min())); mac("ag:mp:max", float(mg.ratio_usd_eq.max()))
+def dm(change, per, stat, case="rstar", h=4):
+    r = D18m[(D18m.h == h) & (D18m.case == case) & (D18m.change == change) & (D18m.period == per) & (D18m.stat == stat)].iloc[0]
+    return r
+def de(stat, h=4, spec="loo"):
+    return D18e[(D18e.h == h) & (D18e.spec == spec) & (D18e.stat == stat)].iloc[0]
+rows = [["Announcement windows, held out", f"{f(de('mean_abs').point, 3)}", f"{f(de('ratio_mean_abs').point)} [{f(de('ratio_mean_abs').lo)}, {f(de('ratio_mean_abs').hi)}]", "0", "--"]]
+for ch_, labch in (("1m", "Monthly changes"), ("12m", "12-month changes")):
+    for per_ in ("1996-2026", "1973-2026"):
+        ma, ra, sh, rn = dm(ch_, per_, "mean_abs"), dm(ch_, per_, "ratio_mean_abs"), dm(ch_, per_, "share_gt_0p25"), dm(ch_, per_, "mean_run_0p25")
+        rows.append([f"{labch}, {per_.replace('-', '--')}", f(ma.point, 3 if ch_ == "1m" else 2), f"{f(ra.point)} [{f(ra.lo)}, {f(ra.hi)}]", f"{sh.point * 100:.0f}", f(rn.point, 1) if rn.point == rn.point else "--"])
+table("dsize", "How Large Is the Difference between the Two Readings?", "tab:dsize", ["Movements", "Mean $|D|$", "Ratio to market move [90\\%]", "Share above 0.25 (\\%)", "Mean run (months)"], rows,
+      "$D$ is the FRB/US reading (four quarters, normalized so that a conventional policy surprise reads one) less the market reading, applied to the changes of the equity valuation, the 10-year yield and the dollar at the $r^*$ step. Announcement windows: held-out events (weights re-estimated without each event). Ratio: mean $|D|$ over mean absolute market move; interval from bootstrap samples of the announcements and, for the monthly history, of 12- or 24-month blocks of months. A run is consecutive months with $|D|$ above 0.25.")
+mac("dz:ev:mean", de("mean_abs").point, 3); mac("dz:ev:ratio", de("ratio_mean_abs").point); mac("dz:ev:ratio:lo", de("ratio_mean_abs").lo); mac("dz:ev:ratio:hi", de("ratio_mean_abs").hi); mac("dz:ev:move", de("mean_abs_market_move").point, 3); mac("dz:ev:p90", de("p90_abs").point, 3)
+for ch_ in ("1m", "12m"):
+    mac(f"dz:{ch_}:ratio", dm(ch_, "1996-2026", "ratio_mean_abs").point); mac(f"dz:{ch_}:ratio:lo", dm(ch_, "1996-2026", "ratio_mean_abs").lo); mac(f"dz:{ch_}:ratio:hi", dm(ch_, "1996-2026", "ratio_mean_abs").hi)
+    mac(f"dz:{ch_}:sh25", dm(ch_, "1996-2026", "share_gt_0p25").point * 100, 0); mac(f"dz:{ch_}:sh25:lo", dm(ch_, "1996-2026", "share_gt_0p25").lo * 100, 0); mac(f"dz:{ch_}:sh25:hi", dm(ch_, "1996-2026", "share_gt_0p25").hi * 100, 0)
+    mac(f"dz:{ch_}:mean", dm(ch_, "1996-2026", "mean_abs").point, 2)
+mac("dz:12m:sh50", dm("12m", "1996-2026", "share_gt_0p5").point * 100, 0); mac("dz:12m:run", dm("12m", "1996-2026", "mean_run_0p25").point, 1); mac("dz:12m:maxrun", dm("12m", "1996-2026", "max_run_0p25").point, 0)
+mac("dz:12m:corr", dm("12m", "1996-2026", "corr_D_m").point)
+STG = [("w_eq", "Equity weights"), ("w_usd", "Dollar weights"), ("w_y10", "10-year weight"), ("scale", "Normalization of the weights"), ("policy", "Policy rate"), ("spread_bbb", "BBB spread"), ("spread_mortgage", "Mortgage spread"), ("house", "House prices")]
+rows = []
+for k_, lab in STG:
+    a = B18[(B18.case == "rstar") & (B18.form == "level") & (B18.stage == k_)].iloc[0]; b = B18[(B18.case == "rstar") & (B18.form == "chg12") & (B18.stage == k_)].iloc[0]
+    rows.append([lab, f"{a.share * 100:.0f} [{a.lo * 100:.0f}, {a.hi * 100:.0f}]", f"{b.share * 100:.0f} [{b.lo * 100:.0f}, {b.hi * 100:.0f}]"])
+    mac(f"br:lvl:{k_}", a.share * 100, 0); mac(f"br:chg:{k_}", b.share * 100, 0)
+table("bridge", "From the Market Index to the FRB/US Index: Shares of the Difference", "tab:bridge", ["Stage", "Level, share of variance (\\%)", "12-month change (\\%)"], rows,
+      "Shares of the variance of the FRB/US index (with house prices) less the market index, relative to $r^*$, 1973--2026, attributed to each stage of a bridge between them: the weights on the three common assets, the normalization of the weights, then the contributions that only the FRB/US index has (policy rate, spreads, house prices); both indexes use the same inputs and centering. Intervals (5th to 95th percentile) from bootstrap samples of the announcements and of blocks of months.")
+for epn in ("1998-2001", "2004-06", "2022-24"):
+    t_ = BE18[(BE18.case == "rstar") & (BE18.form == "level") & (BE18.episode == epn) & (BE18.stage == "total_F_minus_M")]
+    if len(t_):
+        t_ = t_.iloc[0]; k_ = epn[:4]; mac(f"br:ep{k_}:gap", t_.point); mac(f"br:ep{k_}:lo", t_.lo); mac(f"br:ep{k_}:hi", t_.hi)
+        e_ = BE18[(BE18.case == "rstar") & (BE18.form == "level") & (BE18.episode == epn) & (BE18.stage == "w_eq")].iloc[0]; mac(f"br:ep{k_}:eq", e_.point)
+        h_ = BE18[(BE18.case == "rstar") & (BE18.form == "level") & (BE18.episode == epn) & (BE18.stage == "house")].iloc[0]; mac(f"br:ep{k_}:house", h_.point)
+        u_ = BE18[(BE18.case == "rstar") & (BE18.form == "level") & (BE18.episode == epn) & (BE18.stage == "w_usd")].iloc[0]; mac(f"br:ep{k_}:usd", u_.point)
+# composition tests
+def pr(o, smp, ff="noff"):
+    return P19[(P19.outcome == o) & (P19["sample"] == smp) & (P19.ff == ff)].iloc[0]
+rows = []
+for o_, lab in (("du", "Unemployment gap, 12 months"), ("gdp", "Real GDP growth, four quarters")):
+    for smp, sl in (("main", "1976--2026"), ("1996+", "1996--2026"), ("ex2008-15", "Excluding 2008--15")):
+        r = pr(o_, smp)
+        rows.append([f"{lab}: {sl}", f"{int(r.n)}", f(r.a_dM), f"{f(r.c_D)} [{f(r.lo90_c)}, {f(r.hi90_c)}]", f"{f(r.effect_p5_p95)} [{f(r.effect_lo90)}, {f(r.effect_hi90)}]"])
+        mac(f"cm:{o_}:{smp.replace('+', 'p').replace('-', '')}:c", r.c_D); mac(f"cm:{o_}:{smp.replace('+', 'p').replace('-', '')}:lo", r.lo90_c); mac(f"cm:{o_}:{smp.replace('+', 'p').replace('-', '')}:hi", r.hi90_c)
+        mac(f"cm:{o_}:{smp.replace('+', 'p').replace('-', '')}:eff", r.effect_p5_p95); mac(f"cm:{o_}:{smp.replace('+', 'p').replace('-', '')}:efflo", r.effect_lo90); mac(f"cm:{o_}:{smp.replace('+', 'p').replace('-', '')}:effhi", r.effect_hi90)
+        mac(f"cm:{o_}:{smp.replace('+', 'p').replace('-', '')}:a", r.a_dM); mac(f"cm:{o_}:{smp.replace('+', 'p').replace('-', '')}:n", r.n, 0)
+table("comp", "Does the Composition of a Tightening Matter for the Outlook?", "tab:comp", ["", "$n$", "Index change", "Composition $D$ [90\\%]", "Outlook difference, 5th to 95th percentile [90\\%]"], rows,
+      "Local projections of the 12-month-ahead change in the unemployment gap (four-quarter-ahead GDP growth) on own lags, the 12-month change of the market index relative to $r^*$ and the 12-month change of the normalized FRB/US-minus-market difference $D$ computed on the same changes (HAC standard errors, 18 lags; the intervals from block bootstrap are similar). Outlook difference: the coefficient on $D$ times the difference between the 5th and 95th percentiles of $D$ at a given index change, in percentage points of the unemployment gap (percent for GDP). If the FRB/US weights were right, the coefficient on $D$ would equal the coefficient on the index change.")
+sp = S19[(S19["sample"] == "main") & (S19.ff == "noff") & (S19.outcome == "du")].set_index("spec")
+mac("cm:eq:gain", sp.loc["eq", "gain_adj_r2"], 3); mac("cm:mkt:gain", sp.loc["mkt", "gain_adj_r2"], 3); mac("cm:free:gain", sp.loc["free", "gain_adj_r2"], 3); mac("cm:frbus:gain", sp.loc["frbus", "gain_adj_r2"], 3); mac("cm:y10:gain", sp.loc["y10", "gain_adj_r2"], 3); mac("cm:usd:gain", sp.loc["usd", "gain_adj_r2"], 3)
+o_ = OOS19[(OOS19["sample"] == "main") & (OOS19.ff == "noff") & (OOS19.outcome == "du")].set_index("comparison")
+mac("cm:eqmkt:dm", o_.loc["equities_vs_market_nonnested", "dm_t"], 1); mac("cm:eqmkt:rmse", o_.loc["equities_vs_market_nonnested", "rmse_ratio"]); mac("cm:frmkt:dm", o_.loc["frbus_weights_vs_market_nonnested", "dm_t"], 1); mac("cm:addD:cw", o_.loc["add_D_to_market", "cw_t"], 1)
+pw = PR19[(PR19["sample"] == "main") & (PR19.ff == "noff") & (PR19.outcome == "du")].set_index("null")
+mac("cm:prop:wm", pw.loc["w_M", "p_boot"]); mac("cm:prop:wb", pw.loc["w_B", "p_boot"])
+rows = []
+for tgt, sf_, lab in (("unemployment", "both", "Unemployment, both"), ("unemployment", "D_only", "Unemployment, $D$ alone"), ("unemployment", "market_only", "Unemployment, index change alone"), ("unemployment", "both_ex2008-15", "Unemployment, both, excluding 2008--15"), ("gdp", "both", "GDP, both")):
+    for term in ("dM", "D"):
+        r = SPF19[(SPF19.target == tgt) & (SPF19.spec == sf_) & (SPF19.term == term)]
+        if len(r):
+            r = r.iloc[0]; rows.append([f"{lab}: {'index change' if term == 'dM' else 'composition $D$'}", f"{int(r.n)}", f"{f(r.coef)} [{f(r.lo90)}, {f(r.hi90)}]", f(r.t, 1)])
+r_ = SPF19[(SPF19.target == "unemployment") & (SPF19.spec == "both") & (SPF19.term == "D")].iloc[0]; mac("cm:spf:c", r_.coef); mac("cm:spf:lo", r_.lo90); mac("cm:spf:hi", r_.hi90); mac("cm:spf:t", r_.t, 1); mac("cm:spf:n", r_.n, 0)
+r_ = SPF19[(SPF19.target == "unemployment") & (SPF19.spec == "both_ex2008-15") & (SPF19.term == "D")].iloc[0]; mac("cm:spfx:c", r_.coef); mac("cm:spfx:lo", r_.lo90); mac("cm:spfx:hi", r_.hi90)
+r_ = SPF19[(SPF19.target == "unemployment") & (SPF19.spec == "market_only") & (SPF19.term == "dM")].iloc[0]; mac("cm:spf:dm", r_.coef); mac("cm:spf:dm:t", r_.t, 1)
+table("spf", "Does the Financial Movement Predict the Forecasters' Error?", "tab:spf", ["", "$n$", "Coefficient [90\\%]", "$t$"], rows,
+      "Regression of the realized change in the unemployment rate (real GDP growth) four quarters ahead less the median forecast of the Survey of Professional Forecasters on the 12-month changes of the market index and of $D$, with the financial data up to the month before each survey's deadline, 1990Q3--2025Q3; HAC standard errors, overlapping outcomes. A coefficient of zero means that the movement is already in the forecast. Incremental information only: the test says nothing about causation.")
+# episodes
+for _, r in EP19.iterrows():
+    k_ = r.episode[:4]
+    mac(f"ce:{k_}:dm", r.mean_dM); mac(f"ce:{k_}:D", r.mean_D); mac(f"ce:{k_}:contrib", r.contrib_D, 2); mac(f"ce:{k_}:contrib:lo", r.contrib_D_lo90, 2); mac(f"ce:{k_}:contrib:hi", r.contrib_D_hi90, 2)
+EF19 = pd.read_csv(RES / "19_episode_fit.csv")
+for _, r in EF19.iterrows():
+    k_ = r.episode[:4]; mac(f"ce:{k_}:real", r.mean_y); mac(f"ce:{k_}:fcm", r.oos_fc_mkt); mac(f"ce:{k_}:fcf", r.oos_fc_frbus); mac(f"ce:{k_}:fco", r.oos_fc_own)
+# figure D
+Dm = {}
+cs = __import__("lib.cases", fromlist=["inputs"]); X_ = cs.inputs(D, "rstar", rstar="rstar LW"); Xd_ = cs.demean(X_[["y10", "equities", "dollar"]]).loc["1973-01":"2026-09"]
+w_M_ = W.weight.values; psi_ = W.response.values; b4_ = FW.frbus_weight.values; wB_ = b4_ / (b4_ @ psi_)
+dX_ = Xd_.diff(12); mkt_ = dX_.values @ w_M_; Dd_ = dX_.values @ (wB_ - w_M_)
+tt_ = Xd_.index.to_timestamp()
+fig, ax = plt.subplots(2, 1, figsize=(7.5, 5.0), sharex=True)
+ax[0].plot(tt_, mkt_, color=COLORS["market"], lw=1.2, label="Market index, 12-month change"); ax[0].plot(tt_, dX_.values @ wB_, color=COLORS["frbus"], lw=1.2, label="FRB/US reading of the same changes, normalized")
+ax[0].set_title("The two readings of the same financial movements", loc="left"); axes(ax[0], "points")
+ax[1].plot(tt_, Dd_, color=COLORS["fcig"], lw=1.2, label="Difference $D$ (FRB/US less market)"); ax[1].axhline(0.25, color="#999999", ls=":", lw=0.8); ax[1].axhline(-0.25, color="#999999", ls=":", lw=0.8)
+for a_, b_ in (("1998-01-01", "2001-12-31"), ("2004-06-01", "2006-06-30"), ("2022-03-01", "2024-12-31")):
+    for x_ in ax:
+        x_.axvspan(pd.Timestamp(a_), pd.Timestamp(b_), color="#eeeeee", lw=0, zorder=0)
+ax[1].set_title("The difference", loc="left"); axes(ax[1], "points")
+figure("fig_D", fig)
+mac("figD:corr", float(np.corrcoef(mkt_[12:], (dX_.values @ wB_)[12:])[0, 1]))
+
 # ------------------------------------------------------------------ claims of the stance paper
 P8all = pd.read_csv(RES / "08_primary.csv")
 chk(len(P8all) == 9 and int((P8all.p < 0.10).sum()) == 5 and int((P8all.p_holm < 0.10).sum()) == 1, "stance: nine primary tests, five raw p < 0.10, one Holm p < 0.10")
@@ -612,6 +735,26 @@ chk(float(SC["exp_post2010_n_out_ten"]) == 0 and float(SC["exp_post2010_n_out_us
 S15 = pd.read_csv(RES / "15_summary.csv"); sc_ = S15[(S15.step == "rstar") & (S15.form.str.contains("change|flow")) & (S15.set != "MKT")] if "set" in S15 else S15
 chk(float(SC["w_rstar_n_holm_sig10"]) == 0 and float(SC["w_rstar_n_primary_tests"]) == 120 and float(SC["w_rstar_n_raw_sig10"]) == 25, "weights: 25 of 120 raw rejections, none after Holm")
 chk(float(SC["lad_rstar_vs_nominal_all_n_ratio_below1"]) == 69 and float(SC["lad_rstar_vs_nominal_all_n_tests"]) == 91 and float(SC["lad_rstar_vs_nominal_all_n_holm_sig05"]) == 0, "ladder: 69 of 91, none after Holm at 5 percent")
+
+num = lambda k: float(str(M[k]).replace("$-$", "-"))
+# ------------------------------------------------------------------ claims of the agreement paper
+bp4 = w18(4, "bpsi"); chk(bp4.lo < 1 < bp4.hi and 0.9 < bp4.point < 1.05, "agreement: FRB/US typical response near one, interval includes one at four quarters")
+chk(all(w18(h_, "bpsi").lo < 1 < w18(h_, "bpsi").hi for h_ in (2, 4, 8)), "agreement on announcements not rejected at 2, 4, 8 quarters")
+chk(de("share_gt_0p25").point == 0 and de("ratio_mean_abs").point < 0.25, "held-out announcements: difference never above 0.25, ratio below 0.25")
+chk(0.25 < dm("12m", "1996-2026", "ratio_mean_abs").point < 0.4 and dm("12m", "1996-2026", "share_gt_0p25").point > 0.3, "12-month changes: ratio about a third, above 0.25 in more than 30 percent of months")
+chk(ex18(4, "frbus_over_market", "ratio_of_ratios").lo > 1 and ex18(2, "frbus_over_market", "ratio_of_ratios").lo < 1, "ratio of ratios: interval above one at 4 quarters, includes one at 2")
+chk(all(num(f"ag:mp:hl{k_}") > 2.3 for k_ in ("inf", "8", "4", "2")), "matched persistence: contrast above 2.3 for every half-life")
+chk(num("br:lvl:w_eq") > num("br:lvl:w_usd") > num("br:lvl:house"), "bridge: equity weights first, then dollar, then houses")
+chk(num("br:ep1998:gap") > 1 and num("br:ep1998:lo") > 0 and num("br:ep2004:eq") > 0 > num("br:ep2004:house"), "episodes: 1998-2001 gap above one with interval above zero; 2004-06 equities offset by houses")
+c_main, c_96, c_x = pr("du", "main"), pr("du", "1996+"), pr("du", "ex2008-15")
+chk(c_main.lo90_c < 0 < c_main.hi90_c and c_96.lo90_c < 0 < c_96.hi90_c and c_main.c_D < 0 < c_x.c_D, "composition: intervals include zero, sign changes across samples")
+chk(abs(c_main.effect_p5_p95) < 0.5 and c_main.effect_hi90 - c_main.effect_lo90 > 1, "composition: outlook difference small with an interval wider than one point")
+chk(sp.loc["eq", "gain_adj_r2"] > 0.10 and sp.loc["eq", "gain_adj_r2"] < sp.loc["mkt", "gain_adj_r2"] and sp.loc["usd", "gain_adj_r2"] < 0.01, "equities alone: gain above 0.10, below the market index; dollar nothing")
+chk(float(pw.loc["w_M", "p_boot"]) > 0.1 and float(pw.loc["w_B", "p_boot"]) > 0.1, "proportionality not rejected")
+chk(all(OOS19[(OOS19.comparison == "add_D_to_market") & (OOS19.outcome == "du")].cw_t < 1.3), "adding D never significantly improves out-of-sample unemployment forecasts")
+rs_ = SPF19[(SPF19.target == "unemployment") & (SPF19.spec == "both") & (SPF19.term == "D")].iloc[0]
+chk(rs_.hi90 < 0 and SPF19[(SPF19.target == "unemployment") & (SPF19.spec == "market_only") & (SPF19.term == "dM")].iloc[0].coef > 0, "SPF: D coefficient negative with interval below zero, index change positive")
+chk(abs(num("ce:2022:D")) < 0.05 and num("ce:2022:real") < num("ce:2022:fcm"), "2022-24: D near zero and unemployment rose less than forecast")
 
 # ------------------------------------------------------------------ write numbers.tex and check the paper's macros
 def norm(k):

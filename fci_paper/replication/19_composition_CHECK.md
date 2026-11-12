@@ -1,0 +1,13 @@
+# 19_composition: design and checks
+
+New analysis (not a port); nothing to reproduce. Run time about 18 s at REPS=500; two runs give identical `19_*.csv` and scalars (checked with cmp). Input added once: `data/spf/` (SPF medians and deadlines, SOURCES note); no network at run time.
+
+**Definitions** (re-derived, no use of step 18). x = 10-year yield, equities, real dollar at the r* step (`lib/cases.py`); psi = `market_weights.csv` response; w_M = market weights; b = `frbus_weights.csv` (four quarters); w_B = b/(b'psi), b'psi = 0.975; dM = w_M'dx, D = (w_B - w_M)'dx, 12-month changes, same months. Check: dM equals the step-03 market index 12-month change (max abs difference 9e-06).
+
+**Primary test (one, pre-specified in the script docstring):** unemployment-gap change at 12 months on own lags (as step 08), dM and D; main sample (556 origins, 1976-03 to 2026-09, COVID windows dropped); H0 coefficient on D = 0, two-sided, HAC 18 lags, 10 percent level. Also reported: block bootstrap (24 months, 500 draws), weight-estimate draws, with the funds-rate-gap flow. GDP (four-quarter growth, quarterly alignment, HAC 6) is the model-facing check, not a second primary.
+
+**Everything else is descriptive; no adjustment.** Counts: 96 in-sample specifications (2 outcomes x 3 samples x with/without funds-rate gap x 8 specs), 120 coefficient tests, 24 proportionality tests (to w_M and w_B), 96 out-of-sample comparisons (8 per block), 15 SPF coefficients (unemployment and GDP errors). At the 10 percent level about 10 percent of true nulls reject; read any single rejection among these as unadjusted. Samples overlap completely (same data), so the blocks are not independent evidence; 12-month outcomes overlap 12-fold (HAC and block bootstrap). Out-of-sample origins 1995-2025 contain two NBER recessions (one in the 1996+ and ex-2008-15 samples). SPF: 128 surveys 1990Q3-2025Q3 (88 excluding 2008-15 windows), four-quarter overlap, HAC 4, 8-survey blocks; 1990Q2 dropped (not taken in real time).
+
+**SPF alignment.** Financial observations are monthly averages: the information month is the last complete month before the survey deadline month (deadline 22 Nov: October); 12-month change to that month. Daily data were not used (`gs_daily.csv` holds only the GS index and CAPE). Error = realized quarterly-average unemployment rate (or realized 4-quarter log GDP growth, current vintage) minus the SPF median at q+4 (UNEMP6; RGDP6/RGDP2). Incremental information only.
+
+**Limits.** D is estimated (w_M, psi: weight-draw interval given; b treated as fixed). Episodes use origins inside the months listed; 2022-24 has 33 origins and outcomes to 2025-12 (one episode, strongly overlapping). Unemployment gap uses the CBO natural rate (current vintage).
