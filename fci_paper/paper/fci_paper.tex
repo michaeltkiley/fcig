@@ -294,67 +294,8 @@ Table~\ref{tab:compare} compares the market index with the others at each step.
 \subsection{Flows}\label{sec:flows}
 The market index's forward impetus correlates \bl{nominal:fi:fcig} with FCI-G at the nominal step, \bl{real:fi:fcig} at the real step and \bl{rstar:fi:fcig} at the $\rs$ step. Against the published FCI-G the correlation is \bl{nominal:fi:pub} over 1990--2026, and my replication of FCI-G tracks the published series at \bl{nominal:fcig:pub}. The flow built from FRB/US multipliers agrees with FCI-G more closely (\bl{rstar:fcig:frbus:gi} at the $\rs$ step). The market index's flow comes from a small VAR, not from a structural model, and it agrees with both: its correlation with the FRB/US growth impetus is \bl{rstar:fi:frbus:gi}.
 
-\subsection{Where the Indexes Differ}\label{sec:where}
-Table~\ref{tab:episodes} lists the widest and the closest six-month windows at the $\rs$ step, with the gap between the market index and the FRB/US index split by group of variables.
-
-\input{../replication/report/tab_episodes}
-
-Equity valuation accounts for most of the gaps between the market index and the FRB/US index. The widest windows overall fall in 1977--1980, when the market index was about two points tighter than the FRB/US index, with the equity group accounting for about 1.6 points. Equity valuations were then low (CAPE averaged \bl{cape:7780} over 1977--80 against \bl{cape:mean} over 1973--2026), and the market index gives each point of valuation more weight (Table~\ref{tab:frbus}). Since 1990 the widest windows are in 1998--2001, at the height of the equity boom, when valuations were far above average and the market index was about 1.6 points looser than the FRB/US index, again almost entirely because of equities. In the closest windows, in the late 1980s, the equity and dollar gaps are small. A gap opens when equity valuation or the dollar is far from its average, because the indexes then disagree about how much a given deviation matters.
-
-Today the market index reads \bl{rstar:latest:market} and the Goldman Sachs index \bl{rstar:latest:gs}, while the FRB/US index reads \bl{rstar:latest:frbus} (\bl{rstar:latest:frbus:hp} with house prices), all relative to the 1973--2026 average. The group contributions against the FRB/US index with house prices show why (Figure~\ref{fig:today} and Appendix Table~\ref{tab:latestgroups}). High equity valuations lower the market index by \bl{abs:lg:market:equities} points and the FRB/US index by \bl{abs:lg:frbus:hp:equities}, and a strong dollar raises them by \bl{lg:market:dollar} and \bl{lg:frbus:hp:dollar}. The market index is \bl{abs:lg:gap:eq} points lower from equities and \bl{abs:lg:gap:usd} lower from the dollar, out of a total gap of \bl{abs:lg:gap:total}.
-
-\begin{figure}[tp]
-\centering
-\includegraphics[width=0.85\textwidth]{../replication/report/fig_today.pdf}
-\caption{The Reading for September 2026}
-\label{fig:today}
-\begin{flushleft}\footnotesize\textit{Notes:} Level of each index in September 2026 relative to the 1973--2026 mean, at each step. The bar shows the 5th to 95th percentile of the market index over bootstrap samples of the announcements (Section~\ref{sec:precision}).\end{flushleft}
-\end{figure}
-
-\subsection{How Precisely Is the Market Index Estimated?}\label{sec:precision}
-The market index's weights come from regressions on \bl{n:events} announcements, and they are estimated with error. I resample the announcements with replacement \bl{boot:reps} times, recompute the policy-news factor and the weights each time, and recompute the index and its comparisons (Table~\ref{tab:boot}).
-
-\input{../replication/report/tab_boot}
-
-The weights are imprecise. The weight on the 10-year yield has a 90 percent interval from \bl{wb:ten:lo} to \bl{wb:ten:hi} around \bl{w:ten}. The interval for equity valuation runs from \bl{wb:eq:lo} to \bl{wb:eq:hi}, and for the dollar from \bl{wb:usd:lo} to \bl{wb:usd:hi}. The FRB/US weights on all three lie inside these intervals, the equity weight near the edge: it is lower in absolute value than \bl{frw:eq:pct} percent of the bootstrap draws, about 14 percent in a two-sided test. The data do not reject that the model weights equal the market weights. This is a statement about power, not a finding that they are equal, and it treats the FRB/US weights and the VAR as fixed.
-
-The index is better determined than its weights, and its correlations with the others are stable. The correlation with the Goldman Sachs index is \bl{rstar:mkt:gs}, with a 5th to 95th percentile range from \bl{bt:rstar:corr:gs:lo} to \bl{bt:rstar:corr:gs:hi}, and with the FRB/US index \bl{rstar:mkt:frbus}, from \bl{bt:rstar:corr:frbus:lo} to \bl{bt:rstar:corr:frbus:hi}. The level of the reading is not stable. The September 2026 reading relative to $\rs$ is \bl{rstar:latest:market}, with a 90 percent interval from \bl{bt:rstar:latest:lo} to \bl{bt:rstar:latest:hi}. The Goldman Sachs reading (\bl{rstar:latest:gs}) lies inside that interval. The FRB/US reading (\bl{rstar:latest:frbus}) lies just above it, and the 90 percent interval for the market index minus the FRB/US index runs from \bl{gap:frbus:lo} to \bl{gap:frbus:hi}. The sampling error of the weights is therefore of the same size as the differences between the readings, and the Goldman Sachs and FRB/US readings lie on opposite sides of the 1973--2026 average.
-
-
-% ============================================================
-\section{Robustness and Limits}\label{sec:rob}
-The results rest on one sample, one set of weights, one estimate of $\rs$ and data revised after the fact. I vary each in turn. Table~\ref{tab:checks96} gives the main checks.
-
-\subsection{The Sample: 1996--2026}\label{sec:sample96}
-The weights come from announcements since 1996, so the sample of 1996--2026 is the one on which the index is estimated, and the sample of Note B. I re-estimate the VAR and the regressions from 1996. The response of unemployment after 12 months is \bl{ck:a12:phi} (\bl{ck:a12:lo} to \bl{ck:a12:hi}) on 1973--2026, and \bl{ck:b12:phi} (\bl{ck:b12:lo} to \bl{ck:b12:hi}) with 12 lags and \bl{ck:b4:phi} (\bl{ck:b4:lo} to \bl{ck:b4:hi}) with four lags on 1996--2026: it does not change sign, and the interval is about 1.6 times as wide. The estimate from VARs on shorter spans is \bl{vs:197389} for 1973--89, \bl{vs:19902007} for 1990--2007, \bl{vs:19962007} for 1996--2007, \bl{vs:19962019} for 1996--2019 and \bl{vs:20092026} for 2009--26. The flow has $t=$ \bl{ck:b12:tflow} for unemployment (\bl{ck:a12:tflow} on the long sample), with a gain of \bl{ck:b12:gain} in adjusted $R^2$ against \bl{ck:a12:gain}; the index adds \bl{ck:b12:stgain} to the funds-rate gap, with a Clark--West statistic of \bl{ck:b12:cw} (one recession in the out-of-sample period). The payroll flow has $t=$ \bl{ck:b12:payt} and the payroll result does not hold. The $\rs$ step helps on 1996--2026 and not before.
-
-\input{../replication/report/tab_checks96}
-
-\subsection{Weights That Move}\label{sec:drift}
-The weights define the unit, so I hold them fixed and show how they would drift. Re-estimating on an expanding window of announcements from 2006 keeps the 10-year and dollar weights inside the 90 percent band of the full-sample estimate at every date after 2010; the equity weight is outside at \bl{exp:post2010:n:out:eq} dates in 2011--14, by at most \bl{exp:post2010:min:eq} against a band edge of \bl{base:lo:eq} (Figure~\ref{fig:weightpath}). A 20-year rolling window fails after 2021, because it drops the announcements of 1996--2005 (the 10-year weight is outside the band at \bl{roll:post2010:n:out:ten} dates). The 10-year weight is imprecise throughout (interval \bl{base:lo:ten} to \bl{base:hi:ten}). The index built with the expanding-window weights correlates \bl{corr:level:1996:rstar} with the baseline in levels, \bl{corr:d12:1996:rstar} in 12-month changes and \bl{corr:fi:basePhi:1996:rstar} in forward impetus, and the VAR response is \bl{phi12:rt:rstar} against \bl{phi12:base:rstar}. Apart from the equity weight in 2011--14, the weights stay within their sampling error.
-
-\begin{figure}[tp]
-\centering
-\includegraphics[width=\textwidth]{../replication/report/fig_weight_path.pdf}
-\caption{The Weights on an Expanding and a Rolling Window}
-\label{fig:weightpath}
-\begin{flushleft}\footnotesize\textit{Notes:} Weights of the market index re-estimated on announcements to each date (expanding window, from the 80th announcement) and on the latest 20 years (rolling). Shaded: 90 percent bootstrap interval of the full-sample weights; the horizontal line is the full-sample weight.\end{flushleft}
-\end{figure}
-
-\subsection{Data as Known at the Time}\label{sec:realtime}
-Nothing in the baseline is real time. I rebuild the unemployment and payroll inputs from ALFRED vintages (unemployment and payrolls from 1977, the CBO natural rate from 2011) and the $\rs$ input from the New York Fed's real-time Laubach--Williams estimates (from 2005). The weights, the Kiley $\rs$, the earnings in CAPE and expected inflation are not real time, so this is pseudo real time in the macro variables and in $\rs$ from 2005, and not in the weights. Table~\ref{tab:realtime} gives the unemployment results. Vintage data leave them unchanged ($t=$ \bl{rt:vin1976:t} against \bl{rt:rev1976:t}, Clark--West \bl{rt:vin1976:cw} against \bl{rt:rev1976:cw}); with the vintage natural rate from 2011 the flow has $t=$ \bl{rt:vinn2011:t}; and with real-time $\rs$ from 2006 the gain falls from \bl{rt:revf2006:gain} to \bl{rt:revr2006:gain} ($t=$ \bl{rt:revr2006:t}), with the mixed form no longer significant ($t=$ \bl{rt:revr2006:mt}). Real-time $\rs$ weakens the flow.
-
-\input{../replication/report/tab_realtime}
-
-\subsection{The Neutral Rate, the Dynamics, the Weights and the Zero Point}\label{sec:robother}
-Table~\ref{tab:robust} varies the construction. In every row the market index's correlation is at least \bl{rb:min:mkt:gs} with the Goldman Sachs index and at least \bl{rb:min:mkt:frbus} with the FRB/US index, and the 90 percent interval of the yardstick lies above zero.
-
-\input{../replication/report/tab_robust}
-
-With the estimate of \citet{kiley2020} the market index reads \bl{rb:1:latest:market} in September 2026 against \bl{rb:0:latest:market}, and the Goldman Sachs and FRB/US readings move by less than half a point. With four lags the yardstick is \bl{rb:2:phi12}. Re-estimating the weights with the two-year yield as the policy news, with announcements through 2019, or without the lower-bound years (Appendix Table~\ref{tab:wvar}) moves the September 2026 reading from \bl{rb:6:latest:market} to \bl{rb:5:latest:market}, a spread of \bl{rb:spread:weights} points, as wide as the bootstrap interval of Section~\ref{sec:precision}. The readings follow the equity weight, which is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} against \bl{w:eq} in the baseline. With 1990--2026 as the base period the market index reads \bl{rstar:latest90:market}, the Goldman Sachs index \bl{rstar:latest90:gs} and the FRB/US index \bl{rstar:latest90:frbus}, shifts of about a point.
-
-\subsection{Limits of the Design}\label{sec:limits}
-The $\rs$ step is the largest effect in the paper, and the outcomes lean toward it without proving it. The uncertainty of $\rs$ is not in the intervals, and $\rs$ is not neutral to outcomes, because the Laubach--Williams model uses output, inflation and unemployment. The weights come from announcements since 1996 and are applied from 1973; they assume that the responses reflect policy rather than information effects \citep{nakamura2018}, and if policy came to target financial conditions the responses could change, the Lucas-critique concern that \citet{hatzius2010} raise for all indexes. The bootstrap treats the FRB/US and Goldman Sachs weights, the Goldman Sachs conversion and the VAR as fixed. The sample has five recessions, two out of sample, and 12-month outcomes overlap, so the counts of tests are descriptive. The VAR is linear and describes the mean. The Goldman Sachs index and FCI-G are my replications, and the FRB/US index is my construction at one horizon. The readings for September 2026 use $\rs$ through 2026Q2 and interpolate October 2025.
+\subsection{Where They Differ and How Precisely the Weights Are Estimated}\label{sec:wheresummary}
+The widest gaps between the market index and the FRB/US index are in 1977--80 and in 1998--2001, and equity valuation accounts for most of them; today the market index reads \bl{rstar:latest:market} and the FRB/US index \bl{rstar:latest:frbus}. The weights are imprecise: the 90 percent interval of the weight on the 10-year yield runs from \bl{wb:ten:lo} to \bl{wb:ten:hi}, and of the market index's reading for September 2026 from \bl{bt:rstar:latest:lo} to \bl{bt:rstar:latest:hi}, which covers the Goldman Sachs reading (\bl{rstar:latest:gs}) and nearly reaches the FRB/US reading. The sampling error of the weights is of the same size as the differences between the readings. Appendix~\ref{app:differ} gives the episodes, the groups behind today's readings and the bootstrap.
 \FloatBarrier
 
 % ============================================================
@@ -428,6 +369,69 @@ Futures, yields, S\&P 500 and DXY in the window & Event & U.S.\ Monetary Policy 
 \input{../replication/report/tab_wvar}
 \input{../replication/report/tab_var_all}
 \input{../replication/report/tab_checks}
+
+\section{Where the Indexes Differ and How Precisely the Weights Are Estimated}\label{app:differ}
+\subsection{Where the Indexes Differ}\label{sec:where}
+Table~\ref{tab:episodes} lists the widest and the closest six-month windows at the $\rs$ step, with the gap between the market index and the FRB/US index split by group of variables.
+
+\input{../replication/report/tab_episodes}
+
+Equity valuation accounts for most of the gaps between the market index and the FRB/US index. The widest windows overall fall in 1977--1980, when the market index was about two points tighter than the FRB/US index, with the equity group accounting for about 1.6 points. Equity valuations were then low (CAPE averaged \bl{cape:7780} over 1977--80 against \bl{cape:mean} over 1973--2026), and the market index gives each point of valuation more weight (Table~\ref{tab:frbus}). Since 1990 the widest windows are in 1998--2001, at the height of the equity boom, when valuations were far above average and the market index was about 1.6 points looser than the FRB/US index, again almost entirely because of equities. In the closest windows, in the late 1980s, the equity and dollar gaps are small. A gap opens when equity valuation or the dollar is far from its average, because the indexes then disagree about how much a given deviation matters.
+
+Today the market index reads \bl{rstar:latest:market} and the Goldman Sachs index \bl{rstar:latest:gs}, while the FRB/US index reads \bl{rstar:latest:frbus} (\bl{rstar:latest:frbus:hp} with house prices), all relative to the 1973--2026 average. The group contributions against the FRB/US index with house prices show why (Figure~\ref{fig:today} and Appendix Table~\ref{tab:latestgroups}). High equity valuations lower the market index by \bl{abs:lg:market:equities} points and the FRB/US index by \bl{abs:lg:frbus:hp:equities}, and a strong dollar raises them by \bl{lg:market:dollar} and \bl{lg:frbus:hp:dollar}. The market index is \bl{abs:lg:gap:eq} points lower from equities and \bl{abs:lg:gap:usd} lower from the dollar, out of a total gap of \bl{abs:lg:gap:total}.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=0.85\textwidth]{../replication/report/fig_today.pdf}
+\caption{The Reading for September 2026}
+\label{fig:today}
+\begin{flushleft}\footnotesize\textit{Notes:} Level of each index in September 2026 relative to the 1973--2026 mean, at each step. The bar shows the 5th to 95th percentile of the market index over bootstrap samples of the announcements (Section~\ref{sec:precision}).\end{flushleft}
+\end{figure}
+
+\subsection{How Precisely Is the Market Index Estimated?}\label{sec:precision}
+The market index's weights come from regressions on \bl{n:events} announcements, and they are estimated with error. I resample the announcements with replacement \bl{boot:reps} times, recompute the policy-news factor and the weights each time, and recompute the index and its comparisons (Table~\ref{tab:boot}).
+
+\input{../replication/report/tab_boot}
+
+The weights are imprecise. The weight on the 10-year yield has a 90 percent interval from \bl{wb:ten:lo} to \bl{wb:ten:hi} around \bl{w:ten}. The interval for equity valuation runs from \bl{wb:eq:lo} to \bl{wb:eq:hi}, and for the dollar from \bl{wb:usd:lo} to \bl{wb:usd:hi}. The FRB/US weights on all three lie inside these intervals, the equity weight near the edge: it is lower in absolute value than \bl{frw:eq:pct} percent of the bootstrap draws, about 14 percent in a two-sided test. The data do not reject that the model weights equal the market weights. This is a statement about power, not a finding that they are equal, and it treats the FRB/US weights and the VAR as fixed.
+
+The index is better determined than its weights, and its correlations with the others are stable. The correlation with the Goldman Sachs index is \bl{rstar:mkt:gs}, with a 5th to 95th percentile range from \bl{bt:rstar:corr:gs:lo} to \bl{bt:rstar:corr:gs:hi}, and with the FRB/US index \bl{rstar:mkt:frbus}, from \bl{bt:rstar:corr:frbus:lo} to \bl{bt:rstar:corr:frbus:hi}. The level of the reading is not stable. The September 2026 reading relative to $\rs$ is \bl{rstar:latest:market}, with a 90 percent interval from \bl{bt:rstar:latest:lo} to \bl{bt:rstar:latest:hi}. The Goldman Sachs reading (\bl{rstar:latest:gs}) lies inside that interval. The FRB/US reading (\bl{rstar:latest:frbus}) lies just above it, and the 90 percent interval for the market index minus the FRB/US index runs from \bl{gap:frbus:lo} to \bl{gap:frbus:hi}. The sampling error of the weights is therefore of the same size as the differences between the readings, and the Goldman Sachs and FRB/US readings lie on opposite sides of the 1973--2026 average.
+
+
+% ============================================================
+\section{Robustness and Limits}\label{sec:rob}
+The results rest on one sample, one set of weights, one estimate of $\rs$ and data revised after the fact. I vary each in turn. Table~\ref{tab:checks96} gives the main checks.
+
+\subsection{The Sample: 1996--2026}\label{sec:sample96}
+The weights come from announcements since 1996, so the sample of 1996--2026 is the one on which the index is estimated, and the sample of Note B. I re-estimate the VAR and the regressions from 1996. The response of unemployment after 12 months is \bl{ck:a12:phi} (\bl{ck:a12:lo} to \bl{ck:a12:hi}) on 1973--2026, and \bl{ck:b12:phi} (\bl{ck:b12:lo} to \bl{ck:b12:hi}) with 12 lags and \bl{ck:b4:phi} (\bl{ck:b4:lo} to \bl{ck:b4:hi}) with four lags on 1996--2026: it does not change sign, and the interval is about 1.6 times as wide. The estimate from VARs on shorter spans is \bl{vs:197389} for 1973--89, \bl{vs:19902007} for 1990--2007, \bl{vs:19962007} for 1996--2007, \bl{vs:19962019} for 1996--2019 and \bl{vs:20092026} for 2009--26. The flow has $t=$ \bl{ck:b12:tflow} for unemployment (\bl{ck:a12:tflow} on the long sample), with a gain of \bl{ck:b12:gain} in adjusted $R^2$ against \bl{ck:a12:gain}; the index adds \bl{ck:b12:stgain} to the funds-rate gap, with a Clark--West statistic of \bl{ck:b12:cw} (one recession in the out-of-sample period). The payroll flow has $t=$ \bl{ck:b12:payt} and the payroll result does not hold. The $\rs$ step helps on 1996--2026 and not before.
+
+\input{../replication/report/tab_checks96}
+
+\subsection{Weights That Move}\label{sec:drift}
+The weights define the unit, so I hold them fixed and show how they would drift. Re-estimating on an expanding window of announcements from 2006 keeps the 10-year and dollar weights inside the 90 percent band of the full-sample estimate at every date after 2010; the equity weight is outside at \bl{exp:post2010:n:out:eq} dates in 2011--14, by at most \bl{exp:post2010:min:eq} against a band edge of \bl{base:lo:eq} (Figure~\ref{fig:weightpath}). A 20-year rolling window fails after 2021, because it drops the announcements of 1996--2005 (the 10-year weight is outside the band at \bl{roll:post2010:n:out:ten} dates). The 10-year weight is imprecise throughout (interval \bl{base:lo:ten} to \bl{base:hi:ten}). The index built with the expanding-window weights correlates \bl{corr:level:1996:rstar} with the baseline in levels, \bl{corr:d12:1996:rstar} in 12-month changes and \bl{corr:fi:basePhi:1996:rstar} in forward impetus, and the VAR response is \bl{phi12:rt:rstar} against \bl{phi12:base:rstar}. Apart from the equity weight in 2011--14, the weights stay within their sampling error.
+
+\begin{figure}[tp]
+\centering
+\includegraphics[width=\textwidth]{../replication/report/fig_weight_path.pdf}
+\caption{The Weights on an Expanding and a Rolling Window}
+\label{fig:weightpath}
+\begin{flushleft}\footnotesize\textit{Notes:} Weights of the market index re-estimated on announcements to each date (expanding window, from the 80th announcement) and on the latest 20 years (rolling). Shaded: 90 percent bootstrap interval of the full-sample weights; the horizontal line is the full-sample weight.\end{flushleft}
+\end{figure}
+
+\subsection{Data as Known at the Time}\label{sec:realtime}
+Nothing in the baseline is real time. I rebuild the unemployment and payroll inputs from ALFRED vintages (unemployment and payrolls from 1977, the CBO natural rate from 2011) and the $\rs$ input from the New York Fed's real-time Laubach--Williams estimates (from 2005). The weights, the Kiley $\rs$, the earnings in CAPE and expected inflation are not real time, so this is pseudo real time in the macro variables and in $\rs$ from 2005, and not in the weights. Table~\ref{tab:realtime} gives the unemployment results. Vintage data leave them unchanged ($t=$ \bl{rt:vin1976:t} against \bl{rt:rev1976:t}, Clark--West \bl{rt:vin1976:cw} against \bl{rt:rev1976:cw}); with the vintage natural rate from 2011 the flow has $t=$ \bl{rt:vinn2011:t}; and with real-time $\rs$ from 2006 the gain falls from \bl{rt:revf2006:gain} to \bl{rt:revr2006:gain} ($t=$ \bl{rt:revr2006:t}), with the mixed form no longer significant ($t=$ \bl{rt:revr2006:mt}). Real-time $\rs$ weakens the flow.
+
+\input{../replication/report/tab_realtime}
+
+\subsection{The Neutral Rate, the Dynamics, the Weights and the Zero Point}\label{sec:robother}
+Table~\ref{tab:robust} varies the construction. In every row the market index's correlation is at least \bl{rb:min:mkt:gs} with the Goldman Sachs index and at least \bl{rb:min:mkt:frbus} with the FRB/US index, and the 90 percent interval of the yardstick lies above zero.
+
+\input{../replication/report/tab_robust}
+
+With the estimate of \citet{kiley2020} the market index reads \bl{rb:1:latest:market} in September 2026 against \bl{rb:0:latest:market}, and the Goldman Sachs and FRB/US readings move by less than half a point. With four lags the yardstick is \bl{rb:2:phi12}. Re-estimating the weights with the two-year yield as the policy news, with announcements through 2019, or without the lower-bound years (Appendix Table~\ref{tab:wvar}) moves the September 2026 reading from \bl{rb:6:latest:market} to \bl{rb:5:latest:market}, a spread of \bl{rb:spread:weights} points, as wide as the bootstrap interval of Section~\ref{sec:precision}. The readings follow the equity weight, which is \bl{wv:two:year:w:eq}, \bl{wv:to:2019:w:eq} and \bl{wv:no:lower:bound:w:eq} against \bl{w:eq} in the baseline. With 1990--2026 as the base period the market index reads \bl{rstar:latest90:market}, the Goldman Sachs index \bl{rstar:latest90:gs} and the FRB/US index \bl{rstar:latest90:frbus}, shifts of about a point.
+
+\subsection{Limits of the Design}\label{sec:limits}
+The $\rs$ step is the largest effect in the paper, and the outcomes lean toward it without proving it. The uncertainty of $\rs$ is not in the intervals, and $\rs$ is not neutral to outcomes, because the Laubach--Williams model uses output, inflation and unemployment. The weights come from announcements since 1996 and are applied from 1973; they assume that the responses reflect policy rather than information effects \citep{nakamura2018}, and if policy came to target financial conditions the responses could change, the Lucas-critique concern that \citet{hatzius2010} raise for all indexes. The bootstrap treats the FRB/US and Goldman Sachs weights, the Goldman Sachs conversion and the VAR as fixed. The sample has five recessions, two out of sample, and 12-month outcomes overlap, so the counts of tests are descriptive. The VAR is linear and describes the mean. The Goldman Sachs index and FCI-G are my replications, and the FRB/US index is my construction at one horizon. The readings for September 2026 use $\rs$ through 2026Q2 and interpolate October 2025.
 
 \section{Activity Regressions on Each Index and Step}\label{app:activity}
 \input{../replication/report/tab_activity}
