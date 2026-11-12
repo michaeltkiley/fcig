@@ -8,3 +8,5 @@ Runtime 4 s at 5,000 draws; deterministic (two runs, identical checksums) [verif
 - Draw count matters: at 5,000 draws the baseline contrast in points is 0.24 [0.003, 0.448] (500 draws: [-0.01, 0.44]); the ratio-of-ratios lower bound is 1.08 (500 draws: 1.04). The 500-draw intervals in the paper's tables are therefore not final.
 - Definitions of the categories are fixed in the script header before any number was read [verified: header written first]. Month shares use weights uncertainty only (the 12-month changes are held fixed).
 - Not verified independently: the classification is not re-derived outside this script.
+
+- Direct test T of the market weights (futures factor vs two-year yield) and the factor/remainder split added; deterministic [verified by rerun]; T and the cross-product statistics are in `results/25_market_proportion.csv`, `25_proportionality.csv`; scalars in `scalars_25_months.csv`. Not independently re-derived.

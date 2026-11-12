@@ -77,3 +77,8 @@ The paper (`paper/fci_paper.tex`, 7 sections, 3 appendices) is the second rewrit
 Steps added after the colleague report: `21_signal` (four definitions of policy news), `22_channels` (FRB/US expenditure channels; needs the Board's FRB/US package, run once with Python 3.11 and the package downloaded to gitignored `raw/frbus/`; results `results/22_*.csv` are stored and 22 is not in `run_all.py` or the sync check; see `22_channels_CHECK.md`), `23_expenditure` (net exports vs domestic demand, pre-specified). New exhibits: `fig_channels`, `fig_paths`, `tab_signal`, `tab_expend`.
 
 Steps 00_frbus (FRB/US package, vintage), 22_channels, 22_policy_shock, 22_weights_persist (FRB/US runs; need Python 3.11 venv, built automatically), 24_signal_outcomes (null benchmark, outcomes by definition of policy news, split of D). New exhibits: fig_band, tab_sigout.
+
+
+## 12 Nov 2026 additions
+- `replication/25_months.py`: monthly agreement counts (10 and 25 bp), cross-product and direct market-weight proportion tests on common draws, split of the two-year change into the futures factor and a remainder; exhibits `fig_signal.pdf`, `tab_months.tex`.
+- `FCI_REPS_W` (default 5,000) sets the announcement-bootstrap draws behind every weights interval; `FCI_REPS` (default 500) sets the VAR and outcome block bootstraps. Steps 08 and 21 are the slowest at 5,000 (about 25 and 4 minutes).
