@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.13)  13 NOV 2026 19:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.13)  13 NOV 2026 20:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -591,77 +591,77 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [1]
-<../baseline/report/fig_intro.pdf, id=191, 505.89pt x 238.49101pt>
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<../baseline/report/fig_intro.pdf, id=172, 505.89pt x 238.49101pt>
 File: ../baseline/report/fig_intro.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_intro.pdf>
-Package pdftex.def Info: ../baseline/report/fig_intro.pdf  used on input line 8
-5.
+Package pdftex.def Info: ../baseline/report/fig_intro.pdf  used on input line 7
+7.
 (pdftex.def)             Requested size: 469.75502pt x 221.45953pt.
- [2] [3 <../baseline/report/fig_intro.pdf>] [4] [5] [6] (../baseline/report/tab
-_weights.tex) [7] [8]
+ [1] [2 <../baseline/report/fig_intro.pdf>] [3] [4] [5] [6] (../baseline/report
+/tab_weights.tex) [7] [8]
 <../baseline/report/fig_fcis.pdf, id=532, 505.89pt x 332.44202pt>
 File: ../baseline/report/fig_fcis.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_fcis.pdf>
 Package pdftex.def Info: ../baseline/report/fig_fcis.pdf  used on input line 18
-2.
+3.
 (pdftex.def)             Requested size: 422.77664pt x 277.82904pt.
  [9] [10 <../baseline/report/fig_fcis.pdf>]
-<../baseline/report/fig_ordinary.pdf, id=615, 448.07399pt x 238.49101pt>
+<../baseline/report/fig_ordinary.pdf, id=616, 448.07399pt x 238.49101pt>
 File: ../baseline/report/fig_ordinary.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_ordinary.pdf>
 Package pdftex.def Info: ../baseline/report/fig_ordinary.pdf  used on input lin
-e 197.
+e 198.
 (pdftex.def)             Requested size: 338.22418pt x 180.02502pt.
  [11 <../baseline/report/fig_ordinary.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 214--214
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10 (+20) Window
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 216--216
+Underfull \hbox (badness 1092) in paragraph at lines 217--217
 []|\OT1/cmr/m/n/10 (+20) Unemployment and in-fla-tion,
  []
 
-[12] [13] [14] [15] [16]
-<../baseline/report/fig_standard.pdf, id=794, 520.34402pt x 245.718pt>
+[12] [13] [14] [15]
+<../baseline/report/fig_standard.pdf, id=784, 520.34402pt x 245.718pt>
 File: ../baseline/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline/report/fig_standard.pdf  used on input lin
-e 280.
+e 281.
 (pdftex.def)             Requested size: 469.75502pt x 221.84152pt.
- (../baseline/report/tab_standard.tex)
+ [16] (../baseline/report/tab_standard.tex)
 (../baseline/report/tab_matched.tex) [17 <../baseline/report/fig_standard.pdf>]
 [18]
-<../baseline/report/fig_steps.pdf, id=892, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_steps.pdf, id=911, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline/report/fig_steps.pdf  used on input line 3
-01.
+02.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
- [19] [20 <../baseline/report/fig_steps.pdf>]
-<../baseline/report/fig_decomp.pdf, id=970, 520.34402pt x 390.25798pt>
+ [19 <../baseline/report/fig_steps.pdf>] [20]
+<../baseline/report/fig_decomp.pdf, id=990, 520.34402pt x 390.25798pt>
 File: ../baseline/report/fig_decomp.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_decomp.pdf>
 Package pdftex.def Info: ../baseline/report/fig_decomp.pdf  used on input line 
-322.
+323.
 (pdftex.def)             Requested size: 469.75502pt x 352.33653pt.
 
 (../baseline/report/tab_decomp.tex) [21 <../baseline/report/fig_decomp.pdf>]
 [22] (../baseline/report/tab_tradeoff.tex) [23]
 (../baseline/report/tab_components.tex) [24]
 (../baseline/report/tab_weights4.tex) [25]
-<../baseline/report/fig_financial.pdf, id=1131, 317.98799pt x 202.356pt>
+<../baseline/report/fig_financial.pdf, id=1150, 317.98799pt x 202.356pt>
 File: ../baseline/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline/report/fig_financial.pdf  used on input li
-ne 372.
+ne 373.
 (pdftex.def)             Requested size: 291.2458pt x 185.34843pt.
-<../baseline/report/fig_persist.pdf, id=1132, 520.34402pt x 224.037pt>
+<../baseline/report/fig_persist.pdf, id=1151, 520.34402pt x 224.037pt>
 File: ../baseline/report/fig_persist.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_persist.pdf>
 Package pdftex.def Info: ../baseline/report/fig_persist.pdf  used on input line
- 380.
+ 381.
 (pdftex.def)             Requested size: 469.75502pt x 202.26726pt.
  [26] [27 <../baseline/report/fig_financial.pdf> <../baseline/report/fig_persis
 t.pdf>]
@@ -670,31 +670,31 @@ t.pdf>]
 (../baseline/report/tab_rob_summary.tex) [30] [31]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 423.
+(hyperref)                removing `math shift' on input line 424.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 423.
+(hyperref)                removing `superscript' on input line 424.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 423.
+(hyperref)                removing `math shift' on input line 424.
 
 [32] (./mp_transmission.bbl [33] [34] [35] [36] [37] [38]) [39] [40]
 (../baseline/report/tab_proxy_sim.tex) [41] (../baseline/report/tab_lags.tex)
 [42] [43] [44] (../baseline/report/tab_persist.tex) [45]
 (../baseline/report/tab_direct.tex) [46]
-<../baseline/report/fig_gs.pdf, id=1426, 520.34402pt x 216.81pt>
+<../baseline/report/fig_gs.pdf, id=1446, 520.34402pt x 216.81pt>
 File: ../baseline/report/fig_gs.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_gs.pdf>
-Package pdftex.def Info: ../baseline/report/fig_gs.pdf  used on input line 534.
+Package pdftex.def Info: ../baseline/report/fig_gs.pdf  used on input line 535.
 
 (pdftex.def)             Requested size: 469.75502pt x 195.74252pt.
-<../baseline/report/fig_size.pdf, id=1427, 520.34402pt x 281.85298pt>
+<../baseline/report/fig_size.pdf, id=1447, 520.34402pt x 281.85298pt>
 File: ../baseline/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 54
-2.
+3.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
  (../baseline/report/tab_main_B.tex)
 [47] [48 <../baseline/report/fig_gs.pdf> <../baseline/report/fig_size.pdf>]
@@ -728,27 +728,27 @@ Package pdftex.def Info: ../baseline/report/fig_size.pdf  used on input line 54
 
 
 ]) [70] [71]
-Underfull \hbox (badness 10000) in paragraph at lines 666--666
+Underfull \hbox (badness 10000) in paragraph at lines 667--667
 []|\OT1/cmr/m/n/10 (+20) Daily,
  []
 
 
-Underfull \hbox (badness 5985) in paragraph at lines 667--668
+Underfull \hbox (badness 5985) in paragraph at lines 668--669
 []|\OT1/cmr/m/n/10 (+20) Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1052) in paragraph at lines 667--668
+Underfull \hbox (badness 1052) in paragraph at lines 668--669
 \OT1/cmr/m/n/10 (+20) PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 673--674
+Underfull \hbox (badness 10000) in paragraph at lines 674--675
 []|\OT1/cmr/m/n/10 (+20) FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 675--675
+Underfull \hbox (badness 10000) in paragraph at lines 676--676
 []|\OT1/cmr/m/n/10 (+20) Daily;
  []
 
@@ -792,10 +792,10 @@ s/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 sy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on mp_transmission.pdf (74 pages, 803615 bytes).
+Output written on mp_transmission.pdf (74 pages, 803739 bytes).
 PDF statistics:
- 1880 PDF objects out of 2073 (max. 8388607)
- 1255 compressed objects within 13 object streams
+ 1899 PDF objects out of 2073 (max. 8388607)
+ 1274 compressed objects within 13 object streams
  285 named destinations out of 1000 (max. 500000)
  45387 words of extra memory for PDF output out of 51595 (max. 10000000)
 
