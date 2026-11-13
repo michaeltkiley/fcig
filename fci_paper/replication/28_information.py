@@ -1,11 +1,8 @@
-"""Step 28. Market weights with policy news cleaned of information effects (FP-A54, item 6).
+"""Step 28. Market weights with policy news cleaned of information effects (FP-A54, item 6; FP-A55: Bauer-Swanson only).
 
 Questions (fixed before any number was read):
  (1) Re-estimate the futures-based market weights F with three published measures of policy news that remove information effects, each matched to this package's announcements and
      scaled so that one unit raises the two-year yield by one percentage point (same scaling as lib.indexes.ns_factor):
-       JK_med  Jarocinski-Karadi (2020) monetary policy shock, rotational-median sign restriction (MP_median; updated series, data/jk_shocks.csv)
-       JK_pm   Jarocinski-Karadi 'poor man's' split: the surprise on announcements where it and the S&P 500 move in opposite directions, zero otherwise (MP_pm).
-               It selects on the sign of the equity response, so it tilts the equity response away from zero by construction; reported, not preferred.
        BS_orth Bauer-Swanson (2023) surprise orthogonalized to public news before the announcement (MPS_ORTH; data/bauer_swanson_surprises.csv; announcements to 2019)
      To separate the measure from the sample, the baseline futures factor is re-estimated on each matched sample (F_same) and BS's raw surprise MPS is run on the BS sample.
  (2) For each set: weights on the common scale (w'psi_F = 1, psi_F = full-sample baseline response), the Figure 1 ratio (dollar reading over equity reading),
@@ -21,7 +18,6 @@ from lib.report import Scalars
 S = Scalars("28_information")
 EQ, USD = -5.0, 3.9
 raw = I.events_raw().copy(); raw["d"] = raw.Date.dt.strftime("%Y-%m-%d")
-jk = pd.read_csv(DATA / "jk_shocks.csv").groupby("Date", as_index=False).first()
 bs = pd.read_csv(DATA / "bauer_swanson_surprises.csv").groupby("Date", as_index=False).first()
 
 
@@ -43,10 +39,8 @@ Xr = cases.inputs(data.load(), "rstar")[MV]
 Zv = Xr.diff(12).loc["1996-01":END].dropna().values
 RF0 = Zv @ wF0; mF = np.abs(RF0).mean()
 
-mj = raw.merge(jk, left_on="d", right_on="Date", suffixes=("", "_jk"))
 mb = raw.merge(bs, left_on="d", right_on="Date", suffixes=("", "_bs")).dropna(subset=["MPS", "MPS_ORTH"])
-CASES = {"F_full": (raw, None), "F_sameJK": (mj, None), "JK_med": (mj, "MP_median"), "JK_pm": (mj, "MP_pm"),
-         "F_sameBS": (mb, None), "BS_raw": (mb, "MPS"), "BS_orth": (mb, "MPS_ORTH")}
+CASES = {"F_full": (raw, None), "F_sameBS": (mb, None), "BS_raw": (mb, "MPS"), "BS_orth": (mb, "MPS_ORTH")}
 
 
 def weights(df, col):
