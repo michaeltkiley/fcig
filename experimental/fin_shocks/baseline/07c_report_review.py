@@ -15,7 +15,7 @@ from lib.paths import RESULTS, REPORT, OUT
 from lib import noteA, daily as DD
 
 ML, BAD = [], []
-def mac(k, v): ML.append(r"\expandafter\gdef\csname bl:rv:" + k + r"\endcsname{" + str(v) + "}")
+def mac(k, v): ML.append(r"\expandafter\gdef\csname bl:rv:" + k + r"\endcsname{" + str(v) + "}"); ML.append(r"\expandafter\gdef\csname blabs:rv:" + k + r"\endcsname{" + str(v).replace("$-$", "").lstrip("-") + "}")
 def num(x):
     s = f"{abs(x):.2f}"; return ("$-$" if x < 0 and s != "0.00" else "") + s
 def chk(name, ok):
