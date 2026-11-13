@@ -142,12 +142,6 @@
   Credit Spreads: Evidence from Bayesian Proxy SVARs.'' {\em American Economic
   Journal: Macroeconomics}, 11(1):~157--192.
 
-\harvarditem[Castelnuovo \harvardand\ Surico]{E. Castelnuovo \harvardand\ P.
-  Surico}{2010}{castelnuovo2010}
-{\bf Castelnuovo, E., and P. Surico.} 2010. ``Monetary Policy, Inflation
-  Expectations and the Price Puzzle.'' {\em Economic Journal},
-  120(549):~1262--1283.
-
 \harvarditem[Christiano, Eichenbaum \harvardand\ Evans]{L.~J. Christiano, M.
   Eichenbaum \harvardand\ C.~L. Evans}{1999}{christiano1999}
 {\bf Christiano, L.~J., M. Eichenbaum, and C.~L. Evans.} 1999. ``Monetary
@@ -160,11 +154,6 @@
 {\bf Christiano, L.~J., M. Eichenbaum, and C.~L. Evans.} 2005. ``Nominal
   Rigidities and the Dynamic Effects of a Shock to Monetary Policy.'' {\em
   Journal of Political Economy}, 113(1):~1--45.
-
-\harvarditem[{Companion note}]{{Companion note}}{2026}{fcinote}
-{\bf {Companion note}.} 2026. ``A Simple Market-Based Financial Conditions
-  Index: Weights from Policy News, Dynamics from a Transparent VAR, Measured
-  Relative to $r^*$.'' {\em draft}.
 
 \harvarditem[Corsi]{F. Corsi}{2009}{corsi2009}
 {\bf Corsi, F.} 2009. ``A Simple Approximate Long-Memory Model of Realized
@@ -338,6 +327,10 @@
   Interest Rate?'' {\em International Journal of Central Banking},
   16(3):~181--209.
 
+\harvarditem[Kiley]{M.~T. Kiley}{2026}{fcinote}
+{\bf Kiley, M.~T.} 2026. ``Reading Financial Conditions in Units of Monetary
+  Policy.'' {\em Manuscript, Federal Reserve Board}.
+
 \harvarditem[Kroencke, Schmeling \harvardand\ Schrimpf]{T.~A. Kroencke, M.
   Schmeling \harvardand\ A. Schrimpf}{2021}{kroencke2021}
 {\bf Kroencke, T.~A., M. Schmeling, and A. Schrimpf.} 2021. ``The FOMC Risk
@@ -403,10 +396,6 @@
   Monetary Non-Neutrality: The Information Effect.'' {\em Quarterly Journal of
   Economics}, 133(3):~1283--1330.
 
-\harvarditem[Okun]{A.~M. Okun}{1978}{okun1978}
-{\bf Okun, A.~M.} 1978. ``Efficient Disinflationary Policies.'' {\em American
-  Economic Review}, 68(2):~348--352.
-
 \harvarditem[Plagborg-M{\o}ller \harvardand\ Wolf]{M. Plagborg-M{\o}ller
   \harvardand\ C.~K. Wolf}{2021}{plagborg2021}
 {\bf Plagborg-M{\o}ller, M., and C.~K. Wolf.} 2021. ``Local Projections and
@@ -431,12 +420,6 @@
 {\bf Romer, C.~D., and D.~H. Romer.} 2000. ``Federal Reserve Information and
   the Behavior of Interest Rates.'' {\em American Economic Review},
   90(3):~429--457.
-
-\harvarditem[Romer \harvardand\ Romer]{C.~D. Romer \harvardand\ D.~H.
-  Romer}{2004}{romer2004}
-{\bf Romer, C.~D., and D.~H. Romer.} 2004. ``A New Measure of Monetary Shocks:
-  Derivation and Implications.'' {\em American Economic Review},
-  94(4):~1055--1084.
 
 \harvarditem[Sims]{C.~A. Sims}{1992}{sims1992}
 {\bf Sims, C.~A.} 1992. ``Interpreting the Macroeconomic Time Series Facts: The
@@ -469,9 +452,5 @@
 \harvarditem[Tobin]{J. Tobin}{1969}{tobin1969}
 {\bf Tobin, J.} 1969. ``A General Equilibrium Approach to Monetary Theory.''
   {\em Journal of Money, Credit and Banking}, 1(1):~15--29.
-
-\harvarditem[Tobin]{J. Tobin}{1980}{tobin1980}
-{\bf Tobin, J.} 1980. ``Stabilization Policy Ten Years After.'' {\em Brookings
-  Papers on Economic Activity}, 1980(1):~19--71.
 
 \end{thebibliography}

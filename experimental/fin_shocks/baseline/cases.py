@@ -14,7 +14,7 @@ def panel(pid, title, notes, cases):
 
 PANELS = [
  panel("B", "Baseline: 1996 to the present, all data in, no trend",
-       "Nominal, real and r*-gap 2-year yield; the FCI is the matching index of Note A in each case.",
+       "Nominal, real and r*-gap 2-year yield; the FCI is the matching index of Kiley (2026) in each case.",
        sum([pair(f, f) for f in ("nom", "real", "rstar")], [])),
  panel("R1a", "Section 4.1 (a): monthly equations start in 1973", "r*-gap only. Pre-1990 months use monthly series in place of the daily data (see lib/model.py); shocks are the 252 announcements of 1996 on.",
        pair("rstar", "rstar", start="1973-01")),
@@ -26,7 +26,7 @@ PANELS = [
        pair("rstar", "rstar", end=2019)),
  panel("R1e", "Section 4.1 (e): sample ends in December 2019, start 1973", "r*-gap only.",
        pair("rstar", "rstar", start="1973-01", end=2019)),
- panel("R2a", "Section 4.2 (a): Kiley r*, start 1996", "2-year minus expected inflation minus Kiley's r*; the FCI is Note A's index built with Kiley's r* (same adjustment in rate and FCI).",
+ panel("R2a", "Section 4.2 (a): Kiley r*, start 1996", "2-year minus expected inflation minus Kiley's r*; the FCI is the index of Kiley (2026) built with Kiley's r* (same adjustment in rate and FCI).",
        pair("kiley", "kiley")),
  panel("R2b", "Section 4.2 (b): Kiley r*, start 1973", "As 2a.", pair("kiley", "kiley", start="1973-01")),
  panel("R2c", "Section 4.2 (c): real 2-year and real FCI with a cubic spline trend, start 1996",
@@ -79,9 +79,9 @@ GROUPS = {"B": ["B"], "R1": ["R1a", "R1b", "R1c", "R1d", "R1e"], "R2": ["R2a", "
 GROUP_TITLE = {"B": "Baseline: 1996 to the present, all data in, no trend", "R1": "Section 4.1: sample (r*-gap 2-year yield and FCI)",
                "R2": "Section 4.2: the r* adjustment and trends", "R3": "Section 4.3: excess bond premium (r*-gap)", "R4": "Section 3.6: the FCI replaced by its three weighted components", "R5": "Section 4.4: alternative surprises (r*-gap)"}
 def panel_by_id(pid): return next(p for p in PANELS if p["id"] == pid)
-GROUP_NOTE = {"B": "Nominal, real and r*-gap 2-year yield; the FCI is Note A's index in the matching form in each case.",
+GROUP_NOTE = {"B": "Nominal, real and r*-gap 2-year yield; the FCI is the index of Kiley (2026) in the matching form in each case.",
               "R1": "Start 1973: monthly equations from 1973, with monthly series in place of daily data before 1990 (lib/model.py). 2020 dropped: March to December 2020 removed from the monthly and daily equations (2020 values still enter as lags). Ends 2019: all equations, monthly and daily.",
-              "R2": "Kiley r*: 2-year minus expected inflation minus Kiley's r*, with Note A's index built with the same r*. Real, spline trend: real 2-year and real FCI with a natural cubic spline trend (knots at the sample ends and at NBER business-cycle peaks inside the sample) in every monthly equation, in place of any r* measure.",
+              "R2": "Kiley r*: 2-year minus expected inflation minus Kiley's r*, with the index of Kiley (2026) built with the same r*. Real, spline trend: real 2-year and real FCI with a natural cubic spline trend (knots at the sample ends and at NBER business-cycle peaks inside the sample) in every monthly equation, in place of any r* measure.",
               "R3": "The excess bond premium is a third monthly variable, treated like unemployment and inflation (u, inflation, EBP system); responses shown for u and the price level.",
               "R5": "Bauer-Swanson: orthogonalized surprise of Bauer and Swanson (2023), announcements through 2019. Jarocinski-Karadi: Nakamura-Steinsson surprise kept when the 2-year yield and the S\\&P 500 move in opposite directions in the window. The window impact and the bootstrap use the events with a surprise.",
               "R4": "Components: the 10-year yield, equity valuation and real dollar, each multiplied by its weight, enter separately in the daily and monthly equations in the same version as the 2-year yield, each with its own window impact (the three impacts sum to the FCI's). Baseline rows without the FCI are in the baseline table."}
