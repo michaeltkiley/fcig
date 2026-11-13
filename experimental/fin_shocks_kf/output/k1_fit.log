@@ -478,3 +478,26 @@
 23:47:48 cycle 476  loglik 21429.5768  gain 0.00087  LR vs Note B 19.58  Gamma u:[+0.521,-0.081] pi:[-1.472,-1.659]  sd(nu) u 0.1574 pi 0.0103
 23:47:52 cycle 477  loglik 21429.5776  gain 0.00081  LR vs Note B 19.58  Gamma u:[+0.521,-0.081] pi:[-1.472,-1.659]  sd(nu) u 0.1574 pi 0.0103
 23:47:57 cycle 478  loglik 21429.5784  gain 0.00080  LR vs Note B 19.58  Gamma u:[+0.521,-0.081] pi:[-1.472,-1.659]  sd(nu) u 0.1575 pi 0.0104
+23:48:01 cycle 479  loglik 21429.5792  gain 0.00082  LR vs Note B 19.58  Gamma u:[+0.520,-0.081] pi:[-1.472,-1.659]  sd(nu) u 0.1575 pi 0.0104
+23:48:05 cycle 480  loglik 21429.5800  gain 0.00078  LR vs Note B 19.58  Gamma u:[+0.520,-0.081] pi:[-1.472,-1.659]  sd(nu) u 0.1575 pi 0.0104
+23:48:11 cycle 481  loglik 21429.5808  gain 0.00079  LR vs Note B 19.58  Gamma u:[+0.520,-0.081] pi:[-1.472,-1.659]  sd(nu) u 0.1577 pi 0.0104
+23:48:16 cycle 482  loglik 21429.5816  gain 0.00084  LR vs Note B 19.59  Gamma u:[+0.519,-0.081] pi:[-1.471,-1.659]  sd(nu) u 0.1578 pi 0.0104
+23:48:20 cycle 483  loglik 21429.5825  gain 0.00085  LR vs Note B 19.59  Gamma u:[+0.519,-0.081] pi:[-1.471,-1.659]  sd(nu) u 0.1578 pi 0.0105
+23:48:26 cycle 484  loglik 21429.5832  gain 0.00079  LR vs Note B 19.59  Gamma u:[+0.519,-0.081] pi:[-1.471,-1.659]  sd(nu) u 0.1579 pi 0.0105
+23:48:30 cycle 485  loglik 21429.5841  gain 0.00085  LR vs Note B 19.59  Gamma u:[+0.519,-0.081] pi:[-1.471,-1.659]  sd(nu) u 0.1579 pi 0.0105
+23:48:34 cycle 486  loglik 21429.5849  gain 0.00081  LR vs Note B 19.59  Gamma u:[+0.518,-0.082] pi:[-1.470,-1.659]  sd(nu) u 0.1580 pi 0.0105
+23:48:38 cycle 487  loglik 21429.5857  gain 0.00081  LR vs Note B 19.59  Gamma u:[+0.518,-0.082] pi:[-1.470,-1.659]  sd(nu) u 0.1580 pi 0.0105
+23:48:43 cycle 488  loglik 21429.5865  gain 0.00078  LR vs Note B 19.60  Gamma u:[+0.518,-0.082] pi:[-1.470,-1.659]  sd(nu) u 0.1581 pi 0.0106
+23:48:46 cycle 489  loglik 21429.5873  gain 0.00079  LR vs Note B 19.60  Gamma u:[+0.518,-0.082] pi:[-1.470,-1.659]  sd(nu) u 0.1581 pi 0.0106
+23:48:51 cycle 490  loglik 21429.5881  gain 0.00078  LR vs Note B 19.60  Gamma u:[+0.517,-0.082] pi:[-1.470,-1.659]  sd(nu) u 0.1583 pi 0.0107
+23:48:55 cycle 491  loglik 21429.5889  gain 0.00082  LR vs Note B 19.60  Gamma u:[+0.517,-0.082] pi:[-1.470,-1.659]  sd(nu) u 0.1583 pi 0.0106
+23:48:59 cycle 492  loglik 21429.5896  gain 0.00074  LR vs Note B 19.60  Gamma u:[+0.517,-0.082] pi:[-1.470,-1.659]  sd(nu) u 0.1583 pi 0.0107
+23:49:04 cycle 493  loglik 21429.5904  gain 0.00075  LR vs Note B 19.60  Gamma u:[+0.517,-0.082] pi:[-1.469,-1.659]  sd(nu) u 0.1584 pi 0.0108
+23:49:08 cycle 494  loglik 21429.5912  gain 0.00082  LR vs Note B 19.60  Gamma u:[+0.516,-0.082] pi:[-1.469,-1.659]  sd(nu) u 0.1585 pi 0.0107
+23:49:11 cycle 495  loglik 21429.5919  gain 0.00073  LR vs Note B 19.61  Gamma u:[+0.516,-0.082] pi:[-1.469,-1.659]  sd(nu) u 0.1585 pi 0.0108
+23:49:16 cycle 496  loglik 21429.5927  gain 0.00076  LR vs Note B 19.61  Gamma u:[+0.516,-0.082] pi:[-1.469,-1.659]  sd(nu) u 0.1586 pi 0.0108
+23:49:20 cycle 497  loglik 21429.5935  gain 0.00080  LR vs Note B 19.61  Gamma u:[+0.516,-0.082] pi:[-1.469,-1.659]  sd(nu) u 0.1587 pi 0.0108
+23:49:24 cycle 498  loglik 21429.5942  gain 0.00074  LR vs Note B 19.61  Gamma u:[+0.516,-0.082] pi:[-1.469,-1.659]  sd(nu) u 0.1587 pi 0.0109
+23:49:30 cycle 499  loglik 21429.5950  gain 0.00075  LR vs Note B 19.61  Gamma u:[+0.515,-0.082] pi:[-1.468,-1.659]  sd(nu) u 0.1588 pi 0.0109
+23:49:30 done: converged after 500 cycles, 42.6 minutes
+NOTE (added after the run): the line above is wrong; the run stopped at the 500-cycle cap with a gain of 0.00075 per cycle, not at convergence. Message fixed in 03_k1_fit.py.

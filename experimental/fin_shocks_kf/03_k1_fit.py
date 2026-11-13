@@ -23,4 +23,4 @@ for it in range(500):
         f"Gamma u:[{G[0,0]:+.3f},{G[0,1]:+.3f}] pi:[{G[1,0]:+.3f},{G[1,1]:+.3f}]  sd(nu) u {np.sqrt(S[0,0]):.4f} pi {np.sqrt(S[1,1]):.4f}")
     np.savez(OUT / "k1_theta.npz", *th, path=np.array(path))
     if path[-1] - path[-2] < 1e-4: break
-say(f"{time.strftime('%H:%M:%S')} done: converged after {it + 1} cycles, {(time.time() - t0) / 60:.1f} minutes")
+say(f"{time.strftime('%H:%M:%S')} done: {'converged (gain < 1e-4)' if path[-1] - path[-2] < 1e-4 else 'STOPPED AT THE CYCLE CAP, NOT CONVERGED'} after {it + 1} cycles, {(time.time() - t0) / 60:.1f} minutes")
