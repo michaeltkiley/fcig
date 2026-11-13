@@ -1262,6 +1262,10 @@ chk(all(c27(f"{sn}_mad_FG") < min(c27(f"{sn}_mad_{p_}") for p_ in ("FY", "FB", "
 chk(all(min(c27(f"{sn}_mad_FY"), c27(f"{sn}_mad_BG")) >= c27(f"{sn}_mad_FB") for sn, _ in SETL), "GS inputs: both within-method distances at least the F-B distance under all three input sets")
 chk(all(c27(f"{sn}_ep_2008-09_{k}") <= 0.55 * c27(f"rstar_ep_2008-09_{k}") for sn in ("real_cape", "gs_inputs") for k in PORD), "2008-09 roughly half as large or less without the r* adjustment")
 for k in PORD: mac(f"gi:fixed:ep0809:{k}", c27(f"rstar_fixed_ep_2008-09_{k}"))
+_add = [c27(f"rstar_ep_2008-09_{k}") - c27(f"rstar_fixed_ep_2008-09_{k}") for k in PORD]
+_b = [c27(f"rstar_ep_2008-09_{k}") for k in PORD]; _fx = [c27(f"rstar_fixed_ep_2008-09_{k}") for k in PORD]
+mac("gi:rsadd:min", min(_add)); mac("gi:rsadd:max", max(_add)); mac("gi:spread:base", max(_b) - min(_b)); mac("gi:spread:fixed", max(_fx) - min(_fx))
+chk(min(_add) > max(_b) - min(_b) and sorted(PORD, key=lambda k: -c27(f"rstar_fixed_ep_2008-09_{k}"))[:2] == ["G", "F"] and sorted(PORD, key=lambda k: -c27(f"rstar_ep_2008-09_{k}"))[:2] == ["G", "F"], "2008-09: r* adds more than the baseline spread; futures-factor and GS the two highest with and without r* fixed")
 for sn in ("rstar", "real_cape", "gs_inputs", "rstar_fixed"):
     mac(f"gq:{sn}:fgnear:lo", c27(f"{sn}_FG_minus_nearest_lo")); mac(f"gq:{sn}:fgnear:hi", c27(f"{sn}_FG_minus_nearest_hi"))
 chk(all(c27(f"{sn}_FG_minus_nearest_lo") < 0 < c27(f"{sn}_FG_minus_nearest_hi") for sn in ("rstar", "real_cape", "gs_inputs", "rstar_fixed")), "paired interval for F-G less the next-closest distance includes zero under every input set")
