@@ -1,0 +1,4 @@
+23:06:55 start; Note B log-likelihood 21419.7888; start log-likelihood 21428.3244
+23:07:08 cycle   0  loglik 21428.4258  gain 0.10143  LR vs Note B 17.27  Gamma u:[+0.603,-0.074] pi:[-1.187,-1.621]  sd(nu) u 0.0813 pi 0.1152
+23:07:22 cycle   1  loglik 21428.5308  gain 0.10495  LR vs Note B 17.48  Gamma u:[+0.615,-0.077] pi:[-1.208,-1.613]  sd(nu) u 0.0816 pi 0.0992
+23:07:38 cycle   2  loglik 21428.6436  gain 0.11286  LR vs Note B 17.71  Gamma u:[+0.627,-0.078] pi:[-1.231,-1.610]  sd(nu) u 0.0818 pi 0.0797
