@@ -1395,6 +1395,12 @@ _c28 = pd.read_csv(RES / "scalars_28_information.csv", index_col=0)["value"]
 mac("inf3:n", float(_c28["BS_orth_n"]), 0)
 for k_ in ("w_ten", "w_eq", "w_usd"):
     mac("inf3:" + k_, float(_c28["BS_orth_" + k_]), 3)
+_fp = pd.read_csv(data.DATA / "frbus_paths.csv"); _fp = _fp[(_fp["shape"] == "persistent") & (_fp.design == "zfree")]
+for e_, n_ in (("req", "eq"), ("fpxr", "usd")):       # share of the 32-quarter GDP effect reached at 4 and 8 quarters (timing of the two channels)
+    s_ = _fp[_fp.experiment == e_].set_index("quarter").gdp_per_unit
+    for q_ in (4, 8):
+        mac(f"tm:{n_}:q{q_}", 100 * float(s_[q_] / s_[32]), 0)
+mac("ac0:jan1998:x:usd", float(SC26["acc_jan1998_x_usd"]), 0)
 _c29 = pd.read_csv(RES / "scalars_29_credit.csv", index_col=0)["value"].astype(float)
 for k_ in ("ebp_d12_1996_r2", "ebp_d12_1973_r2", "ebp_level_1996_r2", "ebp_level_1973_r2", "ebp_d12_1996_r2_equities"):
     mac("cr:pct:" + k_, 100 * float(_c29[k_]), 0)
