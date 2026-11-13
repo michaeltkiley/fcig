@@ -246,7 +246,7 @@ No source found that converts FCI-G, NFCI and GS to funds-rate equivalents and c
 
 ## 9. WHERE WE ARE (end of session, 13 Nov 2026) -- start here next time
 
-**13 Nov 2026 (latest): second assessment applied to Note A (FP-A57): opens with the 1980 vs 2023 paradox; hedge sweep; appendix cut to 5 pages (paper 30 pp). Old note `fci_note/` marked superseded and its 'cost of coverage' and 'no single measure' sentences removed. Open: author's read; full sync check; merge to main.**
+**13 Nov 2026 (latest): second assessment applied to Note A (FP-A57): opens with the 1980 vs 2023 paradox; hedge sweep; appendix cut to 5 pages (paper 30 pp). Old note `fci_note/` marked superseded and its 'cost of coverage' and 'no single measure' sentences removed. Sync check of 8b52e45 passed (212 files, FP-A59); merged to main. Open: author's read; Note B to update its citation of Note A if needed.**
 
 **13 Nov 2026 (later): Note A revised on an external assessment ('Evaluating Financial Conditions Papers'; FP_QA FP-A54 to FP-A56; branch `claude/eager-euler-m4sbsz`).** Reframed around two choices (weights; neutral level), both opening examples (Figure 1; 1980 vs 2023 and 2008-09 r*), new Section 3 on the neutral level and FCI* (derivation; published FCI* series: r* step raises level correlation with FCI-G less FCI* from 0.22-0.54 to 0.64-0.69 across calibrations), worked FOMC examples (Jan 2004, Jan 2001), Bauer-Swanson weights (JK dropped by the author), credit-spread paragraph (EBP 39 percent, 'sizable'). New steps 28-31. New writing rule 13 (no obvious caveats). Open: author's read; full sync check (about 3 hours) on this revision; flags in FP-A56; merge to main. Note B session handles Note B items of the same assessment.
 

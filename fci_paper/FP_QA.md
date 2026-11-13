@@ -207,3 +207,6 @@ Author: keep 19 pages, the January 1998 table and the appendix as is; give the f
 ## Third assessment (13 Nov 2026; FP-A58)
 - Review of the 30-page draft; numbers in its summary check out. Two misreadings: the Figure 1 ratio of 1.00 under the futures factor is set by the choice of sizes; "operationalizes FCI*" overstates (exact only with constant neutral premiums). Its "0.22 to 0.69" pairs the minimum before with the maximum after.
 - **Applied (author):** (1) Figure 1 sentence says the ratio of one is set by the choice of sizes; (2) the intro's neutral-level paragraph gives the FCI* correlations (futures-based 0.48 -> 0.69; four calibrations 0.22-0.54 -> 0.64-0.69); (3) conclusion: choosing the weights is choosing which channels count (wealth and cost of capital vs trade). **Declined:** the "methodological mandate" framing (conflicts with writing rule 13) and the transparency/opacity framing of GS vs FRB/US (GS weights are published).
+
+## Sync check of 8b52e45 (13 Nov 2026; FP-A59)
+- Full check (steps 00 to 31 re-run into a scratch directory): 212 result files compared, all reproduce; step 7: all claims hold, all macros resolve. Printed "in sync: results reproduce, claims hold, macros resolve" [verified]. (Harmless RuntimeWarnings from infinite entries in some files, as in earlier checks.)
