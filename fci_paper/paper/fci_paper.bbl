@@ -35,9 +35,15 @@
   2024-07, March 4}.
 
 \harvarditem[Bauer \harvardand\ Swanson]{M.~D. Bauer \harvardand\ E.~T.
-  Swanson}{2023}{bauer2023}
-{\bf Bauer, M.~D., and E.~T. Swanson.} 2023. ``A Reassessment of Monetary
-  Policy Surprises and High-Frequency Identification.'' {\em NBER
+  Swanson}{2023{\em a}}{bauer2023aer}
+{\bf Bauer, M.~D., and E.~T. Swanson.} 2023{\em a}. ``An Alternative
+  Explanation for the `Fed Information Effect'.'' {\em American Economic
+  Review}, 113(3):~664--700.
+
+\harvarditem[Bauer \harvardand\ Swanson]{M.~D. Bauer \harvardand\ E.~T.
+  Swanson}{2023{\em b}}{bauer2023}
+{\bf Bauer, M.~D., and E.~T. Swanson.} 2023{\em b}. ``A Reassessment of
+  Monetary Policy Surprises and High-Frequency Identification.'' {\em NBER
   Macroeconomics Annual 2022}, 37:~87--155.
 
 \harvarditem[Bernanke \harvardand\ Kuttner]{B.~S. Bernanke \harvardand\ K.~N.
@@ -85,6 +91,12 @@
 {\bf Caballero, R.~J., T.~E. Caravello, and A. Simsek.} 2026. ``FCI-star.''
   {\em NBER Working Paper 33952 (version of January 12, 2026)}.
 
+\harvarditem[Caldara \harvardand\ Herbst]{D. Caldara \harvardand\ E.
+  Herbst}{2019}{caldara2019}
+{\bf Caldara, D., and E. Herbst.} 2019. ``Monetary Policy, Real Activity, and
+  Credit Spreads: Evidence from Bayesian Proxy SVARs.'' {\em American Economic
+  Journal: Macroeconomics}, 11(1):~157--192.
+
 \harvarditem[Dudley \harvardand\ Hatzius]{W. Dudley \harvardand\ J.
   Hatzius}{2000}{dudley2000}
 {\bf Dudley, W., and J. Hatzius.} 2000. ``The Goldman Sachs Financial
@@ -98,6 +110,17 @@
   Reserve System International Finance Discussion Paper 568.
   doi:10.17016/ifdp.1996.568. Published in Oxford Bulletin of Economics and
   Statistics 58(4), 765--790, doi:10.1111/j.1468-0084.1996.mp58004009.x.
+
+\harvarditem[Gertler \harvardand\ Karadi]{M. Gertler \harvardand\ P.
+  Karadi}{2015}{gertler2015}
+{\bf Gertler, M., and P. Karadi.} 2015. ``Monetary Policy Surprises, Credit
+  Costs, and Economic Activity.'' {\em American Economic Journal:
+  Macroeconomics}, 7(1):~44--76.
+
+\harvarditem[Gilchrist \harvardand\ Zakraj\v{s}ek]{S. Gilchrist \harvardand\ E.
+  Zakraj\v{s}ek}{2012}{gilchrist2012}
+{\bf Gilchrist, S., and E. Zakraj\v{s}ek.} 2012. ``Credit Spreads and Business
+  Cycle Fluctuations.'' {\em American Economic Review}, 102(4):~1692--1720.
 
 \harvarditem[G\"urkaynak, Sack \harvardand\ Swanson]{R.~S. G\"urkaynak, B. Sack
   \harvardand\ E.~T. Swanson}{2005}{gurkaynak2005}
@@ -117,6 +140,18 @@
   ``Financial Conditions Indexes: A Fresh Look after the Financial Crisis.''
   {\em NBER Working Paper 16150; also in U.S. Monetary Policy Forum Report},
   2010:~3--59.
+
+\harvarditem[Holston, Laubach \harvardand\ Williams]{K. Holston, T. Laubach
+  \harvardand\ J.~C. Williams}{2017}{holston2017}
+{\bf Holston, K., T. Laubach, and J.~C. Williams.} 2017. ``Measuring the
+  Natural Rate of Interest: International Trends and Determinants.'' {\em
+  Journal of International Economics 108, S59--S75}.
+
+\harvarditem[Holston, Laubach \harvardand\ Williams]{K. Holston, T. Laubach
+  \harvardand\ J.~C. Williams}{2023}{holston2023}
+{\bf Holston, K., T. Laubach, and J.~C. Williams.} 2023. ``Measuring the
+  Natural Rate of Interest after COVID-19.'' {\em Federal Reserve Bank of New
+  York Staff Report 1063}.
 
 \harvarditem[Kiley]{M.~T. Kiley}{2020}{kiley2020ml}
 {\bf Kiley, M.~T.} 2020. ``Financial Conditions and Economic Activity: Insights
