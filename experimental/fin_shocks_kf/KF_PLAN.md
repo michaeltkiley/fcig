@@ -1,6 +1,6 @@
 # Plan: Note B as a state-space model estimated with the Kalman filter
 
-13 Nov 2026. Proposal for the user; nothing built yet. Decisions go to `KF_QA.md`.
+13 Nov 2026. Stage 1 done (section 6); stage 2 awaits KF-Q4. Decisions go to `KF_QA.md`.
 Source for the Note B model: `../fin_shocks/baseline/lib/model.py` and `lib/daily.py` [verified: read in full 13 Nov 2026]; baseline cases `../fin_shocks/baseline/cases.py` panel B.
 
 ## 1. The Note B model in equations (what is to be replicated)
@@ -56,3 +56,9 @@ Computation [inference]: with finance observed daily from 1996, only the macro p
 2. Stage 1 for the r*-gap case with the FCI, 12 lags: state-space build, likelihood equals OLS, responses equal Note B's point estimates.
 3. Stage 1 inference and the rest of panel B (nominal, real; with and without the FCI; 3/6/12 lags).
 4. Stage 2: K1 first, then K2, K4, K3 (or the user's order). Each reported against stage 1 on the same cases.
+
+## 6. Stage 1 result (13 Nov 2026) [verified]
+`02_stage1.py` (500 draws, 18 runs = 6 cases x 3 lag lengths; about 10 minutes on 4 cores). Results `results/stage1_*.csv`, comparison `results/stage1_vs_noteb.csv`, checks `results/stage1_checks.csv`.
+- **Estimation:** EM on the state space, started from zero coefficients, converges in one step to equation-by-equation OLS (largest coefficient difference 9e-12); the Kalman-filter log-likelihood equals the closed-form Gaussian log-likelihood to 1e-8 in all 18 runs.
+- **Responses and intervals:** the unemployment and price-level paths (h = 0 to 36), their 5th and 95th bootstrap percentiles, all equal Note B's stored paths to within 5e-5, the rounding of Note B's files (4 decimals), in all 18 runs. Example, r*-gap with the FCI, 12 lags: unemployment +0.34 [-0.05, 0.76] at 12 months, +0.50 [0.01, 0.95] at 24; price level -0.81 [-1.23, -0.33] at 24.
+- **Reading:** the new code (data, calendar, event positions, window impact, filter, smoother, the full daily state for the responses, bootstrap) reproduces Note B. Stage 2 starts from a model known to equal Note B.

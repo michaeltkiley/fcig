@@ -4,10 +4,24 @@ One decision at a time. KF-Q = question (proposal), KF-A = the user's answer.
 
 **KF-A0 (13 Nov 2026, user instruction). [decided]** New directory for experimental work on Note B with completely separate code (no overlap with `../fin_shocks/`). First replicate Note B with a Kalman-filter (state-space) mixed-frequency model, same form and restrictions where possible; then relax the restrictions the MIDAS form needs and the state space does not.
 
-**KF-Q1 (open). Inputs and separation.** Proposal: copy the raw inputs Note B reads (`../fin_shocks/baseline/data/`, about 2 MB) into `data/` here, and take Note A's monthly indexes, the market weights and r* as **frozen data inputs** (copied from `../fin_shocks/baseline/output/`, checksums recorded), not rebuilt. All code is new; nothing is imported from `../fin_shocks/`. Alternative: rebuild Note A's indexes with new code too (more work; no new information for this exercise).
+**KF-Q1. Inputs and separation.** Proposal: copy the raw inputs Note B reads (`../fin_shocks/baseline/data/`, about 2 MB) into `data/` here, and take Note A's monthly indexes, the market weights and r* as **frozen data inputs** (copied from `../fin_shocks/baseline/output/`, checksums recorded), not rebuilt. All code is new; nothing is imported from `../fin_shocks/`. Alternative: rebuild Note A's indexes with new code too (more work; no new information for this exercise).
 
-**KF-Q2 (open). Inference in stage 1.** Proposal: the same 12-month block bootstrap as Note B (500 draws), so that the replication covers intervals as well as point estimates. KF-native inference (a posterior from a Gibbs sampler with a simulation smoother, or the inverse Hessian) would come in stage 2, where latent states make the bootstrap expensive.
+**KF-Q2. Inference in stage 1.** Proposal: the same 12-month block bootstrap as Note B (500 draws), so that the replication covers intervals as well as point estimates. KF-native inference (a posterior from a Gibbs sampler with a simulation smoother, or the inverse Hessian) would come in stage 2, where latent states make the bootstrap expensive.
 
-**KF-Q3 (open). Stage-1 scope.** Proposal: the r*-gap case with the FCI at 12 lags first (to machine precision on point estimates), then the rest of panel B (nominal, real, r*-gap; with and without the FCI; 3/6/12 lags). Robustness panels not replicated unless asked.
+**KF-Q3. Stage-1 scope.** Proposal: the r*-gap case with the FCI at 12 lags first (to machine precision on point estimates), then the rest of panel B (nominal, real, r*-gap; with and without the FCI; 3/6/12 lags). Robustness panels not replicated unless asked.
 
-**KF-Q4 (open, for stage 2). Order of relaxations and the form of K1.** See `KF_PLAN.md` section 4. To be taken up after stage 1.
+**KF-A1 (13 Nov 2026, user: 'Yes' to KF-Q1 to Q3). [decided]** (1) Raw inputs copied into `data/`; Note A's monthly indexes, market weights and r* frozen as data (`data/frozen/`), checksums in `data/SOURCES.md`; all code new. (2) Stage-1 inference: the same 12-month block bootstrap, 500 draws. (3) Stage-1 scope: r*-gap with the FCI at 12 lags first, then panel B (nominal, real, r*-gap; with and without the FCI; 3/6/12 lags).
+
+**KF-R1 (13 Nov 2026). [result]** Stage 1 reproduces Note B exactly: EM converges in one step to OLS; the Kalman log-likelihood equals the closed form; all response paths and 5th/95th percentiles equal Note B's files to their 4-decimal rounding in all 18 runs (`KF_PLAN.md` section 6).
+
+**KF-Q4 (open). The form of K1, the first relaxation.** Proposal: **latent daily macro that nests Note B exactly.**
+- Within month t, the daily latent macro moves with the day's financial move: m_tau = m_{tau-1} + Gamma (f_tau - f_{tau-1}) + nu_tau (nu small daily noise, variance estimated).
+- On the first day of each month the level is set by Note B's monthly equation, with the observed monthly averages as lags: m = c_m + sum A_l mbar_{t-l} + sum G_l fbar_{t-l} + e_t.
+- Observation: the monthly data are the monthly averages of the daily latent series (u a stock averaged over the month; pi the average of the daily annualised rate), so they fit Note B's definitions.
+- The daily block conditions on yesterday's latent macro m_{tau-1} (what has happened so far) in place of the month's final value m_t (relaxes M3), with the previous month's average as Note B's second macro term.
+- With Gamma = 0 and nu = 0 the latent series is constant within the month, and the model is exactly Note B (M1, M2, M3 restored). So the relaxation is one set of parameters (Gamma, var nu) with a known null.
+- What identifies Gamma: an announcement early in the month moves more of that month's average than one late in the month, so the monthly macro surprises co-move with the within-month timing of financial moves. Identifying assumption, stated plainly: within a day, finance moves first (same-day macro news that moves finance is attributed to Gamma).
+- Size: latent state about 2(L+1) + 2 elements; the filter is fast. Inference cannot use Note B's bootstrap of daily rows (resampled rows are not a time series), so it needs a choice (KF-Q5, after this one): I would propose a Gibbs sampler with a simulation smoother and flat priors on the Note B coefficients, reporting 90 percent posterior intervals.
+Alternative: K1 without the Gamma channel (only M3 relaxed: daily block conditions on the filtered latent macro). Smaller, but leaves the macro-first restriction in place, which is the one the state space is best placed to test.
+
+**KF-Q6 (later). Order after K1.** Proposal: K4 (long sample without splicing), then K2 (joint estimation, correlated innovations, measurement error), then K3 (exact calendar).
