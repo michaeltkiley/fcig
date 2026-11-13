@@ -23,7 +23,11 @@ CAL = d2.index                                      # trading-day calendar (days
 lev = pd.read_csv(DATA / "gs_daily_levels.csv", parse_dates=["date"]).set_index("date")         # daily CAPE and dollar levels (see data/SOURCES.md)
 DAILY = pd.DataFrame({"y2": d2, "y10": d10}, index=CAL)
 DAILY["idx"] = (W["y10"] * d10 + W["equities"] * 100 * np.log(lev.x_cape) + W["dollar"] * 100 * np.log(lev.x_usd)).reindex(CAL)
-DAILY = DAILY.ffill(limit=3)                        # DAILY.idx = the nominal market index at daily frequency
+W_JK = pd.read_csv(OUT / "market_weights_jk.csv", index_col=0).weight              # weights estimated on the Jarocinski-Karadi subset (robustness)
+DAILY["idx_jk"] = (W_JK["y10"] * d10 + W_JK["equities"] * 100 * np.log(lev.x_cape) + W_JK["dollar"] * 100 * np.log(lev.x_usd)).reindex(CAL)
+DAILY = DAILY.ffill(limit=3)                        # DAILY.idx = the nominal market index at daily frequency (idx_jk: with the Jarocinski-Karadi-subset weights)
+_baa = fred_daily("DBAA")
+BAA = (_baa - d10).reindex(CAL).ffill(limit=3)     # daily Moody's Baa yield less the 10-year Treasury yield, pp (robustness: credit)
 
 POL = d2.reindex(CALW).ffill(limit=3)               # daily 2-year yield on the weekday calendar
 MON = CALW.to_period("M")
@@ -36,6 +40,7 @@ EV["p"] = EV.d.map(POS)
 EV["n"] = [NB.iloc[int(p)] if pd.notna(p) else np.nan for p in EV.p]                                                      # trading days in the event month
 EV["k"] = [int((MONTH.iloc[:int(p) + 1] == MONTH.iloc[int(p)]).sum()) - 1 if pd.notna(p) else np.nan for p in EV.p]      # position of the event day in its month
 EV["idx_win"] = W["y10"] * EV.UST10Y + W["equities"] * EV.SP500 + W["dollar"] * EV.DXY                                    # index change in the window
+EV["idx_win_jk"] = W_JK["y10"] * EV.UST10Y + W_JK["equities"] * EV.SP500 + W_JK["dollar"] * EV.DXY                       # the same with the Jarocinski-Karadi-subset weights
 GOOD = (EV.p.notna() & (EV.p >= 1) & (EV.p + WINDOW_DAYS < len(CAL)) & (EV.d >= "1996-01-01")).values
 
 # ---------------------------------------------------------------- alternative surprises (robustness): the model reads the surprise from EV.ns
@@ -52,12 +57,20 @@ def event_index():
     """Announcements used: inside the daily calendar with a full window, from January 1996 (the first announcement with all window variables), with a policy-news value (252)."""
     return np.where(GOOD & ~EV.ns.isna().values)[0]
 
-def window_impact(idx):
+def window_impact(idx, col="idx_win"):
     """Window response per unit shock: OLS slope on the shock of the 30-minute change in the 2-year yield (scaling variable) and in the market index.
     Returns [2-year, index] scaled so that the 2-year moves +1 pp; the index entry is the index's window move per +1 pp on the 2-year."""
     s = EV.ns.values[idx]; ok = ~np.isnan(s); idx = idx[ok]; x = s[ok] - s[ok].mean()
     slope = lambda col: float(np.sum((EV[col].values[idx] - EV[col].values[idx].mean()) * x) / np.sum(x * x))
-    return np.array([1.0, slope("idx_win") / slope("UST2Y")])
+    return np.array([1.0, slope(col) / slope("UST2Y")])
+
+def baa_impact(idx):
+    """Announcement-day response of the Baa-10-year spread per +1 pp on the 2-year yield in the window: OLS slope on the surprise of the one-day change in the spread
+    (close before to close of the announcement day; the spread has no intraday series) over the window slope of the 2-year yield."""
+    s = EV.ns.values[idx]; ok = ~np.isnan(s); idx = idx[ok]; x = s[ok] - s[ok].mean()
+    b = BAA.values; pp = EV.p.values[idx].astype(int); y = b[pp] - b[pp - 1]; g = ~np.isnan(y)
+    num = float(np.sum((y[g] - y[g].mean()) * x[g]) / np.sum(x[g] ** 2))
+    y2 = EV.UST2Y.values[idx]; return num / float(np.sum((y2 - y2.mean()) * x) / np.sum(x * x))
 
 def window_impact_components(idx):
     """Window response of the three weighted components of the market index (10-year yield, equity valuation, dollar), per +1 pp on the 2-year yield:

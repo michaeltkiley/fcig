@@ -29,18 +29,22 @@ def _read_monthly(name):
 D0, M0 = _read_monthly("data_monthly.csv"), _read_monthly("macro_monthly.csv")
 MAC = pd.DataFrame({"u": M0.u_gap, "pi": M0.pi_core, "ebp": M0.ebp})
 IDXM = {"nom": _read_monthly("indexes_nominal.csv").market, "real": _read_monthly("indexes_real.csv").market,
-        "rstar": _read_monthly("indexes_rstar.csv").market, "kiley": _read_monthly("indexes_rstar_kiley.csv").market}
+        "rstar": _read_monthly("indexes_rstar.csv").market, "kiley": _read_monthly("indexes_rstar_kiley.csv").market,
+        "jkw": _read_monthly("indexes_rstar_jkw.csv").market}        # r*-gap index with weights estimated on the Jarocinski-Karadi subset (robustness)
 
 # ---------------------------------------------------------------- daily rate forms and daily FCIs
 _e2 = fred_daily("EXPINF2YR"); _e2 = pd.Series(_e2.values, index=_e2.index.to_period("M"))     # Cleveland Fed 2-year expected inflation
 RATE = {"nom": POL, "real": POL - interp_monthly(_e2),
         "rstar": POL - interp_monthly(_e2 + D0["rstar LW"]), "kiley": POL - interp_monthly(_e2 + D0["rstar Kiley"])}
 _nomd = DAILY["idx"].reindex(CALW).ffill(limit=3)
-def _daily_fci(target):
+def _daily_fci(target, nomd=_nomd):
     """Daily nominal index plus a smooth offset (interpolated between mid-months) so that its monthly average equals the monthly index in the stated step."""
-    off = (target - _nomd.groupby(_nomd.index.to_period("M")).mean()).dropna()
-    return _nomd + interp_monthly(off)
-FCI = {k: _daily_fci(v) for k, v in IDXM.items()}
+    off = (target - nomd.groupby(nomd.index.to_period("M")).mean()).dropna()
+    return nomd + interp_monthly(off)
+FCI = {k: _daily_fci(v) for k, v in IDXM.items() if k != "jkw"}
+FCI["jkw"] = _daily_fci(IDXM["jkw"], DAILY["idx_jk"].reindex(CALW).ffill(limit=3))
+# Robustness (credit): fci = "baa" adds the daily Baa-10-year spread to the daily block next to the FCI of the same step; its announcement-day response is its impact.
+BAAD = _daily.BAA.reindex(CALW).ffill(limit=3)
 
 # The three weighted components of the index (weight x demeaned input), monthly and daily, in each step (used only when the FCI is replaced by its components).
 CMPKEYS = ["y10", "equities", "dollar"]; CMPNAMES = ["y10", "eq", "usd"]
@@ -80,12 +84,13 @@ RATEM = {"nom": Y2M, "real": Y2M - _e2m, "rstar": Y2M - _e2m - D0["rstar LW"], "
 def daily_frame(form, fci):
     """fci: 0 (none), a step name (Note A's index in that step) or "cmp" (the index replaced by its three weighted components in the same step as the rate)."""
     if fci in CMPGROUPS: return pd.DataFrame({"pol": RATE[form], **cmp_cols(fci, CMPD[form])})
+    if fci == "baa": return pd.DataFrame({"pol": RATE[form], "idx": FCI[form], "baa": BAAD})
     return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[fci]} if fci else {})})
 
 def fin_monthly(form, fci):
     """Monthly averages of the daily block; months without daily data filled from the monthly series."""
     FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean()
-    ext = pd.DataFrame({"pol": RATEM[form], **(cmp_cols(fci, CMPM[form]) if fci in CMPGROUPS else {"idx": IDXM[fci]} if fci else {})})
+    ext = pd.DataFrame({"pol": RATEM[form], **(cmp_cols(fci, CMPM[form]) if fci in CMPGROUPS else {"idx": IDXM[form]} if fci == "baa" else {"idx": IDXM[fci]} if fci else {})})
     FB = FB.combine_first(ext)
     A = agg_matrix(fci)
     if A is not None: FB = pd.DataFrame(FB.values @ A.T, index=FB.index, columns=["pol"] + [f"g{i}" for i in range(A.shape[0] - 1)])
@@ -100,6 +105,8 @@ def impact(fci, idx):
     if fci in CMPGROUPS:
         w = window_impact_components(idx)[1:]; pos = {k: i for i, k in enumerate(CMPKEYS)}
         return np.r_[1.0, [sum(w[pos[k]] for k in g) for g in CMPGROUPS[fci]]]
+    if fci == "baa": return np.r_[window_impact(idx), _daily.baa_impact(idx)]
+    if fci == "jkw": return window_impact(idx, "idx_win_jk")
     wi = window_impact(idx)
     return wi if fci else wi[:1]
 
@@ -232,7 +239,7 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
     (fixed design) and daily rows (moving blocks of 66 days) resampled independently (the earlier default). Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd), e0."""
     boot = boot or BOOT; mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
     idx0, pos0, bidx, bpos = events(B); Xd, Yd, dmon, ddate = har_rows(form, fci, mvars, end, t2020, months=True, dates=True); Bd0 = har_fit(Xd, Yd, fci)
-    two = fci not in (0,) and fci not in CMPGROUPS                                      # yield plus FCI: also compute path B (same model, ordinary FCI movement)
+    two = fci not in (0, "baa") and fci not in CMPGROUPS                                      # yield plus FCI: also compute path B (same model, ordinary FCI movement)
     if two: isev = np.isin(ddate, _daily.EV.d.values); ord0 = ordinary_loading(Xd, Yd, Bd0, isev)
     if boot == "j12r":
         evm = _daily.EV.d.iloc[idx0].dt.to_period("M").values; cal = pd.period_range("1996-01", "2026-09", freq="M")

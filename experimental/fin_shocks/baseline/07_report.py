@@ -203,7 +203,7 @@ def write_numbers():
                 d("bllo:" + k, "$-\\infty$" if np.isinf(r.k_lo) else num(r.k_lo)); d("blhi:" + k, "$+\\infty$" if np.isinf(r.k_hi) else num(r.k_hi))
                 d("blsig:" + k, "bounded away from zero" if (not np.isinf(r.k_lo) and not np.isinf(r.k_hi) and r.k_lo * r.k_hi > 0) or (np.isinf(r.k_lo) != np.isinf(r.k_hi) and (r.k_hi < 0 if np.isinf(r.k_lo) else r.k_lo > 0)) else "includes zero")
     # robustness panels (12 lags): rb:<panel>:<no|yes>:<u|P>:<h> (no = same step without the FCI, yes = with it; panel R4: the FCI replaced by its components)
-    for pid in ("R1a", "R1b", "R1c", "R1d", "R1e", "R2a", "R2b", "R2c", "R2d", "R3a", "R3b", "R4", "R4b", "R5a", "R5b"):
+    for pid in ("R1a", "R1b", "R1c", "R1d", "R1e", "R2a", "R2b", "R2c", "R2d", "R3a", "R3b", "R3c", "R4", "R4b", "R5a", "R5b", "R5c", "R5d"):
         for cs in CS.panel_by_id(pid)["cases"]:
             fk = "cmp" if cs["fci"] == "cmp" else ("no" if cs["fci"] == 0 else "yes"); form_tag = f":{cs['form']}" if pid.startswith("R4") else ""
             dd = R[CS.case_id(cs)]; g_ = dd[dd.lags == MAIN_LAGS]
@@ -457,9 +457,9 @@ def rob_summary():
     """tab_rob_summary.tex: baseline and every variation (r*-gap, 12 lags): the yield alone (unemployment at 12 m) and with the FCI (unemployment and price level at 24 m); macros bl:rob:*; claims."""
     ROWS = [("B", "Baseline", ""), ("R1a", "Start 1973", "Sample"), ("R1b", "2020 dropped", ""), ("R1c", "2020 dropped, start 1973", ""), ("R1d", "Ends 2019", ""), ("R1e", "Ends 2019, start 1973", ""),
             ("R2a", "Kiley $r^*$", "The $r^*$ adjustment and trends"), ("R2b", "Kiley $r^*$, start 1973", ""), ("R2c", "Real yield and FCI, spline trend", ""), ("R2d", "Real yield and FCI, spline trend, start 1973", ""),
-            ("R3a", "Excess bond premium added", "Credit conditions"), ("R3b", "Excess bond premium added, start 1973", ""),
+            ("R3a", "Excess bond premium added", "Credit conditions"), ("R3b", "Excess bond premium added, start 1973", ""), ("R3c", "Baa spread in the daily block", ""),
             ("R4", "Three components in place of the FCI", "Weights of the FCI"), ("R4b", "Three components, start 1973", ""),
-            ("R5a", "Bauer--Swanson surprise", "The surprise"), ("R5b", "Jarocinski--Karadi surprise", "")]
+            ("R5a", "Bauer--Swanson surprise", "The surprise and information effects"), ("R5b", "Jarocinski--Karadi surprise", ""), ("R5c", "FCI weights from the Jarocinski--Karadi subset", ""), ("R5d", "Jarocinski--Karadi weights and surprise", "")]
     def row(pid, pick_fci):
         p_ = CS.panel_by_id(pid) if pid != "B" else dict(cases=[c for c in CS.PANELS[0]["cases"] if c["form"] == "rstar"])
         cs_ = [c for c in p_["cases"] if (c["fci"] == 0) == (not pick_fci) and (pid not in ("R4", "R4b") or c["form"] == "rstar")]
