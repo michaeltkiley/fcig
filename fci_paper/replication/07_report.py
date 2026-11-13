@@ -273,8 +273,10 @@ rows = []
 lab = {"baseline": "Baseline: Nakamura--Steinsson factor", "two_year": "Policy news is the 2-year yield change", "to_2019": "Announcements through 2019", "no_lower_bound": "No announcements December 2008--November 2015"}
 for k, r in WV.iterrows():
     rows.append([lab[k], f"{int(r.n)}", f(r.w_ten, 3), f(r.w_eq, 3), f(r.w_usd, 3), f(r.psi_ten, 2), f(r.psi_eq, 2), f(r.psi_usd, 2)])
+_bs = pd.read_csv(RES / "28_information.csv").set_index("case").loc["BS_orth"]
+rows.append(["Policy news is the Bauer--Swanson orthogonalized surprise (to 2019)", f"{int(_bs.n)}", f(_bs.w_ten, 3), f(_bs.w_eq, 3), f(_bs.w_usd, 3), f(_bs.psi_ten, 2), f(_bs.psi_eq, 2), f(_bs.psi_usd, 2)])
 table("wvar", "Weights under Other Policy-News Series and Event Samples", "tab:wvar", ["", "Events", "$w$ 10-year", "$w$ equities", "$w$ dollar", "$\\psi$ 10-year", "$\\psi$ equities", "$\\psi$ dollar"], rows,
-      "Weights $w$ and responses $\\psi$ as in Table~\\ref{tab:weights}, re-estimated on each sample or with the window change of the two-year yield as the policy-news measure. In each case the weights applied to the responses sum to 1.")
+      "Weights $w$ and responses $\\psi$ as in Table~\\ref{tab:weights}, re-estimated on each sample or with another policy-news measure: the window change of the two-year yield, or the surprise of \\citet{bauer2023} orthogonalized to public news before the announcement, matched to this paper's announcements through 2019 and scaled so that one unit raises the two-year yield by one percentage point. In each case the weights applied to the responses sum to 1.")
 # all VAR cases
 rows = []
 for key, r in V.iterrows():
@@ -767,7 +769,7 @@ for o_, lab in (("gdp", "Real GDP growth over the next four quarters"), ("du", "
         for nm_, r_ in (("beta", b_), ("gamma", g_), ("gmb", d_)):
             mac(f"rs:{k_}:{nm_}", r_.coef); mac(f"rs:{k_}:{nm_}:lo", r_.lo90); mac(f"rs:{k_}:{nm_}:hi", r_.hi90)
 table("comp", "Does the Composition of a Tightening Help Predict Activity?", "tab:comp", ["", "$n$", "Market reading, $\\beta$", "Market reading sufficient: $\\gamma=0$", "FRB/US reading sufficient: $\\gamma-\\beta=0$"], rows,
-      "Local projections of four-quarter-ahead real GDP growth (quarterly) and of the 12-month-ahead change in the unemployment gap (monthly) on own lags and $\\beta M+\\gamma D$, where $M$ is the 12-month change of the futures-factor market reading and $D$ the FRB/US reading of the same asset changes less $M$, both on the common scale. Brackets are 90 percent intervals (HAC, joint covariance of the coefficients); * marks a restriction rejected at the 10 percent level. If the market reading is a sufficient summary, $\\gamma=0$; if the FRB/US reading $M+D$ is, $\\gamma=\\beta$. The market weights are treated as known. A failure to reject is not evidence for either reading.", align="lrccc", small=False)
+      "Local projections of four-quarter-ahead real GDP growth (quarterly) and of the 12-month-ahead change in the unemployment gap (monthly) on own lags and $\\beta M+\\gamma D$, where $M$ is the 12-month change of the futures-factor market reading and $D$ the FRB/US reading of the same asset changes less $M$, both on the common scale. Brackets are 90 percent intervals (HAC, joint covariance of the coefficients); * marks a restriction rejected at the 10 percent level. If the market reading is a sufficient summary, $\\gamma=0$; if the FRB/US reading $M+D$ is, $\\gamma=\\beta$. The market weights are treated as known.", align="lrccc", small=False)
 mac("rs:nrej:gamma", float(RS19[(RS19.term == "gamma")].reject_hac90.sum()), 0); mac("rs:nrej:gmb", float(RS19[(RS19.term == "gamma_minus_beta")].reject_hac90.sum()), 0); mac("rs:ntests", float(len(RS19[RS19.term == "gamma"])), 0)
 def sdc(tgt, smp, comp, term="D"):
     return SD19[(SD19.target == tgt) & (SD19["sample"] == smp) & (SD19.component == comp) & (SD19.term == term)].iloc[0]
@@ -1369,6 +1371,44 @@ chk(rs("du", "main", "gamma").lo90 < 0 < rs("du", "main", "gamma").hi90 and rs("
 chk(rs("du", "1996+", "gamma_minus_beta").hi90 < 0 and num("rs:nrej:gamma") == 0 and num("rs:nrej:gmb") == 2, "1996+: model restriction rejected; market restriction never; model rejected in 2 of 12")
 chk(sdc("unemployment", "all", "forecast").lo90 < 0 < sdc("unemployment", "all", "forecast").hi90 and sdc("unemployment", "all", "realized").hi90 < 0 and sdc("unemployment", "all", "error").hi90 < 0 and sdc("gdp", "all", "error").coef > 0, "SPF: D predicts realized and error, not the forecast; GDP error positive")
 chk(abs(num("ce:2022:D")) < 0.05 and num("br:ep2022:gap") > 0.5 and num("br:ep1998:gap") > 1, "episodes: 2022-24 D near zero with a gap in levels; 1998-2001 gap above one")
+
+# ------------------------------------------------------------------ steps 28-31 (FP-A54 to FP-A56): every scalar becomes a macro with the step's prefix
+for scr_, pre_ in (("28_information", "inf"), ("29_credit", "cr"), ("30_fcistar", "fs"), ("31_examples", "ex")):
+    for k_, v_ in pd.read_csv(RES / f"scalars_{scr_}.csv", index_col=0)["value"].items():
+        try:
+            mac(f"{pre_}:{k_}", float(v_))
+        except ValueError:
+            mac(f"{pre_}:{k_}", str(v_))
+SC28 = pd.read_csv(RES / "28_information.csv").set_index("case")
+chk(SC28.loc["BS_orth", "dF"] < SC28.loc["F_full", "dB"] and SC28.loc["BS_orth", "fig1"] < float(pd.read_csv(RES / "scalars_28_information.csv", index_col=0)["value"]["fig1_B"]), "Bauer-Swanson weights: closer to the baseline than FRB/US is; FRB/US still gives the dollar more relative weight")
+SC30 = pd.read_csv(RES / "30_fcistar.csv")
+_lv = SC30[(SC30.form == "level")].pivot_table(index="calibration", columns="inputs", values="corr_gap")
+chk((_lv["rstar"] > _lv["rstar_fixed"]).all() and (_lv["rstar"] > _lv["real"]).all(), "FCI*: the r* step raises every calibration's level correlation with FCI-G less FCI*")
+for c_ in ("real", "rstar", "rstar_fixed"):
+    mac(f"fs:gap:{c_}:min", float(_lv[c_].min())); mac(f"fs:gap:{c_}:max", float(_lv[c_].max()))
+_c31 = pd.read_csv(RES / "scalars_31_examples.csv", index_col=0)["value"].astype(float)
+for k_ in ("yr_1980_y10", "yr_2023_y10", "lv_real_1980_y10", "lv_real_2023_y10", "lv_rstar_1980_y10", "lv_rstar_2023_y10", "yr_1980_cape", "yr_2023_cape", "jan2004_d10y", "jan2004_d2y", "jan2004_deq", "jan2004_dusd", "jan2001_deq", "jan2001_dusd"):
+    mac("ex1:" + k_, float(_c31[k_]), 1)     # one decimal for the prose
+for k_ in ("lv_nominal_diff", "lv_real_diff", "lv_rstar_diff"):
+    mac("ex1:" + k_, float(_c31[k_]), 1)
+_c28 = pd.read_csv(RES / "scalars_28_information.csv", index_col=0)["value"]
+mac("inf3:n", float(_c28["BS_orth_n"]), 0)
+for k_ in ("w_ten", "w_eq", "w_usd"):
+    mac("inf3:" + k_, float(_c28["BS_orth_" + k_]), 3)
+_c29 = pd.read_csv(RES / "scalars_29_credit.csv", index_col=0)["value"].astype(float)
+for k_ in ("ebp_d12_1996_r2", "ebp_d12_1973_r2", "ebp_level_1996_r2", "ebp_level_1973_r2", "ebp_d12_1996_r2_equities"):
+    mac("cr:pct:" + k_, 100 * float(_c29[k_]), 0)
+_d4 = SC30[(SC30.form == "d4")].pivot_table(index="calibration", columns="inputs", values="corr_gap")
+mac("fs:d4:min", float(_d4.values.min())); mac("fs:d4:max", float(_d4.values.max()))
+rows = []
+for k_, nm_ in (("F", "Market, futures factor"), ("Y", "Market, two-year yield"), ("B", "FRB/US"), ("G", "Published GS weights")):
+    r_ = []
+    for form_ in ("level", "d4"):
+        for c_ in ("rstar_fixed", "rstar"):
+            r_.append(f(float(SC30[(SC30.calibration == k_) & (SC30.form == form_) & (SC30.inputs == c_)].corr_gap.iloc[0]), 2))
+    rows.append([nm_] + r_)
+table("fcistar", "Readings and the Gap to FCI*", "tab:fcistar", ["", "Level, $r^*$ fixed", "Level, $r^*$", "4-quarter change, $r^*$ fixed", "4-quarter change, $r^*$"], rows,
+      "Correlation of each calibration's reading (quarterly mean; common scale) with the gap between FCI-G and FCI$^*$ as published by \\citet{caballero2026}, \\bl{fs:first:q} to \\bl{fs:last:q}. $r^*$: yields and valuations relative to the \\citet{laubach2003} estimate, as in the rest of the paper; $r^*$ fixed: the same series with $r^*$ held at its 1973--2026 mean. FCI-G is the 3-year-lookback version and FCI$^*$ the one-sided estimate.", align="lcccc", small=False)
 
 # ------------------------------------------------------------------ write numbers.tex and check the paper's macros
 def norm(k):

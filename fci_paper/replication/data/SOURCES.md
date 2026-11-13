@@ -19,3 +19,11 @@ A re-check against fresh downloads was attempted on 11 Nov 2026 for the FRED fil
 | `frbus_paths.csv`, `frbus_hike_paths.csv` | FRB/US simulations: GDP responses to persistent unit shifts in each variable and to a persistent 1 pp funds-rate hike | Repository (`experimental/ms_fci/frbus_paths.py`, public FRB/US package, VAR expectations) [derived; not re-run in this package] |
 
 Unverified inputs that matter most for the results: Kiley r* (robustness only), the FRB/US simulations (comparison index), the daily CAPE and GS series (GS conversion and CAPE after 1990), the Livingston Survey (expected inflation before 1982), the pre-2006 dollar splice.
+
+Added 13 Nov 2026 (FP-A54; downloaded in this session, then read only by steps 28-30):
+
+| File | Content | Source and check |
+|---|---|---|
+| `bauer_swanson_surprises.csv` | Bauer-Swanson monetary policy surprise `MPS` and orthogonalized surprise `MPS_ORTH`, 1988-2019 | michaeldbauer.com, `FOMC_Bauer_Swanson.xlsx`, sheet 'High-Freq FOMC Announcemt Surp', downloaded 13 Nov 2026 [verified: columns copied unchanged] |
+| `ebp.csv` | Gilchrist-Zakrajsek spread and excess bond premium, monthly 1973-01 to 2026-10 | Federal Reserve Board, FEDS Notes `ebp_csv.csv`, downloaded 13 Nov 2026 [verified: unchanged copy] |
+| `fcistar_results.xlsx` | FCI* (one-sided), FCI-G (3-year lookback) and output gap, quarterly 1990Q2-2024Q4, as published by Caballero, Caravello and Simsek | github.com/tcaravello/fcistar, `_results/fci_star_results.xlsx` (commit cloned 13 Nov 2026) [verified: unchanged copy] |
