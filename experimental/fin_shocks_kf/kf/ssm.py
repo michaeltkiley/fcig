@@ -38,7 +38,7 @@ def smoother(keep):
     a_s = [None] * n; P_s = [None] * n; C = [None] * (n - 1)
     a_s[-1], P_s[-1] = af[-1], Pf[-1]
     for t in range(n - 2, -1, -1):
-        J = np.linalg.lstsq(Pp[t + 1].T, (Pf[t] @ T[t].T).T, rcond=None)[0].T          # J = Pf_t T_t' Pp_{t+1}^+ (pseudo-inverse: Pp can be singular)
+        J = Pf[t] @ T[t].T @ np.linalg.pinv(Pp[t + 1], rcond=1e-10, hermitian=True)     # J = Pf_t T_t' Pp_{t+1}^+ (Pp is singular where states are known)
         a_s[t] = af[t] + J @ (a_s[t + 1] - ap[t + 1])
         P_s[t] = Pf[t] + J @ (P_s[t + 1] - Pp[t + 1]) @ J.T
         C[t] = P_s[t + 1] @ J.T
