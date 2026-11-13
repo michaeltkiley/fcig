@@ -139,6 +139,35 @@ mac("ord:lo", f"{np.percentile(od, 5):.2f}"); mac("ord:hi", f"{np.percentile(od,
 mac("ord:ratio", f"{bB / o0:.1f}")
 chk("ordinary day: the 90% intervals of the ordinary-day and window loadings do not overlap", np.percentile(od, 95) < np.percentile(wb, 5))
 
+# ---------------------------------------------------------------- 5. four calibrations of the weights (companion paper; same assets, events, r* step, dynamics specification, paired draws)
+FW = pd.read_csv(DD.DATA / "four_weights.csv", index_col=0)
+def dr(c): return np.load(OUT / "draws" / f"{CS.case_id(c)}_L12.npz")
+z0 = dr(cB0); lines = []; W4 = {}
+for k, lab in (("F", "Market, futures factor (baseline)"), ("Y", "Market, two-year yield"), ("B", "FRB/US"), ("G", "Goldman Sachs, published")):
+    c = cB if k == "F" else dict(form="rstar", fci=f"cal{k}", **base); z = dr(c); r = res(c)
+    sh_ = z["sd"][:, 24, 0] - z0["sd"][:, 24, 0]; sh0 = z["s0"][24, 0] - z0["s0"][24, 0]
+    w_ = FW.loc[k]; ratio = (w_["dollar"] * 3.9) / (-w_["equities"] * 5.0)
+    W4[k] = dict(u=r.loc["u"].r24, P=r.loc["P"].r24, ord=float(z["ord0"]), sh=sh0, shlo=np.percentile(sh_, 5), shhi=np.percentile(sh_, 95), usig=r.loc["u"].lo24 * r.loc["u"].hi24 > 0, Psig=r.loc["P"].lo24 * r.loc["P"].hi24 > 0, ratio=ratio,
+                 bF=M.impact(c["fci"], idx0)[1])
+    t = W4[k]
+    lines.append(f"{lab} & {t['ratio']:.2f} & {t['bF']:.2f} & {t['ord']:.2f} & {num(t['u'])}{star(r.loc['u'], 24)} & {num(t['P'])}{star(r.loc['P'], 24)} & {num(t['sh'])} [{num(t['shlo'])}, {num(t['shhi'])}]" + r"\\")
+    for kk in ("u", "P", "ord", "sh", "shlo", "shhi", "bF"): mac(f"w4:{k}:{kk}", num(t[kk]) if kk not in ("ord", "bF") else f"{t[kk]:.2f}")
+    mac(f"w4:{k}:ratio", f"{t['ratio']:.1f}")
+(REPORT / "tab_weights4.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{Four Calibrations of the Index Weights ($r^*$-Gap Yield and FCI; 12 Lags)}\label{tab:weights4}", FIT,
+    r"\begin{tabular}{lcccccc}\toprule & Dollar relative & Window & Ordinary-day & \multicolumn{2}{c}{Yield and FCI, 24 m} & Shift in unemployment\\ \cmidrule(lr){5-6}",
+    r"Weights & to equities & loading & loading & Unemployment & Price level & from adding the FCI, 24 m\\ \midrule", *lines, r"\bottomrule\end{tabular}}",
+    r"\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window, 1996--2026. Each row builds the index from the same three $r^*$-gap series with the weights of one calibration in the companion paper \citep{fcinote}: market weights estimated with the futures factor or the two-year yield as the policy signal, FRB/US funds-rate equivalents, and the published Goldman Sachs weights; all are scaled to the same policy-news direction. Dollar relative to equities: the weight on a 3.9 percent dollar appreciation relative to that on a 5 percent fall in stock valuations. Ordinary-day loading: the FCI movement that accompanies a 1 pp rise in the yield on days without an announcement. Shift: the response with the FCI minus the response with the yield alone (same draws), with its 90 percent interval. $^{**}$ and $^{*}$: the 95 and 90 percent intervals exclude zero.\end{flushleft}", r"\end{table}"]) + "\n")
+shs = [W4[k]["sh"] for k in "FYBG"]; mac("w4:shmin", num(min(shs))); mac("w4:shmax", num(max(shs)))
+mac("w4:umin", num(min(W4[k]["u"] for k in "FYBG"))); mac("w4:umax", num(max(W4[k]["u"] for k in "FYBG")))
+mac("w4:Pmin", num(min(W4[k]["P"] for k in "FYBG"))); mac("w4:Pmax", num(max(W4[k]["P"] for k in "FYBG")))
+mac("w4:ordmin", f"{min(W4[k]['ord'] for k in 'FYBG'):.2f}"); mac("w4:ordmax", f"{max(W4[k]['ord'] for k in 'FYBG'):.2f}")
+W4C = W4
+chk("four calibrations: the unemployment shift from adding the FCI is positive with a 90% interval excluding zero under every weighting", all(W4[k]["shlo"] > 0 for k in "FYBG"))
+chk("four calibrations: unemployment rises and the price level falls significantly (10%) at 24 m under every weighting", all(W4[k]["u"] > 0 and W4[k]["P"] < 0 and W4[k]["Psig"] for k in "FYBG"))
+chk("four calibrations: the window loading is 0.99 under every weighting (common normalization) and the ordinary-day loading is below 0.7", all(abs(W4[k]["bF"] - 0.99) < 0.01 and W4[k]["ord"] < 0.7 for k in "FYBG"))
+chk("four calibrations: the two-year-yield market weighting has the largest ordinary-day loading and the smallest shift", W4["Y"]["ord"] == max(W4[k]["ord"] for k in "FYBG") and W4["Y"]["sh"] == min(W4[k]["sh"] for k in "FYBG"))
+chk("four calibrations: dollar-to-equity ratios match the companion paper (1.00, 2.06, 2.51, 0.96)", np.allclose([W4[k]["ratio"] for k in "FYBG"], [0.995, 2.060, 2.513, 0.955], atol=0.01))
+
 (REPORT / "numbers_rev.tex").write_text("\n".join(ML) + "\n")
 from lib import latex_style as LST
 LST.restyle_dir(REPORT)

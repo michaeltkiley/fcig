@@ -469,11 +469,12 @@ def rob_summary():
         r = d[d["var"] == v].iloc[0]; return r[f"r{h}"], stars(r, h), r
     lines = []; cnt = dict(Pneg=0, Psig5=0, Psig10=0, upos=0, usig10=0, usig5=0, n=0, no_uneg=0, no_n=0); res = {}
     for pid, lab, grp in ROWS:
-        if grp: lines.append(r"\addlinespace" + rf"\multicolumn{{4}}{{l}}{{\textit{{{grp}}}}}\\")
+        if grp: lines.append(r"\addlinespace" + rf"\multicolumn{{5}}{{l}}{{\textit{{{grp}}}}}\\")
         w, no = row(pid, True), row(pid, False)
         cells = []
-        if no is not None: x, st, _ = cellv(no, "u", 12); cells.append(num(x) + st)
-        else: cells.append("--")
+        if no is not None:
+            for h_ in (12, 24): x, st, _ = cellv(no, "u", h_); cells.append(num(x) + st)
+        else: cells += ["--", "--"]
         for v in ("u", "P"):
             x, st, r = cellv(w, v, 24); cells.append(num(x) + st)
         lines.append(f"{lab} & " + " & ".join(cells) + r"\\")
@@ -483,8 +484,8 @@ def rob_summary():
             cnt["Pneg"] += xP < 0; cnt["Psig5"] += sP == "$^{**}$"; cnt["Psig10"] += sP != ""; cnt["upos"] += xu > 0; cnt["usig10"] += su != ""; cnt["usig5"] += su == "$^{**}$"
             xn = res[pid]["no_u12"][0]; cnt["no_n"] += 1; cnt["no_uneg"] += xn < 0
     out = [r"\begin{table}[H]\centering\small", r"\caption{The baseline and the robustness variations ($r^*$-gap two-year yield; 12 lags)}\label{tab:robsummary}",
-           r"\begin{tabular}{lccc}\toprule & Yield alone & \multicolumn{2}{c}{Yield and FCI}\\ \cmidrule(lr){2-2}\cmidrule(lr){3-4} & Unemployment, 12 m & Unemployment, 24 m & Price level, 24 m\\ \midrule", *lines, r"\bottomrule\end{tabular}",
-           r"\par\smallskip\parbox{0.9\linewidth}{\scriptsize Per +1 pp on the two-year yield; unemployment gap in percentage points, price level in percent. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero). The variations are described in Sections 4 and 5; Appendix Tables give each at 12, 24 and 36 months and at 3, 6 and 12 lags. The three-component rows replace the FCI, so they have no yield-alone entry.}", r"\end{table}"]
+           r"\begin{tabular}{lcccc}\toprule & \multicolumn{2}{c}{Yield alone} & \multicolumn{2}{c}{Yield and FCI}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5} & Unemployment, 12 m & Unemployment, 24 m & Unemployment, 24 m & Price level, 24 m\\ \midrule", *lines, r"\bottomrule\end{tabular}",
+           r"\par\smallskip\parbox{0.9\linewidth}{\scriptsize Per +1 pp on the two-year yield; unemployment gap in percentage points, price level in percent. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero). The variations are described in Sections 4 and 5; Appendix Tables give each at 12, 24 and 36 months and at 3, 6 and 12 lags. The yield-alone columns use the same case without the FCI; the 24-month columns give the matched comparison. The three-component rows replace the FCI, so they have no yield-alone entry.}", r"\end{table}"]
     (REPORT / "tab_rob_summary.tex").write_text("\n".join(out) + "\n")
     ml = []; dm = lambda k, v: ml.append(r"\expandafter\gdef\csname bl:rob:" + k + r"\endcsname{" + str(v) + "}")
     for k, v in cnt.items(): dm(k, v)
@@ -567,7 +568,7 @@ def standard_table(rows, fname, label, caption, extra=""):
                 r = LSR[(LSR.case == case) & (LSR["var"] == v) & (LSR.h == h)].iloc[0]; cells.append((num(r.point) + ("$^{*}$" if r.lo * r.hi > 0 else ""), f"[{num(r.lo)}, {num(r.hi)}]"))
         out += [f"{lab} & {smp} & {int(info.nobs[case])} & " + " & ".join(c[0] for c in cells) + r"\\", r" & & & " + " & ".join(rf"{{\scriptsize {c[1]}}}" for c in cells) + r"\\"]
     out += [r"\bottomrule\end{tabular}", r"\par\smallskip\parbox{0.96\linewidth}{\scriptsize Monthly data, 12 lags, constant, no trend; unemployment gap, core PCE inflation and the end-of-month policy rate (the 2-year Treasury yield, or the effective federal funds rate where stated), policy rate ordered last in the Cholesky VARs; price level = cumulated inflation/12. " 
-            + extra + r" Unit: +1 pp on the policy rate on impact. Brackets: 90\% intervals (residual bootstrap for the Cholesky VARs; exact Anderson--Rubin sets for the proxy VAR). $^{*}$ = excludes zero. Specification: baseline/lib/litstyle.py.}", r"\end{table}"]
+            + extra + r" Unit: +1 pp on the policy rate on impact. Brackets: 90\% intervals (residual bootstrap for the Cholesky VARs; exact Anderson--Rubin sets for the proxy VAR). $^{*}$ = excludes zero.}", r"\end{table}"]
     (REPORT / fname).write_text("\n".join(out) + "\n")
 _F = pd.read_csv(RESULTS / "lit_style_info.csv").query("lags == 12").set_index("case").F["proxy_2y_1996"]
 standard_table([("chol_2y_1996", "Cholesky, 2-year yield", "1996--2026"), ("proxy_2y_1996", "Proxy VAR, 2-year yield", "1996--2026")],

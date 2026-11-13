@@ -26,6 +26,9 @@ DAILY["idx"] = (W["y10"] * d10 + W["equities"] * 100 * np.log(lev.x_cape) + W["d
 W_JK = pd.read_csv(OUT / "market_weights_jk.csv", index_col=0).weight              # weights estimated on the Jarocinski-Karadi subset (robustness)
 DAILY["idx_jk"] = (W_JK["y10"] * d10 + W_JK["equities"] * 100 * np.log(lev.x_cape) + W_JK["dollar"] * 100 * np.log(lev.x_usd)).reindex(CAL)
 DAILY = DAILY.ffill(limit=3)                        # DAILY.idx = the nominal market index at daily frequency (idx_jk: with the Jarocinski-Karadi-subset weights)
+W_CAL = pd.read_csv(DATA / "four_weights.csv", index_col=0)                          # four calibrations of the companion paper (F = W)
+for _k in ("Y", "B", "G"):
+    _w = W_CAL.loc[_k]; DAILY[f"idx_cal{_k}"] = (_w["y10"] * d10 + _w["equities"] * 100 * np.log(lev.x_cape) + _w["dollar"] * 100 * np.log(lev.x_usd)).reindex(CAL).ffill(limit=3)
 _baa = fred_daily("DBAA")
 BAA = (_baa - d10).reindex(CAL).ffill(limit=3)     # daily Moody's Baa yield less the 10-year Treasury yield, pp (robustness: credit)
 
@@ -41,6 +44,8 @@ EV["n"] = [NB.iloc[int(p)] if pd.notna(p) else np.nan for p in EV.p]            
 EV["k"] = [int((MONTH.iloc[:int(p) + 1] == MONTH.iloc[int(p)]).sum()) - 1 if pd.notna(p) else np.nan for p in EV.p]      # position of the event day in its month
 EV["idx_win"] = W["y10"] * EV.UST10Y + W["equities"] * EV.SP500 + W["dollar"] * EV.DXY                                    # index change in the window
 EV["idx_win_jk"] = W_JK["y10"] * EV.UST10Y + W_JK["equities"] * EV.SP500 + W_JK["dollar"] * EV.DXY                       # the same with the Jarocinski-Karadi-subset weights
+for _k in ("Y", "B", "G"):
+    _w = W_CAL.loc[_k]; EV[f"idx_win_cal{_k}"] = _w["y10"] * EV.UST10Y + _w["equities"] * EV.SP500 + _w["dollar"] * EV.DXY
 GOOD = (EV.p.notna() & (EV.p >= 1) & (EV.p + WINDOW_DAYS < len(CAL)) & (EV.d >= "1996-01-01")).values
 
 # ---------------------------------------------------------------- alternative surprises (robustness): the model reads the surprise from EV.ns

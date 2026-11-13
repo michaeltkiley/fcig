@@ -30,7 +30,8 @@ D0, M0 = _read_monthly("data_monthly.csv"), _read_monthly("macro_monthly.csv")
 MAC = pd.DataFrame({"u": M0.u_gap, "pi": M0.pi_core, "ebp": M0.ebp})
 IDXM = {"nom": _read_monthly("indexes_nominal.csv").market, "real": _read_monthly("indexes_real.csv").market,
         "rstar": _read_monthly("indexes_rstar.csv").market, "kiley": _read_monthly("indexes_rstar_kiley.csv").market,
-        "jkw": _read_monthly("indexes_rstar_jkw.csv").market}        # r*-gap index with weights estimated on the Jarocinski-Karadi subset (robustness)
+        "jkw": _read_monthly("indexes_rstar_jkw.csv").market,
+        **{f"cal{k}": _read_monthly(f"indexes_rstar_cal{k}.csv").market for k in ("Y", "B", "G")}}     # r*-gap index under the companion paper's other calibrations        # r*-gap index with weights estimated on the Jarocinski-Karadi subset (robustness)
 
 # ---------------------------------------------------------------- daily rate forms and daily FCIs
 _e2 = fred_daily("EXPINF2YR"); _e2 = pd.Series(_e2.values, index=_e2.index.to_period("M"))     # Cleveland Fed 2-year expected inflation
@@ -41,7 +42,8 @@ def _daily_fci(target, nomd=_nomd):
     """Daily nominal index plus a smooth offset (interpolated between mid-months) so that its monthly average equals the monthly index in the stated step."""
     off = (target - nomd.groupby(nomd.index.to_period("M")).mean()).dropna()
     return nomd + interp_monthly(off)
-FCI = {k: _daily_fci(v) for k, v in IDXM.items() if k != "jkw"}
+FCI = {k: _daily_fci(v) for k, v in IDXM.items() if k != "jkw" and not k.startswith("cal")}
+for _k in ("Y", "B", "G"): FCI[f"cal{_k}"] = _daily_fci(IDXM[f"cal{_k}"], DAILY[f"idx_cal{_k}"].reindex(CALW).ffill(limit=3))
 FCI["jkw"] = _daily_fci(IDXM["jkw"], DAILY["idx_jk"].reindex(CALW).ffill(limit=3))
 # Robustness (credit): fci = "baa" adds the daily Baa-10-year spread to the daily block next to the FCI of the same step; its announcement-day response is its impact.
 BAAD = _daily.BAA.reindex(CALW).ffill(limit=3)
@@ -107,6 +109,7 @@ def impact(fci, idx):
         return np.r_[1.0, [sum(w[pos[k]] for k in g) for g in CMPGROUPS[fci]]]
     if fci == "baa": return np.r_[window_impact(idx), _daily.baa_impact(idx)]
     if fci == "jkw": return window_impact(idx, "idx_win_jk")
+    if str(fci).startswith("cal"): return window_impact(idx, f"idx_win_{fci}")
     wi = window_impact(idx)
     return wi if fci else wi[:1]
 

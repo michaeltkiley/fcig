@@ -2,7 +2,7 @@
 Every case is run without the FCI and with the FCI in the matching form. No deterministic trend except Section 4.2c-d (natural cubic spline).
 A case is (form, fci, macro, start, end, t2020, trend); see lib/model.py."""
 FORMS = {"nom": "Nominal", "real": "Real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)"}
-FCI_LABEL = {0: "none", "cmp": "components", "cmpE": "equities free", "cmpR": "index", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)", "baa": "r*-gap + Baa spread", "jkw": "r*-gap (JK weights)"}
+FCI_LABEL = {0: "none", "cmp": "components", "cmpE": "equities free", "cmpR": "index", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)", "baa": "r*-gap + Baa spread", "jkw": "r*-gap (JK weights)", "calY": "r*-gap (Y weights)", "calB": "r*-gap (FRB/US weights)", "calG": "r*-gap (GS weights)"}
 
 def pair(form, with_fci, **kw):
     """The same rate without and with the FCI."""
@@ -16,53 +16,56 @@ PANELS = [
  panel("B", "Baseline: 1996 to the present, all data in, no trend",
        "Nominal, real and r*-gap 2-year yield; the FCI is the matching index of Kiley (2026) in each case.",
        sum([pair(f, f) for f in ("nom", "real", "rstar")], [])),
- panel("R1a", "Section 4.1 (a): monthly equations start in 1973", "r*-gap only. Pre-1990 months use monthly series in place of the daily data (see lib/model.py); shocks are the 252 announcements of 1996 on.",
+ panel("R1a", "monthly equations start in 1973", "r*-gap only. Pre-1990 months use monthly series in place of the daily data; shocks are the 252 announcements of 1996 on.",
        pair("rstar", "rstar", start="1973-01")),
- panel("R1b", "Section 4.1 (b): 2020 dropped from all equations, start 1996", "r*-gap only. March to December 2020 dropped from the monthly and the daily equations.",
+ panel("R1b", "2020 dropped from all equations, start 1996", "r*-gap only. March to December 2020 dropped from the monthly and the daily equations.",
        pair("rstar", "rstar", t2020="out")),
- panel("R1c", "Section 4.1 (c): 2020 dropped from all equations, start 1973", "r*-gap only.",
+ panel("R1c", "2020 dropped from all equations, start 1973", "r*-gap only.",
        pair("rstar", "rstar", start="1973-01", t2020="out")),
- panel("R1d", "Section 4.1 (d): sample ends in December 2019, start 1996", "r*-gap only. All equations, monthly and daily.",
+ panel("R1d", "sample ends in December 2019, start 1996", "r*-gap only. All equations, monthly and daily.",
        pair("rstar", "rstar", end=2019)),
- panel("R1e", "Section 4.1 (e): sample ends in December 2019, start 1973", "r*-gap only.",
+ panel("R1e", "sample ends in December 2019, start 1973", "r*-gap only.",
        pair("rstar", "rstar", start="1973-01", end=2019)),
- panel("R2a", "Section 4.2 (a): Kiley r*, start 1996", "2-year minus expected inflation minus Kiley's r*; the FCI is the index of Kiley (2026) built with Kiley's r* (same adjustment in rate and FCI).",
+ panel("R2a", "Kiley r*, start 1996", "2-year minus expected inflation minus Kiley's r*; the FCI is the index of Kiley (2026) built with Kiley's r* (same adjustment in rate and FCI).",
        pair("kiley", "kiley")),
- panel("R2b", "Section 4.2 (b): Kiley r*, start 1973", "As 2a.", pair("kiley", "kiley", start="1973-01")),
- panel("R2c", "Section 4.2 (c): real 2-year and real FCI with a cubic spline trend, start 1996",
+ panel("R2b", "Kiley r*, start 1973", "As 2a.", pair("kiley", "kiley", start="1973-01")),
+ panel("R2c", "real 2-year and real FCI with a cubic spline trend, start 1996",
        "No r* measure: the trend is a natural cubic spline in time (knots at the sample ends and at the NBER business-cycle peaks inside the sample), estimated in every monthly equation.",
        pair("real", "real", trend="spline")),
- panel("R2d", "Section 4.2 (d): real 2-year and real FCI with a cubic spline trend, start 1973", "As 2c; knots at the NBER peaks of 1973, 1980, 1981, 1990, 2001, 2007 and 2020.",
+ panel("R2d", "real 2-year and real FCI with a cubic spline trend, start 1973", "As 2c; knots at the NBER peaks of 1973, 1980, 1981, 1990, 2001, 2007 and 2020.",
        pair("real", "real", start="1973-01", trend="spline")),
- panel("R3a", "Section 4.3 (a): excess bond premium as a third monthly variable, start 1996",
+ panel("R3a", "excess bond premium as a third monthly variable, start 1996",
        "r*-gap. Monthly system u, inflation, EBP (EBP treated like u and inflation; responses shown for u and the price level).",
        pair("rstar", "rstar", macro="u,pi,ebp")),
- panel("R3b", "Section 4.3 (b): excess bond premium as a third monthly variable, start 1973", "As 3a.",
+ panel("R3b", "excess bond premium as a third monthly variable, start 1973", "As 3a.",
        pair("rstar", "rstar", macro="u,pi,ebp", start="1973-01")),
 ]
 
-PANELS.append(panel("R3c", "Section 4 (credit): daily Baa-10-year spread in the daily block, start 1996",
+PANELS.append(panel("R3c", "daily Baa-10-year spread in the daily block, start 1996",
        "r*-gap. The daily Baa-10-year Treasury spread enters the daily block next to the 2-year yield and the FCI, and its lagged monthly average enters the monthly equations; its impact is its announcement-day change on the surprise (no intraday series).",
        pair("rstar", "baa")))
-PANELS.append(panel("R4", "Section 3.6: the FCI replaced by its three weighted components",
+PANELS.append(panel("R4", "the FCI replaced by its three weighted components",
        "The 10-year yield, equity valuation and the real dollar, each multiplied by its weight, enter the daily and monthly equations separately, in the same version as the 2-year yield; each has its own window impact. Replaces the FCI, so the same step without the FCI is the baseline row.",
        [dict(form=f, fci="cmp") for f in ("nom", "real", "rstar")]))
 
-PANELS.append(panel("R4b", "Section 3.6 (b): the FCI replaced by its three weighted components, start 1973", "As 4: monthly equations from 1973 (monthly series before 1990); the daily block is still estimated from 1996.",
+PANELS.append(panel("R4b", "the FCI replaced by its three weighted components, start 1973", "As 4: monthly equations from 1973 (monthly series before 1990); the daily block is still estimated from 1996.",
        [dict(form=f, fci="cmp", start="1973-01") for f in ("nom", "real", "rstar")]))
 
-PANELS.append(panel("R4c", "Section 3.6 (c): the components with common daily dynamics, 1996 and 1973 starts",
+PANELS.append(panel("R4c", "the components with common daily dynamics, 1996 and 1973 starts",
        "The daily block is that of the three components in all three versions, so the versions differ only in the monthly equations: one variable (the FCI built from the components), equities separately with the 10-year yield and the dollar as one variable, or all three separately.",
        [dict(form=f, fci=k, start=st) for st in ("1996-01", "1973-01") for f in ("nom", "real", "rstar") for k in ("cmpR", "cmpE")]))
-PANELS.append(panel("R5a", "Section 4.4 (a): Bauer-Swanson orthogonalized surprise", "r*-gap. The surprise is the Bauer-Swanson (2023) orthogonalized measure, available for FOMC announcements through 2019; later announcements are dropped from the window impact. Monthly equations and daily block as in the baseline.",
+PANELS.append(panel("R5a", "Bauer-Swanson orthogonalized surprise", "r*-gap. The surprise is the Bauer-Swanson (2023) orthogonalized measure, available for FOMC announcements through 2019; later announcements are dropped from the window impact. Monthly equations and daily block as in the baseline.",
        pair("rstar", "rstar", shock="bs")))
-PANELS.append(panel("R5b", "Section 4.4 (b): Jarocinski-Karadi sign-restricted surprise", "r*-gap. The Nakamura-Steinsson surprise kept only for announcements in which the 2-year yield and the S\\&P 500 move in opposite directions in the window (Jarocinski and Karadi 2020).",
+PANELS.append(panel("R5b", "Jarocinski-Karadi sign-restricted surprise", "r*-gap. The Nakamura-Steinsson surprise kept only for announcements in which the 2-year yield and the S\\&P 500 move in opposite directions in the window (Jarocinski and Karadi 2020).",
        pair("rstar", "rstar", shock="jk")))
 
-PANELS.append(panel("R5c", "Section 4.4 (c): FCI weights estimated on the Jarocinski-Karadi subset", "r*-gap. The weights of the index are estimated by the same GLS regression on the announcements in which the 2-year yield and the S\\&P 500 move in opposite directions; the surprise is the Nakamura-Steinsson surprise at all 252 announcements.",
+PANELS.append(panel("R5c", "FCI weights estimated on the Jarocinski-Karadi subset", "r*-gap. The weights of the index are estimated by the same GLS regression on the announcements in which the 2-year yield and the S\\&P 500 move in opposite directions; the surprise is the Nakamura-Steinsson surprise at all 252 announcements.",
        pair("rstar", "jkw")))
-PANELS.append(panel("R5d", "Section 4.4 (d): FCI weights and surprise both from the Jarocinski-Karadi subset", "r*-gap. As (c), with the surprise restricted to the Jarocinski-Karadi subset as in (b).",
+PANELS.append(panel("R5d", "FCI weights and surprise both from the Jarocinski-Karadi subset", "r*-gap. As (c), with the surprise restricted to the Jarocinski-Karadi subset as in (b).",
        pair("rstar", "jkw", shock="jk")))
+
+PANELS.append(panel("R6", "Four calibrations of the index weights (r*-gap)", "The FCI is built with the weights of the companion paper's other calibrations of the same three assets: market weights with the two-year yield as the policy signal (Y), FRB/US weights (B) and the published Goldman Sachs weights (G); each has its own window and ordinary-day loading. The baseline is the market weighting with the futures factor (F).",
+       [dict(form="rstar", fci=k) for k in ("calY", "calB", "calG")]))
 
 def spec(c):
     """The case as stored in the result files."""
@@ -84,11 +87,11 @@ SHORT = {"B": "", "R1a": "Start 1973", "R1b": "2020 dropped", "R1c": "2020 dropp
          "R2a": "Kiley r*", "R2b": "Kiley r*, start 1973", "R2c": "Real, spline trend", "R2d": "Real, spline trend, start 1973",
          "R3a": "EBP added", "R3b": "EBP added, start 1973", "R3c": "Baa spread in the daily block", "R4": "Components", "R4b": "Components, start 1973", "R5a": "Bauer-Swanson surprise", "R5b": "Jarocinski-Karadi surprise", "R5c": "Jarocinski-Karadi weights", "R5d": "Jarocinski-Karadi weights and surprise"}
 GROUPS = {"B": ["B"], "R1": ["R1a", "R1b", "R1c", "R1d", "R1e"], "R2": ["R2a", "R2b", "R2c", "R2d"], "R3": ["R3a", "R3b", "R3c"], "R4": ["R4", "R4b"], "R5": ["R5a", "R5b"]}
-GROUP_TITLE = {"B": "Baseline: 1996 to the present, all data in, no trend", "R1": "Section 4.1: sample (r*-gap 2-year yield and FCI)",
-               "R2": "Section 4.2: the r* adjustment and trends", "R3": "Section 4.3: excess bond premium (r*-gap)", "R4": "Section 3.6: the FCI replaced by its three weighted components", "R5": "Section 4.4: alternative surprises (r*-gap)"}
+GROUP_TITLE = {"B": "Baseline: 1996 to the present, all data in, no trend", "R1": "sample (r*-gap 2-year yield and FCI)",
+               "R2": "the r* adjustment and trends", "R3": "excess bond premium (r*-gap)", "R4": "the FCI replaced by its three weighted components", "R5": "alternative surprises (r*-gap)"}
 def panel_by_id(pid): return next(p for p in PANELS if p["id"] == pid)
 GROUP_NOTE = {"B": "Nominal, real and r*-gap 2-year yield; the FCI is the index of Kiley (2026) in the matching form in each case.",
-              "R1": "Start 1973: monthly equations from 1973, with monthly series in place of daily data before 1990 (lib/model.py). 2020 dropped: March to December 2020 removed from the monthly and daily equations (2020 values still enter as lags). Ends 2019: all equations, monthly and daily.",
+              "R1": "Start 1973: monthly equations from 1973, with monthly series in place of daily data before 1990. 2020 dropped: March to December 2020 removed from the monthly and daily equations (2020 values still enter as lags). Ends 2019: all equations, monthly and daily.",
               "R2": "Kiley r*: 2-year minus expected inflation minus Kiley's r*, with the index of Kiley (2026) built with the same r*. Real, spline trend: real 2-year and real FCI with a natural cubic spline trend (knots at the sample ends and at NBER business-cycle peaks inside the sample) in every monthly equation, in place of any r* measure.",
               "R3": "EBP added: the excess bond premium is a third monthly variable, treated like unemployment and inflation (u, inflation, EBP system); responses shown for u and the price level. Baa spread: the daily Baa-10-year spread enters the daily block next to the yield and the FCI, with its announcement-day response as impact.",
               "R5": "Bauer-Swanson: orthogonalized surprise of Bauer and Swanson (2023), announcements through 2019. Jarocinski-Karadi: Nakamura-Steinsson surprise kept when the 2-year yield and the S\\&P 500 move in opposite directions in the window. The window impact and the bootstrap use the events with a surprise.",

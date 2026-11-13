@@ -29,3 +29,11 @@ if A.exists():
         d = (a - b).abs().max(); bad += d > 1e-3; print(f"  vs Note A indexes_{name}: max abs difference {d:.5f}")
     wa = pd.read_csv(A / "market_weights.csv", index_col=0).weight; print("  vs Note A weights: max abs difference", float((wa - pd.Series(w, index=wa.index)).abs().max()))
     assert not bad, "market index differs from Note A"
+
+# Four calibrations of the same three assets (companion paper, step 26; data/four_weights.csv): F = market weights from the futures factor (this package's weights),
+# Y = market weights with the two-year yield as the policy signal, B = FRB/US weights, G = published Goldman Sachs weights; r*-gap index for each.
+FW = pd.read_csv(ROOT / "data" / "four_weights.csv", index_col=0)
+assert np.allclose(FW.loc["F"].values, w, atol=1e-6), "F weights differ from this package's weights"
+for k in ("Y", "B", "G"):
+    noteA.market_index(noteA.index_inputs(D, "rstar", "rstar LW"), FW.loc[k].values).loc[noteA.START:noteA.END].rename("market").to_csv(OUT / f"indexes_rstar_cal{k}.csv", float_format="%.4f")
+print("  four calibrations: F matches; r*-gap indexes written for Y, B, G")
