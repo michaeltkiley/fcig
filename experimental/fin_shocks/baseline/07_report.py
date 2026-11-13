@@ -459,7 +459,7 @@ def rob_summary():
             ("R2a", "Kiley $r^*$", "The $r^*$ adjustment and trends"), ("R2b", "Kiley $r^*$, start 1973", ""), ("R2c", "Real yield and FCI, spline trend", ""), ("R2d", "Real yield and FCI, spline trend, start 1973", ""),
             ("R3a", "Excess bond premium added", "Credit conditions"), ("R3b", "Excess bond premium added, start 1973", ""), ("R3c", "Baa spread in the daily block", ""),
             ("R4", "Three components in place of the FCI", "Weights of the FCI"), ("R4b", "Three components, start 1973", ""),
-            ("R5a", "Bauer--Swanson surprise", "The surprise and information effects"), ("R5b", "Jarocinski--Karadi surprise", ""), ("R5c", "FCI weights from the Jarocinski--Karadi subset", ""), ("R5d", "Jarocinski--Karadi weights and surprise", "")]
+            ("R5a", "Bauer--Swanson surprise", "The surprise"), ("R5b", "Jarocinski--Karadi surprise", "")]
     def row(pid, pick_fci):
         p_ = CS.panel_by_id(pid) if pid != "B" else dict(cases=[c for c in CS.PANELS[0]["cases"] if c["form"] == "rstar"])
         cs_ = [c for c in p_["cases"] if (c["fci"] == 0) == (not pick_fci) and (pid not in ("R4", "R4b") or c["form"] == "rstar")]
@@ -490,11 +490,11 @@ def rob_summary():
     for k, v in cnt.items(): dm(k, v)
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
     bad = []; chk = lambda name, ok: None if ok else bad.append(name); sig5 = lambda pid, k: res[pid][k][1] == "$^{**}$"; sig10 = lambda pid, k: res[pid][k][1] != ""
-    chk("with the FCI the price level at 24 m falls in every variation with the r*-gap FCI (16)", cnt["Pneg"] == cnt["n"] == 16)
-    chk("price level at 24 m: significant at 5% in 13 of 16 variations; not significant at 10% when the sample ends in 2019 (from 1996), with Kiley r* (from 1996) and with the spline trend (from 1996)", cnt["Psig5"] == 13 and cnt["Psig10"] == 13 and not any(sig10(k, "P24") for k in ("R1d", "R2a", "R2c")) and sig5("R1e", "P24"))
-    chk("with the FCI unemployment at 24 m is positive in 15 of 16, significant at 10% in 5 (2020 dropped, EBP from 1996, both alternative surprises, JK weights and surprise)", cnt["upos"] == 15 and cnt["usig10"] == 5 and all(sig10(k, "u24") for k in ("R1b", "R3a", "R5a", "R5b", "R5d")))
+    chk("with the FCI the price level at 24 m falls in every variation with the r*-gap FCI (14)", cnt["Pneg"] == cnt["n"] == 14)
+    chk("price level at 24 m: significant at 5% in 11 of 14 variations; not significant at 10% when the sample ends in 2019 (from 1996), with Kiley r* (from 1996) and with the spline trend (from 1996)", cnt["Psig5"] == 11 and cnt["Psig10"] == 11 and not any(sig10(k, "P24") for k in ("R1d", "R2a", "R2c")) and sig5("R1e", "P24"))
+    chk("with the FCI unemployment at 24 m is positive in 13 of 14, significant at 10% in 4 (2020 dropped, EBP from 1996, both alternative surprises)", cnt["upos"] == 13 and cnt["usig10"] == 4 and all(sig10(k, "u24") for k in ("R1b", "R3a", "R5a", "R5b")))
     chk("with the FCI no variation has a significantly negative unemployment response at 24 m", not any(res[k]["u24"][0] < 0 and sig10(k, "u24") for k in res if k != "B"))
-    chk("without the FCI unemployment at 12 m is negative in 14 of 16 (positive when 2020 is dropped from 1973 and when the sample from 1973 ends in 2019)", cnt["no_uneg"] == 14)
+    chk("without the FCI unemployment at 12 m is negative in 12 of 14 (positive when 2020 is dropped from 1973 and when the sample from 1973 ends in 2019)", cnt["no_uneg"] == 12)
     chk("components from 1973: price level at 12 m negative and significant at 5%", (lambda r: r.r12 < 0 and r.lo95_12 * r.hi95_12 > 0)(R[CS.case_id([x for x in CS.panel_by_id("R4b")["cases"] if x["form"] == "rstar"][0])].query("lags == 12 and `var` == 'P'").iloc[0]))
     chk("alternative surprises: price level at 24 m significant at 5%, unemployment at 10% but not 5%", all(sig5(k, "P24") and sig10(k, "u24") and not sig5(k, "u24") for k in ("R5a", "R5b")))
     chk("Kiley and spline from 1973: price level significant at 5% at 24 m", all(sig5(k, "P24") for k in ("R2b", "R2d")))
