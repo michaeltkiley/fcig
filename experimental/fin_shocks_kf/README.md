@@ -18,7 +18,7 @@ Started 13 Nov 2026. Experimental. **Completely separate code from `../fin_shock
 | `04_k1_sim.py` | Step 4: null check, K1 estimated on samples simulated from Note B's model; `output/k1_sim.csv` |
 | `02_stage1.py` | Step 2: stage 1 (panel B, 3/6/12 lags, 500 draws) and the comparison with Note B; writes `results/stage1_*` |
 
-**Status 14 Nov 2026:** stage 1 reproduces Note B exactly (`KF_PLAN.md` section 6). K1 estimated and checked against a simulated null (`KF_QA.md` KF-R3); next step waits for KF-Q7.
+**Status 14 Nov 2026: PAUSED, subject to further analysis (KF-A5).** Stage 1 reproduces Note B exactly (`KF_PLAN.md` section 6). K1 (within-month macro response) closed: not identified, the likelihood is flat (KF-R3, KF-A3). Candidates if resumed are listed in KF-A5.
 Run: `python 01_data.py && python 02_stage1.py` (about 10 minutes on 4 cores; `python 02_stage1.py 20` for a quick run).
 
 Not to be confused with the earlier state-space attempt `../fin_shocks/legacy/route_b.py` (31 Oct 2026: a daily VAR(1) in four variables, a different form from Note B, judged misspecified in `../fin_shocks/MF_DEVELOPMENT.md`). Nothing here reuses it.
