@@ -13,9 +13,12 @@ Started 13 Nov 2026. Experimental. **Completely separate code from `../fin_shock
 | `kf/ssm.py` | General Kalman filter (missing data, time-varying matrices, exogenous inputs) and RTS smoother |
 | `kf/noteb.py` | Note B as a state space on a daily clock: EM estimation, responses from the full daily state, Note B's block bootstrap |
 | `01_data.py` | Step 1: builds the inputs, checks them against Note B's files; writes `output/` |
+| `kf/k1.py`, `kf/fastkf.py` | K1: latent daily macro with a same-month channel (state space, EM/ECME, responses); compiled likelihood |
+| `03_k1_fit.py` | Step 3: K1 on the data by ECME; `output/k1_fit.log`, `output/k1_theta.npz` |
+| `04_k1_sim.py` | Step 4: null check, K1 estimated on samples simulated from Note B's model; `output/k1_sim.csv` |
 | `02_stage1.py` | Step 2: stage 1 (panel B, 3/6/12 lags, 500 draws) and the comparison with Note B; writes `results/stage1_*` |
 
-**Status 13 Nov 2026:** stage 1 reproduces Note B exactly (`KF_PLAN.md` section 6). Stage 2 (relaxations) waits for KF-Q4.
+**Status 14 Nov 2026:** stage 1 reproduces Note B exactly (`KF_PLAN.md` section 6). K1 estimated and checked against a simulated null (`KF_QA.md` KF-R3); next step waits for KF-Q7.
 Run: `python 01_data.py && python 02_stage1.py` (about 10 minutes on 4 cores; `python 02_stage1.py 20` for a quick run).
 
 Not to be confused with the earlier state-space attempt `../fin_shocks/legacy/route_b.py` (31 Oct 2026: a daily VAR(1) in four variables, a different form from Note B, judged misspecified in `../fin_shocks/MF_DEVELOPMENT.md`). Nothing here reuses it.
