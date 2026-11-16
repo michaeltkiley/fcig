@@ -2,9 +2,9 @@
 Calendar CALW: weekdays from 1972, on which the daily financial block is defined; daily series are forward-filled up to 3 days."""
 import numpy as np, pandas as pd
 from .paths import DATA, OUT
-from . import noteA
+from . import noteA, events as nbev
 
-WINDOW_DAYS = 63                                    # an event needs this many trading days after it (the longest daily path in the original design)
+WINDOW_DAYS = nbev.WINDOW_DAYS                       # an event needs this many trading days after it (the longest daily path in the original design)
 HAR = (1, 5, 22, 66)                                # averaging windows (days) of the daily HAR block
 CALW = pd.bdate_range("1972-01-03", "2026-10-30")
 
@@ -26,7 +26,7 @@ DAILY["idx"] = (W["y10"] * d10 + W["equities"] * 100 * np.log(lev.x_cape) + W["d
 W_JK = pd.read_csv(OUT / "market_weights_jk.csv", index_col=0).weight              # weights estimated on the Jarocinski-Karadi subset (robustness)
 DAILY["idx_jk"] = (W_JK["y10"] * d10 + W_JK["equities"] * 100 * np.log(lev.x_cape) + W_JK["dollar"] * 100 * np.log(lev.x_usd)).reindex(CAL)
 DAILY = DAILY.ffill(limit=3)                        # DAILY.idx = the nominal market index at daily frequency (idx_jk: with the Jarocinski-Karadi-subset weights)
-W_CAL = pd.read_csv(DATA / "four_weights.csv", index_col=0)                          # four calibrations of the companion paper (F = W)
+W_CAL = pd.read_csv(OUT / "four_weights_nb.csv", index_col=0)                        # four calibrations of the companion paper in Note B's units (written by step 2; F = W)
 for _k in ("Y", "B", "G"):
     _w = W_CAL.loc[_k]; DAILY[f"idx_cal{_k}"] = (_w["y10"] * d10 + _w["equities"] * 100 * np.log(lev.x_cape) + _w["dollar"] * 100 * np.log(lev.x_usd)).reindex(CAL).ffill(limit=3)
 _baa = fred_daily("DBAA")
@@ -36,7 +36,7 @@ POL = d2.reindex(CALW).ffill(limit=3)               # daily 2-year yield on the 
 MON = CALW.to_period("M")
 
 # ---------------------------------------------------------------- events
-EV = noteA.events(); EV["d"] = EV.Date.dt.normalize()
+EV = nbev.events(); EV["d"] = EV.Date.dt.normalize()                                      # Note B's announcements and policy-news factor (lib/events.py)
 POS = {d: i for i, d in enumerate(CAL)}
 MONTH = pd.Series(CAL.to_period("M"), index=CAL); NB = MONTH.groupby(MONTH).transform("size")
 EV["p"] = EV.d.map(POS)
