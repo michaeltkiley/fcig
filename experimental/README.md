@@ -11,6 +11,7 @@ Note A as a paper (clean package, separate from this folder): `../fci_paper/` (`
 | `DYNAMICS_PLAN.md` | Plan and results for the dynamic (flow) indexes | results in PROJECT_MEMORY 3c; the adopted VAR is in `market_macro/` (3f) |
 | `path_fci/` | Market index construction: weights from policy-news responses; `NOTE_PLAN.md`, `ASSESSMENT.md`, `lit/` | current |
 | `market_macro/` | Two-variable VAR (unemployment gap, market index), Phi, forward impetus, significance | current |
+| `note_a_qvar/` | Experiment (16 Nov 2026): quarterly VAR of the CBO output gap and each FCI (F, Y, B, G at three steps; FCI-G, NFCI, ANFCI; 2-year and funds-rate benchmarks), 4 lags, both Cholesky orderings | experiment, not in the paper |
 | `fci_compare/` | Common-unit comparison of GS, FCI-G, NFCI/ANFCI, macro-model and market indexes; `METRIC.md`; ECB-method exploration | current |
 | `real_case/` | Real-rate case, decisions in `REAL_QA.md` | closed, written up |
 | `rstar_case/` | r*-gap case (baseline of the note), decisions in `RSTAR_QA.md` | current |
