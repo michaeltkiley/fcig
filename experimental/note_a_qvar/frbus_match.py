@@ -20,23 +20,24 @@ F = dX @ w[cols].values                        # F[k] = index reading k quarters
 Gk = hk.gdp.values                             # Gk[k] = GDP at FRB/US quarter k + 1
 R = pd.read_csv(HERE / "results" / "irf_full_indexes.csv")
 rows = []
-for dummies in [True, False]:
-    # full own path needed: rerun the VAR point estimate quickly from qvar_full's functions
-    import importlib.util
-    spec = importlib.util.spec_from_file_location("qf", HERE / "qvar_full.py")
-    src = (HERE / "qvar_full.py").read_text().split("rows = []")[0]; ns = {"__file__": str(HERE / "qvar_full.py")}; exec(src, ns)
-    ix = pd.read_csv(PKG / "results" / "indexes_rstar.csv", index_col=0); ix.index = pd.PeriodIndex(ix.index, freq="M")
-    q = ix["frbus"].dropna(); q = q.groupby(q.index.asfreq("Q")).mean()
-    df = pd.concat([ns["gap"].rename("gap"), q.rename("fci")], axis=1).loc[ns["START"]:ns["END_Q"]].dropna()
-    Z = df.values; dums = np.column_stack([(df.index == d).astype(float) for d in ns["DUM"]]) if dummies else None
-    B, U, S = ns["ols"](Z, dums); path = ns["irf"](B, S, "fci")
-    x = path[:, 1]; n = len(x); a = np.zeros(n)
-    for t in range(n):
-        a[t] = (x[t] - sum(a[s] * F[t - s] for s in range(t))) / F[0]
-    gdp = np.array([sum(a[s] * Gk[h - s] for s in range(h + 1)) for h in range(n)])
-    ffr = np.cumsum(a)
-    for h in range(n):
-        rows.append(dict(dummies_2020=dummies, quarter=h, fci_var=x[h], ffr_path=ffr[h], frbus_gdp=gdp[h], var_gap=path[h, 0]))
+for order in ["gap", "fci"]:
+  for dummies in [True, False]:
+      # full own path needed: rerun the VAR point estimate quickly from qvar_full's functions
+      import importlib.util
+      spec = importlib.util.spec_from_file_location("qf", HERE / "qvar_full.py")
+      src = (HERE / "qvar_full.py").read_text().split("rows = []")[0]; ns = {"__file__": str(HERE / "qvar_full.py")}; exec(src, ns)
+      ix = pd.read_csv(PKG / "results" / "indexes_rstar.csv", index_col=0); ix.index = pd.PeriodIndex(ix.index, freq="M")
+      q = ix["frbus"].dropna(); q = q.groupby(q.index.asfreq("Q")).mean()
+      df = pd.concat([ns["gap"].rename("gap"), q.rename("fci")], axis=1).loc[ns["START"]:ns["END_Q"]].dropna()
+      Z = df.values; dums = np.column_stack([(df.index == d).astype(float) for d in ns["DUM"]]) if dummies else None
+      B, U, S = ns["ols"](Z, dums); path = ns["irf"](B, S, order)
+      x = path[:, 1]; n = len(x); a = np.zeros(n)
+      for t in range(n):
+          a[t] = (x[t] - sum(a[s] * F[t - s] for s in range(t))) / F[0]
+      gdp = np.array([sum(a[s] * Gk[h - s] for s in range(h + 1)) for h in range(n)])
+      ffr = np.cumsum(a)
+      for h in range(n):
+          rows.append(dict(order=order + "_ordered_first", dummies_2020=dummies, quarter=h, fci_var=x[h], ffr_path=ffr[h], frbus_gdp=gdp[h], var_gap=path[h, 0]))
 out = pd.DataFrame(rows); out.to_csv(HERE / "results" / "frbus_match.csv", index=False, float_format="%.4f")
 print("F(k), index reading of a persistent 1 pp hike:", np.round(F[:13], 2))
 print(out.to_string(index=False, float_format=lambda v: f"{v:+.2f}"))
