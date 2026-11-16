@@ -34,3 +34,7 @@ Full table with bands, nominal and real steps, own FCI paths: `results/summary.m
 5. NFCI and ANFCI: a 1 s.d. shock moves the gap by -0.10 and -0.18 at 4 quarters (no policy-unit target).
 
 **Reading [inference].** A two-variable Cholesky VAR does not identify a financial shock: FCI-first attributes all common news (about growth, from equities) to the FCI, and gap-first attributes none. Both orderings give 4-quarter effects of the right order of magnitude (about one point of policy), but the VAR, like the local projections, does not separate the weightings: the four indexes share most of their variation and differ in the months where they differ, which a 50-year VAR barely weighs. A sharper test would need a sample or shock where the calibrations disagree (e.g. dollar-driven episodes: 1998-2001, 2022-24), or a VAR with the three assets separately and the weights imposed vs free.
+
+## Second run: Note A's four full indexes (16 Nov 2026; `qvar_full.py`)
+
+User: use the four indexes as published by the package (`fci_paper/replication/results/indexes_<step>.csv`): market, GS replication (all five GS variables), FRB/US (headline, no house prices), FCI-G 1-year. Shock = 1 point on the FCI on impact; with and without 2020Q1-2021Q1 dummies; from 1973Q1 (FCI-G from 1974Q1, its first quarter). Table with 90 percent bands for all three steps: `results/summary_full_indexes.md`; numbers `results/irf_full_indexes.csv`. Check: the market index at the r* step reproduces F of the first run (same series) [verified].
