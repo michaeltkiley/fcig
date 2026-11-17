@@ -277,3 +277,6 @@ New step `36_levelflow_q.py` (in `run_all.py` and `10_check_sync.py`). Gap equat
 - **The level lags form mostly differences:** the sum of the four level coefficients is small (market -0.027, GS -0.036, FRB/US -0.019) and not different from zero at 5 percent (p = 0.10, 0.06, 0.34; 4-quarter-ahead p 0.54-0.65).
 - **Level and FCI-G together:** neither dominates; FCI-G lags jointly significant at 10 percent in the one-quarter equation (p 0.04-0.07), not 4 quarters ahead.
 - Reading [inference]: for forecasting activity, a level index read in a VAR with lags carries the same information as a change measure; the level's added value is the stance reading (tight or loose relative to neutral), as the author argued (FP-A63), not extra predictive power. Consistent with step 09 (monthly local projections: flows carry the year-ahead content).
+
+## Name (17 Nov 2026; FP-A70)
+- **Decided (author):** the policy-news index is called the **MCFCI** (monetary conditions financial conditions index). One sentence in the paper distinguishes it from the Bank of Canada MCI, the Bank of England MFCI and Beaton-Lalonde-Luu (2009) (FP-A64).
