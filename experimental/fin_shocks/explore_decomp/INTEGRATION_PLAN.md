@@ -2,7 +2,7 @@
 
 Written 17 Nov 2026 at the end of the exploration session. Branch `claude/sharp-goodall-wffoqw`; it contains the FS-A75 weights branch (`claude/fci-note-b-weights-dcfgbi`) and nothing of it is on `main` yet. All exploration code and results are in `experimental/fin_shocks/explore_decomp/`; decisions are in `DECOMP_QA.md` (D-A1 to D-A24). Note B's package (`baseline/`) and paper (`paper/`) were not changed. This file has three parts: what we found (Part 1), the decisions the author has to take before integration (Part 2), and the steps to execute once they are taken (Part 3).
 
-**Guiding principle (author, 17 Nov 2026): one data type throughout the paper.** The paper currently mixes two: Note B's model uses monthly averages of the daily financial variables, while the benchmark monthly VARs (and the standard-methods estimators) use end-of-month values since FS-A48 (10 Nov). That switch was a mistake: it put a second data convention into the paper, and because no end-of-month FCI exists before 1990 it removed the 1973 versions of the benchmarks without this being made clear to the author. The fix is to use monthly averages everywhere (the only type available from 1973, and the one Note B's model already uses) and to remove end-of-month series from the code and the paper (Phase 2 below). The end-of-month results in this folder are kept only as a record.
+**Guiding principle (author, 17 Nov 2026; confirmed): one data type, monthly averages, throughout the paper.** The paper currently mixes two: Note B's model uses monthly averages of the daily financial variables, while the benchmark monthly VARs (and the standard-methods estimators) use end-of-month values since FS-A48 (10 Nov). That switch was a mistake: it put a second data convention into the paper, and because no end-of-month FCI exists before 1990 it removed the 1973 versions of the benchmarks without this being made clear to the author. The fix (confirmed by the author) is to use monthly averages everywhere (the only type available from 1973, and the one Note B's model already uses) and to remove end-of-month series from the code and the paper (Phase 2 below). The end-of-month results in this folder are kept only as a record.
 
 Conventions used below: r*-gap = the 2-year yield and FCI relative to r*; "with the FCI" = Note B's model with the 2-year yield and the FCI; responses per +1 pp window surprise on the 2-year yield; 12 lags; 90 percent intervals unless stated; `**`/`*` = 5/10 percent.
 
@@ -50,13 +50,15 @@ Conventions used below: r*-gap = the 2-year yield and FCI relative to r*; "with 
 
 ## Part 2. Decisions for the author (in order; each changes what Part 3 does)
 
+**Decided by the author on 17 Nov 2026:** D1 (2020 dummies: March-December 2020 dropped, in every sample), D2 (two baselines: Note B's model, r*-gap, 12 lags, monthly averages, 2020 dummies, monthly equations from 1996 and from 1973, each with and without the FCI; `figures/H_baseline_irfs.png`, `results_core/baseline_irfs.md`), D5 (monthly averages everywhere). The other decisions remain open.
+
 | # | Decision | Options | My recommendation |
 |---|---|---|---|
-| D1 | Treatment of 2020 in the baseline | (a) keep 2020 in (current draft); (b) drop March-December 2020 in every case | (b): the same treatment in all samples; the 2020 unemployment spike otherwise dominates the long-sample estimates and the variance shares; Note A's VAR already dummies 2020 |
-| D2 | Role of the 1973 sample | (a) robustness only (r*-gap, Section 5.1); (b) a second baseline, all versions, next to 1996 | (b) for the r*-gap baseline figure and table; all versions in the appendix |
+| D1 | Treatment of 2020 in the baseline | **Decided: (b) March-December 2020 dummied out (dropped from estimation) in every case** | 2020 in becomes a robustness row |
+| D2 | Role of the 1973 sample | **Decided: (b) two baselines, 1996 and 1973 (r*-gap, 12 lags, monthly averages, 2020 dummies, with and without the FCI)** | nominal and real versions from both starts in the appendix |
 | D3 | Regime split (1973-1995 vs 1996-2026) | (a) not reported; (b) reported in Section 5.1 with a formal break test | (b): it explains why the long sample is weaker and that the puzzles are a post-1996 phenomenon |
 | D4 | Brennan et al. comparison | (a) none; (b) a robustness row on their sample (1973-2019), noting their 68 percent bands | (b), short, in Section 5.1 |
-| D5 | Data type | Decided by the author (17 Nov): one data type throughout | Monthly averages everywhere (the only type back to 1973; the model's own); end-of-month series removed from code and paper (Phase 2). To confirm. |
+| D5 | Data type | **Decided: monthly averages everywhere** | end-of-month series removed from code and paper (Phase 2) |
 | D6 | Decompositions in the paper | (a) none; (b) Route 1 only; (c) Route 1 and Route 2 (daily, with the monthly splice) as a new subsection, the monthly-invertibility diagnostic in the appendix | (c), as a subsection of Results after the tradeoff, with Route 2 framed as policy-direction shocks |
 | D7 | Propagation model for Route 2 | 1973 model, 1996 model, or both | the 1973 model (covers the whole period), the 1996 model as a check |
 | D8 | 2020 in the decomposition | (a) inferred with the estimated coefficients (D-A23 main); (b) absorbed by the dummies | (a), with (b) as robustness; shares exclude 2020 (D-A24) |
@@ -78,8 +80,8 @@ Each phase ends with its checks passing and a commit. Work on a short branch fro
 
 ### Phase 1. The model and the case list (`baseline/lib/model.py`, `baseline/cases.py`, `03_estimate.py`)
 
-1. If D1(b): make `t2020="out"` the default in `cases.py` (`panel()` base) and keep a robustness panel with 2020 in. Rerun everything (about 70 minutes); every macro in `report/numbers*.tex` changes.
-2. If D2(b): a panel "B73" with all three versions, without and with the FCI, monthly equations from 1973 (the code exists; A1 shows it runs).
+1. D1 (decided): make `t2020="out"` the default in `cases.py` (`panel()` base) and keep a robustness panel with 2020 in. Rerun everything (about 70 minutes); every macro in `report/numbers*.tex` changes.
+2. D2 (decided): the baseline panel becomes two panels, "B" (monthly equations from 1996) and "B73" (from 1973), each with the three versions without and with the FCI, 2020 dummies; the r*-gap pair of each is the headline. Check: the r*-gap pairs reproduce `results_core/baseline_irfs.md` (Note B's stored R1b and R1c) exactly.
 3. If D3(b): allow the monthly equations to end before the daily block (a separate monthly end date in `macro_data` and `estimate`, so a 1973-1995 monthly sample can use the daily block from 1996); add panels for 1973-1995 and 1996-2026 splits; add a break test (financial-coefficient interactions with a post-1996 dummy in the monthly equations; Wald test with the block bootstrap).
 4. If D4(b): an announcement-end option in the case definition (the A7 approach: restrict `event_index` to announcements through 2019) and a panel "R1f" on 1973-2019.
 5. If D10: macro option `u,pi,ip` (IP = 100 log INDPRO; copy `INDPRO.csv` into `baseline/data/` and record it in `SOURCES.md`); an `fci` option that adds the funds rate to the daily block with the MP1 window impact (the A5 wrapper becomes code in `model.py`: `daily_frame`, `fin_monthly`, `impact`, `irf_b`); a policy-rate option for the 1-year yield (the A6 construction: `DGS1.csv`, `EXPINF1YR`, the 0.78 window ratio, in `daily.py` and `model.py`).
@@ -122,7 +124,7 @@ Steps:
 ### Phase 5. Paper text (read `experimental/WRITING_GUIDE.md` first; one section at a time, each approved by the author)
 
 1. Section 2.5 (A Mixed-Frequency VAR) and Appendix "Relation to a Monthly VAR and a Proxy VAR": one paragraph on why the window identification does not need invertibility, with the monthly diagnostic (D6).
-2. Section 3.2 (Baseline): the two baselines if D2(b), and the 2020 treatment if D1(b).
+2. Section 3.2 (Baseline): the two baselines (1996 and 1973) and the 2020 dummies (D1, D2 decided); the robustness section loses the R1a-R1c rows that become baseline and gains a row with 2020 in.
 3. New Section 3.5, "How Much Do Policy Shocks Explain?": Route 1 and Route 2, the shares and the history (D6-D9).
 4. Sections 3.1 and 4.4 and the appendices: one data type (monthly averages) everywhere; the benchmarks from 1996 and 1973; the temporal-aggregation point stated once (Section 4.6) (D5, Phase 2).
 5. Section 5.1 (The Sample): the corrected sentence on 1973 (1.5 (1)), the regime split (D3), the Brennan et al. sample (D4).
