@@ -10,9 +10,11 @@ from lib import model as M
 from lib.paths import RESULTS, OUT
 
 ap = argparse.ArgumentParser(); ap.add_argument("--draws", type=int, default=500); ap.add_argument("--jobs", type=int, default=4)
-ap.add_argument("--panel"); ap.add_argument("--force", action="store_true"); a = ap.parse_args()
+ap.add_argument("--panel"); ap.add_argument("--force", action="store_true")
+ap.add_argument("--missing-draws", action="store_true", help="also rerun cases whose bootstrap draws (output/draws, not kept in the repository) are missing, e.g. for 05_tradeoff.py"); a = ap.parse_args()
 (OUT / "draws").mkdir(exist_ok=True)
-jobs = [c for c in CS.unique_cases(a.panel) if a.force or not (RESULTS / f"{CS.case_id(c)}.csv").exists()]
+jobs = [c for c in CS.unique_cases(a.panel) if a.force or not (RESULTS / f"{CS.case_id(c)}.csv").exists()
+        or (a.missing_draws and not all((OUT / "draws" / f"{CS.case_id(c)}_L{L}.npz").exists() for L in M.LAGS))]
 print(f"{len(CS.unique_cases(a.panel))} cases, {len(jobs)} to run", flush=True)
 
 def work(c):
