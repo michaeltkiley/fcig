@@ -5,3 +5,4 @@ results/shocks_*_dummy.csv
 results_core/draws/
 results_route2/*.npz
 results_ip/draws/
+results_route2_base/*.npz
