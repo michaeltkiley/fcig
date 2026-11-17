@@ -50,31 +50,33 @@ Conventions used below: r*-gap = the 2-year yield and FCI relative to r*; "with 
 
 ## Part 2. Decisions for the author (in order; each changes what Part 3 does)
 
-**Decided by the author on 17 Nov 2026:** D1 (2020 dummies: March-December 2020 dropped, in every sample), D2 (two baselines: Note B's model, r*-gap, 12 lags, monthly averages, 2020 dummies, monthly equations from 1996 and from 1973, each with and without the FCI; `figures/H_baseline_irfs.png`, `results_core/baseline_irfs.md`), D5 (monthly averages everywhere). The other decisions remain open.
+**Decided by the author on 17 Nov 2026:** D1 (2020 dummies: March-December 2020 dropped, in every sample), D2 (two baselines: Note B's model, r*-gap, 12 lags, monthly averages, 2020 dummies, monthly equations from 1996 and from 1973, each with and without the FCI; `figures/H_baseline_irfs.png`, `results_core/baseline_irfs.md`), D5 (monthly averages everywhere). **All remaining decisions taken on 17 Nov 2026 (second round):** D3 no; D4 no; D6 Route 1 and Route 2 (daily) in a new Section 3.5, the monthly invertibility diagnostic in the appendix; D7-D9 as explored (both baselines propagate; 2020 shocks inferred with the estimated coefficients, shares excluding March-December 2020, "dummies absorb 2020" as robustness; pre-1990 monthly shocks scaled to the daily size, unscaled as robustness); D10 IP and funds rate as robustness rows in Section 5 for both baselines, the 1-year yield in the appendix; D11 90 percent intervals. Execution rules (author): text changes go into a full copy of the paper for the author to merge by diff; the package, tables and macros are updated directly; branches are merged to `main` when every check passes. **Part 3 can now be executed without the author.**
 
 | # | Decision | Options | My recommendation |
 |---|---|---|---|
 | D1 | Treatment of 2020 in the baseline | **Decided: (b) March-December 2020 dummied out (dropped from estimation) in every case** | 2020 in becomes a robustness row |
 | D2 | Role of the 1973 sample | **Decided: (b) two baselines, 1996 and 1973 (r*-gap, 12 lags, monthly averages, 2020 dummies, with and without the FCI)** | nominal and real versions from both starts in the appendix |
-| D3 | Regime split (1973-1995 vs 1996-2026) | (a) not reported; (b) reported in Section 5.1 with a formal break test | (b): it explains why the long sample is weaker and that the puzzles are a post-1996 phenomenon |
-| D4 | Brennan et al. comparison | (a) none; (b) a robustness row on their sample (1973-2019), noting their 68 percent bands | (b), short, in Section 5.1 |
+| D3 | Regime split (1973-1995 vs 1996-2026) | **Decided: not reported** (exploration record only) | |
+| D4 | Brennan et al. comparison | **Decided: not reported** | |
 | D5 | Data type | **Decided: monthly averages everywhere** | end-of-month series removed from code and paper (Phase 2) |
-| D6 | Decompositions in the paper | (a) none; (b) Route 1 only; (c) Route 1 and Route 2 (daily, with the monthly splice) as a new subsection, the monthly-invertibility diagnostic in the appendix | (c), as a subsection of Results after the tradeoff, with Route 2 framed as policy-direction shocks |
-| D7 | Propagation model for Route 2 | 1973 model, 1996 model, or both | the 1973 model (covers the whole period), the 1996 model as a check |
-| D8 | 2020 in the decomposition | (a) inferred with the estimated coefficients (D-A23 main); (b) absorbed by the dummies | (a), with (b) as robustness; shares exclude 2020 (D-A24) |
-| D9 | Splice before 1990 | scaled (sd ratio, 0.52), unscaled, or projection slope | scaled; unscaled reported |
-| D10 | Extensions | IP, funds rate, 1-year yield: robustness rows, appendix only, or not reported | IP and funds rate as robustness rows in Section 5; the 1-year yield in the appendix |
-| D11 | Intervals | 90 percent throughout (current convention) | keep 90; give 68 only where comparing with Brennan et al. |
+| D6 | Decompositions in the paper | **Decided: Route 1 and Route 2 (daily, with the monthly splice) in a new Section 3.5; the monthly invertibility diagnostic in the appendix** | Route 2 framed as policy-direction shocks |
+| D7 | Propagation model for Route 2 | **Decided: both baselines (1996 and 1973 models)** | |
+| D8 | 2020 in the decomposition | **Decided: inferred with the estimated coefficients; shares exclude March-December 2020; absorbed-by-dummies as robustness** | |
+| D9 | Splice before 1990 | **Decided: scaled (sd ratio over the overlap); unscaled as robustness** | |
+| D10 | Extensions | **Decided: IP and funds rate as robustness rows in Section 5 for both baselines; the 1-year yield in the appendix** | bootstrap intervals for the rows (A5/A6 were point estimates) |
+| D11 | Intervals | **Decided: 90 percent (68 percent bands in figures as now)** | |
 
 ---
 
-## Part 3. Execution plan (after Part 2 is decided)
+## Part 3. Execution plan (all of Part 2 decided; executable without the author)
+
+Text rule: every paper change goes into a full copy, `paper/mp_transmission_session_integration.tex` (started from the author's current `paper/mp_transmission.tex` at execution time), for the author to merge by diff; follow `experimental/WRITING_GUIDE.md` and the house style. Package, tables, figures and macros are updated directly. Merge to `main` when Phase 6 passes.
 
 Each phase ends with its checks passing and a commit. Work on a short branch from `main` after merging (Phase 0). Estimated run times assume 4 cores.
 
 ### Phase 0. Housekeeping (no new results)
 
-1. Merge the FS-A75 weights branch and this branch to `main` once the author has merged the text of `paper/mp_transmission_session_weights.tex` (FS-A75 open item).
+1. Merge the FS-A75 weights branch (`claude/fci-note-b-weights-dcfgbi`) and this branch to `main` (author: merge when checks pass). Do not touch `paper/mp_transmission.tex` (the author edits it offline; FS-A75 text still to be merged by the author from `paper/mp_transmission_session_weights.tex`).
 2. Fix the stale text in 1.5 (2) and (3).
 3. Record Part 2's answers in `fin_shocks/FS_QA.md` as a new FS-A entry that points to DECOMP_QA D-A1 to D-A24.
 
@@ -82,9 +84,9 @@ Each phase ends with its checks passing and a commit. Work on a short branch fro
 
 1. D1 (decided): make `t2020="out"` the default in `cases.py` (`panel()` base) and keep a robustness panel with 2020 in. Rerun everything (about 70 minutes); every macro in `report/numbers*.tex` changes.
 2. D2 (decided): the baseline panel becomes two panels, "B" (monthly equations from 1996) and "B73" (from 1973), each with the three versions without and with the FCI, 2020 dummies; the r*-gap pair of each is the headline. Check: the r*-gap pairs reproduce `results_core/baseline_irfs.md` (Note B's stored R1b and R1c) exactly.
-3. If D3(b): allow the monthly equations to end before the daily block (a separate monthly end date in `macro_data` and `estimate`, so a 1973-1995 monthly sample can use the daily block from 1996); add panels for 1973-1995 and 1996-2026 splits; add a break test (financial-coefficient interactions with a post-1996 dummy in the monthly equations; Wald test with the block bootstrap).
-4. If D4(b): an announcement-end option in the case definition (the A7 approach: restrict `event_index` to announcements through 2019) and a panel "R1f" on 1973-2019.
-5. If D10: macro option `u,pi,ip` (IP = 100 log INDPRO; copy `INDPRO.csv` into `baseline/data/` and record it in `SOURCES.md`); an `fci` option that adds the funds rate to the daily block with the MP1 window impact (the A5 wrapper becomes code in `model.py`: `daily_frame`, `fin_monthly`, `impact`, `irf_b`); a policy-rate option for the 1-year yield (the A6 construction: `DGS1.csv`, `EXPINF1YR`, the 0.78 window ratio, in `daily.py` and `model.py`).
+3. D3 and D4: nothing (not reported).
+4. Robustness panels follow the two baselines: every existing robustness panel (R2-R6) is run from both 1996 and 1973 where it was 1996-only, with 2020 dummies; a new panel with 2020 in replaces R1b/R1c; R1a and R1c become the 1973 baseline.
+5. D10 (decided; bootstrap intervals for both baselines): macro option `u,pi,ip` (IP = 100 log INDPRO; copy `INDPRO.csv` into `baseline/data/` and record it in `SOURCES.md`); an `fci` option that adds the funds rate to the daily block with the MP1 window impact (the A5 wrapper becomes code in `model.py`: `daily_frame`, `fin_monthly`, `impact`, `irf_b`); a policy-rate option for the 1-year yield (the A6 construction: `DGS1.csv`, `EXPINF1YR`, the 0.78 window ratio, in `daily.py` and `model.py`).
 6. Checks: the existing panels reproduce their stored results exactly when their options are unchanged; the new panels reproduce the exploration numbers (`results_core/`, `results_ip/`, `results_bjmw/`) to the rounding of the stored files.
 
 ### Phase 2. One data type: remove end-of-month series from the code and the paper
@@ -127,7 +129,7 @@ Steps:
 2. Section 3.2 (Baseline): the two baselines (1996 and 1973) and the 2020 dummies (D1, D2 decided); the robustness section loses the R1a-R1c rows that become baseline and gains a row with 2020 in.
 3. New Section 3.5, "How Much Do Policy Shocks Explain?": Route 1 and Route 2, the shares and the history (D6-D9).
 4. Sections 3.1 and 4.4 and the appendices: one data type (monthly averages) everywhere; the benchmarks from 1996 and 1973; the temporal-aggregation point stated once (Section 4.6) (D5, Phase 2).
-5. Section 5.1 (The Sample): the corrected sentence on 1973 (1.5 (1)), the regime split (D3), the Brennan et al. sample (D4).
+5. Section 5.1 (The Sample): rewritten for the two baselines; the 2020-in row; the old sentence on 1973 (1.5 (1)) removed.
 6. Section 4 or 5 rows for IP and the funds rate (D10).
 7. Abstract, introduction and conclusion last, only if the decomposition becomes a headline result.
 8. Bibliography: Brennan et al. is in `references.bib`; add Plagborg-Moller and Wolf (2022, variance decompositions with IV) only after reading it [not read in this session].
