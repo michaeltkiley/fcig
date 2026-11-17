@@ -270,3 +270,10 @@ New step `35_pc.py` (in `run_all.py` and `10_check_sync.py`; placebo VAR not don
 - Plus BBB and mortgage spreads: 34 percent; loadings in levels mortgage spread 0.64, BBB 0.43, dollar 0.43, y10 0.37, equities -0.30 (changes: BBB 0.59, mortgage 0.52, equities -0.53); correlation with MCFCI 0.60 (levels), 0.70 (changes); with NFCI 0.36; skewness 1.05.
 - Plus spreads and the policy rate: correlation with MCFCI 0.75, NFCI 0.48; skewness 1.13.
 - Reading [inference]: on the three assets, statistical weighting gives nearly the policy-news index; what sets statistical FCIs apart is the indicator set (spreads, stress measures), not the principal-component method. Published NFCI: three assets explain 20 percent of 12-month changes, 51 with the Baa spread; MCFCI flow 63 -> 68 (step 10).
+
+## Stage 5 of the new version: levels and changes in the quarterly gap equation (17 Nov 2026; FP-A69)
+New step `36_levelflow_q.py` (in `run_all.py` and `10_check_sync.py`). Gap equation of the step-33 VAR (4 own lags, 2020 dummies, 1974Q2 on) with 4 lags of the index level (r*), of its 4-quarter change, or of FCI-G 1-year (nominal) [verified, `results/36_levelflow_q.csv`]:
+- **Fit is the same:** R2 (one-quarter gap equation) market 0.916 with levels, 0.914 with changes, 0.919 with FCI-G (own lags only 0.904-0.906); 4-quarter-ahead gap change 0.377, 0.372, 0.375 (own lags 0.353-0.359). GS and FRB/US alike.
+- **The level lags form mostly differences:** the sum of the four level coefficients is small (market -0.027, GS -0.036, FRB/US -0.019) and not different from zero at 5 percent (p = 0.10, 0.06, 0.34; 4-quarter-ahead p 0.54-0.65).
+- **Level and FCI-G together:** neither dominates; FCI-G lags jointly significant at 10 percent in the one-quarter equation (p 0.04-0.07), not 4 quarters ahead.
+- Reading [inference]: for forecasting activity, a level index read in a VAR with lags carries the same information as a change measure; the level's added value is the stance reading (tight or loose relative to neutral), as the author argued (FP-A63), not extra predictive power. Consistent with step 09 (monthly local projections: flows carry the year-ahead content).
