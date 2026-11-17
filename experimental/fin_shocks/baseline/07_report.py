@@ -300,17 +300,7 @@ def check_claims():
     else: assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
 
-# ---------------------------------------------------------------- test of the proportional-weights restriction
-WTT = _wt(); wrows = []
-for start, lab in (("1996-01", ""), ("1973-01", ", start 1973")):
-    for step in ("nom", "real", "rstar"):
-        cells = []
-        for eq in ("u", "pi"):
-            r = WTT[(WTT.step == step) & (WTT.lags == MAIN_LAGS) & (WTT["eq"] == eq) & (WTT.start == start)].iloc[0]; cells.append(f"{r.wald:.1f} & {r.p_boot:.3f}")
-        wrows.append(f"{CS.FORMS[step]}{lab} & " + " & ".join(cells) + r"\\")
-(REPORT / "tab_weights_test.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Test of the proportional-weights restriction (12 lags)}\label{tab:weightstest}",
-    r"\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap equation} & \multicolumn{2}{c}{Core PCE inflation equation}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Version & Wald & Bootstrap $p$ & Wald & Bootstrap $p$\\ \midrule", *wrows, r"\bottomrule\end{tabular}",
-    r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize Wald statistic (heteroskedasticity-robust, HC1) for the restriction that the coefficients on the three weighted components (10-year yield, equity valuation, dollar) are equal at each lag (24 restrictions), in each monthly equation, and the bootstrap $p$-value (999 block-bootstrap draws under the restriction); monthly equations from 1996 (first three rows) and from 1973 (last three), no trend, 2020 in. The unrestricted equation is the one used in Section 4.4.}", r"\end{table}"]) + "\n")
+# test of the proportional-weights restriction: tab_weights_test.tex and tab_wt_full.tex are written by 07b_report_extensions.py
 
 # ---------------------------------------------------------------- weights table (window responses)
 w = pd.read_csv(OUT / "market_weights.csv", index_col=0)
