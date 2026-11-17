@@ -37,8 +37,13 @@ Web searches run 17 Nov 2026. Tags: [search] = from search-result summaries, pri
 - **Blind spot:** cite Castelnuovo and Nistico (2010) together with the Bernanke (2024) review of the Bank of England's forecasting ("powerful references").
 - **Models without equities [author, known]:** CEE (2005), Smets-Wouters (2007) and their descendants generally have no equities; nor do the Board's EDO and SIGMA models or the New York Fed DSGE model. Confirm with one citation each when writing.
 
+## Follow-up work on equities in macro models (search, 17 Nov 2026)
+- **Castelnuovo-Nistico (2010) follow-ups** [search]: Nistico (2011, CASMEF WP 7), "Optimal Monetary Policy and Stock-Price Dynamics in a Non-Ricardian DSGE Model" (Blanchard-Yaari; cites C-N for the empirical wealth channel); Nistico (2012), "Monetary policy and stock-price dynamics in a DSGE framework"; Ifrim (2023), "Stock Price Wealth Effects and Monetary Policy under Imperfect Knowledge" (listed only). About 96 citations on EconPapers. A Google Scholar "cited by" pass is still needed.
+- **HANK and equities** [search]: Kekre and Lenel (2022, Econometrica 90(5)), "Monetary Policy, Redistribution, and Risk Premia": heterogeneity in risk-bearing capacity; a rate cut redistributes to high marginal-propensity-to-take-risk households, lowers risk premia, raises stock prices; explains the risk-premium part of the stock response. Melcangi and Sterk (2024, advance access), "Stock Market Participation, Inequality, and Monetary Policy": rising participation since the 1980s strengthened policy's real effects. Caramp and Silva (WP): HANK with rare disasters, time-varying risk premia, matches asset-price responses. Kaplan-Moll-Violante (2018) HANK: equity is part of the illiquid asset; MPC heterogeneity alone does not explain risk-premium movements (as characterized by Kekre-Lenel) [secondhand]. Representative-agent: Ludvigson, Ma and Ng (JF), regime shifts and equity premia.
+- Reading [inference]: the research frontier (HANK with risk premia; non-Ricardian DSGE) has equity channels; the models in use for policy at the Board and NY Fed (EDO, SIGMA, NY Fed DSGE, Smets-Wouters descendants) do not (author). The paper's claim is about that gap.
+
 ## Gaps to close before writing
-1. FRB/US de-emphasis: document from Greenbooks vs Tealbooks (author's proposal above).
+1. FRB/US de-emphasis: DONE, `experimental/fed_models_check/` (all scheduled meetings).
 2. Read Smets-Wouters (2007) and CEE (2005) on equities (or cite Castelnuovo-Nistico for the general point).
 3. Read Chodorow-Reich-Nenov-Simsek and redo the mapping to index points.
 4. Novelty: one more targeted search; ask colleagues.
