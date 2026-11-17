@@ -11,7 +11,7 @@ FCIs
   Benchmarks  2-year Treasury yield (GS2, 1976Q3+), federal funds rate: the "one point of policy" the FCIs are scaled to
   Others      FCI-G (1-year, GDP growth units), NFCI, ANFCI (standard-deviation units): not in policy units, for sign and shape only
 Specification: 1973Q1 (or first available) to 2026Q3; constant; dummies 2020Q1..2021Q1 (the paper's monthly convention, 2020-01..2021-03);
-FCI as the quarterly average (main) or end-of-quarter month (check); output gap 100 (GDPC1 / GDPPOT - 1).
+FCI as the quarterly average (main) or the last month of the quarter, itself a monthly average, labelled "eoq" (check; not a last-day value); output gap 100 (GDPC1 / GDPPOT - 1).
 Ordering "gap first": the FCI shock has no same-quarter effect on the gap. "FCI first": it may.
 Bands: moving-block bootstrap of residual pairs (blocks of 4 quarters), recursive, dummies fixed; 1000 draws; 68 and 90 percent.
 """
