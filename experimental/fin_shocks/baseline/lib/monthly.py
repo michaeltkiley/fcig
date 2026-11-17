@@ -1,23 +1,24 @@
 """Purely monthly VAR benchmarks (in the baseline section): the same 252 announcements and the same monthly sample as the main model, without the daily block.
 
-System (end-of-month values, no trend, nothing dropped):   y_t = c + sum_{l=1}^{L} A_l y_{t-l} + u_t,     y_t = (unemployment gap, core PCE inflation, i_t [, FCI_t]),
-where i_t is the two-year yield on the last weekday of month t in the stated step (nominal, real or r*-gap) and FCI_t, when included, the market index (Note A's method, Note B's weights) in the same step on that day.
-End-of-month values follow Bauer and Swanson (2023), who argue that they correspond more naturally to a high-frequency surprise than the month-average yield of Gertler and Karadi (2015); in this model
-the end-of-month yield responds to a window surprise by 0.92 to 1.01 of the window move, so the unit of every response in the paper is the same: +1 pp on the two-year yield.
+System (monthly averages, FS-A76: one data type in the paper; no trend; March-December 2020 dropped from the estimation rows by default):   y_t = c + sum_{l=1}^{L} A_l y_{t-l} + u_t,
+y_t = (unemployment gap, core PCE inflation, i_t [, FCI_t]), where i_t is the month's average two-year yield in the stated step (nominal, real or r*-gap) and FCI_t, when included, the month's average
+market index in the same step; months before the daily data (start 1973) use the monthly series, as in the main model. Unit of every response: +1 pp on the two-year yield in the announcement window.
+A window move of 1 pp raises the month's average yield by about 0.44-0.47 in the model (the announcement falls on average mid-month), so the proxy VAR's first-stage column, estimated per +1 pp on
+the month's average yield, is multiplied by that response to be in the window unit.
 Moving-average matrices Theta_h (h = 0..36) map an impact vector into responses; the price level cumulates inflation / 12. Two identification schemes:
 
  P1  Standard proxy VAR (Stock and Watson 2018; Mertens and Ravn 2013; Gertler and Karadi 2015; with high-frequency surprises as in Bauer and Swanson 2023).
      Instrument z_t = Nakamura-Steinsson policy news (Nakamura and Steinsson 2018) summed over the announcements of month t (zero in months without one).
      Assumptions: relevance E[z_t e_1t] != 0 and exogeneity E[z_t e_jt] = 0 for the other structural shocks e_j. Then s = E[z_t u_t] / E[z_t u_{i,t}], estimated by
      regressing each VAR residual on z_t over the instrument months (first to last announcement); every entry of s, including u and inflation, is estimated.
-     Unit: +1 pp on the end-of-month 2-year yield. Inference: 90% Anderson-Rubin set for the response of a target, conditional on the VAR coefficients, with
+     Unit: rescaled to +1 pp in the window (above). Inference: 90% Anderson-Rubin set for the response of a target, conditional on the VAR coefficients, with
      heteroskedasticity-robust (HC1) variance; solved exactly (a quadratic inequality in the response), so it is never cut off by a grid. "Unbounded" = weak instrument.
      (Anderson-Rubin sets for proxy VARs: Montiel Olea, Stock and Watson 2021; Lunsford 2015.)
- WE  Window impact: the impact vector is not estimated from monthly residuals but taken from the daily model: s = (0, 0, e_i, e_F), the model's response of the end-of-month 2-year yield and FCI to a +1 pp
-     window surprise (e_i = 0.95-0.99, e_F the FCI's corresponding response), macro entries zero. Assumption: the shock reaches unemployment and inflation only through the 2-year yield and the FCI,
-     the same restriction as the main model. Unit: +1 pp in the window (= +1 pp end-of-month yield up to 5%). Inference: 500 draws of the block bootstrap of model.estimate (12-month blocks, recursive lags, announcements of the months drawn).
+ WE  Window impact: the impact vector is not estimated from monthly residuals but taken from the daily model: s = (0, 0, e_i, e_F), the model's response of the month's average 2-year yield and FCI in the announcement month to a +1 pp
+     window surprise (e_i about 0.44-0.47, e_F the FCI's corresponding response), macro entries zero. Assumption: the shock reaches unemployment and inflation only through the 2-year yield and the FCI,
+     the same restriction as the main model. Unit: +1 pp in the window. Inference: 500 draws of the block bootstrap of model.estimate (12-month blocks, recursive lags, announcements of the months drawn).
 Relation to the main model: Plagborg-Moller and Wolf (2021) show that VARs and local projections estimate the same responses; a monthly VAR still observes a surprise concentrated on one day
-only through one end-of-month value per month (see also the temporal-aggregation argument of Jacobson, Matthes and Walker 2026)."""
+only through one monthly average, which spreads it over the month (see also the temporal-aggregation argument of Jacobson, Matthes and Walker 2026)."""
 import zlib
 import numpy as np, pandas as pd
 from .daily import EV, event_index

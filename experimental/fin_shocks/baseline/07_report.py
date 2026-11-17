@@ -103,7 +103,7 @@ frows = []
 for step in ("nom", "real", "rstar"):
     for fci in (0, step):
         d = MON[CS.monthly_id(dict(step=step, fci=fci, start="1996-01"))]; g = d[(d.ident == "P1") & (d["var"] == "u") & (d.h == 12)].set_index("lags")
-        frows.append(f"{CS.FORMS[step] if fci == 0 else ''} & {CS.FCI_LABEL[fci]} & " + " & ".join(f"{g.F[L]:.1f}" for L in (3, 6, 12)) + " & " + (f"{num(g.impact_fci[12])} & {num(g.eom_fci[12])}" if fci else " & ") + r"\\")
+        frows.append(f"{CS.FORMS[step] if fci == 0 else ''} & {CS.FCI_LABEL[fci]} & " + " & ".join(f"{g.F[L]:.1f}" for L in (3, 6, 12)) + " & " + (f"{num(g.impact_fci[12])} & {num(g.win_fci[12] / g.win_pol[12])}" if fci else " & ") + r"\\")
 (REPORT / "tab_monthly_F.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Monthly proxy VAR: first-stage strength and impact on the FCI}\label{tab:monthlyF}",
     r"\begin{tabular}{llrrrrr}\toprule 2-year & FCI & $F$ (3 lags) & $F$ (6) & $F$ (12) & Proxy impact on FCI & Model impact on FCI\\ \midrule", *frows, r"\bottomrule\end{tabular}",
     r"\par\smallskip\parbox{0.92\linewidth}{\scriptsize $F$: robust first-stage statistic of the policy-variable residual on the instrument (instrument months only, 1996--2026). Impact on FCI: end-of-month response of the FCI per +1 pp on the end-of-month 2-year yield, estimated from monthly residuals (proxy VAR, 12 lags) and implied by the daily model.}", r"\end{table}"]) + "\n")
@@ -164,8 +164,6 @@ def write_numbers():
     n = R[CS.case_id(dict(form="rstar", fci="rstar", macro="u,pi", start="1996-01", end=None, t2020="in", trend="none"))]; d("bl:nobs", str(int(n[n.lags == MAIN_LAGS].nobs.iloc[0])))
     BASE = dict(macro="u,pi", start="1996-01", end=None, t2020="in", trend="none")
     pth = lambda f, fci: (lambda d: d[d.lags == MAIN_LAGS])(pd.read_csv(RESULTS / f"{CS.case_id(dict(form=f, fci=fci, **BASE))}_paths.csv"))
-    for f, fci, fk in (("nom", 0, "nom"), ("rstar", "rstar", "rstar")):                               # 2-year yield at the end of the announcement month, per +1 pp in the window
-        e = pth(f, fci); d("bl:eom:" + fk, f"{e[(e.kind == 'fin_eom') & (e.h == 0)].r.iloc[0]:.2f}")
     u = pth("nom", 0); u = u[(u.kind == "macro") & (u["var"] == "u")]; i = u.r.idxmin(); d("bl:path:nom:no:u:min", num(u.r[i])); d("bl:path:nom:no:u:minh", str(int(u.h[i])))
     u = pth("rstar", "rstar"); u = u[(u.kind == "macro") & (u["var"] == "u")]; i = u.r.idxmax(); d("bl:path:rstar:yes:u:max", num(u.r[i])); d("bl:path:rstar:yes:u:maxh", str(int(u.h[i])))
     LS = pd.read_csv(RESULTS / "lit_style.csv").query("lags == 12"); LSI = pd.read_csv(RESULTS / "lit_style_info.csv").query("lags == 12").set_index("case")
@@ -180,7 +178,7 @@ def write_numbers():
     for f in ("nom", "real", "rstar"):
         for fci, fk in ((0, "no"), (f, "yes")):
             m = MON[CS.monthly_id(dict(step=f, fci=fci, start="1996-01"))]; m = m[m.lags == MAIN_LAGS]; d(f"bl:mo:{f}:{fk}:F", f"{m.F.iloc[0]:.1f}")
-            if fci: d(f"bl:mo:{f}:{fk}:impf", num(m.impact_fci.iloc[0])); d(f"bl:mo:{f}:{fk}:modf", num(m.eom_fci.iloc[0]))
+            if fci: d(f"bl:mo:{f}:{fk}:impf", num(m.impact_fci.iloc[0])); d(f"bl:mo:{f}:{fk}:modf", num(m.win_fci.iloc[0] / m.win_pol.iloc[0]))
             for ident in ("P1", "WE"):
                 for v in ("u", "P"):
                     for h in (12, 24, 36):
@@ -224,10 +222,10 @@ def write_numbers():
     DD.use_surprise("ns")
     from lib.daily import window_impact, event_index, EV
     from lib import monthly as MO
-    from lib.model import MAC, fin_eom
+    from lib.model import MAC
     d("bl:bF", f"{window_impact(event_index())[1]:.2f}")
-    for f in ("nom", "real", "rstar"):                                  # FCI innovation per unit of 2-year-yield innovation in ordinary months (monthly VAR residuals, 12 lags, 1996+, end-of-month)
-        D = MAC[["u", "pi"]].join(fin_eom(f, f), how="inner").dropna(); X, Y, _ = MO.design(D, 12, "1996-01"); r = Y - X @ np.linalg.lstsq(X, Y, rcond=None)[0]
+    for f in ("nom", "real", "rstar"):                                  # FCI innovation per unit of 2-year-yield innovation in ordinary months (monthly VAR residuals, 12 lags, 1996+, monthly averages, 2020 dropped)
+        X, Y, P_ = MO.design(MO.data(f, f), 12, "1996-01", MO.END); k_ = ~P_.isin(MO.C2020); X, Y = X[k_], Y[k_]; r = Y - X @ np.linalg.lstsq(X, Y, rcond=None)[0]
         d(f"bl:ord:{f}", f"{np.cov(r[:, 3], r[:, 2])[0, 1] / np.var(r[:, 2], ddof=1):.2f}")
     ie = event_index(); s_ = EV.ns.values[ie]                           # share of each window move explained by the policy-news surprise (R-squared)
     for col, k in (("UST2Y", "y2"), ("UST10Y", "y10"), ("SP500", "sp"), ("DXY", "usd"), ("idx_win", "fci")): d(f"bl:r2:{k}", f"{100 * np.corrcoef(s_, EV[col].values[ie])[0, 1] ** 2:.0f}")

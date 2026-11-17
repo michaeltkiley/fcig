@@ -119,7 +119,7 @@ def point_model(form="rstar", fci="rstar", L=12):
 pm = point_model(); dpt = pm(DEC["rstar"]["bF"]) - pm(DEC["rstar"]["ord0"]); mac("dc:chk:AB", f"{dpt[24, 0]:.3f}")
 chk("path B recomputed from the point model equals the stored path", abs(pm(DEC["rstar"]["ord0"])[24, 1] - DEC["rstar"]["pts"]["B"][24, 1]) < 1e-9)
 from lib import monthly as MO
-MAC_ = M.MAC[["u", "pi"]]; Dm = MAC_.join(M.fin_eom("rstar", "rstar"), how="inner").dropna(); Xm, Ym, _ = MO.design(Dm, 12, "1996-01"); rm = Ym - Xm @ np.linalg.lstsq(Xm, Ym, rcond=None)[0]
+Xm, Ym, Pm = MO.design(MO.data("rstar", "rstar"), 12, "1996-01", MO.END); km = ~Pm.isin(MO.C2020); Xm, Ym = Xm[km], Ym[km]; rm = Ym - Xm @ np.linalg.lstsq(Xm, Ym, rcond=None)[0]
 ord_m = float(np.cov(rm[:, 3], rm[:, 2])[0, 1] / np.var(rm[:, 2], ddof=1)); mac("dc:ordm", f"{ord_m:.2f}")
 sens = {phi: pm(phi) for phi in (0.0, DEC["rstar"]["ord0"], ord_m, DEC["rstar"]["bF"])}
 mac("dc:sens:u:phi0", num(sens[DEC["rstar"]["bF"]][24, 0] - sens[0.0][24, 0])); mac("dc:sens:u:phim", num(sens[DEC["rstar"]["bF"]][24, 0] - sens[ord_m][24, 0]))
