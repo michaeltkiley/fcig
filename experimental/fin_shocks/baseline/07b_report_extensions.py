@@ -37,7 +37,7 @@ def tbl(cap, label, body, note, spec=None, size="footnotesize", fit=False):
                       rf"\begin{{flushleft}}\footnotesize\textit{{Notes:}} {note}\end{{flushleft}}", r"\end{table}"])
 def two(cells): return " & ".join(c[0] for c in cells) + r"\\", " & ".join(rf"{{\scriptsize {c[1]}}}" for c in cells) + r"\\"
 
-# =============================================================== 1. decomposition: paths A, B, C
+# =============================================================== 1. decomposition: paths A, B, C   (A-C is the matched comparison of Section 3.2; the A-B / B-C split, fig_decomp and tab_decomp are no longer in the paper, FS-A81)
 FORMS = ("nom", "real", "rstar"); NAMES = {"nom": "Nominal", "real": "Real", "rstar": "Neutral rate ($r^*$-gap)"}
 DEC = {}
 for f in FORMS:
@@ -166,7 +166,6 @@ matched_two()
 chk("headline: from 1996, adding the FCI raises the 24-month unemployment response by 0.5 to 0.7 pp and deepens the price fall by 0.3 to 0.4 percent in every version (\"about 0.6\", \"about a third\")",
     all(0.5 < con(f, "A", "C", "u", 24)[0] < 0.7 and -0.4 < con(f, "A", "C", "P", 24)[0] < -0.3 for f in FORMS))
 chk("headline: r*-gap with FCI, the 24-month price fall is 0.65 to 0.8 percent from both starts", all(-0.8 < load("rstar", "rstar", start=st)["s0"][24, 1] < -0.65 for st in ("1996-01", "1973-01")))
-chk("headline: in every version the initial FCI movement (A-B) accounts for 50 to 70 percent of the unemployment shift and 60 to 85 percent of the price shift", all(0.5 < con(f, "A", "B", "u", 24)[0] / con(f, "A", "C", "u", 24)[0] < 0.7 and 0.6 < con(f, "A", "B", "P", 24)[0] / con(f, "A", "C", "P", 24)[0] < 0.85 for f in FORMS))
 for v in ("u", "P"):
     xs = [100 * con(f, "A", "B", v, 24)[0] / con(f, "A", "C", v, 24)[0] for f in FORMS]; mac(f"dc:shareAB:{v}:min", f"{min(xs):.0f}"); mac(f"dc:shareAB:{v}:max", f"{max(xs):.0f}")
 chk("1973: adding the FCI raises the 12-month unemployment response by 0.1 to 0.25 pp in every version", all(0.1 < load(f, f, start="1973-01")["s0"][12, 0] - load(f, 0, start="1973-01")["s0"][12, 0] < 0.25 for f in FORMS))
@@ -422,10 +421,7 @@ def claims():
     for f in FORMS:
         for v in ("u", "P"):
             chk(f"{f}: adding the FCI changes the {v} response at 24 m significantly (paired, 90%), except the r*-gap price level (upper bound just above zero)", sig10(con(f, "A", "C", v, 24)[1]) == (not (f == "rstar" and v == "P")) and (f != "rstar" or v != "P" or pc(con(f, "A", "C", v, 24)[1], 95) < 0.1))
-            chk(f"{f}: initial FCI movement (A-B) significant at 24 m for {v}", sig10(con(f, "A", "B", v, 24)[1]))
-            chk(f"{f}: B-C not significant at 24 m for {v}, except nominal unemployment", sig10(con(f, "B", "C", v, 24)[1]) == (f == "nom" and v == "u"))
     chk("daily ordinary loading below 0.4 with interval below 0.5 in every version", all(DEC[f]["ord0"] < 0.4 and pc(DEC[f]["ordd"], 95) < 0.5 for f in FORMS))
-    chk("monthly ordinary loading (0.51) above the daily one; initial movement still the larger part of the unemployment effect with it", ord_m > DEC["rstar"]["ord0"] and abs(float(sens[DEC['rstar']['bF']][24, 0] - sens[ord_m][24, 0])) > abs(float(sens[ord_m][24, 0] - DEC['rstar']['pts']['C'][24, 0])))
     P1, Pc = (PER[(PER.base == "window plus later closes") & (PER.controls == c)].set_index(["series", "measure"]) for c in (False, True)) if PER is not None else (None, None)
     if PER is not None:
         chk("yield: model inside the direct interval at every horizon and for the average", all(P1.loc[("y", m)].model_lo <= P1.loc[("y", m)].est or True for m in ("h5", "h22", "h66", "avg22")) and all(P1.loc[("y", m)].lo <= P1.loc[("y", m)].model <= P1.loc[("y", m)].hi for m in ("h5", "h22", "h66", "avg22")))
