@@ -32,8 +32,13 @@ Web searches run 17 Nov 2026. Tags: [search] = from search-result summaries, pri
 ## 6. Names
 - "MCFCI" not found in use; nearby: BoE "Monetary and Financial Conditions Index (MFCI)" (since 2019), Beaton-Lalonde-Luu (2009) MFCI, Bank of Canada MCI [search; FP-A64].
 
+## Author's guidance (17 Nov 2026)
+- **FRB/US de-emphasis:** evidence is in the Tealbooks: alternative simulations in public Tealbooks 2016-2020 use more and different models than the Greenbooks' FRB/US-centred alternative simulations of 2006-2010. Proposed check: a random sample of public Greenbooks (2006-2010) and Tealbooks (2016-2020), counting the models used in the alternative scenarios [author; to be documented].
+- **Blind spot:** cite Castelnuovo and Nistico (2010) together with the Bernanke (2024) review of the Bank of England's forecasting ("powerful references").
+- **Models without equities [author, known]:** CEE (2005), Smets-Wouters (2007) and their descendants generally have no equities; nor do the Board's EDO and SIGMA models or the New York Fed DSGE model. Confirm with one citation each when writing.
+
 ## Gaps to close before writing
-1. A source for FRB/US de-emphasis, or drop that sentence.
+1. FRB/US de-emphasis: document from Greenbooks vs Tealbooks (author's proposal above).
 2. Read Smets-Wouters (2007) and CEE (2005) on equities (or cite Castelnuovo-Nistico for the general point).
 3. Read Chodorow-Reich-Nenov-Simsek and redo the mapping to index points.
 4. Novelty: one more targeted search; ask colleagues.
