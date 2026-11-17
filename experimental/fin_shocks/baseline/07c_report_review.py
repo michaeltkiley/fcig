@@ -170,7 +170,7 @@ for st, sx in (("1996-01", "96"), ("1973-01", "73")):
         for v in ("u", "P"):
             for h in (12, 24, 36): W4M[(sx, k, v, h)] = r.loc[v][f"r{h}"]; mac(f"w4m:{sx}:{k}:{v}{h}", num(r.loc[v][f"r{h}"]))
     for v, h in (("u", 12), ("u", 24), ("P", 24)):
-        xs = [W4M[(sx, k, v, h)] for k in "FYBG"]; mac(f"w4m:{sx}:{v}{h}:min", num(min(xs, key=abs))); mac(f"w4m:{sx}:{v}{h}:max", num(max(xs, key=abs)))
+        xs = [W4M[(sx, k, v, h)] for k in "FYBG"]; mac(f"w4m:{sx}:{v}{h}:min", num(min(xs, key=abs))); mac(f"w4m:{sx}:{v}{h}:max", num(max(xs, key=abs))); mac(f"w4m:{sx}:{v}{h}:minabs", f"{min(abs(x) for x in xs):.2f}"); mac(f"w4m:{sx}:{v}{h}:maxabs", f"{max(abs(x) for x in xs):.2f}")
 chk("four calibrations, both starts: unemployment rises at 12 and 24 m and the price level falls at 12, 24 and 36 m under every weighting", all(W4M[(sx, k, "u", h)] > 0 for sx in ("96", "73") for k in "FYBG" for h in (12, 24)) and all(W4M[(sx, k, "P", h)] < 0 for sx in ("96", "73") for k in "FYBG" for h in (12, 24, 36)))
 chk("four calibrations from 1973: the 24-month price fall differs by less than 0.1 across weightings; the 12-month unemployment rise lies between 0.2 and 0.4", np.ptp([W4M[("73", k, "P", 24)] for k in "FYBG"]) < 0.1 and all(0.2 < W4M[("73", k, "u", 12)] < 0.4 for k in "FYBG"))
 chk("four calibrations from 1996: futures-factor and Goldman Sachs weightings agree within 0.05 (u and P at 24 m); the two-year-yield and FRB/US weightings give smaller effects", all(abs(W4M[("96", "F", v, 24)] - W4M[("96", "G", v, 24)]) < 0.05 for v in ("u", "P")) and all(abs(W4M[("96", k, v, 24)]) < min(abs(W4M[("96", "F", v, 24)]), abs(W4M[("96", "G", v, 24)])) for k in "YB" for v in ("u", "P")))

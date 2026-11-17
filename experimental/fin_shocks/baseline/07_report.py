@@ -245,6 +245,8 @@ def write_numbers():
     (REPORT / "numbers.tex").write_text("\n".join(L) + "\n")
 write_numbers()
 
+def paths(c, L=MAIN_LAGS):
+    d = pd.read_csv(RESULTS / f"{CS.case_id(c)}_paths.csv"); return d[d.lags == L]
 def check_claims():
     """The qualitative claims of the note's Sections 3.1-3.3 (integration of 17 Nov 2026: two baselines, 2020 dropped, monthly averages); raises an error if any stops being true."""
     def g(f, fk, v, h, st="1996-01"):
@@ -278,6 +280,7 @@ def check_claims():
     msig = lambda r: (not r.unbounded) and r.lo * r.hi > 0
     chk("monthly proxy VAR with the FCI: first-stage F below 5 from both starts", mo("rstar", "yes", "P1", "u", 12).F < 5 and mo("rstar", "yes", "P1", "u", 12, T73).F < 5)
     chk("monthly window-impact VAR r*-gap with FCI: unemployment up and price level down at 12-36 m from both starts; price level significant at 24 m in both", all(mo("rstar", "yes", "WE", "u", h, st).r > 0 and mo("rstar", "yes", "WE", "P", h, st).r < 0 for h in H3 for st in ("1996-01", T73)) and all(msig(mo("rstar", "yes", "WE", "P", 24, st)) for st in ("1996-01", T73)))
+    chk("monthly window-impact VAR from 1996: about half the model's response (0.35 to 0.7 of it; r*-gap with FCI, u 12 m and P 24 m)", all(0.35 < mo("rstar", "yes", "WE", v, h).r / est("rstar", "yes", v, h) < 0.7 for v, h in (("u", 12), ("P", 24))))
     chk("monthly window-impact VAR: responses smaller than the model's (r*-gap with FCI, u 12 m and P 24 m, both starts)", all(abs(mo("rstar", "yes", "WE", v, h, st).r) < abs(est("rstar", "yes", v, h, st=st)) for v, h in (("u", 12), ("P", 24)) for st in ("1996-01", T73)))
     chk("monthly proxy VAR nominal without FCI from 1996: unemployment falls significantly at 12 m", mo("nom", "no", "P1", "u", 12).r < 0 and msig(mo("nom", "no", "P1", "u", 12)))
     # simulation with the model as the true process
@@ -286,8 +289,13 @@ def check_claims():
     chk("simulation: window-impact range narrower than the proxy-with-FCI range (u, 12 m)", sm("window", "u12").sim_p95 - sm("window", "u12").sim_p05 < sm("proxy_fci", "u12").sim_p95 - sm("proxy_fci", "u12").sim_p05)
     chk("simulation: data values inside the simulated 5-95 ranges (proxy with FCI: F and u12; proxy without FCI: u12; window u12)", all(sm(a, b).sim_p05 <= sm(a, b).data <= sm(a, b).sim_p95 for a, b in (("proxy_fci", "F"), ("proxy_fci", "u12"), ("proxy_nofci", "u12"), ("window", "u12"))))
     chk("simulation: the monthly window-impact VAR is biased toward zero (median between a third and two thirds of the truth; temporal aggregation)", 0.33 * sm("window", "u12").truth < sm("window", "u12").sim_median < 0.67 * sm("window", "u12").truth)
+    chk("simulation: proxy VAR with the FCI centred below the truth", sm("proxy_fci", "u12").sim_median < sm("proxy_fci", "u12").truth)
     chk("simulation: proxy VAR without FCI biased toward zero (median below half the truth)", sm("proxy_nofci", "u12").sim_median < 0.5 * sm("proxy_nofci", "u12").truth)
     WT = _wt(); chk("weights test results present for both starts", set(WT.start) >= {"1996-01", T73})
+    allr = [c for p_ in CS.PANELS for c in p_["cases"] if c["fci"] != 0 and c["form"] in ("rstar", "kiley", "real") and (c["form"] == "rstar" or p_["id"].startswith(("R2", "B")))]
+    chk("introduction: with the FCI, every robustness case (all panels, both starts) has unemployment up and the price level down after 12 months", all((lambda d: d[d["var"] == "u"].iloc[0].r12 > 0 and d[d["var"] == "P"].iloc[0].r12 < 0)(R[CS.case_id(c)].query("lags == 12")) for c in allr))
+    pth_u = lambda f, fc: (lambda d: d[(d.kind == "macro") & (d["var"] == "u")].sort_values("h").r.values)(paths(dict(form=f, fci=fc, **B96)))
+    chk("Section 3.2: from 1996 the FCI moves the unemployment path above the yield-alone path from month 1 through 36 in every version", all((pth_u(f, f)[1:] > pth_u(f, 0)[1:]).all() for f in S))
     if __import__("os").environ.get("CLAIMS_REPORT") and bad: print("FAILED CLAIMS:", *bad, sep="\n  ")
     else: assert not bad, "claims in the note no longer hold: " + "; ".join(bad)
 check_claims()
@@ -414,6 +422,7 @@ def lag_summary():
         chk(f"lags {L}: without the FCI the r*-gap unemployment gap is not significantly positive", not any(sg(bl("rstar", "no", "u", h, L), h) and bl("rstar", "no", "u", h, L)[f"r{h}"] > 0 for h in (12, 24, 36)))
         chk(f"lags {L}: weights, 1996: inflation equation rejects proportional weights at 10% in every step, unemployment equation not at 5%", all(WTL[(WTL.start == "1996-01") & (WTL.lags == L) & (WTL["eq"] == "pi")].p_boot < 0.10) and all(WTL[(WTL.start == "1996-01") & (WTL.lags == L) & (WTL["eq"] == "u")].p_boot > 0.05))
     chk("weights, 1973: no rejection of proportional weights at 5% at any lag length, step or equation", all(WTL[(WTL.start == "1973-01") & (WTL.lags.isin(LG))].p_boot > 0.05))
+    chk("simulation: the median proxy-VAR estimate with the FCI lies below the true response at every lag length", all(sm[L].loc[("proxy_fci", "u12")].sim_median < sm[L].loc[("proxy_fci", "u12")].truth for L in LG))
     chk("price level significant in more cases with more lags", cnt[3]["Psig"] < cnt[6]["Psig"] < cnt[12]["Psig"])
     chk("point estimates of the baseline price response grow with the lag length", abs(bl("rstar", "yes", "P", 36, 3).r36) < abs(bl("rstar", "yes", "P", 36, 6).r36) < abs(bl("rstar", "yes", "P", 36, 12).r36))
     if mult_bounded: chk("the multiplier set at 24 m (from 1996) is bounded at every lag length; it excludes zero at 6 and 12 lags", mult_bounded == {3: True, 6: True, 12: True} and all(tt(L, 24).k_hi < 0 for L in (6, 12)) and tt(3, 24).k_hi > 0)
@@ -479,6 +488,16 @@ def rob_summary():
     chk("significance pattern at 10% (the text names the exceptions: 2020 left in and Kiley r* for unemployment; Kiley r* and the spline trend from 1996; 3 lags; components from 1973 for unemployment)",
         all(res[(k, sx, v)][1] == ((k, sx, v) not in NOT_SIG) for k, *_ in CORE_TESTS for sx in ("", "73") for v in ("u", "P")))
     chk("the baseline: significant at 5% for both variables and both samples", all(res[("base", sx, v)][2] for sx in ("", "73") for v in ("u", "P")))
+    ratio_ = lambda k, sx, v: res[(k, sx, v)][0] / res[("base", sx, v)][0]
+    chk("Kiley r* and the spline trend from 1996: same sign, a quarter to a half of the baseline's size (u and P)", all(0.2 < ratio_(k, "", v) < 0.5 for k in ("kiley", "spline") for v in ("u", "P")))
+    chk("6 lags: from 1996 unemployment close to the baseline (within 15 percent) and the price fall about a fifth smaller; from 1973 both smaller", 0.85 < ratio_("L6", "", "u") <= 1.0 and 0.7 < ratio_("L6", "", "P") < 0.85 and all(ratio_("L6", "73", v) < 0.85 for v in ("u", "P")))
+    chk("Bauer-Swanson surprise: responses at least as large as the baseline's in both samples", all(ratio_("bs", sx, v) >= 1.0 for sx in ("", "73") for v in ("u", "P")))
+    from lib import model as M_
+    for sx in ("", "73"):
+        r9 = core_row("R9", dict(form="rstar"), sx, 12); b_ = core_row("B", {}, sx, 12)
+        rat = [r9[r9["var"] == v].iloc[0].r12 / b_[b_["var"] == v].iloc[0].r12 for v in ("u", "P")]
+        chk(f"1-year yield ({sx or '96'}): responses per pp of its own window move 1.0 to 1.6 times the baseline's, in line with 1/RATIO_1Y = {1 / M_.RATIO_1Y:.2f}", all(1.0 < x < 1.6 for x in rat))
+    (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + r"\expandafter\gdef\csname bl:rob:ratio1y\endcsname{" + f"{M_.RATIO_1Y:.2f}" + "}\n")
     for sx in ("", "73"):
         mid = [k for k in tests if k not in OUTL[sx]]; srt = sorted(tests, key=lambda k: res[(k, sx, "u")][0])
         chk(f"robustness {sx or '96'}: the two named departures are the two smallest unemployment responses", set(srt[:2]) == set(OUTL[sx]))
