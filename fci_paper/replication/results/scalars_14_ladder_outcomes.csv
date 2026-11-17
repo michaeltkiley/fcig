@@ -225,7 +225,7 @@ lad_base_real_corepce_n,21
 lad_base_real_corepce_mean_ratio,1.1170925889312588
 lad_base_ref_corepce_n_cw_sig10,0
 lad_base_ref_corepce_n,6
-lad_base_ref_corepce_mean_ratio,1.0838090901940998
+lad_base_ref_corepce_mean_ratio,1.0903382283017968
 lad_base_rstar_corepce_n_cw_sig10,2
 lad_base_rstar_corepce_n,21
 lad_base_rstar_corepce_mean_ratio,1.0889618470030071
@@ -235,9 +235,9 @@ lad_base_nominal_gdp_mean_ratio,1.0188205970701703
 lad_base_real_gdp_n_cw_sig10,7
 lad_base_real_gdp_n,21
 lad_base_real_gdp_mean_ratio,1.0097952617437822
-lad_base_ref_gdp_n_cw_sig10,0
+lad_base_ref_gdp_n_cw_sig10,2
 lad_base_ref_gdp_n,6
-lad_base_ref_gdp_mean_ratio,0.9884731039501355
+lad_base_ref_gdp_mean_ratio,0.9913021779597982
 lad_base_rstar_gdp_n_cw_sig10,7
 lad_base_rstar_gdp_n,21
 lad_base_rstar_gdp_mean_ratio,0.9995719822527704
@@ -249,7 +249,7 @@ lad_base_real_payroll_n,21
 lad_base_real_payroll_mean_ratio,0.9581628688286847
 lad_base_ref_payroll_n_cw_sig10,1
 lad_base_ref_payroll_n,6
-lad_base_ref_payroll_mean_ratio,0.9860742422198183
+lad_base_ref_payroll_mean_ratio,0.9919507317592003
 lad_base_rstar_payroll_n_cw_sig10,14
 lad_base_rstar_payroll_n,21
 lad_base_rstar_payroll_mean_ratio,0.9401638122946423
@@ -261,7 +261,7 @@ lad_base_real_recession_n,7
 lad_base_real_recession_mean_ratio,1.1184087581268405
 lad_base_ref_recession_n_cw_sig10,2
 lad_base_ref_recession_n,2
-lad_base_ref_recession_mean_ratio,0.9128389769480034
+lad_base_ref_recession_mean_ratio,0.9230097326784354
 lad_base_rstar_recession_n_cw_sig10,0
 lad_base_rstar_recession_n,7
 lad_base_rstar_recession_mean_ratio,1.132821569601959
@@ -273,7 +273,7 @@ lad_base_real_ugap_n,21
 lad_base_real_ugap_mean_ratio,0.9896458728040636
 lad_base_ref_ugap_n_cw_sig10,6
 lad_base_ref_ugap_n,6
-lad_base_ref_ugap_mean_ratio,0.8360846863448703
+lad_base_ref_ugap_mean_ratio,0.8416320331425057
 lad_base_rstar_ugap_n_cw_sig10,10
 lad_base_rstar_ugap_n,21
 lad_base_rstar_ugap_mean_ratio,0.9665633763734738
