@@ -136,8 +136,9 @@ def _draws(form, fci, start, B):
     est = next(M.estimate(form, fci, "u,pi", start, None, "out", "none", B, (12,))); return est["sd"], est["fd"]
 
 # ---------------------------------------------------------------- the decomposition
-def run(fci, starts=("1973-01", "1996-01"), modes=("infer", "absorb"), B=500, wc_t2020="out", bands=True, save_hd=None):
-    """Route 1 and Route 2 for the r*-gap model without (fci = 0) or with the FCI ("rstar"). Returns shares, bands, overlap rows and the historical decompositions."""
+def run(fci, starts=("1973-01", "1996-01"), modes=("infer", "absorb"), B=500, wc_t2020="out", bands=True, save_hd=None, scale_pre=True):
+    """Route 1 and Route 2 for the r*-gap model without (fci = 0) or with the FCI ("rstar"). Returns shares, bands, overlap rows and the historical decompositions.
+    scale_pre = False: the pre-1990 monthly shocks enter unscaled (robustness, D9)."""
     form = "rstar"; names = NAMES[:2 + (2 if fci else 1)]
     c = monthly_var(form, fci, "1973-01", 12, "out", wc_t2020); em = pd.Series(c["e"], index=c["per"]).reindex(MONTHS).fillna(0.0)
     Uall = c["Y"] - c["X"] @ c["C"]
@@ -145,7 +146,7 @@ def run(fci, starts=("1973-01", "1996-01"), modes=("infer", "absorb"), B=500, wc
     dmA = {mode: DS[mode][DS[mode].t >= 0].groupby("t").s.sum().reindex(range(NM)).fillna(0.0).values for mode in DS}
     ovm = (MONTHS >= pd.Period("1990-05", "M")) & ~COVID; sc = dmA["infer"][ovm].std() / em.values[ovm].std()
     overlap = dict(fci=fci, corr=np.corrcoef(dmA["infer"][ovm], em.values[ovm])[0, 1], sd_daily=dmA["infer"][ovm].std(), sd_monthly=em.values[ovm].std(), scale=sc)
-    pre = np.where(MONTHS < pd.Period("1990-05", "M"), em.values, 0.0) * sc
+    pre = np.where(MONTHS < pd.Period("1990-05", "M"), em.values, 0.0) * (sc if scale_pre else 1.0)
     S_ = {}
     for era, (lo, hi) in ERAS.items():
         m = (c["per"] >= pd.Period(lo, "M")) & (c["per"] <= pd.Period(hi, "M")) & c["keep"]; S_[era] = np.cov(Uall[m].T)

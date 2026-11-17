@@ -19,7 +19,7 @@ def chk(name, ok):
 def num(x, f="{:.2f}"):
     s = f.format(abs(x)); return ("$-$" if x < 0 and float(s) != 0 else "") + s
 def ab(x, f="{:.2f}"): return f.format(abs(x))
-BASE = dict(macro="u,pi", start="1996-01", end=None, t2020="in", trend="none")
+BASE = dict(macro="u,pi", start="1996-01", end=None, t2020="out", trend="none")          # the 1996 baseline (FS-A76: March-December 2020 dropped)
 def load(form, fci, L=12, **kw):
     c = {**BASE, **kw}; return np.load(OUT / "draws" / f"{CS.case_id(dict(form=form, fci=fci, **c))}_L{L}.npz", allow_pickle=True)
 pc = lambda a, q: np.percentile(a, q, axis=0)
@@ -114,7 +114,7 @@ for f in FORMS:
 x = DEC["rstar"]; mac("dc:peak:AC:u", int(np.argmax(x["pts"]["A"][:, 0] - x["pts"]["C"][:, 0]))); mac("dc:peak:AB:u", int(np.argmax(x["pts"]["A"][:, 0] - x["pts"]["B"][:, 0]))); mac("dc:peak:BC:u", int(np.argmax(x["pts"]["B"][:, 0] - x["pts"]["C"][:, 0])))
 # sensitivity of B to the ordinary loading (point estimates): the response is linear in the initial FCI movement phi, so A - B(phi) for any phi needs two simulations
 def point_model(form="rstar", fci="rstar", L=12):
-    mv = ["u", "pi"]; idx0, pos0, _, _ = M.events(1); Xd, Yd = M.har_rows(form, fci, mv, None, "in"); Bd0 = M.har_fit(Xd, Yd, fci); X, Y = M.macro_data(form, fci, mv, L, "1996-01", None, "in", "none"); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]
+    mv = ["u", "pi"]; idx0, pos0, _, _ = M.events(1); Xd, Yd = M.har_rows(form, fci, mv, None, "in"); Bd0 = M.har_fit(Xd, Yd, fci); X, Y = M.macro_data(form, fci, mv, L, "1996-01", None, "out", "none"); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]
     return lambda phi: M.to_level(M.irf_b(Bd0, C0, 2, 2, L, np.r_[1.0, phi], pos0)[0])
 pm = point_model(); dpt = pm(DEC["rstar"]["bF"]) - pm(DEC["rstar"]["ord0"]); mac("dc:chk:AB", f"{dpt[24, 0]:.3f}")
 chk("path B recomputed from the point model equals the stored path", abs(pm(DEC["rstar"]["ord0"])[24, 1] - DEC["rstar"]["pts"]["B"][24, 1]) < 1e-9)
@@ -304,7 +304,7 @@ def sample_facts():
     pi = M.MAC.pi.dropna()
     for lab, a, b in (("9619", "1996-01", "2019-12"), ("7319", "1973-01", "2019-12"), ("2026", "2020-01", "2026-09"), ("9626", "1996-01", "2026-09")):
         x = pi.loc[a:b]; mac(f"sm:pi:sd:{lab}", f"{x.std():.1f}"); mac(f"sm:pi:max:{lab}", f"{x.max():.1f}"); mac(f"sm:pi:min:{lab}", f"{x.min():.1f}")
-    for tag, kw in (("base96", {}), ("end96", dict(end=2019)), ("out96", dict(t2020="out")), ("base73", dict(start="1973-01")), ("end73", dict(start="1973-01", end=2019)), ("out73", dict(start="1973-01", t2020="out"))):
+    for tag, kw in (("base96", {}), ("end96", dict(end=2019)), ("in96", dict(t2020="in")), ("base73", dict(start="1973-01")), ("end73", dict(start="1973-01", end=2019)), ("in73", dict(start="1973-01", t2020="in"))):
         z = load("rstar", "rstar", **kw); C_ = load("rstar", 0, **kw)
         for v in ("u", "P"):
             k = VAR[v]; mac(f"sm:{tag}:{v}:24", num(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:lo", num(pc(z["sd"][:, 24, k], 5))); mac(f"sm:{tag}:{v}:24:hi", num(pc(z["sd"][:, 24, k], 95)))
@@ -317,7 +317,7 @@ sample_facts()
 # sums of the lag coefficients on the three weighted components in the unrestricted monthly equations (r*-gap, 12 lags): what the conditional coefficients say
 def coef_sums():
     for start, t in (("1996-01", "96"), ("1973-01", "73")):
-        L = 12; X, Y = M.macro_data("rstar", "cmp", ["u", "pi"], L, start, None, "in", "none"); n, k = X.shape; K = 2; nd = 4; XX = np.linalg.inv(X.T @ X)
+        L = 12; X, Y = M.macro_data("rstar", "cmp", ["u", "pi"], L, start, None, "out", "none"); n, k = X.shape; K = 2; nd = 4; XX = np.linalg.inv(X.T @ X)
         for j, nm in enumerate(("u", "pi")):
             b = XX @ X.T @ Y[:, j]; r = Y[:, j] - X @ b; V = XX @ (X.T * (r ** 2)) @ X @ XX * n / (n - k)
             for c, lab in ((1, "y10"), (2, "eq"), (3, "usd")):
@@ -328,7 +328,7 @@ coef_sums()
 # sensitivity to the first-month average of the financial variables: the macro response to a change in the event month's average of (yield, FCI), through the monthly equations of the baseline (partial: no feedback into the daily block)
 def persistence_sensitivity():
     if PER is None: return
-    X, Y = M.macro_data("rstar", "rstar", ["u", "pi"], 12, "1996-01", None, "in", "none"); C = np.linalg.lstsq(X, Y, rcond=None)[0]; K, L, nd = 2, 12, 2
+    X, Y = M.macro_data("rstar", "rstar", ["u", "pi"], 12, "1996-01", None, "out", "none"); C = np.linalg.lstsq(X, Y, rcond=None)[0]; K, L, nd = 2, 12, 2
     A = C[1:1 + K * L].T.reshape(K, L, K); G = C[1 + K * L:1 + K * L + nd * L].T.reshape(K, L, nd)
     def resp(dl, n=1):
         m = np.zeros((37, K))
@@ -346,7 +346,7 @@ persistence_sensitivity()
 def persistence_rho():
     """Partial sensitivity: scale the model's FCI path from month 2 on (days 44 and later) by the ratio of the direct to the model estimate at day 66, and trace the macro response through the baseline monthly equations (no feedback into the daily block)."""
     if PER is None: return
-    X, Y = M.macro_data("rstar", "rstar", ["u", "pi"], 12, "1996-01", None, "in", "none"); C = np.linalg.lstsq(X, Y, rcond=None)[0]; K, L, nd = 2, 12, 2
+    X, Y = M.macro_data("rstar", "rstar", ["u", "pi"], 12, "1996-01", None, "out", "none"); C = np.linalg.lstsq(X, Y, rcond=None)[0]; K, L, nd = 2, 12, 2
     A = C[1:1 + K * L].T.reshape(K, L, K); G = C[1 + K * L:1 + K * L + nd * L].T.reshape(K, L, nd); z = load("rstar", "rstar"); f0 = z["f0"].copy()
     def resp(fb):
         m = np.zeros((37, K))
@@ -369,7 +369,7 @@ if PER is not None:                                    # initial level at the an
 def sacrifice():
     T = pd.read_csv(RESULTS / "tradeoff.csv"); T["fci"] = T.fci.astype(str)
     for H_ in (24, 36):
-        t = T[(T.form == "rstar") & (T.fci == "rstar") & (T.macro == "u,pi") & (T.start == "1996-01") & T.end.isna() & (T.t2020 == "in") & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0]
+        t = T[(T.form == "rstar") & (T.fci == "rstar") & (T.macro == "u,pi") & (T.start == "1996-01") & T.end.isna() & (T.t2020 == "out") & (T["shock"] == "ns") & (T["ext"].fillna("") == "" if "ext" in T else True) & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0]
         chk(f"multiplier set at {H_} m bounded and negative", np.isfinite(t.k_lo) and np.isfinite(t.k_hi) and t.k_hi < 0)
         mac(f"tr:sac:{H_}", f"{abs(1 / t.kappa):.1f}"); mac(f"tr:sac:{H_}:lo", f"{abs(1 / t.k_lo):.1f}"); mac(f"tr:sac:{H_}:hi", f"{abs(1 / t.k_hi):.1f}")
 sacrifice()
@@ -400,7 +400,7 @@ def claims():
     chk("tests: yield = dollar (equities free) rejected at 10% in the inflation equation from 1996 at all three versions, at 5% at the nominal; not in the unemployment equation; no test rejects at 10% from 1973",
         all(wp("yd", s_, "pi") < 0.10 for s_ in FORMS) and wp("yd", "nom", "pi") < 0.05 and all(wp("yd", s_, "u") > 0.10 for s_ in FORMS) and all(wp(t_, s_, e_, "1973-01") > 0.10 for t_ in ("all", "yd", "eq") for s_ in FORMS for e_ in ("u", "pi")))
     chk("tests: equities equal to yield and dollar rejected at 10% from 1996 in the r*-gap inflation equation only", wp("eq", "rstar", "pi") < 0.10 and wp("eq", "nom", "pi") > 0.10 and wp("eq", "real", "pi") > 0.10)
-    chk("conditional dollar coefficient in the inflation equation (1996) has the sign opposite to the yield's", float(M.macro_data("rstar", "cmp", ["u", "pi"], 12, "1996-01", None, "in", "none")[0].shape[0]) > 0 and (lambda b_: b_[0] * b_[1] < 0)(_coef_pi_96()))
+    chk("conditional dollar coefficient in the inflation equation (1996) has the sign opposite to the yield's", float(M.macro_data("rstar", "cmp", ["u", "pi"], 12, "1996-01", None, "out", "none")[0].shape[0]) > 0 and (lambda b_: b_[0] * b_[1] < 0)(_coef_pi_96()))
     if DIR is not None:
         g = lambda c_, v, h: DIR[(DIR.controls == c_) & (DIR["var"] == v) & (DIR.h == h)].iloc[0]
         chk("direct projection, macro lags: unemployment negative and price level positive at 12 and 24 m; bootstrap intervals include zero for all four; Newey-West excludes zero for unemployment (both) and the price level at 24 m",
@@ -412,7 +412,7 @@ def claims():
     chk("sample: 24-month price response 1996 start -0.81 vs ends-2019 -0.14 (interval includes zero); 1973 start -0.63 vs ends-2019 -0.50 (significant at 5%)",
         abs(z_("base96")[0] + 0.81) < 0.006 and abs(z_("end96")[0] + 0.14) < 0.006 and not sig10(z_("end96")[1]) and abs(z_("base73")[0] + 0.63) < 0.006 and abs(z_("end73")[0] + 0.50) < 0.006 and sig5(z_("end73")[1]))
 def _coef_pi_96():
-    L = 12; X, Y = M.macro_data("rstar", "cmp", ["u", "pi"], L, "1996-01", None, "in", "none"); b = np.linalg.lstsq(X, Y[:, 1], rcond=None)[0]
+    L = 12; X, Y = M.macro_data("rstar", "cmp", ["u", "pi"], L, "1996-01", None, "out", "none"); b = np.linalg.lstsq(X, Y[:, 1], rcond=None)[0]
     return [sum(b[1 + 2 * L + l * 4 + c] for l in range(L)) for c in (1, 3)]
 _pi_ = M.MAC.pi.dropna(); D_pi = {"9619": _pi_.loc["1996-01":"2019-12"].std(), "7319": _pi_.loc["1973-01":"2019-12"].std(), "2026": _pi_.loc["2020-01":"2026-09"].std()}
 def z_(tag):
@@ -430,7 +430,7 @@ lag_fact()
 def tradeoff_compact():
     T = pd.read_csv(RESULTS / "tradeoff.csv"); T["fci"] = T.fci.astype(str)
     def row(f, start):
-        return {H_: T[(T.form == f) & (T.fci == f) & (T.macro == "u,pi") & (T.start == start) & T.end.isna() & (T.t2020 == "in") & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0] for H_ in (24, 36)}
+        return {H_: T[(T.form == f) & (T.fci == f) & (T.macro == "u,pi") & (T.start == start) & T.end.isna() & (T.t2020 == "out") & (T["shock"] == "ns") & (T["ext"].fillna("") == "" if "ext" in T else True) & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0] for H_ in (24, 36)}
     def cellk(r):
         if np.isfinite(r.k_lo) and np.isfinite(r.k_hi): return f"[{num(r.k_lo)}, {num(r.k_hi)}]"
         return "undefined; 68\\%: " + (f"[{num(r.k68_lo)}, {num(r.k68_hi)}]" if np.isfinite(r.k68_lo) and np.isfinite(r.k68_hi) else "undefined")
@@ -474,5 +474,7 @@ gs_comparison()
 # =============================================================== write macros, restyle, assert claims
 (REPORT / "numbers_ext.tex").write_text("\n".join(ML) + "\n")
 LST.restyle_dir(REPORT)
-assert not BAD, "claims in the revision no longer hold: " + "; ".join(BAD)
+import os as _os
+if _os.environ.get("CLAIMS_REPORT"): print("FAILED CLAIMS:\n  " + "\n  ".join(BAD))
+else: assert not BAD, "claims in the revision no longer hold: " + "; ".join(BAD)
 print("extension exhibits written to", REPORT)

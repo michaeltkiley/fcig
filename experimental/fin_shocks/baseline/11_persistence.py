@@ -49,7 +49,7 @@ for b in range(B):
     while len(mo) < len(cal): mo += list(cal[M.block_rows(len(cal), rng, M.BLOCK_M)])
     bd.append(np.concatenate([rowsby[m] for m in mo[:len(cal)]]))
 allr = np.arange(n); out = []
-z = np.load(OUT / "draws" / "rstar_rstar_upi_1996-01_all_in_L12.npz"); fday0, fdayd = z["fday0"], z["fdayd"]
+z = np.load(OUT / "draws" / "rstar_rstar_upi_1996-01_all_out_L12.npz"); fday0, fdayd = z["fday0"], z["fdayd"]
 def model_stat(path, m):
     return path[22] if m == "h22" else path[5] if m == "h5" else path[66] if m == "h66" else path[:22].mean()
 for k in ("y", "f"):

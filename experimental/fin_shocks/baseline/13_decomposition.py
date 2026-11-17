@@ -18,6 +18,8 @@ for fci in ("rstar", 0):
     for tag, d in r["hd"].items(): d.to_csv(RESULTS / f"decomp_hd_{tag}.csv", index=False, float_format="%.5f")
     for mode, d in r["daily"].items(): d.to_csv(OUT / "decomp" / f"daily_shocks_rstar_{fci}_{mode}.csv", index=False, float_format="%.6f")
     print("decomposition", fci, "done", flush=True)
+for fci in ("rstar", 0):                                                             # robustness (D9): pre-1990 monthly shocks unscaled (point estimates)
+    shares += [dict(r, mode=r["mode"] + "_unscaled") for r in DC.run(fci, modes=("infer",), bands=False, scale_pre=False)["shares"] if r["era"] == "1974-1989"]
 pd.DataFrame(shares).to_csv(RESULTS / "decomp_shares.csv", index=False, float_format="%.5f"); pd.DataFrame(bands).to_csv(RESULTS / "decomp_bands.csv", index=False, float_format="%.5f")
 pd.DataFrame(ov).to_csv(RESULTS / "decomp_overlap.csv", index=False, float_format="%.4f")
 diag = [DC.diagnostics(DC.monthly_var(s, f, st, L)) for s in ("nom", "real", "rstar") for f in (0, s) for st in ("1973-01", "1996-01") for L in (12,)]
