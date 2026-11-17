@@ -19,6 +19,13 @@ Read with `FRAMING_SKETCH.md` (this folder). Decisions are recorded as N-A entri
 ## Status 17 Nov 2026 (FP-A63)
 The author moved to a new framing (policy-news weighting; see `reviews/` and FP-A63): weights lead; the equity blind-spot claim stays (models in use for policy); levels stay (tight or loose vs neutral; historical comparison with FCI-G 1-year); no shared code across notes. N1 is superseded by this framing; the rest of Part 2 and Part 3 to be revised once the author's reaction is complete.
 
+## Status 17 Nov 2026, later (FP-A64, FP-A65; literature)
+- Decided: weights lead, plus one similarity measure and the variance decomposition; NS factor core, Bauer-Swanson robustness, no two-year-yield robustness; PC indexes complementary and different (stress, asymmetry, no stance reading); the VAR as a second dimension of similarity, with the projection formula beta_k = g'Omega w_k / w_k'Omega w_k as the bridge; Note B's specification in Note A's own code (stage 1, done; sync check running).
+- Literature deep dive (`reviews/LIT_HANK_17nov.md`, `LIT_DSGE_17nov.md`, `LIT_EMPIRICAL_17nov.md`): equity response in line with the window literature (Bauer-Swanson 7.4 per pp of 2-year, R2 0.30); one-year output effect moderate and earlier-peaking; wealth channel 29-63 percent in large models (LSL 2002); policy DSGEs lack equities (verified from documentation), FRB/US has them; research models capture parts; no study decomposes output effects by channel with high-frequency identification. Fed staff alternative scenarios: FRB/US only in all 35 Greenbooks 2006-10, about 3 models per Tealbook 2016-20 (`../fed_models_check/`).
+- Author's reading: supports more investment in macro models of financial conditions, especially equities.
+- **Open strategic decision (S1):** the FCI effects are generalized impulse responses (reduced form; a mix of structural shocks). (a) Keep them and write a short empirical note with connections to the literature; (b) go deeper with structural identification. Options and recommendation in the 17 Nov session reply; to be recorded when decided.
+- Still open: name (MCFCI), what moves to the appendix (N3/N9), title.
+
 ## Part 2. Decisions for the author (one at a time; recommendation first)
 
 | # | Decision | Options | Recommendation |
