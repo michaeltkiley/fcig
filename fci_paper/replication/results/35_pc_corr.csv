@@ -1,0 +1,7 @@
+basis,panel,n,var_share,corr_market,corr_nfci,skew_1990
+level,A_three_assets,645,0.4388,0.9471,0.3933,-0.0320
+level,B_plus_spreads,645,0.3393,0.6015,0.3579,1.0487
+level,C_plus_policy,645,0.3470,0.7527,0.4810,1.1332
+change12,A_three_assets,633,0.4824,0.9627,0.2666,
+change12,B_plus_spreads,633,0.4064,0.6981,0.4953,
+change12,C_plus_policy,633,0.3434,0.7371,0.5317,

@@ -263,3 +263,10 @@ New steps `33_qvar.py` (quarterly VAR and FRB/US benchmark, moved from `experime
 - **FRB/US GDP under the matched funds-rate path vs the VAR** (GDP lagged; 4 / 8 / 12 quarters): market FRB/US -0.77 / -1.13 / -1.23 vs VAR -0.74 / -0.42 / -0.19; GS -0.87 / -1.24 / -1.35 vs -0.88 / -0.51 / -0.24; FRB/US index -1.00 / -1.41 / -1.50 vs -0.77 / -0.39 / -0.11. At one year the VAR matches FRB/US for the market and GS indexes almost exactly; after that FRB/US keeps building and the VAR fades.
 - **Equity share of a policy move:** windows: market 0.40 [0.19, 0.58], GS weights 0.44, FRB/US weights 0.25 (common assets); FRB/US hike reading at quarters 1 / 4 / 8: market 0.73 / 0.69 / 0.70, GS 0.72 / 0.68 / 0.70, FRB/US 0.60 / 0.53 / 0.55. Equities' share of level variance: market 0.77, GS 0.79, FRB/US 0.49.
 - Sync check after stages 2-6 (17 Nov 2026): 227 result files compared, all reproduce; all claims hold; all macros resolve; "in sync" [verified].
+
+## Stage 3 of the new version: principal-component indexes (17 Nov 2026; FP-A68)
+New step `35_pc.py` (in `run_all.py` and `10_check_sync.py`; placebo VAR not done, author). Own first principal components of standardized monthly r*-step series, 1973-2026 [verified, `results/35_*.csv`]:
+- Three policy-news assets: 44 percent of variance; correlation with the market index (MCFCI) 0.95 (levels), 0.96 (12-month changes); with NFCI 0.39; skewness 1990-2026 -0.03.
+- Plus BBB and mortgage spreads: 34 percent; loadings in levels mortgage spread 0.64, BBB 0.43, dollar 0.43, y10 0.37, equities -0.30 (changes: BBB 0.59, mortgage 0.52, equities -0.53); correlation with MCFCI 0.60 (levels), 0.70 (changes); with NFCI 0.36; skewness 1.05.
+- Plus spreads and the policy rate: correlation with MCFCI 0.75, NFCI 0.48; skewness 1.13.
+- Reading [inference]: on the three assets, statistical weighting gives nearly the policy-news index; what sets statistical FCIs apart is the indicator set (spreads, stress measures), not the principal-component method. Published NFCI: three assets explain 20 percent of 12-month changes, 51 with the Baa spread; MCFCI flow 63 -> 68 (step 10).
