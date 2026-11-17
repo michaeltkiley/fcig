@@ -62,7 +62,7 @@ def agg_matrix(fci):
     for i, g in enumerate(MGROUPS[fci]): A[1 + i, [1 + j for j in g]] = 1
     return A
 _short = {"y10": "y10", "equities": "eq", "dollar": "usd"}
-def cmp_cols(fci, frame): return {"+".join(_short[k] for k in g): frame[g].sum(axis=1) for g in CMPGROUPS[fci]}
+def cmp_cols(fci, frame): return {"+".join(_short[k] for k in g): frame[g].sum(axis=1, min_count=len(g)) for g in CMPGROUPS[fci]}      # min_count: a day with a missing component stays missing (a plain sum would give 0)
 _cases = {"nom": ("nominal", "rstar LW"), "real": ("real", "rstar LW"), "rstar": ("rstar", "rstar LW"), "kiley": ("rstar", "rstar Kiley")}
 _wv = pd.Series(W, index=CMPKEYS)
 CMPM = {}; CMPD = {}
