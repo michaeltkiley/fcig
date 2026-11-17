@@ -5,7 +5,7 @@
 | rstar |  0.556 |      0.216 |        0.411 |   0.524 |
 | 0     |  0.609 |      0.236 |        0.492 |   0.481 |
 
-### Variance shares at 24 months, percent: r*-gap with the FCI (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; 90% bands from Note B's draws)
+### Variance shares at 24 months, percent: r*-gap with the FCI (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; shares exclude March-December 2020; 90% bands from Note B's draws)
 
 |   model from | shocks                               | unemployment gap   | core inflation   | 2-year yield      | FCI               |
 |-------------:|:-------------------------------------|:-------------------|:-----------------|:------------------|:------------------|
@@ -24,7 +24,7 @@
 |         1996 | 1996-2026: daily-recovered, all days | 13.7 [2.6, 30.6]   | 8.0 [3.5, 13.9]  | 45.0 [23.6, 59.8] | 34.6 [16.9, 55.2] |
 |         1996 | measured surprises (Route 1)         | 0.9 [0.2, 1.9]     | 0.4 [0.2, 0.9]   | 3.1 [1.5, 4.1]    | 2.3 [1.0, 3.7]    |
 
-### Variance shares at 12 months, percent: r*-gap with the FCI (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; 90% bands from Note B's draws)
+### Variance shares at 12 months, percent: r*-gap with the FCI (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; shares exclude March-December 2020; 90% bands from Note B's draws)
 
 |   model from | shocks                               | unemployment gap   | core inflation   | 2-year yield      | FCI               |
 |-------------:|:-------------------------------------|:-------------------|:-----------------|:------------------|:------------------|
@@ -43,7 +43,7 @@
 |         1996 | 1996-2026: daily-recovered, all days | 10.9 [3.3, 21.4]   | 8.7 [3.8, 12.8]  | 57.4 [34.6, 68.4] | 51.9 [26.6, 74.7] |
 |         1996 | measured surprises (Route 1)         | 0.5 [0.1, 0.9]     | 0.4 [0.2, 0.6]   | 2.9 [1.7, 3.4]    | 2.6 [1.3, 3.6]    |
 
-### Variance shares at 36 months, percent: r*-gap with the FCI (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; 90% bands from Note B's draws)
+### Variance shares at 36 months, percent: r*-gap with the FCI (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; shares exclude March-December 2020; 90% bands from Note B's draws)
 
 |   model from | shocks                               | unemployment gap   | core inflation   | 2-year yield      | FCI               |
 |-------------:|:-------------------------------------|:-------------------|:-----------------|:------------------|:------------------|
@@ -62,7 +62,7 @@
 |         1996 | 1996-2026: daily-recovered, all days | 18.3 [2.6, 52.6]   | 7.8 [3.3, 17.3]  | 40.4 [21.3, 59.9] | 25.0 [12.2, 46.1] |
 |         1996 | measured surprises (Route 1)         | 1.1 [0.2, 3.0]     | 0.4 [0.2, 1.0]   | 2.6 [1.3, 3.8]    | 1.6 [0.7, 2.8]    |
 
-### Variance shares at 24 months, percent: r*-gap yield alone (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; 90% bands from Note B's draws)
+### Variance shares at 24 months, percent: r*-gap yield alone (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; shares exclude March-December 2020; 90% bands from Note B's draws)
 
 |   model from | shocks                               | unemployment gap   | core inflation   | 2-year yield        |
 |-------------:|:-------------------------------------|:-------------------|:-----------------|:--------------------|
@@ -81,7 +81,7 @@
 |         1996 | 1996-2026: daily-recovered, all days | 2.0 [0.2, 12.1]    | 4.8 [2.1, 8.8]   | 87.6 [50.1, 111.4]  |
 |         1996 | measured surprises (Route 1)         | 0.1 [0.0, 0.4]     | 0.2 [0.1, 0.3]   | 3.3 [1.8, 4.1]      |
 
-### Variance shares at 12 months, percent: r*-gap yield alone (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; 90% bands from Note B's draws)
+### Variance shares at 12 months, percent: r*-gap yield alone (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; shares exclude March-December 2020; 90% bands from Note B's draws)
 
 |   model from | shocks                               | unemployment gap   | core inflation   | 2-year yield       |
 |-------------:|:-------------------------------------|:-------------------|:-----------------|:-------------------|
@@ -100,7 +100,7 @@
 |         1996 | 1996-2026: daily-recovered, all days | 0.1 [0.1, 2.8]     | 6.1 [2.3, 9.1]   | 84.3 [57.1, 95.6]  |
 |         1996 | measured surprises (Route 1)         | 0.0 [0.0, 0.1]     | 0.2 [0.1, 0.3]   | 2.8 [1.9, 3.1]     |
 
-### Variance shares at 36 months, percent: r*-gap yield alone (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; 90% bands from Note B's draws)
+### Variance shares at 36 months, percent: r*-gap yield alone (12 lags, March-December 2020 dropped from estimation, 2020 absorbed by the dummies; shares exclude March-December 2020; 90% bands from Note B's draws)
 
 |   model from | shocks                               | unemployment gap   | core inflation   | 2-year yield       |
 |-------------:|:-------------------------------------|:-------------------|:-----------------|:-------------------|
