@@ -29,7 +29,7 @@ for fci in ("rstar", "0"):
                     b = B[(B.fci.astype(str) == fci) & (B.model == model) & (B.h == h) & (B.era == era) & (B.source == src) & (B["var"] == v)]
                     r[VN[v]] = f"{100 * g[v].iloc[0]:.1f}" + (f" [{100 * b.p5.iloc[0]:.1f}, {100 * b.p95.iloc[0]:.1f}]" if len(b) else "")
                 rows.append(r)
-        out.append(f"### Variance shares at {h} months, percent: r*-gap {'with the FCI' if fci != '0' else 'yield alone'} (12 lags, March-December 2020 dropped from estimation, 2020 {'decomposed with the estimated coefficients' if MODE == 'infer' else 'absorbed by the dummies'}; 90% bands from Note B's draws)\n\n" + pd.DataFrame(rows).to_markdown(index=False))
+        out.append(f"### Variance shares at {h} months, percent: r*-gap {'with the FCI' if fci != '0' else 'yield alone'} (12 lags, March-December 2020 dropped from estimation, 2020 {'decomposed with the estimated coefficients' if MODE == 'infer' else 'absorbed by the dummies'}; shares exclude March-December 2020; 90% bands from Note B's draws)\n\n" + pd.DataFrame(rows).to_markdown(index=False))
 # episodes
 MONTHS = ["1979-12", "1980-12", "1982-06", "1984-06", "1986-12", "1989-06", "1992-06", "1995-06", "1998-12", "2001-12", "2003-06", "2008-12", "2009-10", "2013-12", "2019-12", "2020-04", "2020-12", "2021-06", "2022-06", "2022-12", "2023-12", "2024-12", "2026-09"]
 rows = []
