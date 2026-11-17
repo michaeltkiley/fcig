@@ -26,7 +26,7 @@ Exploratory work, separate from Note B's package (`../baseline/`, read only) and
 
 * `lib_r2.note_b()` reproduces Note B's stored baseline responses exactly (r*-gap with FCI, 1996, 12 lags: u +0.335/+0.493/+0.431 at 12/24/36 months, price level -0.805 at 24) [verified].
 * The monthly VAR with the window column does not reproduce Note B's responses (`REPORT.md` T4): the monthly-average VAR's yield path decays faster (0.60 in month 1 against Note B's 1.00), and responses differ by up to half. So a Route 2 decomposition uses dynamics that are not the paper's.
-* The FS-A43 addendum (10 Nov) reported monthly VARs "from 1973". The end-of-month series behind them start in 1990, so those runs most likely started in 1990 [inference from the code at commit 8e9433b^]. They are not in the paper now, and `cases.py` already states that a 1973 start is not offered.
+* ~~The FS-A43 addendum's monthly VARs "from 1973" most likely started in 1990.~~ **Wrong (corrected 17 Nov 2026):** they started in 1973, in monthly averages; FS-A48 then switched the monthly VARs to end-of-month values and dropped 1973 (FS_QA FS-A48 (3)). The A2 monthly-average 1973 results reproduce them.
 * Stale text (not changed): the CLAUDE.md glossary describes Note B's monthly block with a "quadratic trend", whereas the package has no trend (spline only as a robustness check). PROJECT_MEMORY section 9 says the Note A quarterly-VAR branch is not merged; it is on `main`.
 * Nothing in the Note B draft (`paper/mp_transmission.tex`) mentions invertibility or decompositions, so nothing in the paper conflicts with these results. Note B's identification (the window surprise as the shock, as in Route 1) does not need invertibility; that is a strength worth a sentence (see REPORT.md).
 
