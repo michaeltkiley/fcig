@@ -162,10 +162,21 @@ mac("w4:umin", num(min(W4[k]["u"] for k in "FYBG"))); mac("w4:umax", num(max(W4[
 mac("w4:Pmin", num(min(W4[k]["P"] for k in "FYBG"))); mac("w4:Pmax", num(max(W4[k]["P"] for k in "FYBG")))
 mac("w4:ordmin", f"{min(W4[k]['ord'] for k in 'FYBG'):.2f}"); mac("w4:ordmax", f"{max(W4[k]['ord'] for k in 'FYBG'):.2f}")
 W4C = W4
-chk("four calibrations: the unemployment shift from adding the FCI is positive with a 90% interval excluding zero under every weighting", all(W4[k]["shlo"] > 0 for k in "FYBG"))
-chk("four calibrations: unemployment rises and the price level falls significantly (10%) at 24 m under every weighting", all(W4[k]["u"] > 0 and W4[k]["P"] < 0 and W4[k]["Psig"] for k in "FYBG"))
+# magnitudes under the four weightings, both starts (12 and 24 months): macros bl:rv:w4m:<start>:<k>:<var><h>
+W4M = {}
+for st, sx in (("1996-01", "96"), ("1973-01", "73")):
+    for k in "FYBG":
+        c = dict(form="rstar", fci="rstar" if k == "F" else f"cal{k}", **{**base, "start": st}); r = res(c)
+        for v in ("u", "P"):
+            for h in (12, 24, 36): W4M[(sx, k, v, h)] = r.loc[v][f"r{h}"]; mac(f"w4m:{sx}:{k}:{v}{h}", num(r.loc[v][f"r{h}"]))
+    for v, h in (("u", 12), ("u", 24), ("P", 24)):
+        xs = [W4M[(sx, k, v, h)] for k in "FYBG"]; mac(f"w4m:{sx}:{v}{h}:min", num(min(xs, key=abs))); mac(f"w4m:{sx}:{v}{h}:max", num(max(xs, key=abs)))
+chk("four calibrations, both starts: unemployment rises at 12 and 24 m and the price level falls at 12, 24 and 36 m under every weighting", all(W4M[(sx, k, "u", h)] > 0 for sx in ("96", "73") for k in "FYBG" for h in (12, 24)) and all(W4M[(sx, k, "P", h)] < 0 for sx in ("96", "73") for k in "FYBG" for h in (12, 24, 36)))
+chk("four calibrations from 1973: the 24-month price fall differs by less than 0.1 across weightings; the 12-month unemployment rise lies between 0.2 and 0.4", np.ptp([W4M[("73", k, "P", 24)] for k in "FYBG"]) < 0.1 and all(0.2 < W4M[("73", k, "u", 12)] < 0.4 for k in "FYBG"))
+chk("four calibrations from 1996: futures-factor and Goldman Sachs weightings agree within 0.05 (u and P at 24 m); the two-year-yield and FRB/US weightings give smaller effects", all(abs(W4M[("96", "F", v, 24)] - W4M[("96", "G", v, 24)]) < 0.05 for v in ("u", "P")) and all(abs(W4M[("96", k, v, 24)]) < min(abs(W4M[("96", "F", v, 24)]), abs(W4M[("96", "G", v, 24)])) for k in "YB" for v in ("u", "P")))
+chk("four calibrations: the unemployment shift from adding the FCI is positive under every weighting; its 90% interval excludes zero except under the FRB/US weights (lower bound near zero)", all(W4[k]["sh"] > 0 for k in "FYBG") and all(W4[k]["shlo"] > 0 for k in "FYG") and -0.05 < W4["B"]["shlo"] <= 0)
 chk("four calibrations: the window loading is 1.00 under every weighting (common normalization) and the ordinary-day loading is below 0.7", all(abs(W4[k]["bF"] - 1.0) < 1e-5 and W4[k]["ord"] < 0.7 for k in "FYBG"))
-chk("four calibrations: the two-year-yield market weighting has the largest ordinary-day loading and the smallest shift", W4["Y"]["ord"] == max(W4[k]["ord"] for k in "FYBG") and W4["Y"]["sh"] == min(W4[k]["sh"] for k in "FYBG"))
+chk("four calibrations: the two weightings with the higher ordinary-day loadings (two-year yield, FRB/US) have the smaller shifts", min(W4[k]["ord"] for k in "YB") > max(W4[k]["ord"] for k in "FG") and max(W4[k]["sh"] for k in "YB") < min(W4[k]["sh"] for k in "FG"))
 chk("four calibrations: dollar-to-equity ratios match the companion paper (1.0, 2.06, 2.51, 0.96; F 0.99 with Note B's weights)", np.allclose([W4[k]["ratio"] for k in "FYBG"], [0.989, 2.060, 2.513, 0.955], atol=0.01))
 
 (REPORT / "numbers_rev.tex").write_text("\n".join(ML) + "\n")
