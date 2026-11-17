@@ -96,6 +96,8 @@ The analysis runs everything for both baselines (author, 17 Nov: "keep robustnes
 
 ## Part 3. Execution plan (all of Part 2 decided; executable without the author)
 
+**Execution status (17 Nov 2026, branch `claude/serene-cori-2oapbc`):** Phases 0-5 done (FS-A76 addenda, FS-A77 to FS-A80); Phase 6 full rebuild and sync check run at the end of the session (see `PROJECT_MEMORY.md` section 9). Paper text: `paper/mp_transmission_session_integration.tex`.
+
 Text rule: every paper change goes into a full copy, `paper/mp_transmission_session_integration.tex` (started from the author's current `paper/mp_transmission.tex` at execution time), for the author to merge by diff; follow `experimental/WRITING_GUIDE.md` and the house style. Package, tables, figures and macros are updated directly. Merge to `main` when Phase 6 passes.
 
 Each phase ends with its checks passing and a commit. Work on a short branch from `main` after merging (Phase 0). Estimated run times assume 4 cores.
