@@ -280,3 +280,9 @@ New step `36_levelflow_q.py` (in `run_all.py` and `10_check_sync.py`). Gap equat
 
 ## Name (17 Nov 2026; FP-A70)
 - **Decided (author):** the policy-news index is called the **MCFCI** (monetary conditions financial conditions index). One sentence in the paper distinguishes it from the Bank of Canada MCI, the Bank of England MFCI and Beaton-Lalonde-Luu (2009) (FP-A64).
+
+## Appendix and scope decisions for the new version (17 Nov 2026; FP-A71)
+- **Composition test (current Section 6): dropped** from the paper, including the net-export result (author). The package keeps computing it.
+- **Two-year-yield calibration (Y): dropped** from the paper (author; FP-A64). The package keeps computing it.
+- **Four-calibration month counts:** agreed: January 1998 and one sentence of counts in the main text where the indexes part; full tables and other episodes in the appendix; recompute with three indexes (MCFCI, GS, FRB/US).
+- **The step-by-step development (nominal -> real -> r*): core, main text** (author). For each step: the economic reason, the approach and its equation, the shift or result. "This is the method of the paper. It would be completely out of place in an appendix." The proposal to move it was wrong. The author's principle, added to `experimental/WRITING_GUIDE.md` section 1: what matters is economic intuition, method based on that intuition, and translating both into tangible, useful results.
