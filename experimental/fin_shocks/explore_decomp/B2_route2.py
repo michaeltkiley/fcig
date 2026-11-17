@@ -16,7 +16,8 @@ from lib.daily import event_index, positions
 
 M = R.M
 OUT = R.Path(__file__).resolve().parent / "results_route2"
-ap = argparse.ArgumentParser(); ap.add_argument("--start", default="1973-01"); ap.add_argument("--hmax", type=int, default=120); a = ap.parse_args()
+ap = argparse.ArgumentParser(); ap.add_argument("--start", default="1973-01"); ap.add_argument("--hmax", type=int, default=120); a, _ = ap.parse_known_args()
+TAG = "" if a.start == "1973-01" else f"_model{a.start[:4]}"                       # --start 1996-01: Note B's baseline model (monthly equations from 1996) as the responses
 idx0 = event_index(); POS0 = positions(idx0)
 MONTHS = pd.period_range("1974-01", R.END, freq="M"); NM = len(MONTHS); MI = {p: i for i, p in enumerate(MONTHS)}
 ERAS = {"1974-1989": ("1974-01", "1989-12"), "1990-2026": ("1990-05", "2026-09"), "1996-2026": ("1996-01", "2026-09")}
@@ -96,7 +97,7 @@ if __name__ == "__main__":
             frames = []
             for v, nm in enumerate(names):
                 frames.append(pd.DataFrame(dict(month=MONTHS.astype(str), var=nm, all_shocks_var=sto[v].values, **{k: C[k][:, v] for k in C})))
-            pd.concat(frames).to_csv(OUT / f"hd_{step}_{fci}.csv", index=False, float_format="%.5f")
+            pd.concat(frames).to_csv(OUT / f"hd_{step}_{fci}{TAG}.csv", index=False, float_format="%.5f")
             for h in (1, 12, 24, 36):
                 for era in ERAS:
                     fev, _ = data_fev(step, fci, h, era); lo, hi = map(lambda x: pd.Period(x, "M"), ERAS[era]); m = (MONTHS >= lo) & (MONTHS <= hi)
@@ -106,5 +107,5 @@ if __name__ == "__main__":
                         x = W[src][m]
                         rows.append(dict(step=step, fci=fci, h=h, era=era, source=src, **{n: x[:, i].var() / fev[i] for i, n in enumerate(names)}))
             print(step, fci, flush=True)
-    pd.DataFrame(rows).to_csv(OUT / "shares.csv", index=False, float_format="%.5f"); pd.DataFrame(ov).to_csv(OUT / "overlap.csv", index=False, float_format="%.4f")
+    pd.DataFrame(rows).to_csv(OUT / f"shares{TAG}.csv", index=False, float_format="%.5f"); pd.DataFrame(ov).to_csv(OUT / f"overlap{TAG}.csv", index=False, float_format="%.4f")
     print(pd.DataFrame(ov).round(3).to_string())
