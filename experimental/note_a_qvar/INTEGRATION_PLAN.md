@@ -16,6 +16,9 @@ Read with `FRAMING_SKETCH.md` (this folder). Decisions are recorded as N-A entri
 5. **Co-movement** [verified]: level correlations 1973-2026, r* step: market-GS 0.994, market-FRB/US 0.942, GS-FRB/US 0.936; 12-month changes 0.96-0.98. Equity valuation is about three-quarters of the level variance of the market and GS indexes and half of FRB/US.
 6. **Housekeeping** [verified]: the Note B integration plan does not touch Note A. NFCI/ANFCI switched to monthly means in `03_indexes.py` (17 Nov); package rerun in progress; changes to be recorded in FP-A62.
 
+## Status 17 Nov 2026 (FP-A63)
+The author moved to a new framing (policy-news weighting; see `reviews/` and FP-A63): weights lead; the equity blind-spot claim stays (models in use for policy); levels stay (tight or loose vs neutral; historical comparison with FCI-G 1-year); no shared code across notes. N1 is superseded by this framing; the rest of Part 2 and Part 3 to be revised once the author's reaction is complete.
+
 ## Part 2. Decisions for the author (one at a time; recommendation first)
 
 | # | Decision | Options | Recommendation |
