@@ -17,7 +17,7 @@ Two things live here. Do not confuse them.
 - **Macro-model levels index (EP_4, FRB/US):** weighted with FRB/US funds-rate equivalents (formerly "MS-style"/"five-variable"; oil dropped; with and without house prices). Our own construction; **not** the market index. Code: `experimental/ms_fci/`. The Morgan Stanley index itself is unverified.
 - **GS:** a replication of Goldman's index with published weights, not the proprietary series. **FCI-G:** the Fed's growth-impulse measure (a flow; built from past changes). **NFCI/ANFCI:** Chicago Fed.
 - **Forward impetus:** the FCI-G-form flow of the market index; **current pressure** is appendix only.
-- **Transmission note (Note B):** window-identified NS surprises traced through a daily block (2-year yield and FCI) into monthly unemployment gap and core PCE (3/6/12 lags, quadratic trend); steps nominal -> real -> r*-gap identical to Note A. Not the same as the market-index VAR of Note A.
+- **Transmission note (Note B):** window-identified NS surprises traced through a daily block (2-year yield and FCI) into monthly unemployment gap and core PCE (3/6/12 lags, no trend in the baseline; a spline trend only as robustness); steps nominal -> real -> r*-gap identical to Note A. Not the same as the market-index VAR of Note A.
 
 ## Working preferences (from the user)
 - **Read `experimental/WRITING_GUIDE.md` before writing or editing any paper text** (the author's views on writing and working, how they show up in Note B, and a pre-send checklist; written 11 Nov 2026; supersedes `fin_shocks/paper/STYLE_GUIDE_DRAFT.md`).
