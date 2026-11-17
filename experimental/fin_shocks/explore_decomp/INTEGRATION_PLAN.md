@@ -2,6 +2,8 @@
 
 Written 17 Nov 2026 at the end of the exploration session. Branch `claude/sharp-goodall-wffoqw`; it contains the FS-A75 weights branch (`claude/fci-note-b-weights-dcfgbi`) and nothing of it is on `main` yet. All exploration code and results are in `experimental/fin_shocks/explore_decomp/`; decisions are in `DECOMP_QA.md` (D-A1 to D-A24). Note B's package (`baseline/`) and paper (`paper/`) were not changed. This file has three parts: what we found (Part 1), the decisions the author has to take before integration (Part 2), and the steps to execute once they are taken (Part 3).
 
+**Guiding principle (author, 17 Nov 2026): one data type throughout the paper.** The paper currently mixes two: Note B's model uses monthly averages of the daily financial variables, while the benchmark monthly VARs (and the standard-methods estimators) use end-of-month values since FS-A48 (10 Nov). That switch was a mistake: it put a second data convention into the paper, and because no end-of-month FCI exists before 1990 it removed the 1973 versions of the benchmarks without this being made clear to the author. The fix is to use monthly averages everywhere (the only type available from 1973, and the one Note B's model already uses) and to remove end-of-month series from the code and the paper (Phase 2 below). The end-of-month results in this folder are kept only as a record.
+
 Conventions used below: r*-gap = the 2-year yield and FCI relative to r*; "with the FCI" = Note B's model with the 2-year yield and the FCI; responses per +1 pp window surprise on the 2-year yield; 12 lags; 90 percent intervals unless stated; `**`/`*` = 5/10 percent.
 
 ---
@@ -11,7 +13,7 @@ Conventions used below: r*-gap = the 2-year yield and FCI relative to r*; "with 
 ### 1.1 Data and samples
 
 * **Two different kinds of model.** Note B's baseline is the mixed-frequency model: a daily block (2-year yield, FCI) and monthly equations (unemployment gap, core PCE inflation) on lagged monthly averages of the daily variables. Its monthly equations can start in 1973 (monthly series before the daily data start in 1990). The paper's *benchmark* monthly VARs (proxy VAR, window-impact VAR, Cholesky; Sections 3.1 and 4.4) are purely monthly.
-* **End of month and monthly averages.** The benchmark VARs use end-of-month values since FS-A48 (10 Nov). The end-of-month FCI and the real and r*-gap 2-year yields exist only from 1990 (nominal 2-year from 1976), so the benchmarks have no 1973 version. The earlier 1973 benchmark runs (FS-A43) were genuine 1973 runs in monthly averages [verified in FS_QA FS-A48]; my earlier claim that they started in 1990 was wrong and is corrected in DECOMP_QA.
+* **Two data types in the paper: the error to remove.** The benchmark VARs were switched to end-of-month values on 10 Nov (FS-A48) while Note B's model kept monthly averages. The end-of-month FCI and the real and r*-gap 2-year yields exist only from 1990 (nominal 2-year from 1976), so the switch also removed the benchmarks' 1973 versions. The 1973 benchmark runs before the switch (FS-A43) were in monthly averages. Every current end-of-month exhibit runs on its full stated sample (1996-2026: 369 months; Cholesky 1984-2026: 513), so the error is the mixing of data types and the lost 1973 versions, not a truncated sample. I also misdescribed this in this session (I first said the 1973 runs had started in 1990; corrected in DECOMP_QA).
 * **The unemployment gap** is the unemployment rate less the CBO natural rate (UNRATE minus NROU, quarterly NROU interpolated to months; October 2025 interpolated) [verified in `baseline/lib/noteA.py`].
 
 ### 1.2 Note B's model from 1973 (A1, A4-A7, G, H; `results_core/`, `results_ip/`, `results_ff/`, `results_1y/`, `results_bjmw/`)
@@ -28,7 +30,7 @@ Conventions used below: r*-gap = the 2-year yield and FCI relative to r*; "with 
 
 * The exploration code reproduces the paper's end-of-month 1996 proxy and window-impact VARs exactly [verified].
 * From 1973 in monthly averages: the window-impact VAR with the FCI (r*-gap) gives unemployment +0.29** at 12 m and price level -0.30* at 24 m; the proxy VAR with the FCI is uninformative (first-stage F 0.9); without the FCI the nominal proxy VAR still has unemployment falling (-0.25*).
-* **Data type versus sample** (same samples, both data types): averaging roughly halves the price response (r*-gap with FCI, window-impact VAR, 24 m: -0.71 end of month 1991, -0.37 averages 1991, -0.30 averages 1973), because the announcement moves this month's average by only 0.47 and the monthly VAR does not reproduce the next month's further rise. The proxy VAR's collapse from 1973 is the sample (F 5.1, 4.0, 0.9). Note B's own model is unaffected (it simulates the daily path).
+* **What moving the benchmarks to monthly averages will change** (A3; same samples, both data types; for the record, not for the paper): the benchmark price responses are about half as large in monthly averages (r*-gap with FCI, window-impact VAR, 24 m: -0.71 end of month 1991, -0.37 averages 1991, -0.30 averages 1973), because an announcement moves this month's average by only 0.47 and a monthly VAR does not reproduce the further rise the next month. This is the temporal aggregation that Section 4.6 of the draft already discusses; with one data type it becomes part of the case for the mixed-frequency model rather than a footnote on units. The proxy VAR's weakness from 1973 is the sample (F 4.0 from 1991, 0.9 from 1973). Note B's own model is unaffected (it simulates the daily path).
 
 ### 1.4 Historical and variance decompositions (REPORT.md Part B; B1-B5)
 
@@ -54,7 +56,7 @@ Conventions used below: r*-gap = the 2-year yield and FCI relative to r*; "with 
 | D2 | Role of the 1973 sample | (a) robustness only (r*-gap, Section 5.1); (b) a second baseline, all versions, next to 1996 | (b) for the r*-gap baseline figure and table; all versions in the appendix |
 | D3 | Regime split (1973-1995 vs 1996-2026) | (a) not reported; (b) reported in Section 5.1 with a formal break test | (b): it explains why the long sample is weaker and that the puzzles are a post-1996 phenomenon |
 | D4 | Brennan et al. comparison | (a) none; (b) a robustness row on their sample (1973-2019), noting their 68 percent bands | (b), short, in Section 5.1 |
-| D5 | Benchmark monthly VARs | (a) end of month only (current); (b) add monthly averages from 1973 and the data-type-versus-sample table to the appendix | (b): it answers the reader who knows the earlier 1973 runs |
+| D5 | Data type | Decided by the author (17 Nov): one data type throughout | Monthly averages everywhere (the only type back to 1973; the model's own); end-of-month series removed from code and paper (Phase 2). To confirm. |
 | D6 | Decompositions in the paper | (a) none; (b) Route 1 only; (c) Route 1 and Route 2 (daily, with the monthly splice) as a new subsection, the monthly-invertibility diagnostic in the appendix | (c), as a subsection of Results after the tradeoff, with Route 2 framed as policy-direction shocks |
 | D7 | Propagation model for Route 2 | 1973 model, 1996 model, or both | the 1973 model (covers the whole period), the 1996 model as a check |
 | D8 | 2020 in the decomposition | (a) inferred with the estimated coefficients (D-A23 main); (b) absorbed by the dummies | (a), with (b) as robustness; shares exclude 2020 (D-A24) |
@@ -83,11 +85,25 @@ Each phase ends with its checks passing and a commit. Work on a short branch fro
 5. If D10: macro option `u,pi,ip` (IP = 100 log INDPRO; copy `INDPRO.csv` into `baseline/data/` and record it in `SOURCES.md`); an `fci` option that adds the funds rate to the daily block with the MP1 window impact (the A5 wrapper becomes code in `model.py`: `daily_frame`, `fin_monthly`, `impact`, `irf_b`); a policy-rate option for the 1-year yield (the A6 construction: `DGS1.csv`, `EXPINF1YR`, the 0.78 window ratio, in `daily.py` and `model.py`).
 6. Checks: the existing panels reproduce their stored results exactly when their options are unchanged; the new panels reproduce the exploration numbers (`results_core/`, `results_ip/`, `results_bjmw/`) to the rounding of the stored files.
 
-### Phase 2. Benchmark monthly VARs (`baseline/lib/monthly.py`, `04_monthly_var.py`, `08_literature_style.py`)
+### Phase 2. One data type: remove end-of-month series from the code and the paper
 
-1. If D5(b): a `kind` argument (end of month, monthly average) and a 1973 start in `monthly.run_case`, with the window column from `f0[0]` for averages and the bootstrap drawing pre- and post-1996 rows separately (as `A2_monthly.py`); the proxy VAR rescaled to the window unit.
-2. Cases: end of month from 1996 (unchanged), monthly averages from 1973, and both types from 1991 for the data-type-versus-sample table.
-3. Check: the 1996 end-of-month results are unchanged (they are the paper's).
+Inventory of end-of-month use (checked 17 Nov 2026):
+
+| Where | What | Change |
+|---|---|---|
+| `baseline/lib/monthly.py` (`run_case`), `04_monthly_var.py`, `cases.py` (`MONTHLY`, `MONTHLY_START`, and the comment that a 1973 start is not offered) | benchmark proxy VAR (P1) and window-impact VAR (WE) on `fin_eom`; window column from `e0` | `fin_monthly`; window column from `f0[0]` (month-average response); proxy VAR in the window unit; starts 1996 and 1973; bootstrap drawing pre- and post-1996 rows separately (as `A2_monthly.py`) |
+| `baseline/lib/litstyle.py`, `08_literature_style.py` | Cholesky (2-year from `fin_eom`; funds rate last weekday) and proxy VAR without the FCI | monthly averages of both; add 1973 starts |
+| `baseline/lib/simulate.py`, `06_proxy_simulation.py` | the simulated proxy VAR and its "truth" in the end-of-month unit (`e0`) | simulate and estimate in monthly averages; truth per +1 pp in the window |
+| `baseline/lib/model.py` | `fin_eom`; `path_rows` writes `kind="fin_eom"` | remove (or keep only for the record outside the package) |
+| `07_report.py` (lines near 168 and 227-230), `07b_report_extensions.py` (near 122) | macros `bl:eom:*`; first-stage diagnostics on end-of-month data | monthly averages; remove the `eom` macros |
+| `paper/mp_transmission.tex` Section 3.1 (line ~277), 3.2 (~292), 3.3 (~308), Section 4.4, Appendix "Relation to a Monthly VAR and a Proxy VAR", Appendix "Construction and Estimation Details" | "end-of-month two-year yield"; the 0.95-0.99 unit statement | one statement of the data: monthly averages throughout; the unit is +1 pp in the window |
+| `fin_shocks/FS_QA.md` FS-A48 | the decision to use end of month | a new FS-A entry that reverses it and says why |
+
+Steps:
+1. Add a guard: every case stops with an error if its requested start precedes the first month with data (no silent truncation).
+2. Make the code changes in the table; remove `fin_eom` from every path that feeds the paper.
+3. Rerun steps 04, 06, 08 and the report scripts; every benchmark and standard-methods number in the paper changes.
+4. Checks: no exhibit or macro uses end-of-month data (grep for `fin_eom`, `e0`, `eom` in the package and for "end of the month" / "end-of-month" in the paper); the 1996 monthly-average benchmarks reproduce `explore_decomp/results_core/avg_vs_eom.csv` (avg 1996 rows) and the 1973 ones `monthly_benchmarks.csv` (avg 1973 rows); Note B's model results unchanged.
 
 ### Phase 3. Decompositions (new `baseline/lib/decomp.py` and `13_decomposition.py`)
 
@@ -99,7 +115,7 @@ Each phase ends with its checks passing and a commit. Work on a short branch fro
 
 ### Phase 4. Report scripts (`07d_report_decomp.py`, and changes to 07/07b/07c)
 
-1. New exhibits: the two-baseline IRF figure (as `H_baseline_irfs.png`); a 1973 table for all versions; the regime-split table; the Brennan et al. sample row; the data-type-versus-sample table; the decomposition figure (as `B5_hd_rstar_infer.png`), the shares table, and the invertibility table (appendix).
+1. New exhibits: the two-baseline IRF figure (as `H_baseline_irfs.png`); a 1973 table for all versions; the regime-split table; the Brennan et al. sample row; the benchmark VARs in monthly averages from 1996 and 1973; the decomposition figure (as `B5_hd_rstar_infer.png`), the shares table, and the invertibility table (appendix).
 2. Macros in `report/numbers_decomp.tex`; every qualitative claim asserted with `chk(...)`, as in 07b/07c.
 3. House style via `lib/latex_style.py`.
 
@@ -108,7 +124,7 @@ Each phase ends with its checks passing and a commit. Work on a short branch fro
 1. Section 2.5 (A Mixed-Frequency VAR) and Appendix "Relation to a Monthly VAR and a Proxy VAR": one paragraph on why the window identification does not need invertibility, with the monthly diagnostic (D6).
 2. Section 3.2 (Baseline): the two baselines if D2(b), and the 2020 treatment if D1(b).
 3. New Section 3.5, "How Much Do Policy Shocks Explain?": Route 1 and Route 2, the shares and the history (D6-D9).
-4. Section 4.4 (Monthly Benchmarks) and the appendix: monthly averages from 1973 and the data-type-versus-sample result (D5).
+4. Sections 3.1 and 4.4 and the appendices: one data type (monthly averages) everywhere; the benchmarks from 1996 and 1973; the temporal-aggregation point stated once (Section 4.6) (D5, Phase 2).
 5. Section 5.1 (The Sample): the corrected sentence on 1973 (1.5 (1)), the regime split (D3), the Brennan et al. sample (D4).
 6. Section 4 or 5 rows for IP and the funds rate (D10).
 7. Abstract, introduction and conclusion last, only if the decomposition becomes a headline result.
