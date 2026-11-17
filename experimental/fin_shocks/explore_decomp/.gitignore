@@ -1,0 +1,4 @@
+results/*.npz
+results/hd_*_dummy.csv
+results/shocks_*_dummy.csv
+__pycache__/
