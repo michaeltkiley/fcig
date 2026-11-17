@@ -84,7 +84,7 @@ The analysis runs everything for both baselines (author, 17 Nov: "keep robustnes
 | 3.3 Why the FCI changes the response | Table / Figure as now | 1996 in the text; the 1973 column added only if it fits the same table without widening it |
 | 3.4 Tradeoff | as now | 1996 and 1973 as two rows |
 | 3.5 How much policy shocks explain (new) | Figure + small table | Figure: historical contributions of policy-direction shocks to the unemployment gap, core inflation, the 2-year yield and the FCI, 1974-2026 (1973 model), with the measured-surprise line (four panels); Table: 24-month variance shares for unemployment and inflation, rows "measured surprises", "policy-direction shocks 1990-2026", "1974-1989", columns 1996 model and 1973 model |
-| 5 Robustness | Table (one) | Core robustness summary, r*-gap with the FCI: rows = tests, columns = 1996 (u 24 m, P 24 m) and 1973 (u 24 m, P 24 m); baseline row first |
+| 5 Robustness | Table (one) | Core robustness summary, r*-gap with the FCI: rows = tests, columns = 1996 (u 12 m, P 12 m) and 1973 (u 12 m, P 12 m); baseline row first (12 months: author, D-A30) |
 
 **Core robustness set for the summary table (proposal).** One row each, both samples: (1) 2020 left in; (2) Kiley's r*; (3) real yield and FCI with a spline trend (no r*); (4) excess bond premium as a third monthly variable; (5) the FCI's three components with equities free; (6) Bauer-Swanson orthogonalized surprise; (7) 3 and 6 lags; (8) industrial production; (9) the federal funds rate. Each gets one sentence in Section 5 saying why it is a good test and whether the result holds; exceptions stated once as facts.
 
