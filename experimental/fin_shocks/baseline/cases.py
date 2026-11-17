@@ -91,8 +91,8 @@ GROUP_NOTE = {"B": "Nominal, real and r*-gap 2-year yield; the FCI is the index 
               "R5": "Bauer-Swanson: orthogonalized surprise of Bauer and Swanson (2023), announcements through 2019. Jarocinski-Karadi: Nakamura-Steinsson surprise kept when the 2-year yield and the S\\&P 500 move in opposite directions in the window. The window impact and the bootstrap use the events with a surprise.",
               "R4": "Components: the 10-year yield, equity valuation and real dollar, each multiplied by its weight, enter separately in the daily and monthly equations in the same version as the 2-year yield, each with its own window impact (the three impacts sum to the FCI's). Baseline rows without the FCI are in the baseline table."}
 
-# Monthly VAR benchmarks: every step without and with the FCI in the same form, on end-of-month series from 1996 (the main sample); the instrument (NS surprise) exists from 1996 only (lib/monthly.py).
-# A 1973 start is not offered: the FCI is daily only from 1990, so an end-of-month FCI cannot be built before then.
-MONTHLY_START = "1996-01"
-MONTHLY = [dict(step=s, fci=f, start=MONTHLY_START) for s in ("nom", "real", "rstar") for f in (0, s)]
+# Monthly VAR benchmarks (lib/monthly.py): every step without and with the FCI in the same form, on monthly averages (FS-A76: one data type), March-December 2020 dropped,
+# from 1996 and from 1973 (months before the daily data use the monthly series, as in the main model). The instrument (NS surprise) exists from 1996 only.
+MONTHLY_STARTS = ("1996-01", "1973-01")
+MONTHLY = [dict(step=s, fci=f, start=st) for st in MONTHLY_STARTS for s in ("nom", "real", "rstar") for f in (0, s)]
 def monthly_id(m): return f"monthly_{m['step']}_{m['fci']}_{m['start']}"

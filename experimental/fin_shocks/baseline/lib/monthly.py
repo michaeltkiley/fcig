@@ -22,7 +22,7 @@ import zlib
 import numpy as np, pandas as pd
 from .daily import EV, event_index
 from . import model as M
-from .model import MAC, fin_eom, impact
+from .model import MAC, fin_monthly, impact
 
 LAGS = (3, 6, 12)
 HORIZ = (12, 24, 36)
@@ -69,31 +69,51 @@ def ar_set(a, d, z):
     if disc < 0: return np.nan, np.nan, False
     return (-qb - np.sqrt(disc)) / (2 * qa), (-qb + np.sqrt(disc)) / (2 * qa), False
 
-def run_case(step, fci, start="1996-01", B=200, lags=LAGS, design_fn=design):
-    """Rows for one (step, FCI): both identification schemes, 3/6/12 lags, u and price level at 12/24/36 months, plus first-stage diagnostics."""
-    idx0 = event_index(); ev = EV.iloc[idx0]; mon = ev.Date.dt.to_period("M"); first, last = mon.min(), mon.max()
-    z_all = ev.ns.groupby(mon).sum(); K = 3 + int(bool(fci)); rows = []; b0 = impact(fci, idx0)
-    D = MAC[["u", "pi"]].join(fin_eom(step, fci), how="inner").dropna()
-    CAL = pd.period_range("1996-01", "2026-09", freq="M"); evm = ev.Date.dt.to_period("M").values; ERW = {m: idx0[evm == m] for m in CAL}
+END = "2026-09"
+C2020 = pd.period_range("2020-03", "2020-12", freq="M")
+
+def data(step, fci):
+    """Monthly averages (FS-A76: one data type): unemployment gap, core PCE inflation, the month's average 2-year yield [and FCI] in the step; months before the daily data from the monthly series."""
+    D = MAC[["u", "pi"]].join(fin_monthly(step, fci), how="inner").dropna(); return D[D.index <= pd.Period(END, "M")]
+
+def window_column(step, fci, t2020):
+    """Response of the month's average yield [and FCI] in the announcement month per +1 pp window surprise, from Note B's daily block (it does not depend on the monthly equations,
+    the start or the lag length: the macro variables are zero in the announcement month)."""
+    return next(M.estimate(step, fci, "u,pi", "1996-01", None, t2020, "none", 1, (12,)))["f0"][0]
+
+def _blocks(idx, n, rng, length=12):
+    nb = -(-n // length); st = rng.integers(0, len(idx) - length + 1, nb); return np.concatenate([idx[s:s + length] for s in st])[:n]
+
+def run_case(step, fci, start="1996-01", B=500, lags=LAGS, t2020="out", tag=None):
+    """Rows for one (step, FCI, start): proxy VAR (P1) and window-impact VAR (WE), u and price level at 12/24/36 months, 3/6/12 lags, with first-stage diagnostics. Unit: +1 pp on the
+    2-year yield in the window (P1's first-stage column is scaled so that its yield entry equals WE's, the month-average response to a window move of 1 pp, about 0.44-0.47).
+    t2020 = "out": March-December 2020 dropped from the estimation rows (their values still enter as lags), as in the main model. Bootstrap (WE): 12-month moving blocks of residuals,
+    pre-1996 and post-1996 rows drawn separately, the VAR rebuilt recursively; the FCI entry rescaled by the window ratio of the drawn months' announcements.
+    Ported from explore_decomp/A2_monthly.py (tag = its seed tag reproduces it)."""
+    idx0 = event_index(); ev = EV.iloc[idx0]; evm = ev.Date.dt.to_period("M").values; zm = ev.Date.dt.to_period("M")
+    z_all = ev.ns.groupby(zm).sum(); first, last = zm.min(), zm.max(); b0 = impact(fci, idx0)
+    D = data(step, fci); K = D.shape[1]; win = window_column(step, fci, t2020); b_we = np.r_[0, 0, win]; rows = []
     for L in lags:
-        e = next(M.estimate(step, fci, "u,pi", start, None, "in", "none", 1, (L,)))["e0"][0]           # model: end-of-month 2-year (and FCI) response per +1 pp window surprise
-        X, Y, per = design_fn(D, L, start); C = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C; res = Y - fit; T = ma(C, K, L)
-        ok = (per >= first) & (per <= last); z = z_all.reindex(per[ok]).fillna(0.0).values; r = res[ok]
-        g = np.array([first_stage(r[:, j], z)[0] for j in range(K)]); F = first_stage(r[:, 2], z)[1]; S = g / g[2]
-        info = dict(step=step, fci=fci, start=start, lags=L, nobs=len(Y), n_instr=int(ok.sum()), F=F, impact_u=S[0], impact_pi=S[1], impact_fci=(S[3] if fci else np.nan),
-                    eom_pol=e[0], eom_fci=(e[1] / e[0] if fci else np.nan))
-        for var, h in TARGETS:                                                                  # P1: point estimate and exact AR set
+        X, Y, per = design(D, L, str(max(D.index[L], pd.Period(start, "M"))), END)
+        keep = np.ones(len(per), bool) if t2020 == "in" else ~per.isin(C2020)
+        X, Y, per = X[keep], Y[keep], per[keep]                                                 # 2020 rows dropped; lags of later months still read the 2020 data
+        C = np.linalg.lstsq(X, Y, rcond=None)[0]; U = Y - X @ C; T = ma(C, K, L)
+        ok = (per >= first) & (per <= last); z = z_all.reindex(per[ok]).fillna(0.0).values; r = U[ok]
+        g = np.array([first_stage(r[:, j], z)[0] for j in range(K)]); F = first_stage(r[:, 2], z)[1]; s_p1 = g / g[2]
+        info = dict(step=step, fci=fci, start=str(per[0]), lags=L, t2020=t2020, nobs=len(per), n_instr=int(ok.sum()), F=F, win_pol=win[0], win_fci=(win[1] if K == 4 else np.nan),
+                    impact_u=s_p1[0], impact_pi=s_p1[1], impact_fci=(s_p1[3] if K == 4 else np.nan))
+        for var, h in TARGETS:                                                                  # P1: per +1 pp on the month's average yield, rescaled to the window unit by win[0]
             c = row_of(T, var, h); lo, hi, unb = ar_set(r @ c, r[:, 2], z)
-            rows.append(dict(**info, ident="P1", var=var, h=h, r=float(c @ S), lo=lo, hi=hi, unbounded=int(unb)))
-        s0 = np.r_[0, 0, e]; rng = np.random.default_rng(zlib.crc32(f"monthly|{step}|{fci}|{start}|{L}".encode()))
-        dr = {t: [] for t in TARGETS}; LI = M._lag_index(per, L); prow = {p: i for i, p in enumerate(per)}
-        for _ in range(B):                                                                     # block bootstrap as in model.estimate: 12-month blocks of calendar months, recursive lags, announcements of the months drawn
-            mo = []; e_ = []
-            while len(e_) < len(per):
-                for r_ in M.block_rows(len(CAL), rng, M.BLOCK_M): mo.append(CAL[r_]); e_ += [res[prow[CAL[r_]]]] if CAL[r_] in prow else []
-            Ys = M._recursive(X, C, np.array(e_[:len(per)]), K, L, LI); Tb = ma(np.linalg.lstsq(M._rebuild(X, K, L, LI, Ys), Ys, rcond=None)[0], K, L)
-            ib = np.concatenate([ERW[m] for m in mo]); ib = ib if len(ib) >= 20 else idx0; sb = np.r_[0, 0, e * (impact(fci, ib) / b0)]      # window ratio of the announcements drawn
+            rows.append(dict(**info, ident="P1", var=var, h=h, r=float(c @ s_p1) * win[0], lo=lo * win[0], hi=hi * win[0], unbounded=int(unb)))
+        pre = np.where(per < pd.Period("1996-01", "M"))[0]; post = np.where(per >= pd.Period("1996-01", "M"))[0]; LI = M._lag_index(per, L)
+        rng = np.random.default_rng(zlib.crc32((tag or f"monthly|{step}|{start}|{L}|{t2020}").format(step=step, start=start, L=L).encode()))     # FCI not in the tag: pairs share draws
+        dr = {t: [] for t in TARGETS}
+        for _ in range(B):
+            rb = np.concatenate([_blocks(pre, len(pre), rng) if len(pre) else np.array([], int), _blocks(post, len(post), rng)])
+            Ys = M._recursive(X, C, U[rb], K, L, LI); Tb = ma(np.linalg.lstsq(M._rebuild(X, K, L, LI, Ys), Ys, rcond=None)[0], K, L)
+            mo_b = per[rb[rb >= len(pre)]]; ib = idx0[np.isin(evm, mo_b.values)] if len(mo_b) else idx0; ib = ib if len(ib) >= 20 else idx0
+            sb = np.r_[0, 0, win * (impact(fci, ib) / b0)[:K - 2]]
             for t in TARGETS: dr[t].append(row_of(Tb, *t) @ sb)
         for t in TARGETS:
-            rows.append(dict(**info, ident="WE", var=t[0], h=t[1], r=float(row_of(T, *t) @ s0), lo=np.percentile(dr[t], 5), hi=np.percentile(dr[t], 95), unbounded=0))
+            rows.append(dict(**info, ident="WE", var=t[0], h=t[1], r=float(row_of(T, *t) @ b_we), lo=np.percentile(dr[t], 5), hi=np.percentile(dr[t], 95), unbounded=0))
     return rows

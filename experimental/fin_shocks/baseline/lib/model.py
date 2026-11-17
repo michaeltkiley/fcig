@@ -137,11 +137,6 @@ def fin_monthly(form, fci):
     if A is not None: FB = pd.DataFrame(FB.values @ A.T, index=FB.index, columns=["pol"] + [f"g{i}" for i in range(A.shape[0] - 1)])
     return FB[FB.index >= pd.Period("1973-01", "M")]
 
-def fin_eom(form, fci):
-    """End-of-month values of the daily block (the last weekday of each month, forward-filled): the 2-year yield and, when included, the FCI. Used by the monthly VAR
-    benchmarks, whose unit is then +1 pp on the end-of-month yield (0.95-0.99 of the announcement-window move in this model)."""
-    return daily_frame(form, fci).ffill().set_index(MON).groupby(level=0).last()
-
 def impact(fci, idx):
     if fci in CMPGROUPS:
         w = window_impact_components(idx)[1:]; pos = {k: i for i, k in enumerate(CMPKEYS)}
@@ -205,9 +200,9 @@ def macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=False):
     return (X, np.array(Y), pd.PeriodIndex(P, freq="M")) if periods else (X, np.array(Y))
 
 def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21, A=None):
-    """Macro first in each month (from lags), then the days of the month (event day = b_day). Returns monthly macro, monthly-average financial paths and end-of-month financial values."""
+    """Macro first in each month (from lags), then the days of the month (event day = b_day). Returns monthly macro, monthly-average financial paths and the daily financial path from the event day."""
     lens = [n0] + [nother] * (months - 1); start = np.concatenate([[0], np.cumsum(lens)]); off = 70
-    f = np.zeros((start[-1] + off, nd)); macro = np.zeros((months, K)); fb = np.zeros((months, nd)); fe = np.zeros((months, nd))
+    f = np.zeros((start[-1] + off, nd)); macro = np.zeros((months, K)); fb = np.zeros((months, nd))
     nm = nd if A is None else A.shape[0]; Am = np.eye(nd) if A is None else A
     A = C[1:1 + K * L].T.reshape(K, L, K); G = C[1 + K * L:1 + K * L + nm * L].T.reshape(K, L, nm)
     for t in range(months):
@@ -217,19 +212,19 @@ def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21, A=None):
             if tau == k0: f[off + tau] = b_day; continue
             x = np.concatenate([[0.0]] + [f[off + tau - h:off + tau].mean(axis=0) for h in HAR] + [macro[t - 1] if t >= 1 else np.zeros(K), macro[t]])
             f[off + tau] = x @ Bd
-        fb[t] = f[off + start[t]:off + start[t + 1]].mean(axis=0); fe[t] = f[off + start[t + 1] - 1]
-    return macro, fb, fe, f[off + k0:off + k0 + 67].copy()          # last: the daily financial path from the event day (day 0) for 67 days
+        fb[t] = f[off + start[t]:off + start[t + 1]].mean(axis=0)
+    return macro, fb, f[off + k0:off + k0 + 67].copy()          # last: the daily financial path from the event day (day 0) for 67 days
 
 def irf(Bd, C, K, nd, L, idx, pos, fci):
-    """Event-position-weighted monthly macro, monthly-average and end-of-month financial responses to a unit shock, h = 0..H."""
+    """Event-position-weighted monthly macro and monthly-average financial responses to a unit shock, h = 0..H, and the daily financial path from the event day."""
     b = impact(fci, idx); Am = agg_matrix(fci); out = [(w, simulate(Bd, C, K, nd, L, b, k0, n0, A=Am)) for k0, n0, w in pos]
-    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out), sum(w * m[2] for w, m in out), sum(w * m[3] for w, m in out)
+    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out), sum(w * m[2] for w, m in out)
 
 def irf_b(Bd, C, K, nd, L, b, pos):
     """As irf, with the window impact vector b given (used for the counterfactual with the ordinary FCI movement)."""
     b = np.r_[b, np.zeros(nd - len(b))]                                                  # further daily variables (the funds rate) start at zero
     out = [(w, simulate(Bd, C, K, nd, L, b, k0, n0)) for k0, n0, w in pos]
-    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out), sum(w * m[2] for w, m in out)
+    return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out)
 
 def ordinary_loading(Xd, Yd, Bd, isev):
     """Ordinary co-movement of the FCI (column 1) with the 2-year yield (column 0): covariance of the daily-block innovations divided by the variance of the yield innovation, on days without an announcement."""
@@ -281,7 +276,7 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
     uses together the monthly residuals, the daily rows and the announcements of the months drawn; the monthly equations are re-estimated on a series rebuilt recursively from the drawn residuals (macro lags
     from the simulated series, financial lags and pre-sample lags from the data), and the daily block is re-estimated on the drawn rows. Monthly residuals before 1996 (start 1973) are drawn in blocks of 12
     months of their own. Months without a monthly row (2020 dropped, sample ends in 2019) contribute their daily rows and announcements but no residual. boot="iid": announcements, monthly residuals
-    (fixed design) and daily rows (moving blocks of 66 days) resampled independently (the earlier default). Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd), e0."""
+    (fixed design) and daily rows (moving blocks of 66 days) resampled independently (the earlier default). Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd)."""
     boot = boot or BOOT; mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
     idx0, pos0, bidx, bpos = events(B); Xd, Yd, dmon, ddate = har_rows(form, fci, mvars, end, t2020, months=True, dates=True); Bd0 = har_fit(Xd, Yd, fci)
     two = fci not in (0, "baa") and fci not in CMPGROUPS                                      # yield plus FCI: also compute path B (same model, ordinary FCI movement)
@@ -293,7 +288,7 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
         X, Y, P = macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=True); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
         tag = f"{form}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)
         rng = np.random.default_rng(zlib.crc32(tag.encode())); rng_d = np.random.default_rng(zlib.crc32(("block|" + tag).encode()))
-        m0, f0, e0, fday0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci)
+        m0, f0, fday0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci)
         if two: mB0 = irf_b(Bd0, C0, K, nd, L, np.r_[1.0, ord0], pos0)[0]
         if boot == "j12r":
             LI = _lag_index(P, L); post = np.where(P >= pd.Period("1996-01", "M"))[0]; pre = np.where(P < pd.Period("1996-01", "M"))[0]; prow = {p: i for i, p in enumerate(P)}
@@ -311,9 +306,9 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
                 Cb = np.linalg.lstsq(X, fit + res[rng.integers(0, len(res), len(res))], rcond=None)[0]
             draws.append(irf(Bd, Cb, K, nd, L, ib, pb, fci))
             if two: ordd = ordinary_loading(Xd[dr] if boot == "j12r" else Xd[r], Yd[dr] if boot == "j12r" else Yd[r], Bd, isev[dr] if boot == "j12r" else isev[r]); drawsB.append((ordd, irf_b(Bd, Cb, K, nd, L, np.r_[1.0, ordd], pb)[0]))
-        extra = dict(fday0=fday0, fdayd=np.array([d[3] for d in draws]), ord0=ord0, ordd=np.array([d[0] for d in drawsB]), s0B=to_level(mB0), sdB=np.array([to_level(d[1]) for d in drawsB])) if two else {}
+        extra = dict(fday0=fday0, fdayd=np.array([d[2] for d in draws]), ord0=ord0, ordd=np.array([d[0] for d in drawsB]), s0B=to_level(mB0), sdB=np.array([to_level(d[1]) for d in drawsB])) if two else {}
         yield dict(**extra, fnames=list(daily_frame(form, fci).columns) if VARIANT["ext"] == "ff" else None, lags=L, nobs=len(Y), names=["P" if v == "pi" else v for v in mvars], s0=to_level(m0), sd=np.array([to_level(d[0]) for d in draws]),
-                   f0=f0, fd=np.array([d[1] for d in draws]), e0=e0)
+                   f0=f0, fd=np.array([d[1] for d in draws]))
 
 # ---------------------------------------------------------------- summaries
 def pct(a, q): return np.percentile(a, q, axis=0)
@@ -333,12 +328,11 @@ def summary_rows(spec, est):
 def path_rows(spec, est):
     """Response paths h = 0..H: macro variables (and the price level) and the monthly-average 2-year yield and FCI, with 90% and 68% bands."""
     out = []
-    eom = pd.DataFrame(dict(**spec, lags=est["lags"], kind="fin_eom", var="pol", h=np.arange(H + 1), r=est["e0"][:, 0], lo=np.nan, hi=np.nan, lo68=np.nan, hi68=np.nan))   # 2-year yield at the end of the month (point estimate)
     for kind, names, s0, sd in (("macro", est["names"], est["s0"], est["sd"]), ("fin", est.get("fnames") or (["pol", "idx"] if est["f0"].shape[1] <= 2 else ["pol"] + [f"c{i}" for i in range(1, est["f0"].shape[1])])[:est["f0"].shape[1]], est["f0"], est["fd"])):
         for j, n in enumerate(names):
             out.append(pd.DataFrame(dict(**spec, lags=est["lags"], kind=kind, var=n, h=np.arange(H + 1), r=s0[:, j], lo=pct(sd[:, :, j], 5), hi=pct(sd[:, :, j], 95),
                                          lo68=pct(sd[:, :, j], 16), hi68=pct(sd[:, :, j], 84))))
-    return pd.concat(out + [eom])
+    return pd.concat(out)
 
 # ---------------------------------------------------------------- implied trade-off (Phillips multiplier, Barnichon-Mesters 2021)
 KAPPA = np.sort(np.concatenate([-np.logspace(-3, 4, 3000), [0.0], np.logspace(-3, 4, 3000)]))     # -1e4 .. 1e4, dense near zero
