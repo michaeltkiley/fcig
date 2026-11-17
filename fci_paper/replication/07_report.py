@@ -73,6 +73,11 @@ for k, v in SC.items():
         d_ = 0 if (float(v).is_integer() and abs(v) >= 2) else (3 if abs(v) < 0.1 and v != 0 else 2)
         M[key] = f(v, d_); M["abs:" + key] = f(abs(v), d_)
 M["n:events"] = f"{int(SC['n_events'])}"
+for lab in ("two", "ten", "eq", "usd", "index"):
+    mac(f"r2:{lab}", SC[f"r2_{lab}"])
+for lab in ("ten", "eq", "usd"):
+    for e in ("lo", "hi"):
+        mac(f"share:{lab}:{e}", SC[f"share_{lab}_{e}"])
 for key, r in V.iterrows():
     k = key.replace("_", ":")
     for c in ("granger_F", "phi6", "phi12", "phi24", "phi12_lo90", "phi12_hi90", "phi24_lo90", "phi24_hi90", "own12", "own24", "corr_fi_fcig", "corr_fi_fcig_lo90", "corr_fi_fcig_hi90"):
@@ -195,6 +200,16 @@ for a, c, title in zip(ax, ("nominal", "real", "rstar"), ("Nominal", "Real rates
         a.plot(t, I[k], color=COLORS[k], lw=lw, label=LAB[k])
     a.set_title(title, loc="left"); axes(a, "pp, tighter above zero", legend=(c == "nominal"))
 figure("fig_levels", fig)
+
+# Figure: window moves of each asset against policy news, with the fitted slope (FP-A65)
+WM = pd.read_csv(RES / "window_moves.csv")
+fig, ax = plt.subplots(1, 3, figsize=(7.5, 2.8))
+for a, (col, title, unit) in zip(ax, (("ten", "10-year yield", "pp"), ("eq", "Stock prices", "percent"), ("usd", "Dollar", "percent"))):
+    a.scatter(WM.ns, WM[col], s=6, color=COLORS["grey"], alpha=0.6)
+    xs = np.linspace(WM.ns.min(), WM.ns.max(), 50); b = np.polyfit(WM.ns, WM[col], 1)
+    a.plot(xs, np.polyval(b, xs), color=COLORS["market"], lw=1.6)
+    a.set_title(title, loc="left"); a.set_xlabel("policy news (pp of 2-year yield)"); axes(a, unit, legend=False)
+fig.tight_layout(); figure("fig_window", fig)
 
 # Figure: expected inflation and r*
 fig, ax = plt.subplots(1, 2, figsize=(7.5, 3.2))

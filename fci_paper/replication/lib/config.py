@@ -7,6 +7,7 @@ DATA = ROOT / "data"
 RES = Path(os.environ.get("FCI_RESULTS", ROOT / "results"))
 REP = Path(os.environ.get("FCI_REPORT", ROOT / "report"))
 START, END = "1973-01", "2026-09"                          # sample; each variable is demeaned over it
+EVENT_END = "2026-07-31"                                   # last announcement used (17 Nov 2026, FP-A65): 252 announcements, 31 Jan 1996 to 29 Jul 2026, the same sample as Note B (FS-A75)
 SEED = 20261111
 REPS = int(os.environ.get("FCI_REPS", 500))                # bootstrap draws (VAR, block bootstraps of outcome regressions)
 REPS_W = int(os.environ.get("FCI_REPS_W", 5000))           # announcement-bootstrap draws for the policy-news weights (step 02 and every step that reads weights_boot.csv; 12 Nov 2026: 500 -> 5,000)

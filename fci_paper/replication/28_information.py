@@ -27,7 +27,7 @@ def fitg(f, Yv):
 
 
 def to2y(f, u2):
-    return f * (f @ u2) / (f @ f)
+    fc = f - f.mean(); return f * (fc @ (u2 - u2.mean())) / (fc @ fc)             # slope with an intercept (FP-A65)
 
 
 X5a = raw[["MP1", "MP2", "ED2", "ED3", "ED4"]].values; u2a = raw.UST2Y.values; Y3a = raw[["UST10Y", "SP500", "DXY"]].values
