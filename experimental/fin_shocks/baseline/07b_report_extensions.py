@@ -139,8 +139,46 @@ def matched():
     body += [r"\bottomrule\end{tabular}"]
     note = (r"Responses 24 months after a policy move that raises the two-year yield 1 pp in the window, 1996--2026, 12 lags. Differences are computed on common bootstrap draws before rounding. Brackets: 90\% intervals; $^{**}$, $^{*}$: 5 and 10 percent levels. "
             r"Responses at 12 and 36 months and at 3 and 6 lags are in Appendix Tables~\ref{tab:mainB} and~\ref{tab:lags}.")
-    (REPORT / "tab_matched.tex").write_text(tbl("Responses without and with the FCI After Two Years", "tab:matched", "\n".join(body), note) + "\n")
+    (REPORT / "tab_matched_diff.tex").write_text(tbl("Responses without and with the FCI After Two Years, 1996--2026, with Paired Differences", "tab:matcheddiff", "\n".join(body), note) + "\n")
 matched()
+
+def matched_two():
+    """Table 3 (Part 2A): the matched comparison at 24 months in two panels (unemployment gap, price level); rows = nominal, real, r*-gap (bold);
+    columns = yield alone and yield with the FCI, monthly equations from 1996 and from 1973. Same surprise, normalization, lags and paired draws within a sample."""
+    body = [r"\begin{tabular}{lcccc}\toprule", r" & \multicolumn{2}{c}{Monthly equations from 1996} & \multicolumn{2}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}",
+            r"Yield measure & Yield alone & Yield and FCI & Yield alone & Yield and FCI\\ \midrule"]
+    for v, head in (("u", "A. Unemployment gap (percentage points)"), ("P", "B. Core PCE price level (percent)")):
+        body.append(rf"\multicolumn{{5}}{{l}}{{\textit{{{head}}}}}\\")
+        for f in FORMS:
+            cells = []
+            for st in ("1996-01", "1973-01"):
+                for fc in (0, f):
+                    z = load(f, fc, start=st); cells.append(cell(z["s0"][24, VAR[v]], z["sd"][:, 24, VAR[v]]))
+            a_, b_ = two(cells); lab = NAMES[f]
+            if f == "rstar": a_ = " & ".join(rf"\textbf{{{c[0]}}}" for c in cells) + r"\\"; lab = rf"\textbf{{{lab}}}"
+            body += [f"{lab} & " + a_, " & " + b_]
+        if v == "u": body.append(r"\addlinespace")
+    body += [r"\bottomrule\end{tabular}"]
+    note = (r"Responses 24 months after a policy move that raises the two-year yield 1 pp in the announcement window; 12 lags; March--December 2020 dropped; the shocks are the 252 announcements of 1996--2026 in both samples. "
+            r"Brackets: 90\% intervals; $^{**}$, $^{*}$: 5 and 10 percent levels. Paired differences (from 1996) are in Appendix Table~\ref{tab:matcheddiff}; 12 and 36 months and other lag lengths in Appendix Tables~\ref{tab:mainB} and~\ref{tab:lags}.")
+    (REPORT / "tab_matched.tex").write_text(tbl("Responses without and with the FCI After Two Years", "tab:matched", "\n".join(body), note) + "\n")
+matched_two()
+chk("headline: from 1996, adding the FCI raises the 24-month unemployment response by 0.5 to 0.7 pp and deepens the price fall by 0.3 to 0.4 percent in every version (\"about 0.6\", \"about a third\")",
+    all(0.5 < con(f, "A", "C", "u", 24)[0] < 0.7 and -0.4 < con(f, "A", "C", "P", 24)[0] < -0.3 for f in FORMS))
+chk("headline: r*-gap with FCI, the 24-month price fall is 0.65 to 0.8 percent from both starts", all(-0.8 < load("rstar", "rstar", start=st)["s0"][24, 1] < -0.65 for st in ("1996-01", "1973-01")))
+chk("headline: in every version the initial FCI movement (A-B) accounts for 50 to 70 percent of the unemployment shift and 60 to 85 percent of the price shift", all(0.5 < con(f, "A", "B", "u", 24)[0] / con(f, "A", "C", "u", 24)[0] < 0.7 and 0.6 < con(f, "A", "B", "P", 24)[0] / con(f, "A", "C", "P", 24)[0] < 0.85 for f in FORMS))
+for v in ("u", "P"):
+    xs = [100 * con(f, "A", "B", v, 24)[0] / con(f, "A", "C", v, 24)[0] for f in FORMS]; mac(f"dc:shareAB:{v}:min", f"{min(xs):.0f}"); mac(f"dc:shareAB:{v}:max", f"{max(xs):.0f}")
+chk("1973: adding the FCI raises the 12-month unemployment response by 0.1 to 0.25 pp in every version", all(0.1 < load(f, f, start="1973-01")["s0"][12, 0] - load(f, 0, start="1973-01")["s0"][12, 0] < 0.25 for f in FORMS))
+chk("1973 vs 1996 (r*-gap with FCI): unemployment somewhat smaller after a year and smaller after two (fades sooner)", load("rstar", "rstar", start="1973-01")["s0"][12, 0] < load("rstar", "rstar")["s0"][12, 0] and load("rstar", "rstar", start="1973-01")["s0"][24, 0] < load("rstar", "rstar", start="1973-01")["s0"][12, 0])
+chk("1996: r*-gap yield alone has the smallest unemployment fall and the largest price fall; with the FCI the largest responses", all(load("rstar", 0)["s0"][24, 0] > load(f, 0)["s0"][24, 0] and load("rstar", 0)["s0"][24, 1] < load(f, 0)["s0"][24, 1] for f in ("nom", "real")))
+for f in FORMS:
+    mac(f"dc:{f}:shareAB:u", f"{100 * con(f, 'A', 'B', 'u', 24)[0] / con(f, 'A', 'C', 'u', 24)[0]:.0f}"); mac(f"dc:{f}:shareAB:P", f"{100 * con(f, 'A', 'B', 'P', 24)[0] / con(f, 'A', 'C', 'P', 24)[0]:.0f}")
+for f in FORMS:                                                                     # shifts from adding the FCI, monthly equations from 1973 (paired draws): bl:m73:<f>:AC:<v>:<h>
+    for v in ("u", "P"):
+        for h in (12, 24, 36):
+            a0, c0 = load(f, f, start="1973-01"), load(f, 0, start="1973-01"); d_ = a0["sd"][:, h, VAR[v]] - c0["sd"][:, h, VAR[v]]
+            k = f"m73:{f}:AC:{v}:{h}"; mac(k, num(a0["s0"][h, VAR[v]] - c0["s0"][h, VAR[v]])); mac(k + ":lo", num(pc(d_, 5))); mac(k + ":hi", num(pc(d_, 95))); mac(k + ":abs", ab(a0["s0"][h, VAR[v]] - c0["s0"][h, VAR[v]]))
 
 # =============================================================== 3. components: the dollar and the weights restriction
 SPECS = (("A", "rstar", "Index (baseline)"), ("R", "cmpR", "Index, components' daily block"), ("E", "cmpE", "Equities free"), ("F", "cmp", "All three free"))
@@ -368,11 +406,15 @@ if PER is not None:                                    # initial level at the an
 # sacrifice-ratio set (inverse of the multiplier set when it is bounded and negative)
 def sacrifice():
     T = pd.read_csv(RESULTS / "tradeoff.csv"); T["fci"] = T.fci.astype(str)
-    for H_ in (24, 36):
-        t = T[(T.form == "rstar") & (T.fci == "rstar") & (T.macro == "u,pi") & (T.start == "1996-01") & T.end.isna() & (T.t2020 == "out") & (T["shock"] == "ns") & (T["ext"].fillna("") == "" if "ext" in T else True) & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0]
-        chk(f"multiplier set at {H_} m bounded and negative", np.isfinite(t.k_lo) and np.isfinite(t.k_hi) and t.k_hi < 0)
-        mac(f"tr:sac:{H_}", f"{abs(1 / t.kappa):.1f}"); mac(f"tr:sac:{H_}:lo", f"{abs(1 / t.k_lo):.1f}"); mac(f"tr:sac:{H_}:hi", f"{abs(1 / t.k_hi):.1f}")
+    for (st_, sx_), H_ in [(a_, b_) for a_ in (("1996-01", ""), ("1973-01", "73")) for b_ in (24, 36)]:
+        t = T[(T.form == "rstar") & (T.fci == "rstar") & (T.macro == "u,pi") & (T.start == st_) & T.end.isna() & (T.t2020 == "out") & (T["shock"] == "ns") & (T["ext"].fillna("") == "" if "ext" in T else True) & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0]
+        chk(f"multiplier set at {H_} m bounded and negative (start {st_[:4]})", np.isfinite(t.k_lo) and np.isfinite(t.k_hi) and t.k_hi < 0)
+        mac(f"tr{sx_}:sac:{H_}", f"{abs(1 / t.kappa):.1f}"); mac(f"tr{sx_}:sac:{H_}:lo", f"{abs(1 / t.k_lo):.1f}"); mac(f"tr{sx_}:sac:{H_}:hi", f"{abs(1 / t.k_hi):.1f}")
 sacrifice()
+_T = pd.read_csv(RESULTS / "tradeoff.csv"); _T["fci"] = _T.fci.astype(str); _T = _T[(_T.macro == "u,pi") & _T.end.isna() & (_T.t2020 == "out") & (_T["shock"] == "ns") & (_T.trend == "none") & (_T.lags == 12) & (_T.H == 24) & (_T["ext"].isna() if "ext" in _T else True)]
+_k = lambda f, st: _T[(_T.form == f) & (_T.fci == f) & (_T.start == st)].iloc[0]
+chk("tradeoff: real and r*-gap multipliers at 24 m between -1.7 and -0.9 in both samples (sacrifice ratio about one)", all(-1.7 < _k(f, st).kappa < -0.9 for f in ("real", "rstar") for st in ("1996-01", "1973-01")))
+chk("tradeoff: nominal from 1996, the 90% interval of cumulative unemployment includes zero (set unbounded)", _k("nom", "1996-01").U_lo < 0 < _k("nom", "1996-01").U_hi and not np.isfinite(_k("nom", "1996-01").k_lo))
 
 
 # =============================================================== claims made in the text about the new exhibits

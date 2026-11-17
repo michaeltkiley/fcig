@@ -461,6 +461,12 @@ def rob_summary():
     for sx in ("", "73"):
         for v in ("u", "P"): dm(f"nsig{sx}:{v}", sum(res[(k, sx, v)][1] for k in tests))
     dm("ntests", len(tests))
+    OUTL = {"": ("kiley", "spline"), "73": ("L3", "kiley")}                         # the two tests whose responses differ in size from the rest (named in the text)
+    for sx in ("", "73"):
+        mid = [k for k in tests if k not in OUTL[sx]]
+        for v in ("u", "P"):
+            xs = [abs(res[(k, sx, v)][0]) for k in mid]; dm(f"mid{sx}:{v}:lo", f"{min(xs):.2f}"); dm(f"mid{sx}:{v}:hi", f"{max(xs):.2f}")
+            for k in tests: dm(f"{k}{sx}:{v}:abs", f"{abs(res[(k, sx, v)][0]):.2f}")
     out = [r"\begin{table}[tp]\centering\small", r"\caption{Robustness: Responses at 12 Months}\label{tab:robsummary}",
            r"\begin{tabular}{lcccc}\toprule & \multicolumn{2}{c}{Monthly equations from 1996} & \multicolumn{2}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5} & Unemployment gap & Price level & Unemployment gap & Price level\\ \midrule",
            *lines, r"\bottomrule\end{tabular}",
@@ -473,6 +479,10 @@ def rob_summary():
     chk("significance pattern at 10% (the text names the exceptions: 2020 left in and Kiley r* for unemployment; Kiley r* and the spline trend from 1996; 3 lags; components from 1973 for unemployment)",
         all(res[(k, sx, v)][1] == ((k, sx, v) not in NOT_SIG) for k, *_ in CORE_TESTS for sx in ("", "73") for v in ("u", "P")))
     chk("the baseline: significant at 5% for both variables and both samples", all(res[("base", sx, v)][2] for sx in ("", "73") for v in ("u", "P")))
+    for sx in ("", "73"):
+        mid = [k for k in tests if k not in OUTL[sx]]; srt = sorted(tests, key=lambda k: res[(k, sx, "u")][0])
+        chk(f"robustness {sx or '96'}: the two named departures are the two smallest unemployment responses", set(srt[:2]) == set(OUTL[sx]))
+        chk(f"robustness {sx or '96'}: the other eight lie around the baseline (baseline inside their range for both variables)", all(min(res[(k, sx, v)][0] for k in mid) <= res[("base", sx, v)][0] <= max(res[(k, sx, v)][0] for k in mid) for v in ("u", "P")))
     if __import__("os").environ.get("CLAIMS_REPORT") and bad: print("FAILED CLAIMS:", *bad, sep="\n  ")
     else: assert not bad, "claims on the robustness section no longer hold: " + "; ".join(bad)
 rob_summary()
