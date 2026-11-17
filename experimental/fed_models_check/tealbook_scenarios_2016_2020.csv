@@ -1,0 +1,177 @@
+meeting,scenario,models
+20170201,Larger Fiscal Expansion,FRB/US
+20170201,No Fiscal Expansion,FRB/US
+20170201,Stronger Aggregate Demand,EDO
+20170201,Lower Inflation Expectations,FRB/US
+20170201,Weaker Productivity and Faster Wage Growth,FRB/US
+20170201,Stronger Dollar and EME Turbulence,SIGMA
+20170201,Stronger Foreign Growth and Weaker Dollar,SIGMA
+20170315,Expectations,FRB/US
+20170315,Stronger Aggregate Demand,EDO
+20170315,Domestic Financial Turbulence,FRB/US
+20170315,No Fiscal Expansion,FRB/US
+20170315,Heightened Risk of EU Breakup,SIGMA
+20170315,Stronger Foreign Growth and Weaker Dollar,SIGMA
+20170503,Expectations,FRB/US
+20170503,Lower Valuation Pressures,FRB/US
+20170503,Broad Policy Disappointment,FRB/US
+20170503,Lower Natural Rate of Unemployment,FRB/US
+20170503,Lower Natural Rate of Unemployment with Misperception,FRB/US
+20170503,EME Turbulence and Stronger Dollar,SIGMA
+20170503,Stronger Foreign Growth and Tighter Policy,SIGMA
+20170614,Broad Policy Disappointment,FRB/US
+20170614,Stronger Aggregate Demand and Higher Inflation,EDO
+20170614,Lower Natural Rate of Unemployment with Misperception,FRB/US
+20170614,A Return to the Greenspan Conundrum,FRB/US
+20170614,EME Turbulence and Stronger Dollar,SIGMA
+20170614,Stronger Foreign Growth,SIGMA
+20170726,Steeper Phillips Curve with More-Sensitive Inflation Expectations,FRB/US
+20170726,Lower Inflation Expectations,FRB/US
+20170726,Lower Natural Rate of Unemployment with Misperception,FRB/US
+20170726,Market Correction,FRB/US
+20170726,Stronger Foreign Growth and Tighter Policy,SIGMA
+20170726,China-Driven EME Turbulence,SIGMA
+20170920,Different Inflation Process,FRB/US
+20170920,Steeper Phillips Curve,FRB/US
+20170920,Lower Inflation Expectations and Weaker Aggregate Demand,EDO
+20170920,Broad Policy Disappointment with Market Correction,FRB/US
+20170920,Economies,SIGMA
+20170920,Spillovers,SIGMA
+20171101,Different Inflation Process,FRB/US
+20171101,Steeper Phillips Curve with More-Sensitive Inflation Expectations,FRB/US
+20171101,Market Correction,FRB/US
+20171101,Stronger Economy,NY Fed DSGE (DGS)
+20171101,Stronger Dollar and Weaker Foreign Growth,SIGMA
+20171101,Inflation-Driven Tightening in the AFEs,SIGMA
+20171213,Lower Inflation Expectations,NY Fed DSGE (DGS)
+20171213,Steeper Phillips Curve with More-Sensitive Inflation Expectations,FRB/US
+20171213,Market Correction,FRB/US
+20171213,China-Driven Emerging Market Economy Turbulence,SIGMA
+20180131,Larger Effects of the Tax Reform,FRB/US
+20180131,Smaller Effects of the Tax Reform,FRB/US
+20180131,Misperceived Lower Natural Rate of Unemployment,FRB/US
+20180131,Lower Inflation Expectations,NY Fed DSGE (DGS)
+20180131,Steeper Phillips Curve with More-Sensitive Inflation Expectations,FRB/US
+20180131,Global Market Correction,SIGMA
+20180131,Stronger Foreign Growth and Tighter Policy,SIGMA
+20180321,Recession,FRB/US
+20180321,Positive Hysteresis,FRB/US
+20180321,Lower Inflation Expectations,NY Fed DSGE (DGS)
+20180321,Steeper Phillips Curve with More-Sensitive Inflation Expectations,FRB/US
+20180321,Global Market Correction,SIGMA
+20180321,Stronger Foreign Growth and Weaker Dollar,SIGMA
+20180502,Supply Constraints,Gertler-Sala-Trigari
+20180502,Positive Hysteresis,FRB/US
+20180502,Lower Inflation Expectations,NY Fed DSGE (DGS)
+20180502,Global Tightening Tantrum,SIGMA
+20180502,Stronger Foreign Growth and Weaker Dollar,SIGMA
+20180613,Financial Correction with Return to Effective Lower Bound,FRB/US
+20180613,Supply Constraints,Gertler-Sala-Trigari
+20180613,Positive Hysteresis,FRB/US
+20180613,Misperceived Lower Natural Rate of Unemployment,FRB/US
+20180613,Heightened Risk of Euro-Area Breakup,SIGMA
+20180613,EME Turbulence and Stronger Dollar,SIGMA
+20180801,Misperceived Natural Rate,FRB/US
+20180801,Positive Hysteresis,FRB/US
+20180801,Greater Interest Rate Sensitivity,FRB/US
+20180801,Unexpected Fiscal Restraint,FRB/US
+20180801,Financial Stress in China,SIGMA
+20180801,Higher Trade Barriers,GEMUS
+20180926,Recession,FRB/US
+20180926,Inflation Fears,FRB/US
+20180926,"Faster Wage Growth, Supply Constraints",Gertler-Sala-Trigari
+20180926,"Faster Wage Growth, Higher Productivity",Gertler-Sala-Trigari
+20180926,EME Turbulence and Stronger Dollar,SIGMA
+20180926,Higher Trade Barriers,GEMUS
+20180926,Higher Trade Barriers with See-Through Monetary Policy,GEMUS
+20181108,Greater Interest Rate Sensitivity,FRB/US
+20181108,Inflation Fears,FRB/US
+20181108,Federal Debt Concerns,FRB/US
+20181108,Stronger Supply Side,FRB/US
+20181108,EME Financial Turbulence,SIGMA
+20181108,Inflation-Driven Global Tightening,SIGMA
+20181219,Financial-Based Recession,Gertler-Karadi
+20181219,Stronger Supply Side,FRB/US
+20181219,Supply Constraints,Gertler-Sala-Trigari
+20181219,Greater Interest Rate Sensitivity,FRB/US
+20181219,Foreign Slowdown,SIGMA
+20181219,Lower Oil Prices,SIGMA
+20190130,Stronger Aggregate Demand,EDO
+20190130,Stronger Aggregate Supply,MQS-LM
+20190130,Supply Constraints,Gertler-Sala-Trigari
+20190130,China Slowdown,SIGMA
+20190130,China Slowdown with Global Financial Spillovers,SIGMA
+20190320,Momentum Weakens Further,FRB/US
+20190320,Recession,FRB/US
+20190320,Lower Inflation Expectations,NY Fed DSGE (DGS)
+20190320,Steeper Phillips Curve with More-Sensitive Inflation Expectations,FRB/US
+20190320,Even Stronger Supply Side,FRB/US
+20190320,Foreign Slowdown,SIGMA
+20190320,Everything Goes Right Abroad,SIGMA
+20190501,Recession with Financial Amplification,FRB/US
+20190501,Falloff in Fiscal Impetus,FRB/US
+20190501,Stronger Aggregate Supply,FRB/US
+20190501,Stronger Aggregate Demand and Higher Inflation,FRB/US
+20190501,Recession in Europe,SIGMA
+20190501,Easing of Trade Tensions,SIGMA
+20190619,Increased Uncertainty,FRB/US
+20190619,Lower Inflation Expectations,FRB/US
+20190619,Stronger Aggregate Supply,FRB/US
+20190619,Stronger Aggregate Demand,FRB/US
+20190619,Escalation of Trade Tensions,GEMUS
+20190619,Favorable Trade Deals,GEMUS
+20190731,Lower Inflation Expectations,FRB/US
+20190731,Stronger Aggregate Demand,FRB/US
+20190731,Stronger Aggregate Supply,FRB/US
+20190731,Recession with Financial Amplification,FRB/US
+20190731,Global Investment Slump,SIGMA
+20190731,Escalation of Trade Tensions,GEMUS
+20190918,No-Deal Brexit,SIGMA
+20190918,Escalation of Trade Tensions,GEMUS
+20190918,Recession with Financial Amplification,FRB/US
+20190918,Lower Long-Run Equilibrium Federal Funds Rate,FRB/US
+20190918,Stronger Aggregate Demand,FRB/US
+20190918,Stronger Aggregate Supply,FRB/US
+20191030,Global Slowdown,SIGMA
+20191030,No-Deal Brexit,SIGMA
+20191030,Recession,NY Fed DSGE (DGS)
+20191030,Recession with Lower Interest Rate Sensitivity,NY Fed DSGE (DGS)
+20191030,Lower Long-Run Equilibrium Federal Funds Rate,Smets-Wouters
+20191030,Stronger Aggregate Demand,FRB/US
+20191030,Steeper Phillips Curve with More-Sensitive Inflation Expectations,FRB/US
+20191211,Weaker Labor Demand,Gertler-Sala-Trigari
+20191211,Positive Hysteresis,FRB/US
+20191211,Lower Long-Run Equilibrium Federal Funds Rate,Smets-Wouters
+20191211,Stronger Aggregate Demand,FRB/US
+20191211,Foreign Slowdown,SIGMA
+20191211,Easing of Trade Tensions,SIGMA
+20200129,Lower Inflation Expectations with Flatter Phillips Curve,FRB/US
+20200129,Recession Preceded by Corporate Leverage Buildup,FRB/US
+20200129,Positive Hysteresis,FRB/US
+20200129,Stronger Aggregate Demand,EDO
+20200129,Foreign Slowdown,SIGMA
+20200129,Geopolitical Tensions,SIGMA
+20200429,Second Waves,FRB/US; SIGMA
+20200429,Early Moderation,FRB/US; SIGMA
+20200429,Depression,FRB/US; SIGMA
+20200610,Second Waves,FRB/US; SIGMA
+20200610,Early Moderation,FRB/US; SIGMA
+20200610,Depression,FRB/US; SIGMA
+20200729,Second Waves,FRB/US; SIGMA
+20200729,Faster Recovery,FRB/US; SIGMA
+20200729,Prolonged Slump,FRB/US; SIGMA
+20200915,Slower Recovery,SIGMA; US-FLM
+20200915,Second Waves,FRB/US; SIGMA
+20200915,Prolonged Slump,FRB/US; SIGMA
+20200915,Faster Recovery,FRB/US; SIGMA
+20201105,Second Waves,FRB/US; SIGMA
+20201105,Delayed Vaccine and Weaker Confidence,SIGMA
+20201105,Slower Recovery,US-FLM
+20201105,Inflationary Pressures,FRB/US
+20201105,Additional Fiscal Support,FRB/US
+20201105,Faster Recovery,FRB/US
+20201216,Second Round of Severe Restrictions,FRB/US; SIGMA
+20201216,Early Vaccine,SIGMA; NK/SIR
+20201216,Additional Fiscal Support,FRB/US
+20201216,Inflationary Pressures,FRB/US
+20201216,Lower Inflation Expectations,FRB/US

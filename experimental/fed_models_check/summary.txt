@@ -1,0 +1,16 @@
+period                      Greenbooks 2006-Apr 2010  Tealbooks 2016-2020  Tealbooks Jun-Dec 2010
+documents                                       35.0                40.00                     5.0
+models per document (mean)                       1.0                 3.05                     2.0
+FRB/US only (share)                              1.0                 0.00                     0.0
+uses FRB/US                                      1.0                 0.92                     1.0
+uses SIGMA                                       0.0                 0.98                     1.0
+uses EDO                                         0.0                 0.38                     0.0
+uses NY Fed DSGE                                 0.0                 0.20                     0.0
+uses Gertler-Sala-Trigari                        0.0                 0.15                     0.0
+uses GEMUS                                       0.0                 0.12                     0.0
+uses Smets-Wouters                               0.0                 0.08                     0.0
+uses Gertler-Karadi                              0.0                 0.05                     0.0
+uses US-FLM                                      0.0                 0.05                     0.0
+Tealbooks with tagged headings: 31 of 40; tagged scenarios: 176
+scenarios naming each model: [('FRB/US', 97), ('SIGMA', 60), ('NY Fed DSGE (DGS)', 8), ('Gertler-Sala-Trigari', 7), ('GEMUS', 7), ('EDO', 6), ('Smets-Wouters', 2), ('US-FLM', 2), ('Gertler-Karadi', 1), ('MQS-LM', 1), ('NK/SIR', 1)]
+FRB/US alone: 0.47 ; FRB/US involved: 0.55
