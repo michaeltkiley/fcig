@@ -9,7 +9,7 @@ BLUE, GRAY, INK = "#2a78d6", "#8a8984", "#52514e"
 plt.rcParams.update({"font.size": 9, "axes.spines.top": False, "axes.spines.right": False, "axes.edgecolor": INK, "axes.labelcolor": INK,
                      "xtick.color": INK, "ytick.color": INK, "axes.grid": True, "grid.color": "#e4e3df", "grid.linewidth": 0.6, "lines.linewidth": 1.5})
 STEP = {"nom": "Nominal", "real": "Real", "rstar": "r*-gap"}; VAR = {"u": "Unemployment gap (pp)", "P": "Price level (%)", "ip": "Industrial production (%)"}
-def paths(f, x, s): p = pd.read_csv(RI / f"{f}_{x}_upipip_{s}_all_in_paths.csv"); return p[(p.kind == "macro") & (p.lags == 12)]
+def paths(f, x, s): p = pd.read_csv(RI / f"{f}_{x}_upiip_{s}_all_in_paths.csv"); return p[(p.kind == "macro") & (p.lags == 12)]
 
 def fig(start):
     fig, ax = plt.subplots(3, 3, figsize=(11, 8), sharex=True)
@@ -38,7 +38,7 @@ def tables():
         for s in ("1996-01", "1973-01"):
             for f in ("nom", "real", "rstar"):
                 for x in ("0", f):
-                    d = pd.read_csv(RI / f"{f}_{x}_upipip_{s}_all_in.csv"); r = d[d["var"] == v].iloc[0]
+                    d = pd.read_csv(RI / f"{f}_{x}_upiip_{s}_all_in.csv"); r = d[d["var"] == v].iloc[0]
                     row = {"sample": s[:4], "yield": STEP[f], "FCI": "yes" if x != "0" else "no", **{f"{h} m": cell(r, h) for h in (12, 24, 36)}}
                     if v in ("u", "P"):
                         b = pd.read_csv(RC / f"{f}_{x}_upi_{s}_all_in.csv"); b = b[(b.lags == 12) & (b["var"] == v)].iloc[0]
