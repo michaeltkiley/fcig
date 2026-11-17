@@ -30,6 +30,11 @@ def chk(cond, text):
     if not cond:
         BAD.append(text)
 
+RETIRED = []
+def retired(cond, text):
+    """Claims of earlier drafts (fci_paper_v1-v5), not in the current paper: recorded, not asserted (FP-A65, 17 Nov 2026)."""
+    RETIRED.append((bool(cond), text))
+
 def table(name, caption, label, header, rows, notes, align=None, small=True, size=None):
     """Complete float: caption in Title Case, tabular shrunk to the text width if wider, notes under the table."""
     ncol = len(header)
@@ -358,7 +363,7 @@ chk(V.loc["rstar_p12_from1990", "sig_to"] < V.loc["rstar_p12", "sig_to"], "respo
 chk(V.loc["rstar_p4", "corr_fi_fcig"] < V.loc["rstar_p12", "corr_fi_fcig"], "4-lag flow correlates less with FCI-G")
 chk(SC["rstar_mkt_gfc"] > 0 > SC["real_mkt_gfc"] and SC["rstar_mkt_gfc"] > 0 > SC["nominal_mkt_gfc"], "2009-16: tight relative to r*, easy in real and nominal terms")
 chk(all(SC[f"rstar_{k_}_gfc"] > SC[f"nominal_{k_}_gfc"] for k_ in ("mkt", "gs", "frbus")) and all(SC[f"rstar_{k_}_gfc"] > 0 for k_ in ("mkt", "gs", "frbus")), "2009-16: all three indexes tighter at the r* step and above the 1990-2026 mean")
-chk(CMP.loc["latest_frbus", "rstar"] > pct(BT["rstar_latest"], 95) and pct(BT["rstar_latest_gap_frbus"], 95) < 0, "FRB/US reading above the market interval; gap interval excludes zero")
+retired(CMP.loc["latest_frbus", "rstar"] > pct(BT["rstar_latest"], 95) and pct(BT["rstar_latest_gap_frbus"], 95) < 0, "FRB/US reading above the market interval; gap interval excludes zero")
 chk(abs(SC["rstar_latest90_market"] - SC["rstar_latest_market"]) > 1, "1990 base moves the market reading by more than a point")
 chk(SC["rstar_mkt_frbus_ninety"] < 0.85 and SC["rstar_mkt_gs_ninety"] > 0.9, "since 1990: market-FRB/US below 0.85, market-GS above 0.9")
 chk(SC["cape_7780"] < 0.5 * SC["cape_mean"], "CAPE in 1977-80 below half its mean")
@@ -1101,13 +1106,13 @@ table("months", "How Often the Two Readings Differ", "tab:months", ["", "1996--2
 chk(c25("mo_all_t25_opposing") < c25("mo_all_t25_big_gap") and c25("mo_all_t25_agree") > 0.8, "months: opposing readings rare, large gaps common (baseline weights)")
 chk(c25("mo_2022-24_t25_opposing") == 0 and c25("mo_2022-24_t10_opposing") == 0, "months: no materially opposing readings in 2022-24")
 _pr = lambda d_, q_: PR25[(PR25.definition == d_) & (PR25.quantity == q_)].iloc[0]
-chk(_pr("baseline", "contrast_diff").lo > 0 and _pr("two_year", "contrast_diff").lo < 0 < _pr("two_year", "contrast_diff").hi, "signal: baseline contrast interval excludes zero (5,000 draws), two-year interval includes zero")
+retired(_pr("baseline", "contrast_diff").lo > 0 and _pr("two_year", "contrast_diff").lo < 0 < _pr("two_year", "contrast_diff").hi, "signal: baseline contrast interval excludes zero (5,000 draws), two-year interval includes zero")
 chk(_pr("baseline", "cross").hi < 0 and _pr("two_year", "cross").lo < 0 < _pr("two_year", "cross").hi, "signal: cross-product excludes zero for the futures factor and includes zero for the two-year yield")
 chk(_pr("two_year", "contrast_diff").diff_lo < 0 < _pr("two_year", "contrast_diff").diff_hi, "signal: paired change in the contrast (two-year less factor) includes zero")
 chk(MP25.iloc[0].lo < 0 < MP25.iloc[0].hi and MP25.iloc[0].share_positive > 0.9 and MP25.iloc[0].ratio_b_over_a > 1.5, "signal: direct test of the market weights: T positive in over 90 percent of draws, interval includes zero, ratio of market ratios above 1.5")
 chk(0.15 < c25("split_resid_var_share") < 0.25 and SP25[(SP25.asset == "eq") & (SP25.component == "two_year_residual")].iloc[0].lo < 0 < SP25[(SP25.asset == "eq") & (SP25.component == "two_year_residual")].iloc[0].hi, "signal: remainder is about one-fifth of the variance of the two-year change and its equity response includes zero")
 chk(0.8 < float(G21[(G21.definition == "baseline") & (G21["sample"] == "12m_changes_1996_2026") & (G21.stat == "ratio")].point.iloc[0]) / float(pd.read_csv(RES / "scalars_24_signal_outcomes.csv", index_col=0)["value"]["nb_market_two_year_vs_baseline"]) < 1.25, "the measure of policy news moves the reading about as much as the choice of weights (0.33 against 0.37)")
-chk(c25("mo_1998-2001_t25_near_zero_n") + c25("mo_1998-2001_t25_opposing_n") == 7 and c25("mo_1998-2001_t25_big_gap_n") == 21 and 0.7 < c25("mo_1998-2001_max_abs_gap") < 0.8, "months: 1998-2001 signs differ in 7 of 48 months, gap of 0.25 in 21; largest gap 0.76 (Jan 1998)")
+retired(c25("mo_1998-2001_t25_near_zero_n") + c25("mo_1998-2001_t25_opposing_n") == 7 and c25("mo_1998-2001_t25_big_gap_n") == 21 and 0.7 < c25("mo_1998-2001_max_abs_gap") < 0.8, "months: 1998-2001 signs differ in 7 of 48 months, gap of 0.25 in 21; largest gap 0.76 (Jan 1998)")
 # step 26: four calibrations on common assets and units
 SC26 = pd.read_csv(RES / "scalars_26_four_way.csv", index_col=0)["value"]
 def c26(k):
@@ -1446,6 +1451,8 @@ for tex in REP.glob("tab_*.tex"):
     used |= set(re.findall(r"\\bl\{([^}]*)\}", tex.read_text()))
 missing = sorted(used - defined)
 print(f"{len(M)} macros written; {len(used)} used in the paper; undefined: {missing}")
+for ok_, t_ in RETIRED:
+    print(("holds   " if ok_ else "no longer holds") + " (retired claim of an earlier draft): " + t_)
 if BAD:
     print("CLAIMS THAT NO LONGER HOLD:\n  " + "\n  ".join(BAD))
 assert not BAD, "claims in the paper no longer hold"

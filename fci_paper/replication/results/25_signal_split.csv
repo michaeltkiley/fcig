@@ -1,7 +1,7 @@
 asset,component,response,lo,hi
-ten,futures_factor,0.534628,0.466728,0.60868
-ten,two_year_residual,0.800534,0.654857,0.986096
-eq,futures_factor,-7.77898,-9.76101,-6.14041
-eq,two_year_residual,0.545558,-5.14143,5.2252
-usd,futures_factor,4.22421,3.52123,5.09801
-usd,two_year_residual,4.29652,2.96949,6.02804
+ten,futures_factor,0.530893,0.461887,0.604573
+ten,two_year_residual,0.800195,0.656824,0.978511
+eq,futures_factor,-7.71256,-9.81341,-6.03486
+eq,two_year_residual,0.521317,-5.04009,5.37115
+usd,futures_factor,4.18469,3.48277,5.04834
+usd,two_year_residual,4.30036,2.9568,5.9425

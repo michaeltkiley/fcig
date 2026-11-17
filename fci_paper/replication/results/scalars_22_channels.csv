@@ -117,17 +117,17 @@ perunit_q4:rbbbp,-0.058218
 perunit_q4:equity_pct_rise,-0.014097
 perunit_q4:equity_pct_fall,-0.014097
 perunit_q4:dollar_pct_rise,-0.045421
-psi_ten,0.534628
-psi_eq,-7.778983
-psi_usd,4.224207
-replay:gdp_q4,-0.440438
-replay:ffr_points_q4,0.954232
-replay:10-year yield:gdp_q4,-0.138912
-replay:10-year yield:share,0.315395
-replay:Equity valuation:gdp_q4,-0.109659
-replay:Equity valuation:share,0.248976
-replay:Dollar:gdp_q4,-0.191867
-replay:Dollar:share,0.435629
+psi_ten,0.530893
+psi_eq,-7.712561
+psi_usd,4.184687
+replay:gdp_q4,-0.436736
+replay:ffr_points_q4,0.946212
+replay:10-year yield:gdp_q4,-0.137941
+replay:10-year yield:share,0.315846
+replay:Equity valuation:gdp_q4,-0.108722
+replay:Equity valuation:share,0.248943
+replay:Dollar:gdp_q4,-0.190072
+replay:Dollar:share,0.435211
 hike_spill:10-year yield:gdp_q4,-0.096003
 hike_spill:10-year yield:share_of_hike_gdp,0.207996
 hike_spill:BBB spread:gdp_q4,-0.002942
@@ -138,6 +138,6 @@ hike_spill:Dollar:gdp_q4,-0.070839
 hike_spill:Dollar:share_of_hike_gdp,0.153476
 hike_spill:sum_priced,-0.365254
 hike_spill:remainder_share,0.208657
-hike_vs_psi:ten_ratio,0.691108
-hike_vs_psi:equity_ratio,1.782539
-hike_vs_psi:dollar_ratio,0.369206
+hike_vs_psi:ten_ratio,0.695970
+hike_vs_psi:equity_ratio,1.797891
+hike_vs_psi:dollar_ratio,0.372693
