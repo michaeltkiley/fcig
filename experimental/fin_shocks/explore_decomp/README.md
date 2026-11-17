@@ -1,4 +1,6 @@
-# explore_decomp: historical and variance decompositions for Note B (exploratory)
+# explore_decomp: Note B explorations of November 2026 (exploratory)
+
+**Start with `INTEGRATION_PLAN.md`** (findings, decisions for the author, and the plan to bring this into the package and the paper). Decisions: `DECOMP_QA.md`.
 
 The question (user, 17 Nov 2026): with policy shocks identified in announcement windows, can the role of monetary policy shocks be traced over the full history, back to 1973, by a historical decomposition, and what share of the variance do they explain? Decisions in `DECOMP_QA.md`; results in **`REPORT.md`**. Nothing here feeds Note B's package or paper; Note B's code (`../baseline/lib/`) is imported read-only.
 

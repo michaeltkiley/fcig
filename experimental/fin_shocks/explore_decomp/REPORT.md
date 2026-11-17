@@ -36,7 +36,7 @@ The paper's monthly VAR benchmarks use end-of-month series, and the end-of-month
 * **Unemployment.** From 1973 the FCI raises the unemployment response at 12 months in every version (+0.31**, +0.26**, +0.23 [-0.01, 0.43]); at 24 and 36 months the difference is small and not significant. The response with the FCI is never significantly positive from 1973. With 6 and 3 lags the FCI's effect on unemployment at 24 months is between -0.11 and +0.03 in the three versions and never significant (r*-gap: +0.03 and -0.04).
 * **Puzzle without the FCI.** From 1973 the nominal version alone still has unemployment falling (-0.33** at 12 months); the real version less (-0.15*); the r*-gap version not at all (-0.05).
 * **Where the FCI effect comes from (Table A1b).** The extra initial movement of the FCI (path A minus B) raises unemployment at 24 months by +0.20 to +0.24, significant from 1973 as from 1996 (+0.44 to +0.46). From 1973 the FCI as it ordinarily moves with the yield (B minus C) lowers it (-0.10 to -0.14), which offsets part of the first effect; from 1996 it raises it. The ordinary loading is the same in both (0.27-0.28; it comes from the daily block, estimated from 1996).
-* **Alignment with the draft.** Section 4.1 of the draft says that "with 2020 dropped or the start moved to 1973, the results are those of the baseline". For prices this holds. For the unemployment result of the abstract and introduction (adding the FCI raises unemployment after 24 months), it does not: from 1973 the shift is 0.14 and not significant at 24 months, though significant at 12. **This is for you to decide;** I changed nothing.
+* **Alignment with the draft.** Section 5.1 of the draft says that "with 2020 dropped or the start moved to 1973, the results are those of the baseline". For prices this holds. For the unemployment result of the abstract and introduction (adding the FCI raises unemployment after 24 months), it does not: from 1973 the shift is 0.14 and not significant at 24 months, though significant at 12. **This is for you to decide;** I changed nothing.
 
 ### A.3 The monthly VAR benchmarks from 1973 (Table A2)
 
@@ -192,7 +192,7 @@ D-A11/12 follow your instructions. Mine: D-A13 the splice scaling (sd ratio over
 
 ## Open for you
 
-1. The draft's sentence on the 1973 start (Section 4.1) and the unemployment result at 24 months from 1973 (Part A.2).
+1. The draft's sentence on the 1973 start (Section 5.1) and the unemployment result at 24 months from 1973 (Part A.2).
 2. Whether the daily Route 2 decomposition (B.3, B.4) belongs in Note B, and with which propagation model (1973 or the 1996 baseline).
 3. The splice scaling before 1990.
 
