@@ -67,13 +67,14 @@ def window_column(step, fci, kind):
 def data(step, fci, kind, start):
     fin = M.fin_monthly(step, fci) if kind == "avg" else M.fin_eom(step, fci)
     D = M.MAC[["u", "pi"]].join(fin, how="inner").dropna()
-    D = D[(D.index >= pd.Period(start, "M")) & (D.index <= END)]
+    D = D[D.index <= END]
+    D.attrs["start"] = start                 # estimation rows from max(start, first month with L lags); earlier months supply lags (as lib/monthly.py)
     return D
 
 # ---------------------------------------------------------------- VAR
 def design(D, L, t2020):
     """Constant and L lags; rows from the first month with L lags in D. t2020 = 'dummy': March-December 2020 removed from the estimation (= one dummy per month)."""
-    first = D.index[L]
+    first = max(D.index[L], pd.Period(D.attrs.get("start", str(D.index[L])), "M"))
     X, Y, per = MO.design(D, L, str(first), str(END))
     keep = np.ones(len(per), bool) if t2020 == "in" else ~per.isin(C2020)
     return X, Y, per, keep
@@ -86,13 +87,13 @@ def fit(X, Y, keep):
     return C, U, S
 
 def proxy_column(U, per, keep, b_we):
-    ok = (per >= Z_FIRST) & (per <= END) & keep
+    ok = (per >= Z_FIRST) & (per <= Z_LAST) & keep
     z = ZFULL.reindex(per[ok]).fillna(0.0).values; r = U[ok]
     zc = z - z.mean(); g = (r - r.mean(0)).T @ zc / (zc @ zc)
     return g / g[2] * b_we[2], g
 
 def first_stage_F(U, per, keep):
-    ok = (per >= Z_FIRST) & (per <= END) & keep
+    ok = (per >= Z_FIRST) & (per <= Z_LAST) & keep
     z = ZFULL.reindex(per[ok]).fillna(0.0).values
     return MO.first_stage(U[ok][:, 2], z)[1]
 

@@ -1,4 +1,6 @@
+__pycache__/
 results/*.npz
 results/hd_*_dummy.csv
 results/shocks_*_dummy.csv
-__pycache__/
+results_core/draws/
+results_route2/*.npz
