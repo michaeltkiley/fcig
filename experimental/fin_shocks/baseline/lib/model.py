@@ -6,7 +6,7 @@ inflation, optionally the excess bond premium) an OLS equation on its own lags a
 Response to a policy surprise: the 30-minute window impact (2-year +1 pp; index = its window move; macro zero) applied on the event day, simulated forward
 through the daily block and the monthly equations, averaged over six event-position bins. Price level = cumulated inflation / 12. Uncertainty: 500 draws that
 resample announcements and monthly residuals and re-estimate the daily block on moving blocks of 66 days; the same announcement draws for every case.
-Rate forms: nom | real | rstar (Laubach-Williams) | kiley (Kiley's r*). FCI: 0 | nom | real | rstar | kiley (Note A's index, same step).
+Rate forms: nom | real | rstar (Laubach-Williams) | kiley (Kiley's r*). FCI: 0 | nom | real | rstar | kiley (the market index of Note A's method with Note B's weights, same step).
 Trend: none | spline (natural cubic spline, knots at the sample ends and at NBER peaks inside the sample; monthly equations only).
 Start before 1990: months without daily data use the monthly series (2-year yield: FRED DGS2 monthly mean, before 1976-06 Gurkaynak-Sack-Wright SVENY02 shifted by
 the mean DGS2 - SVENY02 gap of 1976-06 to 1989-12; expected inflation: Cleveland Fed from 1982, Livingston before; the index and r* from Note A).
@@ -84,7 +84,7 @@ _e2m = _e2.combine_first(D0["einf_1y"])
 RATEM = {"nom": Y2M, "real": Y2M - _e2m, "rstar": Y2M - _e2m - D0["rstar LW"], "kiley": Y2M - _e2m - D0["rstar Kiley"]}
 
 def daily_frame(form, fci):
-    """fci: 0 (none), a step name (Note A's index in that step) or "cmp" (the index replaced by its three weighted components in the same step as the rate)."""
+    """fci: 0 (none), a step name (the market index in that step) or "cmp" (the index replaced by its three weighted components in the same step as the rate)."""
     if fci in CMPGROUPS: return pd.DataFrame({"pol": RATE[form], **cmp_cols(fci, CMPD[form])})
     if fci == "baa": return pd.DataFrame({"pol": RATE[form], "idx": FCI[form], "baa": BAAD})
     return pd.DataFrame({"pol": RATE[form], **({"idx": FCI[fci]} if fci else {})})
