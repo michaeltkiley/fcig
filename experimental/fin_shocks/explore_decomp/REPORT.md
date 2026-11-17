@@ -1,133 +1,447 @@
-# Historical and Variance Decompositions with Window-Identified Policy Shocks (Route 2)
+# Note B from 1973, and Policy Shocks Recovered from Daily and Monthly Innovations (Route 2)
 
-Exploratory report, 17 Nov 2026. Folder `experimental/fin_shocks/explore_decomp/`; decisions in `DECOMP_QA.md`; every number below is in `results/` and every table is written by `07_tables.py`. Nothing in Note B's package or paper was changed. Tags: [verified] = checked in this work; [inference] = my reasoning; [recall] = from memory, not checked here.
+Exploratory report, second version, 17 Nov 2026. It replaces the first version. Folder `experimental/fin_shocks/explore_decomp/`; decisions in `DECOMP_QA.md` (D-A1 to D-A14). Note B's package and paper were not changed; Note B's code is used read-only. Every number below is in `results_core/` or `results_route2/`, and every table is written by a script (`C_core_tables.py`, `E_tables.py`, `07_tables.py`). Tags: [verified] = checked in this work; [inference] = my reasoning; [recall] = from memory, not checked here.
 
-## 1. Answers in brief
+## Summary
 
-1. **Is a historical decomposition possible with window-identified surprises?** Yes, from 1996 on, by treating the measured surprises as the shock and passing them through Note B's model (Route 1). This needs no assumption beyond Note B's own. It is a lower bound on the role of policy if policy news also arrives outside the windows, and it is the full answer under Note B's premise that it does not.
-2. **Do the window surprises identify how to build policy shocks from VAR innovations in other periods, back to 1973 (Route 2)?** The algebra does: the window column b and the innovation covariance Sigma give e_t = b'Sigma^-1 u_t / (b'Sigma^-1 b) in every month, daily data or not. **But the condition that makes the recipe valid, invertibility, fails in this data, and Note B's own model predicts that it fails.** The surprises explain 0.4 to 4 percent of the variance of the VAR innovations (it would be close to 100 percent under invertibility), and the recovered "policy shock" correlates 0.02 to 0.19 with the surprises in 1996-2026. The recovered series is mostly other shocks that move the 2-year yield and the FCI together: it puts a 2.5 pp tightening shock in October 2008.
-3. **Variance decompositions.** Only bounds are identified. Lower bound (the shock is the measured surprise): policy surprises account for under 1 percent of the 24-month forecast-error variance of the unemployment gap and of core inflation, and 0.2 to 4 percent of the 2-year yield's, in every case. Upper bound (invertibility): 0.4 to 23 percent for unemployment, up to 10 percent for inflation; 17.6 percent [3.8, 43.7] for the r*-gap case with the FCI in the 1973 VAR. The upper bound is 17 to 116 times the lower in shock variance, so it carries little information.
-4. **Daily data or monthly back to 1973?** Route 2 needs no daily data, which is why it can reach 1973. The reason it fails is not the frequency. It is that a 4-variable monthly VAR cannot separate the policy news from the much larger flow of other news that moves the same two financial variables in the same month.
+**Part A, the core paper results from 1973.** Note B's model with the monthly equations from 1973 gives the paper's price result in the real and r*-gap versions: the price level falls 0.63 percent after two years in the r*-gap version with the FCI (90 percent interval -0.89 to -0.22), against 0.80 from 1996. It does not give the paper's unemployment result at two years. From 1973 the FCI raises the unemployment response at 12 months (by 0.31, 0.26 and 0.23 pp in the three versions; the first two significant at 5 percent), but at 24 months the rise is 0.06 to 0.14 pp and not significant; from 1996 it is 0.56 to 0.65 pp and significant. With 3 and 6 lags from 1973 the FCI's effect on unemployment at 24 months is between -0.11 and +0.03 and never significant. The paper's monthly window-impact VAR in monthly averages from 1973 has unemployment rising significantly with the FCI (r*-gap: +0.29 at 12 months, +0.18 at 24) and prices falling (-0.30 at 24, -0.41 at 36). The proxy VAR with the FCI is uninformative from 1973 (first-stage F 0.9). Without the FCI, the nominal version from 1973 still has the unemployment puzzle (Note B's model: -0.33 pp at 12 months; proxy VAR: -0.25), and the r*-gap version does not (-0.05).
 
-## 2. Method
+**Part B, Route 2.** The policy shock is recovered on every weekday from 1990 from Note B's daily innovations (the 2-year yield and FCI innovations projected on the window direction), and in every month of 1974-1989 from the monthly VAR's innovations, and traced through Note B's model.
+* The daily shocks are informative: on announcement days they correlate 0.66 with the measured window surprises (slope 0.82).
+* **The measured surprises have a tiny variance share,** as expected: 0.1 percent of the unemployment gap's 24-month forecast-error variance, 0.2 percent of core inflation's, 3 percent of the 2-year yield's and 2 percent of the FCI's (r*-gap with FCI, 1990-2026).
+* **The recovered policy-direction shocks matter much more, and almost all of it comes from days without an announcement.** With Note B's model from 1973 they account for 1.3 percent of unemployment [0.1, 5.8], 4.6 percent of core inflation [1.0, 9.1], 64 percent of the 2-year yield [33, 88] and 45 percent of the FCI [18, 70] over 1990-2026; with Note B's baseline model (from 1996), for 8.6 percent of unemployment and 9.5 percent of core inflation. Announcement days account for 0.1 and 0.2 percent of those.
+* **In 1974-1989** (monthly-recovered shocks, scaled to the daily shocks' size over the overlap): 4.6 percent of unemployment [0.4, 21.6], 7.8 percent of core inflation [2.1, 15.8], 56 percent of the 2-year yield and 37 percent of the FCI with the 1973 model.
+* **History (r*-gap with FCI):** policy-direction shocks were easing on net in 1979-80 (r*-gap yield -1.0 pp; 12-month core inflation +1.3 pp by end-1980), tightening in 1982-84 (yield +3.7 pp in mid-1982), easing in 2001-03 and 2019-21 (core inflation +0.8 pp by mid-2021 and +1.0 by end-2022), and tightening in 2022-24 (yield +1.0 pp by end-2023). With the baseline model the 2020-21 easing lowered the unemployment gap by 1.1 pp in mid-2021 and the 2022-24 tightening raised it by 0.7 pp by end-2024 and lowered core inflation by 0.7 pp.
 
-**System.** Note B's monthly benchmark system: unemployment gap, core PCE inflation (monthly, annual rate), the 2-year yield and the FCI in the same step (nominal, real, r*-gap; FS-A75 weights), 12 lags (3 and 6 as checks), all data in (March-December 2020 removed as a check). Three steps, each without and with the FCI.
+## Part A. The core paper results from 1973
 
-**Data versions (D-A2).** Monthly averages from 1973: the series of Note B's own monthly equations (months before 1990 from monthly series, as in Note B's R1a). End-of-month values from 1990 (the daily FCI starts in 1990): the check. Both also from 1996.
+### A.1 Why this was needed
 
-**Impact column (D-A3, D-A5).** Window column (main): the macro entries are zero (Note B's restriction) and the yield and FCI entries are Note B's model's response in the month of the announcement per +1 pp window surprise: 0.465 and 0.489 for the month's average (r*-gap with FCI), 1.013 and 1.056 at the month's end. Proxy column P1 (comparison): Cov(z_t, u_t) over 1996-2026 months, z_t = the month's sum of Nakamura-Steinsson policy news (slope 1.000 on the 2-year window move after FS-A75).
+The paper's monthly VAR benchmarks use end-of-month series, and the end-of-month r*-gap and real yields and the FCI exist only from 1990 (the daily FCI starts in 1990; the nominal end-of-month yield exists from 1976). Earlier monthly VAR runs labelled "from 1973" (FS-A43 addendum) therefore could not have started in 1973 for those versions [inference from the code]. Note B's own model already allowed a 1973 start (monthly averages, months before 1990 from monthly series), but only the r*-gap pair had been run (robustness R1a). Here: (A1) Note B's model from 1973 in all three versions, with and without the FCI, next to the 1996 baseline, 3/6/12 lags, 500 paired block-bootstrap draws; (A2) the paper's monthly VAR benchmarks (proxy VAR, window-impact VAR, Cholesky) from 1973 in monthly averages and from 1990 at the end of the month, next to the paper's 1996 versions.
 
-**Recovering the shock.** Under invertibility the policy shock is a combination of the month's innovations. With Sigma = BB' and b the policy column, the policy row of B^-1 is proportional to b'Sigma^-1, so
-  e_t = b'Sigma^-1 u_t / (b'Sigma^-1 b),  Var(e_t) = 1/(b'Sigma^-1 b)   (shock in units of +1 pp in the window).
-Without invertibility e_t is the projection of the shock on u_t, and 1/(b'Sigma^-1 b) is an upper bound on the shock's variance [inference; Plagborg-Moller and Wolf (2022, JPE) develop the bounds formally, recall].
+**Reproduction.** The 1996 runs of A1 reproduce the paper's stored results to the last digit in all six cases, and the existing 1973 r*-gap pair too [verified: maximum absolute difference 0.0000]. The 1996 end-of-month monthly VARs of A2 reproduce the paper's stored values exactly (proxy VAR F 4.4378, unemployment at 12 months 0.9457; window-impact VAR 0.3276) [verified].
 
-**Historical decomposition.** H_t = sum_{j=0}^{t-t0} Theta_j b e_{t-j} from the first month of the sample. Route 1 replaces e by the measured surprises z and, in the main version, Theta_j b by Note B's own responses (h = 0..36).
+### A.2 Note B's model from 1973 (Table A1, Figure A1)
 
-**Variance shares (D-A8).** sigma^2 sum_{j<h}(Theta_j b)_k^2 / sum_{j<h}(Theta_j Sigma Theta_j')_kk, with sigma^2 = 1/(b'Sigma^-1 b) (upper) or the mean squared monthly surprise (lower).
+| r*-gap, 12 lags | from 1996 | from 1973 |
+|---|---|---|
+| Unemployment at 24 m, yield alone | -0.07 | -0.01 |
+| Unemployment at 24 m, yield + FCI | +0.49* | +0.14 |
+| Difference (paired) | +0.56** [0.10, 1.05] | +0.14 [-0.13, 0.37] |
+| Price level at 24 m, yield alone | -0.44** | -0.50** |
+| Price level at 24 m, yield + FCI | -0.80** | -0.63** |
+| Difference (paired) | -0.37** [-0.77, -0.07] | -0.13 [-0.27, 0.04] |
 
-**Diagnostics.** (i) R^2 of z_t on the month's innovations u_t. If the policy shock is the surprise and is recoverable from u_t, this R^2 is close to 1; if u_t carried no information about z, its expected value would be about K/n = 1 percent. (ii) Correlation of the recovered shock with z. (iii) Ratio of the two shock variances. (iv) Do future innovations predict z (leads; rejection = non-invertibility, or time aggregation), and do past ones (lags; rejection = predictable surprises)? (v) The same statistics on samples simulated from Note B's estimated model, in which the policy shock is the window surprise by construction (D-A10).
+* **Prices.** From 1973 the price level falls in the real and r*-gap versions with and without the FCI, significantly; the FCI adds a further fall that is not significant. In the nominal version prices do not fall from 1973 (+0.11 with the FCI at 24 months).
+* **Unemployment.** From 1973 the FCI raises the unemployment response at 12 months in every version (+0.31**, +0.26**, +0.23 [-0.01, 0.43]); at 24 and 36 months the difference is small and not significant. The response with the FCI is never significantly positive from 1973. With 6 and 3 lags the FCI's effect on unemployment at 24 months is between -0.11 and +0.03 in the three versions and never significant (r*-gap: +0.03 and -0.04).
+* **Puzzle without the FCI.** From 1973 the nominal version alone still has unemployment falling (-0.33** at 12 months); the real version less (-0.15*); the r*-gap version not at all (-0.05).
+* **Where the FCI effect comes from (Table A1b).** The extra initial movement of the FCI (path A minus B) raises unemployment at 24 months by +0.20 to +0.24, significant from 1973 as from 1996 (+0.44 to +0.46). From 1973 the FCI as it ordinarily moves with the yield (B minus C) lowers it (-0.10 to -0.14), which offsets part of the first effect; from 1996 it raises it. The ordinary loading is the same in both (0.27-0.28; it comes from the daily block, estimated from 1996).
+* **Alignment with the draft.** Section 4.1 of the draft says that "with 2020 dropped or the start moved to 1973, the results are those of the baseline". For prices this holds. For the unemployment result of the abstract and introduction (adding the FCI raises unemployment after 24 months), it does not: from 1973 the shift is 0.14 and not significant at 24 months, though significant at 12. **This is for you to decide;** I changed nothing.
 
-**Inference.** 500 draws, moving blocks of 12 months (pre- and post-1996 drawn separately, as in Note B); the window column is held fixed (D-A7). Route 1 bands from Note B's own 500-draw block bootstrap.
+### A.3 The monthly VAR benchmarks from 1973 (Table A2)
 
-## 3. Results
+* **Window-impact VAR, r*-gap with FCI.** Monthly averages from 1973: unemployment +0.29 [0.13, 0.41] at 12 months and +0.18 [0.02, 0.28] at 24; price level -0.30 [-0.51, -0.07] at 24 and -0.41 at 36. End of month from 1991: +0.23 and +0.28 (not significant), price level -0.71 [-1.08, -0.17]. The paper's 1996 version: +0.33, +0.30, -0.77. All three agree in sign with the paper. In monthly averages the VAR's yield path falls back faster than Note B's (0.60 in the month after the announcement against 1.00), so the monthly-average version understates the size [verified, first-round Table T4].
+* **Proxy VAR with the FCI.** From 1973 in monthly averages the first stage has F = 0.9 and the 90 percent sets are unbounded. At the end of the month from 1991, F = 5.1; unemployment +0.76 at 12 months (set -0.10 to 4.20) and price level -1.09 at 24 (-3.27 to -0.12).
+* **Without the FCI.** The nominal proxy VAR from 1973 has unemployment falling, significantly (-0.25 [-0.58, -0.07] at 12 months); the Cholesky VAR -0.34 [-0.63, 0.04]. The puzzle is in the long sample too, smaller than from 1990 (-0.76, -0.81). r*-gap without the FCI from 1973: unemployment about zero, price level -0.30 to -0.65 at 24 months.
+* Units: per +1 pp in the window (proxy VAR rescaled from the yield measure by the window column; Cholesky per +1 pp yield innovation).
 
-### 3.1 Invertibility fails, and Note B's model says it should
+## Part B. Route 2: policy shocks recovered from daily and monthly innovations
 
-T1 shows the diagnostics for all 24 combinations (12 lags). In every one, the surprises' R^2 on the month's innovations is 0.4 to 3.8 percent, the recovered shock correlates 0.02 to 0.19 with the surprises, and the variance that invertibility attributes to the policy shock is 17 to 116 times the variance of the measured surprises. The bootstrap (T1b) puts the 95th percentile of the R^2 at 7.8 percent at most. Lag length and 2020 do not matter (T5). Adding the federal funds rate and the excess bond premium to the VAR raises the R^2 only to 1.5 percent (averages) and 4.9 percent (end of month) [verified, run in this session; not in the tables].
+### B.1 Method
 
-The leads test rejects at 10 percent in 6 of 24 cases, all in monthly averages (p 0.03 to 0.09), which is what time aggregation predicts (a late-month announcement shows up in next month's innovation); it does not reject for end-of-month data (p 0.11 to 0.37). It has little power here, because the surprises are small relative to the innovations. The lags test does not reject except in one case (nominal with FCI, monthly averages from 1973, p = 0.04), so the surprises are not predicted by past innovations, as Note B assumes.
+* **Daily, from April 1990.** Note B's daily block (HAR regressions of the 2-year yield and the FCI on their 1/5/22/66-day averages and the monthly macro variables; Note B's coefficients, estimated from 1996) gives innovations eps_d on every weekday. With b = (1, b_F) the window impact (b_F = 1.00 for all three versions after FS-A75) and Omega their covariance (1990-2026), the policy shock of day d is s_d = b'Omega^-1 eps_d / (b'Omega^-1 b), in units of +1 pp on the 2-year yield in the window. This assumes that within a day the policy shock is recoverable from the two innovations (invertibility in the daily block): the shock is the yield-and-FCI movement in the window proportion, on any day. Re-estimating the daily block on 1990-2026 changes nothing beyond the third decimal.
+* **Monthly, 1974 to April 1990.** The monthly VAR in monthly averages (12 lags, from 1973) with the window column, e_t = b'Sigma^-1 u_t / (b'Sigma^-1 b).
+* **Splice (D-A13).** Over May 1990 to September 2026 the monthly-VAR shock correlates 0.58 with the month's sum of daily shocks (R2 0.34 with this and next month's), but its standard deviation is about twice as large (0.41 against 0.21). Unscaled, it implies variance shares above 100 percent for the yield when passed through Note B's model. Main version: the 1974-89 monthly shocks are scaled by the ratio of standard deviations over the overlap (0.52 for r*-gap with FCI; 0.48-0.53 in the other versions); the unscaled version is reported too.
+* **Propagation.** Note B's model, point estimates (main: monthly equations from 1973, 12 lags; check: the 1996 baseline). A daily shock enters on its own day of the month (responses simulated for each day position and month length, 120 months); a monthly shock enters with the response averaged over announcement positions. Reproduces Note B's responses exactly [verified].
+* **Variance share** at h: the variance over the period of the contribution of the shocks of the last h months, divided by the data's h-month forecast-error variance (monthly VAR in monthly averages from 1973, innovation covariance of the period). Bands: Note B's 500 bootstrap draws of its responses, with month-aggregated shocks and 36-month responses (the shocks and the data's forecast-error variance held fixed).
 
-T2 is the decisive check. With Note B's estimated r*-gap model with the FCI as the true process, where the policy shock is the window surprise by construction, Route 2 gives a median R^2 of 2.2 percent (averages) and 4.6 percent (end of month), a correlation of 0.11 and 0.19, and a variance ratio of 74 and 25. The data's values (1.7 and 3.5 percent; 0.10 and 0.17; 51 and 17) lie inside the simulated 90 percent ranges. **So the failure is a property of the paper's model, not a misspecification found by the test.** In Note B's model the policy news is a small share of the monthly news that moves the 2-year yield and the FCI (window surprises have a standard deviation of 0.046 pp per month; the month's 2-year yield innovation has a standard deviation of 0.23 pp at the month's end and 0.32 pp in monthly averages), and a monthly VAR in four variables cannot separate it. [inference from T2]
+### B.2 The daily shocks (Table B1, Figure B1)
 
-### 3.2 What the recovered series is
+The recovered daily shock has a standard deviation of 0.049 pp a day: 0.067 on announcement days and 0.048 on other days. On announcement days it correlates 0.66 with the measured surprise (slope 0.82): most of the announcement-day policy shock is the window surprise. On ordinary days the FCI innovation moves 0.35 per pp of the yield innovation (the window moves it 1.00), so the window direction is distinct from ordinary co-movement and the projection is informative. Summed over a month, the recovered shocks have a standard deviation of 0.21 pp, against 0.046 for the measured surprises: there are about 21 weekdays a month and a policy announcement on about 8 days a year.
 
-Figure 1 plots the recovered shock (r*-gap with FCI) against the measured surprises. Its largest values are in 1979-82 (plausible for policy). But it also has +2.5 in October 2008 in monthly averages (+0.83 at the month's end), a tightening in the month the Fed cut rates and financial conditions collapsed; and at the month's end -0.65 in March 2023, the month of the SVB failure. The window column says "the yield and FCI move together and the macro variables do not move within the month", and that signature is shared by risk-appetite, term-premium and crisis shocks. The proxy column (P1) does not help: its first-stage F is 0.8 to 8, and it gives the same low correlation.
+### B.3 Variance shares (Tables B3, B3b, B3c; Figure B3)
 
-### 3.3 Historical decomposition
+r*-gap with FCI, 24 months, Note B's model from 1973 (90 percent bands):
 
-Figure 2 (r*-gap with FCI; VAR in monthly averages from 1973) and T6. **Route 2** attributes large movements to policy: +2.1 pp of the unemployment gap at the end of 1982 (90 percent band 0.6 to 3.7, against 3.8 pp of all shocks), and +1.7 pp in October 2009 (0.8 to 2.6, against 4.2). For inflation it gives +0.6 pp at end-1980, with a band that includes zero (-0.5 to 1.9). The 2009 attribution comes from the October 2008 "tightening" shock above, so it is not a reading of monetary policy.
+| Period, shocks | Unemployment gap | Core inflation | 2-year yield | FCI |
+|---|---|---|---|---|
+| 1974-89, monthly-recovered (scaled) | 4.6 [0.4, 21.6] | 7.8 [2.1, 15.8] | 56 [29, 75] | 37 [16, 58] |
+| 1990-2026, daily-recovered, all days | 1.3 [0.1, 5.8] | 4.6 [1.0, 9.1] | 64 [33, 88] | 45 [18, 70] |
+| of which non-announcement days | 1.3 | 4.9 | 68 | 48 |
+| of which announcement days | 0.1 | 0.2 | 2.7 | 1.9 |
+| measured surprises | 0.1 [0.0, 0.3] | 0.2 [0.0, 0.4] | 3.1 [1.5, 4.2] | 2.1 [0.8, 3.3] |
 
-**Route 1** (Note B's model and the measured surprises, 1996 on) is small and episodic. The 2001-03 easing surprises lowered the unemployment gap by 0.56 pp by mid-2003 (band -1.05 to -0.05) and raised 12-month core inflation by 0.41 pp (0.13 to 0.68). The 2008 surprises lowered unemployment by about 0.3 pp in 2009. Over the 2022-24 tightening, the surprises' contribution is close to zero: -0.03 to -0.16 pp for unemployment and a 2-year yield contribution of -0.16 pp by end-2023. **The tightening of 2022-23 was not a surprise in the windows, on net. It came through the anticipated, systematic part of policy, which no shock decomposition attributes to policy shocks.** [inference from T6]
+* With Note B's baseline model (monthly equations from 1996) the macro shares are larger, because the baseline's unemployment response is larger: 1990-2026, 8.6 percent of unemployment and 9.5 percent of core inflation; 1974-89 (scaled), 31.7 and 14.1 percent (Table B3c).
+* Nominal and real versions with the FCI: smaller shares for unemployment (0.2-0.3 percent from 1990) and inflation (0.6-2.4 percent); the yield 38 percent and the FCI 31-35 percent (Table B3).
+* **Without the FCI** the daily shock is every yield innovation, and the shares for the yield exceed 100 percent (108-116 percent from 1990): Note B's yield-only model makes the yield response more persistent than the data's forecast errors allow. These versions are reported but not interpretable as shares.
+* At 12 and 36 months the pattern is the same (Table B3b).
 
-Figures 4 to 7 show the same for end-of-month data from 1990, the nominal case without the FCI, the two-month recovery (WE2) and the proxy column. All have the same pattern: Route 2 large and crisis-driven, Route 1 small.
+### B.4 Historical decomposition (Table B4, Figure B2)
 
-### 3.4 Variance decomposition
+Figure B2 shows, for the r*-gap version with the FCI, the contribution of the policy-direction shocks (daily from 1990, monthly scaled before), the part from announcement days, and the measured surprises, next to the data's deviation from the monthly VAR's deterministic path. With Note B's model from 1973:
+* 1979-80: easing on net (r*-gap yield -1.0 pp, FCI -1.0 to -1.2 points; 12-month core inflation +1.3 pp by end-1980).
+* 1982-84: tightening (yield +3.7 pp in mid-1982 and +3.0 in mid-1984; FCI +3.7 and +2.5); core inflation -0.4 by mid-1984 and -1.0 by end-1986.
+* 2001-03: easing (yield -1.1 to -1.8 pp); 2008: a financial-conditions tightening (FCI +1.3 at end-2008) despite the cuts; 2019-21: easing (yield -1.7 in mid-2021; core inflation +0.8 by mid-2021 and +1.0 by end-2022).
+* 2022-24: tightening (yield +0.7 to +1.0 pp, FCI +0.6 to +0.8).
+* Unemployment contributions are within +-0.65 pp with the 1973 model. With the baseline model they are larger: the 2001-03 easing lowered unemployment by 0.8 pp by mid-2003, the 2019-21 easing by 1.1 pp in mid-2021, and the 2022-24 tightening raised it by 0.7 pp by end-2024 (and lowered core inflation by 0.7 pp).
+* The measured surprises' contribution is small throughout: at most about 0.5 pp of unemployment (2003, baseline model) and 0.4 pp of core inflation.
 
-T3 and Figure 3 (24 months). Lower bound: 0.0 to 0.7 percent for the unemployment gap; 0.0 to 0.5 percent for core inflation; 0.2 to 3.6 percent for the 2-year yield. With Note B's own responses rather than the VAR's, the share for unemployment in the r*-gap case with the FCI is 0.3 percent at 24 months and 0.4 percent at 36 (`results/noteb_shares.csv`). Upper bound (full sample): 0.4 to 23 percent for unemployment, 0.6 to 10 percent for inflation, 17 to 92 percent for the yield. **The policy surprises explain little of the variance of unemployment and inflation.** Small shares for identified monetary shocks are the common finding in the literature [recall; e.g. the surveys of Ramey (2016) and the high-frequency literature], and they are consistent with Note B's large responses per unit of shock: the shocks are small.
+### B.5 What the shocks are, stated as facts
 
-### 3.5 Alignment of intention and execution
+* The recovered shock is the yield-and-FCI movement in the window's proportion on every day. On announcement days it is mostly the policy surprise (correlation 0.66). On other days it includes policy news outside the windows (speeches, testimony, minutes, data that change the expected path of policy) and any other news that moves the 2-year yield and the FCI in that proportion; the projection cannot separate them [inference].
+* The monthly recovery (first round, Appendix) shows the limit of monthly data: monthly innovations span the measured surprises poorly (R2 0.4-4 percent), and simulations from Note B's model reproduce that, so a monthly VAR cannot identify the announcement shock itself. The daily recovery does much better on announcement days (0.66). Before 1990 only the monthly recovery is available.
 
-* `note_b()` reproduces Note B's stored baseline exactly (u +0.335/+0.493/+0.431, price level -0.805 at 24 months) [verified].
-* The monthly VAR with the window column does not reproduce Note B's responses (T4): in monthly averages its yield path falls to 0.60 in month 1 where Note B's rises to 1.00 (the rest of the month after the announcement), and its responses differ by up to half. Any Route 2 decomposition therefore runs on dynamics other than the paper's. The two-month variant (WE2) fixes the month-1 yield response but gives variance "shares" above 1, so its implied shock is inconsistent with the VAR's covariance (D-A6).
-* End-of-month data are the cleaner version: they match Note B's units (0.92 to 1.01 of the window move) and responses more closely, but they start in 1990.
-* The FS-A43 addendum's monthly VARs "from 1973" most likely started in 1990 (the end-of-month series begin then) [inference]; they are not in the paper.
-* Stale text noticed, not changed: the CLAUDE.md glossary says Note B's monthly block has a "quadratic trend" (the package has none); PROJECT_MEMORY section 9 says the Note A quarterly-VAR branch is not merged (it is on `main`).
+## Choices I made (full list in DECOMP_QA.md)
 
-## 4. What this means for Note B, and what could be done next
+D-A11/12 follow your instructions. Mine: D-A13 the splice scaling (sd ratio over the overlap; unscaled reported); D-A14 Note B's daily coefficients applied from 1990, Omega over 1990-2026, variance shares relative to the data's monthly-VAR forecast errors; Note B's model from 1973 as the main propagation model for Route 2 (it is the model that covers the whole period), the 1996 baseline as the check; responses to 120 months for the point estimates; bands from Note B's draws with month-aggregated shocks.
 
-* **Note B's identification does not need invertibility, and that is a strength.** The window surprise is the shock, so Note B's responses are identified whether or not a monthly VAR could recover the shock. Route 2 shows what a standard proxy VAR would need and cannot have. A sentence on this could go in the section on the monthly proxy VAR. **Your call.**
-* **A Route 1 historical decomposition (1996-2026) could go in as an exhibit** (Figure 2's orange lines, or T6). Its message is that policy surprises mattered in 2001-03 and 2008 and hardly at all in 2022-24. **Your call;** it is a new result for the paper.
-* **Back to 1973 needs a measured shock rather than a recovered one.** Options, each a decision:
-  (a) Futures-based surprises from about 1988-90 (Kuttner; Gurkaynak-Sack-Swanson) would extend Route 1 by six to eight years [recall: start dates not checked].
-  (b) Narrative shocks (Romer and Romer, extended by Wieland and Yang, about 1969-2007) as the measured shock in Note B's monthly equations before 1996. Different identification and units; they would need scaling to the 2-year yield [recall; data not in the repository].
-  (c) Daily Treasury responses to target changes in 1974-79 (Cook and Hahn 1989) [recall].
-* **Possible formal step:** the identified-set bounds of Plagborg-Moller and Wolf (2022) for the variance shares, to replace the two bounds here [recall; paper not read in this session].
+## Corrections to the first report
 
-## 5. Choices I made (the user asked me to choose and report; full list in DECOMP_QA.md)
+* The first report's "1996" rows lost 1996 (no pre-sample lags) and the proxy VAR used instrument months to September 2026; fixed and rerun (Appendix tables are the corrected ones).
+* I said earlier that the paper's "Cholesky 1984-2026" might be affected by the 1990 start of the end-of-month series; it is not (nominal end-of-month yield from 1976; 513 months).
 
-D-A4 cases and lags; D-A5 the window column from Note B's daily model; D-A6 the two-month variant for time aggregation; D-A7 the bootstrap, with the window column fixed; D-A8 variance shares as bounds; D-A9 Route 1 with Note B's own model and bootstrap; D-A10 the simulation check. Not done: the federal funds rate and EBP extension is a quick diagnostic only (not tabulated); no new data downloaded.
+## Open for you
+
+1. The draft's sentence on the 1973 start (Section 4.1) and the unemployment result at 24 months from 1973 (Part A.2).
+2. Whether the daily Route 2 decomposition (B.3, B.4) belongs in Note B, and with which propagation model (1973 or the 1996 baseline).
+3. The splice scaling before 1990.
 
 ## Figures
 
-* `figures/fig1_shocks.png`: recovered shock against measured surprises.
-* `figures/fig2_hd_rstar_avg.png`: historical decomposition, r*-gap with FCI, monthly averages from 1973.
-* `figures/fig3_fevd.png`: variance-share bounds.
-* `figures/fig4_hd_rstar_eom.png`, `fig5_hd_nom_avg.png`, `fig6_hd_rstar_avg_WE2.png`, `fig7_hd_rstar_avg_P1.png`: other versions.
+* `figures/A1_core_paths.png`: Note B's responses from 1973 (solid, 90 percent bands) and from 1996 (dashed), three versions, without and with the FCI.
+* `figures/B1_shocks.png`: daily-recovered shocks (monthly sums) and measured surprises; the spliced series 1974-2026.
+* `figures/B2_hd_rstar.png`: historical decomposition, r*-gap with FCI.
+* `figures/B3_shares.png`: variance shares at 24 months by source.
+* `figures/B4_hd_nom_nofci.png`: nominal without the FCI.
+* First round (Appendix): `figures/fig1_shocks.png` to `fig7_*.png`.
 
-## Tables
+# Tables, Part A
+
+### A1 (12 lags). Note B's model: responses without and with the FCI, monthly equations from 1973 and from 1996 (u: unemployment gap, pp; P: price level, %; per +1 pp window surprise; paired differences; 90% intervals; ** and * 5 and 10 percent)
+
+|   sample | yield   |   h | u: yield alone         | u: yield + FCI        | u: difference          | P: yield alone         | P: yield + FCI         | P: difference          |
+|---------:|:--------|----:|:-----------------------|:----------------------|:-----------------------|:-----------------------|:-----------------------|:-----------------------|
+|     1973 | Nominal |  12 | -0.33** [-0.50, -0.17] | -0.02 [-0.31, +0.21]  | +0.31** [+0.09, +0.49] | +0.10 [-0.02, +0.28]   | +0.08 [-0.05, +0.24]   | -0.03 [-0.11, +0.05]   |
+|     1973 | Nominal |  24 | -0.17** [-0.34, -0.01] | -0.12 [-0.42, +0.12]  | +0.06 [-0.20, +0.25]   | +0.19 [-0.03, +0.59]   | +0.11 [-0.10, +0.46]   | -0.08 [-0.26, +0.05]   |
+|     1973 | Nominal |  36 | -0.09 [-0.27, +0.08]   | -0.13 [-0.45, +0.10]  | -0.04 [-0.31, +0.13]   | +0.25 [-0.07, +0.91]   | +0.12 [-0.15, +0.65]   | -0.12 [-0.44, +0.05]   |
+|     1973 | Real    |  12 | -0.15* [-0.27, -0.01]  | +0.10 [-0.08, +0.27]  | +0.26** [+0.08, +0.41] | -0.15* [-0.25, -0.02]  | -0.18** [-0.29, -0.05] | -0.04 [-0.11, +0.04]   |
+|     1973 | Real    |  24 | -0.08 [-0.22, +0.04]   | +0.00 [-0.24, +0.17]  | +0.09 [-0.11, +0.26]   | -0.31* [-0.52, -0.02]  | -0.39** [-0.57, -0.12] | -0.07 [-0.23, +0.06]   |
+|     1973 | Real    |  36 | -0.05 [-0.20, +0.07]   | -0.02 [-0.25, +0.13]  | +0.03 [-0.16, +0.21]   | -0.47 [-0.79, +0.01]   | -0.55** [-0.85, -0.13] | -0.08 [-0.32, +0.13]   |
+|     1973 | r*-gap  |  12 | -0.05 [-0.20, +0.08]   | +0.18 [-0.07, +0.38]  | +0.23 [-0.01, +0.43]   | -0.22** [-0.33, -0.08] | -0.27** [-0.41, -0.10] | -0.05 [-0.13, +0.02]   |
+|     1973 | r*-gap  |  24 | -0.01 [-0.17, +0.16]   | +0.14 [-0.17, +0.36]  | +0.14 [-0.13, +0.37]   | -0.50** [-0.73, -0.17] | -0.63** [-0.89, -0.22] | -0.13 [-0.27, +0.04]   |
+|     1973 | r*-gap  |  36 | -0.00 [-0.16, +0.17]   | +0.13 [-0.19, +0.35]  | +0.13 [-0.18, +0.37]   | -0.79** [-1.17, -0.21] | -0.98** [-1.42, -0.26] | -0.19 [-0.39, +0.09]   |
+|     1996 | Nominal |  12 | -0.81** [-1.20, -0.38] | -0.05 [-0.50, +0.35]  | +0.76** [+0.34, +1.12] | +0.09 [-0.11, +0.28]   | -0.13 [-0.33, +0.09]   | -0.22* [-0.41, -0.02]  |
+|     1996 | Nominal |  24 | -0.49** [-0.82, -0.13] | +0.16 [-0.24, +0.55]  | +0.65** [+0.21, +1.08] | +0.02 [-0.33, +0.42]   | -0.42 [-0.80, +0.02]   | -0.44* [-0.84, -0.04]  |
+|     1996 | Nominal |  36 | -0.31 [-0.69, +0.06]   | +0.22 [-0.20, +0.67]  | +0.53** [+0.06, +1.04] | -0.12 [-0.61, +0.46]   | -0.71 [-1.22, +0.00]   | -0.59 [-1.14, +0.00]   |
+|     1996 | Real    |  12 | -0.61** [-0.96, -0.27] | +0.09 [-0.37, +0.43]  | +0.69** [+0.37, +0.98] | -0.03 [-0.18, +0.14]   | -0.23** [-0.40, -0.06] | -0.20** [-0.35, -0.05] |
+|     1996 | Real    |  24 | -0.33* [-0.64, -0.07]  | +0.23 [-0.11, +0.60]  | +0.57** [+0.18, +0.98] | -0.11 [-0.37, +0.21]   | -0.48** [-0.84, -0.12] | -0.37** [-0.71, -0.07] |
+|     1996 | Real    |  36 | -0.22 [-0.55, +0.05]   | +0.21 [-0.14, +0.62]  | +0.43* [+0.03, +0.94]  | -0.21 [-0.61, +0.28]   | -0.66** [-1.24, -0.10] | -0.45 [-1.02, +0.03]   |
+|     1996 | r*-gap  |  12 | -0.29 [-0.60, +0.11]   | +0.33 [-0.06, +0.76]  | +0.62** [+0.24, +1.00] | -0.21** [-0.35, -0.05] | -0.42** [-0.60, -0.20] | -0.20** [-0.38, -0.07] |
+|     1996 | r*-gap  |  24 | -0.07 [-0.42, +0.24]   | +0.49* [+0.01, +0.95] | +0.56** [+0.10, +1.05] | -0.44** [-0.73, -0.05] | -0.80** [-1.22, -0.33] | -0.37** [-0.77, -0.07] |
+|     1996 | r*-gap  |  36 | +0.03 [-0.35, +0.36]   | +0.43 [-0.07, +0.98]  | +0.40 [-0.12, +1.01]   | -0.69** [-1.13, -0.10] | -1.11** [-1.90, -0.35] | -0.42 [-1.08, +0.08]   |
+
+### A1 (6 lags). Note B's model: responses without and with the FCI, monthly equations from 1973 and from 1996 (u: unemployment gap, pp; P: price level, %; per +1 pp window surprise; paired differences; 90% intervals; ** and * 5 and 10 percent)
+
+|   sample | yield   |   h | u: yield alone         | u: yield + FCI       | u: difference          | P: yield alone         | P: yield + FCI         | P: difference          |
+|---------:|:--------|----:|:-----------------------|:---------------------|:-----------------------|:-----------------------|:-----------------------|:-----------------------|
+|     1973 | Nominal |  24 | -0.09 [-0.22, +0.07]   | -0.14 [-0.39, +0.05] | -0.05 [-0.27, +0.10]   | +0.33** [+0.17, +0.76] | +0.27** [+0.10, +0.56] | -0.06 [-0.27, +0.04]   |
+|     1973 | Real    |  24 | -0.03 [-0.17, +0.09]   | -0.05 [-0.28, +0.06] | -0.01 [-0.21, +0.09]   | -0.11 [-0.25, +0.30]   | -0.16 [-0.30, +0.17]   | -0.05 [-0.22, +0.04]   |
+|     1973 | r*-gap  |  24 | +0.03 [-0.11, +0.19]   | +0.05 [-0.22, +0.22] | +0.03 [-0.22, +0.18]   | -0.31 [-0.49, +0.08]   | -0.35 [-0.56, +0.08]   | -0.05 [-0.17, +0.09]   |
+|     1996 | Nominal |  24 | -0.42** [-0.67, -0.10] | +0.17 [-0.19, +0.54] | +0.59** [+0.18, +0.96] | +0.01 [-0.31, +0.32]   | -0.39 [-0.77, +0.01]   | -0.40* [-0.70, -0.03]  |
+|     1996 | Real    |  24 | -0.29* [-0.55, -0.03]  | +0.19 [-0.13, +0.55] | +0.48** [+0.16, +0.82] | -0.09 [-0.39, +0.20]   | -0.42** [-0.80, -0.08] | -0.34** [-0.63, -0.05] |
+|     1996 | r*-gap  |  24 | -0.06 [-0.43, +0.25]   | +0.36 [-0.12, +0.71] | +0.42 [-0.02, +0.87]   | -0.35* [-0.68, -0.00]  | -0.63** [-1.01, -0.16] | -0.28 [-0.58, +0.06]   |
+
+### A1 (3 lags). Note B's model: responses without and with the FCI, monthly equations from 1973 and from 1996 (u: unemployment gap, pp; P: price level, %; per +1 pp window surprise; paired differences; 90% intervals; ** and * 5 and 10 percent)
+
+|   sample | yield   |   h | u: yield alone         | u: yield + FCI       | u: difference          | P: yield alone         | P: yield + FCI         | P: difference          |
+|---------:|:--------|----:|:-----------------------|:---------------------|:-----------------------|:-----------------------|:-----------------------|:-----------------------|
+|     1973 | Nominal |  24 | -0.05 [-0.16, +0.09]   | -0.16 [-0.40, +0.04] | -0.11 [-0.34, +0.06]   | +0.50** [+0.39, +0.93] | +0.36** [+0.23, +0.62] | -0.14** [-0.44, -0.07] |
+|     1973 | Real    |  24 | -0.01 [-0.13, +0.12]   | -0.08 [-0.30, +0.02] | -0.07 [-0.27, +0.01]   | +0.06** [+0.10, +0.61] | -0.02 [-0.16, +0.30]   | -0.09** [-0.52, -0.08] |
+|     1973 | r*-gap  |  24 | +0.05 [-0.09, +0.21]   | +0.00 [-0.29, +0.12] | -0.04 [-0.32, +0.04]   | -0.15 [-0.17, +0.46]   | -0.16 [-0.29, +0.37]   | -0.01 [-0.36, +0.16]   |
+|     1996 | Nominal |  24 | -0.45** [-0.72, -0.13] | +0.07 [-0.32, +0.38] | +0.52** [+0.12, +0.85] | +0.08 [-0.18, +0.35]   | -0.27 [-0.60, +0.08]   | -0.35* [-0.65, -0.02]  |
+|     1996 | Real    |  24 | -0.33** [-0.58, -0.08] | +0.06 [-0.26, +0.35] | +0.39** [+0.08, +0.68] | -0.07 [-0.27, +0.21]   | -0.31 [-0.59, +0.01]   | -0.24 [-0.53, +0.01]   |
+|     1996 | r*-gap  |  24 | -0.16 [-0.45, +0.16]   | +0.13 [-0.28, +0.49] | +0.30 [-0.13, +0.64]   | -0.15 [-0.43, +0.14]   | -0.25 [-0.61, +0.16]   | -0.11 [-0.35, +0.16]   |
+
+### A1b. Decomposition of the FCI effect at 24 months (path A = with FCI, B = FCI started at its ordinary co-movement with the yield, C = yield alone; 12 lags)
+
+|   sample | yield   |   ordinary FCI loading | u24: A-B (extra initial FCI move)   | u24: B-C (FCI as ordinarily)   | P24: A-B (extra initial FCI move)   | P24: B-C (FCI as ordinarily)   |
+|---------:|:--------|-----------------------:|:------------------------------------|:-------------------------------|:------------------------------------|:-------------------------------|
+|     1973 | Nominal |                   0.27 | +0.20* [+0.02, +0.45]               | -0.14 [-0.40, +0.02]           | -0.02 [-0.22, +0.23]                | -0.06 [-0.29, +0.11]           |
+|     1973 | Real    |                   0.27 | +0.20** [+0.02, +0.39]              | -0.12 [-0.29, +0.05]           | -0.08 [-0.28, +0.16]                | +0.00 [-0.21, +0.13]           |
+|     1973 | r*-gap  |                   0.28 | +0.24** [+0.07, +0.39]              | -0.10 [-0.33, +0.13]           | -0.16 [-0.33, +0.07]                | +0.03 [-0.13, +0.17]           |
+|     1996 | Nominal |                   0.27 | +0.44** [+0.17, +0.82]              | +0.21 [-0.10, +0.44]           | -0.30** [-0.63, -0.08]              | -0.15 [-0.35, +0.12]           |
+|     1996 | Real    |                   0.27 | +0.45** [+0.19, +0.83]              | +0.12 [-0.17, +0.35]           | -0.29** [-0.62, -0.07]              | -0.08 [-0.26, +0.11]           |
+|     1996 | r*-gap  |                   0.28 | +0.46** [+0.22, +0.93]              | +0.10 [-0.30, +0.38]           | -0.33** [-0.71, -0.09]              | -0.04 [-0.21, +0.20]           |
+
+### A2. Monthly VAR benchmarks (Note B Tables 2 and 4) from 1973 in monthly averages, from 1990 at the end of the month, and the paper's end-of-month 1996 versions (12 lags; per +1 pp window surprise for proxy and window-impact VARs, per +1 pp yield innovation for Cholesky; 90% intervals: Anderson-Rubin for the proxy VAR, block bootstrap otherwise; * = excludes zero)
+
+| yield   | FCI   | method            | data              |   F | u12                   | u24                   | P24                   | P36                   |
+|:--------|:------|:------------------|:------------------|----:|:----------------------|:----------------------|:----------------------|:----------------------|
+| Nominal | no    | Cholesky          | end of month 1990 | 4.4 | -0.81 [-1.28, -0.30]* | -0.49 [-0.79, +0.00]  | +0.05 [-0.34, +0.35]  | -0.06 [-0.63, +0.38]  |
+| Nominal | no    | Cholesky          | end of month 1996 | 4.5 | -0.95 [-1.48, -0.37]* | -0.66 [-1.04, -0.09]* | +0.07 [-0.41, +0.52]  | -0.10 [-0.74, +0.56]  |
+| Nominal | no    | Cholesky          | monthly avg 1974  | 5.5 | -0.34 [-0.63, +0.04]  | -0.17 [-0.36, +0.11]  | +0.20 [-0.23, +0.64]  | +0.25 [-0.41, +0.95]  |
+| Nominal | no    | proxy VAR         | end of month 1990 | 4.4 | -0.76 [-1.16, -0.40]* | -0.45 [-0.78, -0.11]* | -0.04 [-1.65, +1.29]  | -0.17 [-2.07, +1.39]  |
+| Nominal | no    | proxy VAR         | end of month 1996 | 4.5 | -0.86 [-1.31, -0.40]* | -0.58 [-1.03, -0.05]* | -0.07 [-1.75, +1.20]  | -0.25 [-2.17, +1.20]  |
+| Nominal | no    | proxy VAR         | monthly avg 1974  | 5.5 | -0.25 [-0.58, -0.07]* | -0.13 [-0.30, -0.04]* | +0.04 [-1.22, +1.16]  | +0.04 [-1.63, +1.52]  |
+| Nominal | no    | window-impact VAR | end of month 1990 | 4.4 | -0.77 [-1.22, -0.28]* | -0.47 [-0.75, +0.00]  | +0.05 [-0.32, +0.34]  | -0.06 [-0.60, +0.36]  |
+| Nominal | no    | window-impact VAR | end of month 1996 | 4.5 | -0.90 [-1.41, -0.35]* | -0.63 [-0.99, -0.08]* | +0.06 [-0.39, +0.49]  | -0.09 [-0.70, +0.53]  |
+| Nominal | no    | window-impact VAR | monthly avg 1974  | 5.5 | -0.15 [-0.28, +0.02]  | -0.08 [-0.16, +0.05]  | +0.09 [-0.10, +0.28]  | +0.11 [-0.18, +0.42]  |
+| Real    | no    | Cholesky          | end of month 1990 | 6.9 | -0.61 [-0.99, -0.18]* | -0.34 [-0.69, +0.13]  | -0.14 [-0.57, +0.23]  | -0.23 [-0.83, +0.28]  |
+| Real    | no    | Cholesky          | end of month 1996 | 6.9 | -0.66 [-1.17, -0.17]* | -0.47 [-0.94, +0.02]  | -0.16 [-0.67, +0.33]  | -0.30 [-0.98, +0.37]  |
+| Real    | no    | Cholesky          | monthly avg 1974  | 4.6 | -0.22 [-0.47, +0.09]  | -0.12 [-0.32, +0.17]  | -0.45 [-0.75, +0.07]  | -0.66 [-1.12, +0.12]  |
+| Real    | no    | proxy VAR         | end of month 1990 | 6.9 | -0.69 [-1.19, -0.41]* | -0.39 [-0.78, -0.13]* | -0.16 [-1.25, +0.96]  | -0.27 [-1.56, +1.00]  |
+| Real    | no    | proxy VAR         | end of month 1996 | 6.9 | -0.71 [-1.26, -0.35]* | -0.47 [-0.97, -0.07]* | -0.28 [-1.47, +0.84]  | -0.45 [-1.81, +0.79]  |
+| Real    | no    | proxy VAR         | monthly avg 1974  | 4.6 | -0.26 [-0.97, -0.05]* | -0.13 [-0.52, -0.03]* | -0.23 [-1.98, +1.31]  | -0.34 [-2.65, +1.69]  |
+| Real    | no    | window-impact VAR | end of month 1990 | 6.9 | -0.59 [-0.96, -0.17]* | -0.33 [-0.67, +0.13]  | -0.13 [-0.56, +0.22]  | -0.23 [-0.81, +0.28]  |
+| Real    | no    | window-impact VAR | end of month 1996 | 6.9 | -0.65 [-1.15, -0.16]* | -0.46 [-0.92, +0.02]  | -0.16 [-0.66, +0.32]  | -0.29 [-0.96, +0.36]  |
+| Real    | no    | window-impact VAR | monthly avg 1974  | 4.6 | -0.10 [-0.21, +0.04]  | -0.05 [-0.15, +0.08]  | -0.20 [-0.34, +0.03]  | -0.30 [-0.51, +0.05]  |
+| r*-gap  | no    | Cholesky          | end of month 1990 | 8.1 | -0.24 [-0.62, +0.13]  | -0.01 [-0.38, +0.41]  | -0.45 [-0.85, -0.03]* | -0.60 [-1.13, -0.03]* |
+| r*-gap  | no    | Cholesky          | end of month 1996 | 8   | -0.19 [-0.81, +0.31]  | -0.03 [-0.55, +0.36]  | -0.51 [-0.97, -0.05]* | -0.70 [-1.29, -0.11]* |
+| r*-gap  | no    | Cholesky          | monthly avg 1974  | 5   | -0.07 [-0.32, +0.22]  | -0.00 [-0.18, +0.25]  | -0.65 [-0.97, -0.11]* | -0.98 [-1.48, -0.12]* |
+| r*-gap  | no    | proxy VAR         | end of month 1990 | 8.1 | -0.42 [-1.01, -0.11]* | -0.12 [-0.55, +0.13]  | -0.42 [-1.35, +0.65]  | -0.59 [-1.67, +0.61]  |
+| r*-gap  | no    | proxy VAR         | end of month 1996 | 8   | -0.33 [-0.98, +0.02]  | -0.10 [-0.64, +0.24]  | -0.56 [-1.51, +0.48]  | -0.78 [-1.82, +0.31]  |
+| r*-gap  | no    | proxy VAR         | monthly avg 1974  | 5   | -0.21 [-0.93, -0.00]* | -0.09 [-0.45, +0.01]  | -0.33 [-1.73, +1.17]  | -0.51 [-2.36, +1.46]  |
+| r*-gap  | no    | window-impact VAR | end of month 1990 | 8.1 | -0.24 [-0.62, +0.13]  | -0.01 [-0.38, +0.41]  | -0.45 [-0.84, -0.03]* | -0.59 [-1.13, -0.03]* |
+| r*-gap  | no    | window-impact VAR | end of month 1996 | 8   | -0.19 [-0.80, +0.31]  | -0.03 [-0.55, +0.36]  | -0.51 [-0.97, -0.04]* | -0.69 [-1.28, -0.11]* |
+| r*-gap  | no    | window-impact VAR | monthly avg 1974  | 5   | -0.03 [-0.15, +0.10]  | -0.00 [-0.08, +0.11]  | -0.30 [-0.44, -0.05]* | -0.45 [-0.68, -0.06]* |
+| Nominal | yes   | proxy VAR         | end of month 1991 | 1.9 | +0.47 [unbounded]     | +0.32 [unbounded]     | -0.65 [unbounded]     | -0.71 [unbounded]     |
+| Nominal | yes   | proxy VAR         | end of month 1996 | 1.6 | +0.65 [unbounded]     | +0.46 [unbounded]     | -0.93 [unbounded]     | -1.06 [unbounded]     |
+| Nominal | yes   | proxy VAR         | monthly avg 1974  | 0.8 | +0.14 [unbounded]     | +0.09 [unbounded]     | -0.40 [unbounded]     | -0.57 [unbounded]     |
+| Nominal | yes   | window-impact VAR | end of month 1991 | 1.9 | -0.19 [-0.62, +0.19]  | -0.13 [-0.47, +0.24]  | -0.21 [-0.56, +0.20]  | -0.33 [-0.81, +0.23]  |
+| Nominal | yes   | window-impact VAR | end of month 1996 | 1.6 | -0.14 [-0.62, +0.40]  | -0.09 [-0.54, +0.47]  | -0.36 [-0.88, +0.09]  | -0.57 [-1.25, +0.12]  |
+| Nominal | yes   | window-impact VAR | monthly avg 1974  | 0.8 | +0.19 [+0.06, +0.35]* | +0.13 [+0.01, +0.24]* | +0.03 [-0.27, +0.19]  | +0.06 [-0.37, +0.29]  |
+| Real    | yes   | proxy VAR         | end of month 1991 | 3.9 | +0.43 [-0.30, +6.19]  | +0.28 [-0.36, +4.99]  | -0.72 [-4.31, +0.44]  | -0.77 [-4.53, +0.64]  |
+| Real    | yes   | proxy VAR         | end of month 1996 | 3   | +0.69 [-0.21, +23.91] | +0.47 [-0.32, +19.42] | -1.01 [-15.78, +0.22] | -1.07 [-16.27, +0.33] |
+| Real    | yes   | proxy VAR         | monthly avg 1974  | 0.8 | +0.16 [unbounded]     | +0.07 [unbounded]     | -0.78 [unbounded]     | -1.10 [unbounded]     |
+| Real    | yes   | window-impact VAR | end of month 1991 | 3.9 | -0.12 [-0.57, +0.26]  | -0.10 [-0.49, +0.27]  | -0.38 [-0.76, +0.10]  | -0.48 [-1.05, +0.16]  |
+| Real    | yes   | window-impact VAR | end of month 1996 | 3   | -0.02 [-0.57, +0.53]  | -0.04 [-0.57, +0.46]  | -0.49 [-1.05, -0.00]* | -0.63 [-1.33, +0.02]  |
+| Real    | yes   | window-impact VAR | monthly avg 1974  | 0.8 | +0.24 [+0.07, +0.37]* | +0.16 [-0.01, +0.26]  | -0.25 [-0.45, +0.00]  | -0.33 [-0.63, +0.05]  |
+| r*-gap  | yes   | proxy VAR         | end of month 1991 | 5.1 | +0.76 [-0.10, +4.20]  | +0.64 [-0.08, +3.40]  | -1.09 [-3.27, -0.12]* | -1.22 [-3.50, -0.10]* |
+| r*-gap  | yes   | proxy VAR         | end of month 1996 | 4.4 | +0.96 [+0.00, +5.96]* | +0.73 [-0.05, +4.62]  | -1.25 [-4.45, -0.24]* | -1.36 [-4.57, -0.23]* |
+| r*-gap  | yes   | proxy VAR         | monthly avg 1974  | 0.9 | +0.17 [unbounded]     | +0.10 [unbounded]     | -0.71 [unbounded]     | -0.97 [unbounded]     |
+| r*-gap  | yes   | window-impact VAR | end of month 1991 | 5.1 | +0.23 [-0.30, +0.66]  | +0.28 [-0.23, +0.67]  | -0.71 [-1.08, -0.17]* | -0.88 [-1.40, -0.16]* |
+| r*-gap  | yes   | window-impact VAR | end of month 1996 | 4.4 | +0.33 [-0.27, +0.77]  | +0.30 [-0.28, +0.70]  | -0.77 [-1.26, -0.24]* | -0.94 [-1.57, -0.23]* |
+| r*-gap  | yes   | window-impact VAR | monthly avg 1974  | 0.9 | +0.29 [+0.13, +0.41]* | +0.18 [+0.02, +0.28]* | -0.30 [-0.51, -0.07]* | -0.41 [-0.75, -0.05]* |
+
+# Tables, Part B
+
+### B1. Policy shocks recovered from daily innovations, 1990-2026 (Note B's daily block; s_d = b'Omega^-1 eps_d / b'Omega^-1 b)
+
+| case          | first day   |   days |   window loading b_F |   ordinary-day FCI loading |   corr of innovations |   sd shock, all days |   sd, announcement days |   sd, other days |   sd measured surprise |   corr with measured, announcement days |   slope on measured |
+|:--------------|:------------|-------:|---------------------:|---------------------------:|----------------------:|---------------------:|------------------------:|-----------------:|-----------------------:|----------------------------------------:|--------------------:|
+| nominal       | 1990-04-04  |   9521 |                      |                            |                       |                0.055 |                   0.072 |            0.054 |                  0.054 |                                    0.64 |                0.86 |
+| nominal + FCI | 1990-04-17  |   9512 |                    1 |                       0.34 |                  0.28 |                0.048 |                   0.066 |            0.048 |                  0.054 |                                    0.66 |                0.8  |
+| real          | 1990-04-04  |   9521 |                      |                            |                       |                0.055 |                   0.074 |            0.054 |                  0.054 |                                    0.64 |                0.88 |
+| real + FCI    | 1990-04-17  |   9512 |                    1 |                       0.34 |                  0.28 |                0.048 |                   0.067 |            0.048 |                  0.054 |                                    0.66 |                0.82 |
+| r*-gap        | 1990-04-04  |   9521 |                      |                            |                       |                0.055 |                   0.074 |            0.055 |                  0.054 |                                    0.64 |                0.88 |
+| r*-gap + FCI  | 1990-04-17  |   9512 |                    1 |                       0.35 |                  0.29 |                0.049 |                   0.067 |            0.048 |                  0.054 |                                    0.66 |                0.82 |
+
+### B2. Monthly-VAR shocks against the month's sum of daily shocks, May 1990 - September 2026 (the splice)
+
+| case          |   corr, same month |   R2 on same and next month |   sd monthly-VAR shock |   sd daily sum |   scale used before 1990 (sd ratio) |   sd monthly-VAR shock 1974-89 (unscaled) |
+|:--------------|-------------------:|----------------------------:|-----------------------:|---------------:|------------------------------------:|------------------------------------------:|
+| r*-gap + FCI  |               0.58 |                        0.33 |                   0.41 |           0.21 |                                0.52 |                                      0.8  |
+| r*-gap        |               0.61 |                        0.38 |                   0.48 |           0.23 |                                0.48 |                                      1    |
+| nominal + FCI |               0.57 |                        0.33 |                   0.44 |           0.23 |                                0.52 |                                      0.7  |
+| nominal       |               0.65 |                        0.43 |                   0.48 |           0.25 |                                0.53 |                                      1.09 |
+| real + FCI    |               0.57 |                        0.32 |                   0.43 |           0.22 |                                0.5  |                                      0.7  |
+| real          |               0.62 |                        0.38 |                   0.49 |           0.24 |                                0.48 |                                      1.02 |
+
+### B3 (r*-gap + FCI). Share of the 24-month forecast-error variance, percent (Note B's model from 1973; exact day-of-month responses, 120 months; 90% band from Note B's bootstrap with month-aggregated shocks and 36-month responses)
+
+| period    | shocks                       | unemployment gap   | core inflation   | 2-year yield         | FCI                 |
+|:----------|:-----------------------------|:-------------------|:-----------------|:---------------------|:--------------------|
+| 1974-1989 | monthly-recovered (scaled)   | 4.6 [0.4, 21.6]    | 7.8 [2.1, 15.8]  | 55.6 [29.4, 75.2]    | 37.1 [15.7, 58.1]   |
+| 1974-1989 | monthly-recovered (unscaled) | 16.8 [1.3, 79.1]   | 28.7 [7.7, 58.0] | 204.0 [107.9, 275.9] | 135.9 [57.5, 213.1] |
+| 1990-2026 | daily-recovered, all days    | 1.3 [0.1, 5.8]     | 4.6 [1.0, 9.1]   | 64.2 [33.4, 87.9]    | 44.8 [17.6, 70.2]   |
+| 1990-2026 | non-announcement days        | 1.3 [0.1, 6.1]     | 4.9 [1.0, 9.5]   | 68.3 [35.4, 93.6]    | 47.5 [18.6, 74.7]   |
+| 1990-2026 | announcement days            | 0.1 [0.0, 0.2]     | 0.2 [0.1, 0.4]   | 2.7 [1.4, 3.6]       | 1.9 [0.7, 2.9]      |
+| 1990-2026 | measured surprises (Route 1) | 0.1 [0.0, 0.3]     | 0.2 [0.0, 0.4]   | 3.1 [1.5, 4.2]       | 2.1 [0.8, 3.3]      |
+| 1996-2026 | daily-recovered, all days    | 1.0 [0.1, 4.9]     | 4.2 [1.0, 8.3]   | 56.9 [29.8, 78.6]    | 40.9 [16.3, 64.3]   |
+| 1996-2026 | measured surprises (Route 1) | 0.1 [0.0, 0.3]     | 0.2 [0.1, 0.5]   | 3.3 [1.7, 4.6]       | 2.4 [0.9, 3.7]      |
+
+### B3 (nominal + FCI). Share of the 24-month forecast-error variance, percent (Note B's model from 1973; exact day-of-month responses, 120 months; 90% band from Note B's bootstrap with month-aggregated shocks and 36-month responses)
+
+| period    | shocks                       | unemployment gap   | core inflation   | 2-year yield       | FCI                |
+|:----------|:-----------------------------|:-------------------|:-----------------|:-------------------|:-------------------|
+| 1974-1989 | monthly-recovered (scaled)   | 1.4 [0.7, 20.6]    | 0.7 [0.6, 3.9]   | 24.4 [11.1, 37.1]  | 26.1 [14.5, 35.2]  |
+| 1974-1989 | monthly-recovered (unscaled) | 5.3 [2.5, 76.4]    | 2.7 [2.3, 14.6]  | 90.3 [41.1, 137.4] | 96.6 [53.8, 130.4] |
+| 1990-2026 | daily-recovered, all days    | 0.3 [0.2, 5.1]     | 0.6 [0.4, 2.9]   | 37.9 [16.9, 57.9]  | 34.7 [19.0, 46.3]  |
+| 1990-2026 | non-announcement days        | 0.3 [0.1, 5.1]     | 0.6 [0.4, 2.9]   | 38.0 [17.0, 57.8]  | 34.9 [19.3, 46.6]  |
+| 1990-2026 | announcement days            | 0.0 [0.0, 0.2]     | 0.0 [0.0, 0.1]   | 1.8 [0.8, 2.8]     | 1.7 [0.9, 2.2]     |
+| 1990-2026 | measured surprises (Route 1) | 0.0 [0.0, 0.3]     | 0.0 [0.0, 0.1]   | 2.1 [0.9, 3.2]     | 1.9 [1.0, 2.5]     |
+| 1996-2026 | daily-recovered, all days    | 0.3 [0.1, 3.6]     | 0.5 [0.4, 2.3]   | 28.9 [12.8, 44.7]  | 28.4 [15.6, 37.8]  |
+| 1996-2026 | measured surprises (Route 1) | 0.0 [0.0, 0.3]     | 0.0 [0.0, 0.1]   | 2.3 [1.0, 3.4]     | 2.2 [1.1, 2.9]     |
+
+### B3 (real + FCI). Share of the 24-month forecast-error variance, percent (Note B's model from 1973; exact day-of-month responses, 120 months; 90% band from Note B's bootstrap with month-aggregated shocks and 36-month responses)
+
+| period    | shocks                       | unemployment gap   | core inflation   | 2-year yield       | FCI                |
+|:----------|:-----------------------------|:-------------------|:-----------------|:-------------------|:-------------------|
+| 1974-1989 | monthly-recovered (scaled)   | 1.0 [0.6, 10.4]    | 2.7 [0.9, 5.9]   | 22.8 [12.8, 32.3]  | 25.0 [13.7, 37.7]  |
+| 1974-1989 | monthly-recovered (unscaled) | 3.8 [2.2, 41.0]    | 10.4 [3.7, 23.2] | 89.5 [50.3, 126.7] | 98.0 [53.6, 147.9] |
+| 1990-2026 | daily-recovered, all days    | 0.2 [0.1, 2.5]     | 2.4 [0.7, 5.1]   | 37.8 [20.4, 53.9]  | 31.0 [16.1, 47.2]  |
+| 1990-2026 | non-announcement days        | 0.2 [0.1, 2.5]     | 2.4 [0.7, 5.1]   | 37.9 [20.5, 54.0]  | 31.1 [16.3, 47.4]  |
+| 1990-2026 | announcement days            | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.2]   | 1.4 [0.7, 1.9]     | 1.1 [0.6, 1.7]     |
+| 1990-2026 | measured surprises (Route 1) | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.2]   | 1.5 [0.8, 2.2]     | 1.2 [0.6, 1.9]     |
+| 1996-2026 | daily-recovered, all days    | 0.2 [0.1, 1.9]     | 1.9 [0.6, 4.2]   | 30.0 [16.2, 43.1]  | 25.7 [13.5, 39.4]  |
+| 1996-2026 | measured surprises (Route 1) | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.2]   | 1.6 [0.8, 2.3]     | 1.4 [0.7, 2.1]     |
+
+### B3 (r*-gap). Share of the 24-month forecast-error variance, percent (Note B's model from 1973; exact day-of-month responses, 120 months; 90% band from Note B's bootstrap with month-aggregated shocks and 36-month responses)
+
+| period    | shocks                       | unemployment gap   | core inflation   | 2-year yield         |
+|:----------|:-----------------------------|:-------------------|:-----------------|:---------------------|
+| 1974-1989 | monthly-recovered (scaled)   | 2.1 [1.2, 26.9]    | 6.8 [1.4, 15.2]  | 67.1 [40.2, 86.7]    |
+| 1974-1989 | monthly-recovered (unscaled) | 9.3 [5.1, 116.8]   | 29.5 [6.0, 65.7] | 290.8 [174.3, 375.9] |
+| 1990-2026 | daily-recovered, all days    | 0.2 [0.1, 2.2]     | 4.9 [0.8, 10.7]  | 108.3 [63.1, 139.7]  |
+| 1990-2026 | non-announcement days        | 0.2 [0.1, 2.2]     | 4.9 [0.8, 10.7]  | 108.6 [63.1, 140.0]  |
+| 1990-2026 | announcement days            | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.3]   | 3.2 [1.9, 4.0]       |
+| 1990-2026 | measured surprises (Route 1) | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.3]   | 2.8 [1.6, 3.6]       |
+| 1996-2026 | daily-recovered, all days    | 0.1 [0.1, 1.7]     | 4.3 [0.7, 9.5]   | 92.4 [53.8, 119.6]   |
+| 1996-2026 | measured surprises (Route 1) | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.3]   | 3.0 [1.8, 3.9]       |
+
+### B3 (nominal). Share of the 24-month forecast-error variance, percent (Note B's model from 1973; exact day-of-month responses, 120 months; 90% band from Note B's bootstrap with month-aggregated shocks and 36-month responses)
+
+| period    | shocks                       | unemployment gap    | core inflation   | 2-year yield         |
+|:----------|:-----------------------------|:--------------------|:-----------------|:---------------------|
+| 1974-1989 | monthly-recovered (scaled)   | 32.3 [11.9, 75.3]   | 1.2 [0.8, 9.8]   | 67.3 [38.2, 90.4]    |
+| 1974-1989 | monthly-recovered (unscaled) | 115.9 [42.8, 270.8] | 4.2 [2.7, 35.1]  | 241.8 [137.1, 324.9] |
+| 1990-2026 | daily-recovered, all days    | 6.5 [2.3, 14.9]     | 0.8 [0.3, 6.6]   | 115.9 [64.6, 155.0]  |
+| 1990-2026 | non-announcement days        | 6.2 [2.2, 14.2]     | 0.7 [0.3, 6.2]   | 109.7 [61.3, 146.6]  |
+| 1990-2026 | announcement days            | 0.2 [0.1, 0.5]      | 0.0 [0.0, 0.2]   | 3.9 [2.2, 5.1]       |
+| 1990-2026 | measured surprises (Route 1) | 0.2 [0.1, 0.4]      | 0.0 [0.0, 0.2]   | 3.3 [1.8, 4.4]       |
+| 1996-2026 | daily-recovered, all days    | 4.5 [1.6, 10.3]     | 0.6 [0.2, 5.3]   | 95.4 [52.7, 128.3]   |
+| 1996-2026 | measured surprises (Route 1) | 0.2 [0.1, 0.4]      | 0.0 [0.0, 0.2]   | 3.7 [2.1, 4.9]       |
+
+### B3 (real). Share of the 24-month forecast-error variance, percent (Note B's model from 1973; exact day-of-month responses, 120 months; 90% band from Note B's bootstrap with month-aggregated shocks and 36-month responses)
+
+| period    | shocks                       | unemployment gap   | core inflation   | 2-year yield         |
+|:----------|:-----------------------------|:-------------------|:-----------------|:---------------------|
+| 1974-1989 | monthly-recovered (scaled)   | 10.7 [2.3, 31.4]   | 2.8 [0.6, 8.0]   | 48.5 [31.7, 60.9]    |
+| 1974-1989 | monthly-recovered (unscaled) | 46.4 [9.8, 136.2]  | 12.0 [2.8, 34.6] | 210.3 [137.5, 264.3] |
+| 1990-2026 | daily-recovered, all days    | 1.7 [0.3, 4.9]     | 2.4 [0.3, 6.5]   | 95.9 [60.3, 121.5]   |
+| 1990-2026 | non-announcement days        | 1.6 [0.2, 4.7]     | 2.3 [0.3, 6.3]   | 92.3 [58.1, 116.8]   |
+| 1990-2026 | announcement days            | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.2]   | 2.5 [1.6, 3.1]       |
+| 1990-2026 | measured surprises (Route 1) | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.1]   | 2.1 [1.3, 2.6]       |
+| 1996-2026 | daily-recovered, all days    | 1.3 [0.2, 3.7]     | 2.1 [0.3, 5.6]   | 81.0 [50.9, 103.2]   |
+| 1996-2026 | measured surprises (Route 1) | 0.0 [0.0, 0.1]     | 0.1 [0.0, 0.2]   | 2.3 [1.4, 2.9]       |
+
+### B3b. r*-gap with FCI: shares at 12, 24 and 36 months, percent
+
+|   h | period    | shocks                       |   unemployment gap |   core inflation |   2-year yield |   FCI |
+|----:|:----------|:-----------------------------|-------------------:|-----------------:|---------------:|------:|
+|  12 | 1974-1989 | monthly-recovered (scaled)   |                3.6 |              5   |           60.1 |  47.4 |
+|  12 | 1974-1989 | monthly-recovered (unscaled) |               13.1 |             18.2 |          220.5 | 173.8 |
+|  12 | 1990-2026 | daily-recovered, all days    |                0.7 |              2.7 |           71.3 |  58   |
+|  12 | 1990-2026 | non-announcement days        |                0.7 |              2.7 |           74.1 |  60.2 |
+|  12 | 1990-2026 | announcement days            |                0   |              0.1 |            2.8 |   2.3 |
+|  12 | 1990-2026 | measured surprises (Route 1) |                0   |              0.1 |            2.7 |   2.2 |
+|  12 | 1996-2026 | daily-recovered, all days    |                0.6 |              2.4 |           65.6 |  53.7 |
+|  12 | 1996-2026 | measured surprises (Route 1) |                0   |              0.1 |            3.1 |   2.5 |
+|  24 | 1974-1989 | monthly-recovered (scaled)   |                4.6 |              7.8 |           55.6 |  37.1 |
+|  24 | 1974-1989 | monthly-recovered (unscaled) |               16.8 |             28.7 |          204   | 135.9 |
+|  24 | 1990-2026 | daily-recovered, all days    |                1.3 |              4.6 |           64.2 |  44.8 |
+|  24 | 1990-2026 | non-announcement days        |                1.3 |              4.9 |           68.3 |  47.5 |
+|  24 | 1990-2026 | announcement days            |                0.1 |              0.2 |            2.7 |   1.9 |
+|  24 | 1990-2026 | measured surprises (Route 1) |                0.1 |              0.2 |            3.1 |   2.1 |
+|  24 | 1996-2026 | daily-recovered, all days    |                1   |              4.2 |           56.9 |  40.9 |
+|  24 | 1996-2026 | measured surprises (Route 1) |                0.1 |              0.2 |            3.3 |   2.4 |
+|  36 | 1974-1989 | monthly-recovered (scaled)   |                5.1 |              9.4 |           55   |  30.6 |
+|  36 | 1974-1989 | monthly-recovered (unscaled) |               18.6 |             34.4 |          201.9 | 112.1 |
+|  36 | 1990-2026 | daily-recovered, all days    |                1.5 |              5.8 |           56.9 |  31.2 |
+|  36 | 1990-2026 | non-announcement days        |                1.7 |              6.1 |           60.8 |  33.3 |
+|  36 | 1990-2026 | announcement days            |                0.1 |              0.2 |            2.4 |   1.3 |
+|  36 | 1990-2026 | measured surprises (Route 1) |                0.1 |              0.3 |            2.8 |   1.5 |
+|  36 | 1996-2026 | daily-recovered, all days    |                1.4 |              5.6 |           51.8 |  29.6 |
+|  36 | 1996-2026 | measured surprises (Route 1) |                0.1 |              0.3 |            2.9 |   1.6 |
+
+### B3c. r*-gap with FCI, responses from Note B's baseline model (monthly equations from 1996): shares at 24 months, percent
+
+| period    | shocks                       |   unemployment gap |   core inflation |   2-year yield |   FCI |
+|:----------|:-----------------------------|-------------------:|-----------------:|---------------:|------:|
+| 1974-1989 | monthly-recovered (scaled)   |               31.7 |             14.1 |           48.9 |  35.4 |
+| 1974-1989 | monthly-recovered (unscaled) |              116.3 |             51.6 |          179.6 | 129.9 |
+| 1990-2026 | daily-recovered, all days    |                8.6 |              9.5 |           56   |  42.3 |
+| 1990-2026 | non-announcement days        |                9.1 |              9.6 |           59.5 |  44.9 |
+| 1990-2026 | announcement days            |                0.3 |              0.4 |            2.4 |   1.8 |
+| 1990-2026 | measured surprises (Route 1) |                0.4 |              0.4 |            2.6 |   2   |
+| 1996-2026 | daily-recovered, all days    |                7.2 |              8.8 |           49.5 |  38.7 |
+| 1996-2026 | measured surprises (Route 1) |                0.4 |              0.4 |            2.9 |   2.2 |
+
+### B4. Historical decomposition at selected months, r*-gap with FCI (Note B's model from 1973; Route 2 = policy-direction shocks, daily from May 1990, monthly scaled before; measured = window surprises; all shocks = the data's deviation from the monthly VAR's deterministic path)
+
+| month   |   u: all shocks |   u: Route 2 |   u: measured |   core infl. 12m: all shocks |   core infl. 12m: Route 2 |   core infl. 12m: measured |   2-yr yield: all shocks |   2-yr yield: Route 2 |   2-yr yield: measured |   FCI: all shocks |   FCI: Route 2 |   FCI: measured |
+|:--------|----------------:|-------------:|--------------:|-----------------------------:|--------------------------:|---------------------------:|-------------------------:|----------------------:|-----------------------:|------------------:|---------------:|----------------:|
+| 1975-06 |            2.09 |         0.1  |          0    |                         2.73 |                     -0.16 |                       0    |                    -0.56 |                 -0.47 |                   0    |              1.27 |          -0.53 |            0    |
+| 1979-12 |           -1.22 |        -0.55 |          0    |                         3.89 |                      1.29 |                       0    |                    -1.4  |                 -1.01 |                   0    |              1.04 |          -1.01 |            0    |
+| 1980-12 |            0.05 |        -0.63 |          0    |                         5.59 |                      1.32 |                       0    |                     0.56 |                 -0.95 |                   0    |              1.5  |          -1.19 |            0    |
+| 1982-06 |            2.56 |         0.03 |          0    |                         2.9  |                      0.38 |                       0    |                     6.02 |                  3.74 |                   0    |             11.57 |           3.66 |            0    |
+| 1982-12 |            3.8  |         0.04 |          0    |                         2.27 |                     -0.19 |                       0    |                     2.38 |                  1.54 |                   0    |              7.05 |           0.83 |            0    |
+| 1984-06 |            0.3  |        -0.02 |          0    |                         1.08 |                     -0.4  |                       0    |                     4.18 |                  2.99 |                   0    |              7.58 |           2.46 |            0    |
+| 1986-12 |           -0.14 |         0.27 |          0    |                         0.01 |                     -0.99 |                       0    |                     0.21 |                 -0.09 |                   0    |              1.39 |          -0.12 |            0    |
+| 1989-06 |           -1.26 |         0.64 |          0    |                         1.07 |                     -0.8  |                       0    |                     1.46 |                 -0.91 |                   0    |              0.07 |          -0.16 |            0    |
+| 1992-06 |            1.45 |        -0.18 |          0    |                        -0.03 |                      0.17 |                       0    |                    -0.32 |                 -0.83 |                   0    |             -0.47 |          -0.83 |            0    |
+| 1995-06 |           -0.5  |         0.11 |          0    |                        -0.89 |                     -0.15 |                       0    |                     1.26 |                  1.19 |                   0    |             -0.94 |           0.92 |            0    |
+| 1998-12 |           -1.49 |         0.07 |         -0.03 |                        -1.59 |                     -0.47 |                       0.05 |                    -0.39 |                 -0.51 |                  -0.2  |             -3.95 |          -0.79 |           -0.22 |
+| 2001-12 |           -0.1  |         0.19 |         -0.13 |                        -1.21 |                     -0.2  |                       0.13 |                    -1.7  |                 -1.08 |                  -0.71 |             -1.99 |          -0.8  |           -0.79 |
+| 2003-06 |            0.53 |         0.01 |         -0.2  |                        -1.41 |                      0.25 |                       0.42 |                    -2.5  |                 -1.84 |                  -0.54 |             -1.79 |          -1.45 |           -0.55 |
+| 2008-12 |            1.53 |        -0.15 |         -0.2  |                        -1.79 |                      0.28 |                       0.24 |                    -0.19 |                  1.25 |                  -0.26 |              2.35 |           1.29 |           -0.44 |
+| 2009-10 |            4.24 |         0.03 |         -0.23 |                        -1.69 |                     -0.13 |                       0.3  |                    -0.99 |                  0.49 |                  -0.32 |              0.8  |           0.14 |           -0.5  |
+| 2013-12 |            1.14 |         0.47 |         -0.08 |                        -1.38 |                     -0.81 |                       0.17 |                    -1.23 |                  0.33 |                   0.02 |             -0.08 |           0.55 |           -0.03 |
+| 2016-12 |           -0.62 |         0.17 |         -0.15 |                        -1.16 |                     -0.29 |                       0.17 |                    -1.15 |                 -0.66 |                  -0.07 |             -0.24 |          -0.44 |           -0.23 |
+| 2019-12 |           -1.59 |         0.02 |         -0.04 |                        -1.38 |                      0.2  |                       0.09 |                    -0.91 |                 -1.24 |                  -0.02 |             -1.66 |          -0.97 |           -0.03 |
+| 2021-06 |            0.73 |        -0.35 |         -0.04 |                         0.8  |                      0.81 |                       0.07 |                    -2.63 |                 -1.72 |                  -0    |             -2.85 |          -1.67 |           -0.02 |
+| 2022-12 |           -1.66 |        -0.31 |         -0.05 |                         2.03 |                      1    |                       0.04 |                     0.86 |                  0.68 |                   0.02 |             -0.15 |           0.78 |           -0.04 |
+| 2023-12 |           -1.35 |        -0.1  |         -0.07 |                         0.26 |                      0.35 |                       0.09 |                     1.27 |                  0.96 |                  -0.15 |              0.1  |           0.79 |           -0.2  |
+| 2024-12 |           -1.03 |        -0.15 |         -0.1  |                        -0.05 |                      0.02 |                       0.13 |                     1.21 |                  0.97 |                  -0.17 |              0.25 |           0.58 |           -0.24 |
+| 2026-09 |           -0.91 |        -0.23 |         -0.03 |                         0.16 |                      0.09 |                       0.1  |                     1.21 |                  0.55 |                   0.04 |             -0.5  |           0.3  |            0.06 |
+
+# Appendix: first round (Route 2 from monthly VAR innovations alone; corrected rerun)
+
+The tables below are the first report's, rerun after the correction. T1-T2: invertibility diagnostics for shocks recovered from monthly VAR innovations (the surprises' R2 on the month's innovations is 0.4-4 percent; simulations with Note B's model as the true process reproduce that). T3: variance-share bounds within the monthly VAR. T4: the monthly VAR's responses against Note B's. T6: Route 1 and monthly Route 2 at selected months.
+
 ### T1. Invertibility diagnostics (12 lags, 2020 in, window column)
 
 | case          | data     |   first-stage F |   R2 of z on u_t (%) |   corr(recovered, z) |   sd recovered (inv.) |   sd z |   variance ratio |   leads p |   lags p |
 |:--------------|:---------|----------------:|---------------------:|---------------------:|----------------------:|-------:|-----------------:|----------:|---------:|
-| nominal       | avg 1973 |             5.6 |                  2.4 |                 0.14 |                 0.467 |  0.046 |              102 |      0.09 |     0.55 |
-| nominal       | avg 1996 |             5.2 |                  2.7 |                 0.16 |                 0.4   |  0.047 |               74 |      0.04 |     0.89 |
-| nominal       | eom 1990 |             4.4 |                  2.8 |                 0.16 |                 0.241 |  0.046 |               27 |      0.12 |     0.93 |
-| nominal       | eom 1996 |             4   |                  2.7 |                 0.16 |                 0.237 |  0.047 |               26 |      0.16 |     0.87 |
+| nominal       | avg 1973 |             5.5 |                  2.4 |                 0.14 |                 0.467 |  0.046 |              102 |      0.09 |     0.55 |
+| nominal       | avg 1996 |             5.1 |                  2.6 |                 0.16 |                 0.41  |  0.046 |               79 |      0.03 |     0.88 |
+| nominal       | eom 1990 |             4.4 |                  2.9 |                 0.17 |                 0.242 |  0.046 |               27 |      0.14 |     0.9  |
+| nominal       | eom 1996 |             4.5 |                  2.9 |                 0.17 |                 0.24  |  0.046 |               27 |      0.12 |     0.89 |
 | nominal + FCI | avg 1973 |             0.8 |                  0.5 |                 0.03 |                 0.387 |  0.046 |               70 |      0.04 |     0.04 |
-| nominal + FCI | avg 1996 |             2   |                  1.2 |                 0.07 |                 0.329 |  0.047 |               50 |      0.03 |     0.26 |
+| nominal + FCI | avg 1996 |             1.9 |                  1.2 |                 0.07 |                 0.34  |  0.046 |               54 |      0.02 |     0.21 |
 | nominal + FCI | eom 1990 |             1.9 |                  3.2 |                 0.16 |                 0.21  |  0.046 |               21 |      0.26 |     0.25 |
-| nominal + FCI | eom 1996 |             1.4 |                  3.1 |                 0.14 |                 0.204 |  0.047 |               19 |      0.32 |     0.27 |
+| nominal + FCI | eom 1996 |             1.6 |                  3.1 |                 0.15 |                 0.207 |  0.046 |               20 |      0.28 |     0.27 |
 | real          | avg 1973 |             4.6 |                  1.6 |                 0.11 |                 0.498 |  0.046 |              116 |      0.1  |     0.46 |
-| real          | avg 1996 |             5.2 |                  2.3 |                 0.14 |                 0.415 |  0.047 |               79 |      0.2  |     0.56 |
-| real          | eom 1990 |             7.2 |                  3.6 |                 0.19 |                 0.223 |  0.046 |               23 |      0.11 |     0.87 |
-| real          | eom 1996 |             6.3 |                  3.4 |                 0.18 |                 0.218 |  0.047 |               22 |      0.14 |     0.78 |
+| real          | avg 1996 |             5.2 |                  2.2 |                 0.14 |                 0.421 |  0.046 |               83 |      0.18 |     0.62 |
+| real          | eom 1990 |             6.9 |                  3.5 |                 0.19 |                 0.223 |  0.046 |               23 |      0.1  |     0.79 |
+| real          | eom 1996 |             6.9 |                  3.5 |                 0.18 |                 0.221 |  0.046 |               23 |      0.11 |     0.81 |
 | real + FCI    | avg 1973 |             0.8 |                  0.4 |                 0.02 |                 0.404 |  0.046 |               76 |      0.06 |     0.16 |
-| real + FCI    | avg 1996 |             2.4 |                  1.3 |                 0.07 |                 0.33  |  0.047 |               50 |      0.29 |     0.31 |
+| real + FCI    | avg 1996 |             2.4 |                  1.4 |                 0.07 |                 0.338 |  0.046 |               54 |      0.28 |     0.28 |
 | real + FCI    | eom 1990 |             3.9 |                  3.5 |                 0.17 |                 0.196 |  0.046 |               18 |      0.34 |     0.31 |
-| real + FCI    | eom 1996 |             2.7 |                  3.2 |                 0.15 |                 0.19  |  0.047 |               17 |      0.37 |     0.26 |
+| real + FCI    | eom 1996 |             3   |                  3.2 |                 0.16 |                 0.193 |  0.046 |               17 |      0.37 |     0.28 |
 | r*-gap        | avg 1973 |             5   |                  1.7 |                 0.11 |                 0.491 |  0.046 |              113 |      0.13 |     0.53 |
-| r*-gap        | avg 1996 |             5.9 |                  2.4 |                 0.14 |                 0.414 |  0.047 |               79 |      0.18 |     0.62 |
-| r*-gap        | eom 1990 |             8.3 |                  3.8 |                 0.19 |                 0.22  |  0.046 |               23 |      0.12 |     0.88 |
-| r*-gap        | eom 1996 |             7.5 |                  3.6 |                 0.19 |                 0.216 |  0.047 |               21 |      0.14 |     0.83 |
+| r*-gap        | avg 1996 |             5.7 |                  2.3 |                 0.14 |                 0.419 |  0.046 |               82 |      0.16 |     0.66 |
+| r*-gap        | eom 1990 |             8.1 |                  3.8 |                 0.19 |                 0.22  |  0.046 |               23 |      0.13 |     0.81 |
+| r*-gap        | eom 1996 |             8   |                  3.7 |                 0.19 |                 0.218 |  0.046 |               22 |      0.12 |     0.83 |
 | r*-gap + FCI  | avg 1973 |             0.9 |                  0.4 |                 0.05 |                 0.408 |  0.046 |               78 |      0.07 |     0.21 |
-| r*-gap + FCI  | avg 1996 |             3.8 |                  1.7 |                 0.1  |                 0.334 |  0.047 |               51 |      0.19 |     0.51 |
-| r*-gap + FCI  | eom 1990 |             5.2 |                  3.5 |                 0.18 |                 0.196 |  0.046 |               18 |      0.2  |     0.48 |
-| r*-gap + FCI  | eom 1996 |             4.2 |                  3.5 |                 0.17 |                 0.192 |  0.047 |               17 |      0.21 |     0.49 |
+| r*-gap + FCI  | avg 1996 |             3.5 |                  1.7 |                 0.09 |                 0.34  |  0.046 |               54 |      0.19 |     0.5  |
+| r*-gap + FCI  | eom 1990 |             5.1 |                  3.5 |                 0.18 |                 0.196 |  0.046 |               18 |      0.2  |     0.48 |
+| r*-gap + FCI  | eom 1996 |             4.4 |                  3.5 |                 0.17 |                 0.193 |  0.046 |               17 |      0.19 |     0.5  |
 
 ### T1b. Bootstrap distribution of the diagnostics (500 draws)
 
 | case          | data     | R2 (%), median [5, 95]   | corr, median [5, 95]   |
 |:--------------|:---------|:-------------------------|:-----------------------|
 | nominal       | avg 1973 | 2.4 [0.7, 5.3]           | 0.13 [0.04, 0.21]      |
-| nominal       | eom 1990 | 3.0 [0.7, 7.4]           | 0.16 [0.06, 0.26]      |
+| nominal       | eom 1990 | 3.0 [0.7, 7.6]           | 0.16 [0.07, 0.27]      |
 | nominal + FCI | avg 1973 | 1.1 [0.2, 3.7]           | 0.03 [-0.04, 0.13]     |
 | nominal + FCI | eom 1990 | 3.5 [1.3, 7.6]           | 0.15 [0.04, 0.25]      |
 | real          | avg 1973 | 1.7 [0.5, 3.9]           | 0.10 [0.01, 0.17]      |
-| real          | eom 1990 | 3.9 [1.2, 7.8]           | 0.18 [0.09, 0.27]      |
+| real          | eom 1990 | 3.8 [1.2, 7.4]           | 0.18 [0.09, 0.26]      |
 | real + FCI    | avg 1973 | 1.0 [0.2, 2.9]           | 0.02 [-0.05, 0.10]     |
 | real + FCI    | eom 1990 | 3.8 [1.6, 7.8]           | 0.16 [0.08, 0.25]      |
 | r*-gap        | avg 1973 | 1.8 [0.6, 4.0]           | 0.11 [0.02, 0.17]      |
-| r*-gap        | eom 1990 | 4.0 [1.5, 7.8]           | 0.18 [0.10, 0.27]      |
+| r*-gap        | eom 1990 | 4.0 [1.4, 8.1]           | 0.18 [0.10, 0.27]      |
 | r*-gap + FCI  | avg 1973 | 0.9 [0.2, 2.8]           | 0.05 [-0.03, 0.12]     |
 | r*-gap + FCI  | eom 1990 | 4.0 [2.0, 7.4]           | 0.17 [0.09, 0.25]      |
 
@@ -136,61 +450,61 @@ D-A4 cases and lags; D-A5 the window column from Note B's daily model; D-A6 the 
 | data   | statistic              | Note B as truth: median [5, 95]   |   data 1996-2026 |
 |:-------|:-----------------------|:----------------------------------|-----------------:|
 | avg    | R2 of z on u_t         | 0.022 [0.005, 0.050]              |            0.017 |
-| avg    | corr(recovered, z)     | 0.110 [0.027, 0.201]              |            0.097 |
-| avg    | variance ratio         | 73.509 [50.803, 101.895]          |           51.1   |
-| avg    | u share at 24 m, upper | 0.078 [0.012, 0.246]              |            0.039 |
+| avg    | corr(recovered, z)     | 0.110 [0.027, 0.201]              |            0.091 |
+| avg    | variance ratio         | 73.509 [50.803, 101.895]          |           54.2   |
+| avg    | u share at 24 m, upper | 0.078 [0.012, 0.246]              |            0.036 |
 | avg    | u share at 24 m, lower | 0.001 [0.000, 0.004]              |            0.001 |
 | eom    | R2 of z on u_t         | 0.046 [0.017, 0.087]              |            0.035 |
-| eom    | corr(recovered, z)     | 0.189 [0.099, 0.278]              |            0.167 |
-| eom    | variance ratio         | 24.514 [17.088, 33.512]           |           16.8   |
-| eom    | u share at 24 m, upper | 0.074 [0.013, 0.248]              |            0.038 |
+| eom    | corr(recovered, z)     | 0.189 [0.099, 0.278]              |            0.169 |
+| eom    | variance ratio         | 24.514 [17.088, 33.512]           |           17.5   |
+| eom    | u share at 24 m, upper | 0.074 [0.013, 0.248]              |            0.033 |
 | eom    | u share at 24 m, lower | 0.003 [0.001, 0.011]              |            0.002 |
 
 ### T3. Share of the 24-month forecast-error variance due to policy shocks, percent (12 lags, 2020 in)
 
 | data     | case          |   u: lower (VAR) |   u: lower (Note B model) |   u: upper 1996- |   u: upper full | u: upper full, 90% band   |   u: upper full, P1 |   pi: lower |   pi: upper full |   yield: lower |   yield: upper full |
 |:---------|:--------------|-----------------:|--------------------------:|-----------------:|----------------:|:--------------------------|--------------------:|------------:|-----------------:|---------------:|--------------------:|
-| avg 1973 | nominal       |              0   |                       0.7 |              2.9 |             9.6 | [0.3, 19.6]               |                29.8 |         0   |              1   |            0.6 |                76.4 |
-| avg 1973 | nominal + FCI |              0   |                       0   |              2.5 |             6.5 | [0.9, 28.0]               |                13.5 |         0   |              0.6 |            0.2 |                17.2 |
+| avg 1973 | nominal       |              0   |                       0.7 |              2.9 |             9.6 | [0.3, 19.6]               |                29.9 |         0   |              1   |            0.6 |                76.4 |
+| avg 1973 | nominal + FCI |              0   |                       0   |              2.5 |             6.5 | [0.9, 28.0]               |                13.6 |         0   |              0.6 |            0.2 |                17.2 |
 | avg 1973 | real          |              0   |                       0.3 |              1.2 |             3.5 | [0.3, 10.9]               |                26.4 |         0   |              3.4 |            0.7 |                88.6 |
-| avg 1973 | real + FCI    |              0.1 |                       0   |              4.5 |            10.4 | [1.5, 31.3]               |                17.3 |         0   |              3.4 |            0.3 |                24.5 |
-| avg 1973 | r*-gap        |              0   |                       0   |              0.1 |             0.4 | [0.3, 8.9]                |                19.6 |         0   |              6.4 |            0.8 |                91.6 |
+| avg 1973 | real + FCI    |              0.1 |                       0   |              4.5 |            10.4 | [1.5, 31.3]               |                17.2 |         0   |              3.4 |            0.3 |                24.5 |
+| avg 1973 | r*-gap        |              0   |                       0   |              0.1 |             0.4 | [0.3, 8.9]                |                19.7 |         0   |              6.4 |            0.8 |                91.6 |
 | avg 1973 | r*-gap + FCI  |              0.1 |                       0.3 |              7.7 |            17.6 | [3.8, 43.7]               |                10   |         0   |              5.1 |            0.4 |                33.7 |
-| eom 1990 | nominal       |              0.7 |                           |             20.3 |            23   | [6.6, 42.6]               |                22   |         0.1 |              2.1 |            3.3 |                90.1 |
-| eom 1990 | nominal + FCI |              0.1 |                           |              1   |             1.2 | [0.4, 8.8]                |                12   |         0.1 |              3.4 |            1.9 |                41.9 |
-| eom 1990 | real          |              0.4 |                           |              9.3 |            10.5 | [1.9, 28.9]               |                14.5 |         0.1 |              2.3 |            3.6 |                82.7 |
+| eom 1990 | nominal       |              0.7 |                           |             18.8 |            21.6 | [6.2, 38.8]               |                20   |         0.1 |              2.1 |            3.3 |                88.8 |
+| eom 1990 | nominal + FCI |              0.1 |                           |              1   |             1.2 | [0.4, 8.8]                |                12.1 |         0.1 |              3.4 |            1.9 |                41.9 |
+| eom 1990 | real          |              0.4 |                           |              9   |            10.3 | [1.7, 26.2]               |                14.7 |         0.1 |              1.4 |            3.6 |                82.5 |
 | eom 1990 | real + FCI    |              0   |                           |              0.4 |             0.5 | [0.3, 8.0]                |                 9.9 |         0.2 |              4.5 |            2.5 |                48.3 |
-| eom 1990 | r*-gap        |              0   |                           |              1   |             1.1 | [0.5, 14.7]               |                 5.1 |         0.2 |              6   |            3.5 |                79   |
-| eom 1990 | r*-gap + FCI  |              0.1 |                           |              2.1 |             2.4 | [0.5, 14.1]               |                18.4 |         0.5 |              9.8 |            2.8 |                52.1 |
+| eom 1990 | r*-gap        |              0.1 |                           |              1   |             1.2 | [0.5, 13.0]               |                 5.5 |         0.2 |              4.4 |            3.5 |                78   |
+| eom 1990 | r*-gap + FCI  |              0.1 |                           |              2.1 |             2.4 | [0.5, 14.1]               |                18.5 |         0.5 |              9.8 |            2.8 |                52.1 |
 
 ### T4. Responses per +1 pp window surprise: the monthly VAR with the window column against Note B's model (same step; Note B from 1973 for avg 1973, else from 1996)
 
 | case          | data     |   u12 VAR |   u12 Note B |   u24 VAR |   u24 Note B |   P24 VAR |   P24 Note B |   yield h=1 VAR |
 |:--------------|:---------|----------:|-------------:|----------:|-------------:|----------:|-------------:|----------------:|
 | nominal       | avg 1973 |     -0.15 |        -0.33 |     -0.08 |        -0.17 |      0.09 |         0.19 |            0.63 |
-| nominal       | avg 1996 |     -0.56 |        -0.81 |     -0.37 |        -0.49 |      0.02 |         0.02 |            0.6  |
-| nominal       | eom 1990 |     -0.8  |        -0.81 |     -0.52 |        -0.49 |      0.02 |         0.02 |            1.11 |
-| nominal       | eom 1996 |     -0.91 |        -0.81 |     -0.61 |        -0.49 |      0.05 |         0.02 |            1.05 |
+| nominal       | avg 1996 |     -0.54 |        -0.81 |     -0.37 |        -0.49 |      0.02 |         0.02 |            0.6  |
+| nominal       | eom 1990 |     -0.77 |        -0.81 |     -0.47 |        -0.49 |      0.05 |         0.02 |            1.12 |
+| nominal       | eom 1996 |     -0.9  |        -0.81 |     -0.63 |        -0.49 |      0.06 |         0.02 |            1.07 |
 | nominal + FCI | avg 1973 |      0.19 |        -0.02 |      0.13 |        -0.12 |      0.03 |         0.11 |            0.59 |
-| nominal + FCI | avg 1996 |     -0.11 |        -0.05 |     -0.02 |         0.16 |     -0.23 |        -0.42 |            0.56 |
+| nominal + FCI | avg 1996 |     -0.09 |        -0.05 |     -0.04 |         0.16 |     -0.22 |        -0.42 |            0.55 |
 | nominal + FCI | eom 1990 |     -0.19 |        -0.05 |     -0.13 |         0.16 |     -0.21 |        -0.42 |            0.98 |
-| nominal + FCI | eom 1996 |     -0.14 |        -0.05 |     -0.04 |         0.16 |     -0.41 |        -0.42 |            0.89 |
+| nominal + FCI | eom 1996 |     -0.14 |        -0.05 |     -0.09 |         0.16 |     -0.36 |        -0.42 |            0.92 |
 | real          | avg 1973 |     -0.1  |        -0.15 |     -0.05 |        -0.08 |     -0.2  |        -0.31 |            0.61 |
-| real          | avg 1996 |     -0.39 |        -0.6  |     -0.24 |        -0.33 |     -0.08 |        -0.11 |            0.46 |
-| real          | eom 1990 |     -0.59 |        -0.6  |     -0.37 |        -0.33 |     -0.2  |        -0.11 |            0.96 |
-| real          | eom 1996 |     -0.65 |        -0.6  |     -0.44 |        -0.33 |     -0.18 |        -0.11 |            0.91 |
+| real          | avg 1996 |     -0.39 |        -0.6  |     -0.25 |        -0.33 |     -0.07 |        -0.11 |            0.46 |
+| real          | eom 1990 |     -0.59 |        -0.6  |     -0.33 |        -0.33 |     -0.13 |        -0.11 |            0.97 |
+| real          | eom 1996 |     -0.65 |        -0.6  |     -0.46 |        -0.33 |     -0.16 |        -0.11 |            0.92 |
 | real + FCI    | avg 1973 |      0.24 |         0.1  |      0.16 |         0    |     -0.25 |        -0.39 |            0.59 |
-| real + FCI    | avg 1996 |      0    |         0.09 |      0.04 |         0.23 |     -0.29 |        -0.48 |            0.46 |
+| real + FCI    | avg 1996 |      0    |         0.09 |      0.02 |         0.23 |     -0.26 |        -0.48 |            0.45 |
 | real + FCI    | eom 1990 |     -0.12 |         0.09 |     -0.1  |         0.23 |     -0.38 |        -0.48 |            0.89 |
-| real + FCI    | eom 1996 |     -0.01 |         0.09 |      0.01 |         0.23 |     -0.55 |        -0.48 |            0.82 |
+| real + FCI    | eom 1996 |     -0.02 |         0.09 |     -0.04 |         0.23 |     -0.49 |        -0.48 |            0.84 |
 | r*-gap        | avg 1973 |     -0.03 |        -0.05 |     -0    |        -0.01 |     -0.3  |        -0.5  |            0.6  |
-| r*-gap        | avg 1996 |     -0.14 |        -0.29 |      0.01 |        -0.07 |     -0.26 |        -0.44 |            0.47 |
-| r*-gap        | eom 1990 |     -0.24 |        -0.29 |     -0.02 |        -0.07 |     -0.51 |        -0.44 |            0.97 |
-| r*-gap        | eom 1996 |     -0.17 |        -0.29 |      0.03 |        -0.07 |     -0.57 |        -0.44 |            0.93 |
+| r*-gap        | avg 1996 |     -0.15 |        -0.29 |     -0.02 |        -0.07 |     -0.24 |        -0.44 |            0.46 |
+| r*-gap        | eom 1990 |     -0.24 |        -0.29 |     -0.01 |        -0.07 |     -0.45 |        -0.44 |            0.98 |
+| r*-gap        | eom 1996 |     -0.19 |        -0.29 |     -0.03 |        -0.07 |     -0.51 |        -0.44 |            0.94 |
 | r*-gap + FCI  | avg 1973 |      0.29 |         0.18 |      0.18 |         0.14 |     -0.3  |        -0.63 |            0.6  |
-| r*-gap + FCI  | avg 1996 |      0.19 |         0.33 |      0.21 |         0.49 |     -0.41 |        -0.8  |            0.51 |
+| r*-gap + FCI  | avg 1996 |      0.18 |         0.33 |      0.18 |         0.49 |     -0.38 |        -0.8  |            0.49 |
 | r*-gap + FCI  | eom 1990 |      0.23 |         0.33 |      0.28 |         0.49 |     -0.71 |        -0.8  |            0.96 |
-| r*-gap + FCI  | eom 1996 |      0.36 |         0.33 |      0.36 |         0.49 |     -0.84 |        -0.8  |            0.93 |
+| r*-gap + FCI  | eom 1996 |      0.33 |         0.33 |      0.3  |         0.49 |     -0.77 |        -0.8  |            0.94 |
 
 ### T5. r*-gap with FCI: all versions
 
@@ -205,37 +519,37 @@ D-A4 cases and lags; D-A5 the window column from Note B's daily model; D-A6 the 
 | avg 1973 |     12 | in     | WE       |      0.4 |   0.05 |               78 | 17.6                      |
 | avg 1973 |     12 | dummy  | WE       |      0.4 |   0.04 |               75 | 33.1                      |
 | avg 1973 |     12 | in     | P1       |      0.4 |   0.05 |              101 | 10.0                      |
-| avg 1973 |     12 | dummy  | P1       |      0.4 |   0.06 |               61 | 10.8                      |
+| avg 1973 |     12 | dummy  | P1       |      0.4 |   0.06 |               60 | 11.1                      |
 | avg 1973 |     12 | in     | WE2      |      0.4 |   0.08 |               46 | n.a.                      |
 | avg 1973 |     12 | dummy  | WE2      |      0.4 |   0.06 |               44 | n.a.                      |
-| avg 1996 |      3 | in     | WE       |      2.4 |   0.12 |               66 | 2.1                       |
-| avg 1996 |      3 | in     | P1       |      2.4 |   0.15 |               88 | 1.9                       |
-| avg 1996 |      3 | in     | WE2      |      2.4 |   0.16 |               35 | n.a.                      |
-| avg 1996 |      6 | in     | WE       |      2.1 |   0.11 |               58 | 4.6                       |
-| avg 1996 |      6 | in     | P1       |      2.1 |   0.14 |               76 | 0.3                       |
-| avg 1996 |      6 | in     | WE2      |      2.1 |   0.16 |               30 | n.a.                      |
-| avg 1996 |     12 | in     | WE       |      1.7 |   0.1  |               51 | 3.9                       |
-| avg 1996 |     12 | dummy  | WE       |      1.6 |   0.11 |               47 | 5.7                       |
-| avg 1996 |     12 | in     | P1       |      1.7 |   0.13 |               59 | 2.2                       |
-| avg 1996 |     12 | dummy  | P1       |      1.6 |   0.13 |               49 | 1.1                       |
-| avg 1996 |     12 | in     | WE2      |      1.7 |   0.14 |               26 | n.a.                      |
-| avg 1996 |     12 | dummy  | WE2      |      1.6 |   0.17 |               24 | n.a.                      |
+| avg 1996 |      3 | in     | WE       |      2.6 |   0.12 |               67 | 2.2                       |
+| avg 1996 |      3 | in     | P1       |      2.6 |   0.16 |               90 | 2.1                       |
+| avg 1996 |      3 | in     | WE2      |      2.6 |   0.17 |               35 | n.a.                      |
+| avg 1996 |      6 | in     | WE       |      2.2 |   0.12 |               60 | 4.7                       |
+| avg 1996 |      6 | in     | P1       |      2.2 |   0.15 |               80 | 0.3                       |
+| avg 1996 |      6 | in     | WE2      |      2.2 |   0.16 |               31 | n.a.                      |
+| avg 1996 |     12 | in     | WE       |      1.7 |   0.09 |               54 | 3.6                       |
+| avg 1996 |     12 | dummy  | WE       |      1.5 |   0.1  |               50 | 5.6                       |
+| avg 1996 |     12 | in     | P1       |      1.7 |   0.13 |               60 | 1.7                       |
+| avg 1996 |     12 | dummy  | P1       |      1.5 |   0.12 |               52 | 1.5                       |
+| avg 1996 |     12 | in     | WE2      |      1.7 |   0.14 |               27 | n.a.                      |
+| avg 1996 |     12 | dummy  | WE2      |      1.5 |   0.17 |               25 | n.a.                      |
 | eom 1990 |      3 | in     | WE       |      4.2 |   0.2  |               21 | 1.4                       |
-| eom 1990 |      3 | in     | P1       |      4.2 |   0.2  |               19 | 5.9                       |
+| eom 1990 |      3 | in     | P1       |      4.2 |   0.2  |               19 | 6.0                       |
 | eom 1990 |      6 | in     | WE       |      3.9 |   0.19 |               20 | 2.5                       |
-| eom 1990 |      6 | in     | P1       |      3.9 |   0.19 |               17 | 11.3                      |
+| eom 1990 |      6 | in     | P1       |      3.9 |   0.19 |               17 | 11.4                      |
 | eom 1990 |     12 | in     | WE       |      3.5 |   0.18 |               18 | 2.4                       |
 | eom 1990 |     12 | dummy  | WE       |      4   |   0.18 |               17 | 5.1                       |
-| eom 1990 |     12 | in     | P1       |      3.5 |   0.18 |               14 | 18.4                      |
-| eom 1990 |     12 | dummy  | P1       |      4   |   0.2  |               11 | 4.3                       |
-| eom 1996 |      3 | in     | WE       |      4.1 |   0.2  |               21 | 1.2                       |
-| eom 1996 |      3 | in     | P1       |      4.1 |   0.2  |               19 | 5.9                       |
-| eom 1996 |      6 | in     | WE       |      3.7 |   0.18 |               19 | 3.3                       |
-| eom 1996 |      6 | in     | P1       |      3.7 |   0.19 |               16 | 14.5                      |
-| eom 1996 |     12 | in     | WE       |      3.5 |   0.17 |               17 | 3.8                       |
-| eom 1996 |     12 | dummy  | WE       |      4.2 |   0.19 |               16 | 6.2                       |
-| eom 1996 |     12 | in     | P1       |      3.5 |   0.18 |               12 | 24.3                      |
-| eom 1996 |     12 | dummy  | P1       |      4.2 |   0.2  |                9 | 9.1                       |
+| eom 1990 |     12 | in     | P1       |      3.5 |   0.18 |               14 | 18.5                      |
+| eom 1990 |     12 | dummy  | P1       |      4   |   0.2  |               11 | 4.2                       |
+| eom 1996 |      3 | in     | WE       |      4.2 |   0.2  |               21 | 1.1                       |
+| eom 1996 |      3 | in     | P1       |      4.2 |   0.2  |               20 | 5.1                       |
+| eom 1996 |      6 | in     | WE       |      3.8 |   0.19 |               19 | 3.2                       |
+| eom 1996 |      6 | in     | P1       |      3.8 |   0.19 |               17 | 13.1                      |
+| eom 1996 |     12 | in     | WE       |      3.5 |   0.17 |               17 | 3.3                       |
+| eom 1996 |     12 | dummy  | WE       |      4.2 |   0.19 |               16 | 5.5                       |
+| eom 1996 |     12 | in     | P1       |      3.5 |   0.18 |               13 | 21.9                      |
+| eom 1996 |     12 | dummy  | P1       |      4.2 |   0.2  |               10 | 6.8                       |
 
 ### T6. Historical decomposition at selected months, r*-gap with FCI (Route 2: VAR in monthly averages from 1973; Route 1: Note B's model from 1996 and the measured surprises; 90% bands)
 

@@ -74,7 +74,7 @@ def figB_shares():
         y = np.arange(len(order))[::-1]; vals = [100 * float(s[(s.era == e) & (s.source == src)][v].iloc[0]) for e, src, _ in order]
         a.barh(y, vals, color=[VIOLET, BLUE, BLUE, AQUA, ORANGE], height=0.6); a.set_yticks(y); a.set_yticklabels([o[2] for o in order]); a.set_title(lab, loc="left", fontsize=9)
         for yy, vv in zip(y, vals): a.text(vv, yy, f" {vv:.1f}", va="center", fontsize=7.5, color=INK)
-        a.set_xlabel("percent of 24-month forecast-error variance")
+    fig.supxlabel("percent of the 24-month forecast-error variance (r*-gap with FCI)", fontsize=9, color=INK)
     fig.tight_layout(); save(fig, "B3_shares")
 
 if __name__ == "__main__":

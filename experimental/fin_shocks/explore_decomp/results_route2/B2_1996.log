@@ -1,2 +1,13 @@
 rstar rstar
 rstar 0
+nom nom
+nom 0
+real real
+real 0
+    step    fci  corr_same_month  r2_same_and_next  sd_monthly_var_shock  sd_daily_sum  sd_monthly_var_shock_pre1990  scale  proj_slope
+0  rstar  rstar            0.578             0.335                 0.408         0.213                         0.802  0.522       0.302
+1  rstar      0            0.613             0.378                 0.484         0.232                         1.001  0.480       0.295
+2    nom    nom            0.572             0.328                 0.444         0.231                         0.704  0.519       0.297
+3    nom      0            0.653             0.427                 0.482         0.254                         1.094  0.528       0.345
+4   real   real            0.565             0.320                 0.430         0.217                         0.695  0.505       0.285
+5   real      0            0.616             0.380                 0.493         0.237                         1.022  0.480       0.296
