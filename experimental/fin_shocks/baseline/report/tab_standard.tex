@@ -1,13 +1,24 @@
-\begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{2.4pt}
-\caption{Standard Methods: Responses to a 1 Percentage Point Rise in the Policy Rate}\label{tab:standard}
+\begin{table}[tp]\centering\small
+\caption{Standard Methods: Responses to a 1 Percentage Point Rise in the Two-Year Yield}\label{tab:standard}
 \resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
-\begin{tabular}{llrrrrrrr}\toprule
- & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){4-6}\cmidrule(lr){7-9}
-Method & Sample & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule
-Cholesky, 2-year yield & 1996--2026 & 369 & $-$0.95$^{*}$ & $-$0.66$^{*}$ & $-$0.36 & 0.13 & 0.07 & $-$0.10\\
- & & & {\scriptsize [$-$1.50, $-$0.40]} & {\scriptsize [$-$1.10, $-$0.12]} & {\scriptsize [$-$0.75, 0.21]} & {\scriptsize [$-$0.12, 0.36]} & {\scriptsize [$-$0.40, 0.52]} & {\scriptsize [$-$0.72, 0.56]}\\
-Proxy VAR, 2-year yield & 1996--2026 & 369 & $-$0.91$^{*}$ & $-$0.61$^{*}$ & $-$0.32 & 0.03 & $-$0.08 & $-$0.26\\
- & & & {\scriptsize [$-$1.38, $-$0.42]} & {\scriptsize [$-$1.08, $-$0.05]} & {\scriptsize [$-$0.71, 0.17]} & {\scriptsize [$-$1.20, 0.97]} & {\scriptsize [$-$1.84, 1.26]} & {\scriptsize [$-$2.28, 1.26]}\\
+\begin{tabular}{llcc}\toprule Method & Response & 1996--2026 & 1973--2026\\ \midrule
+Recursive (Cholesky) VAR & Unemployment gap, 12 m & $-$0.53$^{*}$ & 0.12\\
+ & & {\scriptsize [$-$0.82, $-$0.14]} & {\scriptsize [$-$0.12, 0.29]}\\
+ & Unemployment gap, 24 m & $-$0.75$^{*}$ & 0.17\\
+ & & {\scriptsize [$-$1.11, $-$0.03]} & {\scriptsize [$-$0.07, 0.38]}\\
+ & Price level, 24 m & 0.08 & $-$0.08\\
+ & & {\scriptsize [$-$0.52, 0.65]} & {\scriptsize [$-$0.42, 0.35]}\\
+ & Price level, 36 m & 0.10 & $-$0.16\\
+ & & {\scriptsize [$-$0.82, 0.85]} & {\scriptsize [$-$0.70, 0.53]}\\
+\addlinespace
+Proxy VAR & Unemployment gap, 12 m & $-$0.41$^{*}$ & $-$0.30\\
+ & & {\scriptsize [$-$1.10, $-$0.09]} & {\scriptsize [$-$2.01, 0.13]}\\
+ & Unemployment gap, 24 m & $-$0.50$^{*}$ & $-$0.19\\
+ & & {\scriptsize [$-$1.17, $-$0.20]} & {\scriptsize [$-$1.48, 0.14]}\\
+ & Price level, 24 m & 0.11 & 0.14\\
+ & & {\scriptsize [$-$0.61, 0.97]} & {\scriptsize [$-$1.41, 2.32]}\\
+ & Price level, 36 m & 0.13 & 0.21\\
+ & & {\scriptsize [$-$0.68, 1.09]} & {\scriptsize [$-$1.81, 3.17]}\\
 \bottomrule\end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} Monthly data, 12 lags, constant, no trend; unemployment gap, core PCE inflation and the end-of-month policy rate (the 2-year Treasury yield, or the effective federal funds rate where stated), policy rate ordered last in the Cholesky VARs; price level = cumulated inflation/12. Proxy VAR: Nakamura--Steinsson policy news summed within the month as instrument; first-stage $F$ = 4.5. Unit: +1 pp on the policy rate on impact. Brackets: 90\% intervals (residual bootstrap for the Cholesky VARs; exact Anderson--Rubin sets for the proxy VAR). $^{*}$ = excludes zero.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly VARs in the unemployment gap, core PCE inflation and the monthly average of the nominal two-year yield; 12 lags, constant, no trend, March--December 2020 dropped. Cholesky: the yield ordered last, per +1 pp innovation in the yield. Proxy VAR: Nakamura--Steinsson policy news summed within the month as instrument (first-stage $F$ = 5.6 from 1996, 3.8 from 1973), per +1 pp on the yield in the announcement window. Brackets: 90\% intervals (block bootstrap for the Cholesky VARs; exact Anderson--Rubin sets for the proxy VAR). $^{*}$ = excludes zero.\end{flushleft}
 \end{table}

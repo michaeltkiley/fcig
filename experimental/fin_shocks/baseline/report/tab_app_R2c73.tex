@@ -1,0 +1,27 @@
+\begingroup\scriptsize\setlength{\tabcolsep}{0.9pt}
+\begin{longtable}{llcrrrrrrr}
+\caption{Real 2-Year and Real FCI with a Cubic Spline Trend, Start 1973}\label{tab:appR2c73}\\
+\toprule
+ & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}
+Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\
+\midrule\endfirsthead
+\toprule
+ & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}
+Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\
+\midrule\endhead
+\bottomrule\endfoot
+Real & none & 3 & 632 & 0.14$^{*}$ & 0.25$^{**}$ & 0.27$^{**}$ & $-$0.14$^{**}$ & $-$0.29$^{**}$ & $-$0.41$^{**}$\\
+ & & & & {\scriptsize [0.01, 0.25]} & {\scriptsize [0.04, 0.38]} & {\scriptsize [0.04, 0.37]} & {\scriptsize [$-$0.23, $-$0.03]} & {\scriptsize [$-$0.46, $-$0.09]} & {\scriptsize [$-$0.63, $-$0.15]}\\
+ &  & 6 & 629 & 0.13$^{*}$ & 0.21 & 0.17 & $-$0.14$^{**}$ & $-$0.36$^{**}$ & $-$0.54$^{**}$\\
+ & & & & {\scriptsize [0.02, 0.24]} & {\scriptsize [$-$0.01, 0.35]} & {\scriptsize [$-$0.02, 0.30]} & {\scriptsize [$-$0.22, $-$0.04]} & {\scriptsize [$-$0.53, $-$0.16]} & {\scriptsize [$-$0.74, $-$0.23]}\\
+ &  & 12 & 623 & 0.13$^{*}$ & 0.23$^{**}$ & 0.22$^{*}$ & $-$0.16$^{**}$ & $-$0.35$^{**}$ & $-$0.51$^{**}$\\
+ & & & & {\scriptsize [0.00, 0.22]} & {\scriptsize [0.05, 0.36]} & {\scriptsize [0.02, 0.34]} & {\scriptsize [$-$0.23, $-$0.06]} & {\scriptsize [$-$0.53, $-$0.16]} & {\scriptsize [$-$0.77, $-$0.22]}\\
+ & real & 3 & 632 & 0.31$^{**}$ & 0.35$^{**}$ & 0.26$^{*}$ & $-$0.18$^{**}$ & $-$0.36$^{**}$ & $-$0.47$^{**}$\\
+ & & & & {\scriptsize [0.15, 0.45]} & {\scriptsize [0.11, 0.54]} & {\scriptsize [0.01, 0.50]} & {\scriptsize [$-$0.30, $-$0.06]} & {\scriptsize [$-$0.57, $-$0.15]} & {\scriptsize [$-$0.75, $-$0.21]}\\
+ &  & 6 & 629 & 0.29$^{**}$ & 0.27$^{*}$ & 0.15 & $-$0.18$^{**}$ & $-$0.45$^{**}$ & $-$0.61$^{**}$\\
+ & & & & {\scriptsize [0.15, 0.43]} & {\scriptsize [0.03, 0.46]} & {\scriptsize [$-$0.07, 0.34]} & {\scriptsize [$-$0.29, $-$0.06]} & {\scriptsize [$-$0.63, $-$0.19]} & {\scriptsize [$-$0.85, $-$0.24]}\\
+ &  & 12 & 623 & 0.29$^{**}$ & 0.28$^{**}$ & 0.19 & $-$0.21$^{**}$ & $-$0.46$^{**}$ & $-$0.60$^{**}$\\
+ & & & & {\scriptsize [0.13, 0.41]} & {\scriptsize [0.04, 0.47]} & {\scriptsize [$-$0.03, 0.38]} & {\scriptsize [$-$0.30, $-$0.08]} & {\scriptsize [$-$0.66, $-$0.22]} & {\scriptsize [$-$0.91, $-$0.25]}\\
+\end{longtable}
+\begin{flushleft}\footnotesize\textit{Notes:} No r* measure: the trend is a natural cubic spline in time (knots at the sample ends and at the NBER business-cycle peaks inside the sample), estimated in every monthly equation. Per +1 pp on the 2-year yield. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero); 90\% intervals in brackets. Obs = monthly observations in the equations.\end{flushleft}
+\endgroup

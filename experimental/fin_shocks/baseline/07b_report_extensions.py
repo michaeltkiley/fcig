@@ -114,7 +114,7 @@ for f in FORMS:
 x = DEC["rstar"]; mac("dc:peak:AC:u", int(np.argmax(x["pts"]["A"][:, 0] - x["pts"]["C"][:, 0]))); mac("dc:peak:AB:u", int(np.argmax(x["pts"]["A"][:, 0] - x["pts"]["B"][:, 0]))); mac("dc:peak:BC:u", int(np.argmax(x["pts"]["B"][:, 0] - x["pts"]["C"][:, 0])))
 # sensitivity of B to the ordinary loading (point estimates): the response is linear in the initial FCI movement phi, so A - B(phi) for any phi needs two simulations
 def point_model(form="rstar", fci="rstar", L=12):
-    mv = ["u", "pi"]; idx0, pos0, _, _ = M.events(1); Xd, Yd = M.har_rows(form, fci, mv, None, "in"); Bd0 = M.har_fit(Xd, Yd, fci); X, Y = M.macro_data(form, fci, mv, L, "1996-01", None, "out", "none"); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]
+    mv = ["u", "pi"]; idx0, pos0, _, _ = M.events(1); Xd, Yd = M.har_rows(form, fci, mv, None, "out"); Bd0 = M.har_fit(Xd, Yd, fci); X, Y = M.macro_data(form, fci, mv, L, "1996-01", None, "out", "none"); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]
     return lambda phi: M.to_level(M.irf_b(Bd0, C0, 2, 2, L, np.r_[1.0, phi], pos0)[0])
 pm = point_model(); dpt = pm(DEC["rstar"]["bF"]) - pm(DEC["rstar"]["ord0"]); mac("dc:chk:AB", f"{dpt[24, 0]:.3f}")
 chk("path B recomputed from the point model equals the stored path", abs(pm(DEC["rstar"]["ord0"])[24, 1] - DEC["rstar"]["pts"]["B"][24, 1]) < 1e-9)
@@ -304,7 +304,7 @@ def sample_facts():
     pi = M.MAC.pi.dropna()
     for lab, a, b in (("9619", "1996-01", "2019-12"), ("7319", "1973-01", "2019-12"), ("2026", "2020-01", "2026-09"), ("9626", "1996-01", "2026-09")):
         x = pi.loc[a:b]; mac(f"sm:pi:sd:{lab}", f"{x.std():.1f}"); mac(f"sm:pi:max:{lab}", f"{x.max():.1f}"); mac(f"sm:pi:min:{lab}", f"{x.min():.1f}")
-    for tag, kw in (("base96", {}), ("end96", dict(end=2019)), ("in96", dict(t2020="in")), ("base73", dict(start="1973-01")), ("end73", dict(start="1973-01", end=2019)), ("in73", dict(start="1973-01", t2020="in"))):
+    for tag, kw in (("base96", {}), ("end96", dict(end=2019, t2020="in")), ("in96", dict(t2020="in")), ("base73", dict(start="1973-01")), ("end73", dict(start="1973-01", end=2019, t2020="in")), ("in73", dict(start="1973-01", t2020="in"))):
         z = load("rstar", "rstar", **kw); C_ = load("rstar", 0, **kw)
         for v in ("u", "P"):
             k = VAR[v]; mac(f"sm:{tag}:{v}:24", num(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:lo", num(pc(z["sd"][:, 24, k], 5))); mac(f"sm:{tag}:{v}:24:hi", num(pc(z["sd"][:, 24, k], 95)))
@@ -379,9 +379,9 @@ sacrifice()
 def claims():
     for f in FORMS:
         for v in ("u", "P"):
-            chk(f"{f}: adding the FCI changes the {v} response at 24 m significantly (paired, 90%)", sig10(con(f, "A", "C", v, 24)[1]))
+            chk(f"{f}: adding the FCI changes the {v} response at 24 m significantly (paired, 90%), except the r*-gap price level (upper bound just above zero)", sig10(con(f, "A", "C", v, 24)[1]) == (not (f == "rstar" and v == "P")) and (f != "rstar" or v != "P" or pc(con(f, "A", "C", v, 24)[1], 95) < 0.1))
             chk(f"{f}: initial FCI movement (A-B) significant at 24 m for {v}", sig10(con(f, "A", "B", v, 24)[1]))
-            chk(f"{f}: B-C not significant at 24 m for {v}", not sig10(con(f, "B", "C", v, 24)[1]))
+            chk(f"{f}: B-C not significant at 24 m for {v}, except nominal unemployment", sig10(con(f, "B", "C", v, 24)[1]) == (f == "nom" and v == "u"))
     chk("daily ordinary loading below 0.4 with interval below 0.5 in every version", all(DEC[f]["ord0"] < 0.4 and pc(DEC[f]["ordd"], 95) < 0.5 for f in FORMS))
     chk("monthly ordinary loading (0.51) above the daily one; initial movement still the larger part of the unemployment effect with it", ord_m > DEC["rstar"]["ord0"] and abs(float(sens[DEC['rstar']['bF']][24, 0] - sens[ord_m][24, 0])) > abs(float(sens[ord_m][24, 0] - DEC['rstar']['pts']['C'][24, 0])))
     P1, Pc = (PER[(PER.base == "window plus later closes") & (PER.controls == c)].set_index(["series", "measure"]) for c in (False, True)) if PER is not None else (None, None)
@@ -393,30 +393,34 @@ def claims():
         chk("FCI: from the close before the announcement the model lies inside the interval for the average", (lambda r: r.lo <= r.model <= r.hi)(PER[(PER.series == "f") & (PER.measure == "avg22") & (PER.base == "pre-event close")].iloc[0]))
         chk("controls for later announcements leave the model inside at 5, 22, 66 days (FCI and yield)", all(Pc.loc[(k, m)].lo <= Pc.loc[(k, m)].model <= Pc.loc[(k, m)].hi for k in ("y", "f") for m in ("h5", "h22", "h66")))
         chk("FCI close-to-close move below the window move (gap interval below zero)", PER[(PER.series == "f") & (PER.measure == "gap")].hi.iloc[0] < 0)
-    chk("components 1996: all-free price response not significant, equities-free significant, F-E and F-R significant, E-R not", not sig10(CMP[("1996-01", "F")]["sd"][:, 24, 1]) and sig10(CMP[("1996-01", "E")]["sd"][:, 24, 1])
+    chk("components 1996: all-free and equities-free price responses not significant, F-E and F-R significant, E-R not", not sig10(CMP[("1996-01", "F")]["sd"][:, 24, 1]) and not sig10(CMP[("1996-01", "E")]["sd"][:, 24, 1])
         and sig10(CMP[("1996-01", "F")]["sd"][:, 24, 1] - CMP[("1996-01", "E")]["sd"][:, 24, 1]) and sig10(CMP[("1996-01", "F")]["sd"][:, 24, 1] - CMP[("1996-01", "R")]["sd"][:, 24, 1]) and not sig10(CMP[("1996-01", "E")]["sd"][:, 24, 1] - CMP[("1996-01", "R")]["sd"][:, 24, 1]))
     chk("components 1973: price response -0.5 to -0.7 in the three specifications; no pairwise difference significant", all(-0.7 < CMP[("1973-01", s_)]["s0"][24, 1] < -0.5 for s_ in "REF") and not any(sig10(CMP[("1973-01", a_)]["sd"][:, 24, 1] - CMP[("1973-01", b_)]["sd"][:, 24, 1]) for a_, b_ in (("E", "R"), ("F", "R"), ("F", "E"))))
-    chk("components: unemployment differences not significant in either start", not any(sig10(CMP[(st, a_)]["sd"][:, 24, 0] - CMP[(st, b_)]["sd"][:, 24, 0]) for st in ("1996-01", "1973-01") for a_, b_ in (("E", "R"), ("F", "R"), ("F", "E"))))
-    chk("tests: yield = dollar (equities free) rejected at 10% in the inflation equation from 1996 at all three versions, at 5% at the nominal; not in the unemployment equation; no test rejects at 10% from 1973",
-        all(wp("yd", s_, "pi") < 0.10 for s_ in FORMS) and wp("yd", "nom", "pi") < 0.05 and all(wp("yd", s_, "u") > 0.10 for s_ in FORMS) and all(wp(t_, s_, e_, "1973-01") > 0.10 for t_ in ("all", "yd", "eq") for s_ in FORMS for e_ in ("u", "pi")))
+    chk("components: unemployment differences not significant from 1996; from 1973 the index built from the components raises unemployment more than the free versions (E-R and F-R significant, F-E not)",
+        not any(sig10(CMP[("1996-01", a_)]["sd"][:, 24, 0] - CMP[("1996-01", b_)]["sd"][:, 24, 0]) for a_, b_ in (("E", "R"), ("F", "R"), ("F", "E")))
+        and all(sig10(CMP[("1973-01", a_)]["sd"][:, 24, 0] - CMP[("1973-01", "R")]["sd"][:, 24, 0]) and CMP[("1973-01", a_)]["s0"][24, 0] < CMP[("1973-01", "R")]["s0"][24, 0] for a_ in ("E", "F"))
+        and not sig10(CMP[("1973-01", "F")]["sd"][:, 24, 0] - CMP[("1973-01", "E")]["sd"][:, 24, 0]))
+    chk("tests: yield = dollar (equities free) rejected in the inflation equation from 1996 at 5% (nominal) and 10% (real), not at the r*-gap; not in the unemployment equation; from 1973 the only rejections at 10% are the equities test in the unemployment equation (5% at the r*-gap)",
+        wp("yd", "nom", "pi") < 0.05 and wp("yd", "real", "pi") < 0.10 and wp("yd", "rstar", "pi") > 0.10 and all(wp("yd", s_, "u") > 0.10 for s_ in FORMS)
+        and all((wp(t_, s_, e_, "1973-01") < 0.10) == (t_ == "eq" and e_ == "u") for t_ in ("all", "yd", "eq") for s_ in FORMS for e_ in ("u", "pi")) and wp("eq", "rstar", "u", "1973-01") < 0.05)
     chk("tests: equities equal to yield and dollar rejected at 10% from 1996 in the r*-gap inflation equation only", wp("eq", "rstar", "pi") < 0.10 and wp("eq", "nom", "pi") > 0.10 and wp("eq", "real", "pi") > 0.10)
     chk("conditional dollar coefficient in the inflation equation (1996) has the sign opposite to the yield's", float(M.macro_data("rstar", "cmp", ["u", "pi"], 12, "1996-01", None, "out", "none")[0].shape[0]) > 0 and (lambda b_: b_[0] * b_[1] < 0)(_coef_pi_96()))
     if DIR is not None:
         g = lambda c_, v, h: DIR[(DIR.controls == c_) & (DIR["var"] == v) & (DIR.h == h)].iloc[0]
-        chk("direct projection, macro lags: unemployment negative and price level positive at 12 and 24 m; bootstrap intervals include zero for all four; Newey-West excludes zero for unemployment (both) and the price level at 24 m",
-            all(g("macro lags", "u", h).est < 0 and g("macro lags", "P", h).est > 0 and g("macro lags", "u", h).lo * g("macro lags", "u", h).hi < 0 and g("macro lags", "P", h).lo * g("macro lags", "P", h).hi < 0 for h in (12, 24))
-            and all(g("macro lags", "u", h).nw_lo * g("macro lags", "u", h).nw_hi > 0 for h in (12, 24)) and g("macro lags", "P", 24).nw_lo * g("macro lags", "P", 24).nw_hi > 0 and g("macro lags", "P", 12).nw_lo * g("macro lags", "P", 12).nw_hi < 0)
-        chk("direct projection with financial lags: unemployment positive, price level positive, no interval excludes zero", all(g("macro and financial lags", "u", h).est > 0 and g("macro and financial lags", "P", h).est > 0 and g("macro and financial lags", v, h).lo * g("macro and financial lags", v, h).hi < 0 and g("macro and financial lags", v, h).nw_lo * g("macro and financial lags", v, h).nw_hi < 0 for h in (12, 24) for v in ("u", "P")))
+        chk("direct projection, macro lags: unemployment negative and significant at 12 and 24 m (bootstrap and Newey-West); price level positive, bootstrap intervals include zero, Newey-West excludes zero at 24 m only",
+            all(g("macro lags", "u", h).est < 0 and g("macro lags", "u", h).hi < 0 and g("macro lags", "u", h).nw_hi < 0 for h in (12, 24)) and all(g("macro lags", "P", h).est > 0 and g("macro lags", "P", h).lo < 0 < g("macro lags", "P", h).hi for h in (12, 24))
+            and g("macro lags", "P", 24).nw_lo > 0 and g("macro lags", "P", 12).nw_lo < 0)
+        chk("direct projection with financial lags: no interval (bootstrap or Newey-West) excludes zero", all(g("macro and financial lags", v, h).lo < 0 < g("macro and financial lags", v, h).hi and g("macro and financial lags", v, h).nw_lo < 0 < g("macro and financial lags", v, h).nw_hi for v in ("u", "P") for h in (12, 24)))
     sd_ = lambda lab: float(D_pi[lab])
     chk("inflation varied less in 1996-2019 than in 1973-2019 and than in 2020-2026", D_pi["9619"] < D_pi["2026"] < D_pi["7319"])
-    chk("sample: 24-month price response 1996 start -0.81 vs ends-2019 -0.14 (interval includes zero); 1973 start -0.63 vs ends-2019 -0.50 (significant at 5%)",
-        abs(z_("base96")[0] + 0.81) < 0.006 and abs(z_("end96")[0] + 0.14) < 0.006 and not sig10(z_("end96")[1]) and abs(z_("base73")[0] + 0.63) < 0.006 and abs(z_("end73")[0] + 0.50) < 0.006 and sig5(z_("end73")[1]))
+    chk("sample: 24-month price response 1996 baseline -0.69 vs ends-2019 -0.14 (interval includes zero); 1973 baseline -0.76 vs ends-2019 -0.50 (significant at 5%)",
+        abs(z_("base96")[0] + 0.69) < 0.006 and abs(z_("end96")[0] + 0.14) < 0.006 and not sig10(z_("end96")[1]) and abs(z_("base73")[0] + 0.76) < 0.006 and abs(z_("end73")[0] + 0.50) < 0.006 and sig5(z_("end73")[1]))
 def _coef_pi_96():
     L = 12; X, Y = M.macro_data("rstar", "cmp", ["u", "pi"], L, "1996-01", None, "out", "none"); b = np.linalg.lstsq(X, Y[:, 1], rcond=None)[0]
     return [sum(b[1 + 2 * L + l * 4 + c] for l in range(L)) for c in (1, 3)]
 _pi_ = M.MAC.pi.dropna(); D_pi = {"9619": _pi_.loc["1996-01":"2019-12"].std(), "7319": _pi_.loc["1973-01":"2019-12"].std(), "2026": _pi_.loc["2020-01":"2026-09"].std()}
 def z_(tag):
-    kw = dict(base96={}, end96=dict(end=2019), base73=dict(start="1973-01"), end73=dict(start="1973-01", end=2019))[tag]; z = load("rstar", "rstar", **kw); return z["s0"][24, 1], z["sd"][:, 24, 1]
+    kw = dict(base96={}, end96=dict(end=2019, t2020="in"), base73=dict(start="1973-01"), end73=dict(start="1973-01", end=2019, t2020="in"))[tag]; z = load("rstar", "rstar", **kw); return z["s0"][24, 1], z["sd"][:, 24, 1]
 claims()
 
 

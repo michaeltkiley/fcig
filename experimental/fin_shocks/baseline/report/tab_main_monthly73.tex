@@ -1,0 +1,36 @@
+\begin{table}[tp]\centering\scriptsize\setlength{\tabcolsep}{2pt}
+\caption{Monthly VAR Benchmark from 1973 (12 Lags)}\label{tab:mainmonthly73}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lllcrrrrrrr}\toprule
+ & & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){6-8}\cmidrule(lr){9-11}
+2-year & FCI & Identification & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\
+\midrule
+Nominal & none & Proxy VAR & 12 & 623 & $-$0.30 & $-$0.19 & $-$0.07 & 0.06 & 0.14 & 0.21\\
+ & & & & & {\tiny [$-$2.01, 0.13]} & {\tiny [$-$1.48, 0.14]} & {\tiny [$-$0.70, 0.11]} & {\tiny [$-$0.95, 1.27]} & {\tiny [$-$1.41, 2.32]} & {\tiny [$-$1.81, 3.17]}\\
+ &  & Window impact & 12 & 623 & 0.05 & 0.07 & 0.05 & $-$0.01 & $-$0.04 & $-$0.07\\
+ & & & & & {\tiny [$-$0.04, 0.13]} & {\tiny [$-$0.03, 0.17]} & {\tiny [$-$0.04, 0.14]} & {\tiny [$-$0.08, 0.09]} & {\tiny [$-$0.19, 0.17]} & {\tiny [$-$0.30, 0.25]}\\
+ & nominal & Proxy VAR & 12 & 623 & $-$0.26 & $-$0.16 & $-$0.06 & 0.00 & 0.03 & 0.03\\
+ & & & & & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded}\\
+ &  & Window impact & 12 & 623 & 0.28$^{*}$ & 0.27$^{*}$ & 0.15 & 0.00 & $-$0.07 & $-$0.12\\
+ & & & & & {\tiny [0.14, 0.39]} & {\tiny [0.10, 0.37]} & {\tiny [$-$0.01, 0.23]} & {\tiny [$-$0.13, 0.11]} & {\tiny [$-$0.31, 0.15]} & {\tiny [$-$0.45, 0.21]}\\
+\addlinespace
+Real & none & Proxy VAR & 12 & 623 & $-$0.37 & $-$0.27 & $-$0.13 & $-$0.07 & $-$0.10 & $-$0.13\\
+ & & & & & {\tiny [$-$5.52, 0.13]} & {\tiny [$-$4.09, 0.11]} & {\tiny [$-$1.92, 0.08]} & {\tiny [$-$1.64, 1.99]} & {\tiny [$-$2.33, 3.96]} & {\tiny [$-$2.95, 5.54]}\\
+ &  & Window impact & 12 & 623 & 0.05 & 0.05 & 0.01 & $-$0.15$^{*}$ & $-$0.31$^{*}$ & $-$0.45$^{*}$\\
+ & & & & & {\tiny [$-$0.04, 0.14]} & {\tiny [$-$0.07, 0.15]} & {\tiny [$-$0.09, 0.12]} & {\tiny [$-$0.20, $-$0.04]} & {\tiny [$-$0.42, $-$0.07]} & {\tiny [$-$0.61, $-$0.07]}\\
+ & real & Proxy VAR & 12 & 623 & $-$0.43 & $-$0.32 & $-$0.17 & $-$0.14 & $-$0.20 & $-$0.26\\
+ & & & & & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded}\\
+ &  & Window impact & 12 & 623 & 0.28$^{*}$ & 0.26$^{*}$ & 0.12 & $-$0.13$^{*}$ & $-$0.32$^{*}$ & $-$0.44$^{*}$\\
+ & & & & & {\tiny [0.13, 0.39]} & {\tiny [0.07, 0.35]} & {\tiny [$-$0.05, 0.21]} & {\tiny [$-$0.23, $-$0.02]} & {\tiny [$-$0.51, $-$0.05]} & {\tiny [$-$0.70, $-$0.05]}\\
+\addlinespace
+r*-gap & none & Proxy VAR & 12 & 623 & $-$0.30 & $-$0.21 & $-$0.12 & $-$0.12 & $-$0.22 & $-$0.33\\
+ & & & & & {\tiny [$-$2.64, 0.16]} & {\tiny [$-$1.91, 0.14]} & {\tiny [$-$0.92, 0.08]} & {\tiny [$-$1.06, 1.23]} & {\tiny [$-$1.66, 2.25]} & {\tiny [$-$2.20, 3.01]}\\
+ &  & Window impact & 12 & 623 & 0.10 & 0.08 & 0.02 & $-$0.17$^{*}$ & $-$0.38$^{*}$ & $-$0.56$^{*}$\\
+ & & & & & {\tiny [$-$0.01, 0.18]} & {\tiny [$-$0.04, 0.19]} & {\tiny [$-$0.10, 0.13]} & {\tiny [$-$0.24, $-$0.07]} & {\tiny [$-$0.50, $-$0.15]} & {\tiny [$-$0.73, $-$0.20]}\\
+ & r*-gap & Proxy VAR & 12 & 623 & $-$0.16 & $-$0.13 & $-$0.12 & $-$0.19 & $-$0.33 & $-$0.43\\
+ & & & & & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded}\\
+ &  & Window impact & 12 & 623 & 0.31$^{*}$ & 0.24$^{*}$ & 0.08 & $-$0.15$^{*}$ & $-$0.36$^{*}$ & $-$0.49$^{*}$\\
+ & & & & & {\tiny [0.16, 0.42]} & {\tiny [0.05, 0.34]} & {\tiny [$-$0.09, 0.17]} & {\tiny [$-$0.26, $-$0.04]} & {\tiny [$-$0.55, $-$0.08]} & {\tiny [$-$0.78, $-$0.07]}\\
+\bottomrule\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly VAR in the unemployment gap, core PCE inflation, the monthly average of the 2-year yield and, when included, of the FCI (same version), to September 2026, no trend, March--December 2020 dropped. Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects. Window impact: impact vector taken from the daily model (the month-average response to a window surprise); 90\% bootstrap intervals. Unit in both: +1 pp on the 2-year yield in the announcement window.\end{flushleft}
+\end{table}

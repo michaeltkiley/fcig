@@ -1,36 +1,36 @@
 \begin{table}[tp]\centering\scriptsize\setlength{\tabcolsep}{2pt}
-\caption{Monthly VAR Benchmark (12 Lags)}\label{tab:mainmonthly}
+\caption{Monthly VAR Benchmark from 1996 (12 Lags)}\label{tab:mainmonthly}
 \resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
 \begin{tabular}{lllcrrrrrrr}\toprule
  & & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){6-8}\cmidrule(lr){9-11}
 2-year & FCI & Identification & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\
 \midrule
-Nominal & none & Proxy VAR & 12 & 369 & $-$0.91$^{*}$ & $-$0.61$^{*}$ & $-$0.32 & 0.03 & $-$0.08 & $-$0.26\\
- & & & & & {\tiny [$-$1.38, $-$0.42]} & {\tiny [$-$1.08, $-$0.05]} & {\tiny [$-$0.71, 0.17]} & {\tiny [$-$1.20, 0.97]} & {\tiny [$-$1.84, 1.26]} & {\tiny [$-$2.28, 1.26]}\\
- &  & Window impact & 12 & 369 & $-$0.90$^{*}$ & $-$0.63$^{*}$ & $-$0.35 & 0.13 & 0.06 & $-$0.09\\
- & & & & & {\tiny [$-$1.42, $-$0.37]} & {\tiny [$-$1.01, $-$0.04]} & {\tiny [$-$0.74, 0.21]} & {\tiny [$-$0.11, 0.36]} & {\tiny [$-$0.41, 0.52]} & {\tiny [$-$0.73, 0.54]}\\
- & nominal & Proxy VAR & 12 & 369 & 0.71 & 0.50 & 0.32 & $-$0.67 & $-$1.02 & $-$1.16\\
+Nominal & none & Proxy VAR & 12 & 359 & $-$0.41$^{*}$ & $-$0.50$^{*}$ & $-$0.39$^{*}$ & 0.05 & 0.11 & 0.13\\
+ & & & & & {\tiny [$-$1.10, $-$0.09]} & {\tiny [$-$1.17, $-$0.20]} & {\tiny [$-$0.88, $-$0.18]} & {\tiny [$-$0.46, 0.63]} & {\tiny [$-$0.61, 0.97]} & {\tiny [$-$0.68, 1.09]}\\
+ &  & Window impact & 12 & 359 & $-$0.23$^{*}$ & $-$0.33$^{*}$ & $-$0.26 & 0.01 & 0.04 & 0.04\\
+ & & & & & {\tiny [$-$0.38, $-$0.06]} & {\tiny [$-$0.52, 0.00]} & {\tiny [$-$0.49, 0.10]} & {\tiny [$-$0.09, 0.15]} & {\tiny [$-$0.21, 0.32]} & {\tiny [$-$0.31, 0.43]}\\
+ & nominal & Proxy VAR & 12 & 359 & $-$0.21 & $-$0.29 & $-$0.20 & $-$0.14 & $-$0.17 & $-$0.19\\
  & & & & & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded}\\
- &  & Window impact & 12 & 369 & $-$0.14 & $-$0.09 & $-$0.01 & $-$0.13 & $-$0.36 & $-$0.57\\
- & & & & & {\tiny [$-$0.64, 0.38]} & {\tiny [$-$0.60, 0.43]} & {\tiny [$-$0.51, 0.48]} & {\tiny [$-$0.37, 0.12]} & {\tiny [$-$0.86, 0.15]} & {\tiny [$-$1.29, 0.16]}\\
+ &  & Window impact & 12 & 359 & 0.08 & 0.01 & $-$0.01 & $-$0.07 & $-$0.14 & $-$0.18\\
+ & & & & & {\tiny [$-$0.10, 0.21]} & {\tiny [$-$0.23, 0.25]} & {\tiny [$-$0.27, 0.23]} & {\tiny [$-$0.20, 0.07]} & {\tiny [$-$0.39, 0.07]} & {\tiny [$-$0.53, 0.10]}\\
 \addlinespace
-Real & none & Proxy VAR & 12 & 369 & $-$0.72$^{*}$ & $-$0.48$^{*}$ & $-$0.22 & $-$0.12 & $-$0.28 & $-$0.46\\
- & & & & & {\tiny [$-$1.29, $-$0.35]} & {\tiny [$-$0.99, $-$0.07]} & {\tiny [$-$0.62, 0.15]} & {\tiny [$-$0.97, 0.71]} & {\tiny [$-$1.50, 0.86]} & {\tiny [$-$1.85, 0.80]}\\
- &  & Window impact & 12 & 369 & $-$0.65$^{*}$ & $-$0.46 & $-$0.23 & $-$0.04 & $-$0.16 & $-$0.29\\
- & & & & & {\tiny [$-$1.12, $-$0.15]} & {\tiny [$-$0.94, 0.02]} & {\tiny [$-$0.66, 0.23]} & {\tiny [$-$0.30, 0.20]} & {\tiny [$-$0.66, 0.31]} & {\tiny [$-$0.97, 0.35]}\\
- & real & Proxy VAR & 12 & 369 & 0.71 & 0.49 & 0.30 & $-$0.72 & $-$1.04 & $-$1.11\\
- & & & & & {\tiny [$-$0.22, 24.76]} & {\tiny [$-$0.33, 20.11]} & {\tiny [$-$0.26, 12.75]} & {\tiny [$-$11.60, 0.17]} & {\tiny [$-$16.34, 0.23]} & {\tiny [$-$16.85, 0.34]}\\
- &  & Window impact & 12 & 369 & $-$0.02 & $-$0.04 & 0.00 & $-$0.26 & $-$0.49 & $-$0.63\\
- & & & & & {\tiny [$-$0.61, 0.48]} & {\tiny [$-$0.54, 0.47]} & {\tiny [$-$0.48, 0.44]} & {\tiny [$-$0.57, 0.00]} & {\tiny [$-$0.99, 0.02]} & {\tiny [$-$1.30, 0.08]}\\
+Real & none & Proxy VAR & 12 & 359 & $-$0.43$^{*}$ & $-$0.53$^{*}$ & $-$0.41$^{*}$ & $-$0.10 & $-$0.09 & $-$0.09\\
+ & & & & & {\tiny [$-$1.69, $-$0.05]} & {\tiny [$-$1.80, $-$0.16]} & {\tiny [$-$1.39, $-$0.14]} & {\tiny [$-$0.82, 0.58]} & {\tiny [$-$1.07, 0.93]} & {\tiny [$-$1.21, 1.04]}\\
+ &  & Window impact & 12 & 359 & $-$0.17$^{*}$ & $-$0.26$^{*}$ & $-$0.20 & $-$0.05 & $-$0.04 & $-$0.04\\
+ & & & & & {\tiny [$-$0.27, $-$0.03]} & {\tiny [$-$0.40, $-$0.01]} & {\tiny [$-$0.33, 0.08]} & {\tiny [$-$0.16, 0.07]} & {\tiny [$-$0.28, 0.21]} & {\tiny [$-$0.38, 0.28]}\\
+ & real & Proxy VAR & 12 & 359 & $-$0.16 & $-$0.27 & $-$0.19 & $-$0.33 & $-$0.44 & $-$0.48\\
+ & & & & & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded} & {\tiny unbounded}\\
+ &  & Window impact & 12 & 359 & 0.11 & 0.04 & 0.04 & $-$0.12 & $-$0.20 & $-$0.23\\
+ & & & & & {\tiny [$-$0.07, 0.24]} & {\tiny [$-$0.18, 0.23]} & {\tiny [$-$0.18, 0.24]} & {\tiny [$-$0.25, 0.01]} & {\tiny [$-$0.44, 0.03]} & {\tiny [$-$0.53, 0.08]}\\
 \addlinespace
-r*-gap & none & Proxy VAR & 12 & 369 & $-$0.33 & $-$0.10 & 0.06 & $-$0.29 & $-$0.57 & $-$0.79\\
- & & & & & {\tiny [$-$0.99, 0.02]} & {\tiny [$-$0.64, 0.24]} & {\tiny [$-$0.30, 0.32]} & {\tiny [$-$0.97, 0.48]} & {\tiny [$-$1.51, 0.48]} & {\tiny [$-$1.83, 0.32]}\\
- &  & Window impact & 12 & 369 & $-$0.19 & $-$0.03 & 0.09 & $-$0.27$^{*}$ & $-$0.51$^{*}$ & $-$0.69$^{*}$\\
- & & & & & {\tiny [$-$0.75, 0.23]} & {\tiny [$-$0.52, 0.37]} & {\tiny [$-$0.28, 0.44]} & {\tiny [$-$0.53, 0.00]} & {\tiny [$-$0.96, $-$0.02]} & {\tiny [$-$1.25, $-$0.05]}\\
- & r*-gap & Proxy VAR & 12 & 369 & 0.95$^{*}$ & 0.72 & 0.46 & $-$0.84$^{*}$ & $-$1.24$^{*}$ & $-$1.34$^{*}$\\
- & & & & & {\tiny [0.00, 5.89]} & {\tiny [$-$0.05, 4.56]} & {\tiny [$-$0.05, 2.90]} & {\tiny [$-$3.18, $-$0.15]} & {\tiny [$-$4.39, $-$0.24]} & {\tiny [$-$4.52, $-$0.23]}\\
- &  & Window impact & 12 & 369 & 0.33 & 0.30 & 0.25 & $-$0.45$^{*}$ & $-$0.77$^{*}$ & $-$0.94$^{*}$\\
- & & & & & {\tiny [$-$0.25, 0.82]} & {\tiny [$-$0.25, 0.76]} & {\tiny [$-$0.23, 0.60]} & {\tiny [$-$0.71, $-$0.16]} & {\tiny [$-$1.26, $-$0.20]} & {\tiny [$-$1.54, $-$0.18]}\\
+r*-gap & none & Proxy VAR & 12 & 359 & $-$0.36 & $-$0.46$^{*}$ & $-$0.38$^{*}$ & $-$0.16 & $-$0.18 & $-$0.22\\
+ & & & & & {\tiny [$-$1.55, 0.02]} & {\tiny [$-$1.68, $-$0.07]} & {\tiny [$-$1.29, $-$0.09]} & {\tiny [$-$0.74, 0.42]} & {\tiny [$-$0.96, 0.69]} & {\tiny [$-$1.09, 0.76]}\\
+ &  & Window impact & 12 & 359 & $-$0.04 & $-$0.13 & $-$0.12 & $-$0.12 & $-$0.17 & $-$0.20\\
+ & & & & & {\tiny [$-$0.19, 0.11]} & {\tiny [$-$0.30, 0.10]} & {\tiny [$-$0.31, 0.11]} & {\tiny [$-$0.22, 0.02]} & {\tiny [$-$0.36, 0.08]} & {\tiny [$-$0.45, 0.11]}\\
+ & r*-gap & Proxy VAR & 12 & 359 & $-$0.03 & $-$0.15 & $-$0.12 & $-$0.36 & $-$0.51 & $-$0.58\\
+ & & & & & {\tiny [$-$1.32, 2.46]} & {\tiny [$-$1.74, 1.75]} & {\tiny [$-$1.83, 0.76]} & {\tiny [$-$5.90, 0.18]} & {\tiny [$-$8.47, 0.27]} & {\tiny [$-$9.58, 0.31]}\\
+ &  & Window impact & 12 & 359 & 0.22$^{*}$ & 0.13 & 0.09 & $-$0.17$^{*}$ & $-$0.30$^{*}$ & $-$0.34$^{*}$\\
+ & & & & & {\tiny [0.01, 0.35]} & {\tiny [$-$0.09, 0.30]} & {\tiny [$-$0.13, 0.27]} & {\tiny [$-$0.26, $-$0.04]} & {\tiny [$-$0.46, $-$0.06]} & {\tiny [$-$0.56, $-$0.04]}\\
 \bottomrule\end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} Monthly VAR in the unemployment gap, core PCE inflation, the end-of-month 2-year yield and, when included, the end-of-month FCI (same version), 1996 to September 2026, no trend, nothing dropped. Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects. Window impact: impact vector taken from the daily model (the end-of-month response to a window surprise); 90\% bootstrap intervals. Unit in both: +1 pp on the 2-year yield (the end-of-month response to a +1 pp window surprise is 0.92 to 1.01, so the two units are the same up to 8\%). $^{*}$ = 90\% interval excludes zero.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Monthly VAR in the unemployment gap, core PCE inflation, the monthly average of the 2-year yield and, when included, of the FCI (same version), to September 2026, no trend, March--December 2020 dropped. Proxy VAR: Nakamura--Steinsson surprise as instrument; sets are exact 90\% Anderson--Rubin sets, ``unbounded'' when the instrument cannot reject large effects. Window impact: impact vector taken from the daily model (the month-average response to a window surprise); 90\% bootstrap intervals. Unit in both: +1 pp on the 2-year yield in the announcement window.\end{flushleft}
 \end{table}
