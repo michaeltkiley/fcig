@@ -20,7 +20,7 @@ Read with `FRAMING_SKETCH.md` (this folder). Decisions are recorded as N-A entri
 
 | # | Decision | Options | Recommendation |
 |---|---|---|---|
-| N1 | Headline claim | (a) "Policy reaches financial conditions mainly through equity valuations and long rates; markets and the macro model agree on this"; (b) "Market, model and GDP-calibrated indexes agree", with equities as the reason; (c) keep the current two-choices framing | (a): it is the economic finding; (b) follows from it |
+| N1 | Headline claim (options sketched in `N1_OPTIONS.md`) | (a) "Policy reaches financial conditions mainly through equity valuations and long rates; markets and the macro model agree on this"; (b) "Market, model and GDP-calibrated indexes agree", with equities as the reason; (c) keep the current two-choices framing | (a): it is the economic finding; (b) follows from it |
 | N2 | Title | e.g. "Monetary Policy, Equity Prices and Financial Conditions"; "What Moves When Policy Moves: Financial Conditions in Units of Policy"; keep current | decide after N1 |
 | N3 | The four-calibration comparison | (a) keep as the body; (b) shrink to one section on where the indexes part (the dollar; January 1998, 1998-2001, 2022-24); (c) appendix | (b) |
 | N4 | Activity evidence | (a) the VAR replaces the composition test; (b) both; (c) composition test only | (a), composition test (and its net-export result) to the appendix |
