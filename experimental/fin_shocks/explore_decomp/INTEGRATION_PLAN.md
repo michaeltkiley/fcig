@@ -68,6 +68,32 @@ Conventions used below: r*-gap = the 2-year yield and FCI relative to r*; "with 
 
 ---
 
+## Part 2A. What the paper reports: the story and its exhibits (proposal, for the author's approval)
+
+The analysis runs everything for both baselines (author, 17 Nov: "keep robustness from both samples in the analysis"); the paper reports what the story needs. Rules from `experimental/WRITING_GUIDE.md`: an economics paper, not a technical report; a few exhibits that carry the argument; the main text stands alone; robustness in its own section, each test introduced by why it is a good test, results in a sentence; verdicts in words, intervals in tables; full tables in the appendix.
+
+**The story in one paragraph.** A policy tightening reaches unemployment and prices through financial conditions as a whole, not through the 2-year yield alone. Since 1996, a model with the yield alone gets the signs wrong; adding the FCI, whose movement in the announcement window is far larger than its ordinary co-movement with the yield, gives a rise in unemployment and a fall in prices. Over the longer sample from 1973 the yield alone already gives conventional signs, and the FCI makes the effects larger. Window surprises themselves are small; the policy-direction movements in yields and financial conditions that occur on all days explain a meaningful share of unemployment and inflation, and they trace the familiar history of easing and tightening.
+
+**Main-text exhibits (target: six or seven in all).**
+
+| Section | Exhibit | Content |
+|---|---|---|
+| 1 Introduction | Figure 1 | The two baselines (unemployment gap and price level; 1996 and 1973; yield alone and with the FCI) - the 2x2 of `figures/H_baseline_irfs.png` |
+| 3.1 Standard methods | Table 2 (compact) | Cholesky and proxy VAR without the FCI, monthly averages, columns 1996 and 1973 |
+| 3.2 Baseline | Table 3 | Matched comparison at 24 months in two panels (A unemployment, B price level); rows nominal, real, r*-gap; columns: 1996 yield alone, 1996 with FCI, 1973 yield alone, 1973 with FCI; the r*-gap row in bold; intervals under the estimates; differences with the FCI in the appendix |
+| 3.3 Why the FCI changes the response | Table / Figure as now | 1996 in the text; the 1973 column added only if it fits the same table without widening it |
+| 3.4 Tradeoff | as now | 1996 and 1973 as two rows |
+| 3.5 How much policy shocks explain (new) | Figure + small table | Figure: historical contributions of policy-direction shocks to the unemployment gap and core inflation, 1974-2026 (1973 model), with the measured-surprise line; Table: 24-month variance shares for unemployment and inflation, rows "measured surprises", "policy-direction shocks 1990-2026", "1974-1989", columns 1996 model and 1973 model |
+| 5 Robustness | Table (one) | Core robustness summary, r*-gap with the FCI: rows = tests, columns = 1996 (u 24 m, P 24 m) and 1973 (u 24 m, P 24 m); baseline row first |
+
+**Core robustness set for the summary table (proposal).** One row each, both samples: (1) 2020 left in; (2) Kiley's r*; (3) real yield and FCI with a spline trend (no r*); (4) excess bond premium as a third monthly variable; (5) the FCI's three components with equities free; (6) Bauer-Swanson orthogonalized surprise; (7) 3 and 6 lags; (8) industrial production; (9) the federal funds rate. Each gets one sentence in Section 5 saying why it is a good test and whether the result holds; exceptions stated once as facts.
+
+**Appendix and replication package only.** Every robustness case for both samples and all versions at 12/24/36 months and 3/6/12 lags; the Baa spread in the daily block, the Jarocinski-Karadi variants and the four weight calibrations (Section 4.2 keeps its own compact table); the 1-year yield; the benchmark monthly VARs (window-impact and proxy, monthly averages, 1996 and 1973); Route 2 robustness (2020 absorbed by the dummies; unscaled pre-1990 shocks); the monthly invertibility diagnostic and its simulation.
+
+**Section length targets.** Section 3.5: about one page of text plus its two exhibits. Section 5: about one and a half pages, one paragraph per group of tests.
+
+**Questions for the author on this part (to answer before Phase 4).** (a) Is the core robustness set right (add or drop rows)? (b) Figure 1 as the 2x2 of both baselines, or keep the 1996 matched comparison and move the 2x2 to Section 3.2? (c) Section 3.5's figure: unemployment and core inflation only (proposal), or also the yield and the FCI?
+
 ## Part 3. Execution plan (all of Part 2 decided; executable without the author)
 
 Text rule: every paper change goes into a full copy, `paper/mp_transmission_session_integration.tex` (started from the author's current `paper/mp_transmission.tex` at execution time), for the author to merge by diff; follow `experimental/WRITING_GUIDE.md` and the house style. Package, tables, figures and macros are updated directly. Merge to `main` when Phase 6 passes.
@@ -85,7 +111,7 @@ Each phase ends with its checks passing and a commit. Work on a short branch fro
 1. D1 (decided): make `t2020="out"` the default in `cases.py` (`panel()` base) and keep a robustness panel with 2020 in. Rerun everything (about 70 minutes); every macro in `report/numbers*.tex` changes.
 2. D2 (decided): the baseline panel becomes two panels, "B" (monthly equations from 1996) and "B73" (from 1973), each with the three versions without and with the FCI, 2020 dummies; the r*-gap pair of each is the headline. Check: the r*-gap pairs reproduce `results_core/baseline_irfs.md` (Note B's stored R1b and R1c) exactly.
 3. D3 and D4: nothing (not reported).
-4. Robustness panels follow the two baselines: every existing robustness panel (R2-R6) is run from both 1996 and 1973 where it was 1996-only, with 2020 dummies; a new panel with 2020 in replaces R1b/R1c; R1a and R1c become the 1973 baseline.
+4. Robustness panels follow the two baselines (author: keep robustness from both samples in the analysis): every existing robustness panel (R2-R6) is run from both 1996 and 1973 where it was 1996-only, with 2020 dummies; a new panel with 2020 in replaces R1b/R1c; R1a and R1c become the 1973 baseline. What the paper shows of them is set in Part 2A.
 5. D10 (decided; bootstrap intervals for both baselines): macro option `u,pi,ip` (IP = 100 log INDPRO; copy `INDPRO.csv` into `baseline/data/` and record it in `SOURCES.md`); an `fci` option that adds the funds rate to the daily block with the MP1 window impact (the A5 wrapper becomes code in `model.py`: `daily_frame`, `fin_monthly`, `impact`, `irf_b`); a policy-rate option for the 1-year yield (the A6 construction: `DGS1.csv`, `EXPINF1YR`, the 0.78 window ratio, in `daily.py` and `model.py`).
 6. Checks: the existing panels reproduce their stored results exactly when their options are unchanged; the new panels reproduce the exploration numbers (`results_core/`, `results_ip/`, `results_bjmw/`) to the rounding of the stored files.
 
@@ -119,11 +145,11 @@ Steps:
 
 ### Phase 4. Report scripts (`07d_report_decomp.py`, and changes to 07/07b/07c)
 
-1. New exhibits: the two-baseline IRF figure (as `H_baseline_irfs.png`); a 1973 table for all versions; the regime-split table; the Brennan et al. sample row; the benchmark VARs in monthly averages from 1996 and 1973; the decomposition figure (as `B5_hd_rstar_infer.png`), the shares table, and the invertibility table (appendix).
+1. Exhibits exactly as in Part 2A: the main-text set (Figure 1, Tables 2 and 3 with 1996 and 1973 columns, Section 3.5's figure and shares table, the single robustness summary table) and the appendix set (full tables for both samples, benchmark VARs, Route 2 robustness, invertibility diagnostic). No regime-split or Brennan et al. exhibits (D3, D4).
 2. Macros in `report/numbers_decomp.tex`; every qualitative claim asserted with `chk(...)`, as in 07b/07c.
 3. House style via `lib/latex_style.py`.
 
-### Phase 5. Paper text (read `experimental/WRITING_GUIDE.md` first; one section at a time, each approved by the author)
+### Phase 5. Paper text (read `experimental/WRITING_GUIDE.md` first; written in the separate copy; follow Part 2A's story and length targets; run the guide's pre-send checklist on each section)
 
 1. Section 2.5 (A Mixed-Frequency VAR) and Appendix "Relation to a Monthly VAR and a Proxy VAR": one paragraph on why the window identification does not need invertibility, with the monthly diagnostic (D6).
 2. Section 3.2 (Baseline): the two baselines (1996 and 1973) and the 2020 dummies (D1, D2 decided); the robustness section loses the R1a-R1c rows that become baseline and gains a row with 2020 in.
