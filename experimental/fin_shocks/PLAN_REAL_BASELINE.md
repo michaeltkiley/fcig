@@ -11,6 +11,7 @@
 | D6 | Eight core robustness tests (revised: components test dropped, better placed in Note A): 2020 left in; LW r*-gap; spline; EBP and IP added together; Bauer-Swanson surprise; 6 lags; without the funds rate; monthly equations from 1985 |
 | D7 | Rebuild every exhibit on the new baseline; by-version exhibits show nominal and real; monthly VAR benchmarks with the funds rate; simulation's true process = new baseline |
 | D8 | New package folder; `fin_shocks/baseline/` frozen as the r*-gap record |
+| D10 | Drop the FCI components and weights analysis (Section 4 Tables 7-8) from Note B; left to Note A |
 | D9 | Folder `fin_shocks/baseline_real/`; text as a new copy plus a changes file; sign-off on results before text; 3 lags dropped everywhere |
 
 ## Phase 0. Housekeeping (needs the author's go-ahead)
@@ -21,7 +22,7 @@
 2. `lib/model.py`:
    * the funds rate (variant "ff") becomes the default; the 2-year-only model becomes a case option (for robustness test 8);
    * spline knots: first knot at the first estimation month (`trend_cols` called with the first period of the sample; tested as `spl74` in `explore_rstar/real_trends.py`);
-   * allow the funds rate with the FCI components (`cmpE`, `cmpR`, `cmp`; currently asserted out at line 127) and with the 1-year yield (variant combination: "1y" + "ff");
+   * allow the funds rate with the 1-year yield (variant combination "1y" + "ff") if that appendix test survives (the components are out of Note B, D10, so no extension for them);
    * lags (6, 12) only.
 3. `cases.py`: baselines B and B73 = nominal and real, each without and with the FCI, in the new model; robustness panels for the eight tests, both starts (1985 only for its own test); appendix panels kept from the old list where they still apply (ends 2019, Baa spread, Jarocinski-Karadi, four calibrations, 1-year yield), all in the new model; the r*-gap step as a panel.
 4. Steps 01-13 unchanged in logic; step 04 (monthly VARs) and step 06 (simulation) with the funds rate in the VAR and the new baseline as the true process; step 13 (decompositions) on the new baseline.
@@ -33,7 +34,7 @@
 
 ## Phase 2. The text
 1. New copy `fin_shocks/paper/mp_transmission_real.tex` from the author's current `mp_transmission.tex` (or from the integration copy if not yet merged: to confirm at the time); `mp_transmission.tex` untouched.
-2. Rewrite, in the house style (`experimental/WRITING_GUIDE.md`, CLAUDE.md working preferences): abstract and introduction (question, result, approach; two steps; the funds rate in the model), Section 2 (model with the funds rate; two steps), Section 3 (results: Figure 1, standard methods, matched comparison, monthly VARs, sacrifice ratio, Section 3.5), Section 4 (mechanisms: components, weights, persistence, timing, credit), Section 5 (robustness: eight tests reported plainly; the r* step), conclusion, appendices.
+2. Rewrite, in the house style (`experimental/WRITING_GUIDE.md`, CLAUDE.md working preferences): abstract and introduction (question, result, approach; two steps; the funds rate in the model), Section 2 (model with the funds rate; two steps), Section 3 (results: Figure 1, standard methods, matched comparison, monthly VARs, sacrifice ratio, Section 3.5), Section 4 (mechanisms: persistence, timing, credit; components and weights removed, D10), Section 5 (robustness: eight tests reported plainly; the r* step), conclusion, appendices.
 3. `paper/CHANGES_FOR_MERGE_REAL.md`: section by section, old to new, with numbers.
 4. Compile (pdflatex + bibtex), `check_paper.py`, no undefined references or overfull boxes.
 
