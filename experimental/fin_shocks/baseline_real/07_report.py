@@ -235,9 +235,6 @@ def write_numbers():
     from lib import monthly as MO
     from lib.model import MAC
     d("bl:bF", f"{window_impact(event_index())[1]:.2f}")
-    for f in ("nom", "real"):                                  # FCI innovation per unit of 2-year-yield innovation in ordinary months (monthly VAR residuals, 12 lags, 1996+, monthly averages, 2020 dropped)
-        X, Y, P_ = MO.design(MO.data(f, f), 12, "1996-01", MO.END); k_ = ~P_.isin(MO.C2020); X, Y = X[k_], Y[k_]; r = Y - X @ np.linalg.lstsq(X, Y, rcond=None)[0]
-        d(f"bl:ord:{f}", f"{np.cov(r[:, 3], r[:, 2])[0, 1] / np.var(r[:, 2], ddof=1):.2f}")
     ie = event_index(); s_ = EV.ns.values[ie]                           # share of each window move explained by the policy-news surprise (R-squared)
     for col, k in (("UST2Y", "y2"), ("UST10Y", "y10"), ("SP500", "sp"), ("DXY", "usd"), ("idx_win", "fci")): d(f"bl:r2:{k}", f"{100 * np.corrcoef(s_, EV[col].values[ie])[0, 1] ** 2:.0f}")
     (REPORT / "numbers.tex").write_text("\n".join(L) + "\n")

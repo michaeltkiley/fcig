@@ -3,7 +3,6 @@
                      and financial conditions (yield alone against yield and FCI), for the nominal and real rates (baseline_real);
   tab_credit.tex  -- credit and the response: baseline, the excess bond premium in the monthly block, the daily Baa spread in the daily block;
                      the response of each credit measure; how much of the monthly variation in the excess bond premium the FCI's components account for;
-  fig_ordinary.pdf -- the same 1 pp rise in the two-year yield on an ordinary day and in an announcement window: the accompanying FCI movement.
 Writes report/numbers_rev.tex (macros bl:rv:*) and asserts the claims the text makes about these exhibits (fails if one stops being true)."""
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg")
@@ -99,22 +98,6 @@ WB = pd.read_csv(OUT / "market_weights.csv", index_col=0); from lib import model
 epbar = float((100 / D0.cape).loc[noteA.START:noteA.END].mean()); kap = WB.weight["y10"] - WB.weight["equities"] * 100 / epbar
 mac("kap", f"{kap:.1f}"); mac("epbar", f"{epbar:.1f}")
 for a in ("y10", "equities", "dollar"): mac(f"psi:{a}", f"{abs(WB.response[a]):.2f}" if a == "y10" else f"{abs(WB.response[a]):.1f}")
-pass
-
-# ---------------------------------------------------------------- 4. figure: an ordinary day and an announcement window
-z = np.load(OUT / "draws" / f"{CS.case_id(cB)}_L12.npz"); o0, od = float(z["ord0"]), z["ordd"]
-rng = np.random.default_rng(7); wb = np.array([DD.window_impact(rng.choice(idx0, len(idx0)))[1] for _ in range(1000)])
-fig, ax = plt.subplots(figsize=(6.2, 3.3)); x = np.arange(2); wdt = 0.36
-ax.bar(x - wdt / 2, [1.0, 1.0], wdt, color=GREY, label="Two-year yield")
-bB = M.impact("real", idx0)[1]
-ax.bar(x + wdt / 2, [o0, bB], wdt, color=[ORANGE, BLUE], label="Financial conditions index")
-ax.errorbar(x + wdt / 2, [o0, bB], yerr=[[o0 - np.percentile(od, 5), bB - np.percentile(wb, 5)], [np.percentile(od, 95) - o0, np.percentile(wb, 95) - bB]], fmt="none", ecolor=INK, capsize=4, lw=1)
-for xi, val in zip(x + wdt / 2, [o0, bB]): ax.text(xi, val + 0.12, f"{val:.2f}", ha="center", fontsize=9)
-ax.set_xticks(x); ax.set_xticklabels(["An ordinary day", "An announcement window"]); ax.set_ylabel("Units (two-year-yield equivalents)"); ax.set_ylim(0, 1.45)
-ax.axhline(0, color=GREY, lw=0.8); ax.legend(frameon=False, fontsize=8, loc="upper left"); ax.spines[["top", "right"]].set_visible(False)
-fig.tight_layout(); fig.savefig(REPORT / "fig_ordinary.pdf"); plt.close(fig)
-mac("ord:lo", f"{np.percentile(od, 5):.2f}"); mac("ord:hi", f"{np.percentile(od, 95):.2f}"); mac("win:lo", f"{np.percentile(wb, 5):.2f}"); mac("win:hi", f"{np.percentile(wb, 95):.2f}")
-mac("ord:ratio", f"{bB / o0:.1f}")
 pass
 
 (REPORT / "numbers_rev.tex").write_text("\n".join(ML) + "\n")

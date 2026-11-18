@@ -41,89 +41,30 @@ FORMS = ("nom", "real"); NAMES = {"nom": "Nominal", "real": "Real"}          # b
 DEC = {}
 for f in FORMS:
     A, C = load(f, f), load(f, 0)
-    pts = dict(A=A["s0"], B=A["s0B"], C=C["s0"]); drs = dict(A=A["sd"], B=A["sdB"], C=C["sd"])
-    DEC[f] = dict(pts=pts, drs=drs, bF=float(D.window_impact(D.event_index())[1]), ord0=float(A["ord0"]), ordd=A["ordd"], f0=A["f0"], fd=A["fd"])
+    pts = dict(A=A["s0"], C=C["s0"]); drs = dict(A=A["sd"], C=C["sd"])          # FS-A81 / FS-A86: the ordinary-movement path B is not reported
+    DEC[f] = dict(pts=pts, drs=drs, bF=float(D.window_impact(D.event_index())[1]), f0=A["f0"], fd=A["fd"])
 def con(f, a, b, v, h):
     x = DEC[f]; j = VAR[v]; return x["pts"][a][h, j] - x["pts"][b][h, j], x["drs"][a][:, h, j] - x["drs"][b][:, h, j]
 
-# identity check: A-B and B-C sum to A-C at every horizon and in every draw
-for f in FORMS:
-    for v in ("u", "P"):
-        for h in range(37):
-            p1, d1 = con(f, "A", "B", v, h); p2, d2 = con(f, "B", "C", v, h); p3, d3 = con(f, "A", "C", v, h)
-            pass
 # pairing check: the draws of A and C are positively related (common announcements, months, daily rows)
 for f in FORMS:
     cc = np.corrcoef(DEC[f]["drs"]["A"][:, 24, 1], DEC[f]["drs"]["C"][:, 24, 1])[0, 1]; mac(f"dc:{f}:corrAC", f"{cc:.2f}")
     pass
 
-def dec_rows(f, label, paths=True):
-    rows = []
-    x = DEC[f]
-    if paths:
-        for k, nm, ini in (("A", "A. Rates and FCI, window FCI movement", f"{x['bF']:.2f}"), ("B", "B. Same model, ordinary FCI movement", f"{x['ord0']:.2f}"), ("C", "C. Rates alone", "--")):
-            cells = [(num(x["pts"][k][24, VAR[v]]) + star(x["drs"][k][:, 24, VAR[v]]), f"[{num(pc(x['drs'][k][:, 24, VAR[v]], 5))}, {num(pc(x['drs'][k][:, 24, VAR[v]], 95))}]") for v in ("u", "P")]
-            a, b = two(cells); rows += [f"{nm} & {ini} & " + a, " & & " + b]
-    for a_, b_, nm in (("A", "C", "A $-$ C: effect of adding the FCI"), ("A", "B", "A $-$ B: initial FCI movement, dynamics fixed"), ("B", "C", "B $-$ C: the financial state and propagation")):
-        cells = []
-        for v in ("u", "P"):
-            p, d = con(f, a_, b_, v, 24); cells.append(cell(p, d))
-        ini = {"AC": "", "AB": f"{x['bF'] - x['ord0']:.2f}", "BC": ""}[a_ + b_]
-        a, b = two(cells); rows += [f"{nm} & {ini} & " + a, " & & " + b]
-    return rows
-def dec_table():
-    body = [r"\begin{tabular}{lrcc}\toprule", r" & Initial FCI & Unemployment gap (pp) & Price level (\%)\\ & movement & 24 months & 24 months\\ \midrule"]
-    body += [r"\multicolumn{4}{l}{\textit{Real version (baseline)}}\\"] + dec_rows("real", "")
-    for f in ("nom",):
-        body += [r"\addlinespace" + rf"\multicolumn{{4}}{{l}}{{\textit{{{NAMES[f]} version}}}}\\"] + dec_rows(f, "", paths=False)
-    body += [r"\bottomrule\end{tabular}"]
-    note = (r"Per +1 pp on the two-year yield in the window. Path A is the baseline model with the yield and the FCI, started with the window movement of the FCI (first column). Path B is the same fitted model started with the FCI movement that "
-            r"ordinarily accompanies a 1 pp innovation in the yield (Appendix~\ref{app:details}). Path C is the model with the yield alone. All three use the same sample, announcements, calendar and bootstrap draws, so the contrasts are paired and "
-            r"A $-$ B and B $-$ C add to A $-$ C in every draw. Brackets: 90\% intervals; $^{**}$, $^{*}$: 5 and 10 percent levels.")
-    (REPORT / "tab_decomp.tex").write_text(tbl("The Effect of the FCI: Initial Movement and Propagation", "tab:decomp", "\n".join(body), note) + "\n")
-dec_table()
-
-BANDS = lambda ax, h, d, col, a: (ax.fill_between(h, pc(d, 5), pc(d, 95), color=col, alpha=a, lw=0), ax.fill_between(h, pc(d, 16), pc(d, 84), color=col, alpha=min(2 * a, 0.4), lw=0))
-def fig_decomp():
-    x = DEC["real"]; h = np.arange(37); fig, axs = plt.subplots(2, 2, figsize=(7.2, 5.4), sharex=True)
-    for j, (v, ylab) in enumerate((("u", "Unemployment gap (pp)"), ("P", "Core PCE price level (%)"))):
-        ax = axs[0, j]; ax.axhline(0, color=GREY, lw=0.8); k = VAR[v]
-        BANDS(ax, h, x["drs"]["A"][:, :, k], BLUE, 0.12); ax.plot(h, x["pts"]["A"][:, k], color=BLUE, lw=2.0, label="A: yield and FCI, window FCI movement")
-        ax.plot(h, x["pts"]["B"][:, k], color=GREEN, lw=1.8, ls="-.", label="B: same model, ordinary FCI movement"); ax.plot(h, x["pts"]["C"][:, k], color=ORANGE, lw=1.8, ls="--", label="C: yield alone")
-        ax.set_ylabel(ylab); ax.set_title("Paths" if j == 0 else "", fontsize=8.5)
-        ax = axs[1, j]; ax.axhline(0, color=GREY, lw=0.8)
-        for (a_, b_), col, ls, lab in ((("A", "B"), BLUE, "-", "A $-$ B: initial FCI movement"), (("B", "C"), GREEN, "-.", "B $-$ C: financial state and propagation")):
-            pt = x["pts"][a_][:, k] - x["pts"][b_][:, k]; d = x["drs"][a_][:, :, k] - x["drs"][b_][:, :, k]; ax.fill_between(h, pc(d, 5), pc(d, 95), color=col, alpha=0.14, lw=0); ax.plot(h, pt, color=col, ls=ls, lw=1.8, label=lab)
-        ax.plot(h, x["pts"]["A"][:, k] - x["pts"]["C"][:, k], color=INK, lw=1.0, ls=":", label="A $-$ C: total"); ax.set_xlabel("Months after the policy move"); ax.set_ylabel(ylab)
-        ax.set_title("Contrasts (90% bands)" if j == 0 else "", fontsize=8.5); ax.set_xlim(0, 36)
-    h1, l1 = axs[0, 0].get_legend_handles_labels(); h2, l2 = axs[1, 0].get_legend_handles_labels()
-    fig.legend(h1 + h2, l1 + l2, loc="lower center", ncol=2, frameon=False, fontsize=7.2)
-    fig.tight_layout(rect=[0, 0.1, 1, 1]); fig.savefig(REPORT / "fig_decomp.pdf"); plt.close(fig)
-fig_decomp()
 for f in FORMS:
     for v in ("u", "P"):
         for h in (12, 24, 36):
-            for a_, b_, nm in (("A", "C", "AC"), ("A", "B", "AB"), ("B", "C", "BC")):
+            for a_, b_, nm in (("A", "C", "AC"),):
                 p, d = con(f, a_, b_, v, h); k = f"dc:{f}:{nm}:{v}:{h}"; mac(k, num(p)); mac(k + ":abs", ab(p)); mac(k + ":lo", num(pc(d, 5))); mac(k + ":hi", num(pc(d, 95))); mac(k + ":sig", "significant" if sig10(d) else "not significant")
-            for nm in "ABC":
+            for nm in "AC":
                 mac(f"dc:{f}:{nm}:{v}:{h}", num(DEC[f]["pts"][nm][h, VAR[v]]))
-    x = DEC[f]; mac(f"dc:{f}:bF", f"{x['bF']:.2f}"); mac(f"dc:{f}:ord", f"{x['ord0']:.2f}"); mac(f"dc:{f}:ord:lo", f"{pc(x['ordd'], 5):.2f}"); mac(f"dc:{f}:ord:hi", f"{pc(x['ordd'], 95):.2f}")
-    mac(f"dc:{f}:diff", f"{x['bF'] - x['ord0']:.2f}"); mac(f"dc:{f}:ratio:u", f"{con(f, 'A', 'B', 'u', 24)[0] / con(f, 'A', 'C', 'u', 24)[0]:.2f}")
-# timing: horizon of the largest A-C and A-B unemployment effect, and of the B-C effect
-x = DEC["real"]; mac("dc:peak:AC:u", int(np.argmax(x["pts"]["A"][:, 0] - x["pts"]["C"][:, 0]))); mac("dc:peak:AB:u", int(np.argmax(x["pts"]["A"][:, 0] - x["pts"]["B"][:, 0]))); mac("dc:peak:BC:u", int(np.argmax(x["pts"]["B"][:, 0] - x["pts"]["C"][:, 0])))
-# sensitivity of B to the ordinary loading (point estimates): the response is linear in the initial FCI movement phi, so A - B(phi) for any phi needs two simulations
+    mac(f"dc:{f}:bF", f"{DEC[f]['bF']:.2f}")
+x = DEC["real"]; mac("dc:peak:AC:u", int(np.argmax(x["pts"]["A"][:, 0] - x["pts"]["C"][:, 0])))
+# point model: the response to a window impact (1, phi) on the FCI, used for the window-to-close sensitivity below
 def point_model(form="real", fci="real", L=12):
     mv = ["u", "pi"]; idx0, pos0, _, _ = M.events(1); Xd, Yd = M.har_rows(form, fci, mv, None, "out"); Bd0 = M.har_fit(Xd, Yd, fci); X, Y = M.macro_data(form, fci, mv, L, "1996-01", None, "out", "none"); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]
     return lambda phi: M.to_level(M.irf_b(Bd0, C0, 2, Yd.shape[1], L, np.r_[1.0, phi], pos0)[0])     # the funds rate starts at zero on path B (irf_b)
-pm = point_model(); dpt = pm(DEC["real"]["bF"]) - pm(DEC["real"]["ord0"]); mac("dc:chk:AB", f"{dpt[24, 0]:.3f}")
-pass
-from lib import monthly as MO
-Xm, Ym, Pm = MO.design(MO.data("real", "real"), 12, "1996-01", MO.END); km = ~Pm.isin(MO.C2020); Xm, Ym = Xm[km], Ym[km]; rm = Ym - Xm @ np.linalg.lstsq(Xm, Ym, rcond=None)[0]
-ord_m = float(np.cov(rm[:, 3], rm[:, 2])[0, 1] / np.var(rm[:, 2], ddof=1)); mac("dc:ordm", f"{ord_m:.2f}")
-sens = {phi: pm(phi) for phi in (0.0, DEC["real"]["ord0"], ord_m, DEC["real"]["bF"])}
-mac("dc:sens:u:phi0", num(sens[DEC["real"]["bF"]][24, 0] - sens[0.0][24, 0])); mac("dc:sens:u:phim", num(sens[DEC["real"]["bF"]][24, 0] - sens[ord_m][24, 0]))
-mac("dc:sens:P:phi0", num(sens[DEC["real"]["bF"]][24, 1] - sens[0.0][24, 1])); mac("dc:sens:P:phim", num(sens[DEC["real"]["bF"]][24, 1] - sens[ord_m][24, 1]))
-mac("dc:sens:u:BCm", num(sens[ord_m][24, 0] - DEC["real"]["pts"]["C"][24, 0])); mac("dc:sens:P:BCm", num(sens[ord_m][24, 1] - DEC["real"]["pts"]["C"][24, 1]))
+pm = point_model()
 
 # =============================================================== 2. matched baseline table (24 months, without and with the FCI, paired differences)
 def matched():
@@ -164,13 +105,9 @@ def matched_two():
 matched_two()
 pass
 pass
-for v in ("u", "P"):
-    xs = [100 * con(f, "A", "B", v, 24)[0] / con(f, "A", "C", v, 24)[0] for f in FORMS]; mac(f"dc:shareAB:{v}:min", f"{min(xs):.0f}"); mac(f"dc:shareAB:{v}:max", f"{max(xs):.0f}")
 pass
 pass
 pass
-for f in FORMS:
-    mac(f"dc:{f}:shareAB:u", f"{100 * con(f, 'A', 'B', 'u', 24)[0] / con(f, 'A', 'C', 'u', 24)[0]:.0f}"); mac(f"dc:{f}:shareAB:P", f"{100 * con(f, 'A', 'B', 'P', 24)[0] / con(f, 'A', 'C', 'P', 24)[0]:.0f}")
 for f in FORMS:                                                                     # shifts from adding the FCI, monthly equations from 1973 (paired draws): bl:m73:<f>:AC:<v>:<h>
     for v in ("u", "P"):
         for h in (12, 24, 36):

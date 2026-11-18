@@ -20,6 +20,7 @@ This package rebuilds Note B on the baseline decided on 18 Nov 2026 (`../PLAN_RE
 * **Dropped:**
   * the FCI components and the weights tests (D10; left to Note A): step 09 is not run, `tab_components` and `tab_weights_test` are gone, and the `cmp*` code is kept in `lib/model.py` but unused;
   * Kiley r* (D5: LW only);
+  * the ordinary-day material (FS-A86, author 18 Nov 2026): the figure comparing an ordinary day with an announcement window and its loadings, and the path-B table (already out of the paper, FS-A81); `lib/model.estimate` still computes path B, unreported;
   * the Jarocinski-Karadi weights and the four calibrations of the weights (their indexes exist only in the r*-gap form; whether to rebuild them in the real form is an open point of the plan).
 * **Claims.** The qualitative claims are rewritten from the new results in `claims_real.py`, called by `07_report.py`. The checks of the r*-gap text in `../baseline/` are not carried over; in 07b, 07c and 07d they are removed (`pass`).
 
@@ -63,7 +64,7 @@ This takes about two hours with 4 cores, mostly step 3 (74 estimations). `CLAIMS
 | Monthly VARs with the funds rate; simulation | `tab_monthly_compact.tex`, `tab_main_monthly*.tex`, `tab_monthly_F.tex`, `tab_proxy_sim.tex` | 07 (04, 06) |
 | Phillips multiplier and sacrifice ratio | `tab_tradeoff.tex`, `tab_tradeoff_full.tex` | 07b, 07 (05) |
 | Decomposition of policy shocks (Section 3.5) | `fig_decomp_hd.pdf`, `tab_decomp_shares.tex`, `tab_decomp_full.tex`, `tab_decomp_diag.tex` | 07d (13) |
-| Mechanisms: paths A/B/C, persistence, timing, credit, ordinary day | `tab_decomp.tex`, `tab_persist.tex`, `fig_persist.pdf`, `tab_timing.tex`, `tab_credit.tex`, `fig_ordinary.pdf` | 07b, 07c |
+| Mechanisms: persistence, timing, credit | `tab_persist.tex`, `fig_persist.pdf`, `tab_timing.tex`, `tab_credit.tex` | 07b, 07c |
 | Robustness summary (six tests, real and nominal, 12 months) | `tab_rob_summary.tex`, `tab_main_R.tex` | 07 |
 | Final section: variance fitted by a spline; r*-gap step and spline responses | `tab_slow_shares.tex`, `tab_slow_resp.tex`, `tab_main_F.tex` | 07 |
 | Appendix: panels at 6 and 12 lags, further tests, lags, direct projection | `tab_app_*.tex`, `tab_main_A.tex`, `tab_lags.tex`, `tab_direct.tex` | 07, 07b |
