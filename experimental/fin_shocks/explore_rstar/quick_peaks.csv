@@ -1,0 +1,121 @@
+version,start,trend,fci,var,nobs,r12,r24,r36
+Nominal,1996,none,no FCI,u,359,-0.3707,-0.4540,-0.3678
+Nominal,1996,none,no FCI,P,359,0.0114,0.0552,0.0585
+Nominal,1996,none,with FCI,u,359,0.1316,0.1622,0.1614
+Nominal,1996,none,with FCI,P,359,-0.1387,-0.2916,-0.4163
+Nominal,1996,spline,no FCI,u,359,-0.3750,-0.3842,-0.2238
+Nominal,1996,spline,no FCI,P,359,0.0337,0.0076,-0.1336
+Nominal,1996,spline,with FCI,u,359,0.1666,0.1711,0.1683
+Nominal,1996,spline,with FCI,P,359,-0.0820,-0.2393,-0.3731
+Nominal,1996,lin,no FCI,u,359,-0.3558,-0.3658,-0.2152
+Nominal,1996,lin,no FCI,P,359,0.0491,0.0954,0.0522
+Nominal,1996,lin,with FCI,u,359,0.1824,0.1981,0.1960
+Nominal,1996,lin,with FCI,P,359,-0.0568,-0.1254,-0.1683
+Nominal,1996,brk,no FCI,u,359,-0.0735,0.0232,0.0724
+Nominal,1996,brk,no FCI,P,359,-0.0555,-0.1501,-0.2217
+Nominal,1996,brk,with FCI,u,359,0.3118,0.4281,0.3799
+Nominal,1996,brk,with FCI,P,359,-0.1219,-0.2816,-0.3585
+Nominal,1996,lvl,no FCI,u,359,-0.2613,-0.1537,0.0053
+Nominal,1996,lvl,no FCI,P,359,-0.0649,-0.2566,-0.4560
+Nominal,1996,lvl,with FCI,u,359,0.3490,0.6026,0.6805
+Nominal,1996,lvl,with FCI,P,359,-0.1591,-0.4363,-0.5991
+Nominal,1973,none,no FCI,u,623,0.1113,0.1720,0.1318
+Nominal,1973,none,no FCI,P,623,-0.0074,-0.0791,-0.1536
+Nominal,1973,none,with FCI,u,623,0.2881,0.1919,0.0631
+Nominal,1973,none,with FCI,P,623,-0.0141,-0.1695,-0.3311
+Nominal,1973,spline,no FCI,u,623,0.1078,0.3213,0.3748
+Nominal,1973,spline,no FCI,P,623,-0.0830,-0.2846,-0.4909
+Nominal,1973,spline,with FCI,u,623,0.3192,0.4237,0.3823
+Nominal,1973,spline,with FCI,P,623,-0.1365,-0.4121,-0.6174
+Nominal,1973,lin,no FCI,u,623,0.1483,0.3784,0.4503
+Nominal,1973,lin,no FCI,P,623,0.0647,0.0363,-0.0513
+Nominal,1973,lin,with FCI,u,623,0.3581,0.4366,0.4003
+Nominal,1973,lin,with FCI,P,623,-0.0028,-0.1727,-0.3106
+Nominal,1973,brk,no FCI,u,623,0.1434,0.3016,0.2924
+Nominal,1973,brk,no FCI,P,623,0.1421,0.2053,0.2245
+Nominal,1973,brk,with FCI,u,623,0.2355,0.2730,0.2095
+Nominal,1973,brk,with FCI,P,623,0.0628,0.0070,0.0097
+Nominal,1973,lvl,no FCI,u,623,0.1693,0.4153,0.4964
+Nominal,1973,lvl,no FCI,P,623,0.0594,0.0885,0.0993
+Nominal,1973,lvl,with FCI,u,623,0.2742,0.2537,0.1669
+Nominal,1973,lvl,with FCI,P,623,0.0698,0.0469,0.0480
+Real,1996,none,no FCI,u,359,-0.2818,-0.3471,-0.2999
+Real,1996,none,no FCI,P,359,-0.0762,-0.0610,-0.0620
+Real,1996,none,with FCI,u,359,0.1666,0.2264,0.2169
+Real,1996,none,with FCI,P,359,-0.2194,-0.3835,-0.4962
+Real,1996,spline,no FCI,u,359,-0.2948,-0.2916,-0.1716
+Real,1996,spline,no FCI,P,359,-0.0460,-0.0851,-0.2069
+Real,1996,spline,with FCI,u,359,0.1824,0.2026,0.1776
+Real,1996,spline,with FCI,P,359,-0.1509,-0.2934,-0.3877
+Real,1996,lin,no FCI,u,359,-0.2731,-0.2713,-0.1629
+Real,1996,lin,no FCI,P,359,-0.0438,-0.0368,-0.0912
+Real,1996,lin,with FCI,u,359,0.1987,0.2299,0.2090
+Real,1996,lin,with FCI,P,359,-0.1450,-0.2393,-0.2881
+Real,1996,brk,no FCI,u,359,-0.0142,0.0762,0.0942
+Real,1996,brk,no FCI,P,359,-0.1381,-0.2510,-0.3275
+Real,1996,brk,with FCI,u,359,0.2903,0.3784,0.2940
+Real,1996,brk,with FCI,P,359,-0.1837,-0.3388,-0.4003
+Real,1996,lvl,no FCI,u,359,-0.2031,-0.0990,0.0207
+Real,1996,lvl,no FCI,P,359,-0.1083,-0.2720,-0.4345
+Real,1996,lvl,with FCI,u,359,0.3349,0.5657,0.5929
+Real,1996,lvl,with FCI,P,359,-0.1975,-0.4370,-0.5514
+Real,1973,none,no FCI,u,623,0.0908,0.0763,0.0232
+Real,1973,none,no FCI,P,623,-0.2305,-0.4931,-0.7163
+Real,1973,none,with FCI,u,623,0.2488,0.1260,0.0234
+Real,1973,none,with FCI,P,623,-0.2429,-0.5495,-0.7857
+Real,1973,spline,no FCI,u,623,0.1269,0.2330,0.2234
+Real,1973,spline,no FCI,P,623,-0.1552,-0.3545,-0.5103
+Real,1973,spline,with FCI,u,623,0.2911,0.2777,0.1862
+Real,1973,spline,with FCI,P,623,-0.2083,-0.4625,-0.5997
+Real,1973,lin,no FCI,u,623,0.1020,0.1438,0.1109
+Real,1973,lin,no FCI,P,623,-0.1552,-0.3535,-0.5103
+Real,1973,lin,with FCI,u,623,0.2781,0.1844,0.0801
+Real,1973,lin,with FCI,P,623,-0.2209,-0.5058,-0.6522
+Real,1973,brk,no FCI,u,623,0.0965,0.1127,0.0810
+Real,1973,brk,no FCI,P,623,-0.0637,-0.1416,-0.1999
+Real,1973,brk,with FCI,u,623,0.1841,0.0966,0.0318
+Real,1973,brk,with FCI,P,623,-0.1119,-0.2501,-0.2874
+Real,1973,lvl,no FCI,u,623,0.1135,0.2424,0.2819
+Real,1973,lvl,no FCI,P,623,-0.0977,-0.1591,-0.1943
+Real,1973,lvl,with FCI,u,623,0.2298,0.1710,0.0939
+Real,1973,lvl,with FCI,P,623,-0.0872,-0.1722,-0.1897
+r*-gap (LW),1996,none,no FCI,u,359,-0.0996,-0.2119,-0.2541
+r*-gap (LW),1996,none,no FCI,P,359,-0.2048,-0.3230,-0.4387
+r*-gap (LW),1996,none,with FCI,u,359,0.4125,0.4528,0.3974
+r*-gap (LW),1996,none,with FCI,P,359,-0.3776,-0.6917,-0.9377
+r*-gap (LW),1996,spline,no FCI,u,359,-0.1458,-0.2156,-0.1824
+r*-gap (LW),1996,spline,no FCI,P,359,-0.1987,-0.4462,-0.7049
+r*-gap (LW),1996,spline,with FCI,u,359,0.3823,0.4191,0.3684
+r*-gap (LW),1996,spline,with FCI,P,359,-0.4308,-0.9814,-1.3693
+r*-gap (LW),1996,lin,no FCI,u,359,-0.0874,-0.0887,-0.0495
+r*-gap (LW),1996,lin,no FCI,P,359,-0.2303,-0.5013,-0.7763
+r*-gap (LW),1996,lin,with FCI,u,359,0.4109,0.4981,0.4615
+r*-gap (LW),1996,lin,with FCI,P,359,-0.4657,-1.0519,-1.4574
+r*-gap (LW),1996,brk,no FCI,u,359,0.1202,0.1792,0.1504
+r*-gap (LW),1996,brk,no FCI,P,359,-0.2153,-0.4040,-0.5256
+r*-gap (LW),1996,brk,with FCI,u,359,0.3815,0.4256,0.3010
+r*-gap (LW),1996,brk,with FCI,P,359,-0.3257,-0.6120,-0.7444
+r*-gap (LW),1996,lvl,no FCI,u,359,-0.1105,-0.1513,-0.1428
+r*-gap (LW),1996,lvl,no FCI,P,359,-0.1370,-0.3039,-0.4569
+r*-gap (LW),1996,lvl,with FCI,u,359,0.4010,0.4495,0.3950
+r*-gap (LW),1996,lvl,with FCI,P,359,-0.2898,-0.5539,-0.6882
+r*-gap (LW),1973,none,no FCI,u,623,0.1750,0.1467,0.0454
+r*-gap (LW),1973,none,no FCI,P,623,-0.2821,-0.6369,-0.9661
+r*-gap (LW),1973,none,with FCI,u,623,0.3262,0.2369,0.1505
+r*-gap (LW),1973,none,with FCI,P,623,-0.3236,-0.7566,-1.1390
+r*-gap (LW),1973,spline,no FCI,u,623,0.1847,0.2447,0.1822
+r*-gap (LW),1973,spline,no FCI,P,623,-0.1911,-0.4513,-0.6397
+r*-gap (LW),1973,spline,with FCI,u,623,0.2942,0.2229,0.1053
+r*-gap (LW),1973,spline,with FCI,P,623,-0.2547,-0.5654,-0.7214
+r*-gap (LW),1973,lin,no FCI,u,623,0.1935,0.2321,0.1446
+r*-gap (LW),1973,lin,no FCI,P,623,-0.2045,-0.5043,-0.7433
+r*-gap (LW),1973,lin,with FCI,u,623,0.3286,0.2413,0.1171
+r*-gap (LW),1973,lin,with FCI,P,623,-0.3077,-0.7093,-0.9153
+r*-gap (LW),1973,brk,no FCI,u,623,0.1289,0.1125,0.0589
+r*-gap (LW),1973,brk,no FCI,P,623,-0.1015,-0.2204,-0.3023
+r*-gap (LW),1973,brk,with FCI,u,623,0.2359,0.1300,0.0375
+r*-gap (LW),1973,brk,with FCI,P,623,-0.1502,-0.3178,-0.3518
+r*-gap (LW),1973,lvl,no FCI,u,623,0.1520,0.1949,0.1615
+r*-gap (LW),1973,lvl,no FCI,P,623,-0.1207,-0.2183,-0.2771
+r*-gap (LW),1973,lvl,with FCI,u,623,0.2720,0.1750,0.0861
+r*-gap (LW),1973,lvl,with FCI,P,623,-0.1135,-0.2119,-0.2204
