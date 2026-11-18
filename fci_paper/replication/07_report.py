@@ -1463,7 +1463,7 @@ for i, k in enumerate(("market", "gs", "frbus")):
     ax[0].bar(xs + (i - 1) * wd, v, wd, color=COLORS[k], label=NVLAB[k])
     if k == "market":
         ax[0].errorbar(xs - wd, v, yerr=[v - lo, hi - v], fmt="none", ecolor="#333333", capsize=2, lw=0.8)
-ax[0].set_xticks(xs); ax[0].set_xticklabels(["10-year", "Equities", "Dollar"]); ax[0].set_title("(a) Weight times standard deviation", loc="left", fontsize=9)
+ax[0].set_xticks(xs); ax[0].set_xticklabels(["10-year", "Equities", "Dollar"]); ax[0].set_title("(a) Directions, standard-deviation units", loc="left", fontsize=9)
 axes(ax[0], "points of policy", legend=True)
 cats = [("Windows", "window"), ("FRB/US hike, q4", "q4")]
 bars = []
