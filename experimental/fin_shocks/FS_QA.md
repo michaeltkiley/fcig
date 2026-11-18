@@ -312,3 +312,12 @@ Still open: whether Section 2 states the funds rate's window impact (0.72, curre
 ## FS-A89 (18 Nov 2026): the funds rate's window impact is a result; Phase 2 starts from the integration copy
 **Funds-rate impact (author):** Section 2 reports the funds rate's announcement-day move, 0.72 per +1 pp on the two-year yield, as a result of the window identification. It is the slope of current-month fed funds futures (USMPD MP1) on policy news divided by the two-year yield's, over the 252 announcements, the same estimator as the FCI's window loading. A clause says what MP1 measures: the expected average funds rate for the rest of the month. Check [verified, 18 Nov]: per +1 pp on the two-year window move, the effective funds rate rises 0.89 from the day before to the day after, 0.82 to five days after and 0.79 to 22 days after. 70 of the 252 announcements fall at the zero lower bound.
 **Text (author):** the new copy `paper/mp_transmission_real.tex` starts from `paper/mp_transmission_session_integration.tex`; `mp_transmission.tex` is untouched.
+
+## FS-A90 (18 Nov 2026): Phase 2 drafted
+`paper/mp_transmission_real.tex` (67 pp) is written from the integration copy on the `baseline_real/` results, with `paper/CHANGES_FOR_MERGE_REAL.md`. Every number is a macro; the claims are in `baseline_real/claims_real.py` (52, all hold); `check_paper.py` reports 0 problems; the compile is clean. Two points for the author's read:
+1. Section 2.1 keeps the ordinary-day logic in words, with no number or figure.
+2. Section 6's "two readings" paragraph frames trends and r* as further work.
+
+Facts found while writing [verified]:
+* Since 1996, a spline trend fits more of the r*-gap FCI (56 percent) than of the real FCI (32). From 1973 the r* adjustment removes trend: a linear trend explains 60 percent of the real FCI and 27 percent of the r*-gap FCI.
+* The FCI's direct 5-day persistence is above the model's (1.37 [1.11, 1.73] against 1.02); measured from the close before the announcement, the model is inside.

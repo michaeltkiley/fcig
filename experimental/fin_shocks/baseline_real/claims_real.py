@@ -81,4 +81,45 @@ def check(R, MON, SIM, B96, ROB):
     sh = lambda m, era, src, v: float(S[(S["mode"] == "infer") & (S.fci == "real") & (S.model == m) & (S.h == 24) & (S.era == era) & (S.source == src)][v].iloc[0])
     chk("decomposition: measured surprises explain under 1 percent of the 24-month variance of unemployment and inflation (both models)", all(sh(m, "1996-2026", "measured", v) < 0.01 for m in (1996, 1973) for v in ("u", "pi")))
     chk("decomposition: policy-direction shocks 1990-2026 explain 3 to 12 percent of unemployment and 4 to 6 percent of inflation at 24 m", all(0.03 <= sh(m, "1990-2026", "daily_all", "u") < 0.12 and 0.04 <= sh(m, "1990-2026", "daily_all", "pi") < 0.06 for m in (1996, 1973)))
+
+    # ---- further statements of paper/mp_transmission_real.tex (Phase 2)
+    chk("1996: adding the FCI shifts u24 by 0.6 to 0.8 pp and P24 by -0.35 to -0.5 percent in both versions (text: about 0.7 and 0.4)",
+        all(0.6 < est(f, "yes", "u", 24) - est(f, "no", "u", 24) < 0.8 and -0.5 < est(f, "yes", "P", 24) - est(f, "no", "P", 24) < -0.35 for f in V))
+    chk("1973: real rates alone lower the price level at 24 m by at least as much as the 1996 baseline with the FCI, minus 0.05", est("real", "no", "P", 24, T73) <= est("real", "yes", "P", 24) + 0.05)
+    chk("1973, real: adding the FCI moves the 24-month price fall by less than 0.1 (text: leaves it about where it is)", abs(est("real", "yes", "P", 24, T73) - est("real", "no", "P", 24, T73)) < 0.1)
+    chk("1973, with the FCI: the nominal price fall at 24 m is less than half the real one", abs(est("nom", "yes", "P", 24, T73)) < 0.5 * abs(est("real", "yes", "P", 24, T73)))
+    chk("multiplier, nominal from 1996 at 24 m: bounded set, point within 0.25 of the real one", np.isfinite(k("nom", "1996-01", 24).k_lo) and abs(k("nom", "1996-01", 24).kappa - k("real", "1996-01", 24).kappa) < 0.25)
+    chk("decomposition: policy-direction shocks since 1990 account for 20 to 35 percent of the two-year yield's 24-month variance (both models)", all(0.2 < sh(m, "1990-2026", "daily_all", "pol") < 0.35 for m in (1996, 1973)))
+    chk("decomposition: policy-direction shocks explain about 5 percent of inflation (4 to 6 percent, both models, since 1990)", all(0.04 <= sh(m, "1990-2026", "daily_all", "pi") < 0.06 for m in (1996, 1973)))
+    PER = pd.read_csv(RESULTS / "persistence.csv"); pw = PER[(PER.base == "window plus later closes") & (~PER.controls)].set_index(["series", "measure"]); pp_ = PER[(PER.base == "pre-event close")].set_index(["series", "measure"])
+    chk("persistence: for the yield the model lies inside the direct interval at 5, 22, 66 days and the first-month average", all(pw.loc[("y", m)].lo <= pw.loc[("y", m)].model <= pw.loc[("y", m)].hi for m in ("h5", "h22", "h66", "avg22")))
+    chk("persistence: for the FCI the model lies below the direct interval at 5 days and for the first-month average, inside at 22 and 66 days; the 66-day interval contains a reversal and more than twice the model",
+        pw.loc[("f", "h5")].model < pw.loc[("f", "h5")].lo and pw.loc[("f", "avg22")].model < pw.loc[("f", "avg22")].lo and all(pw.loc[("f", m)].lo <= pw.loc[("f", m)].model <= pw.loc[("f", m)].hi for m in ("h22", "h66")) and pw.loc[("f", "h66")].lo < 0 and pw.loc[("f", "h66")].hi > 2 * pw.loc[("f", "h66")].model)
+    chk("persistence: from the close before the announcement the model lies inside the FCI intervals at 5 days and for the first-month average", all(pp_.loc[("f", m)].lo <= pp_.loc[("f", m)].model <= pp_.loc[("f", m)].hi for m in ("h5", "avg22")))
+    chk("timing: with rates alone neither model raises unemployment at 24 m; adding the FCI raises it in both versions and both models", all(pd.read_csv(RESULTS / f"monthly_{f}_0_1996-01.csv").query("lags == 12 and ident == 'WE' and var == 'u' and h == 24").r.iloc[0] < 0 and est(f, "no", "u", 24) < 0 for f in V)
+        and all(pd.read_csv(RESULTS / f"monthly_{f}_{f}_1996-01.csv").query("lags == 12 and ident == 'WE' and var == 'u' and h == 24").r.iloc[0] > pd.read_csv(RESULTS / f"monthly_{f}_0_1996-01.csv").query("lags == 12 and ident == 'WE' and var == 'u' and h == 24").r.iloc[0] for f in V))
+    cr = lambda c: R[CS.case_id(c)].query("lags == 12").set_index("var")
+    cE, cE0, cA = (dict(form="real", fci="real", **{**B96, "macro": "u,pi,ebp,ip"}), dict(form="real", fci=0, **{**B96, "macro": "u,pi,ebp,ip"}), dict(form="real", fci="baa", **B96))
+    chk("credit: with the EBP (and IP) or the Baa spread, unemployment rises and the price level falls significantly at 24 m; with Baa the u interval includes zero and the price fall is larger than the baseline's",
+        all(cr(c).loc["u"].r24 > 0 and cr(c).loc["P"].r24 < 0 and cr(c).loc["P"].lo24 * cr(c).loc["P"].hi24 > 0 for c in (cE, cA)) and cr(cA).loc["u"].lo24 < 0 and cr(cA).loc["P"].r24 < est("real", "yes", "P", 24))
+    chk("credit: without the FCI, adding the EBP (and IP) turns the 24-month unemployment response positive", cr(cE0).loc["u"].r24 > 0 > est("real", "no", "u", 24))
+    chk("robustness 1996, real: u at 12 m lowest with the 1985 start and highest with Bauer-Swanson", min(ROB[("real", t, "", "u")][0] for t in tests) == ROB[("real", "s85", "", "u")][0] and max(ROB[("real", t, "", "u")][0] for t in tests) == ROB[("real", "bs", "", "u")][0])
+    chk("robustness, real without the funds rate: smaller responses from 1996 (u and P at 12 m)", all(abs(ROB[("real", "noff", "", v)][0]) < abs(ROB[("real", "base", "", v)][0]) for v in ("u", "P")))
+    chk("robustness, real with 2020 left in: unemployment at 12 m below the baseline's in both samples, the price level within 0.1", all(ROB[("real", "t2020", sx, "u")][0] < ROB[("real", "base", sx, "u")][0] and abs(ROB[("real", "t2020", sx, "P")][0] - ROB[("real", "base", sx, "P")][0]) < 0.1 for sx in ("", "73")))
+    chk("sample ending 2019, real with the FCI: from 1996 the price level does not fall at 24 m and unemployment rises; from 1973 the price level falls significantly", est("real", "yes", "P", 24, end=2019, t2020="in") > 0 and est("real", "yes", "u", 24, end=2019, t2020="in") > 0 and sig("real", "yes", "P", 24, T73, end=2019, t2020="in") and est("real", "yes", "P", 24, T73, end=2019, t2020="in") < 0)
+    chk("Jarocinski-Karadi surprise (real with FCI): u24 within 0.1 and P24 within 0.1 of the baseline in both samples", all(abs(est("real", "yes", v, 24, st, shock="jk") - est("real", "yes", v, 24, st)) < 0.1 for v in ("u", "P") for st in ("1996-01", T73)))
+    chk("6 lags, real from 1996: u at 24 m within 0.05 of 12 lags; P at 24 m 10 to 30 percent smaller", (lambda d6: abs(d6.loc["u"].r24 - est("real", "yes", "u", 24)) < 0.05 and 0.7 < d6.loc["P"].r24 / est("real", "yes", "P", 24) < 0.9)(R[CS.case_id(dict(form="real", fci="real", **B96))].query("lags == 6").set_index("var")))
+    LG6 = [c for p_ in CS.PANELS if p_["id"][0] in "BR" for c in p_["cases"] if c["fci"] != 0]
+    neg6 = [(CS.case_id(c), h) for c in LG6 for h in H3 if (lambda r: r[f"hi{h}"] < 0)(R[CS.case_id(c)].query("lags == 6 and var == 'u'").iloc[0])]
+    chk("lags: with 6 lags only the nominal version from 1973 with 2020 left in shows a significant fall in unemployment (two horizons); none with 12 lags", len(neg6) == 2 and all(i.startswith("nom_nom_upi_1973-01_all_in") for i, _ in neg6))
+    chk("final section: a linear trend explains more of the real FCI than of the version relative to r* since 1973 (macros tr:r:r2, tr:s:r2), and the spline fits more of the r* version than of the real version since 1996", _slow_ok())
+    chk("final section: with the spline from 1973 the real responses with the FCI at 24 m are significant at the 5 percent level", all(sig5("real", "yes", v, 24, T73, trend="spline") for v in ("u", "P")))
     return bad
+
+def _slow_ok():
+    """Reads the macros written by 07_report (final_section) and 07b (gs_comparison)."""
+    import re
+    from lib.paths import REPORT
+    txt = "".join((REPORT / f).read_text() for f in ("numbers.tex", "numbers_ext.tex") if (REPORT / f).exists())
+    g = lambda k: float(re.search(r"csname bl:" + re.escape(k) + r"\\endcsname\{([-0-9.]+)\}", txt).group(1))
+    return g("tr:r:r2") > g("tr:s:r2") + 20 and g("slow:rstar:idx") > g("slow:real:idx")

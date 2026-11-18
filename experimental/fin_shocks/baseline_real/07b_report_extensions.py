@@ -206,7 +206,7 @@ def sample_facts():
     for tag, kw in (("base96", {}), ("end96", dict(end=2019, t2020="in")), ("in96", dict(t2020="in")), ("base73", dict(start="1973-01")), ("end73", dict(start="1973-01", end=2019, t2020="in")), ("in73", dict(start="1973-01", t2020="in"))):
         z = load("real", "real", **kw); C_ = load("real", 0, **kw)
         for v in ("u", "P"):
-            k = VAR[v]; mac(f"sm:{tag}:{v}:24", num(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:lo", num(pc(z["sd"][:, 24, k], 5))); mac(f"sm:{tag}:{v}:24:hi", num(pc(z["sd"][:, 24, k], 95)))
+            k = VAR[v]; mac(f"sm:{tag}:{v}:24", num(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:abs", ab(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:lo", num(pc(z["sd"][:, 24, k], 5))); mac(f"sm:{tag}:{v}:24:hi", num(pc(z["sd"][:, 24, k], 95)))
             mac(f"sm:{tag}:{v}:24:sig5", "significant" if sig5(z["sd"][:, 24, k]) else "not significant")
             pt, d = z["s0"][24, k] - C_["s0"][24, k], z["sd"][:, 24, k] - C_["sd"][:, 24, k]; mac(f"sm:{tag}:{v}:24:AC", num(pt)); mac(f"sm:{tag}:{v}:24:AClo", num(pc(d, 5))); mac(f"sm:{tag}:{v}:24:AChi", num(pc(d, 95)))
     ev = D.EV.d.iloc[D.event_index()]; mac("sm:nev:19", int((ev <= "2019-12-31").sum())); mac("sm:nev:all", len(ev)); mac("sm:nev:post", int((ev > "2019-12-31").sum()))

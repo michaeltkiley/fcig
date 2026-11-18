@@ -234,6 +234,15 @@ def write_numbers():
     from lib.daily import window_impact, event_index, EV
     from lib import monthly as MO
     from lib.model import MAC
+    from lib import model as M_
+    d("bl:ff:b", f"{M_.B_FF:.2f}")                                                      # funds-rate window impact per +1 pp on the two-year yield (MP1), FS-A89
+    ev_ = EV.iloc[event_index()]; xs_ = ev_.ns.values - ev_.ns.values.mean(); sl_ = lambda y: float(np.sum((y - np.nanmean(y)) * xs_) / np.sum(xs_ * xs_)); s2_ = sl_(ev_.UST2Y.values)
+    for k_ in (1, 5, 22):                                                                # realized change in the effective funds rate, day before to k days after, per +1 pp on the two-year window move
+        ch_ = np.array([M_._dff[t:].iloc[min(k_, len(M_._dff[t:]) - 1)] - M_._dff[:t - pd.Timedelta(days=1)].iloc[-1] for t in pd.DatetimeIndex(ev_.d)]); d(f"bl:ff:dff{k_}", f"{sl_(ch_) / s2_:.2f}")
+    zl_ = M_.DFFM < 0.25                                                                 # zero lower bound: monthly average funds rate below 0.25 (FS-A88)
+    for nm_, a_ in (("96", "1996-01"), ("74", "1974-01")): z_ = zl_.loc[a_:"2026-09"]; d(f"bl:zlb:share{nm_}", f"{100 * z_.mean():.0f}")
+    d("bl:zlb:n", str(int(zl_.loc["1996-01":"2026-09"].sum())))
+    zd_ = pd.DatetimeIndex(ev_.d); zm_ = zl_.reindex(zd_.to_period("M")).fillna(False).values; d("bl:zlb:ev", str(int(zm_.sum())))
     d("bl:bF", f"{window_impact(event_index())[1]:.2f}")
     ie = event_index(); s_ = EV.ns.values[ie]                           # share of each window move explained by the policy-news surprise (R-squared)
     for col, k in (("UST2Y", "y2"), ("UST10Y", "y10"), ("SP500", "sp"), ("DXY", "usd"), ("idx_win", "fci")): d(f"bl:r2:{k}", f"{100 * np.corrcoef(s_, EV[col].values[ie])[0, 1] ** 2:.0f}")
@@ -398,6 +407,7 @@ def rob_summary():
            r"\begin{tabular}{lcccc}\toprule & \multicolumn{2}{c}{Monthly equations from 1996} & \multicolumn{2}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5} & Unemployment gap & Price level & Unemployment gap & Price level\\ \midrule",
            *out_rows, r"\bottomrule\end{tabular}",
            r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, federal funds rate and FCI in the stated version; responses 12 months after a policy move that raises the two-year yield 1 percentage point in the announcement window; unemployment gap in percentage points, price level in percent; 12 lags unless stated; March--December 2020 dropped unless stated. The 1985 start has monthly equations from January 1985 (1996 columns). $^{**}$ and $^{*}$: the 95\% and 90\% bootstrap intervals exclude zero; 90\% intervals in brackets. Full results at 12, 24 and 36 months for both versions are in the appendix.\end{flushleft}", r"\end{table}"]
+    from lib import model as M_; dm("ratio1y", f"{M_.RATIO_1Y:.2f}")                 # 1-year / 2-year announcement-day response (appendix A4)
     (REPORT / "tab_rob_summary.tex").write_text("\n".join(out) + "\n")
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
 rob_summary()
@@ -419,7 +429,7 @@ def final_section():
             for k, _ in series:
                 y = (FB[k].values if k in FB else M_.MAC[k].reindex(P_).values); ok = ~np.isnan(y); b_ = np.linalg.lstsq(Z[ok], y[ok], rcond=None)[0]; e_ = y[ok] - Z[ok] @ b_
                 r2 = 1 - e_ @ e_ / ((y[ok] - y[ok].mean()) @ (y[ok] - y[ok].mean())); cells.append(f"{100 * r2:.0f}"); dm(f"{f}{sx}:{k}", f"{100 * r2:.0f}")
-        if f in ("nom", "real") or True: srows.append(f"{CS.FORMS[f]} & " + " & ".join(cells) + r"\\")
+        srows.append(f"{CS.FORMS[f] if f != 'rstar' else 'Relative to $r^*$'} & " + " & ".join(cells) + r"\\")
     head = " & ".join(lab for _, lab in series)
     (REPORT / "tab_slow_shares.tex").write_text("\n".join([r"\begin{table}[tp]\centering\scriptsize\setlength{\tabcolsep}{3pt}", r"\caption{Variance Fitted by a Spline Trend}\label{tab:slowshares}",
         r"\begin{tabular}{l" + "r" * (2 * len(series)) + r"}\toprule & \multicolumn{%d}{c}{Monthly equations from 1996} & \multicolumn{%d}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-%d}\cmidrule(lr){%d-%d}" % (len(series), len(series), 1 + len(series), 2 + len(series), 1 + 2 * len(series)),
@@ -440,10 +450,10 @@ def final_section():
         g = R[CS.case_id(dict(form="rstar", fci="rstar", **{**B96, "start": st}))]; g = g[g.lags == MAIN_LAGS]; pts, ivs = [], []
         for v in ("u", "P"):
             r = g[g["var"] == v].iloc[0]
-            for h in (12, 24): pts.append(num(r[f"r{h}"]) + stars(r, h)); ivs.append(f"[{num(r[f'lo{h}'])}, {num(r[f'hi{h}'])}]"); dm(f"rstar{sx}:{v}:{h}", num(r[f"r{h}"]))
+            for h in (12, 24): pts.append(num(r[f"r{h}"]) + stars(r, h)); ivs.append(f"[{num(r[f'lo{h}'])}, {num(r[f'hi{h}'])}]"); dm(f"rstar{sx}:{v}:{h}", num(r[f"r{h}"])); dm(f"rstar{sx}:{v}:{h}:abs", f"{abs(r[f'r{h}']):.2f}")
         rows += [r"$r^*$-gap (LW) & \multicolumn{4}{c}{} & " + " & ".join(pts) + r"\\", r" & \multicolumn{4}{c}{} & " + " & ".join(rf"{{\tiny {x}}}" for x in ivs) + r"\\", r"\addlinespace"]
     (REPORT / "tab_slow_resp.tex").write_text("\n".join([r"\begin{table}[tp]\centering\scriptsize\setlength{\tabcolsep}{2.5pt}", r"\caption{Slow-Moving Rates: The $r^*$-Gap Step and a Spline Trend}\label{tab:slowresp}",
-        r"\begin{tabular}{lrrrrrrrr}\toprule & \multicolumn{4}{c}{Nominal} & \multicolumn{4}{c}{Real (the $r^*$-gap row: $r^*$-gap)}\\ \cmidrule(lr){2-5}\cmidrule(lr){6-9} & \multicolumn{2}{c}{Unemployment gap} & \multicolumn{2}{c}{Price level} & \multicolumn{2}{c}{Unemployment gap} & \multicolumn{2}{c}{Price level}\\ & 12 m & 24 m & 12 m & 24 m & 12 m & 24 m & 12 m & 24 m\\ \midrule",
+        r"\begin{tabular}{lrrrrrrrr}\toprule & \multicolumn{4}{c}{Nominal} & \multicolumn{4}{c}{Real (last row: relative to $r^*$)}\\ \cmidrule(lr){2-5}\cmidrule(lr){6-9} & \multicolumn{2}{c}{Unemployment gap} & \multicolumn{2}{c}{Price level} & \multicolumn{2}{c}{Unemployment gap} & \multicolumn{2}{c}{Price level}\\ & 12 m & 24 m & 12 m & 24 m & 12 m & 24 m & 12 m & 24 m\\ \midrule",
         *rows[:-1], r"\bottomrule\end{tabular}",
         r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, funds rate and FCI with the FCI, 12 lags, March--December 2020 dropped. Spline trend: natural cubic spline in time in every monthly equation (knots at the first and last estimation months and at NBER peaks inside). $r^*$-gap: rates less expected inflation and Laubach--Williams $r^*$, the FCI in the $r^*$-gap form. $^{**}$, $^{*}$: 95\% and 90\% bootstrap intervals exclude zero; 90\% intervals below.\end{flushleft}", r"\end{table}"]) + "\n")
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
@@ -463,20 +473,6 @@ def line(ax, d, color, ls, label, lo="lo", hi="hi", alpha=0.14):
     ax.plot(d.h, d.r, color=color, ls=ls, lw=1.8, label=label)
 
 base = CS.PANELS[0]["cases"]
-fig, axs = plt.subplots(2, 2, figsize=(6.2, 3.9), sharex=True)
-for j, f in enumerate(("nom", "real")):
-    cs = {c["fci"]: c for c in base if c["form"] == f}
-    for i, v in enumerate(("u", "P")):
-        ax = axs[i, j]; ax.axhline(0, color=GREY, lw=0.8)
-        for c, col, ls, lab in ((cs[0], ORANGE, "--", "2-year yield and funds rate"), (cs[f], BLUE, "-", "with FCI")):
-            d = paths(c); d = d[(d.kind == "macro") & (d["var"] == v)]; line(ax, d, col, ls, lab)
-        if i == 0: ax.set_title(CS.FORMS[f] + " rates", fontsize=8.5)
-        if j == 0: ax.set_ylabel("Unemployment gap (pp)" if v == "u" else "Core PCE price level (%)")
-        if i == 1: ax.set_xlabel("Months after the policy move")
-axs[0, 0].legend(frameon=False, loc="upper left", fontsize=7.5)
-fig.suptitle("Response to a policy move that raises the 2-year yield 1 percentage point (12 lags; bands: 68 and 90 percent intervals)", fontsize=8.5, y=0.995)
-fig.tight_layout(); fig.savefig(REPORT / "fig_steps.pdf"); plt.close(fig)
-
 fig, ax = plt.subplots(1, 1, figsize=(4.4, 2.8)); ax.axhline(0, color=GREY, lw=0.8)
 c = next(c for c in base if c["form"] == HEAD_FORM and c["fci"] == HEAD_FORM); d = paths(c); d = d[d.kind == "fin"]
 line(ax, d[d["var"] == "pol"], INK, "-", "2-year yield, real", alpha=0.10); line(ax, d[d["var"] == "idx"], GREY, "--", "FCI (2-year-yield units)", alpha=0.10)
@@ -553,9 +549,8 @@ def fig_size():
     fig.tight_layout(rect=[0, 0.13, 1, 1]); fig.savefig(REPORT / "fig_size.pdf"); plt.close(fig)
 fig_size()
 
-def fig_intro():
-    """Figure 1: the two baselines, nominal and real; columns = nominal and real, rows = unemployment gap and price level; rates alone (dashed) and with the FCI (solid);
-    one figure per start (fig_intro.pdf from 1996, fig_intro73.pdf from 1973); 68 and 90 percent bands."""
+def fig_steps():
+    """fig_steps.pdf (1996) and fig_steps73.pdf (1973): columns = nominal and real, rows = unemployment gap and price level; rates alone (dashed) and with the FCI (solid); 68 and 90 percent bands."""
     for st, sx in STARTS:
         base = {**B96, "start": st}
         fig, axs = plt.subplots(2, 2, figsize=(7.0, 5.2), sharex=True)
@@ -567,13 +562,34 @@ def fig_intro():
                 d = paths(dict(form=f, fci=f, **base)); d = d[(d.kind == "macro") & (d["var"] == v)]
                 ax.fill_between(d.h, d.lo, d.hi, color=BLUE, alpha=0.13, lw=0); ax.fill_between(d.h, d.lo68, d.hi68, color=BLUE, alpha=0.25, lw=0); h1 = ax.plot(d.h, d.r, color=BLUE, lw=2.0)[0]
                 ax.set_xlim(0, 36)
-                if i == 0: ax.set_title(f"{CS.FORMS[f]} rates, monthly equations from {st[:4]}", fontsize=8.5)
+                if i == 0: ax.set_title(f"{CS.FORMS[f]} rates and FCI", fontsize=8.5)
                 if j == 0: ax.set_ylabel(ylab)
                 if i == 1: ax.set_xlabel("Months after the policy move")
         for i in range(2):
             lo = min(axs[i, 0].get_ylim()[0], axs[i, 1].get_ylim()[0]); hi = max(axs[i, 0].get_ylim()[1], axs[i, 1].get_ylim()[1]); axs[i, 0].set_ylim(lo, hi); axs[i, 1].set_ylim(lo, hi)
         fig.legend([h1, h2], ["Two-year yield, funds rate and FCI", "Two-year yield and funds rate"], loc="lower center", ncol=2, frameon=False, fontsize=7.5)
-        fig.tight_layout(rect=[0, 0.05, 1, 1]); fig.savefig(REPORT / f"fig_intro{sx}.pdf"); plt.close(fig)
+        fig.tight_layout(rect=[0, 0.05, 1, 1]); fig.savefig(REPORT / f"fig_steps{sx}.pdf"); plt.close(fig)
+fig_steps()
+
+def fig_intro():
+    """Figure 1: the headline (real) version, rates alone and with the FCI; columns = monthly equations from 1996 and from 1973, rows = unemployment gap and price level; 68 and 90 percent bands."""
+    fig, axs = plt.subplots(2, 2, figsize=(7.0, 5.2), sharex=True)
+    for j, (st, title) in enumerate((("1996-01", "Monthly equations from 1996"), ("1973-01", "Monthly equations from 1973"))):
+        base = {**B96, "start": st}
+        for i, (v, ylab) in enumerate((("u", "Unemployment gap (pp)"), ("P", "Core PCE price level (%)"))):
+            ax = axs[i, j]; ax.axhline(0, color=GREY, lw=0.8)
+            e = paths(dict(form=HEAD_FORM, fci=0, **base)); e = e[(e.kind == "macro") & (e["var"] == v)]
+            ax.fill_between(e.h, e.lo, e.hi, color=ORANGE, alpha=0.10, lw=0); ax.fill_between(e.h, e.lo68, e.hi68, color=ORANGE, alpha=0.20, lw=0); h2 = ax.plot(e.h, e.r, color=ORANGE, ls="--", lw=1.9)[0]
+            d = paths(dict(form=HEAD_FORM, fci=HEAD_FORM, **base)); d = d[(d.kind == "macro") & (d["var"] == v)]
+            ax.fill_between(d.h, d.lo, d.hi, color=BLUE, alpha=0.13, lw=0); ax.fill_between(d.h, d.lo68, d.hi68, color=BLUE, alpha=0.25, lw=0); h1 = ax.plot(d.h, d.r, color=BLUE, lw=2.0)[0]
+            ax.set_xlim(0, 36)
+            if i == 0: ax.set_title(title, fontsize=8.5)
+            if j == 0: ax.set_ylabel(ylab)
+            if i == 1: ax.set_xlabel("Months after the policy move")
+    for i in range(2):
+        lo = min(axs[i, 0].get_ylim()[0], axs[i, 1].get_ylim()[0]); hi = max(axs[i, 0].get_ylim()[1], axs[i, 1].get_ylim()[1]); axs[i, 0].set_ylim(lo, hi); axs[i, 1].set_ylim(lo, hi)
+    fig.legend([h1, h2], ["Real two-year yield, funds rate and FCI", "Real two-year yield and funds rate"], loc="lower center", ncol=2, frameon=False, fontsize=7.5)
+    fig.tight_layout(rect=[0, 0.05, 1, 1]); fig.savefig(REPORT / "fig_intro.pdf"); plt.close(fig)
 fig_intro()
 from lib import latex_style as LST
 LST.restyle_dir(REPORT)                                                              # house LaTeX style: [tp] floats, Title Case captions, notes below the table
