@@ -45,7 +45,19 @@ def _spf(name, col):
 _q = (_spf("BILL10", "BILL10") - _spf("CPI10", "CPI10"))
 spf = _q.reindex(pd.period_range(_q.index[0], D0.index[-1], freq="M")).interpolate(limit_area="inside").ffill().reindex(D0.index)
 D0["rstar SPF"] = spf
-RS = pd.DataFrame({"LW": D0["rstar LW"], "Kiley": D0["rstar Kiley"], "MA8 (real 2-year)": ma8, "Forward 9-10y less e10": fwd, "MA8 nominal 2-year (replaces e + r*)": nma8, "MA5 real 2-year, lagged": ma5, "MA5 nominal 2-year, lagged (replaces e + r*)": nma5, "SPF BILL10 - CPI10": spf, "e2 (2-year expected inflation)": M._e2m.reindex(D0.index)})
+# hp<lam> / nhp<lam> (18 Nov, author): ONE-SIDED Hodrick-Prescott trend of the monthly 2-year (real: r* slot; nominal: replaces e + r*), lambda 1600 and 16000
+#   as given by the author (on monthly data; the usual monthly value is 129600). One-sided = the last value of the HP trend of the data up to month t, re-estimated each month.
+from statsmodels.tsa.filters.hp_filter import hpfilter
+def hp1s(x, lam, burn=36):
+    x = x.dropna(); out = pd.Series(np.nan, index=x.index)
+    for i in range(burn, len(x)): out.iloc[i] = hpfilter(x.iloc[:i + 1].values, lam)[1][-1]
+    return out
+HP = {}
+for lam in (1600, 16000):
+    HP[f"hp{lam}"] = hp1s(real2.loc["1961-06":], lam).reindex(D0.index)
+    HP[f"nhp{lam}"] = hp1s(M.Y2M.reindex(D0.index).loc["1961-06":], lam).reindex(D0.index)
+    D0[f"rstar HP{lam}"] = HP[f"hp{lam}"]; D0[f"rstar NHP{lam}"] = HP[f"nhp{lam}"] - D0.einf_10y
+RS = pd.DataFrame({"LW": D0["rstar LW"], "Kiley": D0["rstar Kiley"], "MA8 (real 2-year)": ma8, "Forward 9-10y less e10": fwd, "MA8 nominal 2-year (replaces e + r*)": nma8, "MA5 real 2-year, lagged": ma5, "MA5 nominal 2-year, lagged (replaces e + r*)": nma5, "SPF BILL10 - CPI10": spf, **{f"HP one-sided {k}": v for k, v in HP.items()}, "e2 (2-year expected inflation)": M._e2m.reindex(D0.index)})
 RS.loc["1965-01":].to_csv(HERE / "rstar_measures.csv", float_format="%.4f")
 
 # ---------------------------------------------------------------- plug into the model exactly as LW / Kiley are
@@ -68,6 +80,15 @@ M.IDXM["nma5"] = noteA.market_index(noteA.index_inputs(D0, "rstar", "rstar NMA5"
 M.FCI["nma5"] = M._daily_fci(M.IDXM["nma5"])
 for R in (M.RATE, M.RATE2): R["nma5"] = POL - interp_monthly(nma5)
 for R in (M.RATEM, M.RATEM2): R["nma5"] = M.Y2M - nma5
+for lam in (1600, 16000):
+    k = f"hp{lam}"; col = f"rstar HP{lam}"
+    M.IDXM[k] = noteA.market_index(noteA.index_inputs(D0, "rstar", col), w).loc[noteA.START:noteA.END]; M.FCI[k] = M._daily_fci(M.IDXM[k])
+    for R in (M.RATE, M.RATE2): R[k] = POL - interp_monthly(M._e2 + D0[col])
+    for R in (M.RATEM, M.RATEM2): R[k] = M.Y2M - M._e2m - D0[col]
+    k = f"nhp{lam}"; tr = HP[k]
+    M.IDXM[k] = noteA.market_index(noteA.index_inputs(D0, "rstar", f"rstar NHP{lam}"), w).loc[noteA.START:noteA.END]; M.FCI[k] = M._daily_fci(M.IDXM[k])
+    for R in (M.RATE, M.RATE2): R[k] = POL - interp_monthly(tr)
+    for R in (M.RATEM, M.RATEM2): R[k] = M.Y2M - tr
 # same check on the rate: rebuilding LW this way reproduces the stored rate
 assert np.allclose((M.Y2M - M._e2m - D0["rstar LW"]).dropna(), M.RATEM["rstar"].dropna())
 

@@ -15,7 +15,8 @@ def macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=False):
 M.macro_data = macro_data
 rows = []
 import os as _os
-_SETS = {"ma8": (("rstar", "LW (baseline)"), ("ma8", "MA8 real 2-year"), ("nma8", "MA8 nominal 2-year")), "fwd": (("fwd", "Forward 9-10y less e10"),)}
+_SETS = {"ma8": (("rstar", "LW (baseline)"), ("ma8", "MA8 real 2-year"), ("nma8", "MA8 nominal 2-year")), "fwd": (("fwd", "Forward 9-10y less e10"),),
+         "hp": (("hp1600", "HP one-sided 1600, real"), ("hp16000", "HP one-sided 16000, real"), ("nhp1600", "HP one-sided 1600, nominal"), ("nhp16000", "HP one-sided 16000, nominal"))}
 _SET = _os.environ.get("QT_SET", "ma8"); _SFX = "" if _SET == "ma8" else "_" + _SET
 for f, lab in _SETS[_SET]:
     for s in ("1996-01", "1973-01"):
