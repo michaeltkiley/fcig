@@ -1,0 +1,49 @@
+rstar,start,trend,fci,lags,var,nobs,r12,r24,r36
+LW (baseline),1996,none,no FCI,12,u,359,-0.0996,-0.2119,-0.2541
+LW (baseline),1996,none,no FCI,12,P,359,-0.2048,-0.3230,-0.4387
+LW (baseline),1996,none,with FCI,12,u,359,0.4125,0.4528,0.3974
+LW (baseline),1996,none,with FCI,12,P,359,-0.3776,-0.6917,-0.9377
+LW (baseline),1996,spline,no FCI,12,u,359,-0.1458,-0.2156,-0.1824
+LW (baseline),1996,spline,no FCI,12,P,359,-0.1987,-0.4462,-0.7049
+LW (baseline),1996,spline,with FCI,12,u,359,0.3823,0.4191,0.3684
+LW (baseline),1996,spline,with FCI,12,P,359,-0.4308,-0.9814,-1.3693
+LW (baseline),1996,quad,no FCI,12,u,359,-0.0883,-0.0516,0.0038
+LW (baseline),1996,quad,no FCI,12,P,359,-0.2108,-0.4643,-0.7402
+LW (baseline),1996,quad,with FCI,12,u,359,0.4016,0.5033,0.4440
+LW (baseline),1996,quad,with FCI,12,P,359,-0.3779,-0.7810,-1.0409
+LW (baseline),1973,none,no FCI,12,u,623,0.1750,0.1467,0.0454
+LW (baseline),1973,none,no FCI,12,P,623,-0.2821,-0.6369,-0.9661
+LW (baseline),1973,none,with FCI,12,u,623,0.3262,0.2369,0.1505
+LW (baseline),1973,none,with FCI,12,P,623,-0.3236,-0.7566,-1.1390
+LW (baseline),1973,spline,no FCI,12,u,623,0.1847,0.2447,0.1822
+LW (baseline),1973,spline,no FCI,12,P,623,-0.1911,-0.4513,-0.6397
+LW (baseline),1973,spline,with FCI,12,u,623,0.2942,0.2229,0.1053
+LW (baseline),1973,spline,with FCI,12,P,623,-0.2547,-0.5654,-0.7214
+LW (baseline),1973,quad,no FCI,12,u,623,0.1591,0.1372,0.0477
+LW (baseline),1973,quad,no FCI,12,P,623,-0.1494,-0.3427,-0.4836
+LW (baseline),1973,quad,with FCI,12,u,623,0.2767,0.1321,0.0026
+LW (baseline),1973,quad,with FCI,12,P,623,-0.1819,-0.4041,-0.5210
+EWMA 180 real 2-year,1996,none,no FCI,12,u,359,-0.3367,-0.4755,-0.4559
+EWMA 180 real 2-year,1996,none,no FCI,12,P,359,-0.0244,0.0941,0.1977
+EWMA 180 real 2-year,1996,none,with FCI,12,u,359,0.0747,0.0135,-0.0578
+EWMA 180 real 2-year,1996,none,with FCI,12,P,359,-0.0425,0.1138,0.3055
+EWMA 180 real 2-year,1996,spline,no FCI,12,u,359,-0.3067,-0.3172,-0.1974
+EWMA 180 real 2-year,1996,spline,no FCI,12,P,359,-0.0397,-0.0670,-0.1767
+EWMA 180 real 2-year,1996,spline,with FCI,12,u,359,0.2045,0.2734,0.2225
+EWMA 180 real 2-year,1996,spline,with FCI,12,P,359,-0.0956,-0.1556,-0.1813
+EWMA 180 real 2-year,1996,quad,no FCI,12,u,359,-0.2480,-0.1887,-0.0467
+EWMA 180 real 2-year,1996,quad,no FCI,12,P,359,-0.0924,-0.1626,-0.2812
+EWMA 180 real 2-year,1996,quad,with FCI,12,u,359,0.2590,0.5051,0.5765
+EWMA 180 real 2-year,1996,quad,with FCI,12,P,359,-0.1160,-0.1753,-0.2445
+EWMA 180 real 2-year,1973,none,no FCI,12,u,623,0.0839,0.0589,-0.0002
+EWMA 180 real 2-year,1973,none,no FCI,12,P,623,-0.2333,-0.5010,-0.7267
+EWMA 180 real 2-year,1973,none,with FCI,12,u,623,0.1740,0.1342,0.0880
+EWMA 180 real 2-year,1973,none,with FCI,12,P,623,-0.2475,-0.5545,-0.8112
+EWMA 180 real 2-year,1973,spline,no FCI,12,u,623,0.1160,0.2037,0.1822
+EWMA 180 real 2-year,1973,spline,no FCI,12,P,623,-0.1503,-0.3336,-0.4658
+EWMA 180 real 2-year,1973,spline,with FCI,12,u,623,0.1938,0.1925,0.1164
+EWMA 180 real 2-year,1973,spline,with FCI,12,P,623,-0.1962,-0.4023,-0.5089
+EWMA 180 real 2-year,1973,quad,no FCI,12,u,623,0.0544,0.0335,-0.0099
+EWMA 180 real 2-year,1973,quad,no FCI,12,P,623,-0.1144,-0.2426,-0.3239
+EWMA 180 real 2-year,1973,quad,with FCI,12,u,623,0.1291,0.0521,-0.0111
+EWMA 180 real 2-year,1973,quad,with FCI,12,P,623,-0.1368,-0.2881,-0.3663
