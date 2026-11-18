@@ -8,7 +8,7 @@
 | D3 | Two baselines: monthly equations from 1996 (first) and from 1973 (second); 1985 start as a robustness test |
 | D4 | Fix the spline knots (first knot = first estimation month); the corrected cubic spline is the only trend test |
 | D5 | r* robustness = the LW r*-gap step only |
-| D6 | Nine core robustness tests: 2020 left in; LW r*-gap; spline; EBP and IP added together; FCI components, equities free; Bauer-Swanson surprise; 6 lags; without the funds rate; monthly equations from 1985 |
+| D6 | Eight core robustness tests (revised: components test dropped, better placed in Note A): 2020 left in; LW r*-gap; spline; EBP and IP added together; Bauer-Swanson surprise; 6 lags; without the funds rate; monthly equations from 1985 |
 | D7 | Rebuild every exhibit on the new baseline; by-version exhibits show nominal and real; monthly VAR benchmarks with the funds rate; simulation's true process = new baseline |
 | D8 | New package folder; `fin_shocks/baseline/` frozen as the r*-gap record |
 | D9 | Folder `fin_shocks/baseline_real/`; text as a new copy plus a changes file; sign-off on results before text; 3 lags dropped everywhere |
@@ -23,9 +23,9 @@
    * spline knots: first knot at the first estimation month (`trend_cols` called with the first period of the sample; tested as `spl74` in `explore_rstar/real_trends.py`);
    * allow the funds rate with the FCI components (`cmpE`, `cmpR`, `cmp`; currently asserted out at line 127) and with the 1-year yield (variant combination: "1y" + "ff");
    * lags (6, 12) only.
-3. `cases.py`: baselines B and B73 = nominal and real, each without and with the FCI, in the new model; robustness panels for the nine tests, both starts (1985 only for its own test); appendix panels kept from the old list where they still apply (ends 2019, Baa spread, Jarocinski-Karadi, four calibrations, 1-year yield), all in the new model; the r*-gap step as a panel.
+3. `cases.py`: baselines B and B73 = nominal and real, each without and with the FCI, in the new model; robustness panels for the eight tests, both starts (1985 only for its own test); appendix panels kept from the old list where they still apply (ends 2019, Baa spread, Jarocinski-Karadi, four calibrations, 1-year yield), all in the new model; the r*-gap step as a panel.
 4. Steps 01-13 unchanged in logic; step 04 (monthly VARs) and step 06 (simulation) with the funds rate in the VAR and the new baseline as the true process; step 13 (decompositions) on the new baseline.
-5. Reports 07, 07b, 07c, 07d: two versions (nominal, real) in the by-version exhibits; the robustness summary with the nine tests; every claim check rewritten from the new results (no claim carried over); `CLAIMS_REPORT=1` to list failures while rewriting.
+5. Reports 07, 07b, 07c, 07d: two versions (nominal, real) in the by-version exhibits; the robustness summary with the eight tests; every claim check rewritten from the new results (no claim carried over); `CLAIMS_REPORT=1` to list failures while rewriting.
 6. Full rebuild from raw data in strict mode (about 2-3 hours with 4 cores; fewer lags than before), then `check_paper.py` on a skeleton.
 7. README for the new package (steps, exhibits, conventions), and a short note in `baseline/README.md` that it is frozen as the r*-gap record.
 
@@ -33,7 +33,7 @@
 
 ## Phase 2. The text
 1. New copy `fin_shocks/paper/mp_transmission_real.tex` from the author's current `mp_transmission.tex` (or from the integration copy if not yet merged: to confirm at the time); `mp_transmission.tex` untouched.
-2. Rewrite, in the house style (`experimental/WRITING_GUIDE.md`, CLAUDE.md working preferences): abstract and introduction (question, result, approach; two steps; the funds rate in the model), Section 2 (model with the funds rate; two steps), Section 3 (results: Figure 1, standard methods, matched comparison, monthly VARs, sacrifice ratio, Section 3.5), Section 4 (mechanisms: components, weights, persistence, timing, credit), Section 5 (robustness: nine tests reported plainly; the r* step), conclusion, appendices.
+2. Rewrite, in the house style (`experimental/WRITING_GUIDE.md`, CLAUDE.md working preferences): abstract and introduction (question, result, approach; two steps; the funds rate in the model), Section 2 (model with the funds rate; two steps), Section 3 (results: Figure 1, standard methods, matched comparison, monthly VARs, sacrifice ratio, Section 3.5), Section 4 (mechanisms: components, weights, persistence, timing, credit), Section 5 (robustness: eight tests reported plainly; the r* step), conclusion, appendices.
 3. `paper/CHANGES_FOR_MERGE_REAL.md`: section by section, old to new, with numbers.
 4. Compile (pdflatex + bibtex), `check_paper.py`, no undefined references or overfull boxes.
 
