@@ -1635,6 +1635,7 @@ mac("nv:gb:n", len(gb), 0); mac("nv:gb:frbusonly", 100 * float((gb.models == "FR
 mac("nv:tb:models", float(tb.n_models.mean()), 1); mac("nv:tb:frbusonly", 100 * float((tb.models == "FRB/US").mean()), 0)
 mac("nv:tb:sigma", 100 * float(tb.models.str.contains("SIGMA").mean()), 0); mac("nv:tb:dsge", 100 * float(tb.models.str.contains("EDO|DGS|Gertler|Smets|search|FLM|SIR|MQS").mean()), 0)
 
+mac("nv:rsadd:market", c27("rstar_ep_2008-09_F") - c27("rstar_fixed_ep_2008-09_F")); mac("nv:ep0809:market", c27("rstar_ep_2008-09_F")); mac("nv:ep0809:market:fixed", c27("rstar_fixed_ep_2008-09_F"))
 # Claims of the new version
 chk(SC["sim_level_market_gs_cos"] > 0.99 and SC["sim_level_market_frbus_cos"] > 0.9, "nv: weights: cosine MCFCI-GS above 0.99, MCFCI-FRB/US above 0.9")
 chk(SC["share_eq_lo"] > 0 and SC["share_eq"] > max(SC["share_ten"], SC["share_usd"]), "nv: equities carry the largest share of a policy move; interval above zero")
