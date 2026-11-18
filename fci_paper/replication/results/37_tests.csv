@@ -1,0 +1,13 @@
+step,model,dummies,F,restrictions,df,p
+rstar,E,True,2.3362,4,193,0.0569
+rstar,F,True,1.5339,8,189,0.1478
+rstar,E,False,2.2198,4,198,0.0682
+rstar,F,False,1.5283,8,194,0.1495
+real,E,True,2.5996,4,193,0.0375
+real,F,True,1.7595,8,189,0.0874
+real,E,False,2.7781,4,198,0.0281
+real,F,False,1.6875,8,194,0.1035
+nominal,E,True,2.3927,4,193,0.0521
+nominal,F,True,1.6872,8,189,0.1038
+nominal,E,False,3.3827,4,198,0.0105
+nominal,F,False,2.1658,8,194,0.0317
