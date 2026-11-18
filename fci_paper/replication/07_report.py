@@ -1574,9 +1574,7 @@ def nvm(k, order, h, col="frbus_gdp", d=True):
     return float(s[col].iloc[0])
 rows = []
 for k, lab in (("market", "MCFCI"), ("gs", "GS"), ("frbus", "FRB/US"), ("fcig", "FCI-G (one-year)"), ("nfci", "NFCI"), ("anfci", "ANFCI")):
-    r = [lab]
-    for h in (4, 8, 12):
-        r.append(f"{f(nvi(k, 'gap_first', h))} [{f(nvi(k, 'gap_first', h, 'lo'))}, {f(nvi(k, 'gap_first', h, 'hi'))}]")
+    r = [lab, f(nvi(k, "gap_first", 4)), f"[{f(nvi(k, 'gap_first', 4, 'lo'))}, {f(nvi(k, 'gap_first', 4, 'hi'))}]", f(nvi(k, "gap_first", 8)), f(nvi(k, "gap_first", 12))]
     r += [f(nvi(k, "fci_first", h)) for h in (4, 8)]
     r += [f(nvm(k, "gap_first", h)) for h in (4, 8)] if k in ("market", "gs", "frbus") else ["", ""]
     rows.append(r)
@@ -1589,13 +1587,13 @@ for k, lab in (("market", "MCFCI"), ("gs", "GS"), ("frbus", "FRB/US"), ("fcig", 
             for o in ("gap_first", "fci_first"):
                 mac(f"nv:frbus:{k}:{o.split('_')[0]}:h{h}", nvm(k, o, h)); mac(f"nv:frbus:{k}:{o.split('_')[0]}:h{h}:ffr", nvm(k, o, h, "ffr_path"))
 table("nv_var", "The Output Gap after a One-Point Move in Each Index", "tab:nvvar",
-      ["Index", "GDP lagged, 4 quarters", "8 quarters", "12 quarters", "Generalized, 4", "8", "FRB/US benchmark, 4", "8"], rows,
+      ["", "\\multicolumn{4}{c}{GDP lagged}", "\\multicolumn{2}{c}{Generalized}", "\\multicolumn{2}{c}{FRB/US benchmark}"], ["Index & 4q & 90\\% interval & 8q & 12q & 4q & 8q & 4q & 8q \\\\ \\midrule"] + rows,
       "Response of the CBO output gap (percent of potential) to an innovation that raises the index by one point on impact, in a two-variable quarterly VAR "
       "(output gap and the index; four lags; constant; 1973Q1, FCI-G 1974Q1, to " + str(NVIRF.end.iloc[0]) + "; dummies for 2020Q1--2021Q1). GDP lagged: the output gap is "
       "ordered first, so the innovation does not move it within the quarter. Generalized: the index is ordered first, which equals the generalized impulse response. "
-      "Brackets: 90 percent intervals from a moving-block bootstrap of residual pairs (blocks of four quarters, 1,000 draws). MCFCI, GS and FRB/US relative to $r^*$; "
+      "Interval: 90 percent, from a moving-block bootstrap of residual pairs (blocks of four quarters, 1,000 draws). MCFCI, GS and FRB/US relative to $r^*$; "
       "FCI-G at the nominal step (one point = one percentage point of GDP growth over the next year); NFCI and ANFCI in two-year-yield units. FRB/US benchmark: GDP in FRB/US "
-      "under the funds-rate path that makes the index follow its VAR path (GDP lagged).")
+      "under the funds-rate path that makes the index follow its VAR path (GDP lagged).", align="lrcrrrrrr")
 fig, ax = plt.subplots(1, 3, figsize=(7.5, 2.9), sharey=True)
 for a_, k in zip(ax, ("market", "gs", "frbus")):
     for o, ls in (("gap_first", "-"), ("fci_first", "--")):
@@ -1628,7 +1626,7 @@ table("nv_models", "Equity Prices in Models Used for Monetary Policy Analysis", 
       ["Model", "Equity price", "Stock wealth in consumption", "Asset prices the model contains"], [list(m) for m in MODELS],
       "From the model documentation: Smets and Wouters (2007, equations 2 and 4); Christiano, Eichenbaum and Evans (2005, section on the household problem); EDO, "
       "Chung, Kiley and Laforte (2010); SIGMA, Erceg, Guerrieri and Gust (2005); FRBNY DSGE, Del Negro et al. (2013); FRB/US, Brayton, Laubach and Reifschneider (2014) and "
-      "the model equations (household stock-market wealth in desired consumption; the equity return in the business cost of capital).", align="llll")
+      "the model equations (household stock-market wealth in desired consumption; the equity return in the business cost of capital).", align="p{0.3\\textwidth}p{0.08\\textwidth}p{0.12\\textwidth}p{0.4\\textwidth}")
 FB = pd.read_csv(REP.parent.parent.parent / "experimental" / "fed_models_check" / "model_sets.csv", dtype={"meeting": str})
 gb = FB[FB.kind == "gbpt1"]; tb = FB[(FB.kind == "tealbooka") & (FB.year >= 2016)]
 mac("nv:gb:n", len(gb), 0); mac("nv:gb:frbusonly", 100 * float((gb.models == "FRB/US").mean()), 0); mac("nv:tb:n", len(tb), 0)
