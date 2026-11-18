@@ -1,0 +1,38 @@
+\begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{2.2pt}
+\caption{Slow-Moving Rates: The r*-gap Step and a Spline Trend (12 Lags)}\label{tab:mainF}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{llcrrrrrrr}\toprule
+ & & & & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){5-7}\cmidrule(lr){8-10}
+Case & FCI & Lags & Obs & 12 m & 24 m & 36 m & 12 m & 24 m & 36 m\\ \midrule
+r*-gap (LW), 1996 & none & 12 & 359 & 0.02 & $-$0.11 & $-$0.07 & $-$0.22$^{*}$ & $-$0.38$^{*}$ & $-$0.47\\
+ & & & & {\scriptsize [$-$0.18, 0.22]} & {\scriptsize [$-$0.42, 0.24]} & {\scriptsize [$-$0.41, 0.36]} & {\scriptsize [$-$0.37, $-$0.04]} & {\scriptsize [$-$0.70, 0.00]} & {\scriptsize [$-$0.95, 0.07]}\\
+ & r*-gap & 12 & 359 & 0.43$^{**}$ & 0.49$^{**}$ & 0.49$^{*}$ & $-$0.42$^{**}$ & $-$0.81$^{**}$ & $-$1.04$^{**}$\\
+ & & & & {\scriptsize [0.17, 0.61]} & {\scriptsize [0.12, 0.81]} & {\scriptsize [0.03, 0.99]} & {\scriptsize [$-$0.58, $-$0.19]} & {\scriptsize [$-$1.19, $-$0.34]} & {\scriptsize [$-$1.71, $-$0.31]}\\
+\addlinespace
+r*-gap (LW), 1973 & none & 12 & 623 & 0.13$^{*}$ & 0.27$^{**}$ & 0.33$^{**}$ & $-$0.34$^{**}$ & $-$0.65$^{**}$ & $-$0.89$^{**}$\\
+ & & & & {\scriptsize [0.00, 0.28]} & {\scriptsize [0.07, 0.48]} & {\scriptsize [0.09, 0.57]} & {\scriptsize [$-$0.44, $-$0.19]} & {\scriptsize [$-$0.86, $-$0.29]} & {\scriptsize [$-$1.21, $-$0.32]}\\
+ & r*-gap & 12 & 623 & 0.31$^{**}$ & 0.39$^{**}$ & 0.36$^{*}$ & $-$0.38$^{**}$ & $-$0.75$^{**}$ & $-$0.97$^{**}$\\
+ & & & & {\scriptsize [0.13, 0.48]} & {\scriptsize [0.11, 0.63]} & {\scriptsize [0.02, 0.66]} & {\scriptsize [$-$0.48, $-$0.19]} & {\scriptsize [$-$0.91, $-$0.26]} & {\scriptsize [$-$1.24, $-$0.22]}\\
+\addlinespace
+Cubic spline trend, 1996: Nominal & none & 12 & 359 & $-$0.29$^{**}$ & 0.04 & 0.32 & 0.07 & $-$0.04 & $-$0.17\\
+ & & & & {\scriptsize [$-$0.60, $-$0.14]} & {\scriptsize [$-$0.34, 0.27]} & {\scriptsize [$-$0.17, 0.52]} & {\scriptsize [$-$0.10, 0.30]} & {\scriptsize [$-$0.43, 0.39]} & {\scriptsize [$-$0.78, 0.45]}\\
+ & nominal & 12 & 359 & 0.18 & 0.34 & 0.36 & $-$0.08 & $-$0.24 & $-$0.29\\
+ & & & & {\scriptsize [$-$0.10, 0.35]} & {\scriptsize [$-$0.10, 0.68]} & {\scriptsize [$-$0.12, 0.78]} & {\scriptsize [$-$0.27, 0.19]} & {\scriptsize [$-$0.70, 0.25]} & {\scriptsize [$-$1.00, 0.35]}\\
+\addlinespace
+Cubic spline trend, 1996: Real & none & 12 & 359 & $-$0.22$^{**}$ & $-$0.14 & 0.09 & $-$0.02 & 0.02 & $-$0.03\\
+ & & & & {\scriptsize [$-$0.48, $-$0.11]} & {\scriptsize [$-$0.48, 0.10]} & {\scriptsize [$-$0.31, 0.30]} & {\scriptsize [$-$0.17, 0.19]} & {\scriptsize [$-$0.31, 0.36]} & {\scriptsize [$-$0.53, 0.39]}\\
+ & real & 12 & 359 & 0.25 & 0.32 & 0.31 & $-$0.15 & $-$0.20 & $-$0.17\\
+ & & & & {\scriptsize [$-$0.03, 0.38]} & {\scriptsize [$-$0.12, 0.53]} & {\scriptsize [$-$0.13, 0.54]} & {\scriptsize [$-$0.32, 0.09]} & {\scriptsize [$-$0.64, 0.23]} & {\scriptsize [$-$0.83, 0.39]}\\
+\addlinespace
+Cubic spline trend, 1973: Nominal & none & 12 & 623 & 0.06 & 0.30$^{**}$ & 0.43$^{**}$ & $-$0.05 & $-$0.20 & $-$0.32\\
+ & & & & {\scriptsize [$-$0.10, 0.20]} & {\scriptsize [0.05, 0.52]} & {\scriptsize [0.14, 0.63]} & {\scriptsize [$-$0.16, 0.10]} & {\scriptsize [$-$0.42, 0.13]} & {\scriptsize [$-$0.61, 0.18]}\\
+ & nominal & 12 & 623 & 0.20$^{**}$ & 0.35$^{**}$ & 0.39$^{**}$ & $-$0.07 & $-$0.25 & $-$0.37\\
+ & & & & {\scriptsize [0.04, 0.35]} & {\scriptsize [0.13, 0.58]} & {\scriptsize [0.12, 0.65]} & {\scriptsize [$-$0.18, 0.09]} & {\scriptsize [$-$0.49, 0.05]} & {\scriptsize [$-$0.65, 0.11]}\\
+\addlinespace
+Cubic spline trend, 1973: Real & none & 12 & 623 & 0.08 & 0.24$^{**}$ & 0.31$^{**}$ & $-$0.22$^{**}$ & $-$0.43$^{**}$ & $-$0.55$^{**}$\\
+ & & & & {\scriptsize [$-$0.04, 0.20]} & {\scriptsize [0.04, 0.40]} & {\scriptsize [0.06, 0.46]} & {\scriptsize [$-$0.31, $-$0.08]} & {\scriptsize [$-$0.63, $-$0.16]} & {\scriptsize [$-$0.83, $-$0.16]}\\
+ & real & 12 & 623 & 0.26$^{**}$ & 0.37$^{**}$ & 0.35$^{**}$ & $-$0.23$^{**}$ & $-$0.50$^{**}$ & $-$0.63$^{**}$\\
+ & & & & {\scriptsize [0.11, 0.37]} & {\scriptsize [0.12, 0.57]} & {\scriptsize [0.05, 0.64]} & {\scriptsize [$-$0.33, $-$0.10]} & {\scriptsize [$-$0.76, $-$0.20]} & {\scriptsize [$-$1.02, $-$0.15]}\\
+\bottomrule\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} r*-gap: rates less expected inflation and Laubach-Williams r*, the FCI in the r*-gap form. Spline: natural cubic spline in time in every monthly equation, knots at the first and last estimation months and at NBER peaks inside. Per +1 pp on the 2-year yield. $^{**}$ and $^{*}$: significant at the 5 and 10 percent levels (the 95\% and 90\% bootstrap intervals exclude zero); 90\% intervals in brackets. Obs = monthly observations in the equations.\end{flushleft}
+\end{table}

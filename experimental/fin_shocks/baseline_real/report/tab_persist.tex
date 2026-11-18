@@ -1,0 +1,25 @@
+\begin{table}[tp]\centering\footnotesize\setlength{\tabcolsep}{3pt}
+\caption{Financial Persistence: Direct Estimates and the Model}\label{tab:persist}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{llccc}\toprule
+Series & & Direct estimate & With later announcements controlled & Model\\ \midrule
+Two-year yield & Day 5 & 0.82 & 0.80 & 0.97\\
+ & & {\scriptsize [0.56, 1.04]} & {\scriptsize [0.55, 1.04]} & {\scriptsize [0.92, 1.01]}\\
+ & Day 22 & 0.80 & 0.74 & 0.89\\
+ & & {\scriptsize [0.18, 1.23]} & {\scriptsize [0.14, 1.19]} & {\scriptsize [0.76, 0.96]}\\
+ & Day 66 & 0.74 & 0.82 & 0.64\\
+ & & {\scriptsize [$-$0.25, 1.45]} & {\scriptsize [$-$0.11, 1.60]} & {\scriptsize [0.53, 0.70]}\\
+ & Average, days 0--21 & 0.89 & 0.84 & 0.96\\
+ & & {\scriptsize [0.53, 1.16]} & {\scriptsize [0.49, 1.12]} & {\scriptsize [0.88, 1.01]}\\
+\addlinespace
+FCI & Day 5 & 1.37 & 1.40 & 1.02\\
+ & & {\scriptsize [1.11, 1.73]} & {\scriptsize [1.13, 1.76]} & {\scriptsize [0.89, 1.15]}\\
+ & Day 22 & 1.14 & 1.15 & 0.83\\
+ & & {\scriptsize [0.62, 1.70]} & {\scriptsize [0.64, 1.76]} & {\scriptsize [0.66, 0.96]}\\
+ & Day 66 & 0.67 & 0.66 & 0.66\\
+ & & {\scriptsize [$-$0.10, 1.52]} & {\scriptsize [$-$0.09, 1.60]} & {\scriptsize [0.49, 0.79]}\\
+ & Average, days 0--21 & 1.49 & 1.57 & 0.95\\
+ & & {\scriptsize [1.22, 1.91]} & {\scriptsize [1.31, 1.94]} & {\scriptsize [0.81, 1.08]}\\
+\bottomrule\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Response per +1 pp on the two-year yield in the window, real versions, 251 announcements with 66 trading days after them. Day 0 is the announcement day; the change on day $h$ is the window move plus the change in the close from day 0 to day $h$, the convention of the model, and the average is over days 0 to 21 (22 trading days). Direct estimate: slope of that change on the policy-news surprise divided by the window slope of the yield; second column adds the surprises of announcements within the horizon. 90\% intervals from 2,000 draws of moving blocks of 12 calendar months with the normalization re-estimated. Model: the baseline of Table~\ref{tab:matched} on weekdays; 90\% bootstrap interval. Close minus window on the announcement day (the window-to-close gap): $-$0.11 [$-$0.32, 0.12] for the yield and $-$0.27 [$-$0.43, $-$0.14] for the FCI, per +1 pp in the window.\end{flushleft}
+\end{table}

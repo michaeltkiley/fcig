@@ -5,7 +5,8 @@ Output: results/lit_style.csv (lags, case, var, h, point, lo, hi) and results/li
 import os, argparse
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 import pandas as pd
-from lib import litstyle as LS
+from lib import litstyle as LS, model as M
+M.use_variant("noff")          # baseline_real: the standard methods keep one policy rate, as in the literature (no funds rate next to the 2-year yield)
 from lib.paths import RESULTS
 
 ap = argparse.ArgumentParser(); ap.add_argument("--draws", type=int, default=500); a = ap.parse_args()
