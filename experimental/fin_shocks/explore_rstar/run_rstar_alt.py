@@ -60,7 +60,16 @@ for lam in (129600, 1296000):
 # ew180 (18 Nov, author): exponentially weighted average of the real 2-year, half-life 180 months (one-sided; from June 1961; the best simple filter tracking LW, filters_lw.md)
 _r2 = real2.dropna(); ew180 = _r2.ewm(alpha=1 - 0.5 ** (1 / 180), adjust=False).mean().where(np.arange(len(_r2)) >= 36).reindex(D0.index)
 D0["rstar EW180"] = ew180
-RS = pd.DataFrame({"LW": D0["rstar LW"], "Kiley": D0["rstar Kiley"], "MA8 (real 2-year)": ma8, "Forward 9-10y less e10": fwd, "MA8 nominal 2-year (replaces e + r*)": nma8, "MA5 real 2-year, lagged": ma5, "MA5 nominal 2-year, lagged (replaces e + r*)": nma5, "SPF BILL10 - CPI10": spf, **{f"HP one-sided {k}": v for k, v in HP.items()}, "e2 (2-year expected inflation)": M._e2m.reindex(D0.index)})
+# avg120 (18 Nov, author): EWMA, half-life 120 months, of the simple average of the real 2-, 5- and 10-year yields (pc_lw.md; 5-year: FRED GS5 less 5-year expected inflation,
+#   Cleveland from 1982, interpolated by maturity between e2 and e10 before, shifted by the 1982-84 gap). The level difference from LW is absorbed by the VAR intercepts.
+def _fm(n):
+    d = pd.read_csv(HERE / "data_extra" / f"{n}.csv"); return pd.Series(pd.to_numeric(d.iloc[:, 1], errors="coerce").values, index=pd.PeriodIndex(d.iloc[:, 0], freq="M")).reindex(D0.index)
+_e2 = M._e2m.reindex(D0.index); _i5 = _e2 + 3 / 8 * (D0.einf_10y - _e2); _c5 = _fm("EXPINF5YR")
+_e5 = _c5.combine_first(_i5 + float((_c5 - _i5).loc["1982-01":"1984-12"].mean()))
+_avg = pd.concat([real2, _fm("GS5") - _e5, D0.y10 - D0.einf_10y], axis=1).loc["1961-06":"2026-09"].mean(axis=1, skipna=False).dropna()
+avg120 = _avg.ewm(alpha=1 - 0.5 ** (1 / 120), adjust=False).mean().where(np.arange(len(_avg)) >= 36).reindex(D0.index)
+D0["rstar AVG120"] = avg120
+RS = pd.DataFrame({"LW": D0["rstar LW"], "Kiley": D0["rstar Kiley"], "MA8 (real 2-year)": ma8, "Forward 9-10y less e10": fwd, "MA8 nominal 2-year (replaces e + r*)": nma8, "MA5 real 2-year, lagged": ma5, "MA5 nominal 2-year, lagged (replaces e + r*)": nma5, "SPF BILL10 - CPI10": spf, "EWMA 180 real 2-year": ew180, "EWMA 120 average real 2/5/10-year": avg120, **{f"HP one-sided {k}": v for k, v in HP.items()}, "e2 (2-year expected inflation)": M._e2m.reindex(D0.index)})
 RS.loc["1965-01":].to_csv(HERE / "rstar_measures.csv", float_format="%.4f")
 
 # ---------------------------------------------------------------- plug into the model exactly as LW / Kiley are
@@ -69,7 +78,7 @@ chk = noteA.market_index(noteA.index_inputs(D0, "rstar", "rstar LW"), w).loc[not
 assert np.allclose(chk.values, M.IDXM["rstar"].reindex(chk.index).values, atol=1e-3), "LW index not reproduced"
 chk = noteA.market_index(noteA.index_inputs(D0, "rstar", "rstar Kiley"), w).loc[noteA.START:noteA.END]
 assert np.allclose(chk.values, M.IDXM["kiley"].reindex(chk.index).values, atol=1e-3), "Kiley index not reproduced"
-for key, col in (("ma8", "rstar MA8"), ("fwd", "rstar FWD"), ("ma5", "rstar MA5"), ("spf", "rstar SPF"), ("ew180", "rstar EW180")):
+for key, col in (("ma8", "rstar MA8"), ("fwd", "rstar FWD"), ("ma5", "rstar MA5"), ("spf", "rstar SPF"), ("ew180", "rstar EW180"), ("avg120", "rstar AVG120")):
     M.IDXM[key] = noteA.market_index(noteA.index_inputs(D0, "rstar", col), w).loc[noteA.START:noteA.END]
     M.IDXM[key] = M.IDXM[key].where(D0[col].reindex(M.IDXM[key].index).notna())     # undefined where r* is (market_index's sum would otherwise keep the other terms)
     M.FCI[key] = M._daily_fci(M.IDXM[key])
