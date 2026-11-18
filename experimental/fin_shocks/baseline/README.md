@@ -1,5 +1,7 @@
 # Note B: baseline and robustness results (self-contained replication package)
 
+**Frozen 18 Nov 2026 as the record of the r*-gap version (FS_QA FS-A85 D8).** The new baseline (real version with the funds rate, two steps) is built by `../baseline_real/`; do not change this package.
+
 Everything in the results document is built from raw inputs in `data/` by the scripts below, in order. Each step writes files that the next reads, and each can be re-run alone.
 Note A's code that Note B needs (the market index, its weights and inputs) is vendored in `lib/noteA.py`. Note B applies the same method on its own announcement sample (252 events, 31 Jan 1996 to 29 Jul 2026, the events of the daily model) with an intercept in the factor scaling and in the weight regressions (`lib/events.py`, FS_QA FS-A75), so the factor and the index each move exactly 1 per 1 pp on the 2-year yield in the windows; step 2 reports the differences from Note A's files (weights about 1 percent apart) when the Note A package is present.
 
