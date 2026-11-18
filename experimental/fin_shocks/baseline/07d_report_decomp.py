@@ -129,7 +129,7 @@ chk("history (model from 1973): policy-direction shocks eased in 1979-80, 2001-0
 chk("history: the 1979-80 and 2020-21 easings raised core inflation and lowered unemployment; the 1982-84 tightening did the reverse", sg("e7980", "pi") > 0 > sg("e7980", "u") and sg("e2021", "pi") > 0 > sg("e2021", "u") and sg("e8284", "pi") < 0 < sg("e8284", "u"))
 chk("history: policy-direction shocks added about 1 percentage point or more to core inflation over 2021-22", avg(1973, "pi", "2021-01", "2022-12") > 0.8)
 chk("abstract: policy-direction shocks account for about a tenth (6 to 14 percent) of the 24-month variance of core inflation, both models and both periods", all(0.06 < share("rstar", m, 24, era, src, "pi") < 0.14 for m in (1996, 1973) for era, src in (("1990-2026", "daily_all"), ("1974-1989", "spliced"))))
-if os.environ.get("CLAIMS_REPORT"): print("FAILED CLAIMS:\n  " + "\n  ".join(BAD))
+if os.environ.get("CLAIMS_REPORT") and BAD: print("FAILED CLAIMS:\n  " + "\n  ".join(BAD))
 else: assert not BAD, "claims in Section 3.5 no longer hold: " + "; ".join(BAD)
 (REPORT / "numbers_decomp.tex").write_text("\n".join(ML) + "\n")
 from lib import latex_style as LST

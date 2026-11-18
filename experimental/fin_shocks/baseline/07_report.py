@@ -403,15 +403,17 @@ def lag_summary():
         b = bl("rstar", "yes", "P", 36, L); dm(f"rstar:P36:{L}", num(b.r36)); b = bl("rstar", "yes", "u", 24, L); dm(f"rstar:u24:{L}", num(b.r24))
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
     for L in LG:
-        chk(f"lags {L}: with the FCI the price level falls in all core cases and horizons but one (12 lags: Kiley r* from 1996 at 36 m, not significant; 3 lags: components with equities free from 1973 at 12-36 m, significant at 24 m; 6 lags: none)",
-            cnt[L]["Pneg"] == n_ - {3: 3, 6: 0, 12: 1}[L] and cnt[L]["Psigpos"] == (1 if L == 3 else 0))
+        chk(f"lags {L}: with the FCI the price level falls in all core cases and horizons (12 lags: but one, Kiley r* from 1996 at 36 m, not significant)",
+            cnt[L]["Pneg"] == n_ - {3: 0, 6: 0, 12: 1}[L] and cnt[L]["Psigpos"] == 0)
         chk(f"lags {L}: with the FCI no significant fall in unemployment in any core case", cnt[L]["usigneg"] == 0)
         chk(f"lags {L}: unemployment rises in a large majority of responses with the FCI", cnt[L]["upos"] >= 0.7 * n_)
         t = lit("chol_2y_1996", "u", 12, L); chk(f"lags {L}: Cholesky unemployment falls at 12 m (significantly at 12 lags only)", t.point < 0 and t.sig == (L == 12))
         pr = lit("proxy_2y_1996", "u", 24, L); chk(f"lags {L}: proxy VAR unemployment falls at 24 m", pr.point < 0)
         chk(f"lags {L}: without the FCI the r*-gap unemployment gap is not significantly positive", not any(sg(bl("rstar", "no", "u", h, L), h) and bl("rstar", "no", "u", h, L)[f"r{h}"] > 0 for h in (12, 24, 36)))
         chk(f"lags {L}: weights, 1996: inflation equation rejects proportional weights at 10% in every step, unemployment equation not at 5%", all(WTL[(WTL.start == "1996-01") & (WTL.lags == L) & (WTL["eq"] == "pi")].p_boot < 0.10) and all(WTL[(WTL.start == "1996-01") & (WTL.lags == L) & (WTL["eq"] == "u")].p_boot > 0.05))
-    chk("weights, 1973: no rejection of proportional weights at 5% at any lag length, step or equation", all(WTL[(WTL.start == "1973-01") & (WTL.lags.isin(LG))].p_boot > 0.05))
+    w73 = WTL[(WTL.start == "1973-01") & (WTL.lags.isin(LG))]
+    chk("weights, 1973: inflation equation rejects at 10% in every step and lag length except the r*-gap with 6 lags; unemployment equation not at 5% except 12 lags in the real and r*-gap versions",
+        all((r.p_boot < 0.10) == (not (r.step == "rstar" and r.lags == 6)) for r in w73[w73["eq"] == "pi"].itertuples()) and all((r.p_boot < 0.05) == (r.lags == 12 and r.step in ("real", "rstar")) for r in w73[w73["eq"] == "u"].itertuples()))
     chk("simulation: the median proxy-VAR estimate with the FCI lies below the true response at every lag length", all(sm[L].loc[("proxy_fci", "u12")].sim_median < sm[L].loc[("proxy_fci", "u12")].truth for L in LG))
     chk("price level significant in more cases with more lags", cnt[3]["Psig"] < cnt[6]["Psig"] < cnt[12]["Psig"])
     chk("point estimates of the baseline price response grow with the lag length", abs(bl("rstar", "yes", "P", 36, 3).r36) < abs(bl("rstar", "yes", "P", 36, 6).r36) < abs(bl("rstar", "yes", "P", 36, 12).r36))
@@ -474,8 +476,8 @@ def rob_summary():
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
     bad = []; chk = lambda name, ok: None if ok else bad.append(name)
     chk("every core test, both samples: unemployment rises and the price level falls at 12 m", all(res[(k, sx, "u")][0] > 0 and res[(k, sx, "P")][0] < 0 for k, *_ in CORE_TESTS for sx in ("", "73")))
-    NOT_SIG = {("t2020", "", "u"), ("kiley", "", "u"), ("kiley", "", "P"), ("spline", "", "u"), ("spline", "", "P"), ("L3", "", "P"), ("t2020", "73", "u"), ("kiley", "73", "u"), ("cmpE", "73", "u"), ("L3", "73", "u"), ("L3", "73", "P")}
-    chk("significance pattern at 10% (the text names the exceptions: 2020 left in and Kiley r* for unemployment; Kiley r* and the spline trend from 1996; 3 lags; components from 1973 for unemployment)",
+    NOT_SIG = {("t2020", "", "u"), ("kiley", "", "u"), ("kiley", "", "P"), ("spline", "", "u"), ("spline", "", "P"), ("L3", "", "P"), ("t2020", "73", "u"), ("kiley", "73", "u"), ("L3", "73", "u"), ("L3", "73", "P")}
+    chk("significance pattern at 10% (the text names the exceptions: 2020 left in and Kiley r* for unemployment; Kiley r* and the spline trend from 1996; 3 lags)",
         all(res[(k, sx, v)][1] == ((k, sx, v) not in NOT_SIG) for k, *_ in CORE_TESTS for sx in ("", "73") for v in ("u", "P")))
     chk("the baseline: significant at 5% for both variables and both samples", all(res[("base", sx, v)][2] for sx in ("", "73") for v in ("u", "P")))
     ratio_ = lambda k, sx, v: res[(k, sx, v)][0] / res[("base", sx, v)][0]

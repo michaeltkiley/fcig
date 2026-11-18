@@ -433,14 +433,15 @@ def claims():
         chk("FCI close-to-close move below the window move (gap interval below zero)", PER[(PER.series == "f") & (PER.measure == "gap")].hi.iloc[0] < 0)
     chk("components 1996: all-free and equities-free price responses not significant, F-E and F-R significant, E-R not", not sig10(CMP[("1996-01", "F")]["sd"][:, 24, 1]) and not sig10(CMP[("1996-01", "E")]["sd"][:, 24, 1])
         and sig10(CMP[("1996-01", "F")]["sd"][:, 24, 1] - CMP[("1996-01", "E")]["sd"][:, 24, 1]) and sig10(CMP[("1996-01", "F")]["sd"][:, 24, 1] - CMP[("1996-01", "R")]["sd"][:, 24, 1]) and not sig10(CMP[("1996-01", "E")]["sd"][:, 24, 1] - CMP[("1996-01", "R")]["sd"][:, 24, 1]))
-    chk("components 1973: price response -0.5 to -0.7 in the three specifications; no pairwise difference significant", all(-0.7 < CMP[("1973-01", s_)]["s0"][24, 1] < -0.5 for s_ in "REF") and not any(sig10(CMP[("1973-01", a_)]["sd"][:, 24, 1] - CMP[("1973-01", b_)]["sd"][:, 24, 1]) for a_, b_ in (("E", "R"), ("F", "R"), ("F", "E"))))
-    chk("components: unemployment differences not significant from 1996; from 1973 the index built from the components raises unemployment more than the free versions (E-R and F-R significant, F-E not)",
-        not any(sig10(CMP[("1996-01", a_)]["sd"][:, 24, 0] - CMP[("1996-01", b_)]["sd"][:, 24, 0]) for a_, b_ in (("E", "R"), ("F", "R"), ("F", "E")))
-        and all(sig10(CMP[("1973-01", a_)]["sd"][:, 24, 0] - CMP[("1973-01", "R")]["sd"][:, 24, 0]) and CMP[("1973-01", a_)]["s0"][24, 0] < CMP[("1973-01", "R")]["s0"][24, 0] for a_ in ("E", "F"))
-        and not sig10(CMP[("1973-01", "F")]["sd"][:, 24, 0] - CMP[("1973-01", "E")]["sd"][:, 24, 0]))
-    chk("tests: yield = dollar (equities free) rejected in the inflation equation from 1996 at 5% (nominal) and 10% (real), not at the r*-gap; not in the unemployment equation; from 1973 the only rejections at 10% are the equities test in the unemployment equation (5% at the r*-gap)",
-        wp("yd", "nom", "pi") < 0.05 and wp("yd", "real", "pi") < 0.10 and wp("yd", "rstar", "pi") > 0.10 and all(wp("yd", s_, "u") > 0.10 for s_ in FORMS)
-        and all((wp(t_, s_, e_, "1973-01") < 0.10) == (t_ == "eq" and e_ == "u") for t_ in ("all", "yd", "eq") for s_ in FORMS for e_ in ("u", "pi")) and wp("eq", "rstar", "u", "1973-01") < 0.05)
+    D = lambda st, a_, b_, k: CMP[(st, a_)]["sd"][:, 24, k] - CMP[(st, b_)]["sd"][:, 24, k]; S0 = lambda st, a_, k: CMP[(st, a_)]["s0"][24, k]
+    chk("components 1973: as from 1996, freeing equities leaves the price response in place (E-R under 0.1, not significant) and freeing the dollar as well removes most of it (F not significant, F-R significant)",
+        abs(S0("1973-01", "E", 1) - S0("1973-01", "R", 1)) < 0.1 and not sig10(D("1973-01", "E", "R", 1)) and not sig10(CMP[("1973-01", "F")]["sd"][:, 24, 1]) and sig10(D("1973-01", "F", "R", 1)) and S0("1973-01", "F", 1) > 0.5 * S0("1973-01", "R", 1))
+    chk("components: unemployment differences not significant in either sample; responses 0.2 to 0.46 in every specification and sample",
+        not any(sig10(D(st, a_, b_, 0)) for st in ("1996-01", "1973-01") for a_, b_ in (("E", "R"), ("F", "R"), ("F", "E"))) and all(0.2 <= S0(st, x, 0) < 0.46 for st in ("1996-01", "1973-01") for x in "REF"))
+    chk("components: the index built from the components is within 0.1 of the baseline in both samples (u and P)", all(abs(S0(st, "R", k) - S0(st, "A", k)) < 0.1 for st in ("1996-01", "1973-01") for k in (0, 1)))
+    chk("tests, both samples: yield = dollar (equities free) rejected at 10% in the inflation equation in the nominal and real versions, not at the r*-gap, and not in the unemployment equation; tying equities to the yield and dollar rejected at 5% in the unemployment equation at the r*-gap from both starts and in every version from 1973",
+        all(wp("yd", "nom", "pi", st) < 0.10 and wp("yd", "real", "pi", st) < 0.10 and wp("yd", "rstar", "pi", st) > 0.10 and all(wp("yd", s_, "u", st) > 0.10 for s_ in FORMS) and wp("eq", "rstar", "u", st) < 0.05 for st in ("1996-01", "1973-01"))
+        and all(wp("eq", s_, "u", "1973-01") < 0.05 for s_ in FORMS))
     chk("tests: equities equal to yield and dollar rejected at 10% from 1996 in the r*-gap inflation equation only", wp("eq", "rstar", "pi") < 0.10 and wp("eq", "nom", "pi") > 0.10 and wp("eq", "real", "pi") > 0.10)
     chk("conditional dollar coefficient in the inflation equation (1996) has the sign opposite to the yield's", float(M.macro_data("rstar", "cmp", ["u", "pi"], 12, "1996-01", None, "out", "none")[0].shape[0]) > 0 and (lambda b_: b_[0] * b_[1] < 0)(_coef_pi_96()))
     if DIR is not None:
@@ -517,6 +518,6 @@ gs_comparison()
 (REPORT / "numbers_ext.tex").write_text("\n".join(ML) + "\n")
 LST.restyle_dir(REPORT)
 import os as _os
-if _os.environ.get("CLAIMS_REPORT"): print("FAILED CLAIMS:\n  " + "\n  ".join(BAD))
+if _os.environ.get("CLAIMS_REPORT") and BAD: print("FAILED CLAIMS:\n  " + "\n  ".join(BAD))
 else: assert not BAD, "claims in the revision no longer hold: " + "; ".join(BAD)
 print("extension exhibits written to", REPORT)
