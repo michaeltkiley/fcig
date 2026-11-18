@@ -9,6 +9,10 @@ State of 11 Nov 2026. This folder turns the companion note (`../fci_note/`, "Not
 | `reviews/` | Reviewer reports on the draft and what was done with them |
 | `FP_QA.md` | Decisions (scope, style, methods) and open items |
 
+## New version (17-18 Nov 2026; FP-A63 to FP-A73)
+
+The paper is being rewritten around the MCFCI (policy-news weights; congruence with macro-model indexes; equities in macro models). Outline: `OUTLINE_new_version.md`. Draft: `paper/mcfci.tex` (build: `paper/build_mcfci.sh`). New package steps: `32_history.py` (co-movement, variance by asset, direction similarity, tight vs tightening, shape), `33_qvar.py` (quarterly output-gap VAR and FRB/US benchmark), `34_equity_channel.py`, `35_pc.py` (own principal components), `36_levelflow_q.py` (levels vs changes); exhibits in the `nv:` section of `07_report.py`. Index specification follows Note B (intercept scaling, 252 announcements; FP-A65). The earlier draft `paper/fci_paper.tex` is kept unchanged.
+
 ## Run order (about 5 minutes, 500 bootstrap draws)
 
 ```
