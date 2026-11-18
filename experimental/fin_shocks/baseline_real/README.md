@@ -21,7 +21,7 @@ This package rebuilds Note B on the baseline decided on 18 Nov 2026 (`../PLAN_RE
   * the FCI components and the weights tests (D10; left to Note A): step 09 is not run, `tab_components` and `tab_weights_test` are gone, and the `cmp*` code is kept in `lib/model.py` but unused;
   * Kiley r* (D5: LW only);
   * the ordinary-day material (FS-A86, author 18 Nov 2026): the figure comparing an ordinary day with an announcement window and its loadings, and the path-B table (already out of the paper, FS-A81); `lib/model.estimate` still computes path B, unreported;
-  * the Jarocinski-Karadi weights and the four calibrations of the weights (their indexes exist only in the r*-gap form; whether to rebuild them in the real form is an open point of the plan).
+  * the Jarocinski-Karadi weights and the four calibrations of the weights (FS-A87, author: dropped, not rebuilt in the real form; the JK surprise stays as A3).
 * **Claims.** The qualitative claims are rewritten from the new results in `claims_real.py`, called by `07_report.py`. The checks of the r*-gap text in `../baseline/` are not carried over; in 07b, 07c and 07d they are removed (`pass`).
 
 | Step | Script | Writes |

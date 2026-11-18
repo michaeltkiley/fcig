@@ -81,5 +81,5 @@ Shares are of the 24-month variance, real model.
 * the components and weights tests (D10);
 * Kiley r* (D5);
 * the ordinary-day figure and path B (FS-A86, FS-A81);
-* the four calibrations and the Jarocinski–Karadi weights (not rebuilt in the real form; open);
+* the four calibrations and the Jarocinski–Karadi weights (FS-A87);
 * 3 lags (D9).
