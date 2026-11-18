@@ -1,11 +1,11 @@
 """Summary of the r* exploration: responses of the unemployment gap (pp) and the price level (percent) per +1 pp on the 2-year yield in the window,
-at 12 and 24 months, under four r* measures (LW baseline and Kiley from baseline/results; MA8 and forward from results/), both baselines, without and with the FCI.
+at 12 and 24 months, under alternative r* measures (LW baseline and Kiley from baseline/results; MA8 and forward from results/), both baselines, without and with the FCI.
 ** / * : 95 / 90 percent interval excludes zero (5 / 10 percent level). Writes summary.csv, summary.md, fig_rstar.pdf, fig_paths.pdf."""
 from pathlib import Path
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 HERE = Path(__file__).resolve().parent; BR = HERE.parent / "baseline" / "results"
-FORMS = [("rstar", "LW (baseline)", BR), ("kiley", "Kiley", BR), ("ma8", "MA8 real 2-year", HERE / "results"), ("fwd", "Forward 9-10y less e10", HERE / "results"), ("nma8", "MA8 nominal 2-year", HERE / "results")]
+FORMS = [("rstar", "LW (baseline)", BR), ("kiley", "Kiley", BR), ("ma8", "MA8 real 2-year", HERE / "results"), ("fwd", "Forward 9-10y less e10", HERE / "results"), ("nma8", "MA8 nominal 2-year", HERE / "results"), ("ma5", "MA5 real 2-year, lagged", HERE / "results"), ("nma5", "MA5 nominal 2-year, lagged", HERE / "results"), ("spf", "SPF BILL10 - CPI10 (1996 only)", HERE / "results")]
 STARTS = [("1996-01", "1996"), ("1973-01", "1973")]
 def star(lo, hi, lo95, hi95): return "**" if lo95 > 0 or hi95 < 0 else "*" if lo > 0 or hi < 0 else ""
 rows = []
@@ -30,7 +30,7 @@ def table(lags):
     out = ["| Start | FCI | r* measure | u 12m | u 24m | P 12m | P 24m |", "|---|---|---|---|---|---|---|"]
     for (s, fc, r), v in P.iterrows(): out.append(f"| {s} | {fc} | {r} | " + " | ".join(str(x) for x in v.values) + " |")
     return "\n".join(out)
-md = ["# r* exploration: Note B's two baselines under four r* measures", "",
+md = ["# r* exploration: Note B's two baselines under alternative r* measures", "",
       "Responses per +1 pp on the 2-year yield in the window: unemployment gap (pp) and price level (percent). `**`/`*`: 95/90 percent interval excludes zero. 500 draws; 2020 (March-December) dropped; no trend. LW and Kiley rows are the package's stored results (`baseline/results`).", ""]
 for L in (12, 6, 3): md += [f"## {L} lags" + (" (main)" if L == 12 else ""), "", table(L), ""]
 (HERE / "summary.md").write_text("\n".join(md))
@@ -38,7 +38,7 @@ print("\n".join(md))
 
 RS = pd.read_csv(HERE / "rstar_measures.csv", index_col=0); RS.index = pd.PeriodIndex(RS.index, freq="M").to_timestamp()
 fig, ax = plt.subplots(figsize=(8, 4))
-for c, col in zip([c for c in RS.columns if not c.startswith("e2")], ["k", "0.55", "tab:blue", "tab:red", "tab:green"]): ax.plot(RS.index, RS[c], color=col, lw=1.3, label=c)
+for c, col in zip([c for c in RS.columns if not c.startswith("e2")], ["k", "0.55", "tab:blue", "tab:red", "tab:green", "tab:cyan", "tab:olive", "tab:purple"]): ax.plot(RS.index, RS[c], color=col, lw=1.3, label=c)
 ax.axhline(0, color="0.8", lw=0.8); ax.set_ylabel("percent"); ax.legend(frameon=False, fontsize=8); ax.set_xlim(pd.Timestamp("1970-01-01"), RS.index[-1])
 ax.set_title("r* measures (monthly)", fontsize=10); fig.tight_layout(); fig.savefig(HERE / "fig_rstar.pdf"); fig.savefig(HERE / "fig_rstar.png", dpi=150)
 

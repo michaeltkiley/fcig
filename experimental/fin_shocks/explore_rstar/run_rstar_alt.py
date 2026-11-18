@@ -32,7 +32,20 @@ D0["rstar MA8"] = ma8; D0["rstar FWD"] = fwd
 #   In index_inputs this is r* = MA8 - e10 (it subtracts e10 and r*); in the rate it is r* = MA8 - e2.
 nma8 = M.Y2M.reindex(D0.index).rolling(96, min_periods=96).mean()
 D0["rstar NMA8"] = nma8 - D0.einf_10y
-RS = pd.DataFrame({"LW": D0["rstar LW"], "Kiley": D0["rstar Kiley"], "MA8 (real 2-year)": ma8, "Forward 9-10y less e10": fwd, "MA8 nominal 2-year (replaces e + r*)": nma8, "e2 (2-year expected inflation)": M._e2m.reindex(D0.index)})
+# ma5 / nma5 (18 Nov, author): LAGGED 5-year average, months t-60..t-1 (excludes the current month); real 2-year in the r* slot (ma5), nominal 2-year replacing e + r* (nma5).
+#   Available from 1966-07 (2-year from 1961-06), so the 1973 sample with 12 lags is fully covered.
+ma5 = real2.shift(1).rolling(60, min_periods=60).mean()
+nma5 = M.Y2M.reindex(D0.index).shift(1).rolling(60, min_periods=60).mean()
+D0["rstar MA5"] = ma5; D0["rstar NMA5"] = nma5 - D0.einf_10y
+# spf (18 Nov, author; 1996 baseline only): SPF median BILL10 - CPI10 (first-quarter surveys, 1992-2026), placed in February (survey month),
+#   linearly interpolated between surveys and held after the last (as LW is placed mid-quarter and interpolated). Undefined before 1992-02.
+def _spf(name, col):
+    d = pd.read_excel(HERE / "survey_data" / f"Median_{name}_Level.xlsx").dropna(subset=[col]).query("QUARTER == 1")
+    return pd.Series(d[col].values, index=pd.PeriodIndex([f"{y}-02" for y in d.YEAR], freq="M"))
+_q = (_spf("BILL10", "BILL10") - _spf("CPI10", "CPI10"))
+spf = _q.reindex(pd.period_range(_q.index[0], D0.index[-1], freq="M")).interpolate(limit_area="inside").ffill().reindex(D0.index)
+D0["rstar SPF"] = spf
+RS = pd.DataFrame({"LW": D0["rstar LW"], "Kiley": D0["rstar Kiley"], "MA8 (real 2-year)": ma8, "Forward 9-10y less e10": fwd, "MA8 nominal 2-year (replaces e + r*)": nma8, "MA5 real 2-year, lagged": ma5, "MA5 nominal 2-year, lagged (replaces e + r*)": nma5, "SPF BILL10 - CPI10": spf, "e2 (2-year expected inflation)": M._e2m.reindex(D0.index)})
 RS.loc["1965-01":].to_csv(HERE / "rstar_measures.csv", float_format="%.4f")
 
 # ---------------------------------------------------------------- plug into the model exactly as LW / Kiley are
@@ -41,8 +54,9 @@ chk = noteA.market_index(noteA.index_inputs(D0, "rstar", "rstar LW"), w).loc[not
 assert np.allclose(chk.values, M.IDXM["rstar"].reindex(chk.index).values, atol=1e-3), "LW index not reproduced"
 chk = noteA.market_index(noteA.index_inputs(D0, "rstar", "rstar Kiley"), w).loc[noteA.START:noteA.END]
 assert np.allclose(chk.values, M.IDXM["kiley"].reindex(chk.index).values, atol=1e-3), "Kiley index not reproduced"
-for key, col in (("ma8", "rstar MA8"), ("fwd", "rstar FWD")):
+for key, col in (("ma8", "rstar MA8"), ("fwd", "rstar FWD"), ("ma5", "rstar MA5"), ("spf", "rstar SPF")):
     M.IDXM[key] = noteA.market_index(noteA.index_inputs(D0, "rstar", col), w).loc[noteA.START:noteA.END]
+    M.IDXM[key] = M.IDXM[key].where(D0[col].reindex(M.IDXM[key].index).notna())     # undefined where r* is (market_index's sum would otherwise keep the other terms)
     M.FCI[key] = M._daily_fci(M.IDXM[key])
     for R in (M.RATE, M.RATE2): R[key] = POL - interp_monthly(M._e2 + D0[col])
     for R in (M.RATEM, M.RATEM2): R[key] = M.Y2M - M._e2m - D0[col]
@@ -50,13 +64,17 @@ M.IDXM["nma8"] = noteA.market_index(noteA.index_inputs(D0, "rstar", "rstar NMA8"
 M.FCI["nma8"] = M._daily_fci(M.IDXM["nma8"])
 for R in (M.RATE, M.RATE2): R["nma8"] = POL - interp_monthly(nma8)
 for R in (M.RATEM, M.RATEM2): R["nma8"] = M.Y2M - nma8
+M.IDXM["nma5"] = noteA.market_index(noteA.index_inputs(D0, "rstar", "rstar NMA5"), w).loc[noteA.START:noteA.END]
+M.FCI["nma5"] = M._daily_fci(M.IDXM["nma5"])
+for R in (M.RATE, M.RATE2): R["nma5"] = POL - interp_monthly(nma5)
+for R in (M.RATEM, M.RATEM2): R["nma5"] = M.Y2M - nma5
 # same check on the rate: rebuilding LW this way reproduces the stored rate
 assert np.allclose((M.Y2M - M._e2m - D0["rstar LW"]).dropna(), M.RATEM["rstar"].dropna())
 
 FORMS = ("rstar", "kiley", "ma8", "fwd"); LAB = {"rstar": "LW (baseline)", "kiley": "Kiley", "ma8": "MA8 real 2-year", "fwd": "Forward less e10"}
 STARTS = ("1996-01", "1973-01")
 def cid(form, fci, start): return f"{form}_{fci}_upi_{start}_all_out"
-JOBS = [(f, fci, s) for f in ("ma8", "fwd", "nma8") for s in STARTS for fci in (0, f)]
+JOBS = [(f, fci, s) for f in ("ma8", "fwd", "nma8", "ma5", "nma5") for s in STARTS for fci in (0, f)] + [("spf", fci, "1996-01") for fci in (0, "spf")]
 
 def work(job):
     f, fci, s = job; t0 = time.time(); rows, paths = [], []
