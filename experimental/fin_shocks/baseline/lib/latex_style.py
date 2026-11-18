@@ -11,9 +11,11 @@ def title_case(s):
     for tk in toks:
         if tk.isspace() or not tk: out.append(tk); continue
         core = re.sub(r"^[(\[`']+", "", tk); lead = tk[:len(tk) - len(core)]
-        if any(c in core for c in "$\\^{}*") or (core[1:] != core[1:].lower()) or not re.search(r"[A-Za-z]", core): new = tk
+        keep = any(c in core for c in "$\\^{}*") or (core[1:] != core[1:].lower()) or not re.search(r"[A-Za-z]", core)
+        if keep: new = tk
         elif core.lower().rstrip(",.;:)") in SMALL and not first and not prev_colon: new = lead + core.lower()
         else: new = lead + "-".join((q[0].upper() + q[1:]) if q and q.lower() not in SMALL else q for q in core.split("-"))
+        if (first or prev_colon) and not keep and new[len(lead):len(lead) + 1].islower(): new = lead + new[len(lead)].upper() + new[len(lead) + 1:]   # the first word (and the word after a colon) is always capitalized
         out.append(new); first = False; prev_colon = tk.endswith(":")
     return "".join(out)
 

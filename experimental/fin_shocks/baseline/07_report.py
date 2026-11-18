@@ -19,10 +19,11 @@ def core_row(pid, sel, sx, L):
     """The r*-gap (or the panel's own version) case with the FCI of a core robustness test, from 1996 (sx = '') or 1973 (sx = '73'); rows of its 12-month results at L lags."""
     p_ = CS.panel_by_id(pid + sx); c = next(c for c in p_["cases"] if c["fci"] != 0 and all(c.get(k) == v for k, v in sel.items()) and (sel or c["form"] in ("rstar", "kiley", "real")) and (pid != "B" or c["form"] == "rstar"))
     d = R[CS.case_id(c)]; return d[d.lags == L]
-def blocks_of(p, lab=None):
-    """Rows of a panel's table: one block per version when the panel has more than one (or the components), else one block."""
+def blocks_of(p, lab=None, version_only=False):
+    """Rows of a panel's table: one block per version when the panel has more than one (or the components), else one block.
+    version_only: label each block by its version alone (appendix tables, whose caption names the panel)."""
     forms = list(dict.fromkeys(c["form"] for c in p["cases"])); lab = lab or CS.SHORT.get(p["id"], p["title"])
-    if len(forms) > 1 or p["id"].startswith("R4"): return [(f"{lab}: {CS.FORMS[f]}", [c for c in p["cases"] if c["form"] == f]) for f in forms]
+    if len(forms) > 1 or p["id"].startswith("R4"): return [(CS.FORMS[f] if version_only else f"{lab}: {CS.FORMS[f]}", [c for c in p["cases"] if c["form"] == f]) for f in forms]
     return [(lab, p["cases"])]
 def _wt():
     w = pd.read_csv(RESULTS / "weights_test.csv"); return w[w.test == "all"] if "test" in w else w
@@ -72,7 +73,7 @@ for g, pids in CS.GROUPS.items():                                               
     blocks = sum([blocks_of(CS.panel_by_id(pid)) for pid in pids], [])
     (REPORT / f"tab_main_{g}.tex").write_text(table(CS.GROUP_TITLE[g] + " (12 lags)", f"tab:main{g}", blocks, (MAIN_LAGS,), CS.GROUP_NOTE[g]) + "\n")
 for p in CS.PANELS:                                                                  # appendix: 3, 6, 12 lags, per panel
-    (REPORT / f"tab_app_{p['id']}.tex").write_text(table(p["title"], f"tab:app{p['id']}", blocks_of(p, CS.FORMS[p["cases"][0]["form"]] if len(set(c["form"] for c in p["cases"])) == 1 and not p["id"].startswith("R4") else ""), (3, 6, 12), p["notes"], "p") + "\n")
+    (REPORT / f"tab_app_{p['id']}.tex").write_text(table(p["title"], f"tab:app{p['id']}", blocks_of(p, CS.FORMS[p["cases"][0]["form"]] if len(set(c["form"] for c in p["cases"])) == 1 and not p["id"].startswith("R4") else "", version_only=True), (3, 6, 12), p["notes"], "p") + "\n")
 
 # ---------------------------------------------------------------- monthly VAR benchmark tables
 MON = {CS.monthly_id(m): pd.read_csv(RESULTS / f"{CS.monthly_id(m)}.csv") for m in CS.MONTHLY}
