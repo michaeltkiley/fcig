@@ -2,6 +2,7 @@
 The alternative r* enters every place LW r* enters (the 'identical case'): the r*-gap 2-year yield (2-year - 2-year expected inflation - r*, daily and monthly),
 and the r*-gap market index (10-year - 10-year expected inflation - r*; equities as E/P - r*; real dollar), Note B's weights unchanged.
   ma8: r* = trailing 8-year (96-month) average of the REAL 2-year yield (monthly average 2-year less 2-year expected inflation, the series of the real step).
+  nma8: the trailing 8-year average of the nominal 2-year replaces expected inflation and r* together (FS-A20's form; see below).
   fwd: r* = 1-year forward rate 9 years ahead (Gurkaynak-Sack-Wright SVEN1F09, monthly average) less 10-year expected inflation (Note A's series).
 Cases: baselines B (monthly equations from 1996) and B73 (from 1973), r*-gap with and without the FCI, 2020 dropped, no trend, 3/6/12 lags, 500 draws.
 Run from this folder:  python3 run_rstar_alt.py [--draws 500] [--jobs 4]
@@ -26,7 +27,12 @@ ma8 = real2.rolling(96, min_periods=96).mean()
 g = pd.read_csv(HERE / "gsw_sven1f09.csv", parse_dates=["Date"]).set_index("Date").SVEN1F09
 fwd = g.groupby(g.index.to_period("M")).mean().reindex(D0.index) - D0.einf_10y
 D0["rstar MA8"] = ma8; D0["rstar FWD"] = fwd
-RS = pd.DataFrame({"LW": D0["rstar LW"], "Kiley": D0["rstar Kiley"], "MA8 (real 2-year)": ma8, "Forward 9-10y less e10": fwd, "e2 (2-year expected inflation)": M._e2m.reindex(D0.index)})
+# nma8 (FS-A20's form): the trailing 8-year average of the NOMINAL 2-year replaces expected inflation and r* together.
+#   2-year: 2-year - MA8(2-year). Index: 10-year - MA8(2-year); equities: nominal earnings yield (E/P + e10) - MA8(2-year) = E/P - (MA8 - e10).
+#   In index_inputs this is r* = MA8 - e10 (it subtracts e10 and r*); in the rate it is r* = MA8 - e2.
+nma8 = M.Y2M.reindex(D0.index).rolling(96, min_periods=96).mean()
+D0["rstar NMA8"] = nma8 - D0.einf_10y
+RS = pd.DataFrame({"LW": D0["rstar LW"], "Kiley": D0["rstar Kiley"], "MA8 (real 2-year)": ma8, "Forward 9-10y less e10": fwd, "MA8 nominal 2-year (replaces e + r*)": nma8, "e2 (2-year expected inflation)": M._e2m.reindex(D0.index)})
 RS.loc["1965-01":].to_csv(HERE / "rstar_measures.csv", float_format="%.4f")
 
 # ---------------------------------------------------------------- plug into the model exactly as LW / Kiley are
@@ -40,13 +46,17 @@ for key, col in (("ma8", "rstar MA8"), ("fwd", "rstar FWD")):
     M.FCI[key] = M._daily_fci(M.IDXM[key])
     for R in (M.RATE, M.RATE2): R[key] = POL - interp_monthly(M._e2 + D0[col])
     for R in (M.RATEM, M.RATEM2): R[key] = M.Y2M - M._e2m - D0[col]
+M.IDXM["nma8"] = noteA.market_index(noteA.index_inputs(D0, "rstar", "rstar NMA8"), w).loc[noteA.START:noteA.END]
+M.FCI["nma8"] = M._daily_fci(M.IDXM["nma8"])
+for R in (M.RATE, M.RATE2): R["nma8"] = POL - interp_monthly(nma8)
+for R in (M.RATEM, M.RATEM2): R["nma8"] = M.Y2M - nma8
 # same check on the rate: rebuilding LW this way reproduces the stored rate
 assert np.allclose((M.Y2M - M._e2m - D0["rstar LW"]).dropna(), M.RATEM["rstar"].dropna())
 
 FORMS = ("rstar", "kiley", "ma8", "fwd"); LAB = {"rstar": "LW (baseline)", "kiley": "Kiley", "ma8": "MA8 real 2-year", "fwd": "Forward less e10"}
 STARTS = ("1996-01", "1973-01")
 def cid(form, fci, start): return f"{form}_{fci}_upi_{start}_all_out"
-JOBS = [(f, fci, s) for f in ("ma8", "fwd") for s in STARTS for fci in (0, f)]
+JOBS = [(f, fci, s) for f in ("ma8", "fwd", "nma8") for s in STARTS for fci in (0, f)]
 
 def work(job):
     f, fci, s = job; t0 = time.time(); rows, paths = [], []

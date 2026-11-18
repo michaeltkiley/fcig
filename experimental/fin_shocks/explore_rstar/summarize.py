@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 HERE = Path(__file__).resolve().parent; BR = HERE.parent / "baseline" / "results"
-FORMS = [("rstar", "LW (baseline)", BR), ("kiley", "Kiley", BR), ("ma8", "MA8 real 2-year", HERE / "results"), ("fwd", "Forward 9-10y less e10", HERE / "results")]
+FORMS = [("rstar", "LW (baseline)", BR), ("kiley", "Kiley", BR), ("ma8", "MA8 real 2-year", HERE / "results"), ("fwd", "Forward 9-10y less e10", HERE / "results"), ("nma8", "MA8 nominal 2-year", HERE / "results")]
 STARTS = [("1996-01", "1996"), ("1973-01", "1973")]
 def star(lo, hi, lo95, hi95): return "**" if lo95 > 0 or hi95 < 0 else "*" if lo > 0 or hi < 0 else ""
 rows = []
@@ -38,7 +38,7 @@ print("\n".join(md))
 
 RS = pd.read_csv(HERE / "rstar_measures.csv", index_col=0); RS.index = pd.PeriodIndex(RS.index, freq="M").to_timestamp()
 fig, ax = plt.subplots(figsize=(8, 4))
-for c, col in zip(RS.columns[:4], ["k", "0.55", "tab:blue", "tab:red"]): ax.plot(RS.index, RS[c], color=col, lw=1.3, label=c)
+for c, col in zip([c for c in RS.columns if not c.startswith("e2")], ["k", "0.55", "tab:blue", "tab:red", "tab:green"]): ax.plot(RS.index, RS[c], color=col, lw=1.3, label=c)
 ax.axhline(0, color="0.8", lw=0.8); ax.set_ylabel("percent"); ax.legend(frameon=False, fontsize=8); ax.set_xlim(pd.Timestamp("1970-01-01"), RS.index[-1])
 ax.set_title("r* measures (monthly)", fontsize=10); fig.tight_layout(); fig.savefig(HERE / "fig_rstar.pdf"); fig.savefig(HERE / "fig_rstar.png", dpi=150)
 
