@@ -14,7 +14,10 @@ def macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=False):
     return (X, Y, P) if periods else (X, Y)
 M.macro_data = macro_data
 rows = []
-for f, lab in (("rstar", "LW (baseline)"), ("ma8", "MA8 real 2-year"), ("nma8", "MA8 nominal 2-year")):
+import os as _os
+_SETS = {"ma8": (("rstar", "LW (baseline)"), ("ma8", "MA8 real 2-year"), ("nma8", "MA8 nominal 2-year")), "fwd": (("fwd", "Forward 9-10y less e10"),)}
+_SET = _os.environ.get("QT_SET", "ma8"); _SFX = "" if _SET == "ma8" else "_" + _SET
+for f, lab in _SETS[_SET]:
     for s in ("1996-01", "1973-01"):
         for tr in ("none", "spline", "quad"):
             for fci in (0, f):
@@ -23,7 +26,7 @@ for f, lab in (("rstar", "LW (baseline)"), ("ma8", "MA8 real 2-year"), ("nma8", 
                         rows.append(dict(rstar=lab, start=s[:4], trend=tr, fci="with FCI" if fci else "no FCI", lags=est["lags"], var=n, nobs=est["nobs"],
                                          **{f"r{h}": est["s0"][h, j] for h in (12, 24, 36)}))
                 print(lab, s, tr, fci, flush=True)
-R = pd.DataFrame(rows); R.to_csv(HERE / "quick_trends.csv", index=False, float_format="%.4f")
+R = pd.DataFrame(rows); R.to_csv(HERE / f"quick_trends{_SFX}.csv", index=False, float_format="%.4f")
 md = ["# Quick read: 8-year moving-average r* under three trend treatments (point estimates, no bootstrap)", "",
       "Per +1 pp on the 2-year in the window: unemployment gap (pp), price level (percent). 2020 (March-December) dropped. Point estimates only; no intervals.", ""]
 for L in (12,):
@@ -33,4 +36,4 @@ for L in (12,):
         u = g[g["var"] == "u"].iloc[0]; p = g[g["var"] == "P"].iloc[0]
         md.append(f"| {s} | {fc} | {r} | {tr} | {u.r12:+.2f} | {u.r24:+.2f} | {p.r12:+.2f} | {p.r24:+.2f} |")
     md.append("")
-(HERE / "quick_trends.md").write_text("\n".join(md)); print("\n".join(md[:45]))
+(HERE / f"quick_trends{_SFX}.md").write_text("\n".join(md)); print("\n".join(md[:45]))
