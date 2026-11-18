@@ -3,7 +3,7 @@ The qualitative statements of the text are asserted here (check_claims): the scr
 import re
 import numpy as np, pandas as pd
 import matplotlib.pyplot as plt
-from lib import data, compare as K
+from lib import data, cases, compare as K
 from lib.config import RES, REP, REPS
 from lib.latex_style import title_case
 from lib.report import COLORS, axes, figure, load_scalars
@@ -1435,6 +1435,218 @@ for k_, nm_ in (("F", "Market, futures factor"), ("Y", "Market, two-year yield")
     rows.append([nm_] + r_)
 table("fcistar", "Readings and the Gap to FCI*", "tab:fcistar", ["", "Level, $r^*$ fixed", "Level, $r^*$", "4-quarter change, $r^*$ fixed", "4-quarter change, $r^*$"], rows,
       "Correlation of each calibration's reading (quarterly mean; common scale) with the gap between FCI-G and FCI$^*$ as published by \\citet{caballero2026}, \\bl{fs:first:q} to \\bl{fs:last:q}. $r^*$: yields and valuations relative to the \\citet{laubach2003} estimate, as in the rest of the paper; $r^*$ fixed: the same series with $r^*$ held at its 1973--2026 mean. FCI-G is the 3-year-lookback version and FCI$^*$ the one-sided estimate.", align="lcccc", small=False)
+
+# ------------------------------------------------------------------ new version (MCFCI paper; FP-A72 outline): exhibits, macros (prefix nv:), claims
+NVW = pd.read_csv(RES / "32_weights_common.csv", index_col=0)                    # common-scale weights on y10, equities, dollar (market, frbus, gs)
+NVX = cases.inputs(D, "rstar")[["y10", "equities", "dollar"]].loc["1973-01":"2026-09"].dropna()
+NVSD = NVX.std().values
+NVEQ = pd.read_csv(RES / "34_equity_channel.csv")
+NVIRF = pd.read_csv(RES / "33_irf.csv")
+NVM = pd.read_csv(RES / "33_frbus_match.csv")
+NVS = pd.read_csv(RES / "32_series.csv", index_col=0); NVS.index = pd.PeriodIndex(NVS.index, freq="M")
+NVTT = pd.read_csv(RES / "32_tight_vs_tightening.csv").set_index("episode")
+NVSH = pd.read_csv(RES / "32_shape.csv")
+NVPC = pd.read_csv(RES / "35_pc_corr.csv")
+NVLF = pd.read_csv(RES / "36_levelflow_q.csv")
+NVLAB = {"market": "MCFCI", "gs": "GS", "frbus": "FRB/US"}
+NVA = ["ten", "eq", "usd"]; NVAL = {"ten": "10-year yield", "eq": "Equity valuation", "usd": "Dollar"}
+
+# Figure 1: weights scaled by each asset's standard deviation (panel a) and shares of a policy move (panel b)
+fig, ax = plt.subplots(1, 2, figsize=(7.5, 3.3))
+xs = np.arange(3); wd = 0.26
+sdw = {k: NVW[k].values * NVSD for k in ("market", "gs", "frbus")}
+wbm = WB[["w_ten", "w_eq", "w_usd"]].values * NVSD
+_p5, _p95 = np.abs(np.percentile(wbm, 5, axis=0)), np.abs(np.percentile(wbm, 95, axis=0))
+lo, hi = np.minimum(_p5, _p95), np.maximum(_p5, _p95)                             # bounds of the absolute sd-scaled weight
+for i, k in enumerate(("market", "gs", "frbus")):
+    v = np.abs(sdw[k])
+    ax[0].bar(xs + (i - 1) * wd, v, wd, color=COLORS[k], label=NVLAB[k])
+    if k == "market":
+        ax[0].errorbar(xs - wd, v, yerr=[v - lo, hi - v], fmt="none", ecolor="#333333", capsize=2, lw=0.8)
+ax[0].set_xticks(xs); ax[0].set_xticklabels(["10-year", "Equities", "Dollar"]); ax[0].set_title("(a) Weight times standard deviation", loc="left", fontsize=9)
+axes(ax[0], "points of policy", legend=True)
+cats = [("Windows", "window"), ("FRB/US hike, q4", "q4")]
+bars = []
+for part, hz in cats:
+    for k in ("market", "gs", "frbus"):
+        sub = NVEQ[(NVEQ["index"] == k) & (NVEQ.horizon == hz)]
+        g = {("ten" if a in ("ten", "rates") else a): s for a, s in zip(sub.asset, sub.share)}
+        bars.append((NVLAB[k], g.get("ten", 0), g.get("eq", 0), g.get("usd", 0)))
+bx = np.arange(len(bars)); bottom = np.zeros(len(bars))
+for j, (lab, col) in enumerate((("Rates", "#9db7d5"), ("Equities", "#1f4e9c"), ("Dollar", "#d95f02"))):
+    vals = np.array([b[j + 1] for b in bars]); ax[1].bar(bx, vals, 0.6, bottom=bottom, color=col, label=lab); bottom += vals
+ax[1].set_xticks(bx); ax[1].set_xticklabels([b[0] for b in bars], fontsize=7); ax[1].set_title("(b) Share of a policy move", loc="left", fontsize=9)
+ax[1].axvline(2.5, color="#999999", lw=0.8, ls=":"); axes(ax[1], "share", legend=False, zero=False); ax[1].set_ylim(0, 1.18)
+ax[1].text(1, 1.06, "Announcement windows", ha="center", fontsize=7.5); ax[1].text(4, 1.06, "FRB/US hike, 4 quarters", ha="center", fontsize=7.5)
+ax[1].legend(frameon=False, fontsize=7, loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=3)
+figure("fig_nv_weights", fig)
+for i, a in enumerate(NVA):
+    for k in ("market", "gs", "frbus"):
+        mac(f"nv:sdw:{k}:{a}", abs(sdw[k][i]))
+    mac(f"nv:sdw:market:{a}:lo", abs(lo[i])); mac(f"nv:sdw:market:{a}:hi", abs(hi[i]))
+    mac(f"nv:w:gs:{a}", NVW["gs"].values[i], 3); mac(f"nv:w:frbus:{a}", NVW["frbus"].values[i], 3); mac(f"nv:w:market:{a}", NVW["market"].values[i], 3)
+
+# Table: the MCFCI weights
+rows = []
+for i, a in enumerate(NVA):
+    rows.append([NVAL[a], f(W.response.iloc[i], 2), f"({f(W.se.iloc[i], 2)})", f(SC[f"r2_{a}"], 2), f(W.weight.iloc[i], 3),
+                 f"[{f(pct(WB[f'w_{a}'], 5), 3)}, {f(pct(WB[f'w_{a}'], 95), 3)}]", f(SC[f"share_{a}"], 2), f"[{f(SC[f'share_{a}_lo'], 2)}, {f(SC[f'share_{a}_hi'], 2)}]"])
+table("nv_weights", "Policy News, Window Responses and the MCFCI Weights", "tab:nvweights",
+      ["", "Response", "(s.e.)", "$R^2$", "Weight", "90\\% interval", "Share", "90\\% interval"], rows,
+      f"{int(SC['n_events'])} FOMC announcements, {SC['event_first']} to {SC['event_last']} (USMPD monetary-event windows). Response: OLS slope of the window change "
+      "(10-year yield in percentage points; S\\&P 500 and DXY in percent) on Nakamura--Steinsson policy news scaled so that one unit raises the two-year yield by one "
+      "percentage point; heteroskedasticity-robust standard errors. $R^2$: share of the window variance explained by policy news. Weight: one-factor GLS weights, "
+      "$w=S^{-1}\\psi/\\psi'S^{-1}\\psi$, so that the index reads one point on the usual response. Share: $w_a\\psi_a$, the part of a one-point reading carried by each asset. "
+      "Intervals: 5th and 95th percentiles of 5,000 bootstrap draws of announcements, with the policy-news factor re-estimated in each draw.")
+mac("nv:r2:two", SC["r2_two"]); mac("nv:r2:index", SC["r2_index"])
+for a in NVA:
+    mac(f"nv:r2:{a}", SC[f"r2_{a}"]); mac(f"nv:share:{a}", SC[f"share_{a}"]); mac(f"nv:share:{a}:lo", SC[f"share_{a}_lo"]); mac(f"nv:share:{a}:hi", SC[f"share_{a}_hi"])
+    mac(f"nv:wlo:{a}", pct(WB[f"w_{a}"], 5), 3); mac(f"nv:whi:{a}", pct(WB[f"w_{a}"], 95), 3)
+
+# Table: the equity channel
+def nvsh(k, hz, a):
+    s = NVEQ[(NVEQ["index"] == k) & (NVEQ.horizon == hz) & (NVEQ.asset == a)]
+    return float(s.share.iloc[0]) if len(s) else np.nan
+rows = []
+for k in ("market", "gs", "frbus"):
+    r = [NVLAB[k], f(nvsh(k, "window", "eq"), 2)]
+    r += [f(nvsh(k, f"q{q}", "eq"), 2) for q in (1, 4, 8)]
+    r += [f(nvsh(k, "level", "eq"), 2), f(nvsh(k, "change12", "eq"), 2)]
+    rows.append(r)
+    for hz in ("window", "q1", "q4", "q8", "level", "change12"):
+        mac(f"nv:eq:{k}:{hz}", nvsh(k, hz, "eq"))
+    for q in (1, 4, 8):
+        mac(f"nv:hike:{k}:q{q}", SC[f"hike_{k}_reading_q{q}"])
+table("nv_equity", "Equities in a Policy Move and in the History of Each Index", "tab:nvequity",
+      ["Weights", "Windows", "FRB/US hike, q1", "q4", "q8", "Variance, levels", "Variance, 12-month changes"], rows,
+      "Windows: equities' share of the reading of the usual response to policy news, $w_{eq}\\psi_{eq}/w'\\psi$, with each calibration's weights on the 10-year yield, "
+      "equity valuation and the dollar (MCFCI interval in Table~\\ref{tab:nvweights}). FRB/US hike: equities' share of each index's reading of a persistent one-percentage-point "
+      "rise in the federal funds rate in FRB/US (VAR expectations, full transmission), quarters 1, 4 and 8; the GS and FRB/US readings use their full sets of variables "
+      "(policy rate, spreads). Variance: equities' share of the variance of each index relative to $r^*$, 1973--2026, $\\mathrm{cov}(C_{eq},I)/\\mathrm{var}(I)$.")
+
+# Figure: the three level indexes
+fig, ax = plt.subplots(figsize=(7.5, 3.3)); t = NVS.index.to_timestamp()
+for k, lw in (("gs", 1.0), ("frbus", 1.0), ("market", 1.6)):
+    ax.plot(t, NVS[k], color=COLORS[k], lw=lw, label=NVLAB[k])
+axes(ax, "points of policy, tighter above zero"); figure("fig_nv_history", fig)
+
+# Figure: tight or tightening
+fig, ax = plt.subplots(2, 1, figsize=(7.5, 4.8), sharex=True)
+s2 = NVS.loc["1974-01":]; t2 = s2.index.to_timestamp()
+for a_, col, lab in ((ax[0], "market", "MCFCI level (relative to $r^*$)"), (ax[1], "fcig", "FCI-G, one-year lookback")):
+    a_.plot(t2, s2[col], color=COLORS["market" if col == "market" else "fcig"], lw=1.3)
+    for a0, e0 in (("1994-01", "1994-12"), ("2022-03", "2024-12")):
+        a_.axvspan(pd.Period(a0, "M").to_timestamp(), pd.Period(e0, "M").to_timestamp(), color="#dddddd", alpha=0.6, lw=0)
+    a_.set_title(lab, loc="left", fontsize=9); axes(a_, "points of policy" if col == "market" else "pp of GDP growth", legend=False)
+figure("fig_nv_tight", fig)
+for ep_ in NVTT.index:
+    tg = ep_.replace(" ", "").replace("-", "")
+    mac(f"nv:tt:{tg}:level", NVTT.loc[ep_, "market_level"]); mac(f"nv:tt:{tg}:fcig", NVTT.loc[ep_, "fcig"])
+    mac(f"nv:tt:{tg}:loose", 100 * NVTT.loc[ep_, "flow_tightening_level_loose"], 0); mac(f"nv:tt:{tg}:same", 100 * NVTT.loc[ep_, "same_sign"], 0)
+
+# Where the indexes part: three-index counts on the common assets (step 26 monthly readings, 12-month changes, 1996-2026)
+M26 = pd.read_csv(RES / "26_monthly.csv"); T3 = M26[["F", "B", "G"]].values
+mac("nv:cnt:n", len(T3), 0)
+mac("nv:cnt:same", 100 * float((np.abs(np.sign(T3).sum(1)) == 3).mean()), 0)
+mac("nv:cnt:range25", 100 * float((T3.max(1) - T3.min(1) >= 0.25).mean()), 0)
+mac("nv:cnt:opp25", float(((T3 >= 0.25).any(1) & (T3 <= -0.25).any(1)).sum()), 0)
+for k_, c_ in (("market", "F"), ("frbus", "B"), ("gs", "G")):
+    for a_ in ("y10", "eq", "usd", "total"):
+        mac(f"nv:jan98:{k_}:{a_}", SC[f"acc_jan1998_{c_}_{a_}"])
+mac("nv:jan98:x:eq", SC["acc_jan1998_x_eq"], 1); mac("nv:jan98:x:usd", SC["acc_jan1998_x_usd"], 1); mac("nv:jan98:x:y10", SC["acc_jan1998_x_y10"])
+
+# Shape and statistical indexes
+for _, r in NVSH.iterrows():
+    tg = r.period.replace("-", "")
+    mac(f"nv:skew:{tg}:{r['index']}", r["skew"]); mac(f"nv:tail:{tg}:{r['index']}", r.tail_ratio)
+for _, r in NVPC.iterrows():
+    tg = {"A_three_assets": "A", "B_plus_spreads": "B", "C_plus_policy": "C"}[r.panel]
+    mac(f"nv:pc:{r.basis}:{tg}:mkt", r.corr_market); mac(f"nv:pc:{r.basis}:{tg}:nfci", r.corr_nfci); mac(f"nv:pc:{r.basis}:{tg}:share", 100 * r.var_share, 0)
+    if r.basis == "level":
+        mac(f"nv:pc:{tg}:skew", r.skew_1990)
+
+# Activity: VAR table and figure with the FRB/US benchmark
+def nvi(k, order, h, col="gap", step="rstar", d=True):
+    s = NVIRF[(NVIRF.step == step) & (NVIRF["index"] == k) & (NVIRF.dummies == d) & (NVIRF.order == order)]
+    return float(s[f"{col}_h{h}"].iloc[0])
+def nvm(k, order, h, col="frbus_gdp", d=True):
+    s = NVM[(NVM["index"] == k) & (NVM.dummies == d) & (NVM.order == order) & (NVM.quarter == h)]
+    return float(s[col].iloc[0])
+rows = []
+for k, lab in (("market", "MCFCI"), ("gs", "GS"), ("frbus", "FRB/US"), ("fcig", "FCI-G (one-year)"), ("nfci", "NFCI"), ("anfci", "ANFCI")):
+    r = [lab]
+    for h in (4, 8, 12):
+        r.append(f"{f(nvi(k, 'gap_first', h))} [{f(nvi(k, 'gap_first', h, 'lo'))}, {f(nvi(k, 'gap_first', h, 'hi'))}]")
+    r += [f(nvi(k, "fci_first", h)) for h in (4, 8)]
+    r += [f(nvm(k, "gap_first", h)) for h in (4, 8)] if k in ("market", "gs", "frbus") else ["", ""]
+    rows.append(r)
+    for h in (4, 8, 12):
+        for o in ("gap_first", "fci_first"):
+            for c in ("gap", "lo", "hi"):
+                mac(f"nv:var:{k}:{o.split('_')[0]}:h{h}" + ("" if c == "gap" else f":{c}"), nvi(k, o, h, c))
+            mac(f"nv:var:{k}:{o.split('_')[0]}:h{h}:nd", nvi(k, o, h, d=False))
+        if k in ("market", "gs", "frbus"):
+            for o in ("gap_first", "fci_first"):
+                mac(f"nv:frbus:{k}:{o.split('_')[0]}:h{h}", nvm(k, o, h)); mac(f"nv:frbus:{k}:{o.split('_')[0]}:h{h}:ffr", nvm(k, o, h, "ffr_path"))
+table("nv_var", "The Output Gap after a One-Point Move in Each Index", "tab:nvvar",
+      ["Index", "GDP lagged, 4 quarters", "8 quarters", "12 quarters", "Generalized, 4", "8", "FRB/US benchmark, 4", "8"], rows,
+      "Response of the CBO output gap (percent of potential) to an innovation that raises the index by one point on impact, in a two-variable quarterly VAR "
+      "(output gap and the index; four lags; constant; 1973Q1, FCI-G 1974Q1, to " + str(NVIRF.end.iloc[0]) + "; dummies for 2020Q1--2021Q1). GDP lagged: the output gap is "
+      "ordered first, so the innovation does not move it within the quarter. Generalized: the index is ordered first, which equals the generalized impulse response. "
+      "Brackets: 90 percent intervals from a moving-block bootstrap of residual pairs (blocks of four quarters, 1,000 draws). MCFCI, GS and FRB/US relative to $r^*$; "
+      "FCI-G at the nominal step (one point = one percentage point of GDP growth over the next year); NFCI and ANFCI in two-year-yield units. FRB/US benchmark: GDP in FRB/US "
+      "under the funds-rate path that makes the index follow its VAR path (GDP lagged).")
+fig, ax = plt.subplots(1, 3, figsize=(7.5, 2.9), sharey=True)
+for a_, k in zip(ax, ("market", "gs", "frbus")):
+    for o, ls in (("gap_first", "-"), ("fci_first", "--")):
+        s = NVM[(NVM["index"] == k) & (NVM.dummies) & (NVM.order == o)].sort_values("quarter")
+        a_.plot(s.quarter, s.var_gap, color=COLORS[k], ls=ls, lw=1.5, label="VAR, GDP lagged" if o == "gap_first" else "VAR, generalized")
+    s = NVM[(NVM["index"] == k) & (NVM.dummies) & (NVM.order == "gap_first")].sort_values("quarter")
+    a_.plot(s.quarter, s.frbus_gdp, color="#222222", lw=1.2, ls=":", label="FRB/US, matched path")
+    a_.set_title(NVLAB[k], loc="left", fontsize=9); a_.set_xlabel("quarters"); axes(a_, "percent" if k == "market" else None, legend=(k == "market"))
+figure("fig_nv_var", fig)
+
+# Similarity, co-movement, levels and changes
+for x_, y_ in (("market", "gs"), ("market", "frbus"), ("gs", "frbus")):
+    mac(f"nv:cos:{x_}:{y_}", SC[f"sim_level_{x_}_{y_}_cos"], 3); mac(f"nv:corromega:{x_}:{y_}", SC[f"sim_level_{x_}_{y_}_corr"], 3)
+for _, r in NVLF.iterrows():
+    if r.spec in ("level", "change4", "fcig"):
+        mac(f"nv:lf:{r['index']}:{r.spec}:{r.dep}:rtwo", r.r2, 3)
+    if r.spec == "level":
+        mac(f"nv:lf:{r['index']}:{r.dep}:sum", r.sum_level, 3); mac(f"nv:lf:{r['index']}:{r.dep}:p", r.p_sum_level_zero)
+    if r.spec == "level+fcig":
+        mac(f"nv:lf:{r['index']}:{r.dep}:pfcig", r.p_fcig_joint_zero)
+
+# Policy models and equities (from model documentation; experimental/note_a_qvar/reviews/LIT_DSGE_17nov.md)
+MODELS = [("Smets and Wouters (2007)", "No", "No", "Value of installed capital (Tobin's $q$); exogenous risk-premium wedge"),
+          ("Christiano, Eichenbaum and Evans (2005)", "No", "No", "Shadow price of installed capital"),
+          ("EDO (Federal Reserve Board)", "No", "No", "Implicit value of capital; exogenous risk premiums"),
+          ("SIGMA (Federal Reserve Board)", "No", "No", "Interest-parity and intermediation premiums"),
+          ("FRBNY DSGE", "No", "No", "Price of capital; entrepreneurial net worth; Baa spread"),
+          ("FRB/US (Federal Reserve Board)", "Yes", "Yes", "Treasury yields, BBB and mortgage rates, equity, house prices, dollar")]
+table("nv_models", "Equity Prices in Models Used for Monetary Policy Analysis", "tab:nvmodels",
+      ["Model", "Equity price", "Stock wealth in consumption", "Asset prices the model contains"], [list(m) for m in MODELS],
+      "From the model documentation: Smets and Wouters (2007, equations 2 and 4); Christiano, Eichenbaum and Evans (2005, section on the household problem); EDO, "
+      "Chung, Kiley and Laforte (2010); SIGMA, Erceg, Guerrieri and Gust (2005); FRBNY DSGE, Del Negro et al. (2013); FRB/US, Brayton, Laubach and Reifschneider (2014) and "
+      "the model equations (household stock-market wealth in desired consumption; the equity return in the business cost of capital).", align="llll")
+FB = pd.read_csv(REP.parent.parent.parent / "experimental" / "fed_models_check" / "model_sets.csv", dtype={"meeting": str})
+gb = FB[FB.kind == "gbpt1"]; tb = FB[(FB.kind == "tealbooka") & (FB.year >= 2016)]
+mac("nv:gb:n", len(gb), 0); mac("nv:gb:frbusonly", 100 * float((gb.models == "FRB/US").mean()), 0); mac("nv:tb:n", len(tb), 0)
+mac("nv:tb:models", float(tb.n_models.mean()), 1); mac("nv:tb:frbusonly", 100 * float((tb.models == "FRB/US").mean()), 0)
+mac("nv:tb:sigma", 100 * float(tb.models.str.contains("SIGMA").mean()), 0); mac("nv:tb:dsge", 100 * float(tb.models.str.contains("EDO|DGS|Gertler|Smets|search|FLM|SIR|MQS").mean()), 0)
+
+# Claims of the new version
+chk(SC["sim_level_market_gs_cos"] > 0.99 and SC["sim_level_market_frbus_cos"] > 0.9, "nv: weights: cosine MCFCI-GS above 0.99, MCFCI-FRB/US above 0.9")
+chk(SC["share_eq_lo"] > 0 and SC["share_eq"] > max(SC["share_ten"], SC["share_usd"]), "nv: equities carry the largest share of a policy move; interval above zero")
+chk(0.9 < SC["hike_reading_market_q1"] < 1.15, "nv: FRB/US reads a persistent 1 pp hike as about one MCFCI point")
+chk(all(nvi(k, "gap_first", 4, "hi") < 0 for k in ("market", "gs", "frbus", "fcig")), "nv: 4-quarter responses exclude zero (GDP lagged)")
+chk(all(0.8 < nvi(k, "gap_first", 4) / nvm(k, "gap_first", 4) < 1.2 for k in ("market", "gs")), "nv: at 4 quarters the VAR matches FRB/US for MCFCI and GS")
+chk(all(nvi(k, "gap_first", 8) / nvm(k, "gap_first", 8) < 0.6 for k in ("market", "gs", "frbus")), "nv: after a year the VAR fades relative to FRB/US")
+chk(NVSH[(NVSH.period == "1990-2026") & (NVSH["index"] == "nfci")]["skew"].iloc[0] > 3 and abs(NVSH[(NVSH.period == "1990-2026") & (NVSH["index"] == "market")]["skew"].iloc[0]) < 0.5, "nv: NFCI skewed, MCFCI symmetric since 1990")
+chk(NVPC[(NVPC.basis == "level") & (NVPC.panel == "A_three_assets")].corr_market.iloc[0] > 0.9 and NVPC[(NVPC.basis == "level") & (NVPC.panel == "B_plus_spreads")].corr_market.iloc[0] < 0.7, "nv: PC of three assets close to MCFCI; with spreads it departs")
+chk(all(NVLF[(NVLF["index"] == k) & (NVLF.spec == "level") & (NVLF.dep == "gap")].p_sum_level_zero.iloc[0] > 0.05 for k in ("market", "gs", "frbus")), "nv: level lags sum to zero at 5 percent (act as changes)")
+chk(NVTT.loc["2022-24", "market_level"] < 0 < NVTT.loc["2022-24", "fcig"], "nv: 2022-24 FCI-G a drag while the MCFCI level reads loose")
+chk(float((gb.models == "FRB/US").mean()) == 1.0 and float((tb.models == "FRB/US").mean()) == 0.0, "nv: Greenbooks FRB/US only, Tealbooks never FRB/US only")
 
 # ------------------------------------------------------------------ write numbers.tex and check the paper's macros
 def norm(k):

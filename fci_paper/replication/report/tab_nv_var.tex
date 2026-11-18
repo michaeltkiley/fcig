@@ -1,0 +1,17 @@
+\begin{table}[tbp]\centering\small
+\caption{The Output Gap after a One-Point Move in Each Index}\label{tab:nvvar}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrrrrrr}
+\toprule
+Index & GDP lagged, 4 quarters & 8 quarters & 12 quarters & Generalized, 4 & 8 & FRB/US benchmark, 4 & 8 \\
+\midrule
+MCFCI & $-$0.74 [$-$1.08, $-$0.34] & $-$0.42 [$-$0.69, 0.00] & $-$0.19 [$-$0.40, 0.20] & $-$1.03 & $-$0.52 & $-$0.77 & $-$1.13 \\
+GS & $-$0.88 [$-$1.24, $-$0.46] & $-$0.51 [$-$0.82, $-$0.06] & $-$0.24 [$-$0.47, 0.18] & $-$1.19 & $-$0.60 & $-$0.87 & $-$1.24 \\
+FRB/US & $-$0.77 [$-$1.13, $-$0.30] & $-$0.39 [$-$0.68, 0.08] & $-$0.11 [$-$0.37, 0.32] & $-$1.10 & $-$0.54 & $-$1.00 & $-$1.41 \\
+FCI-G (one-year) & $-$1.27 [$-$1.67, $-$0.72] & $-$0.86 [$-$1.45, $-$0.31] & $-$0.28 [$-$0.67, 0.13] & $-$1.54 & $-$0.98 &  &  \\
+NFCI & $-$0.10 [$-$0.14, $-$0.07] & $-$0.09 [$-$0.13, $-$0.05] & $-$0.05 [$-$0.09, $-$0.02] & $-$0.10 & $-$0.09 &  &  \\
+ANFCI & $-$0.18 [$-$0.25, $-$0.12] & $-$0.15 [$-$0.22, $-$0.08] & $-$0.08 [$-$0.15, $-$0.02] & $-$0.19 & $-$0.15 &  &  \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Response of the CBO output gap (percent of potential) to an innovation that raises the index by one point on impact, in a two-variable quarterly VAR (output gap and the index; four lags; constant; 1973Q1, FCI-G 1974Q1, to 2026Q3; dummies for 2020Q1--2021Q1). GDP lagged: the output gap is ordered first, so the innovation does not move it within the quarter. Generalized: the index is ordered first, which equals the generalized impulse response. Brackets: 90 percent intervals from a moving-block bootstrap of residual pairs (blocks of four quarters, 1,000 draws). MCFCI, GS and FRB/US relative to $r^*$; FCI-G at the nominal step (one point = one percentage point of GDP growth over the next year); NFCI and ANFCI in two-year-yield units. FRB/US benchmark: GDP in FRB/US under the funds-rate path that makes the index follow its VAR path (GDP lagged).\end{flushleft}
+\end{table}

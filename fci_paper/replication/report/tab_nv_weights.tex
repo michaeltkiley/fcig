@@ -1,0 +1,14 @@
+\begin{table}[tbp]\centering\small
+\caption{Policy News, Window Responses and the MCFCI Weights}\label{tab:nvweights}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrrrrrrr}
+\toprule
+ & Response & (s.e.) & $R^2$ & Weight & 90\% interval & Share & 90\% interval \\
+\midrule
+10-year yield & 0.53 & (0.06) & 0.32 & 0.616 & [0.144, 1.105] & 0.33 & [0.08, 0.59] \\
+Equity valuation & $-$7.71 & (0.95) & 0.31 & $-$0.052 & [$-$0.069, $-$0.030] & 0.40 & [0.19, 0.58] \\
+Dollar & 4.18 & (0.54) & 0.34 & 0.066 & [0.020, 0.114] & 0.27 & [0.08, 0.54] \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} 252 FOMC announcements, January 1996 to July 2026 (USMPD monetary-event windows). Response: OLS slope of the window change (10-year yield in percentage points; S\&P 500 and DXY in percent) on Nakamura--Steinsson policy news scaled so that one unit raises the two-year yield by one percentage point; heteroskedasticity-robust standard errors. $R^2$: share of the window variance explained by policy news. Weight: one-factor GLS weights, $w=S^{-1}\psi/\psi'S^{-1}\psi$, so that the index reads one point on the usual response. Share: $w_a\psi_a$, the part of a one-point reading carried by each asset. Intervals: 5th and 95th percentiles of 5,000 bootstrap draws of announcements, with the policy-news factor re-estimated in each draw.\end{flushleft}
+\end{table}
