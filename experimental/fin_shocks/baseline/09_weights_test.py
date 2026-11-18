@@ -17,9 +17,9 @@ for Ls, seed in (((12,), 7), ((6, 3), 8)):                                  # 12
   rng = np.random.default_rng(seed); rng2 = np.random.default_rng(seed + 100)       # separate streams: the draws of the 'all' test are those of the earlier version
   for start, form in [(st, f) for st in ("1996-01", "1973-01") for f in ("nom", "real", "rstar")]:
     for L in Ls:
-        X, Y = M.macro_data(form, "cmp", ["u", "pi"], L, start, None, "in", "none"); n, k = X.shape; K = 2; nd = 4
-        Xr, _ = M.macro_data(form, form, ["u", "pi"], L, start, None, "in", "none")                  # restricted: the FCI as one regressor per lag
-        Xe, _ = M.macro_data(form, "cmpE", ["u", "pi"], L, start, None, "in", "none")                  # equities free, the 10-year yield and the dollar as one variable (columns: yield, y10+usd, equities)
+        X, Y = M.macro_data(form, "cmp", ["u", "pi"], L, start, None, "out", "none"); n, k = X.shape; K = 2; nd = 4
+        Xr, _ = M.macro_data(form, form, ["u", "pi"], L, start, None, "out", "none")                  # restricted: the FCI as one regressor per lag
+        Xe, _ = M.macro_data(form, "cmpE", ["u", "pi"], L, start, None, "out", "none")                  # equities free, the 10-year yield and the dollar as one variable (columns: yield, y10+usd, equities)
         for j, name in enumerate(("u", "pi")):
             y = Y[:, j]
             Ra = np.zeros((2 * L, k)); Ry = np.zeros((L, k)); Re = np.zeros((L, Xe.shape[1]))

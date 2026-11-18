@@ -10,7 +10,7 @@ ap = argparse.ArgumentParser(); ap.add_argument("--jobs", type=int, default=4); 
 CASES = [("nom", 0), ("nom", "nom"), ("real", 0), ("real", "real"), ("rstar", 0), ("rstar", "rstar")]
 JOBS = [(f, c, v) for f, c in CASES for v in ("j12r", "iid")]
 def work(j):
-    f, c, v = j; t0 = time.time(); est = next(M.estimate(f, c, boot=v, B=a.draws, lags=(12,))); rows = []
+    f, c, v = j; t0 = time.time(); est = next(M.estimate(f, c, t2020="out", boot=v, B=a.draws, lags=(12,))); rows = []
     for k, n in enumerate(est["names"]):
         for h in M.HORIZ:
             s0, sd = est["s0"][h, k], est["sd"][:, h, k]; lo, hi = np.percentile(sd, [5, 95]); lo95, hi95 = np.percentile(sd, [2.5, 97.5])

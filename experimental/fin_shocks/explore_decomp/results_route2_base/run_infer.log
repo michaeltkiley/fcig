@@ -1,0 +1,7 @@
+rstar 1973-01 infer
+rstar 1996-01 infer
+0 1973-01 infer
+0 1996-01 infer
+     fci   corr  sd_daily  sd_monthly  scale
+0  rstar  0.556     0.216       0.411  0.524
+1      0  0.609     0.237       0.492  0.481

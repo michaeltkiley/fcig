@@ -10,14 +10,16 @@ from lib import model as M
 from lib.paths import RESULTS, OUT
 
 ap = argparse.ArgumentParser(); ap.add_argument("--draws", type=int, default=500); ap.add_argument("--jobs", type=int, default=4)
-ap.add_argument("--panel"); ap.add_argument("--force", action="store_true"); a = ap.parse_args()
+ap.add_argument("--panel"); ap.add_argument("--force", action="store_true")
+ap.add_argument("--missing-draws", action="store_true", help="also rerun cases whose bootstrap draws (output/draws, not kept in the repository) are missing, e.g. for 05_tradeoff.py"); a = ap.parse_args()
 (OUT / "draws").mkdir(exist_ok=True)
-jobs = [c for c in CS.unique_cases(a.panel) if a.force or not (RESULTS / f"{CS.case_id(c)}.csv").exists()]
+jobs = [c for c in CS.unique_cases(a.panel) if a.force or not (RESULTS / f"{CS.case_id(c)}.csv").exists()
+        or (a.missing_draws and not all((OUT / "draws" / f"{CS.case_id(c)}_L{L}.npz").exists() for L in M.LAGS))]
 print(f"{len(CS.unique_cases(a.panel))} cases, {len(jobs)} to run", flush=True)
 
 def work(c):
     t0 = time.time(); i = CS.case_id(c); sp = CS.spec(c); rows, paths = [], []
-    from lib import daily as DD; DD.use_surprise(c.get("shock", "ns"))
+    from lib import daily as DD; DD.use_surprise(c.get("shock", "ns")); M.use_variant(c.get("ext", ""))
     for est in M.estimate(c["form"], c["fci"], c["macro"], c["start"], c["end"], c["t2020"], c["trend"], a.draws):
         rows += M.summary_rows(sp, est); paths.append(M.path_rows(sp, est))
         np.savez_compressed(OUT / "draws" / f"{i}_L{est['lags']}.npz", s0=est["s0"], sd=est["sd"], f0=est["f0"], fd=est["fd"], names=est["names"], **{k: est[k] for k in ("ord0", "ordd", "s0B", "sdB", "fday0", "fdayd") if k in est})

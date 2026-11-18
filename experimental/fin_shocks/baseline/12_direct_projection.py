@@ -1,6 +1,6 @@
 """Step 12. Direct monthly projections on the announcement surprise (a benchmark with no financial block; appendix).   python3 12_direct_projection.py      Output: results/direct_projection.csv
 
-For each announcement month t (January 1996 to September 2026, nothing dropped) and horizon h = 12 and 24 months:
+For each announcement month t (January 1996 to September 2026; rows whose outcome month t+h falls in March-December 2020 dropped, as the month dummies of the model, FS-A77) and horizon h = 12 and 24 months:
     outcome_{t+h} = a + b_h S_t + controls_{t-1} + e,
 S_t = sum of the policy-news surprises of the announcements in month t (zero in months without one), the outcome is the unemployment gap in month t+h (event month = 0, as in the model) or the core price
 level, the cumulated core PCE inflation of months t..t+h divided by 12 (as the model's price level, percent). Controls (all dated before the shock month): 12 lags of the unemployment gap and inflation
@@ -23,6 +23,7 @@ def build(h, fin):
             yu = MAC.u.loc[t + h]; yp = MAC.pi.loc[t:t + h].sum() / 12
         except KeyError: continue
         if np.isnan(x).any() or np.isnan(yu) or np.isnan(yp): continue
+        if pd.Period("2020-03", "M") <= t + h <= pd.Period("2020-12", "M"): continue          # 2020 dummies (FS-A77)
         rows.append((t, Sm.get(t, 0.0), yu, yp, x))
     return rows
 def slope(y, x, ctrl):
