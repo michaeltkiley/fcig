@@ -297,3 +297,11 @@ New step `36_levelflow_q.py` (in `run_all.py` and `10_check_sync.py`). Gap equat
 - **Bibliography:** added beaton2009, rigobon2004, chodorowreich2021, ludvigson2002, bernanke2024, kekre2022, pflueger2022, auclert2020, and smets2007, christiano2005, ramey2016 from Note B's file. The `castelnuovo2010` key in Note B's file is Castelnuovo-Surico (2010, EJ); here it is replaced by Castelnuovo-Nistico (2010, JEDC). Journal details of kekre2022 (Econometrica 90(5)) and pflueger2022 (JFE 146(1)) are [secondhand]; the deep dive read their working-paper versions. Citations to verify before circulation: all of the above against the published versions.
 - **Open for the author:** title; whether the four conclusions in the introduction are the right four; the depth of Section 6 (equities and macro models) and of the robustness section; whether the r* development (2.3) needs the inflation/r* figure in the main text.
 - Sync check (18 Nov 2026): 233 result files compared, all reproduce; all claims hold (including the eleven nv: claims); all macros resolve; "in sync" [verified]. Merged to main.
+
+
+- **FP-A54 (18 Nov 2026, author): items handed over from Note B.** `FROM_NOTE_B_RSTAR.md` lists the r*-related questions explored for Note B that belong in Note A. They are not started; take them one decision at a time.
+  1. Alternative r* measures and the sensitivity of the reading relative to r*.
+  2. The index's loading on r* (κ ≈ 1.5).
+  3. How much each version of the index trends; since 1996 the r* step adds slow movement.
+  4. The ordinary-day against window loading.
+  5. Moved without being specific to r*: the components and weights tests, the four calibrations in a macro model, the JK-subset weights, and the real-time status of r*.
