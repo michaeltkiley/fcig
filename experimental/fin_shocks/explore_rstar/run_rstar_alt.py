@@ -53,9 +53,15 @@ def hp1s(x, lam, burn=36):
     for i in range(burn, len(x)): out.iloc[i] = hpfilter(x.iloc[:i + 1].values, lam)[1][-1]
     return out
 HP = {}
+_hpc = HERE / "hp_cache.csv"                     # the one-sided HP loops take about a minute; cached (delete the file to recompute)
+if _hpc.exists():
+    _h = pd.read_csv(_hpc, index_col=0); _h.index = pd.PeriodIndex(_h.index, freq="M"); HP = {k: _h[k].reindex(D0.index) for k in _h.columns}
+else:
+    for lam in (129600, 1296000):
+        HP[f"hp{lam}"] = hp1s(real2.loc["1961-06":], lam).reindex(D0.index)
+        HP[f"nhp{lam}"] = hp1s(M.Y2M.reindex(D0.index).loc["1961-06":], lam).reindex(D0.index)
+    pd.DataFrame(HP).to_csv(_hpc, float_format="%.6f")
 for lam in (129600, 1296000):
-    HP[f"hp{lam}"] = hp1s(real2.loc["1961-06":], lam).reindex(D0.index)
-    HP[f"nhp{lam}"] = hp1s(M.Y2M.reindex(D0.index).loc["1961-06":], lam).reindex(D0.index)
     D0[f"rstar HP{lam}"] = HP[f"hp{lam}"]; D0[f"rstar NHP{lam}"] = HP[f"nhp{lam}"] - D0.einf_10y
 # ew180 (18 Nov, author): exponentially weighted average of the real 2-year, half-life 180 months (one-sided; from June 1961; the best simple filter tracking LW, filters_lw.md)
 _r2 = real2.dropna(); ew180 = _r2.ewm(alpha=1 - 0.5 ** (1 / 180), adjust=False).mean().where(np.arange(len(_r2)) >= 36).reindex(D0.index)
