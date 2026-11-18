@@ -2,6 +2,7 @@
   none   : no trend (the package's real baseline)
   quad   : quadratic time trend (t, t^2)
   spline : the package's natural cubic spline (knots at the sample ends and the NBER peaks inside the sample)
+  spl74  : the cubic spline with its first knot at the first estimation month (from 1973: 1974-01, so the 1973-11 peak drops out; from 1996: identical to spline)
   lvl    : constant within each cycle, level jump at each NBER peak inside the sample (1[t > peak])
 Without and with the FCI. March-December 2020 dropped. Writes real_trends.md, real_trends.csv."""
 import os, sys
@@ -11,9 +12,10 @@ import numpy as np, pandas as pd
 from lib import model as M
 _orig = M.macro_data
 def macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=False):
-    if trend not in ("quad", "lvl"): return _orig(form, fci, mvars, L, start, end, t2020, trend, periods)
+    if trend not in ("quad", "lvl", "spl74"): return _orig(form, fci, mvars, L, start, end, t2020, trend, periods)
     X, Y, P = _orig(form, fci, mvars, L, start, end, t2020, "none", periods=True); t = np.array([M._dec(p) for p in P])
     if trend == "quad": C = np.c_[t, t ** 2]
+    elif trend == "spl74": C = M.trend_cols(P, str(P[0]), end)          # the package's natural spline with its first knot at the first estimation month (1974-01 from 1973; unchanged from 1996)
     else:
         a, b = pd.Period(start, "M"), M.last_month(end)
         C = np.column_stack([np.array([p > pd.Period(k, "M") for p in P], float) for k in M.NBER_PEAKS if a < pd.Period(k, "M") < b]); C = C[:, C.std(axis=0) > 0]
