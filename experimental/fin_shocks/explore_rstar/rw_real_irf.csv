@@ -1,0 +1,121 @@
+start,method,rstar,var,h,r
+1996,A monthly VAR,RW r* (filtered in the VAR),u,6,0.1175
+1996,A monthly VAR,RW r* (filtered in the VAR),u,12,0.1821
+1996,A monthly VAR,RW r* (filtered in the VAR),u,18,0.1517
+1996,A monthly VAR,RW r* (filtered in the VAR),u,24,0.1404
+1996,A monthly VAR,RW r* (filtered in the VAR),u,36,0.1438
+1996,A monthly VAR,RW r* (filtered in the VAR),P,6,-0.0696
+1996,A monthly VAR,RW r* (filtered in the VAR),P,12,-0.0455
+1996,A monthly VAR,RW r* (filtered in the VAR),P,18,-0.0649
+1996,A monthly VAR,RW r* (filtered in the VAR),P,24,-0.0510
+1996,A monthly VAR,RW r* (filtered in the VAR),P,36,-0.0317
+1996,A monthly VAR,"LW r*, same VAR",u,6,0.1515
+1996,A monthly VAR,"LW r*, same VAR",u,12,0.2296
+1996,A monthly VAR,"LW r*, same VAR",u,18,0.1870
+1996,A monthly VAR,"LW r*, same VAR",u,24,0.1563
+1996,A monthly VAR,"LW r*, same VAR",u,36,0.1214
+1996,A monthly VAR,"LW r*, same VAR",P,6,-0.1517
+1996,A monthly VAR,"LW r*, same VAR",P,12,-0.1927
+1996,A monthly VAR,"LW r*, same VAR",P,18,-0.2668
+1996,A monthly VAR,"LW r*, same VAR",P,24,-0.3224
+1996,A monthly VAR,"LW r*, same VAR",P,36,-0.3765
+1996,A monthly VAR,"constant r* (real case), same VAR",u,6,0.0654
+1996,A monthly VAR,"constant r* (real case), same VAR",u,12,0.1151
+1996,A monthly VAR,"constant r* (real case), same VAR",u,18,0.0732
+1996,A monthly VAR,"constant r* (real case), same VAR",u,24,0.0415
+1996,A monthly VAR,"constant r* (real case), same VAR",u,36,0.0384
+1996,A monthly VAR,"constant r* (real case), same VAR",P,6,-0.1042
+1996,A monthly VAR,"constant r* (real case), same VAR",P,12,-0.1265
+1996,A monthly VAR,"constant r* (real case), same VAR",P,18,-0.1816
+1996,A monthly VAR,"constant r* (real case), same VAR",P,24,-0.2086
+1996,A monthly VAR,"constant r* (real case), same VAR",P,36,-0.2352
+1996,B Note B model,RW r* (filtered in the VAR),u,6,0.1888
+1996,B Note B model,RW r* (filtered in the VAR),u,12,0.3577
+1996,B Note B model,RW r* (filtered in the VAR),u,18,0.4771
+1996,B Note B model,RW r* (filtered in the VAR),u,24,0.5169
+1996,B Note B model,RW r* (filtered in the VAR),u,36,0.4938
+1996,B Note B model,RW r* (filtered in the VAR),P,6,-0.1068
+1996,B Note B model,RW r* (filtered in the VAR),P,12,-0.1339
+1996,B Note B model,RW r* (filtered in the VAR),P,18,-0.1508
+1996,B Note B model,RW r* (filtered in the VAR),P,24,-0.1810
+1996,B Note B model,RW r* (filtered in the VAR),P,36,-0.1958
+1996,B Note B model,LW r* (package baseline),u,6,0.2481
+1996,B Note B model,LW r* (package baseline),u,12,0.4125
+1996,B Note B model,LW r* (package baseline),u,18,0.4686
+1996,B Note B model,LW r* (package baseline),u,24,0.4528
+1996,B Note B model,LW r* (package baseline),u,36,0.3974
+1996,B Note B model,LW r* (package baseline),P,6,-0.2461
+1996,B Note B model,LW r* (package baseline),P,12,-0.3776
+1996,B Note B model,LW r* (package baseline),P,18,-0.5321
+1996,B Note B model,LW r* (package baseline),P,24,-0.6917
+1996,B Note B model,LW r* (package baseline),P,36,-0.9377
+1996,B Note B model,real case (package baseline),u,6,0.0822
+1996,B Note B model,real case (package baseline),u,12,0.1666
+1996,B Note B model,real case (package baseline),u,18,0.2200
+1996,B Note B model,real case (package baseline),u,24,0.2264
+1996,B Note B model,real case (package baseline),u,36,0.2169
+1996,B Note B model,real case (package baseline),P,6,-0.1453
+1996,B Note B model,real case (package baseline),P,12,-0.2194
+1996,B Note B model,real case (package baseline),P,18,-0.2995
+1996,B Note B model,real case (package baseline),P,24,-0.3835
+1996,B Note B model,real case (package baseline),P,36,-0.4962
+1973,A monthly VAR,RW r* (filtered in the VAR),u,6,0.2885
+1973,A monthly VAR,RW r* (filtered in the VAR),u,12,0.5306
+1973,A monthly VAR,RW r* (filtered in the VAR),u,18,0.5885
+1973,A monthly VAR,RW r* (filtered in the VAR),u,24,0.4895
+1973,A monthly VAR,RW r* (filtered in the VAR),u,36,0.2179
+1973,A monthly VAR,RW r* (filtered in the VAR),P,6,-0.1114
+1973,A monthly VAR,RW r* (filtered in the VAR),P,12,-0.2931
+1973,A monthly VAR,RW r* (filtered in the VAR),P,18,-0.4503
+1973,A monthly VAR,RW r* (filtered in the VAR),P,24,-0.5917
+1973,A monthly VAR,RW r* (filtered in the VAR),P,36,-0.7524
+1973,A monthly VAR,"LW r*, same VAR",u,6,0.2046
+1973,A monthly VAR,"LW r*, same VAR",u,12,0.3291
+1973,A monthly VAR,"LW r*, same VAR",u,18,0.3298
+1973,A monthly VAR,"LW r*, same VAR",u,24,0.2618
+1973,A monthly VAR,"LW r*, same VAR",u,36,0.1014
+1973,A monthly VAR,"LW r*, same VAR",P,6,-0.0804
+1973,A monthly VAR,"LW r*, same VAR",P,12,-0.1754
+1973,A monthly VAR,"LW r*, same VAR",P,18,-0.2964
+1973,A monthly VAR,"LW r*, same VAR",P,24,-0.4048
+1973,A monthly VAR,"LW r*, same VAR",P,36,-0.5705
+1973,A monthly VAR,"constant r* (real case), same VAR",u,6,0.1710
+1973,A monthly VAR,"constant r* (real case), same VAR",u,12,0.2921
+1973,A monthly VAR,"constant r* (real case), same VAR",u,18,0.3116
+1973,A monthly VAR,"constant r* (real case), same VAR",u,24,0.2649
+1973,A monthly VAR,"constant r* (real case), same VAR",u,36,0.1203
+1973,A monthly VAR,"constant r* (real case), same VAR",P,6,-0.0437
+1973,A monthly VAR,"constant r* (real case), same VAR",P,12,-0.1338
+1973,A monthly VAR,"constant r* (real case), same VAR",P,18,-0.2370
+1973,A monthly VAR,"constant r* (real case), same VAR",P,24,-0.3304
+1973,A monthly VAR,"constant r* (real case), same VAR",P,36,-0.4604
+1973,B Note B model,RW r* (filtered in the VAR),u,6,0.2041
+1973,B Note B model,RW r* (filtered in the VAR),u,12,0.3267
+1973,B Note B model,RW r* (filtered in the VAR),u,18,0.2937
+1973,B Note B model,RW r* (filtered in the VAR),u,24,0.2228
+1973,B Note B model,RW r* (filtered in the VAR),u,36,0.0996
+1973,B Note B model,RW r* (filtered in the VAR),P,6,-0.0912
+1973,B Note B model,RW r* (filtered in the VAR),P,12,-0.2449
+1973,B Note B model,RW r* (filtered in the VAR),P,18,-0.4151
+1973,B Note B model,RW r* (filtered in the VAR),P,24,-0.5809
+1973,B Note B model,RW r* (filtered in the VAR),P,36,-0.8495
+1973,B Note B model,LW r* (package baseline),u,6,0.2491
+1973,B Note B model,LW r* (package baseline),u,12,0.3262
+1973,B Note B model,LW r* (package baseline),u,18,0.2919
+1973,B Note B model,LW r* (package baseline),u,24,0.2369
+1973,B Note B model,LW r* (package baseline),u,36,0.1505
+1973,B Note B model,LW r* (package baseline),P,6,-0.1122
+1973,B Note B model,LW r* (package baseline),P,12,-0.3236
+1973,B Note B model,LW r* (package baseline),P,18,-0.5423
+1973,B Note B model,LW r* (package baseline),P,24,-0.7566
+1973,B Note B model,LW r* (package baseline),P,36,-1.1390
+1973,B Note B model,real case (package baseline),u,6,0.1825
+1973,B Note B model,real case (package baseline),u,12,0.2488
+1973,B Note B model,real case (package baseline),u,18,0.1968
+1973,B Note B model,real case (package baseline),u,24,0.1260
+1973,B Note B model,real case (package baseline),u,36,0.0234
+1973,B Note B model,real case (package baseline),P,6,-0.0712
+1973,B Note B model,real case (package baseline),P,12,-0.2429
+1973,B Note B model,real case (package baseline),P,18,-0.4018
+1973,B Note B model,real case (package baseline),P,24,-0.5495
+1973,B Note B model,real case (package baseline),P,36,-0.7857
