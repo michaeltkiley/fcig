@@ -21,7 +21,7 @@ for case, rs in (("nominal", None), ("real", None), ("rstar", "rstar LW"), ("rst
     out = pd.DataFrame({"market": mkt, "gs": gs, "frbus": ep, "frbus_hp": eph, "frbus_gi": gi, "frbus_gi_hp": gih, "fcig_1yr": f1, "fcig_3yr": f3})
     for nm in ("NFCI", "ANFCI"):
         s = pd.read_csv(data.DATA / f"{nm}.csv"); s = pd.Series(s.iloc[:, 1].values, index=pd.to_datetime(s.iloc[:, 0]))
-        s = s.groupby(s.index.to_period("M")).last()
+        s = s.groupby(s.index.to_period("M")).mean()                                             # monthly mean of the weekly readings (17 Nov 2026; was the last week)
         out[nm.lower()] = (s - s.loc[START:END].mean()) * conv[nm]
     out.loc[START:END].to_csv(RES / f"indexes_{case}.csv", float_format="%.5f")
     G = {}

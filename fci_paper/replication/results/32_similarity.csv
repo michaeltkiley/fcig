@@ -1,0 +1,7 @@
+basis,x,y,cos_sd,corr_omega,beta_x_if_y,beta_y_if_x
+level,market,gs,0.9972,0.9982,1.0409,0.9571
+level,market,frbus,0.9498,0.9536,0.7252,1.2541
+level,gs,frbus,0.9357,0.9418,0.6867,1.2915
+change12,market,gs,0.9952,0.9975,1.0207,0.9747
+change12,market,frbus,0.9454,0.9671,0.8057,1.1609
+change12,gs,frbus,0.9254,0.9562,0.7784,1.1746

@@ -1,24 +1,33 @@
 """The indexes: market index, GS replication, FRB/US (macro-model) index, FCI-G replication. Each returns the index and its contributions."""
 import numpy as np, pandas as pd
 import statsmodels.api as sm
-from .config import DATA
+from .config import DATA, EVENT_END
 from .cases import demean
 
 # ---------------------------------------------------------------- market index (weights from policy news)
 
+def slope(y, x):
+    """OLS slope of y on x with an intercept."""
+    x = np.asarray(x, float) - np.mean(x); return float(np.sum((np.asarray(y, float) - np.mean(y)) * x) / np.sum(x * x))
+
+
 def ns_factor(ev):
-    """Nakamura-Steinsson policy news: first principal component of MP1, MP2, ED2, ED3, ED4, scaled so that 1 unit moves the 2-year yield by 1 pp."""
+    """Nakamura-Steinsson policy news: first principal component of MP1, MP2, ED2, ED3, ED4, signed to raise ED4, scaled so that the OLS slope, with an
+    intercept, of the 2-year window change on it is 1 (17 Nov 2026, FP-A65; before: through the origin). With the intercept in the weight regressions,
+    one unit of news raises the 2-year yield and the market index each by exactly 1 in the windows."""
     X = ev[["MP1", "MP2", "ED2", "ED3", "ED4"]].values
     U, S, Vt = np.linalg.svd(X, full_matrices=False)
     f = U[:, 0] * S[0]
     if f @ ev.ED4.values < 0:
         f = -f
-    return f * (f @ ev.UST2Y.values) / (f @ f)
+    return f * slope(ev.UST2Y.values, f)
 
 
 def events_raw():
-    """USMPD 'Monetary Events' (statement + press conference window): drop unscheduled no-move events and March-April 2020."""
+    """USMPD 'Monetary Events' (statement + press conference window): drop unscheduled no-move events and March-April 2020; announcements through
+    EVENT_END (lib.config; 252 announcements, FP-A65)."""
     d = pd.read_csv(DATA / "usmpd_monetary_events.csv", parse_dates=["Date"])
+    d = d[d.Date <= EVENT_END]
     d = d[~((d.Unscheduled == 1) & (d.MP1 == 0))]
     d = d[~((d.Date >= "2020-03-01") & (d.Date <= "2020-04-30"))]
     return d.dropna(subset=["MP1", "MP2", "ED2", "ED3", "ED4", "UST2Y", "UST10Y", "SP500", "DXY"]).reset_index(drop=True)

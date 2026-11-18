@@ -18,6 +18,16 @@ for k, lab in enumerate(["ten", "eq", "usd"]):
     S.add(f"psi_{lab}", psi[k]); S.add(f"se_{lab}", se[k]); S.add(f"w_{lab}", w[k]); S.add(f"share_{lab}", w[k] * psi[k])
 S.add("ns_sd", ev.ns.std())
 print("baseline weights", w.round(4), "responses", psi.round(3))
+# Exact unit (FP-A65): one unit of policy news raises the 2-year yield and the market index each by 1 in the windows (OLS slopes with an intercept)
+idx_w = Y @ w
+assert abs(I.slope(ev.UST2Y.values, ev.ns.values) - 1) < 1e-10 and abs(I.slope(idx_w, ev.ns.values) - 1) < 1e-10, "window loadings are not 1"
+# Share of the window variance of each move explained by policy news (R2 of the window regression with an intercept)
+r2 = lambda y: float(np.corrcoef(y, ev.ns.values)[0, 1] ** 2)
+for lab, y in (("two", ev.UST2Y.values), ("ten", Y[:, 0]), ("eq", Y[:, 1]), ("usd", Y[:, 2]), ("index", idx_w)):
+    S.add(f"r2_{lab}", r2(y))
+# Window moves for the figure of each asset against policy news
+pd.DataFrame({"date": ev.Date.dt.strftime("%Y-%m-%d"), "ns": ev.ns, "two": ev.UST2Y, "ten": Y[:, 0], "eq": Y[:, 1], "usd": Y[:, 2], "index": idx_w}).to_csv(
+    RES / "window_moves.csv", index=False, float_format="%.6g")
 
 # GS: response of the daily GS replication to policy news, previous business day to the day after (its dollar input is a noon series)
 g = pd.read_csv(data.DATA / "gs_daily.csv", parse_dates=["date"]).set_index("date").gs_fci
@@ -83,5 +93,9 @@ for _ in range(REPS_W):
     B.append(np.r_[wb, pb])
 B = pd.DataFrame(B, columns=["w_ten", "w_eq", "w_usd", "psi_ten", "psi_eq", "psi_usd"])
 B.to_csv(RES / "weights_boot.csv", index=False)
+# Shares of a policy move in the market reading (w_a psi_a; they sum to 1 in every draw), 90 percent intervals from the announcement bootstrap
+for lab in ("ten", "eq", "usd"):
+    sh = B[f"w_{lab}"] * B[f"psi_{lab}"]
+    S.add(f"share_{lab}_lo", float(np.percentile(sh, 5))); S.add(f"share_{lab}_hi", float(np.percentile(sh, 95)))
 print(B.describe().round(3).loc[["mean", "std"]])
 S.save()

@@ -11,12 +11,14 @@ NQ = 32
 # ------------------------------------------------------------------ policy-news fits in numpy (same algebra as lib.indexes.ns_factor / gls_weights)
 
 def ns_arr(X5, u2):
-    """Nakamura-Steinsson factor from the five surprises (columns MP1, MP2, ED2, ED3, ED4), scaled so one unit moves the 2-year yield 1 pp."""
+    """Nakamura-Steinsson factor from the five surprises (columns MP1, MP2, ED2, ED3, ED4), scaled so that the OLS slope, with an intercept, of the 2-year
+    window change on it is 1 (as lib.indexes.ns_factor; FP-A65)."""
     U, S, Vt = np.linalg.svd(X5, full_matrices=False)
     f = U[:, 0] * S[0]
     if f @ X5[:, 4] < 0:
         f = -f
-    return f * (f @ u2) / (f @ f)
+    fc = f - f.mean()
+    return f * (fc @ (u2 - u2.mean())) / (fc @ fc)
 
 
 def fit(X5, u2, Y):

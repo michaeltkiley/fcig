@@ -1,0 +1,81 @@
+year,meeting,kind,found,intro_sentence,sec_FRB/US,doc_FRB/US,sec_SIGMA,doc_SIGMA,sec_EDO,doc_EDO,sec_FRB/Global,doc_FRB/Global,sec_DSGE,doc_DSGE,sec_staff models,doc_staff models,sec_VAR,doc_VAR
+2006,20060131,gbpt1,True,In this section we evaluate several risks to the staff forecast using simulations of the FRB/US model.,6,6,0,0,0,0,0,1,0,0,0,0,0,0
+2006,20060328,gbpt1,True,In this section we evaluate several risks to the staff forecast using simulations of the FRB/US model.,11,11,0,0,0,0,0,1,0,0,0,0,0,0
+2006,20060510,gbpt1,True,"In this section, we evaluate several risks to the staff forecast using simulations of the FRB/US model.",8,9,0,2,0,0,0,1,0,0,0,0,0,0
+2006,20060629,gbpt1,True,"In this section, we evaluate several risks to the staff forecast using simulations of the FRB/US model.",8,8,0,0,0,0,0,1,0,0,0,0,0,0
+2006,20060808,gbpt1,True,"In this section, we consider several risks to the staff outlook using simulations of the FRB/US model.",8,9,0,2,0,0,0,1,0,0,0,0,0,0
+2006,20060920,gbpt1,True,"In this section, we evaluate alternatives to the staff forecast using simulations of the FRB/US model.",9,9,0,0,0,0,0,1,0,0,0,0,0,0
+2006,20061025,gbpt1,True,In this section we illustrate some alternatives to the staff forecast using simulations of the FRB/US model.,9,10,0,2,0,0,0,1,0,0,0,0,0,0
+2006,20061212,gbpt1,True,"In this section, we evaluate several alternatives to the staff forecast using simulations of the FRB/US model.",8,8,0,0,0,0,0,1,0,0,0,0,0,0
+2007,20070131,gbpt1,True,"In this section, we evaluate several alternatives to the staff forecast using simulations of the FRB/US model.",8,8,0,0,0,0,0,1,0,0,0,0,0,0
+2007,20070321,gbpt1,True,"In this section, we evaluate six alternatives to the staff forecast using simulations of the FRB/US model.",8,9,0,0,0,0,0,1,0,0,0,0,0,0
+2007,20070509,gbpt1,True,We consider several risks to the staff outlook using simulations of the FRB/US model.,8,8,0,0,0,0,0,1,0,0,0,0,0,0
+2007,20070628,gbpt1,True,"In this section, we evaluate alternatives to the staff forecast using simulations of the FRB/US model.",8,9,0,2,0,0,0,1,0,0,0,0,0,0
+2007,20070807,gbpt1,True,"In this section, we evaluate alternatives to the staff forecast using simulations of the FRB/US model.",9,9,0,0,0,0,0,1,0,0,0,0,0,0
+2007,20070918,gbpt1,True,"In this section, we evaluate alternatives to the staff forecast using simulations of the FRB/US model.",8,8,0,0,0,0,0,1,0,0,0,0,0,0
+2007,20071031,gbpt1,True,"In this section, we evaluate alternatives to the staff forecast using simulations of the FRB/US model.",8,8,0,0,0,0,0,1,0,0,0,0,0,0
+2007,20071211,gbpt1,True,"In this section, we explore alternatives to the staff forecast using simulations of the FRB/US model.",8,8,0,0,0,0,0,2,0,0,0,0,0,0
+2008,20080130,gbpt1,True,"In this section, we explore risks to the staff forecast using alternative simulations of the FRB/US model.",8,9,0,1,0,0,0,0,0,0,0,0,0,0
+2008,20080318,gbpt1,True,We consider alternatives to the staff forecast using simulations of the FRB/US model.,9,10,0,1,0,0,0,0,0,0,0,0,0,0
+2008,20080430,gbpt1,True,"In this section, we consider alternatives to the staff forecast using simulations of the FRB/US model.",9,10,0,1,0,0,0,0,0,0,0,0,0,0
+2008,20080625,gbpt1,True,"In this section, we consider alternatives to the staff forecast using simulations of the FRB/US model.",9,10,0,2,0,0,0,0,0,0,0,0,0,0
+2008,20080805,gbpt1,True,"In this section, we illustrate several risks to the staff forecast using simulations of the FRB/US model.",9,10,0,2,0,0,0,0,0,0,0,0,0,0
+2008,20080916,gbpt1,True,"In this section, we illustrate risks to the staff forecast using simulations of the FRB/US model.",9,15,0,0,0,0,0,2,0,0,0,0,0,3
+2008,20081029,gbpt1,True,"In this section, we illustrate risks to the staff forecast using simulations of the FRB/US model.",10,19,0,0,0,0,0,1,0,0,0,0,0,1
+2008,20081216,gbpt1,True,"In this section, we illustrate risks to the staff forecast using simulations of the FRB/US model.",10,11,0,0,0,0,0,0,0,0,0,0,0,0
+2009,20090128,gbpt1,True,"In this section, we illustrate risks to the staff forecast using simulations of the FRB/US model.",9,10,0,0,0,0,0,1,0,0,0,0,0,0
+2009,20090318,gbpt1,True,"In this section, we illustrate risks to the staff forecast using simulations of the FRB/US model.",9,11,0,2,0,0,0,0,0,0,0,0,0,0
+2009,20090429,gbpt1,True,"In this section, we illustrate risks to the staff forecast using simulations of the FRB/US model.",10,15,0,1,0,0,0,0,0,0,0,0,0,1
+2009,20090624,gbpt1,True,"In this section, we illustrate risks to the staff forecast using simulations of the FRB/US model.",10,11,0,3,0,0,0,0,0,0,0,0,0,0
+2009,20090812,gbpt1,True,"In this section, we consider risks to the staff projection (as represented by the extended Greenbook baseline) using simulations of the FRB/US model.",9,10,0,0,0,0,0,1,0,0,0,0,0,0
+2009,20090923,gbpt1,True,"In this section, we consider risks to the baseline projection using simulations of the FRB/US model.",2,3,0,2,0,0,0,0,0,0,0,0,0,0
+2009,20091104,gbpt1,True,"In this section, we consider risks to the baseline projection using simulations of the FRB/US model.",9,10,0,1,0,0,0,0,0,0,0,0,0,0
+2009,20091216,gbpt1,True,"In this section, we consider alternatives to the baseline projection using simulations of the FRB/US model.",9,10,0,2,0,0,0,0,0,0,0,0,0,0
+2010,20100127,gbpt1,True,"In this section, we consider alternatives to the baseline projection using simulations of the FRB/US model.",9,10,0,2,0,0,0,0,0,0,0,0,0,0
+2010,20100316,gbpt1,True,"In this section, we consider alternatives to the baseline projection using simulations of the FRB/US model.",9,10,0,2,0,1,0,0,0,1,0,0,0,0
+2010,20100428,gbpt1,True,"In this section, we consider alternatives to the baseline projection using simulations of the FRB/US model.",9,10,0,2,0,0,0,0,0,0,0,0,0,0
+2010,20100623,tealbooka,True,"To illustrate some of these risks, we consider a number of alternatives to the baseline projection using simulations of staff models.",10,11,2,3,0,0,0,0,0,1,1,1,0,0
+2010,20100810,tealbooka,True,"To illustrate some of these risks, we consider a number of alternatives to the baseline projection using simulations of staff models.",10,12,2,2,0,1,0,0,0,1,1,1,0,2
+2010,20100921,tealbooka,True,"To illustrate some of the risks to the outlook, we consider a number of alternatives to the baseline projection using simulations of staff models.",9,10,2,2,0,1,0,0,0,0,1,1,0,0
+2010,20101103,tealbooka,True,"To illustrate some of these risks, we consider a number of alternatives to the baseline projection using simulations of staff models.",9,13,2,2,0,1,0,0,0,0,1,1,0,0
+2010,20101214,tealbooka,True,"To illustrate some of the risks to the outlook, we consider a number of alternatives to the baseline projection using simulations of staff models.",10,11,2,2,0,0,0,0,0,0,1,2,0,0
+2016,20160127,tealbooka,True,"Risks & Uncertainty    To illustrate some of the risks to the outlook, we construct a number of alternatives to the baseline projection using simulations of staff models.",8,20,1,1,2,7,0,0,2,7,1,1,0,3
+2016,20160316,tealbooka,True,"To illustrate some of the risks to the outlook, we construct a number of alternatives to the baseline projection using simulations of staff models.",12,26,3,3,3,16,0,0,0,8,1,2,0,3
+2016,20160427,tealbooka,True,"Risks & Uncertainty    To illustrate some of the risks to the outlook, we construct a number of alternatives to the baseline projection using simulations of staff models.",11,19,3,3,4,8,0,0,1,1,1,2,0,3
+2016,20160615,tealbooka,True,"To illustrate some of the risks to the outlook, we construct a number of alternatives to the baseline projection using simulations of staff models.",12,26,3,3,4,15,0,0,1,1,1,1,0,2
+2016,20160727,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted)  2016 Measure and scenario                                             2017 2018 2019- 20 H1      H2 Real GDP Extended Tealb",8,15,1,1,1,7,0,0,0,1,1,1,0,2
+2016,20160921,tealbooka,True,"To illustrate some of the risks to the outlook, we construct six alternatives to the baseline projection using simulations of staff models.",10,24,1,1,1,13,0,0,1,5,1,1,0,2
+2016,20161102,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted)  2016 Measure and scenario                                             2017 2018 2019 2020- 21 H1       H2 Real GDP Extended",10,18,1,1,1,5,0,0,0,0,1,1,0,2
+2016,20161214,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted)  2016 Measure and scenario                                   2017 2018 2019 2020- 21 H2 Real GDP Extended Tealbook baseline ",10,25,1,1,0,11,0,0,2,4,1,2,0,3
+2017,20170201,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted) Risks & Uncertainty    2017 Measure and scenario                                              2018 2019 2020- 21 H1      H2",11,78,1,3,1,6,0,0,1,1,2,2,0,4
+2017,20170315,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted) Risks & Uncertainty    2017 Measure and scenario                                             2018 2019 2020 2021- 22 H1     ",12,54,1,3,2,13,0,0,2,4,2,3,0,2
+2017,20170503,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted) Risks & Uncertainty    2017 Measure and scenario                                              2018 2019 2020 2021- 22 H1    ",15,58,1,3,0,4,0,0,1,1,2,2,0,2
+2017,20170614,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted) Risks & Uncertainty    2017 Measure and scenario                                             2018 2019 2020 2021- 22 H1     ",7,58,1,3,3,14,0,0,4,5,2,2,0,24
+2017,20170726,tealbooka,True,"Risks & Uncertainty To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",16,50,1,3,0,4,0,0,1,1,2,2,0,3
+2017,20170920,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",17,67,2,3,3,26,0,0,2,3,2,2,0,4
+2017,20171101,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",16,50,1,3,0,5,0,0,3,4,2,2,0,3
+2017,20171213,tealbooka,True,"Risks & Uncertainty     To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",13,55,2,3,0,11,0,0,4,5,2,3,0,3
+2018,20180131,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",14,53,1,3,0,4,0,0,2,2,2,2,0,3
+2018,20180321,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",17,57,2,9,0,11,0,0,2,4,2,3,0,13
+2018,20180502,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",12,59,1,4,1,19,0,0,5,8,3,3,0,3
+2018,20180613,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",14,59,1,4,0,12,0,0,3,7,2,2,0,3
+2018,20180801,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",15,51,2,5,0,4,0,0,2,5,1,1,0,3
+2018,20180926,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",12,55,3,6,0,11,0,0,4,7,2,2,0,5
+2018,20181108,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",15,45,2,5,0,4,0,0,2,4,1,1,0,8
+2018,20181219,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",13,49,1,5,0,11,0,0,3,7,2,3,0,5
+2019,20190130,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",8,39,1,4,2,6,0,0,5,7,2,3,0,4
+2019,20190320,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",15,61,1,5,0,15,0,0,2,5,2,2,0,4
+2019,20190501,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",13,81,1,4,0,24,0,0,1,3,2,2,0,4
+2019,20190619,tealbooka,True,"Risks & Uncertainty To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",8,51,0,0,0,7,0,0,1,3,2,2,0,4
+2019,20190731,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",11,50,2,3,0,6,0,0,2,5,2,2,0,4
+2019,20190918,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted) Risks & Uncertainty    2019 Measure and scenario                                  2020 2021 2022 2023 2024- 25 H2",12,49,0,2,1,8,0,0,0,2,0,0,0,11
+2019,20191030,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",2,50,3,4,0,6,0,0,4,8,1,2,0,4
+2019,20191211,tealbooka,True,"Risks & Uncertainty To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",7,56,3,4,0,8,0,0,5,10,1,2,0,7
+2020,20200129,tealbooka,True,"To illustrate some of the risks to the outlook, we construct alternatives to the baseline projection using simulations of staff models.",11,54,3,4,3,9,0,0,2,4,1,1,0,4
+2020,20200315,tealbooka,True,"(Percent change, annual rate, from end of preceding period except as noted) Risks & Uncertainty    2020 Measure and scenario                                             2021 2022 2023 2024 2025 H1    ",7,44,1,2,3,6,0,0,0,1,0,1,0,4
+2020,20200429,tealbooka,True,These scenarios are simulated using the FRB/US and SIGMA models.,11,47,4,5,2,15,0,0,0,1,0,1,0,4
+2020,20200610,tealbooka,True,These scenarios use simulations from the FRB/US and SIGMA models.,4,25,4,5,0,2,0,0,0,1,0,1,0,3
+2020,20200729,tealbooka,True,These scenarios use simulations from the FRB/US and SIGMA models.,10,42,4,5,2,5,0,0,0,1,0,1,0,3
+2020,20200915,tealbooka,True," This section describes several alternative scenarios simulated using the FRB/US and SIGMA models as well as a newly developed staff model, US-FLM, that features labor market     Page 105 of 168 ",5,38,5,6,0,7,0,0,3,6,0,1,0,2
+2020,20201105,tealbooka,True,This section describes several alternative scenarios simulated using the FRB/US and SIGMA models as well as a recently developed staff model—US-FLM—that features financial and labor market frictions.,6,36,3,4,0,7,0,0,3,6,0,1,0,3
+2020,20201216,tealbooka,True,"The scenarios are simulated using the FRB/US and SIGMA models as well as a recently developed staff model—NK/SIR—that couples a small-scale New Keynesian model with a SIR (susceptible, infected, recovered) model of viral propagation to capture the endogenous response of consumption and production to the progression of the pandemic.",7,37,3,4,0,8,0,0,0,1,0,0,1,5
