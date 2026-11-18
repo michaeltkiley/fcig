@@ -26,7 +26,7 @@ def table(lags):
     T["col"] = T["var"].map({"u": "u", "P": "P"}) + T.h.astype(str)
     P = T.pivot_table(index=["start", "fci", "rstar"], columns="col", values="cell", aggfunc="first")[["u12", "u24", "P12", "P24"]]
     order = [l for _, l, _ in FORMS]
-    P = P.reindex(pd.MultiIndex.from_product([["1996", "1973"], ["no FCI", "with FCI"], order]))
+    P = P.reindex(pd.MultiIndex.from_product([["1996", "1973"], ["no FCI", "with FCI"], order])).dropna(how="all")
     out = ["| Start | FCI | r* measure | u 12m | u 24m | P 12m | P 24m |", "|---|---|---|---|---|---|---|"]
     for (s, fc, r), v in P.iterrows(): out.append(f"| {s} | {fc} | {r} | " + " | ".join(str(x) for x in v.values) + " |")
     return "\n".join(out)
