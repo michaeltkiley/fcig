@@ -17,7 +17,7 @@
 * Merge `claude/dazzling-franklin-vcd359` (the exploration, `explore_rstar/`, FS-A83 to FS-A85) into `main`; start a short branch from `main` for the new package.
 
 ## Phase 1. The package `fin_shocks/baseline_real/`
-1. Copy `fin_shocks/baseline/` (code, `data/`, `lib/`, `cases.py`, step and report scripts); add the 5-year inputs not needed (none); keep `data/` self-contained.
+1. Copy `fin_shocks/baseline/` (code, `data/`, `lib/`, `cases.py`, step and report scripts); `data/` stays self-contained (no new inputs needed).
 2. `lib/model.py`:
    * the funds rate (variant "ff") becomes the default; the 2-year-only model becomes a case option (for robustness test 8);
    * spline knots: first knot at the first estimation month (`trend_cols` called with the first period of the sample; tested as `spl74` in `explore_rstar/real_trends.py`);
