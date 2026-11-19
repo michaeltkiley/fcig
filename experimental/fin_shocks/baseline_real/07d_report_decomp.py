@@ -24,8 +24,8 @@ def band(fci, model, h, era, src, var, mode="infer"):
     return (float(g.p5.iloc[0]), float(g.p95.iloc[0])) if len(g) else (np.nan, np.nan)
 
 # ---------------------------------------------------------------- macros: shares (percent), bands, splice, diagnostics, simulation
-ROWS = [("meas", "1996-2026", "measured", "Measured window surprises, 1996--2026"), ("pd90", "1990-2026", "daily_all", "Policy-direction shocks, 1990--2026"),
-        ("other90", "1990-2026", "daily_other", r"\quad of which on days without an announcement"), ("pd74", "1974-1989", "spliced", "Policy-direction shocks, 1974--1989")]
+ROWS = [("meas", "1996-2026", "measured", "Announcement surprises, 1996--2026"), ("pd90", "1990-2026", "daily_all", "Policy-direction surprises, 1990--2026"),
+        ("other90", "1990-2026", "daily_other", r"\quad days without an announcement only"), ("pd74", "1974-1989", "spliced", "Policy-direction surprises, 1974--1989 (monthly backcast)")]      # FS-A96: labels
 for fci, fk in (("real", "yes"), ("0", "no")):
     for model in (1996, 1973):
         for h in (12, 24, 36):
@@ -54,6 +54,11 @@ EPIS = [("e7980", "1979-01", "1980-12"), ("e8284", "1982-01", "1984-12"), ("e010
 for key, a, b in EPIS:
     for v in ("u", "pi", "pol", "idx"): mac(f"hist:{key}:{v}", num(avg(1973, v, a, b)))
 mac("hist:pi2122", num(avg(1973, "pi", "2021-01", "2022-12")))
+HDA = pd.read_csv(RESULTS / "decomp_hd_real_real_model1973_absorb.csv")                 # FS-A96: March-December 2020 surprises set to zero (absorbed by the month dummies)
+def avg_abs(var, a, b, col="spliced"):
+    g = HDA[HDA["var"] == var].set_index("month")[col]; g.index = pd.PeriodIndex(g.index, freq="M"); return float(g.loc[a:b].mean())
+mac("hist:pi2122:absorb", num(avg_abs("pi", "2021-01", "2022-12"))); mac("hist:pi2122:meas", num(avg(1973, "pi", "2021-01", "2022-12", col="measured")))
+mac("hist:pi2122:absorb:abs", f"{abs(avg_abs('pi', '2021-01', '2022-12')):.2f}"); mac("hist:pi2122:meas:abs", f"{abs(avg(1973, 'pi', '2021-01', '2022-12', col='measured')):.2f}")
 
 # ---------------------------------------------------------------- Table: 24-month variance shares (main text)
 def cellp(fci, model, h, era, src, v, bands=True):
@@ -63,14 +68,14 @@ body = []
 for key, era, src, lab in ROWS:
     cs = [cellp("real", m, 24, era, src, v) for m in (1996, 1973) for v in ("u", "pi")]
     body += [f"{lab} & " + " & ".join(c[0] for c in cs) + r"\\", " & " + " & ".join(rf"{{\scriptsize {c[1]}}}" for c in cs) + r"\\"]
-(REPORT / "tab_decomp_shares.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{How Much Policy Shocks Explain: Variance Shares at 24 Months}\label{tab:decompshares}",
+(REPORT / "tab_decomp_shares.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{Announcement and Policy-Direction Surprises: Variance Shares at 24 Months}\label{tab:decompshares}",
     r"\begin{tabular}{lcccc}\toprule & \multicolumn{2}{c}{Model from 1996} & \multicolumn{2}{c}{Model from 1973}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5} Shocks & Unemployment gap & Core inflation & Unemployment gap & Core inflation\\ \midrule",
     *body, r"\bottomrule\end{tabular}",
-    r"\begin{flushleft}\footnotesize\textit{Notes:} Percent of the 24-month forecast-error variance (monthly VAR in monthly averages from 1973, 12 lags) accounted for by the contributions of the shocks of the last 24 months, propagated through the real model with the FCI and the funds rate (12 lags, March--December 2020 dropped) with monthly equations from 1996 or from 1973; shares over the stated period, March--December 2020 excluded. Measured window surprises: the 252 announcements. Policy-direction shocks: the daily movement of the two-year yield and the FCI in the direction of the window response, recovered from the daily block on every day from 1990; before 1990 from the monthly VAR, scaled to the daily shocks' size. Brackets: 90\% bootstrap bands of Note B's responses.\end{flushleft}", r"\end{table}"]) + "\n")
+    r"\begin{flushleft}\footnotesize\textit{Notes:} Percent of the 24-month forecast-error variance (monthly VAR in monthly averages from 1973, 12 lags) accounted for by the contributions of the shocks of the last 24 months, propagated through the real model with the FCI and the funds rate (12 lags, March--December 2020 dropped) with monthly equations from 1996 or from 1973; shares over the stated period, March--December 2020 excluded. Announcement surprises: the window surprises of the 252 announcements. Policy-direction surprises: the daily innovations of the two-year yield, the FCI and the funds rate projected on the window direction, every day from 1990 (equation~\eqref{eq:pdsplit}); before 1990 the monthly analogue from a monthly VAR, rescaled to the size of the daily surprises (a backcast). The shares are ratios of variances and need not add up, because contributions on different days are correlated. Brackets: 90\% bootstrap bands of the model's responses.\end{flushleft}", r"\end{table}"]) + "\n")
 
 # ---------------------------------------------------------------- appendix: full shares, robustness, diagnostics
-SRCF = [("1974-1989", "spliced", "1974--1989, policy-direction (monthly, scaled)"), ("1990-2026", "daily_all", "1990--2026, policy-direction (daily)"), ("1990-2026", "daily_other", r"\quad days without an announcement"),
-        ("1990-2026", "daily_ann", r"\quad announcement days"), ("1990-2026", "measured", r"\quad measured surprises"), ("1996-2026", "daily_all", "1996--2026, policy-direction (daily)"), ("1996-2026", "measured", r"\quad measured surprises")]
+SRCF = [("1974-1989", "spliced", "1974--1989, policy-direction surprises (monthly backcast)"), ("1990-2026", "daily_all", "1990--2026, policy-direction surprises (daily)"), ("1990-2026", "daily_other", r"\quad days without an announcement only"),
+        ("1990-2026", "daily_ann", r"\quad announcement days only"), ("1990-2026", "measured", r"\quad announcement surprises"), ("1996-2026", "daily_all", "1996--2026, policy-direction surprises (daily)"), ("1996-2026", "measured", r"\quad announcement surprises")]
 lines = []
 for fci, ft in (("real", "Yield and FCI"), ("0", "Yield alone")):
     for model in (1996, 1973):
@@ -111,7 +116,7 @@ for k, (v, lab) in enumerate(names):
     a.fill_between(t, np.nanpercentile(z, 5, axis=0), np.nanpercentile(z, 95, axis=0), color=BLUE, alpha=0.15, lw=0)
     h1 = a.plot(t, f(g.spliced.values), color=BLUE, lw=1.4)[0]; h2 = a.plot(t, f(g.measured.values), color=ORANGE, lw=1.1)[0]
     a.axhline(0, color=GREY, lw=0.7); a.set_title(lab, loc="left", fontsize=8.5)
-fig.legend([h1, h2], ["Policy-direction shocks (90% band)", "Measured window surprises"], loc="lower center", ncol=2, frameon=False, fontsize=7.5)
+fig.legend([h1, h2], ["Policy-direction surprises (90% band)", "Announcement surprises"], loc="lower center", ncol=2, frameon=False, fontsize=7.5)
 fig.tight_layout(rect=[0, 0.05, 1, 1]); fig.savefig(REPORT / "fig_decomp_hd.pdf"); plt.close(fig)
 
 # ---------------------------------------------------------------- claims made in Section 3.5 and the appendix
@@ -129,6 +134,11 @@ pass
 pass
 pass
 pass
+# FS-A96: claims of the rewritten Section 6
+chk("2021-22: with the March-December 2020 surprises set to zero the contribution to core inflation is smaller but positive, and the announcement surprises' contribution is below 0.1 pp", 0 < avg_abs("pi", "2021-01", "2022-12") < avg(1973, "pi", "2021-01", "2022-12") and abs(avg(1973, "pi", "2021-01", "2022-12", col="measured")) < 0.1)
+chk("shares: days without an announcement alone exceed the total in the model from 1996 for unemployment (ratios need not add up)", share("real", 1996, 24, "1990-2026", "daily_other", "u") > share("real", 1996, 24, "1990-2026", "daily_all", "u"))
+chk("shares: announcement surprises below 1 percent and policy-direction surprises above them for u and pi, both models", all(share("real", m, 24, "1996-2026", "measured", v) < 0.01 < share("real", m, 24, "1990-2026", "daily_all", v) for m in (1996, 1973) for v in ("u", "pi")))
+chk("backcast: unscaled shares 1974-89 (model from 1973) at least three times the scaled ones", all(share("real", 1973, 24, "1974-1989", "spliced", v, "infer_unscaled") > 3 * share("real", 1973, 24, "1974-1989", "spliced", v) for v in ("u", "pi")))
 if os.environ.get("CLAIMS_REPORT") and BAD: print("FAILED CLAIMS:\n  " + "\n  ".join(BAD))
 else: assert not BAD, "claims in Section 3.5 no longer hold: " + "; ".join(BAD)
 (REPORT / "numbers_decomp.tex").write_text("\n".join(ML) + "\n")
