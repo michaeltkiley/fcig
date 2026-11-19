@@ -16,12 +16,12 @@ def check(R, MON, SIM, B96, ROB):
     est = lambda *a, **k: g(*a, **k)[0]; sig = lambda *a, **k: g(*a, **k)[1]; sig5 = lambda *a, **k: g(*a, **k)[2]; T73 = "1973-01"; V = ("nom", "real")
 
     # ---- baselines from 1996
-    chk("1996, rates alone (both versions): unemployment falls significantly (5%) at 12 and 24 m; the price level is not significant at 12, 24 or 36 m",
-        all(est(f, "no", "u", h) < 0 and sig5(f, "no", "u", h) for f in V for h in (12, 24)) and not any(sig(f, "no", "P", h) for f in V for h in H3))
+    chk("1996, rates alone (both versions): unemployment falls significantly at 12 m (10%) and 24 m (5%); the price level is not significant at 12, 24 or 36 m",
+        all(est(f, "no", "u", h) < 0 and sig(f, "no", "u", h) for f in V for h in (12, 24)) and all(sig5(f, "no", "u", 24) for f in V) and not any(sig(f, "no", "P", h) for f in V for h in H3))
     chk("1996, real with the FCI: unemployment rises significantly (5%) at 12 and 24 m; the price level falls significantly at 24 m (5%) and 36 m (10%)",
         all(est("real", "yes", "u", h) > 0 and sig5("real", "yes", "u", h) for h in (12, 24)) and sig5("real", "yes", "P", 24) and est("real", "yes", "P", 36) < 0 and sig("real", "yes", "P", 36))
-    chk("1996, nominal with the FCI: unemployment rises significantly at 12 m (10%) and 24 m (5%); the price level falls significantly at 24 m (10%), not at 36 m",
-        sig("nom", "yes", "u", 12) and sig5("nom", "yes", "u", 24) and est("nom", "yes", "P", 24) < 0 and sig("nom", "yes", "P", 24) and not sig("nom", "yes", "P", 36))
+    chk("1996, nominal with the FCI: unemployment rises significantly at 12 m (10%) and 24 m (5%); the price level falls significantly at 24 and 36 m (10%), not at 12 m",
+        sig("nom", "yes", "u", 12) and sig5("nom", "yes", "u", 24) and est("nom", "yes", "P", 24) < 0 and sig("nom", "yes", "P", 24) and sig("nom", "yes", "P", 36) and not sig("nom", "yes", "P", 12))
     chk("1996: adding the FCI turns the unemployment response from a fall to a rise and deepens the price fall at 24 m, in both versions",
         all(est(f, "no", "u", 24) < 0 < est(f, "yes", "u", 24) and est(f, "yes", "P", 24) < est(f, "no", "P", 24) for f in V))
     chk("1996, with the FCI: the nominal and real responses at 24 m are within 0.05 of each other (u and P)", all(abs(est("nom", "yes", v, 24) - est("real", "yes", v, 24)) < 0.05 for v in ("u", "P")))
@@ -29,8 +29,8 @@ def check(R, MON, SIM, B96, ROB):
     chk("1973, real with the FCI: unemployment rises significantly at 12 m (5%); the price level falls significantly at 12, 24, 36 m (5% at 24 and 36)",
         est("real", "yes", "u", 12, T73) > 0 and sig5("real", "yes", "u", 12, T73) and all(est("real", "yes", "P", h, T73) < 0 and sig("real", "yes", "P", h, T73) for h in H3) and all(sig5("real", "yes", "P", h, T73) for h in (24, 36)))
     chk("1973, real rates alone: the price level falls significantly at 24 and 36 m and unemployment does not fall", all(sig5("real", "no", "P", h, T73) and est("real", "no", "P", h, T73) < 0 for h in (24, 36)) and all(est("real", "no", "u", h, T73) > 0 for h in H3))
-    chk("1973, nominal with the FCI: no response is significant", not any(sig("nom", "yes", v, h, T73) for v in ("u", "P") for h in H3))
-    chk("1973, nominal rates alone: the price level is not significant; unemployment is significant only at 36 m, with the conventional sign", not any(sig("nom", "no", "P", h, T73) for h in H3) and sig("nom", "no", "u", 36, T73) and est("nom", "no", "u", 36, T73) > 0 and not any(sig("nom", "no", "u", h, T73) for h in (12, 24)))
+    chk("1973, nominal with the FCI: unemployment is significant only at 12 m; the price level falls significantly at 24 and 36 m, not at 12 m (FS-A108)", sig("nom", "yes", "u", 12, T73) and not any(sig("nom", "yes", "u", h, T73) for h in (24, 36)) and all(sig("nom", "yes", "P", h, T73) and est("nom", "yes", "P", h, T73) < 0 for h in (24, 36)) and not sig("nom", "yes", "P", 12, T73))
+    chk("1973, nominal rates alone: no response is significant (FS-A108)", not any(sig("nom", "no", v, h, T73) for v in ("u", "P") for h in H3))
     chk("1973: adding the FCI raises the 12-month unemployment response in both versions", all(est(f, "yes", "u", 12, T73) > est(f, "no", "u", 12, T73) for f in V))
 
     # ---- standard methods (no funds rate, as in the literature)
@@ -42,9 +42,9 @@ def check(R, MON, SIM, B96, ROB):
     mo = lambda f, fk, i, v, h, st="1996-01": (lambda m: m[(m.lags == 12) & (m.ident == i) & (m["var"] == v) & (m.h == h)].iloc[0])(MON[CS.monthly_id(dict(step=f, fci=0 if fk == "no" else f, start=st))])
     chk("monthly proxy VAR with the FCI: first-stage F below 2 from both starts and both versions", all(mo(f, "yes", "P1", "u", 12, st).F < 2 for f in V for st in ("1996-01", T73)))
     chk("monthly proxy VAR without the FCI from 1996: unemployment falls significantly at 12 m in both versions", all(mo(f, "no", "P1", "u", 12).r < 0 and not mo(f, "no", "P1", "u", 12).unbounded and mo(f, "no", "P1", "u", 12).hi < 0 for f in V))
-    chk("window-impact monthly VAR, real with the FCI: unemployment up and the price level down at 12 and 24 m from both starts; significant from 1973, not from 1996",
+    chk("window-impact monthly VAR, real with the FCI: unemployment up and the price level down at 12 and 24 m from both starts; significant from both starts (FS-A108)",
         all(mo("real", "yes", "WE", "u", h, st).r > 0 and mo("real", "yes", "WE", "P", h, st).r < 0 for h in (12, 24) for st in ("1996-01", T73))
-        and all(mo("real", "yes", "WE", v, h, T73).lo * mo("real", "yes", "WE", v, h, T73).hi > 0 for v in ("u", "P") for h in (12, 24)) and not any(mo("real", "yes", "WE", v, h).lo * mo("real", "yes", "WE", v, h).hi > 0 for v in ("u", "P") for h in (12, 24)))
+        and all(mo("real", "yes", "WE", v, h, T73).lo * mo("real", "yes", "WE", v, h, T73).hi > 0 for v in ("u", "P") for h in (12, 24)) and all(mo("real", "yes", "WE", v, h).lo * mo("real", "yes", "WE", v, h).hi > 0 for v in ("u", "P") for h in (12, 24)))
     chk("window-impact monthly VAR, real with the FCI: from 1996 about half the main model's responses (u 12 m and P 24 m); from 1973 the price fall is smaller than the model's and unemployment within 0.05",
         all(0.35 < mo("real", "yes", "WE", v, h).r / est("real", "yes", v, h) < 0.65 for v, h in (("u", 12), ("P", 24))) and abs(mo("real", "yes", "WE", "P", 24, T73).r) < abs(est("real", "yes", "P", 24, T73)) and abs(mo("real", "yes", "WE", "u", 12, T73).r - est("real", "yes", "u", 12, T73)) < 0.05)
 
@@ -70,18 +70,18 @@ def check(R, MON, SIM, B96, ROB):
     # ---- robustness (12 months; ROB from 07_report.rob_summary)
     tests = ("t2020", "ip", "bs", "L6", "noff", "s85")
     chk("robustness, real with the FCI: in every test and both samples unemployment rises and the price level falls at 12 m", all(ROB[("real", t, sx, "u")][0] > 0 and ROB[("real", t, sx, "P")][0] < 0 for t in tests for sx in ("", "73") if ("real", t, sx, "u") in ROB))
-    chk("robustness, real with the FCI: the price level falls significantly at 12 m in every test from 1973, and from 1996 in every test except 6 lags and the 1985 start",
-        all(ROB[("real", t, "73", "P")][1] for t in tests if ("real", t, "73", "P") in ROB) and all(ROB[("real", t, "", "P")][1] == (t not in ("L6", "s85")) for t in tests))
-    chk("robustness, real with the FCI: unemployment at 12 m is significant except with 2020 left in (both samples), 6 lags from 1973 and the 1985 start",
-        all(ROB[("real", t, sx, "u")][1] == ((t, sx) not in {("t2020", ""), ("t2020", "73"), ("L6", "73"), ("s85", "")}) for t in tests for sx in ("", "73") if ("real", t, sx, "u") in ROB))
+    chk("robustness, real with the FCI: the price level falls significantly at 12 m in every test from 1973, and from 1996 in every test except the 1985 start",
+        all(ROB[("real", t, "73", "P")][1] for t in tests if ("real", t, "73", "P") in ROB) and all(ROB[("real", t, "", "P")][1] == (t != "s85") for t in tests))
+    chk("robustness, real with the FCI: unemployment at 12 m is significant in every test except with 2020 left in (both samples)",
+        all(ROB[("real", t, sx, "u")][1] == ((t, sx) not in {("t2020", ""), ("t2020", "73")}) for t in tests for sx in ("", "73") if ("real", t, sx, "u") in ROB))
     chk("robustness: the 1985 start is the weakest test (smallest responses of the real version at 12 m)", all(abs(ROB[("real", "s85", "", v)][0]) <= min(abs(ROB[("real", t, sx, v)][0]) for t in tests if t != "s85" for sx in ("", "73") if ("real", t, sx, v) in ROB and t != "t2020") for v in ("P",)))
     chk("robustness: Bauer-Swanson responses at least as large as the baseline's (real, both samples)", all(abs(ROB[("real", "bs", sx, v)][0]) >= abs(ROB[("real", "base", sx, v)][0]) - 0.005 for sx in ("", "73") for v in ("u", "P")))
 
     # ---- the final section
     chk("final section: the r*-gap step with the FCI has larger responses than the real baseline at 24 m (u and P), both samples",
         all(est("rstar", "yes", "u", 24, st) > est("real", "yes", "u", 24, st) and est("rstar", "yes", "P", 24, st) < est("real", "yes", "P", 24, st) for st in ("1996-01", T73)))
-    chk("final section: with the spline trend, from 1996 no response with the FCI is significant at 24 m; from 1973 the real version's are (u and P)",
-        not any(sig(f, "yes", v, 24, trend="spline") for f in V for v in ("u", "P")) and all(sig("real", "yes", v, 24, T73, trend="spline") for v in ("u", "P")))
+    chk("final section: with the spline trend, from 1996 the unemployment response with the FCI is significant at 24 m (5%) and the price response is not, in both versions; from 1973 the real version's are both significant at 5%",
+        all(sig5(f, "yes", "u", 24, trend="spline") and not sig(f, "yes", "P", 24, trend="spline") for f in V) and all(sig5("real", "yes", v, 24, T73, trend="spline") for v in ("u", "P")))
 
     # ---- decomposition (Section 3.5)
     S = pd.read_csv(RESULTS / "decomp_shares.csv"); S["fci"] = S.fci.astype(str)
@@ -125,7 +125,7 @@ def check(R, MON, SIM, B96, ROB):
     chk("6 lags, real from 1996: u at 24 m within 0.05 of 12 lags; P at 24 m 10 to 30 percent smaller", (lambda d6: abs(d6.loc["u"].r24 - est("real", "yes", "u", 24)) < 0.05 and 0.7 < d6.loc["P"].r24 / est("real", "yes", "P", 24) < 0.9)(R[CS.case_id(dict(form="real", fci="real", **B96))].query("lags == 6").set_index("var")))
     LG6 = [c for p_ in CS.PANELS if p_["id"][0] in "BR" for c in p_["cases"] if c["fci"] != 0]
     neg6 = [(CS.case_id(c), h) for c in LG6 for h in H3 if (lambda r: r[f"hi{h}"] < 0)(R[CS.case_id(c)].query("lags == 6 and var == 'u'").iloc[0])]
-    chk("lags: with 6 lags only the nominal version from 1973 with 2020 left in shows a significant fall in unemployment (two horizons); none with 12 lags", len(neg6) == 2 and all(i.startswith("nom_nom_upi_1973-01_all_in") for i, _ in neg6))
+    chk("lags: with 6 lags only the nominal version from 1973 with 2020 left in shows a significant fall in unemployment (at 12 m only); none with 12 lags", len(neg6) == 1 and all(i.startswith("nom_nom_upi_1973-01_all_in") for i, _ in neg6))
     # ---- the index restriction (step 15, FS-A93; real, 12 lags)
     import pandas as _pd
     from lib.paths import RESULTS as _RS
@@ -134,7 +134,7 @@ def check(R, MON, SIM, B96, ROB):
     _ex0 = lambda r: r.lo * r.hi <= 0
     chk("components: freeing the components leaves unemployment in place: the paired differences at 12 and 24 m include zero in both samples", all(_ex0(_D.loc[(st, "u", h)]) for st in ("1996-01", "1973-01") for h in (12, 24)))
     chk("components: the price level at 12 m is not significantly different (both samples) and falls with the components free (point estimates)", all(_ex0(_D.loc[(st, "P", 12)]) and _c("cmp", st).loc["P"].r12 < 0 for st in ("1996-01", "1973-01")))
-    chk("components: at 24 m the price fall is significantly smaller with the components free, and not significant, in both samples", all(not _ex0(_D.loc[(st, "P", 24)]) and _D.loc[(st, "P", 24)]["diff"] > 0 and _c("cmp", st).loc["P"].lo24 < 0 < _c("cmp", st).loc["P"].hi24 for st in ("1996-01", "1973-01")))
+    chk("components: at 24 m the price fall is significantly smaller with the components free in both samples; with them free it is not significant from 1996 and is from 1973 (FS-A108)", all(not _ex0(_D.loc[(st, "P", 24)]) and _D.loc[(st, "P", 24)]["diff"] > 0 for st in ("1996-01", "1973-01")) and _c("cmp", "1996-01").loc["P"].lo24 < 0 < _c("cmp", "1996-01").loc["P"].hi24 and _c("cmp", "1973-01").loc["P"].hi24 < 0)
     chk("components: unemployment with the components free rises significantly at 12 m in both samples", all(_c("cmp", st).loc["u"].lo12 > 0 for st in ("1996-01", "1973-01")))
     chk("components: equal coefficients rejected at 5 percent (bootstrap) in the inflation equation in both samples, not at 5 percent in the unemployment equation; BIC prefers the restriction in every equation, AIC in three of four",
         all(_W.loc[(st, "pi")].p_boot < 0.05 and _W.loc[(st, "u")].p_boot >= 0.05 for st in ("1996-01", "1973-01")) and (_W.d_bic > 0).all() and (_W.d_aic > 0).sum() == 3)
