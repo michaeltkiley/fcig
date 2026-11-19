@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 21:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 21:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -752,7 +752,7 @@ Package rerunfilecheck Info: File `mp_transmission_real.out' has not changed.
 Here is how much of TeX's memory you used:
  21751 strings out of 476182
  384353 string characters out of 5795594
- 2000975 words of memory out of 5000000
+ 1999975 words of memory out of 5000000
  42829 multiletter control sequences out of 15000+600000
  582904 words of font info for 262 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -779,7 +779,7 @@ lic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
 8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on mp_transmission_real.pdf (69 pages, 867635 bytes).
+Output written on mp_transmission_real.pdf (69 pages, 867821 bytes).
 PDF statistics:
  1851 PDF objects out of 2073 (max. 8388607)
  1225 compressed objects within 13 object streams
