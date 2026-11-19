@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 14:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 14:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -672,74 +672,73 @@ fig_persist.pdf>]
 (../baseline_real/report/tab_persist.tex) [45]
 (../baseline_real/report/tab_direct.tex) [46]
 (../baseline_real/report/tab_main_A.tex) [47] [48]
-(../baseline_real/report/tab_components.tex)
-<../baseline_real/report/fig_steps73.pdf, id=1377, 505.89pt x 375.804pt>
+<../baseline_real/report/fig_steps73.pdf, id=1376, 505.89pt x 375.804pt>
 File: ../baseline_real/report/fig_steps73.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_steps73.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_steps73.pdf  used on input
- line 515.
+ line 513.
 (pdftex.def)             Requested size: 469.75502pt x 348.96655pt.
-<../baseline_real/report/fig_gs.pdf, id=1379, 520.34402pt x 216.81pt>
+<../baseline_real/report/fig_gs.pdf, id=1378, 520.34402pt x 216.81pt>
 File: ../baseline_real/report/fig_gs.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_gs.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_gs.pdf  used on input line
- 523.
+ 521.
 (pdftex.def)             Requested size: 469.75502pt x 195.74252pt.
-<../baseline_real/report/fig_size.pdf, id=1380, 520.34402pt x 281.85298pt>
+<../baseline_real/report/fig_size.pdf, id=1379, 520.34402pt x 281.85298pt>
 File: ../baseline_real/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_size.pdf  used on input li
-ne 531.
+ne 529.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
 
-(../baseline_real/report/tab_main_B.tex) [49] [50] [51 <../baseline_real/report
-/fig_steps73.pdf>] [52 <../baseline_real/report/fig_gs.pdf> <../baseline_real/r
-eport/fig_size.pdf>] (../baseline_real/report/tab_matched_diff.tex)
-(../baseline_real/report/tab_tradeoff_full.tex) [53] [54]
+(../baseline_real/report/tab_main_B.tex) [49] [50 <../baseline_real/report/fig_
+steps73.pdf>] [51 <../baseline_real/report/fig_gs.pdf> <../baseline_real/report
+/fig_size.pdf>] (../baseline_real/report/tab_matched_diff.tex)
+(../baseline_real/report/tab_tradeoff_full.tex) [52] [53]
 (../baseline_real/report/tab_main_R.tex
 
 LaTeX Warning: Float too large for page by 177.48776pt on input line 98.
 
-) [55] (../baseline_real/report/tab_main_F.tex) [56]
+) [54] (../baseline_real/report/tab_main_F.tex) [55]
 (../baseline_real/report/tab_app_B.tex)
-(../baseline_real/report/tab_app_B73.tex [57
+(../baseline_real/report/tab_app_B73.tex [56
 
 
 
 ])
-(../baseline_real/report/tab_decomp_full.tex) [58] [59]
-(../baseline_real/report/tab_standard_all.tex) [60]
-(../baseline_real/report/tab_standard_com.tex) [61]
-(../baseline_real/report/tab_monthly_F.tex) [62]
+(../baseline_real/report/tab_decomp_full.tex) [57] [58]
+(../baseline_real/report/tab_standard_all.tex) [59]
+(../baseline_real/report/tab_standard_com.tex) [60]
+(../baseline_real/report/tab_monthly_F.tex) [61]
 (../baseline_real/report/tab_main_monthly.tex)
-(../baseline_real/report/tab_main_monthly73.tex) [63]
+(../baseline_real/report/tab_main_monthly73.tex) [62]
 (../baseline_real/report/tab_app_monthly.tex)
-(../baseline_real/report/tab_app_monthly73.tex [64
+(../baseline_real/report/tab_app_monthly73.tex [63
 
 
 
 
-]) [65] [66]
-Underfull \hbox (badness 10000) in paragraph at lines 618--618
+]) [64] [65]
+Underfull \hbox (badness 10000) in paragraph at lines 616--616
 []|\OT1/cmr/m/n/10 (+20) Daily,
  []
 
 
-Underfull \hbox (badness 5985) in paragraph at lines 622--623
+Underfull \hbox (badness 5985) in paragraph at lines 620--621
 []|\OT1/cmr/m/n/10 (+20) Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 1052) in paragraph at lines 622--623
+Underfull \hbox (badness 1052) in paragraph at lines 620--621
 \OT1/cmr/m/n/10 (+20) PINF2YR, EX-PINF10YR; be-fore 1982, Liv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 627--628
+Underfull \hbox (badness 10000) in paragraph at lines 625--626
 []|\OT1/cmr/m/n/10 (+20) FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
-[67] [68] (./mp_transmission_real.aux)
+[66] [67] (./mp_transmission_real.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -748,13 +747,13 @@ Package rerunfilecheck Info: File `mp_transmission_real.out' has not changed.
 (rerunfilecheck)             Checksum: 6EAB8EA4CACD6D0D69D1B12EA238676F;6750.
  ) 
 Here is how much of TeX's memory you used:
- 21583 strings out of 476182
- 381132 string characters out of 5795594
+ 21570 strings out of 476182
+ 380731 string characters out of 5795594
  1999975 words of memory out of 5000000
- 42673 multiletter control sequences out of 15000+600000
- 582607 words of font info for 256 fonts, out of 8000000 for 9000
+ 42667 multiletter control sequences out of 15000+600000
+ 582556 words of font info for 255 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,79p,2122b,806s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,2122b,802s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0600.600pk> </
 root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0800.600pk></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/te
@@ -777,10 +776,10 @@ lic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
 8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on mp_transmission_real.pdf (69 pages, 859165 bytes).
+Output written on mp_transmission_real.pdf (68 pages, 857292 bytes).
 PDF statistics:
- 1834 PDF objects out of 2073 (max. 8388607)
- 1207 compressed objects within 13 object streams
- 262 named destinations out of 1000 (max. 500000)
+ 1829 PDF objects out of 2073 (max. 8388607)
+ 1203 compressed objects within 13 object streams
+ 260 named destinations out of 1000 (max. 500000)
  43331 words of extra memory for PDF output out of 51595 (max. 10000000)
 

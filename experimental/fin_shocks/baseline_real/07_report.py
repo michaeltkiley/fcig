@@ -404,6 +404,13 @@ def rob_summary():
                     pts.append(num(r.r12) + stars(r, 12)); ivs.append(f"[{num(r.lo12)}, {num(r.hi12)}]")
                     dm(f"{f}:{key}{sx}:{v}", num(r.r12)); dm(f"{f}:{key}{sx}:{v}:abs", f"{abs(r.r12):.2f}"); dm(f"{f}:{key}{sx}:{v}:sig", "significant" if r.lo12 * r.hi12 > 0 else "not significant")
             out_rows += [f"{lab} & " + " & ".join(pts) + r"\\", " & " + " & ".join(rf"{{\scriptsize {x}}}" if x else "" for x in ivs) + r"\\"]
+        if f == "real":                                                              # FS-A94: the index restriction (step 15), real version only; not in ROB (the claims on the core tests)
+            pts, ivs = [], []
+            for st, sx in STARTS:
+                d = pd.read_csv(RESULTS / f"{CS.case_id(dict(form='real', fci='cmp', macro='u,pi', start=st, end=None, t2020='out', trend='none'))}.csv").query("lags == 12")
+                for v in ("u", "P"):
+                    r = d[d["var"] == v].iloc[0]; pts.append(num(r.r12) + stars(r, 12)); ivs.append(f"[{num(r.lo12)}, {num(r.hi12)}]")
+            out_rows += ["FCI components free & " + " & ".join(pts) + r"\\", " & " + " & ".join(rf"{{\scriptsize {x}}}" for x in ivs) + r"\\"]
     tests = [k for k, *_ in CORE_TESTS if k != "base"]; dm("ntests", len(tests))
     for f in ("real", "nom"):
         for sx in ("", "73"):
@@ -411,7 +418,7 @@ def rob_summary():
     out = [r"\begin{table}[tp]\centering\small", r"\caption{Robustness: Responses at 12 Months}\label{tab:robsummary}",
            r"\begin{tabular}{lcccc}\toprule & \multicolumn{2}{c}{Monthly equations from 1996} & \multicolumn{2}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5} & Unemployment gap & Price level & Unemployment gap & Price level\\ \midrule",
            *out_rows, r"\bottomrule\end{tabular}",
-           r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, federal funds rate and FCI in the stated version; responses 12 months after a policy move that raises the two-year yield 1 percentage point in the announcement window; unemployment gap in percentage points, price level in percent; 12 lags unless stated; March--December 2020 dropped unless stated. The 1985 start has monthly equations from January 1985 (1996 columns). $^{**}$ and $^{*}$: the 95\% and 90\% bootstrap intervals exclude zero; 90\% intervals in brackets. Full results at 12, 24 and 36 months for both versions are in the appendix.\end{flushleft}", r"\end{table}"]
+           r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, federal funds rate and FCI in the stated version; responses 12 months after a policy move that raises the two-year yield 1 percentage point in the announcement window; unemployment gap in percentage points, price level in percent; 12 lags unless stated; March--December 2020 dropped unless stated. The 1985 start has monthly equations from January 1985 (1996 columns). $^{**}$ and $^{*}$: the 95\% and 90\% bootstrap intervals exclude zero; 90\% intervals in brackets. FCI components free (real version only): the three weighted components of the FCI replace it in the daily block and enter the monthly equations separately; the daily block then differs slightly from the baseline's, and the like-for-like comparison, with the FCI built from the components, is in the text. Full results at 12, 24 and 36 months for both versions are in the appendix.\end{flushleft}", r"\end{table}"]
     from lib import model as M_; dm("ratio1y", f"{M_.RATIO_1Y:.2f}")                 # 1-year / 2-year announcement-day response (appendix A4)
     (REPORT / "tab_rob_summary.tex").write_text("\n".join(out) + "\n")
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
