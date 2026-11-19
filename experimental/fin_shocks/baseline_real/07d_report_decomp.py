@@ -40,7 +40,7 @@ for fci, fk in (("real", "yes"), ("0", "no")):
     r = O[O.fci == fci].iloc[0]; mac(f"{fk}:splice:corr", f"{r['corr']:.2f}"); mac(f"{fk}:splice:scale", f"{r.scale:.2f}")
 for _, r in DG.iterrows():
     k = f"diag:{r.step}:{'no' if r.fci == '0' else 'yes'}:{str(r.start)[:4]}"
-    mac(k + ":r2", f"{100 * r.r2_z_u:.1f}"); mac(k + ":corr", f"{r.corr_e_z:.2f}"); mac(k + ":plead", f"{r.p_leads:.2f}"); mac(k + ":varratio", f"{r.var_ratio:.0f}")
+    mac(k + ":r2", f"{100 * r.r2_z_u:.1f}"); mac(k + ":r2lead", f"{100 * r.r2_z_u_leads:.1f}"); mac(k + ":corr", f"{r.corr_e_z:.2f}"); mac(k + ":plead", f"{r.p_leads:.2f}"); mac(k + ":varratio", f"{r.var_ratio:.0f}")
 for c in ("r2_z_u", "corr_e_z", "var_ratio"): mac(f"sim:{c}:med", f"{(100 if c == 'r2_z_u' else 1) * SIM[c].median():.{1 if c != 'var_ratio' else 0}f}")
 mac("sim:n", len(SIM))
 D = pd.read_csv(OUT / "decomp" / "daily_shocks_real_real_infer.csv", parse_dates=["date"]); ann = D[D.ann == 1]
@@ -150,6 +150,9 @@ chk("history (FS-A100): before the Volcker tightening the surprises added to inf
     HY[("pi", "1981H1")] > 0 > HY[("u", "1981H1")] and HY[("pol", "1982H1")] > HY[("pol", "1981H1")] + 1 and HY[("pi", "1982H1")] < 0 and 0 < HY[("u", "1982H2")] < HY[("u", "1985H2")])
 chk("history (FS-A100): 2020s: the yield contribution fell from 2019 H1 to 2021 H2 and inflation's rose above 0.9; the yield contribution rose by more than 2.5 by 2023 H2 and inflation's turned negative; unemployment's rose from 2022 H1 to 2025 H2 while still negative",
     HY[("pol", "2021H2")] < HY[("pol", "2019H1")] and HY[("pi", "2021H2")] > 0.9 and HY[("pol", "2023H2")] - HY[("pol", "2021H2")] > 2.5 and HY[("pi", "2023H2")] < 0 and HY[("u", "2022H1")] < HY[("u", "2025H2")] < 0)
+_dg = DG[(DG.step == "real") & (DG.fci == "real")].set_index(DG[(DG.step == "real") & (DG.fci == "real")].start.astype(str).str[:4])
+chk("recovery (FS-A103): the month's innovations explain under 2 percent of the surprises (real with FCI, both samples); with six leads about 20 percent (15 to 25); leads jointly significant at 5 percent from 1973, not from 1996",
+    all(_dg.loc[y].r2_z_u < 0.02 and 0.15 < _dg.loc[y].r2_z_u_leads < 0.25 for y in ("1996", "1973")) and _dg.loc["1973"].p_leads < 0.05 < _dg.loc["1996"].p_leads)
 if os.environ.get("CLAIMS_REPORT") and BAD: print("FAILED CLAIMS:\n  " + "\n  ".join(BAD))
 else: assert not BAD, "claims in Section 3.5 no longer hold: " + "; ".join(BAD)
 (REPORT / "numbers_decomp.tex").write_text("\n".join(ML) + "\n")
