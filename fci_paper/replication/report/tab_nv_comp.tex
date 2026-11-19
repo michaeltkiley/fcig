@@ -1,0 +1,20 @@
+\begin{table}[tbp]\centering\small
+\caption{The Output Gap after a Policy Move: The MCFCI and Its Components}\label{tab:nvcomp}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{lrcrr}
+\toprule
+ & 4q & 90\% interval & 8q & Index at 8q \\
+\midrule
+MCFCI as one variable & $-$0.74 & [$-$1.08, $-$0.34] & $-$0.42 & 1.04 \\
+Components free & $-$0.45 & [$-$0.78, $-$0.06] & 0.02 & 0.64 \\
+\midrule
+\multicolumn{5}{l}{\textit{Components free, by component}} \\
+\quad 10-year yield & $-$0.17 &  & 0.01 &  \\
+\quad Equities & $-$0.42 &  & $-$0.26 &  \\
+\quad Dollar & 0.14 &  & 0.27 &  \\
+\midrule
+\multicolumn{5}{l}{Equal coefficients on the three components, p-value: 0.15} \\
+\bottomrule
+\end{tabular}}
+\begin{flushleft}\footnotesize\textit{Notes:} Response of the CBO output gap (percent of potential) in the quarterly VAR of Table~\ref{tab:nvvar} (output gap first; four lags; constant; 1973Q1 to 2026Q3; dummies for 2020Q1--2021Q1), indexes relative to $r^*$. MCFCI as one variable: the two-variable VAR of Table~\ref{tab:nvvar}, shock raising the index one point. Components free: the index replaced by its three contributions (weight times asset price, in index points); the shock moves each contribution by its response to policy news in the windows, in index points (10-year yield 0.33, equities 0.40, dollar 0.27), so the index moves one point on impact. By component: the response to each contribution's part of that shock; the three add to the total. Index at 8q: the MCFCI (sum of the contributions) eight quarters after the shock. Interval: 90 percent, moving-block bootstrap (blocks of four quarters, 1,000 draws). p-value: F test, in the output-gap equation, of equal coefficients on the three contributions at each of the four lags.\end{flushleft}
+\end{table}

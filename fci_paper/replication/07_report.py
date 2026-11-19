@@ -1463,7 +1463,7 @@ for i, k in enumerate(("market", "gs", "frbus")):
     ax[0].bar(xs + (i - 1) * wd, v, wd, color=COLORS[k], label=NVLAB[k])
     if k == "market":
         ax[0].errorbar(xs - wd, v, yerr=[v - lo, hi - v], fmt="none", ecolor="#333333", capsize=2, lw=0.8)
-ax[0].set_xticks(xs); ax[0].set_xticklabels(["10-year", "Equities", "Dollar"]); ax[0].set_title("(a) Weight times standard deviation", loc="left", fontsize=9)
+ax[0].set_xticks(xs); ax[0].set_xticklabels(["10-year", "Equities", "Dollar"]); ax[0].set_title("(a) Directions, standard-deviation units", loc="left", fontsize=9)
 axes(ax[0], "points of policy", legend=True)
 cats = [("Windows", "window"), ("FRB/US hike, q4", "q4")]
 bars = []
@@ -1646,6 +1646,59 @@ chk(NVPC[(NVPC.basis == "level") & (NVPC.panel == "A_three_assets")].corr_market
 chk(all(NVLF[(NVLF["index"] == k) & (NVLF.spec == "level") & (NVLF.dep == "gap")].p_sum_level_zero.iloc[0] > 0.05 for k in ("market", "gs", "frbus")), "nv: level lags sum to zero at 5 percent (act as changes)")
 chk(NVTT.loc["2022-24", "market_level"] < 0 < NVTT.loc["2022-24", "fcig"], "nv: 2022-24 FCI-G a drag while the MCFCI level reads loose")
 chk(float((gb.models == "FRB/US").mean()) == 1.0 and float((tb.models == "FRB/US").mean()) == 0.0, "nv: Greenbooks FRB/US only, Tealbooks never FRB/US only")
+
+# ------------------------------------------------------------------ new version: components of the MCFCI in the activity VAR (step 37; FP-A75)
+NVC = pd.read_csv(RES / "37_components.csv"); NVCB = pd.read_csv(RES / "37_by_component.csv"); NVCT = pd.read_csv(RES / "37_tests.csv")
+def nvc(step, m, col, d=True):
+    return float(NVC[(NVC.step == step) & (NVC.model == m) & (NVC.dummies == d)][col].iloc[0])
+def nvcb(step, comp, h, d=True):
+    return float(NVCB[(NVCB.step == step) & (NVCB.component == comp) & (NVCB.dummies == d)][f"gap_h{h}"].iloc[0])
+def nvct(step, d=True):
+    return float(NVCT[(NVCT.step == step) & (NVCT.model == "F") & (NVCT.dummies == d)].p.iloc[0])
+CL = {"rates": "10-year yield", "equities": "Equities", "dollar": "Dollar"}
+for step in ("rstar", "real", "nominal"):
+    for m, tg in (("R", "index"), ("F", "free")):
+        for h in (4, 8, 12):
+            for c in ("gap", "lo", "hi"):
+                mac(f"nv:cq:{step}:{tg}:h{h}" + ("" if c == "gap" else f":{c}"), nvc(step, m, f"{c}_h{h}"))
+            mac(f"nv:cq:{step}:{tg}:fci:h{h}", nvc(step, m, f"fci_h{h}"))
+    for k in CL:
+        for h in (4, 8, 12):
+            mac(f"nv:cq:{step}:{k}:h{h}", nvcb(step, k, h))
+    mac(f"nv:cq:{step}:p", nvct(step)); mac(f"nv:cq:{step}:p:nd", nvct(step, d=False))
+for k in CL:
+    mac(f"nv:cq:share:{k}", float(NVCB[(NVCB.step == "rstar") & (NVCB.component == k)].share.iloc[0]))
+rows = [["MCFCI as one variable", f(nvc("rstar", "R", "gap_h4")), f"[{f(nvc('rstar', 'R', 'lo_h4'))}, {f(nvc('rstar', 'R', 'hi_h4'))}]", f(nvc("rstar", "R", "gap_h8")), f(nvc("rstar", "R", "fci_h8"))],
+        ["Components free", f(nvc("rstar", "F", "gap_h4")), f"[{f(nvc('rstar', 'F', 'lo_h4'))}, {f(nvc('rstar', 'F', 'hi_h4'))}]", f(nvc("rstar", "F", "gap_h8")), f(nvc("rstar", "F", "fci_h8"))],
+        r"\midrule" + "\n" + r"\multicolumn{5}{l}{\textit{Components free, by component}} \\"]
+for k, lab in CL.items():
+    rows.append([r"\quad " + lab, f(nvcb("rstar", k, 4)), "", f(nvcb("rstar", k, 8)), ""])
+rows.append(r"\midrule" + "\n" + r"\multicolumn{5}{l}{Equal coefficients on the three components, p-value: " + f(nvct("rstar")) + r"} \\")
+table("nv_comp", "The Output Gap after a Policy Move: The MCFCI and Its Components", "tab:nvcomp",
+      ["", "4q", "90\\% interval", "8q", "Index at 8q"], rows,
+      "Response of the CBO output gap (percent of potential) in the quarterly VAR of Table~\\ref{tab:nvvar} (output gap first; four lags; constant; 1973Q1 to "
+      + str(NVC.end.iloc[0]) + "; dummies for 2020Q1--2021Q1), indexes relative to $r^*$. MCFCI as one variable: the two-variable VAR of Table~\\ref{tab:nvvar}, shock raising the "
+      "index one point. Components free: the index replaced by its three contributions (weight times asset price, in index points); the shock moves each contribution "
+      "by its response to policy news in the windows, in index points (10-year yield " + f(float(NVCB[(NVCB.step == 'rstar') & (NVCB.component == 'rates')].share.iloc[0])) +
+      ", equities " + f(float(NVCB[(NVCB.step == 'rstar') & (NVCB.component == 'equities')].share.iloc[0])) + ", dollar " + f(float(NVCB[(NVCB.step == 'rstar') & (NVCB.component == 'dollar')].share.iloc[0])) +
+      "), so the index moves one point on impact. By component: the response to each contribution's part of that shock; the three add to the total. Index at 8q: "
+      "the MCFCI (sum of the contributions) eight quarters after the shock. Interval: 90 percent, moving-block bootstrap (blocks of four quarters, 1,000 draws). "
+      "p-value: F test, in the output-gap equation, of equal coefficients on the three contributions at each of the four lags.", align="lrcrr")
+for step in ("rstar", "real", "nominal"):
+    chk(nvc(step, "F", "hi_h4") < 0, f"nv: components free, 4-quarter response excludes zero ({step})")
+    chk(nvcb(step, "equities", 4) < min(nvcb(step, "rates", 4), 0) and nvcb(step, "dollar", 4) > 0 and nvcb(step, "dollar", 8) > 0, f"nv: equities carry the response, the freed dollar works against it ({step})")
+    chk(nvc(step, "F", "fci_h8") < nvc(step, "R", "fci_h8"), f"nv: the index is less persistent with the components free ({step})")
+    chk(abs(sum(nvcb(step, k, 4) for k in CL) - nvc(step, "F", "gap_h4")) < 1e-3, f"nv: components add to the total ({step})")
+chk(nvct("rstar") > 0.10, "nv: equal coefficients on the components not rejected at 10 percent (r*)")
+chk(nvc("rstar", "F", "gap_h4") / nvc("rstar", "R", "gap_h4") > 0.5, "nv: components free keep more than half of the one-year response (r*)")
+
+# ------------------------------------------------------------------ new version: slow-moving trend in each MCFCI (step 38; FP-A76)
+NVTR = pd.read_csv(RES / "38_trend_share.csv").set_index("step")
+for step in ("nominal", "real", "rstar"):
+    mac(f"nv:trend:{step}", 100 * NVTR.loc[step, "r2_quadratic"], 0)
+mac("nv:trend:first", str(NVTR.loc["rstar", "start"])[:4]); mac("nv:trend:last", str(NVTR.loc["rstar", "end"])[:4])
+chk(NVTR.loc["nominal", "r2_quadratic"] > NVTR.loc["real", "r2_quadratic"] > NVTR.loc["rstar", "r2_quadratic"], "nv: each step removes slow-moving variation (quadratic trend share nominal > real > r*)")
+chk(NVTR.loc["rstar", "r2_quadratic"] < 0.5 * NVTR.loc["nominal", "r2_quadratic"], "nv: relative to r*, the trend share is less than half the nominal one")
 
 # ------------------------------------------------------------------ write numbers.tex and check the paper's macros
 def norm(k):

@@ -2,13 +2,13 @@
 
 On 18 Nov 2026 Note B moved to the real version (two-year yield, funds rate and FCI; decisions `experimental/fin_shocks/FS_QA.md` FS-A85 to FS-A90). Several questions explored there concern the measurement of financial conditions rather than transmission, and the author agreed they suit Note A (`fci_paper/`).
 
-This note lists them, with what is known, where the code and results are, and what a Note A analysis would add. None of it has been started in `fci_paper/`.
+This note lists them, with what is known, where the code and results are, and what a Note A analysis would add. Status 19 Nov 2026: a Note A session working in parallel has already done two items. The components and weights test (item 5) is FP-A75, step 37, Section 5.4. A trend share by step (item 3, quadratic trend, full sample: nominal 72, real 62, r* 33 percent) is FP-A76, step 38, Section 2.3; the author judged the post-1996 shares ancillary. The rest is not started. Decisions file entry: FP-A77.
 
 * Take each item one decision at a time in `FP_QA.md`.
 * Every number below was computed on Note B's sample and weights (252 announcements, an intercept in the scaling, FS-A75). Recompute it on Note A's own weights and samples before using it. Note A's weights differ by about 1 percent.
 * Tags: [verified] = computed and checked in this repo; [inference] = a reading, not a computation.
 
-Where Note A stands now (`fci_paper/paper/fci_paper.tex`):
+Where Note A stood on 18 Nov (`fci_paper/paper/fci_paper.tex`; the current draft is `fci_paper/paper/mcfci.tex`, retitled "Financial Conditions along the Monetary Policy Direction", FP-A74; check it before acting on any item):
 * Section 3, "Measured Relative to What? The Neutral Level", covers the three steps (nominal, real, relative to r*), the decomposition of the gap to a neutral level ($x^*_t=\iota r^*_t+c_t$) and the comparison with the published FCI* of Caballero et al. (2026).
 * It uses Laubach-Williams (LW) r* only. Kiley's r* is in the data (`replication/01_data.py`), but not compared in the text, and it is flagged unverified in `FP_QA.md`.
 * There is no trend analysis and no alternative r* measure.
@@ -107,7 +107,7 @@ This connects directly to Note A's argument that levels need a neutral benchmark
   * Note A's question, whether subsequent activity can distinguish the calibrations, could use this as a second, identified test.
 * **Weights estimated without information shocks** (Jarocinski-Karadi subset; FS-A72, dropped by FS-A87). The index built from the 157 announcements in which the two-year yield and stocks move in opposite directions correlates above 0.9 with the baseline index from 1996.
   * Code: `baseline/02_indexes.py` (the JK weights), `output/market_weights_jk.csv`, `report/tab_jk.tex`.
-  * Note A's appendix on other measures of policy news is the natural home.
+  * **Already decided against in Note A:** the author dropped the JK weights there on 13 Nov 2026 (FP-A55: Bauer-Swanson cleaning only). Listed for completeness; do not reopen without the author.
 * **Real-time status of r\*.** Note B uses the August 2026 vintage of one-sided LW (filtered, with parameters estimated on the full sample), so it is not real time. Note A's FP-A18 already notes LW vintages from 2005. A real-time comparison of the reading relative to r* would follow from item 1.
 
 ## 6. Left in Note B (for reference)

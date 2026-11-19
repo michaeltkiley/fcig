@@ -9,9 +9,9 @@ State of 11 Nov 2026. This folder turns the companion note (`../fci_note/`, "Not
 | `reviews/` | Reviewer reports on the draft and what was done with them |
 | `FP_QA.md` | Decisions (scope, style, methods) and open items |
 
-## New version (17-18 Nov 2026; FP-A63 to FP-A73)
+## New version (17-19 Nov 2026; FP-A63 to FP-A76)
 
-The paper is being rewritten around the MCFCI (policy-news weights; congruence with macro-model indexes; equities in macro models). Outline: `OUTLINE_new_version.md`. Draft: `paper/mcfci.tex` (build: `paper/build_mcfci.sh`). New package steps: `32_history.py` (co-movement, variance by asset, direction similarity, tight vs tightening, shape), `33_qvar.py` (quarterly output-gap VAR and FRB/US benchmark), `34_equity_channel.py`, `35_pc.py` (own principal components), `36_levelflow_q.py` (levels vs changes); exhibits in the `nv:` section of `07_report.py`. Index specification follows Note B (intercept scaling, 252 announcements; FP-A65). The earlier draft `paper/fci_paper.tex` is kept unchanged.
+The paper is being rewritten around the MCFCI (policy-news weights; congruence with macro-model indexes; equities in macro models). Outline: `OUTLINE_new_version.md`. Draft: `paper/mcfci.tex`, "Financial Conditions along the Monetary Policy Direction" (build: `paper/build_mcfci.sh`; 20 pages, 19 Nov 2026). New package steps: `32_history.py` (co-movement, variance by asset, direction similarity, tight vs tightening, shape), `33_qvar.py` (quarterly output-gap VAR and FRB/US benchmark), `34_equity_channel.py`, `35_pc.py` (own principal components), `36_levelflow_q.py` (levels vs changes), `37_components_q.py` (the quarterly VAR with the MCFCI's three components free; by-component split; equal-coefficients test; Section 5.4 and `tab_nv_comp`; FP-A75), `38_trend_share.py` (quadratic-trend share of each MCFCI's variance, Section 2.3; FP-A76); exhibits in the `nv:` section of `07_report.py`. Index specification follows Note B (intercept scaling, 252 announcements; FP-A65). The earlier draft `paper/fci_paper.tex` is kept unchanged.
 
 ## Run order (about 5 minutes, 500 bootstrap draws)
 
