@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 15:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 17:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -601,7 +601,7 @@ ine 80.
 (pdftex.def)             Requested size: 469.75502pt x 348.96655pt.
  [2 <../baseline_real/report/fig_intro.pdf>] [3] [4] [5] [6] (../baseline_real/
 report/tab_weights.tex) [7] [8]
-<../baseline_real/report/fig_fcis.pdf, id=511, 505.89pt x 332.44202pt>
+<../baseline_real/report/fig_fcis.pdf, id=510, 505.89pt x 332.44202pt>
 File: ../baseline_real/report/fig_fcis.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_fcis.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_fcis.pdf  used on input li
@@ -619,7 +619,7 @@ Underfull \hbox (badness 1092) in paragraph at lines 182--182
  []
 
 [10] [11] [12] [13] [14]
-<../baseline_real/report/fig_standard.pdf, id=716, 520.34402pt x 245.718pt>
+<../baseline_real/report/fig_standard.pdf, id=715, 520.34402pt x 245.718pt>
 File: ../baseline_real/report/fig_standard.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_standard.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_standard.pdf  used on inpu
@@ -628,7 +628,7 @@ t line 248.
  (../baseline_real/report/tab_standard.tex) [15]
 [16 <../baseline_real/report/fig_standard.pdf>]
 (../baseline_real/report/tab_matched.tex) [17]
-<../baseline_real/report/fig_steps.pdf, id=822, 505.89pt x 375.804pt>
+<../baseline_real/report/fig_steps.pdf, id=821, 505.89pt x 375.804pt>
 File: ../baseline_real/report/fig_steps.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_steps.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_steps.pdf  used on input l
@@ -636,13 +636,13 @@ ine 271.
 (pdftex.def)             Requested size: 469.75502pt x 348.96655pt.
  [18 <../baseline_real/report/fig_steps.pdf>] (../baseline_real/report/tab_trad
 eoff.tex) [19] [20]
-<../baseline_real/report/fig_financial.pdf, id=952, 317.98799pt x 202.356pt>
+<../baseline_real/report/fig_financial.pdf, id=951, 317.98799pt x 202.356pt>
 File: ../baseline_real/report/fig_financial.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_financial.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_financial.pdf  used on inp
 ut line 304.
 (pdftex.def)             Requested size: 291.2458pt x 185.34843pt.
-<../baseline_real/report/fig_persist.pdf, id=953, 520.34402pt x 224.037pt>
+<../baseline_real/report/fig_persist.pdf, id=952, 520.34402pt x 224.037pt>
 File: ../baseline_real/report/fig_persist.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_persist.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_persist.pdf  used on input
@@ -654,7 +654,7 @@ ig_financial.pdf>]) [22 <../baseline_real/report/fig_persist.pdf>]
 (../baseline_real/report/tab_credit.tex) [23]
 (../baseline_real/report/tab_timing.tex) [24]
 (../baseline_real/report/tab_rob_summary.tex) [25] [26] [27]
-<../baseline_real/report/fig_decomp_hd.pdf, id=1144, 520.34402pt x 361.35pt>
+<../baseline_real/report/fig_decomp_hd.pdf, id=1139, 520.34402pt x 361.35pt>
 File: ../baseline_real/report/fig_decomp_hd.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_decomp_hd.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_decomp_hd.pdf  used on inp
@@ -671,19 +671,19 @@ rt/fig_decomp_hd.pdf>] [30] (../baseline_real/report/tab_slow_shares.tex)
 (../baseline_real/report/tab_persist.tex) [46]
 (../baseline_real/report/tab_direct.tex) [47]
 (../baseline_real/report/tab_main_A.tex) [48] [49]
-<../baseline_real/report/fig_steps73.pdf, id=1386, 505.89pt x 375.804pt>
+<../baseline_real/report/fig_steps73.pdf, id=1381, 505.89pt x 375.804pt>
 File: ../baseline_real/report/fig_steps73.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_steps73.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_steps73.pdf  used on input
  line 519.
 (pdftex.def)             Requested size: 469.75502pt x 348.96655pt.
-<../baseline_real/report/fig_gs.pdf, id=1388, 520.34402pt x 216.81pt>
+<../baseline_real/report/fig_gs.pdf, id=1383, 520.34402pt x 216.81pt>
 File: ../baseline_real/report/fig_gs.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_gs.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_gs.pdf  used on input line
  527.
 (pdftex.def)             Requested size: 469.75502pt x 195.74252pt.
-<../baseline_real/report/fig_size.pdf, id=1389, 520.34402pt x 281.85298pt>
+<../baseline_real/report/fig_size.pdf, id=1384, 520.34402pt x 281.85298pt>
 File: ../baseline_real/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_size.pdf  used on input li
@@ -737,6 +737,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 631--632
 []|\OT1/cmr/m/n/10 (+20) FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 632--632
+[]|\OT1/cmr/m/n/10 (+20) Daily;
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 632--632
+\OT1/cmr/m/n/10 (+20) monthly
+ []
+
 [66] [67] (./mp_transmission_real.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
@@ -746,11 +756,11 @@ Package rerunfilecheck Info: File `mp_transmission_real.out' has not changed.
 (rerunfilecheck)             Checksum: CCAF29A2EB4DE5BD055C22F47AD6CA54;6845.
  ) 
 Here is how much of TeX's memory you used:
- 21582 strings out of 476182
- 380903 string characters out of 5795594
+ 21729 strings out of 476182
+ 383870 string characters out of 5795594
  1999975 words of memory out of 5000000
- 42674 multiletter control sequences out of 15000+600000
- 582715 words of font info for 257 fonts, out of 8000000 for 9000
+ 42817 multiletter control sequences out of 15000+600000
+ 582817 words of font info for 259 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,12n,79p,2122b,802s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0600.600pk> </
@@ -775,10 +785,10 @@ lic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
 8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on mp_transmission_real.pdf (68 pages, 860509 bytes).
+Output written on mp_transmission_real.pdf (68 pages, 861510 bytes).
 PDF statistics:
- 1835 PDF objects out of 2073 (max. 8388607)
- 1210 compressed objects within 13 object streams
+ 1830 PDF objects out of 2073 (max. 8388607)
+ 1205 compressed objects within 13 object streams
  261 named destinations out of 1000 (max. 500000)
  43331 words of extra memory for PDF output out of 51595 (max. 10000000)
 

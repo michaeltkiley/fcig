@@ -54,6 +54,13 @@ EPIS = [("e7980", "1979-01", "1980-12"), ("e8284", "1982-01", "1984-12"), ("e010
 for key, a, b in EPIS:
     for v in ("u", "pi", "pol", "idx"): mac(f"hist:{key}:{v}", num(avg(1973, v, a, b)))
 mac("hist:pi2122", num(avg(1973, "pi", "2021-01", "2022-12")))
+# FS-A100: the history in changes (half-year averages of the contributions, model from 1973): the Volcker tightening and the 2020s
+def hy(var, tag):
+    y, half = int(tag[:4]), tag[4:]; a, b = (f"{y}-01", f"{y}-06") if half == "H1" else (f"{y}-07", f"{y}-12"); return avg(1973, var, a, b)
+HY = {(v, t): hy(v, t) for v in ("u", "pi", "pol") for t in ("1981H1", "1982H1", "1982H2", "1985H2", "2019H1", "2021H2", "2022H1", "2023H2", "2025H2")}
+for (v, t), x in HY.items(): mac(f"hy:{v}:{t}", num(x)); mac(f"hy:{v}:{t}:abs", f"{abs(x):.2f}"); mac(f"hy:{v}:{t}:r1", f"{abs(x):.1f}")
+for k, (v, a, b) in {"vpol": ("pol", "1981H1", "1982H1"), "vpi": ("pi", "1981H1", "1982H1"), "cpol1": ("pol", "2019H1", "2021H2"), "cpol2": ("pol", "2021H2", "2023H2"), "cu": ("u", "2022H1", "2025H2")}.items():
+    d = HY[(v, b)] - HY[(v, a)]; mac(f"hy:d:{k}", f"{abs(d):.1f}"); mac(f"hy:d:{k}:2", f"{abs(d):.2f}")
 HDA = pd.read_csv(RESULTS / "decomp_hd_real_real_model1973_absorb.csv")                 # FS-A96: March-December 2020 surprises set to zero (absorbed by the month dummies)
 def avg_abs(var, a, b, col="spliced"):
     g = HDA[HDA["var"] == var].set_index("month")[col]; g.index = pd.PeriodIndex(g.index, freq="M"); return float(g.loc[a:b].mean())
@@ -139,6 +146,10 @@ chk("2021-22: with the March-December 2020 surprises set to zero the contributio
 chk("shares: days without an announcement alone exceed the total in the model from 1996 for unemployment (ratios need not add up)", share("real", 1996, 24, "1990-2026", "daily_other", "u") > share("real", 1996, 24, "1990-2026", "daily_all", "u"))
 chk("shares: announcement surprises below 1 percent and policy-direction surprises above them for u and pi, both models", all(share("real", m, 24, "1996-2026", "measured", v) < 0.01 < share("real", m, 24, "1990-2026", "daily_all", v) for m in (1996, 1973) for v in ("u", "pi")))
 chk("backcast: unscaled shares 1974-89 (model from 1973) at least three times the scaled ones", all(share("real", 1973, 24, "1974-1989", "spliced", v, "infer_unscaled") > 3 * share("real", 1973, 24, "1974-1989", "spliced", v) for v in ("u", "pi")))
+chk("history (FS-A100): before the Volcker tightening the surprises added to inflation and lowered unemployment (1981 H1); within a year the yield contribution rose and the inflation contribution turned negative; unemployment's turned positive in 1982 and rose to 1985 H2",
+    HY[("pi", "1981H1")] > 0 > HY[("u", "1981H1")] and HY[("pol", "1982H1")] > HY[("pol", "1981H1")] + 1 and HY[("pi", "1982H1")] < 0 and 0 < HY[("u", "1982H2")] < HY[("u", "1985H2")])
+chk("history (FS-A100): 2020s: the yield contribution fell from 2019 H1 to 2021 H2 and inflation's rose above 0.9; the yield contribution rose by more than 2.5 by 2023 H2 and inflation's turned negative; unemployment's rose from 2022 H1 to 2025 H2 while still negative",
+    HY[("pol", "2021H2")] < HY[("pol", "2019H1")] and HY[("pi", "2021H2")] > 0.9 and HY[("pol", "2023H2")] - HY[("pol", "2021H2")] > 2.5 and HY[("pi", "2023H2")] < 0 and HY[("u", "2022H1")] < HY[("u", "2025H2")] < 0)
 if os.environ.get("CLAIMS_REPORT") and BAD: print("FAILED CLAIMS:\n  " + "\n  ".join(BAD))
 else: assert not BAD, "claims in Section 3.5 no longer hold: " + "; ".join(BAD)
 (REPORT / "numbers_decomp.tex").write_text("\n".join(ML) + "\n")

@@ -1,11 +1,14 @@
 \begin{table}[tp]\centering\small
-\caption{Credit and the Response (Real Rates; 12 Lags)}\label{tab:credit}
+\caption{Credit, Activity and the Effect of Adding the FCI (Real Rates; 24 Months)}\label{tab:credit}
 \resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
-\begin{tabular}{lcccc}\toprule & Yield alone & \multicolumn{2}{c}{Yield and FCI} & Credit measure \\ \cmidrule(lr){2-2}\cmidrule(lr){3-4}\cmidrule(lr){5-5}
- & Unemployment, 24 m & Unemployment, 24 m & Price level, 24 m & Response, 12 m (pp)\\ \midrule
-Baseline & $-$0.33$^{**}$ & 0.40$^{**}$ & $-$0.49$^{**}$ & --\\
-Excess bond premium (with IP) in the monthly block & 0.25 & 0.37$^{*}$ & $-$0.51$^{**}$ & $-$0.06 [$-$0.28, 0.11]\\
-Baa spread in the daily block & $-$0.33$^{**}$ & 0.27 & $-$0.61$^{**}$ & $-$0.07 [$-$0.22, 0.07]\\
+\begin{tabular}{lcccc}\toprule & \multicolumn{2}{c}{Unemployment gap (pp)} & \multicolumn{2}{c}{Effect of adding the FCI} \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & Rates alone & Rates and FCI & Unemployment gap & Price level (\%)\\ \midrule
+Baseline & $-$0.33$^{*}$ & 0.40$^{*}$ & 0.73$^{*}$ & $-$0.43$^{*}$\\
+ & {\scriptsize [$-$0.60, $-$0.08]} & {\scriptsize [0.13, 0.68]} & {\scriptsize [0.37, 1.04]} & {\scriptsize [$-$0.82, $-$0.09]}\\
+Baa spread in the daily block & $-$0.22 & 0.27 & 0.49$^{*}$ & $-$0.50$^{*}$\\
+ & {\scriptsize [$-$0.58, 0.12]} & {\scriptsize [$-$0.05, 0.55]} & {\scriptsize [0.19, 0.77]} & {\scriptsize [$-$0.80, $-$0.15]}\\
+Industrial production in the monthly block & $-$0.07 & 0.52$^{*}$ & 0.59$^{*}$ & $-$0.60$^{*}$\\
+ & {\scriptsize [$-$0.38, 0.13]} & {\scriptsize [0.22, 0.86]} & {\scriptsize [0.31, 0.96]} & {\scriptsize [$-$1.01, $-$0.29]}\\
 \bottomrule\end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window, 1996--2026. Excess bond premium: a third monthly variable, set like unemployment and inflation before markets within the month. Baa spread: Moody's Baa yield less the 10-year Treasury yield, in the daily block next to the yield and the FCI; its impact is its announcement-day change, because it has no intraday series. In the Baa row the yield-alone entry is the baseline's. Credit response: the excess bond premium, or the monthly average of the Baa spread, 12 months after the move, with its 90 percent interval. $^{**}$ and $^{*}$: the 95 and 90 percent intervals exclude zero.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window; real two-year yield and funds rate, 12 lags, monthly equations from 1996, March--December 2020 dropped. Baa spread: Moody's Baa yield less the 10-year Treasury yield, in the daily block next to the rates (and the FCI); its impact is its announcement-day change on the surprise, because it has no intraday series; months before the daily data (1986) use the monthly series. Industrial production: $100\ln$ of the index, a third monthly variable, set like unemployment and inflation before markets within the month. Effect of adding the FCI: the response with the FCI less the response with the same variables without it. All cases use the same bootstrap draws, so the effects are paired; 90 percent intervals in brackets; $^{*}$: the 90 percent interval excludes zero.\end{flushleft}
 \end{table}

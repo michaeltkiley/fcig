@@ -85,6 +85,7 @@ mac("cr:baa12", num(pA.r[12])); mac("cr:baa12:lo", num(pA.lo[12])); mac("cr:baa1
 
 # ---------------------------------------------------------------- 3b. the r*-gap index as a gap to a neutral level that moves with r* (Section 2.2), and the window responses in words
 WB = pd.read_csv(OUT / "market_weights.csv", index_col=0); from lib import model as M
+D0 = pd.read_csv(OUT / "data_monthly.csv", index_col=0); D0.index = pd.PeriodIndex(D0.index, freq="M")
 epbar = float((100 / D0.cape).loc[noteA.START:noteA.END].mean()); kap = WB.weight["y10"] - WB.weight["equities"] * 100 / epbar
 mac("kap", f"{kap:.1f}"); mac("epbar", f"{epbar:.1f}")
 for a in ("y10", "equities", "dollar"): mac(f"psi:{a}", f"{abs(WB.response[a]):.2f}" if a == "y10" else f"{abs(WB.response[a]):.1f}")
