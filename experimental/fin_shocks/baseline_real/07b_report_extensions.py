@@ -314,6 +314,23 @@ def gs_comparison():
     pass
 gs_comparison()
 
+# =============================================================== FS-A108: bias-corrected intervals and the weights sensitivity (bootstrap appendix)
+def boot_bc():
+    from scipy.stats import norm
+    IC = pd.read_csv(RESULTS / "intervals_compare.csv"); I12 = IC[IC.lags == 12]
+    w = ((I12.new_hi - I12.new_lo) / (I12.old_hi - I12.old_lo)).median(); mac("bc:wratio", f"{w:.2f}")
+    for h in (12, 24, 36): mac(f"bc:shift:{h}", f"{I12[I12.h == h]['shift'].abs().median():.2f}")
+    mac("bc:n12", len(I12)); mac("bc:gain", int((~I12.old10 & I12.new10).sum())); mac("bc:lose", int((I12.old10 & ~I12.new10).sum()))
+    WB = pd.read_csv(RESULTS / "weights_boot.csv").set_index(["run", "var"]); WD = pd.read_csv(RESULTS / "weights_boot_draws.csv")
+    mac("wb:y10:p5", f"{WD.y10.quantile(0.05):.2f}"); mac("wb:y10:p95", f"{WD.y10.quantile(0.95):.2f}"); mac("wb:y10:est", f"{D.W['y10']:.2f}")
+    r = [WB.loc[("reestimated", v)][f"sd{h}"] / WB.loc[("fixed", v)][f"sd{h}"] - 1 for v in ("u", "P") for h in (12, 24, 36)]
+    mac("wb:sdup:lo", f"{100 * min(r):.0f}"); mac("wb:sdup:hi", f"{100 * max(r):.0f}"); mac("wb:below:u24", f"{100 * WB.loc[('reestimated', 'u')].below24:.0f}")
+    for run, k in (("reestimated", "re"), ("fixed", "fx")):
+        for v in ("u", "P"): x = WB.loc[(run, v)]; mac(f"wb:{k}:{v}:lo24", num(x.lo24)); mac(f"wb:{k}:{v}:hi24", num(x.hi24))
+    ok = all(WB.loc[("reestimated", v)].lo24 * WB.loc[("reestimated", v)].hi24 > 0 for v in ("u", "P")) and WB.loc[("reestimated", "u")].below24 > 0.5
+    assert ok, "weights sensitivity: the bias-corrected 24-month intervals no longer exclude zero, or the draws are no longer shifted toward zero"
+boot_bc()
+
 # =============================================================== write macros, restyle, assert claims
 (REPORT / "numbers_ext.tex").write_text("\n".join(ML) + "\n")
 LST.restyle_dir(REPORT)
