@@ -43,14 +43,18 @@ for f in ("nom", "real"):
         for k, x in t.items(): mac(f"tm:{f}:{v}:{k}", num(x))
         mac(f"tm:{f}:{v}:fci", num(((t["m1"] - t["m0"]) + (t["d1"] - t["d0"])) / 2)); mac(f"tm:{f}:{v}:time", num(((t["d0"] - t["m0"]) + (t["d1"] - t["m1"])) / 2))
         mac(f"tm:{f}:{v}:timefci", num(t["d1"] - t["m1"])); mac(f"tm:{f}:{v}:timeno", num(t["d0"] - t["m0"]))
+TD = pd.read_csv(RESULTS / "timing_only_diff.csv"); TD["fci"] = TD.fci.astype(str)               # step 16 (FS-A97): calendar position alone, real, 1996
+_tmax = float(TD[(TD.contrast.isin(["actual-first", "actual-mid"])) & TD.h.isin([12, 24, 36])]["diff"].abs().max())
+mac("tmo:max", f"{max(_tmax, 0.005):.2f}")                                                      # largest change in u or P at 12/24/36 m, with or without the FCI, from placing every announcement on the first day or at mid-month
+assert _tmax < 0.025, "calendar position alone: a change of 0.025 or more"
 lines = []
 for i, (f, v, cells) in enumerate(rows):
     lab = {"nom": "Nominal", "real": "Real"}[f] if v == "u" else ""
     lines.append(f"{lab} & {'Unemployment gap (pp)' if v == 'u' else 'Price level (\\%)'} & " + " & ".join(cells) + r"\\" + (r"\addlinespace" if v == "P" and f != "real" else ""))
-(REPORT / "tab_timing.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{Two Corrections: Announcement Timing and Financial Conditions (24 Months; 12 Lags)}\label{tab:timing2}", FIT,
+(REPORT / "tab_timing.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{The Daily Block and Financial Conditions (24 Months; 12 Lags)}\label{tab:timing2}", FIT,
     r"\begin{tabular}{llcccc}\toprule & & \multicolumn{2}{c}{Yield alone} & \multicolumn{2}{c}{Yield and FCI}\\ \cmidrule(lr){3-4}\cmidrule(lr){5-6}",
     r"Yield & Response & Monthly VAR & Daily block & Monthly VAR & Daily block\\ \midrule", *lines, r"\bottomrule\end{tabular}}",
-    r"\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window, 1996--2026. Monthly VAR: the window-impact monthly VAR of Section~\ref{sec:monthlyvar}, in monthly averages, whose impact is the main model's response of the month's average two-year yield, FCI and funds rate in the announcement month; it loses the position of each announcement within its month and the daily path of the financial variables in the following weeks. Daily block: the main model. $^{**}$ and $^{*}$: the 95 and 90 percent intervals exclude zero.\end{flushleft}", r"\end{table}"]) + "\n")
+    r"\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window, 1996--2026. Monthly VAR: the window-impact monthly VAR of Section~\ref{sec:monthlyvar}, in monthly averages, whose impact is the main model's response of the month's average two-year yield, FCI and funds rate in the announcement month; it loses the position of each announcement within its month and the daily path of the financial variables in the following weeks. Daily block: the main model. With the main model's estimated equations, placing every announcement on the first day of its month or at mid-month changes the responses at 12, 24 and 36 months by at most 0.02 (real version). $^{**}$ and $^{*}$: the 95 and 90 percent intervals exclude zero.\end{flushleft}", r"\end{table}"]) + "\n")
 for f in ("nom", "real"):
     t = T[(f, "u")]
     pass
