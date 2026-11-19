@@ -502,6 +502,21 @@ def components_test():
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
 components_test()
 
+def expectations_facts():
+    """FS-A104: macros bl:ei:* for the construction of expected inflation before 1982 (lib/noteA.expected_inflation): the shifts of the Livingston 12-month expectation to the Cleveland 1- and 10-year levels
+    (mean gaps over 1982-84) and the mean gap between Cleveland's 2-year and 1-year expectations over 1982-84 (the step in the 2-year proxy in 1982)."""
+    from lib import noteA as NA
+    from lib.daily import fred_daily
+    lv = pd.read_excel(DATA / "livingston_median_growth.xlsx", "CPI").set_index("Date")["G_BP_To_12M"].dropna(); lv.index = pd.to_datetime(lv.index).to_period("M")
+    lv = lv.reindex(pd.period_range(lv.index[0], "1984-12", freq="M")).interpolate(limit_area="inside")
+    cm = lambda n: (lambda x: pd.Series(x.values, index=x.index.to_period("M")).groupby(level=0).mean())(fred_daily(n))
+    c1, c2, c10 = cm("EXPINF1YR"), cm("EXPINF2YR"), cm("EXPINF10YR"); w = slice("1982-01", "1984-12")
+    k1, k10, g21 = float((c1.loc[w] - lv.loc[w]).mean()), float((c10.loc[w] - lv.loc[w]).mean()), float((c2.loc[w] - c1.loc[w]).mean())
+    ml = [r"\expandafter\gdef\csname bl:ei:" + k + r"\endcsname{" + v + "}" for k, v in (("k1", num(k1)), ("k10", num(k10)), ("g21", num(g21)), ("lvfirst", str(lv.index[0].year)))]
+    (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
+    assert 0 < g21 < 0.3, "2-year less 1-year Cleveland expectations, 1982-84"
+expectations_facts()
+
 check_claims()                                                                       # after rob_summary (ROB)
 
 # ---------------------------------------------------------------- figures
