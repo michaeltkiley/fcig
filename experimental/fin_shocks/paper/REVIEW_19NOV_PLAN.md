@@ -24,7 +24,7 @@ Checks I made on the current text before writing this plan: [verified] means che
 *Where:* Note A now has this test (Section 5.4, step 37, FP-A75), but on Note A's own model. In the r*-gap Note B, freeing all three removed most of the 1973 price response as well (FS-A81).
 *My view:* This is the review's strongest point. The price result is the one exposed to it, and Note A's test is on a different model, so it does not answer the question for Note B. **Recommend: run it in `baseline_real/` first (the extension of `lib/model` to the funds rate with components, already scoped in D6), then decide whether the text gets a paragraph or a sentence that points to Note A.** If the price result survives, that is new evidence for the baseline. If it does not, the text has to say so.
 *Work:* code extension and three cases × two starts × two versions with bootstrap: about a day.
-*Decision:*
+*Decision (FS-A93, FS-A94):* run in the real version, all free against the index built from the components (no equities-free case). Unemployment unchanged; the first-year price fall holds; the two-year price fall is smaller with the components free. Reported as a short robustness subsection (5.3) and an appendix table; not in the abstract, introduction or conclusion.
 
 ### 3. Placement of the historical exercise (Figure 5, Table 6)
 *Review (pp. 1, 5):* Put the history after the tests of the transmission estimates. Keep the 0.90 pp 2021–22 number once, stated precisely (see item 15).

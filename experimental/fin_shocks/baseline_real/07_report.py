@@ -464,6 +464,37 @@ def final_section():
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
 final_section()
 
+def components_test():
+    """Robustness: the index restriction in the monthly equations (step 15, FS-A93; real version, 12 lags). tab_components.tex (appendix) and macros bl:cm:* appended to numbers.tex:
+    bl:cm:<sx>:<R|F|D>:<u|P>:<h>[:lo|:hi|:abs] (R restricted = FCI built from the components, F all free, D paired difference F less R; sx '' = 1996, '73' = 1973),
+    bl:cm:<sx>:p:<u|pi> (bootstrap p of equal coefficients), bl:cm:<sx>:aic:<u|pi>, bl:cm:<sx>:bic:<u|pi>."""
+    ml = []; dm = lambda k, v: ml.append(r"\expandafter\gdef\csname bl:cm:" + k + r"\endcsname{" + v + "}")
+    Dif = pd.read_csv(RESULTS / "components_diff.csv"); Wt = pd.read_csv(RESULTS / "components_wald.csv"); rows = []
+    for st, sx in (("1996-01", ""), ("1973-01", "73")):
+        cs = {k: pd.read_csv(RESULTS / f"{CS.case_id(dict(form='real', fci=f, macro='u,pi', start=st, end=None, t2020='out', trend='none'))}.csv").query("lags == 12").set_index("var") for k, f in (("R", "cmpR"), ("F", "cmp"))}
+        for k in ("R", "F"):
+            for v in ("u", "P"):
+                for h in (12, 24):
+                    r = cs[k].loc[v]; dm(f"{sx}:{k}:{v}:{h}", num(r[f"r{h}"])); dm(f"{sx}:{k}:{v}:{h}:abs", f"{abs(r[f'r{h}']):.2f}"); dm(f"{sx}:{k}:{v}:{h}:lo", num(r[f"lo{h}"])); dm(f"{sx}:{k}:{v}:{h}:hi", num(r[f"hi{h}"]))
+        dd = Dif[(Dif.start == st) & (Dif.contrast == "free-restricted")].set_index(["var", "h"])
+        for v in ("u", "P"):
+            for h in (12, 24):
+                r = dd.loc[(v, h)]; dm(f"{sx}:D:{v}:{h}", num(r["diff"])); dm(f"{sx}:D:{v}:{h}:lo", num(r.lo)); dm(f"{sx}:D:{v}:{h}:hi", num(r.hi))
+        for _, r in Wt[Wt.start == st].iterrows(): dm(f"{sx}:p:{r['eq']}", f"{r.p_boot:.3f}"); dm(f"{sx}:aic:{r['eq']}", f"{r.d_aic:.0f}"); dm(f"{sx}:bic:{r['eq']}", f"{r.d_bic:.0f}")
+        # table rows for this start
+        def trow(lab, k):
+            if k == "D": pts = [num(dd.loc[(v, h)]["diff"]) + ("$^{**}$" if dd.loc[(v, h)].lo95 * dd.loc[(v, h)].hi95 > 0 else "$^{*}$" if dd.loc[(v, h)].lo * dd.loc[(v, h)].hi > 0 else "") for v in ("u", "P") for h in (12, 24)]; ivs = [f"[{num(dd.loc[(v, h)].lo)}, {num(dd.loc[(v, h)].hi)}]" for v in ("u", "P") for h in (12, 24)]
+            else: pts = [num(cs[k].loc[v][f"r{h}"]) + stars(cs[k].loc[v], h) for v in ("u", "P") for h in (12, 24)]; ivs = [f"[{num(cs[k].loc[v][f'lo{h}'])}, {num(cs[k].loc[v][f'hi{h}'])}]" for v in ("u", "P") for h in (12, 24)]
+            return [lab + " & " + " & ".join(pts) + r"\\", " & " + " & ".join(rf"{{\tiny {x}}}" for x in ivs) + r"\\"]
+        rows += [rf"\multicolumn{{5}}{{l}}{{\textit{{Monthly equations from {st[:4]}}}}}\\"] + trow("FCI built from the components", "R") + trow("Components free", "F") + trow("Difference, free less restricted", "D")
+        wt = Wt[Wt.start == st].set_index("eq")
+        rows += [rf"Equal coefficients: bootstrap $p$ & \multicolumn{{2}}{{c}}{{{wt.loc['u'].p_boot:.3f}}} & \multicolumn{{2}}{{c}}{{{wt.loc['pi'].p_boot:.3f}}}\\", r"\addlinespace"]
+    (REPORT / "tab_components.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{The Index Restriction: The FCI and Its Components (Real Version)}\label{tab:components}",
+        r"\begin{tabular}{lrrrr}\toprule & \multicolumn{2}{c}{Unemployment gap (pp)} & \multicolumn{2}{c}{Price level (\%)}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5} & 12 m & 24 m & 12 m & 24 m\\ \midrule", *rows[:-1], r"\bottomrule\end{tabular}",
+        r"\begin{flushleft}\footnotesize\textit{Notes:} Real two-year yield, funds rate and FCI, 12 lags, March--December 2020 dropped; per +1 pp on the two-year yield in the window. One daily block with the two rates and the three weighted components of the FCI (10-year yield, equity valuation, dollar); the window move of each component is its response to policy news, so the three add to the FCI's move. Restricted: the sum of the components (the FCI) as one regressor per lag in the monthly equations. Free: the three components as separate regressors. The two use the same bootstrap draws; the difference is paired. Equal coefficients: Wald test (HC1) that the three components have equal coefficients at every lag (24 restrictions), in the unemployment and the inflation equations, $p$-value from a block bootstrap under the restriction. $^{**}$, $^{*}$: 95\% and 90\% intervals exclude zero; 90\% intervals below.\end{flushleft}", r"\end{table}"]) + "\n")
+    (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
+components_test()
+
 check_claims()                                                                       # after rob_summary (ROB)
 
 # ---------------------------------------------------------------- figures

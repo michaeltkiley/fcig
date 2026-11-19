@@ -77,7 +77,9 @@ if __name__ == "__main__":
         for j, name in enumerate(("u", "pi")):
             y = Y[:, j]; w = wald(X, y, R); fit = Xr @ np.linalg.lstsq(Xr, y, rcond=None)[0]; res = y - fit
             wb = np.array([wald(X, fit + res[M.block_rows(n, rng, M.BLOCK_M)], R) for _ in range(999)])
-            W.append(dict(start=st, eq=name, restrictions=2 * L, nobs=n, wald=w, p=1 - stats.chi2.cdf(w, 2 * L), p_boot=(1 + np.sum(wb >= w)) / 1000))
+            ssr = lambda Z: float(np.sum((y - Z @ np.linalg.lstsq(Z, y, rcond=None)[0]) ** 2)); lr = n * np.log(ssr(Xr) / ssr(X)); q = X.shape[1] - Xr.shape[1]
+            W.append(dict(start=st, eq=name, restrictions=2 * L, nobs=n, wald=w, p=1 - stats.chi2.cdf(w, 2 * L), p_boot=(1 + np.sum(wb >= w)) / 1000,
+                          lr=lr, d_aic=2 * q - lr, d_bic=q * np.log(n) - lr))           # information criteria, free less restricted (Gaussian): positive = the restriction preferred
     W = pd.DataFrame(W); W.to_csv(RESULTS / "components_wald.csv", index=False, float_format="%.4f")
     print(D[D.h.isin([12, 24])].round(2).to_string(index=False)); print(W.round(3).to_string(index=False))
     print(pd.DataFrame(T).query("H == 24")[["fci", "start", "kappa", "k_lo", "k_hi"]].round(2).to_string(index=False))

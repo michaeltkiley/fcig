@@ -117,6 +117,18 @@ def check(R, MON, SIM, B96, ROB):
     LG6 = [c for p_ in CS.PANELS if p_["id"][0] in "BR" for c in p_["cases"] if c["fci"] != 0]
     neg6 = [(CS.case_id(c), h) for c in LG6 for h in H3 if (lambda r: r[f"hi{h}"] < 0)(R[CS.case_id(c)].query("lags == 6 and var == 'u'").iloc[0])]
     chk("lags: with 6 lags only the nominal version from 1973 with 2020 left in shows a significant fall in unemployment (two horizons); none with 12 lags", len(neg6) == 2 and all(i.startswith("nom_nom_upi_1973-01_all_in") for i, _ in neg6))
+    # ---- the index restriction (step 15, FS-A93; real, 12 lags)
+    import pandas as _pd
+    from lib.paths import RESULTS as _RS
+    _D = _pd.read_csv(_RS / "components_diff.csv").query("contrast == 'free-restricted'").set_index(["start", "var", "h"]); _W = _pd.read_csv(_RS / "components_wald.csv").set_index(["start", "eq"])
+    _c = lambda f, st: _pd.read_csv(_RS / f"real_{f}_upi_{st}_all_out.csv").query("lags == 12").set_index("var")
+    _ex0 = lambda r: r.lo * r.hi <= 0
+    chk("components: freeing the components leaves unemployment in place: the paired differences at 12 and 24 m include zero in both samples", all(_ex0(_D.loc[(st, "u", h)]) for st in ("1996-01", "1973-01") for h in (12, 24)))
+    chk("components: the price level at 12 m is not significantly different (both samples) and falls with the components free (point estimates)", all(_ex0(_D.loc[(st, "P", 12)]) and _c("cmp", st).loc["P"].r12 < 0 for st in ("1996-01", "1973-01")))
+    chk("components: at 24 m the price fall is significantly smaller with the components free, and not significant, in both samples", all(not _ex0(_D.loc[(st, "P", 24)]) and _D.loc[(st, "P", 24)]["diff"] > 0 and _c("cmp", st).loc["P"].lo24 < 0 < _c("cmp", st).loc["P"].hi24 for st in ("1996-01", "1973-01")))
+    chk("components: unemployment with the components free rises significantly at 12 m in both samples", all(_c("cmp", st).loc["u"].lo12 > 0 for st in ("1996-01", "1973-01")))
+    chk("components: equal coefficients rejected at 5 percent (bootstrap) in the inflation equation in both samples, not at 5 percent in the unemployment equation; BIC prefers the restriction in every equation, AIC in three of four",
+        all(_W.loc[(st, "pi")].p_boot < 0.05 and _W.loc[(st, "u")].p_boot >= 0.05 for st in ("1996-01", "1973-01")) and (_W.d_bic > 0).all() and (_W.d_aic > 0).sum() == 3)
     chk("final section: a linear trend explains more of the real FCI than of the version relative to r* since 1973 (macros tr:r:r2, tr:s:r2), and the spline fits more of the r* version than of the real version since 1996", _slow_ok())
     chk("final section: with the spline from 1973 the real responses with the FCI at 24 m are significant at the 5 percent level", all(sig5("real", "yes", v, 24, T73, trend="spline") for v in ("u", "P")))
     return bad
