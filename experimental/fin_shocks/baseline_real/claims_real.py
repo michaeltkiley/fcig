@@ -6,6 +6,8 @@ from lib.paths import RESULTS
 
 H3 = (12, 24, 36)
 
+import pandas as _pd_dp
+from lib.paths import RESULTS as _RS_dp
 def check(R, MON, SIM, B96, ROB):
     bad = []; chk = lambda name, ok: None if ok else bad.append(name)
     def g(f, fk, v, h, st="1996-01", **kw):
@@ -97,6 +99,10 @@ def check(R, MON, SIM, B96, ROB):
     chk("decomposition: policy-direction shocks since 1990 account for 20 to 35 percent of the two-year yield's 24-month variance (both models)", all(0.2 < sh(m, "1990-2026", "daily_all", "pol") < 0.35 for m in (1996, 1973)))
     chk("decomposition: policy-direction shocks explain about 5 percent of inflation (4 to 6 percent, both models, since 1990)", all(0.04 <= sh(m, "1990-2026", "daily_all", "pi") < 0.06 for m in (1996, 1973)))
     PER = pd.read_csv(RESULTS / "persistence.csv"); pw = PER[(PER.base == "window plus later closes") & (~PER.controls)].set_index(["series", "measure"]); pp_ = PER[(PER.base == "pre-event close")].set_index(["series", "measure"])
+    _DP = _pd_dp.read_csv(_RS_dp / "direct_projection.csv").set_index(["controls", "var", "h"])            # FS-A101: the direct projection (appendix), aligned 2020 treatment
+    chk("direct projection: with macro lags unemployment falls significantly at 12 and 24 m and the price level does not fall; with financial lags no interval excludes zero and the price estimates are within 0.2 of zero",
+        all(_DP.loc[("macro lags", "u", h)].hi < 0 and _DP.loc[("macro lags", "P", h)].est > 0 for h in (12, 24)) and all(_DP.loc[("macro and financial lags", v, h)].lo < 0 < _DP.loc[("macro and financial lags", v, h)].hi for v in ("u", "P") for h in (12, 24))
+        and all(abs(_DP.loc[("macro and financial lags", "P", h)].est) < 0.2 for h in (12, 24)))
     chk("persistence: for the yield the model lies inside the direct interval at 5, 22, 66 days and the first-month average", all(pw.loc[("y", m)].lo <= pw.loc[("y", m)].model <= pw.loc[("y", m)].hi for m in ("h5", "h22", "h66", "avg22")))
     chk("persistence: for the FCI the model lies below the direct interval at 5 days and for the first-month average, inside at 22 and 66 days; the 66-day interval contains a reversal and more than twice the model",
         pw.loc[("f", "h5")].model < pw.loc[("f", "h5")].lo and pw.loc[("f", "avg22")].model < pw.loc[("f", "avg22")].lo and all(pw.loc[("f", m)].lo <= pw.loc[("f", m)].model <= pw.loc[("f", m)].hi for m in ("h22", "h66")) and pw.loc[("f", "h66")].lo < 0 and pw.loc[("f", "h66")].hi > 2 * pw.loc[("f", "h66")].model)
