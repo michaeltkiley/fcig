@@ -66,7 +66,7 @@ def check(R, MON, SIM, B96, ROB):
     chk("multiplier, nominal from 1973: the set is unbounded (cumulative unemployment interval includes zero)", not np.isfinite(k("nom", T73, 24).k_lo))
 
     # ---- robustness (12 months; ROB from 07_report.rob_summary)
-    tests = ("t2020", "ebpip", "bs", "L6", "noff", "s85")
+    tests = ("t2020", "ip", "bs", "L6", "noff", "s85")
     chk("robustness, real with the FCI: in every test and both samples unemployment rises and the price level falls at 12 m", all(ROB[("real", t, sx, "u")][0] > 0 and ROB[("real", t, sx, "P")][0] < 0 for t in tests for sx in ("", "73") if ("real", t, sx, "u") in ROB))
     chk("robustness, real with the FCI: the price level falls significantly at 12 m in every test from 1973, and from 1996 in every test except 6 lags and the 1985 start",
         all(ROB[("real", t, "73", "P")][1] for t in tests if ("real", t, "73", "P") in ROB) and all(ROB[("real", t, "", "P")][1] == (t not in ("L6", "s85")) for t in tests))
@@ -103,11 +103,14 @@ def check(R, MON, SIM, B96, ROB):
     chk("persistence: from the close before the announcement the model lies inside the FCI intervals at 5 days and for the first-month average", all(pp_.loc[("f", m)].lo <= pp_.loc[("f", m)].model <= pp_.loc[("f", m)].hi for m in ("h5", "avg22")))
     chk("timing: with rates alone neither model raises unemployment at 24 m; adding the FCI raises it in both versions and both models", all(pd.read_csv(RESULTS / f"monthly_{f}_0_1996-01.csv").query("lags == 12 and ident == 'WE' and var == 'u' and h == 24").r.iloc[0] < 0 and est(f, "no", "u", 24) < 0 for f in V)
         and all(pd.read_csv(RESULTS / f"monthly_{f}_{f}_1996-01.csv").query("lags == 12 and ident == 'WE' and var == 'u' and h == 24").r.iloc[0] > pd.read_csv(RESULTS / f"monthly_{f}_0_1996-01.csv").query("lags == 12 and ident == 'WE' and var == 'u' and h == 24").r.iloc[0] for f in V))
-    cr = lambda c: R[CS.case_id(c)].query("lags == 12").set_index("var")
-    cE, cE0, cA = (dict(form="real", fci="real", **{**B96, "macro": "u,pi,ebp,ip"}), dict(form="real", fci=0, **{**B96, "macro": "u,pi,ebp,ip"}), dict(form="real", fci="baa", **B96))
-    chk("credit: with the EBP (and IP) or the Baa spread, unemployment rises and the price level falls significantly at 24 m; with Baa the u interval includes zero and the price fall is larger than the baseline's",
-        all(cr(c).loc["u"].r24 > 0 and cr(c).loc["P"].r24 < 0 and cr(c).loc["P"].lo24 * cr(c).loc["P"].hi24 > 0 for c in (cE, cA)) and cr(cA).loc["u"].lo24 < 0 and cr(cA).loc["P"].r24 < est("real", "yes", "P", 24))
-    chk("credit: without the FCI, adding the EBP (and IP) turns the 24-month unemployment response positive", cr(cE0).loc["u"].r24 > 0 > est("real", "no", "u", 24))
+    # credit (FS-A99; step 17, matched and paired, 1996)
+    import pandas as _pdc
+    from lib.paths import RESULTS as _RSc
+    _CD = _pdc.read_csv(_RSc / "credit_diff.csv").query("start == '1996-01' and h == 24").set_index(["spec", "var"]); _CC = _pdc.read_csv(_RSc / "credit_cases.csv").query("start == '1996-01'").set_index(["spec", "fci", "var"])
+    _sg = lambda r: r.lo * r.hi > 0
+    chk("credit: adding the FCI raises unemployment and lowers the price level significantly at 24 m with the Baa spread and with industrial production", all(_CD.loc[(k, "u")].fci_effect > 0 and _sg(_CD.loc[(k, "u")]) and _CD.loc[(k, "P")].fci_effect < 0 and _sg(_CD.loc[(k, "P")]) for k in ("baa", "ip")))
+    chk("credit: neither effect of adding the FCI differs significantly from the baseline's (Baa and IP, u and P at 24 m)", all(_CD.loc[(k, v)].vs_lo < 0 < _CD.loc[(k, v)].vs_hi for k in ("baa", "ip") for v in ("u", "P")))
+    chk("credit: without the FCI, unemployment still falls at 24 m with the Baa spread and with IP", all(_CC.loc[(k, "no", "u")].r24 < 0 for k in ("baa", "ip")))
     chk("robustness 1996, real: u at 12 m lowest with the 1985 start and highest with Bauer-Swanson", min(ROB[("real", t, "", "u")][0] for t in tests) == ROB[("real", "s85", "", "u")][0] and max(ROB[("real", t, "", "u")][0] for t in tests) == ROB[("real", "bs", "", "u")][0])
     chk("robustness, real without the funds rate: smaller responses from 1996 (u and P at 12 m)", all(abs(ROB[("real", "noff", "", v)][0]) < abs(ROB[("real", "base", "", v)][0]) for v in ("u", "P")))
     chk("robustness, real with 2020 left in: unemployment at 12 m below the baseline's in both samples, the price level within 0.1", all(ROB[("real", "t2020", sx, "u")][0] < ROB[("real", "base", sx, "u")][0] and abs(ROB[("real", "t2020", sx, "P")][0] - ROB[("real", "base", sx, "P")][0]) < 0.1 for sx in ("", "73")))

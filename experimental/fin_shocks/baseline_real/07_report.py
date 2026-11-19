@@ -13,7 +13,7 @@ B73 = {**B96, "start": "1973-01"}
 STARTS = (("1996-01", ""), ("1973-01", "73"))
 HEAD_FORM = "real"          # baseline_real (FS-A85 D1): the headline version
 # The six core robustness tests (FS-A85 D6 as revised by D10-D11); the 1985 start has no 1973 counterpart (sx73 = None)
-CORE_TESTS = [("base", "Baseline", "B", {}, 12), ("t2020", "2020 left in", "R1", {}, 12), ("ebpip", "Excess bond premium and industrial production added", "R2", {}, 12),
+CORE_TESTS = [("base", "Baseline", "B", {}, 12), ("t2020", "2020 left in", "R1", {}, 12), ("ip", "Industrial production added", "R2", {}, 12),
               ("bs", "Bauer--Swanson surprise", "R3", {}, 12), ("L6", "6 lags", "B", {}, 6), ("noff", "Without the funds rate", "R5", {}, 12), ("s85", "Monthly equations from 1985", "R6", {}, 12)]
 def core_row(pid, sel, sx, L, form=HEAD_FORM):
     """The case with the FCI of a core robustness test in the given version (default: the headline real version), from 1996 (sx = '') or 1973 (sx = '73'); rows of its results at L lags.

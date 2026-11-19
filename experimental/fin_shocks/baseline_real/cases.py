@@ -28,9 +28,9 @@ PANELS = [
        "As the 1996 baseline; months before 1990 use monthly series in place of the daily data; the daily block and the shocks are those of 1996 on.", [{**c, **S73} for c in ALL2]),
  # ---- the six core robustness tests (FS-A85 D6, revised by D10-D11)
  *both("R1", "2020 left in (no dummies)", "Nominal and real. March-December 2020 kept in the monthly and the daily equations.", [{**c, "t2020": "in"} for c in ALL2]),
- *both("R2", "excess bond premium and industrial production as monthly variables",
-       "Nominal and real. Monthly system u, inflation, EBP, IP (IP = 100 x log INDPRO; both treated like u and inflation, also in the daily block's regressors); responses shown for u and the price level.",
-       sum([pair(f, f, macro="u,pi,ebp,ip") for f in VERSIONS], [])),
+ *both("R2", "industrial production as a monthly variable",
+       "Nominal and real. Monthly system u, inflation, IP (IP = 100 x log INDPRO; treated like u and inflation, also in the daily block's regressors); responses shown for u and the price level. FS-A99: the excess bond premium is no longer in the paper.",
+       sum([pair(f, f, macro="u,pi,ip") for f in VERSIONS], [])),
  *both("R3", "Bauer-Swanson orthogonalized surprise", "Nominal and real. The surprise is the Bauer-Swanson (2023) orthogonalized measure, available for FOMC announcements through 2019; later announcements are dropped from the window impact.",
        sum([pair(f, f, shock="bs") for f in VERSIONS], [])),
  # 6 lags: every case is estimated at 6 and 12 lags (no separate panel)
@@ -65,7 +65,7 @@ def unique_cases(panel_id=None):
     return out
 
 # Short row labels and the groups of the 12-lag tables (each test from 1996 (<id>) and from 1973 (<id>73)); appendix tables are per panel.
-_BASE_SHORT = {"R1": "2020 left in", "R2": "EBP and IP added", "R3": "Bauer-Swanson surprise", "R5": "Without the funds rate", "R6": "From 1985",
+_BASE_SHORT = {"R1": "2020 left in", "R2": "IP added", "R3": "Bauer-Swanson surprise", "R5": "Without the funds rate", "R6": "From 1985",
                "F1": "r*-gap (LW)", "F2": "Cubic spline trend", "A1": "Ends 2019", "A2": "Baa spread in the daily block", "A3": "Jarocinski-Karadi surprise", "A4": "1-year yield"}
 SHORT = {"B": "Baseline, 1996", "B73": "Baseline, 1973", **{k: v + ", 1996" for k, v in _BASE_SHORT.items()}, **{k + "73": v + ", 1973" for k, v in _BASE_SHORT.items()}}
 SHORT["R6"] = "Monthly equations from 1985"
@@ -75,7 +75,7 @@ GROUP_TITLE = {"B": "Baselines: monthly equations from 1996 and from 1973, March
                "A": "further tests (appendix)"}
 def panel_by_id(pid): return next(p for p in PANELS if p["id"] == pid)
 GROUP_NOTE = {"B": "Nominal and real 2-year yield and funds rate; the FCI is the index in the matching form in each case. March-December 2020 dropped from the monthly and daily equations (values still enter as lags). From 1973: monthly series in place of daily data before 1990.",
-              "R": "2020 left in: no month dummies. EBP and IP: two further monthly variables. Bauer-Swanson: orthogonalized surprise, announcements through 2019. Without the funds rate: the 2-year yield is the only rate in the daily block. From 1985: monthly equations from January 1985. Lag length: every case at 6 lags in the appendix tables.",
+              "R": "2020 left in: no month dummies. IP added: industrial production as a further monthly variable. Bauer-Swanson: orthogonalized surprise, announcements through 2019. Without the funds rate: the 2-year yield is the only rate in the daily block. From 1985: monthly equations from January 1985. Lag length: every case at 6 lags in the appendix tables.",
               "F": "r*-gap: rates less expected inflation and Laubach-Williams r*, the FCI in the r*-gap form. Spline: natural cubic spline in time in every monthly equation, knots at the first and last estimation months and at NBER peaks inside.",
               "A": "Ends 2019: all equations. Baa: daily Baa-10-year spread in the daily block. Jarocinski-Karadi: surprise kept when the 2-year yield and the S\\&P 500 move in opposite directions. 1-year yield: replaces the 2-year."}
 

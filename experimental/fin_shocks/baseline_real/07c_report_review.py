@@ -62,40 +62,26 @@ for f in ("nom", "real"):
     pass
     pass
 
-# ---------------------------------------------------------------- 2. credit
-cB = dict(form="real", fci="real", **base); cE = dict(form="real", fci="real", **{**base, "macro": "u,pi,ebp,ip"}); cA = dict(form="real", fci="baa", **base)       # baseline_real: EBP enters with IP (robustness test R2)
-cB0, cE0 = dict(form="real", fci=0, **base), dict(form="real", fci=0, **{**base, "macro": "u,pi,ebp,ip"})
-def paths(c): return pd.read_csv(RESULTS / f"{CS.case_id(c)}_paths.csv").query("lags == @L")
-pE = paths(cE).query("kind == 'macro' and var == 'ebp'").set_index("h"); pA = paths(cA).query("kind == 'fin' and var == 'baa'").set_index("h")
-rB, rE, rA, rB0, rE0 = res(cB), res(cE), res(cA), res(cB0), res(cE0)
+# ---------------------------------------------------------------- 2. credit (FS-A99: the Baa spread in the daily block and industrial production in the monthly block; matched cases of step 17, paired draws)
+CC = pd.read_csv(RESULTS / "credit_cases.csv").query("start == '1996-01'"); CDf = pd.read_csv(RESULTS / "credit_diff.csv").query("start == '1996-01'")
+def cc(spec, w, v): return CC[(CC.spec == spec) & (CC.fci == w) & (CC["var"] == v)].iloc[0]
+def cd(spec, v, h=24): return CDf[(CDf.spec == spec) & (CDf["var"] == v) & (CDf.h == h)].iloc[0]
+def s90(r, lo="lo24", hi="hi24"): return "$^{*}$" if r[lo] * r[hi] > 0 else ""
+cA = dict(form="real", fci="baa", **base); pA = pd.read_csv(RESULTS / f"{CS.case_id(cA)}_paths.csv").query("lags == @L and kind == 'fin' and var == 'baa'").set_index("h")
 idx0 = DD.event_index(); baa_imp = DD.baa_impact(idx0)
-# share of the monthly variation in the excess bond premium accounted for by the three weighted components of the r*-gap FCI (1996-2026), levels and 3-month changes
-D0 = pd.read_csv(OUT / "data_monthly.csv", index_col=0); D0.index = pd.PeriodIndex(D0.index, freq="M")
-M0 = pd.read_csv(OUT / "macro_monthly.csv", index_col=0); M0.index = pd.PeriodIndex(M0.index, freq="M")
-W = pd.read_csv(OUT / "market_weights.csv", index_col=0).weight
-X = noteA.index_inputs(D0, "real", "rstar LW")[noteA.MARKET_VARS] * W.values
-Z = X.join(M0.ebp).loc["1996-01":"2026-09"].dropna()
-r2l = sm.OLS(Z.ebp, sm.add_constant(Z[noteA.MARKET_VARS])).fit().rsquared
-dZ = Z.diff(3).dropna(); r2d = sm.OLS(dZ.ebp, sm.add_constant(dZ[noteA.MARKET_VARS])).fit().rsquared
-r2eq = sm.OLS(dZ.ebp, sm.add_constant(dZ[["equities"]])).fit().rsquared
 lines = []
-for lab, r, r0, cred in (("Baseline", rB, rB0, "--"), ("Excess bond premium (with IP) in the monthly block", rE, rE0, f"{num(pE.r[12])} [{num(pE.lo[12])}, {num(pE.hi[12])}]"),
-                         ("Baa spread in the daily block", rA, rB0, f"{num(pA.r[12])} [{num(pA.lo[12])}, {num(pA.hi[12])}]")):
-    lines.append(f"{lab} & {num(r0.loc['u'].r24)}{star(r0.loc['u'], 24)} & {num(r.loc['u'].r24)}{star(r.loc['u'], 24)} & {num(r.loc['P'].r24)}{star(r.loc['P'], 24)} & {cred}" + r"\\")
-(REPORT / "tab_credit.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{Credit and the Response (Real Rates; 12 Lags)}\label{tab:credit}", FIT,
-    r"\begin{tabular}{lcccc}\toprule & Yield alone & \multicolumn{2}{c}{Yield and FCI} & Credit measure \\ \cmidrule(lr){2-2}\cmidrule(lr){3-4}\cmidrule(lr){5-5}",
-    r" & Unemployment, 24 m & Unemployment, 24 m & Price level, 24 m & Response, 12 m (pp)\\ \midrule", *lines, r"\bottomrule\end{tabular}}",
-    r"\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window, 1996--2026. Excess bond premium: a third monthly variable, set like unemployment and inflation before markets within the month. Baa spread: Moody's Baa yield less the 10-year Treasury yield, in the daily block next to the yield and the FCI; its impact is its announcement-day change, because it has no intraday series. In the Baa row the yield-alone entry is the baseline's. Credit response: the excess bond premium, or the monthly average of the Baa spread, 12 months after the move, with its 90 percent interval. $^{**}$ and $^{*}$: the 95 and 90 percent intervals exclude zero.\end{flushleft}", r"\end{table}"]) + "\n")
-for k, r in (("E", rE), ("A", rA), ("B", rB)):
-    for v in ("u", "P"):
-        mac(f"cr:{k}:{v}", num(r.loc[v].r24)); mac(f"cr:{k}:{v}:sig", "significant" if r.loc[v].lo24 * r.loc[v].hi24 > 0 else "not significant")
-mac("cr:E0:u", num(rE0.loc["u"].r24)); mac("cr:B0:u", num(rB0.loc["u"].r24))
-mac("cr:ebp12", num(pE.r[12])); mac("cr:baa12", num(pA.r[12])); mac("cr:baaimp", num(baa_imp))
-mac("cr:r2lev", f"{100 * r2l:.0f}"); mac("cr:r2d", f"{100 * r2d:.0f}"); mac("cr:r2eq", f"{100 * r2eq:.0f}")
-pass
-pass
-pass
-pass
+for spec, lab in (("base", "Baseline"), ("baa", "Baa spread in the daily block"), ("ip", "Industrial production in the monthly block")):
+    r0, r1 = cc(spec, "no", "u"), cc(spec, "yes", "u"); du, dp = cd(spec, "u"), cd(spec, "P")
+    lines += [f"{lab} & {num(r0.r24)}{s90(r0)} & {num(r1.r24)}{s90(r1)} & {num(du.fci_effect)}{s90(du, 'lo', 'hi')} & {num(dp.fci_effect)}{s90(dp, 'lo', 'hi')}" + r"\\",
+              f" & {{\\scriptsize [{num(r0.lo24)}, {num(r0.hi24)}]}} & {{\\scriptsize [{num(r1.lo24)}, {num(r1.hi24)}]}} & {{\\scriptsize [{num(du.lo)}, {num(du.hi)}]}} & {{\\scriptsize [{num(dp.lo)}, {num(dp.hi)}]}}" + r"\\"]
+    for w, k in (("no", "0"), ("yes", "1")):
+        for v in ("u", "P"): r = cc(spec, w, v); mac(f"cr:{spec}:{k}:{v}", num(r.r24)); mac(f"cr:{spec}:{k}:{v}:12", num(r.r12))
+    for v in ("u", "P"): r = cd(spec, v); mac(f"cr:{spec}:eff:{v}", num(r.fci_effect)); mac(f"cr:{spec}:eff:{v}:lo", num(r.lo)); mac(f"cr:{spec}:eff:{v}:hi", num(r.hi))
+(REPORT / "tab_credit.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{Credit, Activity and the Effect of Adding the FCI (Real Rates; 24 Months)}\label{tab:credit}", FIT,
+    r"\begin{tabular}{lcccc}\toprule & \multicolumn{2}{c}{Unemployment gap (pp)} & \multicolumn{2}{c}{Effect of adding the FCI} \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}",
+    r" & Rates alone & Rates and FCI & Unemployment gap & Price level (\%)\\ \midrule", *lines, r"\bottomrule\end{tabular}}",
+    r"\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window; real two-year yield and funds rate, 12 lags, monthly equations from 1996, March--December 2020 dropped. Baa spread: Moody's Baa yield less the 10-year Treasury yield, in the daily block next to the rates (and the FCI); its impact is its announcement-day change on the surprise, because it has no intraday series; months before the daily data (1986) use the monthly series. Industrial production: $100\ln$ of the index, a third monthly variable, set like unemployment and inflation before markets within the month. Effect of adding the FCI: the response with the FCI less the response with the same variables without it. All cases use the same bootstrap draws, so the effects are paired; 90 percent intervals in brackets; $^{*}$: the 90 percent interval excludes zero.\end{flushleft}", r"\end{table}"]) + "\n")
+mac("cr:baa12", num(pA.r[12])); mac("cr:baa12:lo", num(pA.lo[12])); mac("cr:baa12:hi", num(pA.hi[12])); mac("cr:baaimp", num(baa_imp))
 
 # ---------------------------------------------------------------- 3b. the r*-gap index as a gap to a neutral level that moves with r* (Section 2.2), and the window responses in words
 WB = pd.read_csv(OUT / "market_weights.csv", index_col=0); from lib import model as M
