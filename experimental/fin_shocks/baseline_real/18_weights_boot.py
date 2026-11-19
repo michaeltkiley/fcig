@@ -75,6 +75,8 @@ if __name__ == "__main__":
             rows.append(dict(run=md, var=v, **{f"r{h}": pt[h, j] for h in M.HORIZ}, **{f"lo{h}": np.percentile(sd[:, h, j], 5) for h in M.HORIZ}, **{f"hi{h}": np.percentile(sd[:, h, j], 95) for h in M.HORIZ},
                              **{f"sd{h}": sd[:, h, j].std() for h in M.HORIZ}))
     R = pd.DataFrame(rows); R.to_csv(RESULTS / "weights_boot.csv", index=False, float_format="%.4f")
+    from lib.paths import OUT
+    np.savez_compressed(OUT / "draws" / "weights_boot.npz", fixed=S["fixed"], reestimated=S["reestimated"], point=pt, weights=Wd)
     pd.DataFrame(Wd, columns=KEYS).to_csv(RESULTS / "weights_boot_draws.csv", index=False, float_format="%.5f")
     print("weights: estimate", np.round(w_hat, 4), "used", np.round(W0, 4), "draws 5-95:", np.round(np.percentile(Wd, 5, axis=0), 4), np.round(np.percentile(Wd, 95, axis=0), 4))
     print(R.round(3).to_string(index=False))
