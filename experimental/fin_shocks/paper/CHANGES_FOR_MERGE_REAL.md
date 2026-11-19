@@ -136,3 +136,15 @@ All numbers below are at 12 lags, per +1 pp on the two-year yield in the window.
 ## Open for the author
 * **Section 2.1 keeps one sentence of the ordinary-day logic, in words** ("financial conditions move with them by much less"), because it is the reason a rates-only model carries a surprise as an ordinary move. Cut it too if FS-A86 was meant to remove the idea as well as the exhibit.
 * **The "two readings" paragraph of Section 6** is my framing of "further work" [inference]; the author may prefer a shorter version.
+
+
+## After the research review of 19 Nov 2026 (FS-A91 to FS-A116)
+* **Abstract and introduction:** abstract about 115 words, no results numbers; the four-conclusion list is deleted (its content is in the paragraphs before it); the roadmap has no results; "interest rates alone" replaced by "through interest rates, at most with a credit spread"; "What is new" states the difference from Gertler-Karadi and Caldara-Herbst.
+* **Section 2:** the ordinary-day sentence ("financial conditions move with them by much less") is gone (the Section 2.1 item under "Open for the author" above is resolved: rates alone can work in principle, an empirical question; simulation result); funds-rate impact described as MP1 (surprise to the rate set at the meeting, GSS scaling); monetary-event windows and the SOFR switch stated; the real window impacts assume expected inflation does not move in the window; expected inflation before 1982 documented (Livingston, 1-year proxy for all horizons, the 0.16 step in 1982); the broad policy-direction measure and its backcast are stated in Section 6.
+* **Section 3:** paired differences in Table 4 (the appendix duplicate is dropped); Figure 4 deleted; the Barnichon-Mesters paragraph simplified; horizons named for the 1973 unemployment shift.
+* **Section 4:** credit on the Baa spread and industrial production (matched, paired), the excess bond premium removed; timing: the gain comes from the daily dynamics, not calendar position; recovery of the surprise from monthly innovations stated correctly (direction, leads, no non-invertibility claim).
+* **Section 5:** the index restriction (components free) and the GS weights are rows of the robustness table; Section 5.3 reports the restriction test; "IP added" replaces "EBP and IP added".
+* **Section 6 (new place, after robustness):** the variance shares and the history; "announcement surprises" and "surprises in the policy direction"; the history read in changes (Volcker, 2020s).
+* **Section 7:** three r* estimates (Table 13).
+* **Appendices:** the bootstrap appendix describes the bias-corrected intervals and the weights sensitivity; the further-tests table has matched Baa rows and the 1-year units; the direct projection excludes 2020 inflation from price outcomes.
+* **Throughout:** bias-corrected percentile intervals; "Two rates alone" / "Two rates and FCI" labels; 31 appendix pointers rewritten as a sentence plus a footnote.
