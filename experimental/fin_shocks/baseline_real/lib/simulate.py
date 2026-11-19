@@ -40,8 +40,9 @@ class DGP:
         self.F0 = M.daily_frame(form, fci).ffill().iloc[T0 - 70:T0].values; assert not np.isnan(self.F0).any()
         pre = pd.period_range("1995-01", "1995-12", freq="M"); self.m0 = M.MAC[self.mv].loc[pre].values; self.fb0 = M.fin_monthly(form, fci).loc[pre].values
 
-    def simulate(self, S, rng):
-        """S simulated samples: monthly macro (S, 12+M, 2) and monthly-average financial values (S, 12+M, 2) with the 12 pre-sample months first, and the monthly instrument (S, M)."""
+    def simulate(self, S, rng, keep_daily=False):
+        """S simulated samples: monthly macro (S, 12+M, 2) and monthly-average financial values (S, 12+M, nd) with the 12 pre-sample months first, and the monthly instrument (S, M).
+        keep_daily=True also returns the daily financial values (S, 70+days, nd; the first 70 days are the actual pre-sample data), used by step 14; the draws are the same either way."""
         nd, K, nm = self.nd, 2, len(self.months); T = self.T1 + 1 - (self.T0 - 70)
         F = np.zeros((S, T, nd)); F[:, :70] = self.F0; cs = np.zeros((S, T + 1, nd)); cs[:, 1:71] = np.cumsum(F[:, :70], axis=1)
         m = np.zeros((S, 12 + nm, K)); m[:, :12] = self.m0; fb = np.zeros((S, 12 + nm, nd)); fb[:, :12] = self.fb0
@@ -59,7 +60,7 @@ class DGP:
                 else: eps = self.pool_non[rng.integers(0, len(self.pool_non), S)]
                 F[:, k] = xd @ self.Bd + eps; cs[:, k + 1] = cs[:, k] + F[:, k]
             fb[:, 12 + t] = F[:, lo - (self.T0 - 70):hi - (self.T0 - 70) + 1].mean(axis=1)
-        return m, fb, z
+        return (m, fb, z, F) if keep_daily else (m, fb, z)
 
 def proxy_stats(Z, z, ok, K, L=L, scale=1.0):
     """Proxy VAR (12 lags, no trend) on Z = (12 pre-sample rows + sample, K variables [u, pi, i, (FCI)]): first stage, impact vector, point estimates and exact AR sets,
