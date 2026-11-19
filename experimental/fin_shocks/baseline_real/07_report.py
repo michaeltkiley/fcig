@@ -366,7 +366,7 @@ def lag_summary():
     dm("n", str(int(n_)))
     for L in LG:
         t = lit("chol_2y_1996", "u", 12, L); dm(f"chol:u12:{L}", num(t.point))
-        b = bl(HEAD_FORM, "yes", "P", 36, L); dm(f"real:P36:{L}", num(b.r36)); b = bl(HEAD_FORM, "yes", "u", 24, L); dm(f"real:u24:{L}", num(b.r24))
+        b = bl(HEAD_FORM, "yes", "P", 36, L); dm(f"real:P36:{L}", num(b.r36)); b = bl(HEAD_FORM, "yes", "u", 24, L); dm(f"real:u24:{L}", num(b.r24)); b = bl(HEAD_FORM, "yes", "P", 24, L); dm(f"real:P24:{L}", num(b.r24))      # FS-A116
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
 lag_summary()
 
@@ -409,15 +409,17 @@ def rob_summary():
             for st, sx in STARTS:
                 d = pd.read_csv(RESULTS / f"{CS.case_id(dict(form='real', fci='cmp', macro='u,pi', start=st, end=None, t2020='out', trend='none'))}.csv").query("lags == 12")
                 for v in ("u", "P"):
-                    r = d[d["var"] == v].iloc[0]; pts.append(num(r.r12) + stars(r, 12)); ivs.append(f"[{num(r.lo12)}, {num(r.hi12)}]")
+                    r = d[d["var"] == v].iloc[0]; pts.append(num(r.r12) + stars(r, 12)); ivs.append(f"[{num(r.lo12)}, {num(r.hi12)}]"); assert r.lo12 * r.hi12 > 0, "FCI components free: response no longer significant (Section 5.1 count)"
             out_rows += ["FCI components free & " + " & ".join(pts) + r"\\", " & " + " & ".join(rf"{{\scriptsize {x}}}" for x in ivs) + r"\\"]
             pts, ivs = [], []                                                         # FS-A114: the FCI with the weights of the Goldman Sachs index
             for st, sx in STARTS:
                 d = pd.read_csv(RESULTS / f"{CS.case_id(dict(form='real', fci='calGr', macro='u,pi', start=st, end=None, t2020='out', trend='none'))}.csv").query("lags == 12")
                 for v in ("u", "P"):
-                    r = d[d["var"] == v].iloc[0]; pts.append(num(r.r12) + stars(r, 12)); ivs.append(f"[{num(r.lo12)}, {num(r.hi12)}]"); dm(f"real:gs{sx}:{v}", num(r.r12)); dm(f"real:gs{sx}:{v}:abs", f"{abs(r.r12):.2f}")
+                    r = d[d["var"] == v].iloc[0]; pts.append(num(r.r12) + stars(r, 12)); ivs.append(f"[{num(r.lo12)}, {num(r.hi12)}]"); dm(f"real:gs{sx}:{v}", num(r.r12)); dm(f"real:gs{sx}:{v}:abs", f"{abs(r.r12):.2f}"); assert r.lo12 * r.hi12 > 0, "GS weights: response no longer significant (Section 5.1 count)"
             out_rows += ["FCI with Goldman Sachs index weights & " + " & ".join(pts) + r"\\", " & " + " & ".join(rf"{{\scriptsize {x}}}" for x in ivs) + r"\\"]
     tests = [k for k, *_ in CORE_TESTS if k != "base"]; dm("ntests", len(tests))
+    _ns = {(k, sx, v) for k in tests for sx in ("", "73") for v in ("u", "P") if ("real", k, sx, v) in ROB and not ROB[("real", k, sx, v)][1]}
+    assert _ns == {("t2020", "", "u"), ("t2020", "73", "u"), ("s85", "", "P")}, f"Section 5.1 says all but three of the 30 real responses are significant at 10 percent (unemployment with 2020 left in, both samples; prices with the 1985 start); now: {sorted(_ns)}"
     for f in ("real", "nom"):
         for sx in ("", "73"):
             for v in ("u", "P"): dm(f"{f}:nsig{sx}:{v}", sum(ROB[(f, k, sx, v)][1] for k in tests if (f, k, sx, v) in ROB))
