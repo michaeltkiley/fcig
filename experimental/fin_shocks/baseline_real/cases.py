@@ -1,8 +1,8 @@
 """The case list of Note B with the real version as the baseline (fin_shocks/baseline_real, FS-A85; edit here; 03_estimate.py, 05_tradeoff.py and the reports read it).
 Every case is run without the FCI and with the FCI in the matching form, with the 2-year yield and the federal funds rate in the daily block. No deterministic trend except panel F2 (natural cubic spline).
 A case is (form, fci, macro, start, end, t2020, trend); see lib/model.py."""
-FORMS = {"nom": "Nominal", "real": "Real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)"}
-FCI_LABEL = {0: "none", "cmp": "components", "cmpE": "equities free", "cmpR": "index", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)", "baa": "real + Baa spread", "baa0": "none (Baa spread)", "jkw": "r*-gap (JK weights)", "calY": "r*-gap (Y weights)", "calB": "r*-gap (FRB/US weights)", "calG": "r*-gap (GS weights)"}
+FORMS = {"nom": "Nominal", "real": "Real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)", "hlw": "r*-gap (HLW)", "lm": "r*-gap (Lubik-Matthes)"}
+FCI_LABEL = {0: "none", "cmp": "components", "cmpE": "equities free", "cmpR": "index", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)", "baa": "real + Baa spread", "baa0": "none (Baa spread)", "jkw": "r*-gap (JK weights)", "calY": "r*-gap (Y weights)", "calB": "r*-gap (FRB/US weights)", "calG": "r*-gap (GS weights)", "hlw": "r*-gap (HLW)", "lm": "r*-gap (Lubik-Matthes)", "calGr": "real (GS weights)"}
 
 def pair(form, with_fci, **kw):
     """The same rate without and with the FCI."""
@@ -39,6 +39,9 @@ PANELS = [
  panel("R6", "monthly equations from 1985", "Nominal and real. As the baselines, with the monthly equations from January 1985 (months before 1990 from the monthly series).", [{**c, "start": "1985-01"} for c in ALL2]),
  # ---- the final section (FS-A85 D11): slow-moving rates and financial conditions
  *both("F1", "r*-gap step (Laubach-Williams r*)", "2-year yield and funds rate less expected inflation and LW r*; the FCI in the r*-gap form (earnings-yield gap less r*).", pair("rstar", "rstar")),
+ *both("F3", "r*-gap step (Holston-Laubach-Williams r*)", "Real 2-year yield and funds rate less expected inflation and the one-sided HLW r* (New York Fed); the FCI in the r*-gap form with that r* (FS-A114).", pair("hlw", "hlw")),
+ *both("F4", "r*-gap step (Lubik-Matthes r*)", "Real 2-year yield and funds rate less expected inflation and the Lubik-Matthes r* (Richmond Fed, median); the FCI in the r*-gap form with that r* (FS-A114).", pair("lm", "lm")),
+ *both("A5", "FCI with the weights of the Goldman Sachs index", "Real. The real FCI with the companion paper's Goldman Sachs calibration (rescaled so that its window loading is 1), daily and monthly (FS-A114).", pair("real", "calGr")),
  *both("F2", "cubic spline trend", "Nominal and real. A natural cubic spline in time (knots at the first and last estimation months and at the NBER business-cycle peaks inside) in every monthly equation.",
        sum([pair(f, f, trend="spline") for f in VERSIONS], [])),
  # ---- appendix (kept from the earlier list where they still apply; real version)
@@ -66,11 +69,11 @@ def unique_cases(panel_id=None):
 
 # Short row labels and the groups of the 12-lag tables (each test from 1996 (<id>) and from 1973 (<id>73)); appendix tables are per panel.
 _BASE_SHORT = {"R1": "2020 left in", "R2": "IP added", "R3": "Bauer-Swanson surprise", "R5": "Without the funds rate", "R6": "From 1985",
-               "F1": "r*-gap (LW)", "F2": "Cubic spline trend", "A1": "Ends 2019", "A2": "Baa spread in the daily block", "A3": "Jarocinski-Karadi surprise", "A4": "1-year yield"}
+               "F1": "r*-gap (LW)", "F2": "Cubic spline trend", "F3": "r*-gap (HLW)", "F4": "r*-gap (Lubik-Matthes)", "A5": "GS index weights", "A1": "Ends 2019", "A2": "Baa spread in the daily block", "A3": "Jarocinski-Karadi surprise", "A4": "1-year yield"}
 SHORT = {"B": "Baseline, 1996", "B73": "Baseline, 1973", **{k: v + ", 1996" for k, v in _BASE_SHORT.items()}, **{k + "73": v + ", 1973" for k, v in _BASE_SHORT.items()}}
 SHORT["R6"] = "Monthly equations from 1985"
 def _both(*ids): return [x for k in ids for x in (k, k + "73")]
-GROUPS = {"B": ["B", "B73"], "R": _both("R1", "R2", "R3", "R5") + ["R6"], "F": _both("F1", "F2"), "A": _both("A1", "A2", "A3", "A4")}
+GROUPS = {"B": ["B", "B73"], "R": _both("R1", "R2", "R3", "R5") + ["R6"], "F": _both("F1", "F3", "F4", "F2"), "A": _both("A1", "A2", "A3", "A4", "A5")}
 GROUP_TITLE = {"B": "Baselines: monthly equations from 1996 and from 1973, March-December 2020 dropped", "R": "robustness tests", "F": "slow-moving rates: the r*-gap step and a spline trend",
                "A": "further tests (appendix)"}
 def panel_by_id(pid): return next(p for p in PANELS if p["id"] == pid)

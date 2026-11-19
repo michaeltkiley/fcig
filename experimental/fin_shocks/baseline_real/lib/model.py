@@ -117,6 +117,21 @@ _e1 = fred_daily("EXPINF1YR"); _e1 = pd.Series(_e1.values, index=_e1.index.to_pe
 _Y1M = _d1.groupby(_d1.index.to_period("M")).mean(); _e1m = _e1.combine_first(D0["einf_1y"])
 RATE1 = {"nom": _POL1, "real": _POL1 - interp_monthly(_e1), "rstar": _POL1 - interp_monthly(_e1 + D0["rstar LW"]), "kiley": _POL1 - interp_monthly(_e1 + D0["rstar Kiley"])}
 RATEM1 = {"nom": _Y1M, "real": _Y1M - _e1m, "rstar": _Y1M - _e1m - D0["rstar LW"], "kiley": _Y1M - _e1m - D0["rstar Kiley"]}
+# FS-A114: other r* in the step relative to r* (Holston-Laubach-Williams one-sided, New York Fed; Lubik-Matthes median, Richmond Fed), entering wherever LW r* enters (rates and index),
+# with Note B's weights; quarterly values placed mid-quarter as LW (noteA.mid_quarter). Forms and FCI keys "hlw", "lm".
+def _rq(dates, vals):
+    q = pd.Series(np.asarray(vals, float), index=pd.PeriodIndex(pd.to_datetime(dates), freq="Q")).dropna(); return noteA.mid_quarter(q).reindex(D0.index)
+_hlw = pd.read_excel(DATA / "Holston_Laubach_Williams_current_estimates.xlsx", "HLW Estimates", header=None).iloc[6:]; _hlw = _hlw[pd.to_datetime(_hlw[0], errors="coerce").notna()]
+_lm = pd.read_excel(DATA / "lubik_matthes_natural_rate_interest.xlsx", "LM_RealRate")
+D0["rstar HLW"] = _rq(_hlw[0], _hlw[10]); D0["rstar LM"] = _rq(_lm.Date, _lm.Median)
+_W = pd.read_csv(OUT / "market_weights.csv", index_col=0).weight.values
+for _k, _c in (("hlw", "rstar HLW"), ("lm", "rstar LM")):
+    IDXM[_k] = noteA.market_index(noteA.index_inputs(D0, "rstar", _c), _W).loc[noteA.START:noteA.END].where(D0[_c].notna()); FCI[_k] = _daily_fci(IDXM[_k])
+    RATE[_k] = POL - interp_monthly(_e2 + D0[_c]); RATEM[_k] = Y2M - _e2m - D0[_c]
+# FS-A114: the real index with the weights of the Goldman Sachs index (the companion paper's calibration G, in Note B's units); FCI key "calGr"; its window move is idx_win_calGr
+_WG = pd.read_csv(OUT / "four_weights_nb.csv", index_col=0).loc["G", ["y10", "equities", "dollar"]].values
+IDXM["calGr"] = noteA.market_index(noteA.index_inputs(D0, "real", "rstar LW"), _WG).loc[noteA.START:noteA.END]
+FCI["calGr"] = _daily_fci(IDXM["calGr"], DAILY["idx_calG"].reindex(CALW).ffill(limit=3)); _daily.EV["idx_win_calGr"] = _daily.EV["idx_win_calG"]
 RATE2, RATEM2 = dict(RATE), dict(RATEM)
 
 def use_variant(ext=""):

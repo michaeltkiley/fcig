@@ -411,6 +411,12 @@ def rob_summary():
                 for v in ("u", "P"):
                     r = d[d["var"] == v].iloc[0]; pts.append(num(r.r12) + stars(r, 12)); ivs.append(f"[{num(r.lo12)}, {num(r.hi12)}]")
             out_rows += ["FCI components free & " + " & ".join(pts) + r"\\", " & " + " & ".join(rf"{{\scriptsize {x}}}" for x in ivs) + r"\\"]
+            pts, ivs = [], []                                                         # FS-A114: the FCI with the weights of the Goldman Sachs index
+            for st, sx in STARTS:
+                d = pd.read_csv(RESULTS / f"{CS.case_id(dict(form='real', fci='calGr', macro='u,pi', start=st, end=None, t2020='out', trend='none'))}.csv").query("lags == 12")
+                for v in ("u", "P"):
+                    r = d[d["var"] == v].iloc[0]; pts.append(num(r.r12) + stars(r, 12)); ivs.append(f"[{num(r.lo12)}, {num(r.hi12)}]"); dm(f"real:gs{sx}:{v}", num(r.r12)); dm(f"real:gs{sx}:{v}:abs", f"{abs(r.r12):.2f}")
+            out_rows += ["FCI with Goldman Sachs index weights & " + " & ".join(pts) + r"\\", " & " + " & ".join(rf"{{\scriptsize {x}}}" for x in ivs) + r"\\"]
     tests = [k for k, *_ in CORE_TESTS if k != "base"]; dm("ntests", len(tests))
     for f in ("real", "nom"):
         for sx in ("", "73"):
@@ -418,7 +424,7 @@ def rob_summary():
     out = [r"\begin{table}[tp]\centering\small", r"\caption{Robustness: Responses at 12 Months}\label{tab:robsummary}",
            r"\begin{tabular}{lcccc}\toprule & \multicolumn{2}{c}{Monthly equations from 1996} & \multicolumn{2}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5} & Unemployment gap & Price level & Unemployment gap & Price level\\ \midrule",
            *out_rows, r"\bottomrule\end{tabular}",
-           r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, federal funds rate and FCI in the stated version; responses 12 months after a policy move that raises the two-year yield 1 percentage point in the announcement window; unemployment gap in percentage points, price level in percent; 12 lags unless stated; March--December 2020 dropped unless stated. The 1985 start has monthly equations from January 1985 (1996 columns). $^{**}$ and $^{*}$: the 95\% and 90\% bootstrap intervals exclude zero; 90\% intervals in brackets. FCI components free (real version only): the three weighted components of the FCI replace it in the daily block and enter the monthly equations separately; the daily block then differs slightly from the baseline's, and the like-for-like comparison, with the FCI built from the components, is in the text. Full results at 12, 24 and 36 months for both versions are in the appendix.\end{flushleft}", r"\end{table}"]
+           r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, federal funds rate and FCI in the stated version; responses 12 months after a policy move that raises the two-year yield 1 percentage point in the announcement window; unemployment gap in percentage points, price level in percent; 12 lags unless stated; March--December 2020 dropped unless stated. The 1985 start has monthly equations from January 1985 (1996 columns). $^{**}$ and $^{*}$: the 95\% and 90\% bootstrap intervals exclude zero; 90\% intervals in brackets. FCI with Goldman Sachs index weights (real version only): the weights of the companion paper's calibration of the Goldman Sachs index, rescaled so that the window move is 1. FCI components free (real version only): the three weighted components of the FCI replace it in the daily block and enter the monthly equations separately; the daily block then differs slightly from the baseline's, and the like-for-like comparison, with the FCI built from the components, is in the text. Full results at 12, 24 and 36 months for both versions are in the appendix.\end{flushleft}", r"\end{table}"]
     from lib import model as M_; dm("ratio1y", f"{M_.RATIO_1Y:.2f}")                 # 1-year / 2-year announcement-day response (appendix A4)
     (REPORT / "tab_rob_summary.tex").write_text("\n".join(out) + "\n")
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
@@ -470,6 +476,29 @@ def final_section():
         r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, funds rate and FCI with the FCI, 12 lags, March--December 2020 dropped. Spline trend: natural cubic spline in time in every monthly equation (knots at the first and last estimation months and at NBER peaks inside). $r^*$-gap: rates less expected inflation and Laubach--Williams $r^*$, the FCI in the $r^*$-gap form. $^{**}$, $^{*}$: 95\% and 90\% bootstrap intervals exclude zero; 90\% intervals below.\end{flushleft}", r"\end{table}"]) + "\n")
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
 final_section()
+
+def rstar_table():
+    """FS-A114: tab_rstar.tex, the step relative to r* with three estimates of r* (LW one-sided, HLW one-sided, Lubik-Matthes): responses with the FCI after 24 months and the effect of
+    adding the FCI (paired draws, bias-corrected), both samples; macros bl:rs:<key><sx>:<u|P>[:eff[:lo|:hi]]."""
+    import numpy as _np
+    from lib import intervals as _IV
+    ml = []; dm = lambda k, v: ml.append(r"\expandafter\gdef\csname bl:rs:" + k + r"\endcsname{" + str(v) + "}"); rows = []
+    for f, lab in (("rstar", "Laubach--Williams"), ("hlw", "Holston--Laubach--Williams"), ("lm", "Lubik--Matthes")):
+        pts, ivs = [], []
+        for st, sx in STARTS:
+            z1 = _np.load(OUT / "draws" / f"{CS.case_id(dict(form=f, fci=f, **{**B96, 'start': st}))}_L12.npz"); z0 = _np.load(OUT / "draws" / f"{CS.case_id(dict(form=f, fci=0, **{**B96, 'start': st}))}_L12.npz")
+            for j, v in enumerate(("u", "P")):
+                p1 = z1["s0"][24, j]; lo, hi = _IV.ci(z1["sd"][:, 24, j], p1); pts.append(num(p1) + ("$^{*}$" if lo * hi > 0 else "")); ivs.append(f"[{num(lo)}, {num(hi)}]"); dm(f"{f}{sx}:{v}", num(p1)); dm(f"{f}{sx}:{v}:abs", f"{abs(p1):.2f}")
+            for j, v in enumerate(("u", "P")):
+                d0 = z1["s0"][24, j] - z0["s0"][24, j]; lo, hi = _IV.ci(z1["sd"][:, 24, j] - z0["sd"][:, 24, j], d0); pts.append(num(d0) + ("$^{*}$" if lo * hi > 0 else "")); ivs.append(f"[{num(lo)}, {num(hi)}]")
+                dm(f"{f}{sx}:{v}:eff", num(d0)); dm(f"{f}{sx}:{v}:eff:abs", f"{abs(d0):.2f}"); dm(f"{f}{sx}:{v}:eff:sig", "yes" if lo * hi > 0 else "no")
+        rows += [f"{lab} & " + " & ".join(pts) + r"\\", " & " + " & ".join(rf"{{\tiny {x}}}" for x in ivs) + r"\\"]
+    (REPORT / "tab_rstar.tex").write_text("\n".join([r"\begin{table}[tp]\centering\scriptsize\setlength{\tabcolsep}{2.5pt}", r"\caption{Rates and the FCI Relative to Three Estimates of $r^*$ (24 Months)}\label{tab:rstar}",
+        r"\begin{tabular}{lrrrrrrrr}\toprule & \multicolumn{4}{c}{Monthly equations from 1996} & \multicolumn{4}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-5}\cmidrule(lr){6-9} & \multicolumn{2}{c}{With the FCI} & \multicolumn{2}{c}{Effect of adding the FCI} & \multicolumn{2}{c}{With the FCI} & \multicolumn{2}{c}{Effect of adding the FCI}\\ $r^*$ & Unemp. & Prices & Unemp. & Prices & Unemp. & Prices & Unemp. & Prices\\ \midrule",
+        *rows, r"\bottomrule\end{tabular}",
+        r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, funds rate and FCI less expected inflation and $r^*$ (the FCI in the version relative to $r^*$, with the same $r^*$), 12 lags, March--December 2020 dropped; per +1 pp on the two-year yield in the window; unemployment gap in percentage points, price level in percent, after 24 months. Laubach--Williams and Holston--Laubach--Williams: one-sided estimates (Federal Reserve Bank of New York); Lubik--Matthes: median estimate (Federal Reserve Bank of Richmond). Effect of adding the FCI: the response with the FCI less the response with the rates alone, on the same bootstrap draws. $^{*}$: the 90\% interval excludes zero; intervals below.\end{flushleft}", r"\end{table}"]) + "\n")
+    (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
+rstar_table()
 
 def components_test():
     """Robustness: the index restriction in the monthly equations (step 15, FS-A93; real version, 12 lags). tab_components.tex (appendix) and macros bl:cm:* appended to numbers.tex:
