@@ -10,6 +10,39 @@ Checks I made on the current text before writing this plan: [verified] means che
 
 ---
 
+## Outcome (end of the 19 Nov 2026 session; every item taken one at a time with the author; records FS-A91 to FS-A117 in `../FS_QA.md`)
+| Item | Outcome | Record |
+|---|---|---|
+| 1 ordinary-day comparison | not restored; units and mechanism sentences rewritten; the main model without the FCI on simulated samples (step 14) | FS-A91, A92 |
+| 2 components test | run (real, both starts, paired); one row of the robustness table and Section 5.3; not in the abstract, introduction or conclusion | FS-A93, A94 |
+| 3 history after the tests | moved to Section 6 (after robustness), with an equation for the broad measure and the wording "surprises in the policy direction" | FS-A95, A96 |
+| 4 define the multiplier early | **open**: never put to the author; the multiplier is defined in Section 3.3 only | not decided |
+| 5 paired intervals in Table 4 | done, both samples | FS-A111 |
+| 6 name the horizon (1973 unemployment) | done | FS-A110 |
+| 7 Barnichon-Mesters at three years | simplified paragraph (Section 3.3); their numbers checked in the paper | FS-A108 addendum |
+| 8 shape of the multiplier sets | split sets marked; 2019-end rows | FS-A112 |
+| 9 abstract and introduction | abstract about 115 words without results numbers; four-conclusion list deleted | FS-A117 |
+| 10-12 novelty, risk appetite, Bauer-Swanson | done | FS-A109 |
+| 13 timing | the gain is the daily dynamics, not calendar position (step 16); note corrected | FS-A97 |
+| 14 credit | Baa spread and IP, matched and paired; the excess bond premium is out of the paper | FS-A98, A99 |
+| 15 historical accounting | a-f done (equation, labels, ratios, backcast, 2021-22 sensitivity, history in changes); **Plagborg-Moller and Wolf not cited** (never read) | FS-A96, A100 |
+| 16 direct projection | aligned (2020 price rows) | FS-A101 |
+| 17 Appendix E scenarios | no change (author agreed) | FS-A102 |
+| 18 monthly recovery | direction corrected, leads reported, no non-invertibility claim | FS-A103 |
+| 19 expected inflation before 1982 | documented (Section 2.2, Appendix G); no new series | FS-A104 |
+| 20 window inputs | documented and corrected | FS-A105 |
+| 21 audit | Baa rows matched; 1-year units | FS-A106 |
+| 22 weights fixed in the bootstrap | stated; sensitivity with re-estimated weights (step 18); led to bias-corrected intervals everywhere | FS-A107, A108 |
+| 23 other r* | three estimates (LW, HLW, Lubik-Matthes) in Section 7 | FS-A113, A114 |
+| 24 other weights | GS weights as a robustness row; FRB/US not in the paper | FS-A113, A114 |
+| 25 Figure 4 | deleted | FS-A110 |
+| 26 wording | "two rates"; point estimates, paired differences, significance; 31 appendix pointers as sentence plus footnote | FS-A115, A116 |
+
+The per-item sections below are the plan as first drafted; the table above is the outcome.
+
+---
+
+
 ## Part 1. The four big decisions (the review's "Three decisions" plus history)
 
 ### 1. The ordinary-day comparison and the A/B/C split  **[reverses FS-A81, FS-A86]**
