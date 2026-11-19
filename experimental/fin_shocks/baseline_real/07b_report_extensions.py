@@ -87,22 +87,23 @@ matched()
 def matched_two():
     """Table 3 (Part 2A): the matched comparison at 24 months in two panels (unemployment gap, price level); rows = nominal, real, r*-gap (bold);
     columns = yield alone and yield with the FCI, monthly equations from 1996 and from 1973. Same surprise, normalization, lags and paired draws within a sample."""
-    body = [r"\begin{tabular}{lcccc}\toprule", r" & \multicolumn{2}{c}{Monthly equations from 1996} & \multicolumn{2}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}",
-            r"Yield measure & Yield alone & Yield and FCI & Yield alone & Yield and FCI\\ \midrule"]
+    body = [r"\begin{tabular}{lcccccc}\toprule", r" & \multicolumn{3}{c}{Monthly equations from 1996} & \multicolumn{3}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}",
+            r"Yield measure & Yield alone & Yield and FCI & Difference & Yield alone & Yield and FCI & Difference\\ \midrule"]
     for v, head in (("u", "A. Unemployment gap (percentage points)"), ("P", "B. Core PCE price level (percent)")):
-        body.append(rf"\multicolumn{{5}}{{l}}{{\textit{{{head}}}}}\\")
+        body.append(rf"\multicolumn{{7}}{{l}}{{\textit{{{head}}}}}\\")
         for f in FORMS:
             cells = []
             for st in ("1996-01", "1973-01"):
-                for fc in (0, f):
-                    z = load(f, fc, start=st); cells.append(cell(z["s0"][24, VAR[v]], z["sd"][:, 24, VAR[v]]))
+                zz = [load(f, fc, start=st) for fc in (0, f)]
+                for z in zz: cells.append(cell(z["s0"][24, VAR[v]], z["sd"][:, 24, VAR[v]]))
+                cells.append(cell(zz[1]["s0"][24, VAR[v]] - zz[0]["s0"][24, VAR[v]], zz[1]["sd"][:, 24, VAR[v]] - zz[0]["sd"][:, 24, VAR[v]]))      # FS-A111: paired difference (same draws within a sample)
             a_, b_ = two(cells); lab = NAMES[f]
             if f == "real": a_ = " & ".join(rf"\textbf{{{c[0]}}}" for c in cells) + r"\\"; lab = rf"\textbf{{{lab}}}"
             body += [f"{lab} & " + a_, " & " + b_]
         if v == "u": body.append(r"\addlinespace")
     body += [r"\bottomrule\end{tabular}"]
     note = (r"Responses 24 months after a policy move that raises the two-year yield 1 pp in the announcement window; 12 lags; March--December 2020 dropped; the shocks are the 252 announcements of 1996--2026 in both samples. "
-            r"Brackets: 90\% intervals; $^{**}$, $^{*}$: 5 and 10 percent levels. Paired differences (from 1996) are in Appendix Table~\ref{tab:matcheddiff}; 12 and 36 months and other lag lengths in Appendix Tables~\ref{tab:mainB} and~\ref{tab:lags}.")
+            r"Brackets: 90\% intervals; $^{**}$, $^{*}$: 5 and 10 percent levels. Difference: yield and FCI less yield alone, computed draw by draw (the two use the same bootstrap draws within a sample). 12 and 36 months and other lag lengths in Appendix Tables~\ref{tab:mainB} and~\ref{tab:lags}.")
     (REPORT / "tab_matched.tex").write_text(tbl("Responses without and with the FCI After Two Years", "tab:matched", "\n".join(body), note) + "\n")
 matched_two()
 pass
