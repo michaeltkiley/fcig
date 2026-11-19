@@ -57,10 +57,11 @@ CMPGROUPS = {k: [["y10"], ["equities"], ["dollar"]] for k in ("cmp", "cmpE", "cm
 # The three share the daily block, so their responses differ only in the monthly equations (indices into the three daily components).
 MGROUPS = {"cmp": [[0], [1], [2]], "cmpE": [[0, 2], [1]], "cmpR": [[0, 1, 2]]}
 def agg_matrix(fci):
-    """Maps the daily variables (2-year yield and the three components) to the monthly regressors; None when the monthly equations use the daily variables as they are."""
+    """Maps the daily variables (2-year yield, the three components [, funds rate last]) to the monthly regressors; None when the monthly equations use the daily variables as they are."""
     if fci not in MGROUPS: return None
-    A = np.zeros((1 + len(MGROUPS[fci]), 4)); A[0, 0] = 1
+    ff = VARIANT["ff"]; A = np.zeros((1 + len(MGROUPS[fci]) + ff, 4 + ff)); A[0, 0] = 1
     for i, g in enumerate(MGROUPS[fci]): A[1 + i, [1 + j for j in g]] = 1
+    if ff: A[-1, -1] = 1                                                                 # FS-A93: the funds rate passes through
     return A
 _short = {"y10": "y10", "equities": "eq", "dollar": "usd"}
 def cmp_cols(fci, frame): return {"+".join(_short[k] for k in g): frame[g].sum(axis=1, min_count=len(g)) for g in CMPGROUPS[fci]}      # min_count: a day with a missing component stays missing (a plain sum would give 0)
@@ -126,7 +127,7 @@ def daily_frame(form, fci):
     elif fci == "baa": D = pd.DataFrame({"pol": RATE[form], "idx": FCI[form], "baa": BAAD})
     else: D = pd.DataFrame({"pol": RATE[form], **({"idx": FCI[fci]} if fci else {})})
     if VARIANT["ff"]:
-        assert fci not in CMPGROUPS; D["ff"] = DFFW - (RATE["nom"] - RATE[form])          # same adjustment as the policy rate (2-year or 1-year yield)
+        D["ff"] = DFFW - (RATE["nom"] - RATE[form])          # same adjustment as the policy rate (2-year or 1-year yield); with the components too (FS-A93)
     return D
 
 def fin_monthly(form, fci):
@@ -136,7 +137,8 @@ def fin_monthly(form, fci):
     if VARIANT["ff"]: ext["ff"] = DFFM - (RATEM["nom"] - RATEM[form])
     FB = FB.combine_first(ext)
     A = agg_matrix(fci)
-    if A is not None: FB = pd.DataFrame(FB.values @ A.T, index=FB.index, columns=["pol"] + [f"g{i}" for i in range(A.shape[0] - 1)])
+    if A is not None: FB = pd.DataFrame(FB[["pol", *cmp_cols(fci, CMPM[form]).keys(), *(["ff"] if VARIANT["ff"] else [])]].values @ A.T, index=FB.index,
+                                        columns=["pol"] + [f"g{i}" for i in range(len(MGROUPS[fci]))] + (["ff"] if VARIANT["ff"] else []))
     return FB[FB.index >= pd.Period("1973-01", "M")]
 
 def impact(fci, idx):
@@ -181,8 +183,9 @@ def har_fit(X, Y, fci):
     nd = Y.shape[1]
     if fci not in CMPGROUPS: return np.linalg.lstsq(X, Y, rcond=None)[0]
     Bd = np.zeros((X.shape[1], nd)); macro_cols = list(range(1 + len(HAR) * nd, X.shape[1]))
+    rates = {0, nd - 1} if VARIANT["ff"] else {0}                                       # FS-A93: with the funds rate, the two rates play the role of the yield (own, yield and funds-rate averages for each component; the two rates' averages for each rate)
     for j in range(nd):
-        vars_ = sorted({0, j}); cols = [0] + [1 + a * nd + v for a in range(len(HAR)) for v in vars_] + macro_cols
+        vars_ = sorted(rates | {j}); cols = [0] + [1 + a * nd + v for a in range(len(HAR)) for v in vars_] + macro_cols
         Bd[cols, j] = np.linalg.lstsq(X[:, cols], Y[:, j], rcond=None)[0]
     return Bd
 
