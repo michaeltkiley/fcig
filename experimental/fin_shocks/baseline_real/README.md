@@ -37,6 +37,7 @@ This package rebuilds Note B on the baseline decided on 18 Nov 2026 (`../PLAN_RE
 | 11 | `11_persistence.py` | `results/persistence.csv` (real yield and FCI) |
 | 12 | `12_direct_projection.py` | `results/direct_projection.csv` (real financial lags) |
 | 13 | `13_decomposition.py` | `results/decomp_*.csv`, `output/decomp/` (real model) |
+| 14 | `14_sim_matched.py` | `results/sim_matched_real.csv`, `results/sim_matched_summary.csv` (the main model without and with the FCI on step 6's simulated samples; FS-A92) |
 | 7 | `07_report.py`, `07b_report_extensions.py`, `07c_report_review.py`, `07d_report_decomp.py` | `report/tab_*.tex`, `report/fig_*.pdf`, `report/numbers*.tex`; `07_report.py` asserts `claims_real.py` |
 
 Then `cd report && pdflatex results_real.tex` (twice). That is the results document for the sign-off.
@@ -46,7 +47,7 @@ Reproduce: `pip install -r requirements.txt`, then
 ```
 python3 01_data.py && python3 02_indexes.py && python3 03_estimate.py --jobs 4 && python3 04_monthly_var.py --jobs 4 && python3 05_tradeoff.py \
 && python3 06_proxy_simulation.py && python3 06_proxy_simulation.py --lags 6 && python3 08_literature_style.py && python3 10_bootstrap_sensitivity.py \
-&& python3 11_persistence.py && python3 12_direct_projection.py && python3 13_decomposition.py \
+&& python3 11_persistence.py && python3 12_direct_projection.py && python3 13_decomposition.py && python3 14_sim_matched.py \
 && python3 07_report.py && python3 07b_report_extensions.py && python3 07c_report_review.py && python3 07d_report_decomp.py
 ```
 
