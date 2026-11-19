@@ -48,6 +48,10 @@ for _k in ("Y", "B", "G"): FCI[f"cal{_k}"] = _daily_fci(IDXM[f"cal{_k}"], DAILY[
 FCI["jkw"] = _daily_fci(IDXM["jkw"], DAILY["idx_jk"].reindex(CALW).ffill(limit=3))
 # Robustness (credit): fci = "baa" adds the daily Baa-10-year spread to the daily block next to the FCI of the same step; its announcement-day response is its impact.
 BAAD = _daily.BAA.reindex(CALW).ffill(limit=3)
+# FS-A98: monthly Baa-10-year spread (Moody's Baa monthly less GS10) for the months before the daily data, as the other series; fci = "baa0" = the 2-year yield and the Baa spread without the FCI (the matched rates-only case)
+def _fredm(name):
+    d = pd.read_csv(DATA / f"{name}.csv"); return pd.Series(pd.to_numeric(d.iloc[:, 1], errors="coerce").values, index=pd.PeriodIndex(pd.to_datetime(d.iloc[:, 0]), freq="M")).dropna()
+BAAM = _fredm("BAA") - _fredm("GS10")
 
 # The three weighted components of the index (weight x demeaned input), monthly and daily, in each step (used only when the FCI is replaced by its components).
 CMPKEYS = ["y10", "equities", "dollar"]; CMPNAMES = ["y10", "eq", "usd"]
@@ -125,6 +129,7 @@ def daily_frame(form, fci):
     """fci: 0 (none), a step name (the market index in that step) or "cmp" (the index replaced by its three weighted components in the same step as the rate). Variant "ff" adds the funds rate last."""
     if fci in CMPGROUPS: D = pd.DataFrame({"pol": RATE[form], **cmp_cols(fci, CMPD[form])})
     elif fci == "baa": D = pd.DataFrame({"pol": RATE[form], "idx": FCI[form], "baa": BAAD})
+    elif fci == "baa0": D = pd.DataFrame({"pol": RATE[form], "baa": BAAD})
     else: D = pd.DataFrame({"pol": RATE[form], **({"idx": FCI[fci]} if fci else {})})
     if VARIANT["ff"]:
         D["ff"] = DFFW - (RATE["nom"] - RATE[form])          # same adjustment as the policy rate (2-year or 1-year yield); with the components too (FS-A93)
@@ -133,9 +138,9 @@ def daily_frame(form, fci):
 def fin_monthly(form, fci):
     """Monthly averages of the daily block; months without daily data filled from the monthly series."""
     FB = daily_frame(form, fci).set_index(MON).groupby(level=0).mean()
-    ext = pd.DataFrame({"pol": RATEM[form], **(cmp_cols(fci, CMPM[form]) if fci in CMPGROUPS else {"idx": IDXM[form]} if fci == "baa" else {"idx": IDXM[fci]} if fci else {})})
+    ext = pd.DataFrame({"pol": RATEM[form], **(cmp_cols(fci, CMPM[form]) if fci in CMPGROUPS else {"idx": IDXM[form], "baa": BAAM} if fci == "baa" else {"baa": BAAM} if fci == "baa0" else {"idx": IDXM[fci]} if fci else {})})
     if VARIANT["ff"]: ext["ff"] = DFFM - (RATEM["nom"] - RATEM[form])
-    FB = FB.combine_first(ext)
+    cols = list(FB.columns); FB = FB.combine_first(ext)[cols]                          # keep the daily block's column order (combine_first can reorder)
     A = agg_matrix(fci)
     if A is not None: FB = pd.DataFrame(FB[["pol", *cmp_cols(fci, CMPM[form]).keys(), *(["ff"] if VARIANT["ff"] else [])]].values @ A.T, index=FB.index,
                                         columns=["pol"] + [f"g{i}" for i in range(len(MGROUPS[fci]))] + (["ff"] if VARIANT["ff"] else []))
@@ -152,6 +157,7 @@ def _impact0(fci, idx):
         w = window_impact_components(idx)[1:]; pos = {k: i for i, k in enumerate(CMPKEYS)}
         return np.r_[1.0, [sum(w[pos[k]] for k in g) for g in CMPGROUPS[fci]]]
     if fci == "baa": return np.r_[window_impact(idx), _daily.baa_impact(idx)]
+    if fci == "baa0": return np.r_[window_impact(idx)[:1], _daily.baa_impact(idx)]
     if fci == "jkw": return window_impact(idx, "idx_win_jk")
     if str(fci).startswith("cal"): return window_impact(idx, f"idx_win_{fci}")
     wi = window_impact(idx); return wi if fci else wi[:1]
@@ -281,7 +287,7 @@ def _recursive(X, C, e, K, L, LI):
         Y[t] = Xs[t] @ C + e[t]
     return Y
 
-def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=500, lags=LAGS, boot=None):
+def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", trend="none", B=500, lags=LAGS, boot=None, seed_macro=None):
     """Point responses and B draws for each lag length. Default bootstrap ("j12r", the block bootstrap): the 369 calendar months from January 1996 are resampled in moving blocks of 12 months, and each draw
     uses together the monthly residuals, the daily rows and the announcements of the months drawn; the monthly equations are re-estimated on a series rebuilt recursively from the drawn residuals (macro lags
     from the simulated series, financial lags and pre-sample lags from the data), and the daily block is re-estimated on the drawn rows. Monthly residuals before 1996 (start 1973) are drawn in blocks of 12
@@ -289,14 +295,14 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
     (fixed design) and daily rows (moving blocks of 66 days) resampled independently (the earlier default). Yields dicts: lags, nobs, names, s0 (H+1, K), sd (B, H+1, K), f0 (H+1, nd), fd (B, H+1, nd)."""
     boot = boot or BOOT; mvars = macro.split(","); K = len(mvars); nd = daily_frame(form, fci).shape[1]
     idx0, pos0, bidx, bpos = events(B); Xd, Yd, dmon, ddate = har_rows(form, fci, mvars, end, t2020, months=True, dates=True); Bd0 = har_fit(Xd, Yd, fci)
-    two = fci not in (0, "baa") and fci not in CMPGROUPS                                      # yield plus FCI: also compute path B (same model, ordinary FCI movement)
+    two = fci not in (0, "baa", "baa0") and fci not in CMPGROUPS                                      # yield plus FCI: also compute path B (same model, ordinary FCI movement)
     if two: isev = np.isin(ddate, _daily.EV.d.values); ord0 = ordinary_loading(Xd, Yd, Bd0, isev)
     if boot == "j12r":
         evm = _daily.EV.d.iloc[idx0].dt.to_period("M").values; cal = pd.period_range("1996-01", "2026-09", freq="M")
         drows = {m: np.where(dmon == m)[0] for m in cal}; erows = {m: idx0[evm == m] for m in cal}
     for L in lags:
         X, Y, P = macro_data(form, fci, mvars, L, start, end, t2020, trend, periods=True); C0 = np.linalg.lstsq(X, Y, rcond=None)[0]; fit = X @ C0; res = Y - fit
-        tag = f"{form}|{macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)
+        tag = f"{form}|{seed_macro or macro}|{start}|{end}|{t2020}|{L}" + ("" if trend == "none" else "|" + trend)          # seed_macro (FS-A98): draw the months of another macro case, so that cases with different monthly variables are paired
         rng = np.random.default_rng(zlib.crc32(tag.encode())); rng_d = np.random.default_rng(zlib.crc32(("block|" + tag).encode()))
         m0, f0, fday0 = irf(Bd0, C0, K, nd, L, idx0, pos0, fci)
         if two: mB0 = irf_b(Bd0, C0, K, nd, L, np.r_[1.0, ord0], pos0)[0]
