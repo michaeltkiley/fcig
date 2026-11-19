@@ -4,7 +4,7 @@
 \begin{tabular}{llrr}\toprule Case & FCI & $H=24$ months & $H=36$ months\\ \midrule
 \multicolumn{4}{l}{\textit{Baseline, 1996}}\\
 Nominal & none & 0.08 [$-$0.36, 1.38] & 0.09 [$-$0.29, 1.48]\\
- & nominal & $-$1.02 [$-$2.38, $-$0.29] & $-$0.76 [$-$1.64, $-$0.29]\\
+ & nominal & $-$1.02 [$-$2.38, $-$0.29]$^{\dagger}$ & $-$0.76 [$-$1.64, $-$0.29]\\
 Real & none & 0.16 [$-$0.45, 2.27] & 0.07 [$-$0.42, 1.44]\\
  & real & $-$0.85 [$-$1.45, $-$0.33] & $-$0.61 [$-$1.08, $-$0.18]\\
 \addlinespace
@@ -23,13 +23,15 @@ Bauer-Swanson surprise, 1996 & real & $-$0.80 [$-$1.34, $-$0.33] & $-$0.59 [$-$1
 Bauer-Swanson surprise, 1973 & real & $-$1.57 [$-$3.29, $-$1.01] & $-$1.30 [$-$3.17, $-$0.76]\\
 Without the funds rate, 1996 & real & $-$1.16 [$-$7.10, $-$0.30] & $-$0.90 [$-$228.66, $-$0.11]\\
 Without the funds rate, 1973 & real & $-$1.56 [$-$3.24, $-$0.95] & $-$1.89 [$-$5.30, $-$1.00]\\
-Monthly equations from 1985 & real & $-$0.64 [$-$3.79, 10.49] & $-$0.26 (undefined; 68\%: [$-$1.06, 0.24])\\
+Monthly equations from 1985 & real & $-$0.64 [$-$3.79, 10.49]$^{\dagger}$ & $-$0.26 (undefined; 68\%: [$-$1.06, 0.24])\\
 Cubic spline trend, 1996 & real & $-$0.44 [$-$1.05, 0.65] & $-$0.22 [$-$0.69, 0.83]\\
 Cubic spline trend, 1973 & real & $-$1.06 [$-$2.26, $-$0.61] & $-$0.74 [$-$1.59, $-$0.42]\\
+Ends 2019, 1996 & real & 0.42 (undefined; 68\%: [0.13, 1.32]) & 0.31 (undefined; 68\%: [0.06, 11.18])\\
+Ends 2019, 1973 & real & $-$1.32 [$-$12.76, $-$0.64] & $-$1.30 [$-$73.92, $-$0.51]\\
 r*-gap (LW), 1996 & r*-gap & $-$1.06 [$-$1.73, $-$0.69] & $-$0.83 [$-$1.59, $-$0.49]\\
 r*-gap (LW), 1973 & r*-gap & $-$1.32 [$-$3.02, $-$0.92] & $-$1.03 [$-$2.86, $-$0.71]\\
 \addlinespace
 Real minus nominal, with FCI & & [$-$0.97, 1.96] & [$-$0.78, 1.67]\\
 \bottomrule\end{tabular}}
-\begin{flushleft}\footnotesize\textit{Notes:} $\kappa_H$ = core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response (Barnichon and Mesters 2021); the sacrifice ratio is $-1/\kappa_H$. Point estimate and 90\% confidence set (Anderson--Rubin type) in brackets, computed exactly (a wide grid refined by bisection), so a finite end is never an artifact of the grid. An infinite end means that the 90\% interval of the cumulative unemployment response includes zero: the data then cannot rule out arbitrarily steep trade-offs on that side; ``unbounded'': both sides. Last row: paired difference over common announcement draws.\end{flushleft}
+\begin{flushleft}\footnotesize\textit{Notes:} $\kappa_H$ = core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response (Barnichon and Mesters 2021); the sacrifice ratio is $-1/\kappa_H$. Point estimate and 90\% confidence set (Anderson--Rubin type) in brackets, computed exactly (a wide grid refined by bisection), so a finite end is never an artifact of the grid. An infinite end means that the 90\% interval of the cumulative unemployment response includes zero: the data then cannot rule out arbitrarily steep trade-offs on that side; ``unbounded'': both sides. $^{\dagger}$: the set has a gap wider than 2 percent of its width; shown is its hull. Ends 2019: all equations end in December 2019 (2020 not dropped). Last row: paired difference over common announcement draws.\end{flushleft}
 \end{table}

@@ -276,7 +276,7 @@ def tradeoff_compact():
     def row(f, start):
         return {H_: T[(T.form == f) & (T.fci == f) & (T.macro == "u,pi") & (T.start == start) & T.end.isna() & (T.t2020 == "out") & (T["shock"] == "ns") & (T["ext"].fillna("") == "" if "ext" in T else True) & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0] for H_ in (24, 36)}
     def cellk(r):
-        if np.isfinite(r.k_lo) and np.isfinite(r.k_hi): return f"[{num(r.k_lo)}, {num(r.k_hi)}]"
+        if np.isfinite(r.k_lo) and np.isfinite(r.k_hi): return f"[{num(r.k_lo)}, {num(r.k_hi)}]" + ("" if bool(r.connected) else r"$^{\dagger}$")
         return "undefined; 68\\%: " + (f"[{num(r.k68_lo)}, {num(r.k68_hi)}]" if np.isfinite(r.k68_lo) and np.isfinite(r.k68_hi) else "undefined")
     body = [r"\begin{tabular}{lcccc}\toprule", r" & \multicolumn{2}{c}{24 months} & \multicolumn{2}{c}{36 months}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Rates and FCI, measured as & Estimate & 90\% set & Estimate & 90\% set\\ \midrule"]
     for lab, f, st, bold in (("Nominal, 1996 start", "nom", "1996-01", False), ("Real, 1996 start (baseline)", "real", "1996-01", True), ("Nominal, 1973 start", "nom", "1973-01", False), ("Real, 1973 start", "real", "1973-01", False)):
@@ -285,7 +285,7 @@ def tradeoff_compact():
         pass
     body.append(r"\bottomrule\end{tabular}")
     note = (r"$\kappa_H$ is the core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response \citep{barnichon2021}; its inverse in absolute value is the sacrifice ratio. Estimate: ratio of the point responses. "
-            r"90\% set: Anderson--Rubin type, all values for which the 90\% bootstrap interval of $\tilde P_H-\kappa\tilde U_H$ contains zero. The ratio is undefined when the 90\% interval of the cumulative unemployment response includes zero, because the data then cannot rule out unemployment responses of zero or either sign; the 68\% set is then shown where it exists. 12 lags. All cases in Appendix Table~\ref{tab:tradefull}.")
+            r"90\% set: Anderson--Rubin type, all values for which the 90\% bootstrap interval of $\tilde P_H-\kappa\tilde U_H$ contains zero. The ratio is undefined when the 90\% interval of the cumulative unemployment response includes zero, because the data then cannot rule out unemployment responses of zero or either sign; the 68\% set is then shown where it exists. $^{\dagger}$: the set has a gap wider than 2 percent of its width; shown is its hull. 12 lags. All cases in Appendix Table~\ref{tab:tradefull}.")
     (REPORT / "tab_tradeoff.tex").write_text(tbl("Implied Trade-Off: The Phillips Multiplier", "tab:tradeoff", "\n".join(body), note) + "\n")
 tradeoff_compact()
 

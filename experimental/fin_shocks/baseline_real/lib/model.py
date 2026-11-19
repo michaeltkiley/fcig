@@ -373,7 +373,11 @@ def ar_set(Pd, Ud, q=(5, 95), P0=None, U0=None):
         return b
     lo = -np.inf if ok[0] else edge(KAPPA[i[0] - 1], KAPPA[i[0]])
     hi = np.inf if ok[-1] else edge(KAPPA[i[-1] + 1], KAPPA[i[-1]])
-    return lo, hi, bool(np.all(np.diff(i) == 1))
+    # FS-A112: "connected" ignores gaps narrower than 2 percent of the finite part of the set (the bias-corrected quantiles move in steps along the grid, which leaves slivers of
+    # one or two grid points at the edges); a wider gap marks a set in several pieces
+    seg = np.split(i, np.where(np.diff(i) > 1)[0] + 1); width = KAPPA[i[-1]] - KAPPA[i[0]]
+    gaps = [KAPPA[b[0]] - KAPPA[a[-1]] for a, b in zip(seg[:-1], seg[1:])]
+    return lo, hi, bool(all(g < 0.02 * width for g in gaps))
 
 def cum_u(s):
     """Cumulative unemployment-gap response, percentage-point years: index h holds sum_{1..h} u_h / 12 (axis -2 is time)."""
