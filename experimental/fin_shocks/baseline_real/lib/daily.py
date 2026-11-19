@@ -1,4 +1,4 @@
-"""Daily data, the weekday calendar, and the policy announcements (events) with their 30-minute windows.
+"""Daily data, the weekday calendar, and the policy announcements (events) with their announcement windows (USMPD monetary-event windows).
 Calendar CALW: weekdays from 1972, on which the daily financial block is defined; daily series are forward-filled up to 3 days."""
 import numpy as np, pandas as pd
 from .paths import DATA, OUT
@@ -63,7 +63,7 @@ def event_index():
     return np.where(GOOD & ~EV.ns.isna().values)[0]
 
 def window_impact(idx, col="idx_win"):
-    """Window response per unit shock: OLS slope on the shock of the 30-minute change in the 2-year yield (scaling variable) and in the market index.
+    """Window response per unit shock: OLS slope on the shock of the announcement-window change in the 2-year yield (scaling variable) and in the market index.
     Returns [2-year, index] scaled so that the 2-year moves +1 pp; the index entry is the index's window move per +1 pp on the 2-year."""
     s = EV.ns.values[idx]; ok = ~np.isnan(s); idx = idx[ok]; x = s[ok] - s[ok].mean()
     slope = lambda col: float(np.sum((EV[col].values[idx] - EV[col].values[idx].mean()) * x) / np.sum(x * x))

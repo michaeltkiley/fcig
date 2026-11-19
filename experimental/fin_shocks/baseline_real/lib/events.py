@@ -1,7 +1,7 @@
 """Note B's announcement sample, policy-news factor and market-index weights (FS_QA FS-A75, 16 Nov 2026).
 
 Same method as Note A (fci_note; code vendored in lib/noteA.py): the Nakamura-Steinsson policy-news factor is the first principal component of the
-30-minute changes in MP1, MP2, ED2, ED3, ED4 (USMPD monetary-event windows), and the weights are the one-factor GLS weights of the 10-year yield,
+announcement-window changes in MP1, MP2, ED2, ED3, ED4 (USMPD monetary-event windows), and the weights are the one-factor GLS weights of the 10-year yield,
 S&P 500 and dollar window changes on that factor. Note B differs from Note A in two respects, so that every window regression in the note uses
 one sample and one specification:
   1. Sample: the announcements used everywhere in Note B (factor, weights, window responses, daily model): from January 1996, on a trading day with

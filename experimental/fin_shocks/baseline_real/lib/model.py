@@ -3,7 +3,7 @@
 Daily block (estimated from DAILY_START = January 1996, the same start as the shocks and the monthly equations; averages use earlier days): HAR regressions in levels of the 2-year yield form (`pol`) and, when included, the market index (`idx`), on 1/5/22/66-day averages
 and the monthly macro variables (this month and last: macro first within the month). Monthly block: for each macro variable (unemployment gap, core PCE
 inflation, optionally the excess bond premium) an OLS equation on its own lags and lagged monthly averages of the daily financial variables, 3/6/12 lags.
-Response to a policy surprise: the 30-minute window impact (2-year +1 pp; index = its window move; macro zero) applied on the event day, simulated forward
+Response to a policy surprise: the announcement-window impact (2-year +1 pp; index = its window move; macro zero) applied on the event day, simulated forward
 through the daily block and the monthly equations, averaged over six event-position bins. Price level = cumulated inflation / 12. Uncertainty: 500 draws that
 resample announcements and monthly residuals and re-estimate the daily block on moving blocks of 66 days; the same announcement draws for every case.
 Rate forms: nom | real | rstar (Laubach-Williams) | kiley (Kiley's r*). FCI: 0 | nom | real | rstar | kiley (the market index of Note A's method with Note B's weights, same step).

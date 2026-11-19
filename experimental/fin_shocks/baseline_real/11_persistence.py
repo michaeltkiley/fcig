@@ -2,7 +2,7 @@
 compared with the model's daily paths on the same clock.   python3 11_persistence.py      Output: results/persistence.csv
 
 Clock. Day 0 is the announcement day; day h is h trading days later (the model uses weekdays; holidays make 66 weekdays about 63-65 trading days). The model sets the level on day 0 equal to the window impact
-(unit: +1 pp on the 2-year yield in the window) and propagates it with the daily block. The event-based change at day h is therefore built the same way: the 30-minute window move (the policy-news window,
+(unit: +1 pp on the 2-year yield in the window) and propagates it with the daily block. The event-based change at day h is therefore built the same way: the announcement-window move (the policy-news window,
 which contains the announcement) plus the close-to-close change from the announcement day's close to the close on day h:  D_h = window move + (level_h - level_0).  Endpoint = D_h (levels on day h);
 average = mean of D_0..D_21 (22 trading days, announcement day included). The alternative builds D_h from the close before the announcement (level_h - level_{-1}); the difference between the two, the part of the
 announcement day's close-to-close move that the window does not contain, is reported as the window-to-close gap.
