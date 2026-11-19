@@ -21,14 +21,16 @@ def ab(x, f="{:.2f}"): return f.format(abs(x))
 BASE = dict(macro="u,pi", start="1996-01", end=None, t2020="out", trend="none")          # the 1996 baseline (FS-A76: March-December 2020 dropped)
 def load(form, fci, L=12, **kw):
     c = {**BASE, **kw}; return np.load(OUT / "draws" / f"{CS.case_id(dict(form=form, fci=fci, **c))}_L{L}.npz", allow_pickle=True)
-pc = lambda a, q: np.percentile(a, q, axis=0)
-def star(d, h_idx=None):
-    """Significance mark for a draw vector (or array of draws): ** if the 95% interval excludes zero, * if the 90% does."""
-    return "$^{**}$" if pc(d, 2.5) * pc(d, 97.5) > 0 else ("$^{*}$" if pc(d, 5) * pc(d, 95) > 0 else "")
+def pc(a, q, t):
+    """FS-A108: the bias-corrected bootstrap quantile (lib/intervals) of the draws a around the point estimate t."""
+    return M.IV.quantiles(a, t, (q,))[0]
+def star(d, t):
+    """Significance mark for draws d around the point t: ** if the 95% interval excludes zero, * if the 90% does."""
+    return "$^{**}$" if pc(d, 2.5, t) * pc(d, 97.5, t) > 0 else ("$^{*}$" if pc(d, 5, t) * pc(d, 95, t) > 0 else "")
 def cell(pt, d):
-    return num(pt) + star(d), f"[{num(pc(d, 5))}, {num(pc(d, 95))}]"
-def sig10(d): return pc(d, 5) * pc(d, 95) > 0
-def sig5(d): return pc(d, 2.5) * pc(d, 97.5) > 0
+    return num(pt) + star(d, pt), f"[{num(pc(d, 5, pt))}, {num(pc(d, 95, pt))}]"
+def sig10(d, t): return pc(d, 5, t) * pc(d, 95, t) > 0
+def sig5(d, t): return pc(d, 2.5, t) * pc(d, 97.5, t) > 0
 VAR = {"u": 0, "P": 1}
 def tbl(cap, label, body, note, spec=None, size="footnotesize", fit=False):
     if fit: body = r"\resizebox{\textwidth}{!}{%" + "\n" + body + "\n}"
@@ -55,7 +57,7 @@ for f in FORMS:
     for v in ("u", "P"):
         for h in (12, 24, 36):
             for a_, b_, nm in (("A", "C", "AC"),):
-                p, d = con(f, a_, b_, v, h); k = f"dc:{f}:{nm}:{v}:{h}"; mac(k, num(p)); mac(k + ":abs", ab(p)); mac(k + ":lo", num(pc(d, 5))); mac(k + ":hi", num(pc(d, 95))); mac(k + ":sig", "significant" if sig10(d) else "not significant")
+                p, d = con(f, a_, b_, v, h); k = f"dc:{f}:{nm}:{v}:{h}"; mac(k, num(p)); mac(k + ":abs", ab(p)); mac(k + ":lo", num(pc(d, 5, p))); mac(k + ":hi", num(pc(d, 95, p))); mac(k + ":sig", "significant" if sig10(d, p) else "not significant")
             for nm in "AC":
                 mac(f"dc:{f}:{nm}:{v}:{h}", num(DEC[f]["pts"][nm][h, VAR[v]]))
     mac(f"dc:{f}:bF", f"{DEC[f]['bF']:.2f}")
@@ -112,7 +114,7 @@ for f in FORMS:                                                                 
     for v in ("u", "P"):
         for h in (12, 24, 36):
             a0, c0 = load(f, f, start="1973-01"), load(f, 0, start="1973-01"); d_ = a0["sd"][:, h, VAR[v]] - c0["sd"][:, h, VAR[v]]
-            k = f"m73:{f}:AC:{v}:{h}"; mac(k, num(a0["s0"][h, VAR[v]] - c0["s0"][h, VAR[v]])); mac(k + ":lo", num(pc(d_, 5))); mac(k + ":hi", num(pc(d_, 95))); mac(k + ":abs", ab(a0["s0"][h, VAR[v]] - c0["s0"][h, VAR[v]]))
+            k = f"m73:{f}:AC:{v}:{h}"; mac(k, num(a0["s0"][h, VAR[v]] - c0["s0"][h, VAR[v]])); p_ = a0["s0"][h, VAR[v]] - c0["s0"][h, VAR[v]]; mac(k + ":lo", num(pc(d_, 5, p_))); mac(k + ":hi", num(pc(d_, 95, p_))); mac(k + ":abs", ab(a0["s0"][h, VAR[v]] - c0["s0"][h, VAR[v]]))
 
 # =============================================================== 4. persistence beyond the window (event-based responses on the same clock as the model)
 PER = pd.read_csv(RESULTS / "persistence.csv") if (RESULTS / "persistence.csv").exists() else None
@@ -121,7 +123,7 @@ def persistence():
     P = PER[(PER.base == "window plus later closes") & (~PER.controls)].set_index(["series", "measure"]); PC = PER[(PER.base == "window plus later closes") & (PER.controls)].set_index(["series", "measure"])
     fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.1))
     for ax, k, j, ttl in ((axs[0], "y", 0, "Two-year yield (real version)"), (axs[1], "f", 1, "FCI (real version)")):
-        ax.axhline(0, color=GREY, lw=0.8); ax.fill_between(days, pc(fd[:, :, j], 5), pc(fd[:, :, j], 95), color=BLUE, alpha=0.14, lw=0); ax.fill_between(days, pc(fd[:, :, j], 16), pc(fd[:, :, j], 84), color=BLUE, alpha=0.25, lw=0)
+        ax.axhline(0, color=GREY, lw=0.8); ax.fill_between(days, pc(fd[:, :, j], 5, f0[:, j]), pc(fd[:, :, j], 95, f0[:, j]), color=BLUE, alpha=0.14, lw=0); ax.fill_between(days, pc(fd[:, :, j], 16, f0[:, j]), pc(fd[:, :, j], 84, f0[:, j]), color=BLUE, alpha=0.25, lw=0)
         ax.plot(days, f0[:, j], color=BLUE, lw=1.9, label="Model path, 68 and 90% bands")
         for m_, x_ in (("h5", 5), ("h22", 22), ("h66", 66)):
             r = P.loc[(k, m_)]; ax.errorbar([x_], [r.est], yerr=[[r.est - r.lo], [r.hi - r.est]], fmt="o", color=ORANGE, ms=4.5, capsize=3, lw=1.3, label="Direct estimate, 90% interval" if m_ == "h5" else None)
@@ -206,9 +208,9 @@ def sample_facts():
     for tag, kw in (("base96", {}), ("end96", dict(end=2019, t2020="in")), ("in96", dict(t2020="in")), ("base73", dict(start="1973-01")), ("end73", dict(start="1973-01", end=2019, t2020="in")), ("in73", dict(start="1973-01", t2020="in"))):
         z = load("real", "real", **kw); C_ = load("real", 0, **kw)
         for v in ("u", "P"):
-            k = VAR[v]; mac(f"sm:{tag}:{v}:24", num(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:abs", ab(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:lo", num(pc(z["sd"][:, 24, k], 5))); mac(f"sm:{tag}:{v}:24:hi", num(pc(z["sd"][:, 24, k], 95)))
-            mac(f"sm:{tag}:{v}:24:sig5", "significant" if sig5(z["sd"][:, 24, k]) else "not significant")
-            pt, d = z["s0"][24, k] - C_["s0"][24, k], z["sd"][:, 24, k] - C_["sd"][:, 24, k]; mac(f"sm:{tag}:{v}:24:AC", num(pt)); mac(f"sm:{tag}:{v}:24:AClo", num(pc(d, 5))); mac(f"sm:{tag}:{v}:24:AChi", num(pc(d, 95)))
+            k = VAR[v]; mac(f"sm:{tag}:{v}:24", num(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:abs", ab(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:lo", num(pc(z["sd"][:, 24, k], 5, z["s0"][24, k]))); mac(f"sm:{tag}:{v}:24:hi", num(pc(z["sd"][:, 24, k], 95, z["s0"][24, k])))
+            mac(f"sm:{tag}:{v}:24:sig5", "significant" if sig5(z["sd"][:, 24, k], z["s0"][24, k]) else "not significant")
+            pt, d = z["s0"][24, k] - C_["s0"][24, k], z["sd"][:, 24, k] - C_["sd"][:, 24, k]; mac(f"sm:{tag}:{v}:24:AC", num(pt)); mac(f"sm:{tag}:{v}:24:AClo", num(pc(d, 5, pt))); mac(f"sm:{tag}:{v}:24:AChi", num(pc(d, 95, pt)))
     ev = D.EV.d.iloc[D.event_index()]; mac("sm:nev:19", int((ev <= "2019-12-31").sum())); mac("sm:nev:all", len(ev)); mac("sm:nev:post", int((ev > "2019-12-31").sum()))
 sample_facts()
 

@@ -327,18 +327,19 @@ def estimate(form, fci, macro="u,pi", start="1996-01", end=None, t2020="in", tre
                    f0=f0, fd=np.array([d[1] for d in draws]))
 
 # ---------------------------------------------------------------- summaries
-def pct(a, q): return np.percentile(a, q, axis=0)
+from . import intervals as IV          # FS-A108: bias-corrected percentile intervals everywhere (CI=pct for the plain percentile interval)
+QS = (5, 95, 16, 84, 10, 90, 2.5, 97.5)
 
 def summary_rows(spec, est):
-    """One row per variable: point responses and 90% / 68% bootstrap intervals at 12, 24, 36 months."""
+    """One row per variable: point responses and 90% / 68% / 80% / 95% bootstrap intervals (lib/intervals) at 12, 24, 36 months."""
     rows = []
     for j, n in enumerate(est["names"]):
-        s0, sd = est["s0"][:, j], est["sd"][:, :, j]
+        s0, sd = est["s0"][:, j], est["sd"][:, :, j]; Q = dict(zip(QS, IV.quantiles(sd, s0, QS)))
         rows.append(dict(**spec, lags=est["lags"], var=n, nobs=est["nobs"], draws=len(sd), **{f"r{h}": s0[h] for h in HORIZ},
-                         **{f"lo{h}": pct(sd, 5)[h] for h in HORIZ}, **{f"hi{h}": pct(sd, 95)[h] for h in HORIZ},
-                         **{f"lo68_{h}": pct(sd, 16)[h] for h in HORIZ}, **{f"hi68_{h}": pct(sd, 84)[h] for h in HORIZ},
-                         **{f"lo80_{h}": pct(sd, 10)[h] for h in HORIZ}, **{f"hi80_{h}": pct(sd, 90)[h] for h in HORIZ},
-                         **{f"lo95_{h}": pct(sd, 2.5)[h] for h in HORIZ}, **{f"hi95_{h}": pct(sd, 97.5)[h] for h in HORIZ}))
+                         **{f"lo{h}": Q[5][h] for h in HORIZ}, **{f"hi{h}": Q[95][h] for h in HORIZ},
+                         **{f"lo68_{h}": Q[16][h] for h in HORIZ}, **{f"hi68_{h}": Q[84][h] for h in HORIZ},
+                         **{f"lo80_{h}": Q[10][h] for h in HORIZ}, **{f"hi80_{h}": Q[90][h] for h in HORIZ},
+                         **{f"lo95_{h}": Q[2.5][h] for h in HORIZ}, **{f"hi95_{h}": Q[97.5][h] for h in HORIZ}))
     return rows
 
 def path_rows(spec, est):
@@ -346,20 +347,22 @@ def path_rows(spec, est):
     out = []
     for kind, names, s0, sd in (("macro", est["names"], est["s0"], est["sd"]), ("fin", est.get("fnames") or (["pol", "idx"] if est["f0"].shape[1] <= 2 else ["pol"] + [f"c{i}" for i in range(1, est["f0"].shape[1])])[:est["f0"].shape[1]], est["f0"], est["fd"])):
         for j, n in enumerate(names):
-            out.append(pd.DataFrame(dict(**spec, lags=est["lags"], kind=kind, var=n, h=np.arange(H + 1), r=s0[:, j], lo=pct(sd[:, :, j], 5), hi=pct(sd[:, :, j], 95),
-                                         lo68=pct(sd[:, :, j], 16), hi68=pct(sd[:, :, j], 84))))
+            Q = IV.quantiles(sd[:, :, j], s0[:, j], (5, 95, 16, 84))
+            out.append(pd.DataFrame(dict(**spec, lags=est["lags"], kind=kind, var=n, h=np.arange(H + 1), r=s0[:, j], lo=Q[0], hi=Q[1], lo68=Q[2], hi68=Q[3])))
     return pd.concat(out)
 
 # ---------------------------------------------------------------- implied trade-off (Phillips multiplier, Barnichon-Mesters 2021)
 KAPPA = np.sort(np.concatenate([-np.logspace(-3, 4, 3000), [0.0], np.logspace(-3, 4, 3000)]))     # -1e4 .. 1e4, dense near zero
 
-def ar_set(Pd, Ud, q=(5, 95)):
+def ar_set(Pd, Ud, q=(5, 95), P0=None, U0=None):
     """Confidence set for kappa = P_H / U_H (Anderson-Rubin style): {kappa : the 90% bootstrap interval of P_H - kappa U_H contains 0}, computed on a wide
     log-spaced grid (|kappa| up to 1e4) with each boundary refined by bisection, so a finite boundary is never cut off by the grid. A side is reported as
     infinite only if the set still contains +-1e4; for large |kappa| the condition reduces to the 90% interval of U_H containing zero, so that is a statistical
     result (the data cannot rule out arbitrarily steep trade-offs), not a grid limit. Returns (lo, hi, connected); lo = -inf / hi = +inf when unbounded."""
-    inside = lambda k: np.percentile(Pd - k * Ud, q[0]) <= 0 <= np.percentile(Pd - k * Ud, q[1])
-    Z = Pd[:, None] - KAPPA[None, :] * Ud[:, None]; ok = (np.percentile(Z, q[0], axis=0) <= 0) & (np.percentile(Z, q[1], axis=0) >= 0)
+    # FS-A108: the interval of P_H - kappa U_H is the bias-corrected one around its point estimate P0 - kappa U0 (lib/intervals)
+    def inside(k):
+        a, b = IV.ci(Pd - k * Ud, P0 - k * U0, *q); return a <= 0 <= b
+    Z = Pd[:, None] - KAPPA[None, :] * Ud[:, None]; Qz = IV.quantiles(Z, P0 - KAPPA * U0, q); ok = (Qz[0] <= 0) & (Qz[1] >= 0)
     if not ok.any(): return np.nan, np.nan, True
     i = np.where(ok)[0]
     def edge(a, b):                                   # a outside, b inside the set: bisect to the boundary
@@ -380,7 +383,7 @@ def multiplier_rows(spec, est):
     """kappa_H = P_H / U_H at H = 12, 24, 36 with the confidence set; P is the price level (%), U the cumulative unemployment gap (pp-years)."""
     s0, sd = est["s0"], est["sd"]; U0 = np.cumsum(s0[:, 0]) / 12; Ud = np.cumsum(sd[:, :, 0], axis=1) / 12; rows = []
     for h in HORIZ:
-        lo, hi, con = ar_set(sd[:, h, 1], Ud[:, h]); lo68, hi68, _ = ar_set(sd[:, h, 1], Ud[:, h], (16, 84))
-        rows.append(dict(**spec, lags=est["lags"], H=h, P=s0[h, 1], U=U0[h], U_lo=np.percentile(Ud[:, h], 5), U_hi=np.percentile(Ud[:, h], 95),
+        lo, hi, con = ar_set(sd[:, h, 1], Ud[:, h], (5, 95), s0[h, 1], U0[h]); lo68, hi68, _ = ar_set(sd[:, h, 1], Ud[:, h], (16, 84), s0[h, 1], U0[h]); ulo, uhi = IV.ci(Ud[:, h], U0[h])
+        rows.append(dict(**spec, lags=est["lags"], H=h, P=s0[h, 1], U=U0[h], U_lo=ulo, U_hi=uhi,
                          kappa=s0[h, 1] / U0[h], k_lo=lo, k_hi=hi, connected=con, k68_lo=lo68, k68_hi=hi68))
     return rows

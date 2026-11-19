@@ -38,7 +38,7 @@ def paths_chol(D, start, B=500, seed="x", L=L):
     for _ in range(B):                                                                  # block bootstrap: 12-month blocks of residuals, lags rebuilt recursively
         Ys = M_._recursive(X, C, res[M_.block_rows(len(res), rng, M_.BLOCK_M)], K, L, LI); Cb = np.linalg.lstsq(M_._rebuild(X, K, L, LI, Ys), Ys, rcond=None)[0]; r = resp(Cb)
         for v in pt: dr[v].append(r[v])
-    return {v: (pt[v], np.percentile(dr[v], 5, axis=0), np.percentile(dr[v], 95, axis=0)) for v in pt}, len(Y)
+    return {v: (pt[v], *M_.IV.quantiles(np.array(dr[v]), pt[v], (5, 95))) for v in pt}, len(Y)          # FS-A108: bias-corrected
 
 def paths_p1(start="1996-01", L=L):
     """Monthly proxy VAR (P1) of lib/monthly.py for the nominal two-year yield without FCI, all horizons, monthly averages, 2020 dropped; per +1 pp in the window (first-stage column scaled by the window column)."""

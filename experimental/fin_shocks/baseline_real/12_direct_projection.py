@@ -51,6 +51,6 @@ for fin in (False, True):
             swb = wslope([mons[i] for i in idx])
             for v in Y: dr[v].append(slope(Y[v][idx], S[idx], X[idx]) / swb)
         for v in Y:
-            d = np.array(dr[v]); out.append(dict(controls="macro and financial lags" if fin else "macro lags", var=v, h=h, nobs=int((~np.isnan(Y[v])).sum()), est=est[v], lo=np.percentile(d, 5), hi=np.percentile(d, 95), lo68=np.percentile(d, 16), hi68=np.percentile(d, 84),
+            d = np.array(dr[v]); out.append(dict(controls="macro and financial lags" if fin else "macro lags", var=v, h=h, nobs=int((~np.isnan(Y[v])).sum()), est=est[v], lo=M.IV.ci(d, est[v])[0], hi=M.IV.ci(d, est[v])[1], lo68=M.IV.ci(d, est[v], 16, 84)[0], hi68=M.IV.ci(d, est[v], 16, 84)[1],
                                                  nw_se=nwr[v][1], nw_lo=est[v] - 1.645 * nwr[v][1], nw_hi=est[v] + 1.645 * nwr[v][1], window_slope=sw))
 R = pd.DataFrame(out); R.to_csv(RESULTS / "direct_projection.csv", index=False, float_format="%.4f"); print(R.round(3).to_string())

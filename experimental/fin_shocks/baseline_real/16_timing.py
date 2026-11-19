@@ -27,17 +27,17 @@ if __name__ == "__main__":
     R = {(t, f): (s0, sd) for t, f, s0, sd in out}; rows, drows = [], []
     for (t, f), (s0, sd) in R.items():
         for j, v in enumerate(("u", "P")):
-            rows.append(dict(timing=t, fci=f, var=v, **{f"r{h}": s0[h, j] for h in M.HORIZ}, **{f"lo{h}": np.percentile(sd[:, h, j], 5) for h in M.HORIZ}, **{f"hi{h}": np.percentile(sd[:, h, j], 95) for h in M.HORIZ},
-                             **{f"lo95_{h}": np.percentile(sd[:, h, j], 2.5) for h in M.HORIZ}, **{f"hi95_{h}": np.percentile(sd[:, h, j], 97.5) for h in M.HORIZ}))
+            rows.append(dict(timing=t, fci=f, var=v, **{f"r{h}": s0[h, j] for h in M.HORIZ}, **{f"lo{h}": M.IV.ci(sd[:, h, j], s0[h, j])[0] for h in M.HORIZ}, **{f"hi{h}": M.IV.ci(sd[:, h, j], s0[h, j])[1] for h in M.HORIZ},
+                             **{f"lo95_{h}": M.IV.ci(sd[:, h, j], s0[h, j], 2.5, 97.5)[0] for h in M.HORIZ}, **{f"hi95_{h}": M.IV.ci(sd[:, h, j], s0[h, j], 2.5, 97.5)[1] for h in M.HORIZ}))
     for f in (0, "real"):
         for x, y in (("actual", "first"), ("mid", "first"), ("actual", "mid")):
             (sx, dx), (sy, dy) = R[(x, f)], R[(y, f)]
             for j, v in enumerate(("u", "P")):
                 for h in M.HORIZ:
-                    d = dx[:, h, j] - dy[:, h, j]; drows.append(dict(fci=f, contrast=f"{x}-{y}", var=v, h=h, diff=sx[h, j] - sy[h, j], lo=np.percentile(d, 5), hi=np.percentile(d, 95)))
+                    d = dx[:, h, j] - dy[:, h, j]; drows.append(dict(fci=f, contrast=f"{x}-{y}", var=v, h=h, diff=sx[h, j] - sy[h, j], lo=M.IV.ci(d, sx[h, j] - sy[h, j])[0], hi=M.IV.ci(d, sx[h, j] - sy[h, j])[1]))
     # check: the actual timing reproduces step 3
     for f in (0, "real"):
         old = pd.read_csv(RESULTS / f"real_{f}_upi_1996-01_all_out.csv").query("lags == 12").set_index("var")
-        for j, v in enumerate(("u", "P")): assert abs(old.loc[v].r24 - R[("actual", f)][0][24, j]) < 1e-4 and abs(old.loc[v].lo24 - np.percentile(R[("actual", f)][1][:, 24, j], 5)) < 1e-4
+        for j, v in enumerate(("u", "P")): assert abs(old.loc[v].r24 - R[("actual", f)][0][24, j]) < 1e-4 and abs(old.loc[v].lo24 - M.IV.ci(R[("actual", f)][1][:, 24, j], R[("actual", f)][0][24, j])[0]) < 1e-4
     T = pd.DataFrame(rows); T.to_csv(RESULTS / "timing_only.csv", index=False, float_format="%.4f"); D = pd.DataFrame(drows); D.to_csv(RESULTS / "timing_only_diff.csv", index=False, float_format="%.4f")
     print(T[["timing", "fci", "var", "r12", "r24", "lo24", "hi24"]].round(2).to_string(index=False)); print(D[D.h == 24].round(2).to_string(index=False))

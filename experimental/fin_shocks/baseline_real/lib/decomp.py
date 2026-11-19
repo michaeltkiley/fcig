@@ -132,8 +132,8 @@ def _draws(form, fci, start, B):
     import importlib; CS = importlib.import_module("cases")
     c = dict(form=form, fci=fci, macro="u,pi", start=start, end=None, t2020="out", trend="none"); f = OUT / "draws" / f"{CS.case_id(c)}_L12.npz"
     if f.exists():
-        z = np.load(f); return z["sd"], z["fd"]
-    est = next(M.estimate(form, fci, "u,pi", start, None, "out", "none", B, (12,))); return est["sd"], est["fd"]
+        z = np.load(f); return z["sd"], z["fd"], z["s0"], z["f0"]
+    est = next(M.estimate(form, fci, "u,pi", start, None, "out", "none", B, (12,))); return est["sd"], est["fd"], est["s0"], est["f0"]
 
 # ---------------------------------------------------------------- the decomposition
 def run(fci, starts=("1973-01", "1996-01"), modes=("infer", "absorb"), B=500, wc_t2020="out", bands=True, save_hd=None, scale_pre=True):
@@ -154,7 +154,7 @@ def run(fci, starts=("1973-01", "1996-01"), modes=("infer", "absorb"), B=500, wc
     rows, brows, hds = [], [], {}
     for start in starts:
         nb = NoteB(form, fci, start)
-        if bands: sd, fd = _draws(form, fci, start, B); rd = [monthly_avg_resp(sd[b], fd[b]) for b in range(len(sd))]
+        if bands: sd, fd, s0_, f0_ = _draws(form, fci, start, B); rd = [monthly_avg_resp(sd[b], fd[b]) for b in range(len(sd))]; r0_ = monthly_avg_resp(s0_, f0_)
         for mode in modes:
             daily = DS[mode]; tag = f"{form}_{fci}_model{start[:4]}_{mode}"; Cfull = contributions(nb, daily, pre)
             keep = c["keep"] if mode == "absorb" else np.ones(len(c["per"]), bool)
@@ -177,8 +177,9 @@ def run(fci, starts=("1973-01", "1996-01"), modes=("infer", "absorb"), B=500, wc
                     mm = (MONTHS >= pd.Period(lo, "M")) & (MONTHS <= pd.Period(hi, "M")) & ~COVID; F = fev(h, era)
                     for src, x in series.items():
                         if era == "1974-1989" and src != "spliced": continue
-                        dr = np.array([conv(x, trunc(r, h))[mm].var(axis=0) / F for r in rd])
-                        for i, n in enumerate(names): brows.append(dict(mode=mode, fci=fci, model=start[:4], h=h, era=era, source=src, var=n, p5=np.percentile(dr[:, i], 5), p95=np.percentile(dr[:, i], 95)))
+                        dr = np.array([conv(x, trunc(r, h))[mm].var(axis=0) / F for r in rd]); d0 = conv(x, trunc(r0_, h))[mm].var(axis=0) / F      # FS-A108: bias-corrected bands around the point share
+                        Q = M.IV.quantiles(dr, d0, (5, 95))
+                        for i, n in enumerate(names): brows.append(dict(mode=mode, fci=fci, model=start[:4], h=h, era=era, source=src, var=n, p5=Q[0][i], p95=Q[1][i]))
     return dict(shares=rows, bands=brows, overlap=overlap, hd=hds, daily=DS)
 
 def sim_invertibility(S=200, seed=b"r2sim"):

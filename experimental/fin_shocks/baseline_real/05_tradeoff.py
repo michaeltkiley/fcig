@@ -23,6 +23,6 @@ for L in M.LAGS:
     for h in M.HORIZ:
         ok = (Ua[:, h] > 0.05) & (Ub[:, h] > 0.05); dk = a["sd"][ok, h, 1] / Ua[ok, h] - b["sd"][ok, h, 1] / Ub[ok, h]
         ka = a["s0"][h, 1] / (np.cumsum(a["s0"][:, 0])[h] / 12); kb = b["s0"][h, 1] / (np.cumsum(b["s0"][:, 0])[h] / 12)
-        diff.append(dict(lags=L, H=h, kappa_diff=ka - kb, lo=np.percentile(dk, 5), hi=np.percentile(dk, 95), share=float(ok.mean())))
+        diff.append(dict(lags=L, H=h, kappa_diff=ka - kb, lo=M.IV.ci(dk, ka - kb)[0], hi=M.IV.ci(dk, ka - kb)[1], share=float(ok.mean())))
 pd.DataFrame(diff).to_csv(RESULTS / "tradeoff_diff.csv", index=False, float_format="%.4f")
 print(pd.DataFrame(rows).query("H == 24 and lags == 12")[["form", "fci", "start", "end", "t2020", "trend", "kappa", "k_lo", "k_hi", "U_lo"]].round(2).to_string(index=False))

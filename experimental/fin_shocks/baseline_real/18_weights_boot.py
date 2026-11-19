@@ -72,7 +72,8 @@ if __name__ == "__main__":
     rows = []
     for md, sd in S.items():
         for j, v in enumerate(("u", "P")):
-            rows.append(dict(run=md, var=v, **{f"r{h}": pt[h, j] for h in M.HORIZ}, **{f"lo{h}": np.percentile(sd[:, h, j], 5) for h in M.HORIZ}, **{f"hi{h}": np.percentile(sd[:, h, j], 95) for h in M.HORIZ},
+            rows.append(dict(run=md, var=v, **{f"r{h}": pt[h, j] for h in M.HORIZ}, **{f"lo{h}": M.IV.ci(sd[:, h, j], pt[h, j])[0] for h in M.HORIZ}, **{f"hi{h}": M.IV.ci(sd[:, h, j], pt[h, j])[1] for h in M.HORIZ},
+                             **{f"plo{h}": np.percentile(sd[:, h, j], 5) for h in M.HORIZ}, **{f"phi{h}": np.percentile(sd[:, h, j], 95) for h in M.HORIZ}, **{f"below{h}": float(np.mean(sd[:, h, j] < pt[h, j])) for h in M.HORIZ},
                              **{f"sd{h}": sd[:, h, j].std() for h in M.HORIZ}))
     R = pd.DataFrame(rows); R.to_csv(RESULTS / "weights_boot.csv", index=False, float_format="%.4f")
     from lib.paths import OUT

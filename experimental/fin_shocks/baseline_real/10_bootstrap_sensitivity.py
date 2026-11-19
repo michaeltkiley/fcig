@@ -13,7 +13,7 @@ def work(j):
     f, c, v = j; t0 = time.time(); est = next(M.estimate(f, c, t2020="out", boot=v, B=a.draws, lags=(12,))); rows = []
     for k, n in enumerate(est["names"]):
         for h in M.HORIZ:
-            s0, sd = est["s0"][h, k], est["sd"][:, h, k]; lo, hi = np.percentile(sd, [5, 95]); lo95, hi95 = np.percentile(sd, [2.5, 97.5])
+            s0, sd = est["s0"][h, k], est["sd"][:, h, k]; lo, hi = M.IV.ci(sd, s0); lo95, hi95 = M.IV.ci(sd, s0, 2.5, 97.5)
             rows.append(dict(variant=v, form=f, fci=str(c), var=n, h=h, r=s0, lo=lo, hi=hi, lo95=lo95, hi95=hi95))
     print(f"{f} {c} {v} {time.time() - t0:.0f}s", flush=True); return rows
 if __name__ == "__main__":

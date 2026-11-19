@@ -116,5 +116,6 @@ def run_case(step, fci, start="1996-01", B=500, lags=LAGS, t2020="out", tag=None
             sb = np.r_[0, 0, win * (impact(fci, ib) / b0)[:K - 2]]
             for t in TARGETS: dr[t].append(row_of(Tb, *t) @ sb)
         for t in TARGETS:
-            rows.append(dict(**info, ident="WE", var=t[0], h=t[1], r=float(row_of(T, *t) @ b_we), lo=np.percentile(dr[t], 5), hi=np.percentile(dr[t], 95), unbounded=0))
+            r0 = float(row_of(T, *t) @ b_we); lo, hi = M.IV.ci(np.array(dr[t]), r0)          # FS-A108: bias-corrected
+            rows.append(dict(**info, ident="WE", var=t[0], h=t[1], r=r0, lo=lo, hi=hi, unbounded=0))
     return rows

@@ -61,10 +61,10 @@ for k in ("y", "f"):
                 if pre and ctrl: continue
                 key = (k, m, pre); ch = CTRL[m] if ctrl else None
                 est = resp(allr, key, ch); dr = np.array([resp(r, key, ch) for r in bd])
-                out.append(dict(series=k, measure=m, base="pre-event close" if pre else "window plus later closes", controls=ctrl, est=est, lo=np.percentile(dr, 5), hi=np.percentile(dr, 95), lo68=np.percentile(dr, 16), hi68=np.percentile(dr, 84),
-                                model=mp, model_lo=np.percentile(md, 5), model_hi=np.percentile(md, 95), n=n))
+                out.append(dict(series=k, measure=m, base="pre-event close" if pre else "window plus later closes", controls=ctrl, est=est, lo=M.IV.ci(dr, est)[0], hi=M.IV.ci(dr, est)[1], lo68=M.IV.ci(dr, est, 16, 84)[0], hi68=M.IV.ci(dr, est, 16, 84)[1],
+                                model=mp, model_lo=M.IV.ci(md, mp)[0], model_hi=M.IV.ci(md, mp)[1], n=n))
 # the window-to-close gap, per +1 pp in the window
 for k in ("y", "f"):
     est = slope(gap[k], s) / slope(wy, s); dr = np.array([slope(gap[k][r], s[r]) / slope(wy[r], s[r]) for r in bd])
-    out.append(dict(series=k, measure="gap", base="close minus window", controls=False, est=est, lo=np.percentile(dr, 5), hi=np.percentile(dr, 95), lo68=np.percentile(dr, 16), hi68=np.percentile(dr, 84), n=n))
+    out.append(dict(series=k, measure="gap", base="close minus window", controls=False, est=est, lo=M.IV.ci(dr, est)[0], hi=M.IV.ci(dr, est)[1], lo68=M.IV.ci(dr, est, 16, 84)[0], hi68=M.IV.ci(dr, est, 16, 84)[1], n=n))
 R = pd.DataFrame(out); R.to_csv(RESULTS / "persistence.csv", index=False, float_format="%.4f"); print(R.round(3).to_string())

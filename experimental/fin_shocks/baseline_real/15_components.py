@@ -54,7 +54,7 @@ if __name__ == "__main__":
             for j, v in enumerate(("u", "P")):
                 for h in M.HORIZ:
                     d = dx[:, h, j] - dy[:, h, j]
-                    rows.append(dict(start=st, contrast=lab, var=v, h=h, diff=sx[h, j] - sy[h, j], lo=np.percentile(d, 5), hi=np.percentile(d, 95), lo95=np.percentile(d, 2.5), hi95=np.percentile(d, 97.5)))
+                    rows.append(dict(start=st, contrast=lab, var=v, h=h, diff=sx[h, j] - sy[h, j], lo=M.IV.ci(d, sx[h, j] - sy[h, j])[0], hi=M.IV.ci(d, sx[h, j] - sy[h, j])[1], lo95=M.IV.ci(d, sx[h, j] - sy[h, j], 2.5, 97.5)[0], hi95=M.IV.ci(d, sx[h, j] - sy[h, j], 2.5, 97.5)[1]))
     D = pd.DataFrame(rows); D.to_csv(RESULTS / "components_diff.csv", index=False, float_format="%.4f")
 
     # ---- Phillips multiplier and its set (as step 5)
