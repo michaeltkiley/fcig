@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 22:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 23:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -645,41 +645,42 @@ Package pdftex.def Info: ../baseline_real/report/fig_persist.pdf  used on input
 ig_financial.pdf>]) [22 <../baseline_real/report/fig_persist.pdf>]
 (../baseline_real/report/tab_credit.tex) [23]
 (../baseline_real/report/tab_timing.tex) [24]
-(../baseline_real/report/tab_rob_summary.tex) [25] [26] [27]
-<../baseline_real/report/fig_decomp_hd.pdf, id=1095, 520.34402pt x 361.35pt>
+(../baseline_real/report/tab_rob_summary.tex) [25] [26] [27] [28]
+<../baseline_real/report/fig_decomp_hd.pdf, id=1102, 520.34402pt x 361.35pt>
 File: ../baseline_real/report/fig_decomp_hd.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_decomp_hd.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_decomp_hd.pdf  used on inp
 ut line 375.
 (pdftex.def)             Requested size: 469.75502pt x 326.23755pt.
- [28]
+
 (../baseline_real/report/tab_decomp_shares.tex) [29 <../baseline_real/report/fi
 g_decomp_hd.pdf>] (../baseline_real/report/tab_slow_shares.tex) [30]
-(../baseline_real/report/tab_slow_resp.tex) [31] [32]
-(./mp_transmission_real.bbl [33] [34] [35] [36] [37] [38]) [39] [40]
+(../baseline_real/report/tab_slow_resp.tex)
+(../baseline_real/report/tab_rstar.tex [31]) [32] [33]
+(./mp_transmission_real.bbl [34] [35] [36] [37] [38]) [39] [40]
 (../baseline_real/report/tab_decomp_diag.tex)
 (../baseline_real/report/tab_proxy_sim.tex) [41] [42] [43]
 (../baseline_real/report/tab_lags.tex) [44] [45] [46]
 (../baseline_real/report/tab_persist.tex) [47]
 (../baseline_real/report/tab_direct.tex) [48]
 (../baseline_real/report/tab_main_A.tex) [49] [50]
-<../baseline_real/report/fig_steps73.pdf, id=1351, 505.89pt x 375.804pt>
+<../baseline_real/report/fig_steps73.pdf, id=1360, 505.89pt x 375.804pt>
 File: ../baseline_real/report/fig_steps73.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_steps73.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_steps73.pdf  used on input
- line 515.
+ line 519.
 (pdftex.def)             Requested size: 469.75502pt x 348.96655pt.
-<../baseline_real/report/fig_gs.pdf, id=1352, 520.34402pt x 216.81pt>
+<../baseline_real/report/fig_gs.pdf, id=1361, 520.34402pt x 216.81pt>
 File: ../baseline_real/report/fig_gs.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_gs.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_gs.pdf  used on input line
- 523.
+ 527.
 (pdftex.def)             Requested size: 469.75502pt x 195.74252pt.
-<../baseline_real/report/fig_size.pdf, id=1353, 520.34402pt x 281.85298pt>
+<../baseline_real/report/fig_size.pdf, id=1362, 520.34402pt x 281.85298pt>
 File: ../baseline_real/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_size.pdf  used on input li
-ne 531.
+ne 535.
 (pdftex.def)             Requested size: 469.75502pt x 254.46527pt.
 
 (../baseline_real/report/tab_main_B.tex) [51] [52 <../baseline_real/report/fig_
@@ -709,27 +710,27 @@ LaTeX Warning: Float too large for page by 187.98776pt on input line 98.
 
 
 ]) [65] [66] [67]
-Underfull \hbox (badness 10000) in paragraph at lines 619--619
+Underfull \hbox (badness 10000) in paragraph at lines 623--623
 []|\OT1/cmr/m/n/10 (+20) Daily,
  []
 
 
-Underfull \hbox (badness 5985) in paragraph at lines 623--624
+Underfull \hbox (badness 5985) in paragraph at lines 627--628
 []|\OT1/cmr/m/n/10 (+20) Cleveland Fed, FRED EX-PINF1YR, EX-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 628--629
+Underfull \hbox (badness 10000) in paragraph at lines 632--633
 []|\OT1/cmr/m/n/10 (+20) FRED DTWEXBGS; ear-lier DTWEXB,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
+Underfull \hbox (badness 10000) in paragraph at lines 633--633
 []|\OT1/cmr/m/n/10 (+20) Daily;
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
+Underfull \hbox (badness 10000) in paragraph at lines 633--633
 \OT1/cmr/m/n/10 (+20) monthly
  []
 
@@ -739,13 +740,13 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `mp_transmission_real.out' has not changed.
-(rerunfilecheck)             Checksum: CCAF29A2EB4DE5BD055C22F47AD6CA54;6845.
+(rerunfilecheck)             Checksum: 2F4E0C5E08A0EBBD9DAE6D4E1A9E0A93;6911.
  ) 
 Here is how much of TeX's memory you used:
- 21765 strings out of 476182
- 384041 string characters out of 5795594
- 2000975 words of memory out of 5000000
- 42842 multiletter control sequences out of 15000+600000
+ 22207 strings out of 476182
+ 392763 string characters out of 5795594
+ 2001975 words of memory out of 5000000
+ 43279 multiletter control sequences out of 15000+600000
  582954 words of font info for 263 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,12n,79p,2293b,798s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -771,10 +772,10 @@ lic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
 8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on mp_transmission_real.pdf (70 pages, 846276 bytes).
+Output written on mp_transmission_real.pdf (70 pages, 851543 bytes).
 PDF statistics:
- 1802 PDF objects out of 2073 (max. 8388607)
- 1228 compressed objects within 13 object streams
- 267 named destinations out of 1000 (max. 500000)
+ 1811 PDF objects out of 2073 (max. 8388607)
+ 1237 compressed objects within 13 object streams
+ 269 named destinations out of 1000 (max. 500000)
  43326 words of extra memory for PDF output out of 51595 (max. 10000000)
 

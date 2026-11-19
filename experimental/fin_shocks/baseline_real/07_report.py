@@ -498,6 +498,8 @@ def rstar_table():
         *rows, r"\bottomrule\end{tabular}",
         r"\begin{flushleft}\footnotesize\textit{Notes:} Two-year yield, funds rate and FCI less expected inflation and $r^*$ (the FCI in the version relative to $r^*$, with the same $r^*$), 12 lags, March--December 2020 dropped; per +1 pp on the two-year yield in the window; unemployment gap in percentage points, price level in percent, after 24 months. Laubach--Williams and Holston--Laubach--Williams: one-sided estimates (Federal Reserve Bank of New York); Lubik--Matthes: median estimate (Federal Reserve Bank of Richmond). Effect of adding the FCI: the response with the FCI less the response with the rates alone, on the same bootstrap draws. $^{*}$: the 90\% interval excludes zero; intervals below.\end{flushleft}", r"\end{table}"]) + "\n")
     (REPORT / "numbers.tex").write_text((REPORT / "numbers.tex").read_text() + "\n".join(ml) + "\n")
+    _sig = {k.split("{")[0]: k for k in ml}
+    assert all(any(f"bl:rs:{f}:{v}:eff:sig" in x and x.endswith("{yes}") for x in ml) for f in ("rstar", "hlw", "lm") for v in ("u", "P")), "r* table: the effect of adding the FCI since 1996 is no longer significant for every r*"
 rstar_table()
 
 def components_test():
