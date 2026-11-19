@@ -223,8 +223,10 @@ def simulate(Bd, C, K, nd, L, b_day, k0, n0, months=H + 1, nother=21, A=None):
         fb[t] = f[off + start[t]:off + start[t + 1]].mean(axis=0)
     return macro, fb, f[off + k0:off + k0 + 67].copy()          # last: the daily financial path from the event day (day 0) for 67 days
 
+POS_OVERRIDE = [None]      # FS-A97 (step 16): a function mapping the event-position bins to the bins used (e.g. every announcement on the first day of its month); None = the actual positions
 def irf(Bd, C, K, nd, L, idx, pos, fci):
     """Event-position-weighted monthly macro and monthly-average financial responses to a unit shock, h = 0..H, and the daily financial path from the event day."""
+    if POS_OVERRIDE[0] is not None: pos = POS_OVERRIDE[0](pos)
     b = impact(fci, idx); Am = agg_matrix(fci); out = [(w, simulate(Bd, C, K, nd, L, b, k0, n0, A=Am)) for k0, n0, w in pos]
     return sum(w * m[0] for w, m in out), sum(w * m[1] for w, m in out), sum(w * m[2] for w, m in out)
 

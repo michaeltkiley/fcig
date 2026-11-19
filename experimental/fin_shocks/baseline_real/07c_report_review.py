@@ -50,7 +50,7 @@ for i, (f, v, cells) in enumerate(rows):
 (REPORT / "tab_timing.tex").write_text("\n".join([r"\begin{table}[tp]\centering\small", r"\caption{Two Corrections: Announcement Timing and Financial Conditions (24 Months; 12 Lags)}\label{tab:timing2}", FIT,
     r"\begin{tabular}{llcccc}\toprule & & \multicolumn{2}{c}{Yield alone} & \multicolumn{2}{c}{Yield and FCI}\\ \cmidrule(lr){3-4}\cmidrule(lr){5-6}",
     r"Yield & Response & Monthly VAR & Daily block & Monthly VAR & Daily block\\ \midrule", *lines, r"\bottomrule\end{tabular}}",
-    r"\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window, 1996--2026. Monthly VAR: the window-impact monthly VAR of Section~\ref{sec:monthlyvar}, which takes the impact from the windows and treats every announcement as if it fell at the start of its month (end-of-month series). Daily block: the main model, which tracks when in the month each announcement falls. $^{**}$ and $^{*}$: the 95 and 90 percent intervals exclude zero.\end{flushleft}", r"\end{table}"]) + "\n")
+    r"\begin{flushleft}\footnotesize\textit{Notes:} Per +1 pp on the two-year yield in the announcement window, 1996--2026. Monthly VAR: the window-impact monthly VAR of Section~\ref{sec:monthlyvar}, in monthly averages, whose impact is the main model's response of the month's average two-year yield, FCI and funds rate in the announcement month; it loses the position of each announcement within its month and the daily path of the financial variables in the following weeks. Daily block: the main model. $^{**}$ and $^{*}$: the 95 and 90 percent intervals exclude zero.\end{flushleft}", r"\end{table}"]) + "\n")
 for f in ("nom", "real"):
     t = T[(f, "u")]
     pass
