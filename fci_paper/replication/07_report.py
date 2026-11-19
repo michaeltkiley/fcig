@@ -1692,6 +1692,14 @@ for step in ("rstar", "real", "nominal"):
 chk(nvct("rstar") > 0.10, "nv: equal coefficients on the components not rejected at 10 percent (r*)")
 chk(nvc("rstar", "F", "gap_h4") / nvc("rstar", "R", "gap_h4") > 0.5, "nv: components free keep more than half of the one-year response (r*)")
 
+# ------------------------------------------------------------------ new version: slow-moving trend in each MCFCI (step 38; FP-A76)
+NVTR = pd.read_csv(RES / "38_trend_share.csv").set_index("step")
+for step in ("nominal", "real", "rstar"):
+    mac(f"nv:trend:{step}", 100 * NVTR.loc[step, "r2_quadratic"], 0)
+mac("nv:trend:first", str(NVTR.loc["rstar", "start"])[:4]); mac("nv:trend:last", str(NVTR.loc["rstar", "end"])[:4])
+chk(NVTR.loc["nominal", "r2_quadratic"] > NVTR.loc["real", "r2_quadratic"] > NVTR.loc["rstar", "r2_quadratic"], "nv: each step removes slow-moving variation (quadratic trend share nominal > real > r*)")
+chk(NVTR.loc["rstar", "r2_quadratic"] < 0.5 * NVTR.loc["nominal", "r2_quadratic"], "nv: relative to r*, the trend share is less than half the nominal one")
+
 # ------------------------------------------------------------------ write numbers.tex and check the paper's macros
 def norm(k):
     return k.replace("_", ":")
