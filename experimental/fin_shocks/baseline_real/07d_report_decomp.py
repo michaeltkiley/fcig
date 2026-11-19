@@ -84,7 +84,7 @@ for key, era, src, lab in ROWS:
 SRCF = [("1974-1989", "spliced", "1974--1989, policy-direction surprises (monthly backcast)"), ("1990-2026", "daily_all", "1990--2026, policy-direction surprises (daily)"), ("1990-2026", "daily_other", r"\quad days without an announcement only"),
         ("1990-2026", "daily_ann", r"\quad announcement days only"), ("1990-2026", "measured", r"\quad announcement surprises"), ("1996-2026", "daily_all", "1996--2026, policy-direction surprises (daily)"), ("1996-2026", "measured", r"\quad announcement surprises")]
 lines = []
-for fci, ft in (("real", "Yield and FCI"), ("0", "Yield alone")):
+for fci, ft in (("real", "Two rates and FCI"), ("0", "Two rates alone")):
     for model in (1996, 1973):
         lines.append(rf"\addlinespace\multicolumn{{6}}{{l}}{{\textit{{{ft}, model from {model}}}}}\\")
         for era, src, lab in SRCF:

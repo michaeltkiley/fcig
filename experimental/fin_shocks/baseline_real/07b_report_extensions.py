@@ -71,7 +71,7 @@ pm = point_model()
 # =============================================================== 2. matched baseline table (24 months, without and with the FCI, paired differences)
 def matched():
     body = [r"\begin{tabular}{lcccccc}\toprule", r" & \multicolumn{3}{c}{Unemployment gap (pp)} & \multicolumn{3}{c}{Price level (\%)}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}",
-            r"Yield measure & Yield alone & Yield and FCI & Difference & Yield alone & Yield and FCI & Difference\\ \midrule"]
+            r"Rates measured as & Two rates alone & Two rates and FCI & Difference & Two rates alone & Two rates and FCI & Difference\\ \midrule"]
     for f in FORMS:
         cells = []
         for v in ("u", "P"):
@@ -88,7 +88,7 @@ def matched_two():
     """Table 3 (Part 2A): the matched comparison at 24 months in two panels (unemployment gap, price level); rows = nominal, real, r*-gap (bold);
     columns = yield alone and yield with the FCI, monthly equations from 1996 and from 1973. Same surprise, normalization, lags and paired draws within a sample."""
     body = [r"\begin{tabular}{lcccccc}\toprule", r" & \multicolumn{3}{c}{Monthly equations from 1996} & \multicolumn{3}{c}{Monthly equations from 1973}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}",
-            r"Yield measure & Yield alone & Yield and FCI & Difference & Yield alone & Yield and FCI & Difference\\ \midrule"]
+            r"Rates measured as & Two rates alone & Two rates and FCI & Difference & Two rates alone & Two rates and FCI & Difference\\ \midrule"]
     for v, head in (("u", "A. Unemployment gap (percentage points)"), ("P", "B. Core PCE price level (percent)")):
         body.append(rf"\multicolumn{{7}}{{l}}{{\textit{{{head}}}}}\\")
         for f in FORMS:
@@ -103,9 +103,17 @@ def matched_two():
         if v == "u": body.append(r"\addlinespace")
     body += [r"\bottomrule\end{tabular}"]
     note = (r"Responses 24 months after a policy move that raises the two-year yield 1 pp in the announcement window; 12 lags; March--December 2020 dropped; the shocks are the 252 announcements of 1996--2026 in both samples. "
-            r"Brackets: 90\% intervals; $^{**}$, $^{*}$: 5 and 10 percent levels. Difference: yield and FCI less yield alone, computed draw by draw (the two use the same bootstrap draws within a sample). 12 and 36 months and other lag lengths in Appendix Tables~\ref{tab:mainB} and~\ref{tab:lags}.")
+            r"Brackets: 90\% intervals; $^{**}$, $^{*}$: 5 and 10 percent levels. Difference: two rates and FCI less two rates alone, computed draw by draw (the two use the same bootstrap draws within a sample). 12 and 36 months and other lag lengths in Appendix Tables~\ref{tab:mainB} and~\ref{tab:lags}.")
     (REPORT / "tab_matched.tex").write_text(tbl("Responses without and with the FCI After Two Years", "tab:matched", "\n".join(body), note) + "\n")
 matched_two()
+
+def _matched_sig_claims():
+    """FS-A115: the significance levels the text states for the paired differences of Table 4 (24 m, since 1996): unemployment 5 percent in both versions; the price level 5 percent in the real version, 10 but not 5 percent in the nominal."""
+    for f, v, lvl in (("nom", "u", 5), ("real", "u", 5), ("real", "P", 5), ("nom", "P", 10)):
+        p, d = con(f, "A", "C", v, 24); q = (2.5, 97.5) if lvl == 5 else (5, 95)
+        assert pc(d, q[0], p) * pc(d, q[1], p) > 0, f"paired difference {f} {v} at 24 m is no longer significant at the {lvl} percent level"
+    p, d = con("nom", "A", "C", "P", 24); assert pc(d, 2.5, p) * pc(d, 97.5, p) <= 0, "the nominal price-level difference is now significant at 5 percent: update Section 3.1"
+_matched_sig_claims()
 pass
 pass
 pass
@@ -278,7 +286,7 @@ def tradeoff_compact():
     def cellk(r):
         if np.isfinite(r.k_lo) and np.isfinite(r.k_hi): return f"[{num(r.k_lo)}, {num(r.k_hi)}]" + ("" if bool(r.connected) else r"$^{\dagger}$")
         return "undefined; 68\\%: " + (f"[{num(r.k68_lo)}, {num(r.k68_hi)}]" if np.isfinite(r.k68_lo) and np.isfinite(r.k68_hi) else "undefined")
-    body = [r"\begin{tabular}{lcccc}\toprule", r" & \multicolumn{2}{c}{24 months} & \multicolumn{2}{c}{36 months}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Rates and FCI, measured as & Estimate & 90\% set & Estimate & 90\% set\\ \midrule"]
+    body = [r"\begin{tabular}{lcccc}\toprule", r" & \multicolumn{2}{c}{24 months} & \multicolumn{2}{c}{36 months}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Two rates and FCI, measured as & Estimate & 90\% set & Estimate & 90\% set\\ \midrule"]
     for lab, f, st, bold in (("Nominal, 1996 start", "nom", "1996-01", False), ("Real, 1996 start (baseline)", "real", "1996-01", True), ("Nominal, 1973 start", "nom", "1973-01", False), ("Real, 1973 start", "real", "1973-01", False)):
         r = row(f, st); a = lambda x: rf"\textbf{{{x}}}" if bold else x
         body.append(f"{a(lab)} & {a(num(r[24].kappa))} & {a(cellk(r[24]))} & {a(num(r[36].kappa))} & {a(cellk(r[36]))}" + r"\\")
