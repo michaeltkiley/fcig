@@ -2,7 +2,7 @@
 Every case is run without the FCI and with the FCI in the matching form, with the 2-year yield and the federal funds rate in the daily block. No deterministic trend except panel F2 (natural cubic spline).
 A case is (form, fci, macro, start, end, t2020, trend); see lib/model.py."""
 FORMS = {"nom": "Nominal", "real": "Real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)"}
-FCI_LABEL = {0: "none", "cmp": "components", "cmpE": "equities free", "cmpR": "index", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)", "baa": "r*-gap + Baa spread", "jkw": "r*-gap (JK weights)", "calY": "r*-gap (Y weights)", "calB": "r*-gap (FRB/US weights)", "calG": "r*-gap (GS weights)"}
+FCI_LABEL = {0: "none", "cmp": "components", "cmpE": "equities free", "cmpR": "index", "nom": "nominal", "real": "real", "rstar": "r*-gap", "kiley": "r*-gap (Kiley)", "baa": "real + Baa spread", "baa0": "none (Baa spread)", "jkw": "r*-gap (JK weights)", "calY": "r*-gap (Y weights)", "calB": "r*-gap (FRB/US weights)", "calG": "r*-gap (GS weights)"}
 
 def pair(form, with_fci, **kw):
     """The same rate without and with the FCI."""
@@ -43,7 +43,7 @@ PANELS = [
        sum([pair(f, f, trend="spline") for f in VERSIONS], [])),
  # ---- appendix (kept from the earlier list where they still apply; real version)
  *both("A1", "sample ends in December 2019", "Real. All equations, monthly and daily.", pair("real", "real", end=2019, t2020="in")),
- *both("A2", "daily Baa-10-year spread in the daily block", "Real. The daily Baa-10-year Treasury spread enters the daily block next to the yields and the FCI; its impact is its announcement-day change on the surprise.", pair("real", "baa")),
+ *both("A2", "daily Baa-10-year spread in the daily block", "Real. The daily Baa-10-year Treasury spread enters the daily block next to the rates (and the FCI); its impact is its announcement-day change on the surprise; months before the daily data (1986) use the monthly series. Without the FCI: the rates and the spread (FS-A106).", [dict(form="real", fci="baa0"), dict(form="real", fci="baa")]),
  *both("A3", "Jarocinski-Karadi sign-restricted surprise", "Real. The Nakamura-Steinsson surprise kept only for announcements in which the 2-year yield and the S\\&P 500 move in opposite directions in the window.", pair("real", "real", shock="jk")),
  *both("A4", "the 1-year yield in place of the 2-year", "Nominal and real. The 1-year Treasury yield replaces the 2-year (the funds rate stays); responses per +1 pp on the 1-year yield in the window.",
        sum([pair(f, f, ext="1y") for f in VERSIONS], [])),
@@ -77,7 +77,7 @@ def panel_by_id(pid): return next(p for p in PANELS if p["id"] == pid)
 GROUP_NOTE = {"B": "Nominal and real 2-year yield and funds rate; the FCI is the index in the matching form in each case. March-December 2020 dropped from the monthly and daily equations (values still enter as lags). From 1973: monthly series in place of daily data before 1990.",
               "R": "2020 left in: no month dummies. IP added: industrial production as a further monthly variable. Bauer-Swanson: orthogonalized surprise, announcements through 2019. Without the funds rate: the 2-year yield is the only rate in the daily block. From 1985: monthly equations from January 1985. Lag length: every case at 6 lags in the appendix tables.",
               "F": "r*-gap: rates less expected inflation and Laubach-Williams r*, the FCI in the r*-gap form. Spline: natural cubic spline in time in every monthly equation, knots at the first and last estimation months and at NBER peaks inside.",
-              "A": "Ends 2019: all equations. Baa: daily Baa-10-year spread in the daily block. Jarocinski-Karadi: surprise kept when the 2-year yield and the S\\&P 500 move in opposite directions. 1-year yield: replaces the 2-year."}
+              "A": "Ends 2019: all equations. Baa: daily Baa-10-year spread in the daily block. Jarocinski-Karadi: surprise kept when the 2-year yield and the S\\&P 500 move in opposite directions. 1-year yield: replaces the 2-year; its rows are per +1 pp on the 1-year yield in the window."}
 
 # Monthly VAR benchmarks (lib/monthly.py): every step without and with the FCI in the same form, on monthly averages (FS-A76: one data type), March-December 2020 dropped,
 # from 1996 and from 1973 (months before the daily data use the monthly series, as in the main model). The instrument (NS surprise) exists from 1996 only.
