@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 20:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.19)  19 NOV 2026 20:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -671,19 +671,19 @@ rt/fig_decomp_hd.pdf>] [31] (../baseline_real/report/tab_slow_shares.tex)
 (../baseline_real/report/tab_persist.tex) [47]
 (../baseline_real/report/tab_direct.tex) [48]
 (../baseline_real/report/tab_main_A.tex) [49] [50]
-<../baseline_real/report/fig_steps73.pdf, id=1395, 505.89pt x 375.804pt>
+<../baseline_real/report/fig_steps73.pdf, id=1396, 505.89pt x 375.804pt>
 File: ../baseline_real/report/fig_steps73.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_steps73.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_steps73.pdf  used on input
  line 519.
 (pdftex.def)             Requested size: 469.75502pt x 348.96655pt.
-<../baseline_real/report/fig_gs.pdf, id=1397, 520.34402pt x 216.81pt>
+<../baseline_real/report/fig_gs.pdf, id=1398, 520.34402pt x 216.81pt>
 File: ../baseline_real/report/fig_gs.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_gs.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_gs.pdf  used on input line
  527.
 (pdftex.def)             Requested size: 469.75502pt x 195.74252pt.
-<../baseline_real/report/fig_size.pdf, id=1398, 520.34402pt x 281.85298pt>
+<../baseline_real/report/fig_size.pdf, id=1399, 520.34402pt x 281.85298pt>
 File: ../baseline_real/report/fig_size.pdf Graphic file (type pdf)
 <use ../baseline_real/report/fig_size.pdf>
 Package pdftex.def Info: ../baseline_real/report/fig_size.pdf  used on input li
@@ -696,7 +696,7 @@ steps73.pdf>] [53 <../baseline_real/report/fig_gs.pdf> <../baseline_real/report
 (../baseline_real/report/tab_tradeoff_full.tex) [54] [55]
 (../baseline_real/report/tab_main_R.tex
 
-LaTeX Warning: Float too large for page by 177.48776pt on input line 98.
+LaTeX Warning: Float too large for page by 187.98776pt on input line 98.
 
 ) [56] (../baseline_real/report/tab_main_F.tex) [57]
 (../baseline_real/report/tab_app_B.tex)
@@ -751,11 +751,11 @@ Package rerunfilecheck Info: File `mp_transmission_real.out' has not changed.
 (rerunfilecheck)             Checksum: CCAF29A2EB4DE5BD055C22F47AD6CA54;6845.
  ) 
 Here is how much of TeX's memory you used:
- 21748 strings out of 476182
- 384206 string characters out of 5795594
+ 21746 strings out of 476182
+ 384314 string characters out of 5795594
  1999975 words of memory out of 5000000
  42829 multiletter control sequences out of 15000+600000
- 582859 words of font info for 260 fonts, out of 8000000 for 9000
+ 582808 words of font info for 259 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,12n,79p,2293b,802s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0600.600pk> </
@@ -780,10 +780,10 @@ lic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
 8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on mp_transmission_real.pdf (70 pages, 866453 bytes).
+Output written on mp_transmission_real.pdf (70 pages, 867058 bytes).
 PDF statistics:
- 1849 PDF objects out of 2073 (max. 8388607)
- 1222 compressed objects within 13 object streams
+ 1850 PDF objects out of 2073 (max. 8388607)
+ 1223 compressed objects within 13 object streams
  266 named destinations out of 1000 (max. 500000)
  43331 words of extra memory for PDF output out of 51595 (max. 10000000)
 
