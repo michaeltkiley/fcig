@@ -49,6 +49,6 @@ Companion list on r*: `FROM_NOTE_B_RSTAR.md` (FP-A77). Items 1-2 of that list ar
 * The variance-share and history exercise (Section 6 of Note B) rests on Note B's daily projection; it is not needed in Note A.
 
 ## 10. Open items in Note B that touch Note A [inference]
-* The Phillips multiplier is defined in Note B Section 3.3 only (plan item 4 is open); Note A does not use it.
-* Plagborg-Moller and Wolf (2022) is not cited in either note (never read); it bears on Note B's variance shares and on any claim that a monthly VAR recovers a shock.
+* The sacrifice ratio is now introduced in the Note B introduction (FS-A119) and the multiplier defined in Section 3.3; Note A does not use it.
+* Plagborg-Moller and Wolf (2022) is cited in Note B Section 6 (FS-A119; abstract checked only), not in Note A; it bears on Note B's variance shares and on any claim that a monthly VAR recovers a shock.
 * References added to Note B's bibliography (`lubik2015`: Lubik and Matthes, Richmond Fed Economic Brief 15-10, title as on the Richmond Fed page): add to Note A's if Section 3 above is adopted.
