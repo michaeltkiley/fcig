@@ -148,3 +148,8 @@ All numbers below are at 12 lags, per +1 pp on the two-year yield in the window.
 * **Section 7:** three r* estimates (Table 13).
 * **Appendices:** the bootstrap appendix describes the bias-corrected intervals and the weights sensitivity; the further-tests table has matched Baa rows and the 1-year units; the direct projection excludes 2020 inflation from price outcomes.
 * **Throughout:** bias-corrected percentile intervals; "Two rates alone" / "Two rates and FCI" labels; 31 appendix pointers rewritten as a sentence plus a footnote.
+
+## After the second review, 20 Nov 2026 (FS-A118)
+* **Sacrifice-ratio sets by direct inversion** (Table 5 and the appendix table: multiplier, cost and its set); the nominal version from 1973 has a bounded cost (about 0.9, set -0.06 to 3.1), not "undefined".
+* **Introduction:** "The signs are the same in nearly every test."; the three-year cost against Barnichon and Mesters; the daily block's contribution (0.16 monthly against 0.40 daily). **Conclusion:** the 0.90 is the contribution of surprises in the policy direction, with the two sensitivities.
+* **Sections 5.2 and 7:** the paired difference for the sample ending 2019; "the responses have the same signs under both treatments".

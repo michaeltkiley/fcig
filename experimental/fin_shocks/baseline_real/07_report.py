@@ -282,26 +282,31 @@ try:
             s68 = "undefined" if (np.isinf(r.k68_lo) or np.isinf(r.k68_hi)) else f"[{num(r.k68_lo)}, {num(r.k68_hi)}]"
             return f"{num(r.kappa)} (undefined; 68\\%: {s68})"
         return f"{num(r.kappa)} [{num(r.k_lo)}, {num(r.k_hi)}]" + ("" if bool(r.connected) else r"$^{\dagger}$")
+    def cset(r):
+        """FS-A118: the cost (sacrifice ratio) with its directly inverted 90 percent set; not defined where the price level does not fall."""
+        if r.sac <= 0: return "not defined"
+        if not (np.isfinite(r.s_lo) and np.isfinite(r.s_hi)): return f"{num(r.sac)} (unbounded)"
+        return f"{num(r.sac)} [{num(r.s_lo)}, {num(r.s_hi)}]" + ("" if bool(r.s_connected) else r"$^{\dagger}$")
     lines = []
     def trow(lab, c):
         t = T[(T.form == c["form"]) & (T.fci == str(c["fci"])) & (T.macro == c["macro"]) & (T.start == c["start"]) & (T.end.fillna("").astype(str).str.replace(".0", "", regex=False) == (str(c["end"]) if c["end"] else ""))
               & (T.t2020 == c["t2020"]) & (T.trend == c["trend"]) & (T.lags == MAIN_LAGS) & (T["shock"] == c.get("shock", "ns")) & (T["ext"].fillna("") == c.get("ext", "") if "ext" in T else True)]
-        return f"{lab} & {CS.FCI_LABEL[c['fci']]} & " + " & ".join(kset(t[t.H == h].iloc[0]) for h in (24, 36)) + r"\\"
+        return f"{lab} & {CS.FCI_LABEL[c['fci']]} & " + " & ".join(kset(t[t.H == h].iloc[0]) for h in (24, 36)) + " & " + " & ".join(cset(t[t.H == h].iloc[0]) for h in (24, 36)) + r"\\"
     for pb in ("B", "B73"):
-        lines.append(rf"\multicolumn{{4}}{{l}}{{\textit{{{CS.SHORT[pb]}}}}}\\")
+        lines.append(rf"\multicolumn{{6}}{{l}}{{\textit{{{CS.SHORT[pb]}}}}}\\")
         for f in ("nom", "real"):
             lines += [trow(CS.FORMS[f] if c["fci"] == 0 else "", c) for c in CS.panel_by_id(pb)["cases"] if c["form"] == f]
         lines.append(r"\addlinespace")
-    lines.append(r"\multicolumn{4}{l}{\textit{Robustness tests and the final section, real with the FCI}}\\")
+    lines.append(r"\multicolumn{6}{l}{\textit{Robustness tests and the final section, real with the FCI}}\\")
     for pid in CS._both("R1", "R2", "R3", "R5") + ["R6"] + CS._both("F2") + CS._both("A1"):          # FS-A112: the samples ending in 2019 added
         p_ = CS.panel_by_id(pid); lines.append(trow(CS.SHORT[pid], next(c for c in p_["cases"] if c["fci"] != 0 and c["form"] == "real")))
     for pid in CS._both("F1"):
         p_ = CS.panel_by_id(pid); lines.append(trow(CS.SHORT[pid], next(c for c in p_["cases"] if c["fci"] != 0)))
     d = D[D.lags == MAIN_LAGS].set_index("H")
-    lines += [r"\addlinespace", "Real minus nominal, with FCI & & " + " & ".join(f"[{num(d.lo[h])}, {num(d.hi[h])}]" for h in (24, 36)) + r"\\"]
+    lines += [r"\addlinespace", "Real minus nominal, with FCI & & " + " & ".join(f"[{num(d.lo[h])}, {num(d.hi[h])}]" for h in (24, 36)) + r" & & \\"]
     (REPORT / "tab_tradeoff_full.tex").write_text("\n".join([r"\begin{table}[H]\centering\small", r"\caption{Implied trade-off: Phillips multiplier $\kappa_H$ (12 lags), all cases}\label{tab:tradefull}",
-        r"\begin{tabular}{llrr}\toprule Case & FCI & $H=24$ months & $H=36$ months\\ \midrule", *lines, r"\bottomrule\end{tabular}",
-        r"\par\smallskip\parbox{0.9\linewidth}{\scriptsize $\kappa_H$ = core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response (Barnichon and Mesters 2021); the sacrifice ratio is $-1/\kappa_H$. Point estimate and 90\% confidence set (Anderson--Rubin type) in brackets, computed exactly (a wide grid refined by bisection), so a finite end is never an artifact of the grid. An infinite end means that the 90\% interval of the cumulative unemployment response includes zero: the data then cannot rule out arbitrarily steep trade-offs on that side; ``unbounded'': both sides. $^{\dagger}$: the set has a gap wider than 2 percent of its width; shown is its hull. Ends 2019: all equations end in December 2019 (2020 not dropped). Last row: paired difference over common announcement draws.}", r"\end{table}"]) + "\n")
+        r"\begin{tabular}{llrrrr}\toprule & & \multicolumn{2}{c}{Multiplier $\kappa_H$} & \multicolumn{2}{c}{Cost (sacrifice ratio)}\\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} Case & FCI & $H=24$ & $H=36$ & $H=24$ & $H=36$\\ \midrule", *lines, r"\bottomrule\end{tabular}",
+        r"\par\smallskip\parbox{0.9\linewidth}{\scriptsize $\kappa_H$ = core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response (Barnichon and Mesters 2021); the sacrifice ratio is $-1/\kappa_H$. Point estimate and 90\% confidence set (Anderson--Rubin type) in brackets, computed exactly (a wide grid refined by bisection), so a finite end is never an artifact of the grid. An infinite end means that the 90\% interval of the cumulative unemployment response includes zero: the data then cannot rule out arbitrarily steep trade-offs on that side; ``unbounded'': both sides. $^{\dagger}$: the set has a gap wider than 2 percent of its width; shown is its hull. Ends 2019: all equations end in December 2019 (2020 not dropped). Cost: percentage-point years of cumulative unemployment per 1 percent lower price level, with the 90\% set obtained by inverting the test for the cost itself (bounded whenever the price response is well estimated; ``not defined'' where the price level does not fall). Last row: paired difference over common announcement draws.}", r"\end{table}"]) + "\n")
 except FileNotFoundError:
     print("tradeoff.csv missing: run 04_tradeoff.py first")
 

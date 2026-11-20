@@ -394,6 +394,28 @@ def ar_set(Pd, Ud, q=(5, 95), P0=None, U0=None):
     gaps = [KAPPA[b[0]] - KAPPA[a[-1]] for a, b in zip(seg[:-1], seg[1:])]
     return lo, hi, bool(all(g < 0.02 * width for g in gaps))
 
+SGRID = np.sort(np.concatenate([-np.logspace(-3, 3, 3000), [0.0], np.logspace(-3, 3, 3000)]))     # FS-A118: -1e3 .. 1e3, dense near zero
+
+def sac_set(Pd, Ud, P0, U0, q=(5, 95)):
+    """FS-A118: confidence set for the sacrifice ratio s = U_H / (-P_H) (percentage-point years of cumulative unemployment per 1 percent lower price level), by inverting the test directly:
+    {s : the bias-corrected bootstrap interval of U_H + s P_H contains 0}. Unlike the set for kappa = P_H / U_H, it is bounded whenever the price response is well estimated, even if cumulative
+    unemployment is near zero (the review of 19 Nov 2026). Grid -1e3..1e3 refined by bisection; infinite only if the set reaches the grid end; connectedness as in ar_set. Returns (lo, hi, connected)."""
+    def inside(k):
+        a, b = IV.ci(Ud + k * Pd, U0 + k * P0, *q); return a <= 0 <= b
+    Z = Ud[:, None] + SGRID[None, :] * Pd[:, None]; Qz = IV.quantiles(Z, U0 + SGRID * P0, q); ok = (Qz[0] <= 0) & (Qz[1] >= 0)
+    if not ok.any(): return np.nan, np.nan, True
+    i = np.where(ok)[0]
+    def edge(a, b):
+        for _ in range(40):
+            mid = (a + b) / 2
+            if inside(mid): b = mid
+            else: a = mid
+        return b
+    lo = -np.inf if ok[0] else edge(SGRID[i[0] - 1], SGRID[i[0]]); hi = np.inf if ok[-1] else edge(SGRID[i[-1] + 1], SGRID[i[-1]])
+    seg = np.split(i, np.where(np.diff(i) > 1)[0] + 1); width = SGRID[i[-1]] - SGRID[i[0]]
+    gaps = [SGRID[b[0]] - SGRID[a[-1]] for a, b in zip(seg[:-1], seg[1:])]
+    return lo, hi, bool(all(g < 0.02 * width for g in gaps))
+
 def cum_u(s):
     """Cumulative unemployment-gap response, percentage-point years: index h holds sum_{1..h} u_h / 12 (axis -2 is time)."""
     return np.cumsum(s, axis=-2) / 12
@@ -403,6 +425,7 @@ def multiplier_rows(spec, est):
     s0, sd = est["s0"], est["sd"]; U0 = np.cumsum(s0[:, 0]) / 12; Ud = np.cumsum(sd[:, :, 0], axis=1) / 12; rows = []
     for h in HORIZ:
         lo, hi, con = ar_set(sd[:, h, 1], Ud[:, h], (5, 95), s0[h, 1], U0[h]); lo68, hi68, _ = ar_set(sd[:, h, 1], Ud[:, h], (16, 84), s0[h, 1], U0[h]); ulo, uhi = IV.ci(Ud[:, h], U0[h])
+        slo, shi, scon = sac_set(sd[:, h, 1], Ud[:, h], s0[h, 1], U0[h]); s68lo, s68hi, _ = sac_set(sd[:, h, 1], Ud[:, h], s0[h, 1], U0[h], (16, 84))            # FS-A118: the sacrifice ratio U / (-P), direct inversion
         rows.append(dict(**spec, lags=est["lags"], H=h, P=s0[h, 1], U=U0[h], U_lo=ulo, U_hi=uhi,
-                         kappa=s0[h, 1] / U0[h], k_lo=lo, k_hi=hi, connected=con, k68_lo=lo68, k68_hi=hi68))
+                         kappa=s0[h, 1] / U0[h], k_lo=lo, k_hi=hi, connected=con, k68_lo=lo68, k68_hi=hi68, sac=-U0[h] / s0[h, 1], s_lo=slo, s_hi=shi, s_connected=scon, s68_lo=s68lo, s68_hi=s68hi))
     return rows

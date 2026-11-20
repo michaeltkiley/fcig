@@ -219,6 +219,7 @@ def sample_facts():
         for v in ("u", "P"):
             k = VAR[v]; mac(f"sm:{tag}:{v}:12", num(z["s0"][12, k])); mac(f"sm:{tag}:{v}:24", num(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:abs", ab(z["s0"][24, k])); mac(f"sm:{tag}:{v}:24:lo", num(pc(z["sd"][:, 24, k], 5, z["s0"][24, k]))); mac(f"sm:{tag}:{v}:24:hi", num(pc(z["sd"][:, 24, k], 95, z["s0"][24, k])))
             if tag == "end96" and v == "u": assert sig10(z["sd"][:, 12, k], z["s0"][12, k]) and not sig10(z["sd"][:, 24, k], z["s0"][24, k]), "ends 2019 from 1996: unemployment is significant at 12 m and not at 24 m (Section 5.2)"
+            if tag == "end96": _pt = z["s0"][24, k] - C_["s0"][24, k]; _d = z["sd"][:, 24, k] - C_["sd"][:, 24, k]; assert (sig10(_d, _pt) if v == "u" else not sig10(_d, _pt)), "ends 2019 from 1996: the paired difference is significant for unemployment and not for the price level (Section 5.2)"
             mac(f"sm:{tag}:{v}:24:sig5", "significant" if sig5(z["sd"][:, 24, k], z["s0"][24, k]) else "not significant")
             pt, d = z["s0"][24, k] - C_["s0"][24, k], z["sd"][:, 24, k] - C_["sd"][:, 24, k]; mac(f"sm:{tag}:{v}:24:AC", num(pt)); mac(f"sm:{tag}:{v}:24:AClo", num(pc(d, 5, pt))); mac(f"sm:{tag}:{v}:24:AChi", num(pc(d, 95, pt)))
     ev = D.EV.d.iloc[D.event_index()]; mac("sm:nev:19", int((ev <= "2019-12-31").sum())); mac("sm:nev:all", len(ev)); mac("sm:nev:post", int((ev > "2019-12-31").sum()))
@@ -271,7 +272,12 @@ def sacrifice():
     for (st_, sx_), H_ in [(a_, b_) for a_ in (("1996-01", ""), ("1973-01", "73")) for b_ in (24, 36)]:
         t = T[(T.form == "real") & (T.fci == "real") & (T.macro == "u,pi") & (T.start == st_) & T.end.isna() & (T.t2020 == "out") & (T["shock"] == "ns") & (T["ext"].fillna("") == "" if "ext" in T else True) & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0]
         pass
-        mac(f"tr{sx_}:sac:{H_}", f"{abs(1 / t.kappa):.1f}"); mac(f"tr{sx_}:sac:{H_}:lo", f"{abs(1 / t.k_lo):.1f}"); mac(f"tr{sx_}:sac:{H_}:hi", f"{abs(1 / t.k_hi):.1f}")
+        mac(f"tr{sx_}:sac:{H_}", f"{t.sac:.1f}"); mac(f"tr{sx_}:sac:{H_}:lo", f"{t.s_lo:.1f}"); mac(f"tr{sx_}:sac:{H_}:hi", f"{t.s_hi:.1f}")          # FS-A118: the sets come from inverting the test for the cost directly
+        if (st_, H_) == ("1996-01", 36): assert t.s_hi < 6.7, "the three-year cost set from 1996 no longer excludes the Barnichon-Mesters value of about 7 (Section 3.3)"
+    n_ = T[(T.form == "nom") & (T.fci == "nom") & (T.macro == "u,pi") & (T.start == "1973-01") & T.end.isna() & (T.t2020 == "out") & (T["shock"] == "ns") & (T["ext"].fillna("") == "" if "ext" in T else True) & (T.trend == "none") & (T.lags == 12)].set_index("H")
+    for H_ in (24, 36):
+        mac(f"trn73:sac:{H_}", f"{n_.loc[H_].sac:.1f}"); mac(f"trn73:sac:{H_}:lo", num(n_.loc[H_].s_lo)); mac(f"trn73:sac:{H_}:hi", f"{n_.loc[H_].s_hi:.1f}")
+    assert np.isfinite(n_.loc[24].s_lo) and np.isfinite(n_.loc[24].s_hi) and n_.loc[24].s_lo < 0 < n_.loc[24].s_hi and n_.loc[24].U_lo < 0 < n_.loc[24].U_hi, "nominal from 1973: the cost set should be bounded and include zero, with cumulative unemployment including zero (Section 3.3)"
 sacrifice()
 _T = pd.read_csv(RESULTS / "tradeoff.csv"); _T["fci"] = _T.fci.astype(str); _T = _T[(_T.macro == "u,pi") & _T.end.isna() & (_T.t2020 == "out") & (_T["shock"] == "ns") & (_T.trend == "none") & (_T.lags == 12) & (_T.H == 24) & (_T["ext"].isna() if "ext" in _T else True)]
 _k = lambda f, st: _T[(_T.form == f) & (_T.fci == f) & (_T.start == st)].iloc[0]
@@ -285,17 +291,19 @@ def tradeoff_compact():
     def row(f, start):
         return {H_: T[(T.form == f) & (T.fci == f) & (T.macro == "u,pi") & (T.start == start) & T.end.isna() & (T.t2020 == "out") & (T["shock"] == "ns") & (T["ext"].fillna("") == "" if "ext" in T else True) & (T.trend == "none") & (T.lags == 12) & (T.H == H_)].iloc[0] for H_ in (24, 36)}
     def cellk(r):
-        if np.isfinite(r.k_lo) and np.isfinite(r.k_hi): return f"[{num(r.k_lo)}, {num(r.k_hi)}]" + ("" if bool(r.connected) else r"$^{\dagger}$")
-        return "undefined; 68\\%: " + (f"[{num(r.k68_lo)}, {num(r.k68_hi)}]" if np.isfinite(r.k68_lo) and np.isfinite(r.k68_hi) else "undefined")
-    body = [r"\begin{tabular}{lcccc}\toprule", r" & \multicolumn{2}{c}{24 months} & \multicolumn{2}{c}{36 months}\\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}", r"Two rates and FCI, measured as & Estimate & 90\% set & Estimate & 90\% set\\ \midrule"]
+        """FS-A118: estimate and 90 percent set of the sacrifice ratio (direct inversion); not defined where the price level does not fall."""
+        if r.sac <= 0: return "not defined"
+        if not (np.isfinite(r.s_lo) and np.isfinite(r.s_hi)): return "unbounded"
+        return f"[{num(r.s_lo)}, {num(r.s_hi)}]" + ("" if bool(r.s_connected) else r"$^{\dagger}$")
+    body = [r"\begin{tabular}{lcccccc}\toprule", r" & \multicolumn{3}{c}{24 months} & \multicolumn{3}{c}{36 months}\\ \cmidrule(lr){2-4}\cmidrule(lr){5-7}", r"Two rates and FCI, measured as & Multiplier & Cost & 90\% set & Multiplier & Cost & 90\% set\\ \midrule"]
     for lab, f, st, bold in (("Nominal, 1996 start", "nom", "1996-01", False), ("Real, 1996 start (baseline)", "real", "1996-01", True), ("Nominal, 1973 start", "nom", "1973-01", False), ("Real, 1973 start", "real", "1973-01", False)):
         r = row(f, st); a = lambda x: rf"\textbf{{{x}}}" if bold else x
-        body.append(f"{a(lab)} & {a(num(r[24].kappa))} & {a(cellk(r[24]))} & {a(num(r[36].kappa))} & {a(cellk(r[36]))}" + r"\\")
+        body.append(f"{a(lab)} & {a(num(r[24].kappa))} & {a(num(r[24].sac))} & {a(cellk(r[24]))} & {a(num(r[36].kappa))} & {a(num(r[36].sac))} & {a(cellk(r[36]))}" + r"\\")
         pass
     body.append(r"\bottomrule\end{tabular}")
-    note = (r"$\kappa_H$ is the core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response \citep{barnichon2021}; its inverse in absolute value is the sacrifice ratio. Estimate: ratio of the point responses. "
-            r"90\% set: Anderson--Rubin type, all values for which the 90\% bootstrap interval of $\tilde P_H-\kappa\tilde U_H$ contains zero. The ratio is undefined when the 90\% interval of the cumulative unemployment response includes zero, because the data then cannot rule out unemployment responses of zero or either sign; the 68\% set is then shown where it exists. $^{\dagger}$: the set has a gap wider than 2 percent of its width; shown is its hull. 12 lags. All cases in Appendix Table~\ref{tab:tradefull}.")
-    (REPORT / "tab_tradeoff.tex").write_text(tbl("Implied Trade-Off: The Phillips Multiplier", "tab:tradeoff", "\n".join(body), note) + "\n")
+    note = (r"Multiplier: $\kappa_H$, the core PCE price level at month $H$ (percent) per percentage-point year of cumulative unemployment-gap response \citep{barnichon2021}. Cost: its inverse in absolute value, the sacrifice ratio, in percentage-point years of unemployment per 1 percent lower price level. "
+            r"90\% set: for the cost, all values $s$ for which the 90\% bias-corrected bootstrap interval of $\tilde U_H+s\,\tilde P_H$ contains zero (the test is inverted for the cost itself, so the set is bounded whenever the price response is well estimated); it may include zero. $^{\dagger}$: the set has a gap wider than 2 percent of its width; shown is its hull. 12 lags. Sets for the multiplier and all cases in Appendix Table~\ref{tab:tradefull}.")
+    (REPORT / "tab_tradeoff.tex").write_text(tbl("Implied Trade-Off: The Phillips Multiplier and the Cost of Disinflation", "tab:tradeoff", "\n".join(body), note) + "\n")
 tradeoff_compact()
 
 
